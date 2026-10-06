@@ -5,11 +5,21 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import StrEnum
 
+from core.shared.domain.exceptions import DomainException
+
 type JsonObject = dict[str, object]
 
 
-class LLMError(RuntimeError):
+class LLMError(DomainException):
     """Any failed model call: transport, refusal, truncation, invalid JSON. Callers fail closed on it."""
+
+    def __init__(self, message: str, error_code: int = 502) -> None:
+        super().__init__(message, error_code)
+
+
+class LLMProviderError(LLMError):
+    """The provider rejected or could not serve the call (bad key 401, rate limit 429, outage 502).
+    Clients translate their SDK's exceptions into this, so no other layer depends on an SDK."""
 
 
 class Stage(StrEnum):

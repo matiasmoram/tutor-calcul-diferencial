@@ -7,17 +7,17 @@ class CourseException(DomainException):
 
 class ExerciseNotFoundException(CourseException):
     def __init__(self, exercise_id: str) -> None:
-        super().__init__(f"Exercici desconegut: {exercise_id}", 404)
+        super().__init__("Exercici desconegut", 404)
 
 
 class ProblemSheetNotFoundException(CourseException):
     def __init__(self, sheet_id: str) -> None:
-        super().__init__(f"Llista desconeguda: {sheet_id}", 404)
+        super().__init__("Llista desconeguda", 404)
 
 
 class TheoryItemNotFoundException(CourseException):
     def __init__(self, item_id: str) -> None:
-        super().__init__(f"Ítem de teoria desconegut: {item_id}", 404)
+        super().__init__("Ítem de teoria desconegut", 404)
 
 
 class UnknownStepException(CourseException):

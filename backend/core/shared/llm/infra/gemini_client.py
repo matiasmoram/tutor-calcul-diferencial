@@ -6,7 +6,17 @@ from google import genai
 from google.genai import errors, types
 
 from core.shared.domain.clock import Clock, SystemClock
-from core.shared.llm.client import CallMeta, JsonObject, LLMClient, LLMError, LLMRequest, Stage, StageConfig, parse_json
+from core.shared.llm.client import (
+    CallMeta,
+    JsonObject,
+    LLMClient,
+    LLMError,
+    LLMProviderError,
+    LLMRequest,
+    Stage,
+    StageConfig,
+    parse_json,
+)
 
 # Anthropic-style effort names mapped onto Gemini thinking levels.
 THINKING: Mapping[str, types.ThinkingLevel] = {
@@ -46,7 +56,14 @@ class GeminiLLMClient(LLMClient):
             automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
             **schema_args,  # type: ignore[arg-type]
         )
-        response = await self._generate_with_retry(cfg.model, contents, config)
+        try:
+            response = await self._generate_with_retry(cfg.model, contents, config)
+        except errors.APIError as e:
+            raise LLMProviderError(
+                f"Error de l'API de Gemini ({e.code}): {e.message}", 429 if e.code == 429 else 502
+            ) from e
+        except httpx.TransportError as e:
+            raise LLMProviderError("No s'ha pogut connectar amb l'API de Gemini.") from e
         usage = response.usage_metadata
         meta = CallMeta(
             stage=stage,

@@ -1,4 +1,4 @@
-from collections.abc import Mapping
+from collections.abc import Awaitable, Mapping
 from typing import cast
 
 import openai
@@ -11,6 +11,7 @@ from core.shared.llm.client import (
     JsonObject,
     LLMClient,
     LLMError,
+    LLMProviderError,
     LLMRequest,
     Stage,
     StageConfig,
@@ -56,14 +57,16 @@ class OpenAILLMClient(LLMClient):
                 "json_schema": {"name": f"tutor_{stage}", "strict": True, "schema": request.schema},
             }
         user = f"{request.context}\n\n{request.user}" if request.context else request.user  # cached prefix first
-        response = await self._client.chat.completions.create(
-            model=cfg.model,
-            max_completion_tokens=cfg.max_tokens,
-            messages=cast(
-                list[ChatCompletionMessageParam],
-                [{"role": "system", "content": system}, {"role": "user", "content": _content(user, request.image)}],
-            ),
-            **kwargs,  # type: ignore[arg-type]
+        response = await _translated(
+            self._client.chat.completions.create(
+                model=cfg.model,
+                max_completion_tokens=cfg.max_tokens,
+                messages=cast(
+                    list[ChatCompletionMessageParam],
+                    [{"role": "system", "content": system}, {"role": "user", "content": _content(user, request.image)}],
+                ),
+                **kwargs,  # type: ignore[arg-type]
+            )
         )
         usage = response.usage
         details = usage.prompt_tokens_details if usage else None
@@ -94,3 +97,16 @@ def _content(user: str, image: Image | None) -> str | list[dict[str, object]]:
         {"type": "text", "text": user},
         {"type": "image_url", "image_url": {"url": f"data:{image.media_type};base64,{image.b64()}", "detail": "high"}},
     ]
+
+
+async def _translated[T](call: Awaitable[T]) -> T:
+    try:
+        return await call
+    except openai.AuthenticationError as e:
+        raise LLMProviderError(f"Clau d'API invàlida o absent: {e.message}", 401) from e
+    except openai.RateLimitError as e:
+        raise LLMProviderError(f"Límit de l'API: {e.message}", 429) from e
+    except openai.APIStatusError as e:
+        raise LLMProviderError(f"Error de l'API ({e.status_code}): {e.message}") from e
+    except openai.APIConnectionError as e:
+        raise LLMProviderError("No s'ha pogut connectar amb l'API.") from e

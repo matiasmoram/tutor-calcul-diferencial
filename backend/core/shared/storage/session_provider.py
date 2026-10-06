@@ -7,6 +7,7 @@ from typing import Any, Concatenate
 from sqlalchemy import JSON
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
+from sqlmodel import SQLModel
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 # JSON documents: JSONB on Postgres, JSON (text) on SQLite.
@@ -61,3 +62,12 @@ def with_session[R: BaseSQLModelRepository, **P, T](
             return await method(self, session, *args, **kwargs)
 
     return wrapper
+
+
+async def create_schema_if_sqlite(engine: AsyncEngine) -> None:
+    """Local SQLite databases get their tables on first use. Postgres (Supabase) gets them from
+    supabase/migrations only, so production never runs DDL it was not reviewed for."""
+    if engine.url.get_backend_name() != "sqlite":
+        return
+    async with engine.begin() as conn:
+        await conn.run_sync(SQLModel.metadata.create_all)

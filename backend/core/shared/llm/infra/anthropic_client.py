@@ -1,4 +1,4 @@
-from collections.abc import Mapping
+from collections.abc import Awaitable, Mapping
 
 import anthropic
 
@@ -9,6 +9,7 @@ from core.shared.llm.client import (
     JsonObject,
     LLMClient,
     LLMError,
+    LLMProviderError,
     LLMRequest,
     Stage,
     StageConfig,
@@ -33,12 +34,14 @@ class AnthropicLLMClient(LLMClient):
         output_config: dict[str, object] = {"effort": cfg.effort}
         if request.schema is not None:
             output_config["format"] = {"type": "json_schema", "schema": request.schema}
-        response = await self._client.messages.create(
-            model=cfg.model,
-            max_tokens=cfg.max_tokens,
-            system=request.system,
-            messages=[{"role": "user", "content": _content(request.user, request.image, request.context)}],  # type: ignore[arg-type]
-            output_config=output_config,  # type: ignore[arg-type]
+        response = await _translated(
+            self._client.messages.create(
+                model=cfg.model,
+                max_tokens=cfg.max_tokens,
+                system=request.system,
+                messages=[{"role": "user", "content": _content(request.user, request.image, request.context)}],  # type: ignore[arg-type]
+                output_config=output_config,  # type: ignore[arg-type]
+            )
         )
         usage = response.usage
         meta = CallMeta(
@@ -75,3 +78,16 @@ def _content(user: str, image: Image | None, context: str | None) -> str | list[
     if not blocks:
         return user
     return [*blocks, {"type": "text", "text": user}]
+
+
+async def _translated[T](call: Awaitable[T]) -> T:
+    try:
+        return await call
+    except anthropic.AuthenticationError as e:
+        raise LLMProviderError("Clau d'API d'Anthropic invàlida o absent (ANTHROPIC_API_KEY).", 401) from e
+    except anthropic.RateLimitError as e:
+        raise LLMProviderError("Límit de peticions de l'API. Torna-ho a provar en uns segons.", 429) from e
+    except anthropic.APIStatusError as e:
+        raise LLMProviderError(f"Error de l'API d'Anthropic ({e.status_code}): {e.message}") from e
+    except anthropic.APIConnectionError as e:
+        raise LLMProviderError("No s'ha pogut connectar amb l'API d'Anthropic.") from e

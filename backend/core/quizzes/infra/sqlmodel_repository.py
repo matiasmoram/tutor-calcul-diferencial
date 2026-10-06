@@ -1,0 +1,173 @@
+from sqlalchemy import Column, Index, func, update
+from sqlmodel import Field, SQLModel, col, select
+from sqlmodel.ext.asyncio.session import AsyncSession
+
+from core.quizzes.domain.entities.grading import Answer, QuizGrading
+from core.quizzes.domain.entities.quiz import Quiz
+from core.quizzes.domain.entities.quiz_session import QuizSession, QuizSubmission
+from core.quizzes.domain.exceptions import (
+    ConcurrentQuizGradingException,
+    QuizNotFoundException,
+    QuizSessionNotFoundException,
+)
+from core.quizzes.domain.repository import Availability, QuizRepository, QuizSessionRepository
+from core.quizzes.domain.values.difficulty import Difficulty, difficulty_of
+from core.shared.domain.ids import SessionId
+from core.shared.storage.session_provider import BaseSQLModelRepository, JsonColumn, with_session
+
+
+class QuizRecord(SQLModel, table=True):
+    """The quiz document as stored in ``generats/afirmacions`` (Catalan keys), with its key columns alongside."""
+
+    __tablename__ = "quizzes"  # type: ignore[assignment]
+    __table_args__ = (Index("ix_quizzes_source_difficulty", "source_id", "difficulty"),)
+
+    id: str = Field(primary_key=True, max_length=32)
+    source_id: str = Field(max_length=64)
+    difficulty: str = Field(max_length=16)
+    topic: int
+    created_at: float
+    data: dict[str, object] = Field(sa_column=Column(JsonColumn, nullable=False))
+
+
+class QuizSessionRecord(SQLModel, table=True):
+    __tablename__ = "quiz_sessions"  # type: ignore[assignment]
+
+    id: str = Field(primary_key=True, max_length=64)
+    source_id: str = Field(max_length=64)
+    difficulty: str = Field(max_length=16)
+    quiz_id: str = Field(max_length=32, foreign_key="quizzes.id")
+    hints_used: list[str] = Field(sa_column=Column(JsonColumn, nullable=False))
+    created_at: float
+    updated_at: float
+    version: int = 0
+
+
+class QuizGradingRecord(SQLModel, table=True):
+    """The one grading of a session: the answers handed in, the hints used, and the result shown."""
+
+    __tablename__ = "quiz_gradings"  # type: ignore[assignment]
+
+    session_id: str = Field(primary_key=True, max_length=64, foreign_key="quiz_sessions.id", ondelete="CASCADE")
+    created_at: float
+    answers: list[dict[str, object]] = Field(sa_column=Column(JsonColumn, nullable=False))
+    hints: list[str] = Field(sa_column=Column(JsonColumn, nullable=False))
+    result: dict[str, object] = Field(sa_column=Column(JsonColumn, nullable=False))
+
+
+class SQLModelQuizRepository(QuizRepository, BaseSQLModelRepository):
+    @with_session
+    async def add(self, session: AsyncSession, quiz: Quiz) -> None:
+        await session.merge(
+            QuizRecord(
+                id=quiz.id,
+                source_id=quiz.source_id,
+                difficulty=quiz.difficulty,
+                topic=quiz.topic,
+                created_at=quiz.created,
+                data=quiz.model_dump(mode="json"),
+            )
+        )
+
+    @with_session
+    async def get(self, session: AsyncSession, quiz_id: str) -> Quiz:
+        record = await session.get(QuizRecord, quiz_id)
+        if record is None:
+            raise QuizNotFoundException(quiz_id)
+        return Quiz.model_validate(record.data)
+
+    @with_session
+    async def of_source(self, session: AsyncSession, source_id: str, difficulty: Difficulty) -> list[Quiz]:
+        rows = await session.exec(
+            select(QuizRecord)
+            .where(QuizRecord.source_id == source_id, QuizRecord.difficulty == difficulty)
+            .order_by(col(QuizRecord.created_at), col(QuizRecord.id))
+        )
+        return [Quiz.model_validate(r.data) for r in rows]
+
+    @with_session
+    async def availability(self, session: AsyncSession) -> Availability:
+        rows = await session.exec(
+            select(QuizRecord.source_id, QuizRecord.difficulty, func.count()).group_by(
+                col(QuizRecord.source_id), col(QuizRecord.difficulty)
+            )
+        )
+        out: Availability = {}
+        for source_id, name, n in rows:
+            difficulty = difficulty_of(name)
+            if difficulty is not None and n:
+                out.setdefault(source_id, {})[difficulty] = n
+        return out
+
+
+class SQLModelQuizSessionRepository(QuizSessionRepository, BaseSQLModelRepository):
+    @with_session
+    async def add(self, session: AsyncSession, quiz_session: QuizSession) -> None:
+        session.add(
+            QuizSessionRecord(
+                id=quiz_session.id,
+                source_id=quiz_session.source_id,
+                difficulty=quiz_session.difficulty,
+                quiz_id=quiz_session.quiz_id,
+                hints_used=list(quiz_session.hints_used),
+                created_at=quiz_session.created_at,
+                updated_at=quiz_session.updated_at,
+                version=quiz_session.version,
+            )
+        )
+
+    @with_session
+    async def get(self, session: AsyncSession, session_id: str) -> QuizSession:
+        record = await session.get(QuizSessionRecord, session_id)
+        if record is None:
+            raise QuizSessionNotFoundException(session_id)
+        grading = await session.get(QuizGradingRecord, session_id)
+        difficulty = difficulty_of(record.difficulty)
+        return QuizSession.model_validate(
+            {
+                "id": SessionId(record.id),
+                "source_id": record.source_id,
+                "difficulty": difficulty,
+                "quiz_id": record.quiz_id,
+                "hints_used": record.hints_used,
+                "submission": _submission(grading) if grading else None,
+                "created_at": record.created_at,
+                "updated_at": record.updated_at,
+                "version": record.version,
+            }
+        )
+
+    @with_session
+    async def save(self, session: AsyncSession, quiz_session: QuizSession) -> None:
+        result = await session.exec(
+            update(QuizSessionRecord)  # type: ignore[call-overload]
+            .where(col(QuizSessionRecord.id) == quiz_session.id, col(QuizSessionRecord.version) == quiz_session.version)
+            .values(
+                hints_used=list(quiz_session.hints_used),
+                updated_at=quiz_session.updated_at,
+                version=quiz_session.version + 1,
+            )
+        )
+        if result.rowcount != 1:
+            raise ConcurrentQuizGradingException(quiz_session.id)
+        submission = quiz_session.submission
+        if submission is not None and await session.get(QuizGradingRecord, quiz_session.id) is None:
+            session.add(
+                QuizGradingRecord(
+                    session_id=quiz_session.id,
+                    created_at=submission.created_at,
+                    answers=[a.model_dump(mode="json") for a in submission.answers],
+                    hints=list(submission.hints),
+                    result=submission.result.model_dump(mode="json"),
+                )
+            )
+        quiz_session.version += 1
+
+
+def _submission(record: QuizGradingRecord) -> QuizSubmission:
+    return QuizSubmission(
+        answers=[Answer.model_validate(a) for a in record.answers],
+        hints=record.hints,
+        result=QuizGrading.model_validate(record.result),
+        created_at=record.created_at,
+    )

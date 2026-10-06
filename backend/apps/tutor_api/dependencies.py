@@ -49,7 +49,7 @@ def is_professor(request: Request, config: Config = Depends(get_config)) -> bool
 
 def require_professor(professor: bool = Depends(is_professor)) -> None:
     if not professor:
-        raise HTTPException(403, "Només per al professorat")
+        raise HTTPException(403, "Només per al professorat.")
 
 
 KEY_VARIABLES: Mapping[str, str] = {

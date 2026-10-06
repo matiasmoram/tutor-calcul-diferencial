@@ -24,5 +24,10 @@ class ScriptedLLMClient(LLMClient):
             raise out
         return out, CallMeta(stage=stage, model="scripted", latency_ms=1, input_tokens=10, output_tokens=2)
 
+    def then(self, stage: Stage, *outputs: JsonObject | Exception) -> "ScriptedLLMClient":
+        """Appends outputs for `stage` (for fixtures built before the test knows its script)."""
+        self._script.setdefault(stage, []).extend(outputs)
+        return self
+
     def calls(self, stage: Stage) -> int:
         return len(self.requests[stage])

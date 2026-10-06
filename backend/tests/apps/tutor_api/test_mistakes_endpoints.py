@@ -10,10 +10,14 @@ def test_a_ready_document_opens_without_the_model_and_hides_its_errors(api: Test
     assert set(out["solucio"]) == {"id", "font", "dificultat", "fragments", "n_enunciat", "n_errors"}
 
 
-def test_grading_without_annotations_needs_no_model_and_is_stored(api: TestClient, scripted_llm: ScriptedLLMClient) -> None:
+def test_grading_without_annotations_needs_no_model_and_is_stored(
+    api: TestClient, scripted_llm: ScriptedLLMClient
+) -> None:
     sid = api.post("/api/errades/sessions", json={"teoria_id": "T2.12"}).json()["session_id"]
     first = api.post(f"/api/errades/sessions/{sid}/correccio", json={"anotacions": []}).json()
-    assert first["trobats"] == 0 and first["original"]["id"] == "T2.12" and scripted_llm.calls(Stage.MISTAKES_GRADING) == 0
+    assert (
+        first["trobats"] == 0 and first["original"]["id"] == "T2.12" and scripted_llm.calls(Stage.MISTAKES_GRADING) == 0
+    )
     again = api.post(f"/api/errades/sessions/{sid}/correccio", json={"anotacions": []}).json()
     assert again == first
 

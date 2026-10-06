@@ -12,6 +12,7 @@ from apps.tutor_api.dependencies import AppState
 from apps.tutor_api.endpoints import config as config_endpoints
 from apps.tutor_api.endpoints import course as course_endpoints
 from apps.tutor_api.endpoints import mistakes as mistakes_endpoints
+from apps.tutor_api.endpoints import tutoring as tutoring_endpoints
 from core.course.application.course_loader import CourseLoader
 from core.course.infra.sqlmodel_repository import SQLModelCourseRepository
 from core.course.infra.yaml_course_source import YamlCourseSource
@@ -53,7 +54,7 @@ def create_app(config: Config | None = None, llm: LLMClient | None = None) -> Fa
         await engine.dispose()
 
     app = FastAPI(title="Tutor socràtic — Càlcul Diferencial", lifespan=lifespan)
-    for module in (config_endpoints, course_endpoints, mistakes_endpoints):
+    for module in (config_endpoints, course_endpoints, tutoring_endpoints, mistakes_endpoints):
         app.include_router(module.router)
 
     @app.get("/", include_in_schema=False)

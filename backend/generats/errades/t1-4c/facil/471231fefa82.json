@@ -1,0 +1,41 @@
+{
+  "id": "471231fefa82",
+  "exercici": "t1-4c",
+  "font": "problema",
+  "dificultat": "facil",
+  "fragments": [
+    "Volem provar $\\|x+y\\|\\,\\|x-y\\|\\leq\\|x\\|^2+\\|y\\|^2$. Primer desenvolupem els quadrats amb el producte escalar: $\\|x\\pm y\\|^2=\\langle x\\pm y,x\\pm y\\rangle=\\|x\\|^2\\pm\\langle x,y\\rangle+\\|y\\|^2$.",
+    "Sumant les dues expressions, els termes creuats es cancel·len i obtenim la llei del paral·lelogram: $\\|x+y\\|^2+\\|x-y\\|^2=2\\|x\\|^2+2\\|y\\|^2$.",
+    "D'altra banda, per a nombres reals $a,b$ qualssevol tenim $0\\leq(a-b)^2=a^2-2ab+b^2$, d'on $ab\\leq\\frac{a^2+b^2}{2}$.",
+    "Ho apliquem a $a=\\|x+y\\|$ i $b=\\|x-y\\|$: $\\|x+y\\|\\,\\|x-y\\|\\leq\\frac{\\|x+y\\|^2+\\|x-y\\|^2}{2}$.",
+    "Substituint-hi la llei del paral·lelogram, $\\|x+y\\|\\,\\|x-y\\|\\leq\\frac{2\\|x\\|^2+2\\|y\\|^2}{2}=\\|x\\|^2+\\|y\\|^2$, que és la desigualtat que volíem."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "escalar: $\\|x\\pm y\\|^2=\\langle x\\pm y,x\\pm y\\rangle=\\|x\\|^2\\pm\\langle x,y\\rangle+\\|y\\|^2$",
+      "inici": 101,
+      "fi": 190,
+      "tipus": "calcul",
+      "explicacio": "En desenvolupar $\\langle x\\pm y,x\\pm y\\rangle$ apareixen dos termes creuats iguals, $\\pm\\langle x,y\\rangle\\pm\\langle y,x\\rangle$, per la simetria del producte escalar: el coeficient és $2$, no $1$.",
+      "correccio": "$\\|x\\pm y\\|^2=\\|x\\|^2\\pm2\\langle x,y\\rangle+\\|y\\|^2$.",
+      "pista": "Quants termes creuats surten en desenvolupar $\\langle x+y,x+y\\rangle$ per bilinealitat?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t12.json",
+    "valoracio": "Resolució correcta excepte el desenvolupament del quadrat, al qual falta el factor 2 del terme creuat.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "\\|x\\|^2\\pm\\langle x,y\\rangle+\\|y\\|^2",
+        "gravetat": "error",
+        "explicacio": "Falta el factor 2: $\\|x\\pm y\\|^2=\\|x\\|^2\\pm2\\langle x,y\\rangle+\\|y\\|^2$ (el resultat de la suma no canvia perquè els termes creuats es cancel·len igualment)."
+      }
+    ]
+  },
+  "creat": 1791295812.8648694
+}

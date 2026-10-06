@@ -1,0 +1,62 @@
+{
+  "id": "e6c661bfef77",
+  "exercici": "T3.13",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $f:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}$ diferenciable en un punt $a\\in\\mathring{\\Omega}$. Aleshores: (i) $\\displaystyle\\max_{u\\neq0}\\{D_uf(a)\\}=\\|\\nabla f(a)\\|$ i aquest valor s'obté per a $u=\\dfrac{\\nabla f(a)}{\\|\\nabla f(a)\\|}$; (ii) de manera anàloga, $\\displaystyle\\min_{\\|u\\|=1}\\{D_uf(a)\\}=-\\|\\nabla f(a)\\|$ i aquest valor s'obté per al vector $u=-\\dfrac{\\nabla f(a)}{\\|\\nabla f(a)\\|}$.",
+    "(iii) Considerem el cas $n=2$ i sigui $\\gamma=\\{(x,y)\\in\\mathbb{R}^2\\mid f(x,y)=f(a_1,a_2)\\}$ la corba de nivell d'alçada $f(a_1,a_2)$. Aleshores el vector gradient $\\nabla f(a_1,a_2)$ és ortogonal a la corba $\\gamma$ en el punt $(a_1,a_2)$.",
+    "Sigui $u\\in\\mathbb{R}^n$ amb $\\|u\\|=1$ (norma euclidiana). Com que $f$ és diferenciable en $a$, $D_uf(a)=\\langle\\nabla f(a),u\\rangle=\\|\\nabla f(a)\\|\\,\\|u\\|\\cos\\alpha=\\|\\nabla f(a)\\|\\cos\\alpha$, on $\\alpha$ és l'angle entre els vectors $\\nabla f(a)$ i $u$.",
+    "És clar que $0\\leq\\|\\nabla f(a)\\|\\cos\\alpha\\leq\\|\\nabla f(a)\\|$.",
+    "El valor màxim s'ateny per a $\\cos\\alpha=1$, és a dir $\\alpha=0$ i, en conseqüència, per a $u=\\nabla f(a)/\\|\\nabla f(a)\\|$: $\\displaystyle\\max_{\\|u\\|=1}\\{D_uf(a)\\}=D_{\\frac{\\nabla f(a)}{\\|\\nabla f(a)\\|}}f(a)=\\|\\nabla f(a)\\|$.",
+    "De manera similar, el valor mínim correspon a $\\cos\\alpha=-1$, és a dir, a un angle $\\pi$ entre $u$ i $\\nabla f(a)$. Així, $u=-\\nabla f(a)/\\|\\nabla f(a)\\|$ i $\\displaystyle\\min_{\\|u\\|=1}\\{D_uf(a)\\}=D_{-\\frac{\\nabla f(a)}{\\|\\nabla f(a)\\|}}f(a)=-\\|\\nabla f(a)\\|$.",
+    "(iii) Clarament, el punt $(a_1,a_2)$ pertany a $\\gamma$. La corba corresponent dins de la gràfica, $\\Gamma=\\{(x,y,z)\\in\\mathbb{R}^3\\mid(x,y)\\in\\gamma,\\ z=f(a_1,a_2)\\}$, està caracteritzada pel fet que tots els seus punts tenen la mateixa alçada $f(a_1,a_2)$.",
+    "La derivada direccional $D_{u_\\tau}f(a_1,a_2)$ segons el vector unitari tangent $u_\\tau$ a $\\gamma$ ens manté dins la corba $\\gamma$, on el valor de $f$ no varia; per tant, $D_{u_\\tau}f(a_1,a_2)=0$.",
+    "Com que $f$ és diferenciable, $0=D_{u_\\tau}f(a_1,a_2)=\\langle\\nabla f(a_1,a_2),u_\\tau\\rangle$, és a dir, $\\nabla f(a_1,a_2)\\perp u_\\tau$. Per definició, això vol dir que $\\nabla f(a_1,a_2)$ és ortogonal a la corba $\\gamma$ en el punt $(a_1,a_2)$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "$\\displaystyle\\max_{u\\neq0}\\{D_uf(a)\\}=\\|\\nabla f(a)\\|$",
+      "inici": 116,
+      "fi": 171,
+      "tipus": "quantificador",
+      "explicacio": "Sense la restricció $\\|u\\|=1$ el màxim no existeix, perquè $D_{\\lambda u}f(a)=\\lambda D_uf(a)$. Contraexemple: $f(x,y)=x$, $a=(0,0)$, $u=(2,0)$: $D_uf(a)=2>1=\\|\\nabla f(a)\\|$.",
+      "correccio": "$\\displaystyle\\max_{\\|u\\|=1}\\{D_uf(a)\\}=\\|\\nabla f(a)\\|$, s'obté per a $u=\\nabla f(a)/\\|\\nabla f(a)\\|$.",
+      "pista": "Sobre quins vectors $u$ es pren el màxim? Què passa si dobles la longitud de $u$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "$0\\leq\\|\\nabla f(a)\\|\\cos\\alpha\\leq\\|\\nabla f(a)\\|$",
+      "inici": 12,
+      "fi": 63,
+      "tipus": "desigualtat",
+      "explicacio": "$\\cos\\alpha$ pot ser negatiu (per a $\\alpha\\in(\\pi/2,\\pi]$), així que la fita inferior $0$ és falsa; de fet el mínim que es calcula després és $-\\|\\nabla f(a)\\|<0$.",
+      "correccio": "$-\\|\\nabla f(a)\\|\\leq\\|\\nabla f(a)\\|\\cos\\alpha\\leq\\|\\nabla f(a)\\|$.",
+      "pista": "Quins valors pot prendre $\\cos\\alpha$ quan $\\alpha$ recorre $[0,\\pi]$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t3.json",
+    "valoracio": "Dos errors: el màxim sobre $u\\neq0$ a l'enunciat i la fita inferior $0$ a la demostració.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "$\\displaystyle\\max_{u\\neq0}\\{D_uf(a)\\}=\\|\\nabla f(a)\\|$",
+        "gravetat": "error",
+        "explicacio": "El màxim s'ha de prendre sobre $\\|u\\|=1$; sobre $u\\neq0$, $D_uf(a)=\\langle\\nabla f(a),u\\rangle$ no és acotat (si $\\nabla f(a)\\neq0$) i l'afirmació és falsa."
+      },
+      {
+        "fragment": 4,
+        "cita": "$0\\leq\\|\\nabla f(a)\\|\\cos\\alpha\\leq\\|\\nabla f(a)\\|$",
+        "gravetat": "error",
+        "explicacio": "La fita inferior és $-\\|\\nabla f(a)\\|$ (perquè $\\cos\\alpha\\geq-1$), no $0$; a més contradiu el mínim $-\\|\\nabla f(a)\\|$ obtingut a [6]."
+      }
+    ]
+  },
+  "creat": 1791296233.7400007
+}

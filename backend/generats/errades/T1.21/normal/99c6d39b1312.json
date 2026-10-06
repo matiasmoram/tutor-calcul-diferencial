@@ -1,0 +1,67 @@
+{
+  "id": "99c6d39b1312",
+  "exercici": "T1.21",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $(M,d)$ un espai mètric i sigui $(x_n)_{n\\in\\mathbb{N}}$ una successió de $M$. i) Si $(x_n)_n$ és convergent, aleshores és de Cauchy. ii) Si $(x_n)_n$ és convergent, aleshores és fitada.",
+    "iii) Si $(x_n)_n$ és de Cauchy, aleshores és convergent.",
+    "i) Sigui $x=\\lim_n x_n$ i sigui $\\varepsilon>0$. Existeix $n_0\\in\\mathbb{N}$ tal que $d(x_n,x)<\\frac{\\varepsilon}{2}$ per a tot $n\\geq n_0$.",
+    "Per tant, si $p,q\\geq n_0$, aleshores $d(x_p,x_q)\\leq d(x_p,x)+d(x,x_q)<\\frac{\\varepsilon}{2}+\\frac{\\varepsilon}{2}=\\varepsilon$, i $(x_n)_n$ és de Cauchy.",
+    "ii) Sigui $x=\\lim_n x_n$. Prenent $\\varepsilon=1$, existeix $n_0\\in\\mathbb{N}$ tal que $d(x_n,x)<1$ per a tot $n\\geq n_0$.",
+    "Considerem $R=\\max\\{d(x_1,x),d(x_2,x),\\ldots,d(x_{n_0-1},x)\\}$. Aleshores $d(x_n,x)\\leq R$ per a tot $n\\in\\mathbb{N}$ i, en conclusió, $(x_n)_n$ és fitada.",
+    "iii) Sigui $(x_{n_k})_k$ una subsuccessió convergent de $(x_n)_n$, amb $x=\\lim_k x_{n_k}$, i sigui $\\varepsilon>0$. Com que $(x_n)_n$ és de Cauchy, existeix $n_1\\in\\mathbb{N}$ tal que $d(x_p,x_q)<\\frac{\\varepsilon}{2}$ per a tot $p,q\\geq n_1$.",
+    "Com que $(x_{n_k})_k$ convergeix a $x$, existeix $n_2\\in\\mathbb{N}$ tal que $d(x_{n_k},x)<\\frac{\\varepsilon}{2}$ per a tot $n_k\\geq n_2$. Sigui $N=\\max\\{n_1,n_2\\}$: per a $n\\geq N$, prenem un $n_k\\geq N$, i aleshores $d(x_n,x)\\leq d(x_n,x_{n_k})+d(x_{n_k},x)<\\frac{\\varepsilon}{2}+\\frac{\\varepsilon}{2}=\\varepsilon$. Per tant, $\\lim_n x_n=x$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "Si $(x_n)_n$ és de Cauchy, aleshores és convergent",
+      "inici": 5,
+      "fi": 55,
+      "tipus": "hipotesi",
+      "explicacio": "Falta la hipòtesi que tingui una subsuccessió convergent; en un espai mètric qualsevol és fals: a $M=(0,1)$, $x_n=\\frac{1}{n+1}$ és de Cauchy però no convergeix a $M$.",
+      "correccio": "Si $(x_n)_n$ és de Cauchy i té una subsuccessió convergent, aleshores és convergent.",
+      "pista": "Convergeix $\\frac{1}{n+1}$ dins de l'espai $(0,1)$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "$R=\\max\\{d(x_1,x),d(x_2,x),\\ldots,d(x_{n_0-1},x)\\}$",
+      "inici": 11,
+      "fi": 62,
+      "tipus": "cas_oblidat",
+      "explicacio": "Aquest màxim només fita els termes amb $n<n_0$; per als $n\\geq n_0$ només sabem $d(x_n,x)<1$, que pot ser més gran que $R$.",
+      "correccio": "$R=\\max\\{d(x_1,x),\\ldots,d(x_{n_0-1},x),1\\}$.",
+      "pista": "Quina fita tens per als termes amb $n\\geq n_0$? Queda inclosa a $R$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t1a.json",
+    "valoracio": "Hipòtesi clau eliminada a iii) (enunciat fals) i màxim sense l'1 a ii).",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "iii) Si $(x_n)_n$ és de Cauchy, aleshores és convergent.",
+        "gravetat": "error",
+        "explicacio": "Elimina la hipòtesi que té una subsuccessió convergent; fals en espais no complets (p. ex. $x_n=1/n$ a $(0,1)$)."
+      },
+      {
+        "fragment": 6,
+        "cita": "$R=\\max\\{d(x_1,x),d(x_2,x),\\ldots,d(x_{n_0-1},x)\\}$",
+        "gravetat": "error",
+        "explicacio": "Falta l'1 dins el màxim: per a $n\\geq n_0$ només se sap $d(x_n,x)<1$, que pot ser més gran que aquest $R$, i la cota $d(x_n,x)\\leq R$ per a tot $n$ no se segueix."
+      },
+      {
+        "fragment": 7,
+        "cita": "Sigui $(x_{n_k})_k$ una subsuccessió convergent de $(x_n)_n$",
+        "gravetat": "consequencia",
+        "explicacio": "El pas és el dels apunts però usa l'existència d'una subsuccessió convergent, hipòtesi que l'enunciat erroni de iii) ha tret."
+      }
+    ]
+  },
+  "creat": 1791295858.0272746
+}

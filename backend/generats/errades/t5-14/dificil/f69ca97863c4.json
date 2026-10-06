@@ -1,0 +1,78 @@
+{
+  "id": "f69ca97863c4",
+  "exercici": "t5-14",
+  "font": "problema",
+  "dificultat": "dificil",
+  "fragments": [
+    "Com que $\\varphi$ és derivable, és contínua. Posem $\\Phi(s)=\\int_a^s\\varphi(t)\\,dt$; pel teorema fonamental del càlcul $\\Phi'=\\varphi$, i $f(x,y)=\\Phi(y)-\\Phi(x)$.",
+    "Així $\\frac{\\partial f}{\\partial x}(x,y)=-\\varphi(x)$ i $\\frac{\\partial f}{\\partial y}(x,y)=\\varphi(y)$, que són contínues, i $f$ és de classe $\\mathcal{C}^1$. Els punts crítics són els que compleixen $\\varphi(x)=\\varphi(y)=0$: $(a,a)$, $(a,b)$, $(b,a)$ i $(b,b)$.",
+    "Com que $\\varphi'(a)>0$, $\\varphi$ és creixent en un entorn de $a$ i, com que $\\varphi(a)=0$, prop de $a$ el signe de $\\varphi(t)$ és el de $t-a$. Anàlogament, de $\\varphi'(b)<0$ es dedueix que prop de $b$ el signe de $\\varphi(t)$ és el contrari del de $t-b$.",
+    "Com que $\\varphi$ és contínua i no s'anul·la a $(-\\infty,a)$, a $(a,b)$ ni a $(b,+\\infty)$, pel teorema de Bolzano té signe constant a cada interval: $\\varphi<0$ a $(-\\infty,a)$, $\\varphi>0$ a $(a,b)$ i $\\varphi<0$ a $(b,+\\infty)$. Per tant $\\Phi$ té un mínim local estricte a $a$ i un màxim local estricte a $b$.",
+    "Al punt $(a,b)$: per a $(x,y)$ proper, $\\Phi(y)\\leq\\Phi(b)$ i $\\Phi(x)\\geq\\Phi(a)$, amb igualtat només si $y=b$ i $x=a$ respectivament. Per tant $f(x,y)-f(a,b)=[\\Phi(y)-\\Phi(b)]-[\\Phi(x)-\\Phi(a)]<0$ si $(x,y)\\neq(a,b)$: és un màxim local estricte.",
+    "Al punt $(b,a)$ les desigualtats s'inverteixen, i és un mínim local estricte, amb $f(b,a)=-\\int_a^b\\varphi<0$.",
+    "Al punt $(a,a)$: $f(a,y)-f(a,a)=\\Phi(y)-\\Phi(a)>0$ per a $y\\neq a$ proper, de manera que hi ha punts arbitràriament a prop on $f$ supera $f(a,a)=0$, i per tant $(a,a)$ és un punt de sella. Anàlogament, $(b,b)$ és un punt de sella.",
+    "Interpretació: $f(a,b)=\\int_a^b\\varphi>0$ és l'àrea de tot el tram on $\\varphi$ és positiva; desplaçar un extrem de l'interval afegeix àrea negativa o en treu de positiva, i la integral disminueix. De fet, $f(a,b)$ és el màxim absolut de $f$, perquè cap interval no pot acumular més àrea positiva que $[a,b]$. El mínim local $(b,a)$ és el mateix interval recorregut al revés, i a la diagonal $f(x,x)=0$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "Com que $\\varphi'(a)>0$, $\\varphi$ és creixent en un entorn de $a$",
+      "inici": 0,
+      "fi": 66,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "Una derivada positiva en un sol punt no implica monotonia en cap entorn si $\\varphi'$ no és contínua (p. ex. $t+2t^2\\sin(1/t)$ a $0$). El signe s'ha de deduir de $\\varphi'(a)=\\lim_{t\\to a}\\frac{\\varphi(t)}{t-a}>0$.",
+      "correccio": "Com que $\\varphi'(a)=\\lim_{t\\to a}\\frac{\\varphi(t)}{t-a}>0$, el quocient és positiu prop de $a$, i per tant $\\varphi(t)$ té el signe de $t-a$ prop de $a$.",
+      "pista": "Saber que $\\varphi'(a)>0$ et diu alguna cosa sobre $\\varphi'$ en els punts propers a $a$? Què et diu, en canvi, la definició de derivada?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "hi ha punts arbitràriament a prop on $f$ supera $f(a,a)=0$, i per tant $(a,a)$ és un punt de sella",
+      "inici": 89,
+      "fi": 187,
+      "tipus": "conclusio",
+      "explicacio": "Trobar punts propers amb $f>f(a,a)$ només descarta que sigui un màxim local; per ser un punt de sella també calen punts propers amb $f<f(a,a)$.",
+      "correccio": "A més, $f(x,a)-f(a,a)=-(\\Phi(x)-\\Phi(a))<0$ per a $x\\neq a$ proper; com que hi ha punts propers amb $f$ més gran i més petit que $f(a,a)$, és un punt de sella.",
+      "pista": "Amb punts on $f$ és més gran que $f(a,a)$, quina possibilitat has descartat? N'hi ha prou per dir que és un punt de sella?"
+    },
+    {
+      "id": "e3",
+      "fragment": 8,
+      "cita": "De fet, $f(a,b)$ és el màxim absolut de $f$",
+      "inici": 198,
+      "fi": 241,
+      "tipus": "conclusio",
+      "explicacio": "Els arguments només són locals: lluny de $[a,b]$, $\\Phi$ pot créixer sense fita (p. ex. $\\varphi(t)=-(t-a)(t-b)$ dona $\\Phi(s)\\to+\\infty$ quan $s\\to-\\infty$), i llavors $f(x,y)=\\Phi(y)-\\Phi(x)$ no és fitada superiorment.",
+      "correccio": "$(a,b)$ és un màxim local estricte; en general no és màxim absolut, perquè integrar al revés sobre un tram llarg on $\\varphi<0$ pot donar valors tan grans com es vulgui.",
+      "pista": "Què val $\\int_x^y\\varphi$ si prens $y<a$ i $x$ encara més a l'esquerra, on $\\varphi<0$? Pot superar $\\int_a^b\\varphi$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t56.json",
+    "valoracio": "Gradient, punts crítics i extrems locals correctes, però la justificació del signe de φ és falsa, la sella de (a,a) està mal justificada i s'afirma un màxim absolut fals.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$\\varphi$ és creixent en un entorn de $a$",
+        "gravetat": "error",
+        "explicacio": "$\\varphi'(a)>0$ només en un punt no implica que $\\varphi$ sigui creixent en un entorn (caldria $\\varphi'$ contínua, que no es té). El signe de $\\varphi(t)$ prop de $a$ s'obté de $\\varphi'(a)=\\lim_{t\\to a}\\frac{\\varphi(t)}{t-a}>0$."
+      },
+      {
+        "fragment": 7,
+        "cita": "hi ha punts arbitràriament a prop on $f$ supera $f(a,a)=0$, i per tant $(a,a)$ és un punt de sella",
+        "gravetat": "error",
+        "explicacio": "Per ser sella calen també punts propers amb $f<f(a,a)$ (p. ex. $f(x,a)-f(a,a)=-(\\Phi(x)-\\Phi(a))<0$); només amb punts on $f$ és més gran no es pot concloure."
+      },
+      {
+        "fragment": 8,
+        "cita": "De fet, $f(a,b)$ és el màxim absolut de $f$",
+        "gravetat": "error",
+        "explicacio": "Fals en general: per $y<a$, $f(a,y)=-\\int_y^a\\varphi=\\int_y^a|\\varphi|$, que pot superar $\\int_a^b\\varphi$ (fins i tot no ser fitada). $(a,b)$ només és màxim local."
+      }
+    ]
+  },
+  "creat": 1791295917.0042815
+}

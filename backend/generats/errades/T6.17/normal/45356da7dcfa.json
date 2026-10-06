@@ -1,0 +1,60 @@
+{
+  "id": "45356da7dcfa",
+  "exercici": "T6.17",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "(Teorema dels multiplicadors de Lagrange). Sigui $\\Phi\\colon G\\subseteq\\mathbb{R}^n\\to\\mathbb{R}^{n-m}$ de classe $\\mathcal{C}^r$ amb $\\mathrm{rang}\\,D\\Phi(\\mathbf{z})=n-m$ per a tot $\\mathbf{z}\\in G$, $M_\\Phi\\neq\\emptyset$ la seva varietat associada, i $f\\colon G\\subseteq\\mathbb{R}^n\\to\\mathbb{R}$ una funció $\\mathcal{C}^1(G)$.",
+    "Aleshores, $\\mathbf{a}\\in M_\\Phi$ és un extrem local de $f$ condicionat a $M_\\Phi$ si i només si existeixen uns valors únics $\\lambda_1,\\ldots,\\lambda_{n-m}\\in\\mathbb{R}$ tals que $(\\mathbf{a},\\lambda_1,\\ldots,\\lambda_{n-m})\\in G\\times\\mathbb{R}^{n-m}$ és un punt crític de $L$, és a dir, $(\\mathbf{a},\\boldsymbol{\\lambda})$ és solució del sistema de $2n-m$ equacions $\\nabla f(\\mathbf{a})-\\lambda_1\\nabla\\Phi_1(\\mathbf{a})-\\cdots-\\lambda_{n-m}\\nabla\\Phi_{n-m}(\\mathbf{a})=\\mathbf{0}$, $\\Phi(\\mathbf{a})=\\mathbf{0}$.",
+    "Si el punt $\\mathbf{a}\\in M_\\Phi$ és un extrem condicionat, per la proposició 13 sabem que $\\nabla f(\\mathbf{a})\\in N_M(\\mathbf{a})$.",
+    "Ara bé, pel teorema 10, $N_M(\\mathbf{a})=\\langle\\nabla\\Phi_1(\\mathbf{a}),\\ldots,\\nabla\\Phi_{n-m}(\\mathbf{a})\\rangle$.",
+    "Com que $\\Phi$ és de classe $\\mathcal{C}^1$, els vectors $\\nabla\\Phi_1(\\mathbf{a}),\\ldots,\\nabla\\Phi_{n-m}(\\mathbf{a})$ són linealment independents i, per tant, formen una base de $N_M(\\mathbf{a})$, que té dimensió $n-m$.",
+    "Aleshores, existeixen uns únics $\\lambda_1,\\ldots,\\lambda_{n-m}\\in\\mathbb{R}$ (les coordenades de $\\nabla f(\\mathbf{a})$ en aquesta base) tals que $\\nabla f(\\mathbf{a})=\\lambda_1\\nabla\\Phi_1(\\mathbf{a})+\\cdots+\\lambda_{n-m}\\nabla\\Phi_{n-m}(\\mathbf{a})$, que és la primera equació del sistema.",
+    "Finalment, com que $\\mathbf{a}\\in M_\\Phi$, es té $\\Phi(\\mathbf{a})=\\mathbf{0}$, que és la segona equació. Per tant, $(\\mathbf{a},\\boldsymbol{\\lambda})$ és un punt crític de $L$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "és un extrem local de $f$ condicionat a $M_\\Phi$ si i només si",
+      "inici": 34,
+      "fi": 96,
+      "tipus": "implicacio",
+      "explicacio": "El recíproc és fals: ser punt crític de $L$ és només condició necessària. Contraexemple: $\\Phi(x,y)=y$, $f(x,y)=x^3$, $\\mathbf{a}=(0,0)$, $\\lambda=0$ (únic): $(\\mathbf{a},0)$ és punt crític de $L$, però $f|_{M}=x^3$ no té extrem a $0$.",
+      "correccio": "Si $\\mathbf{a}\\in M_\\Phi$ és un extrem local de $f$ condicionat a $M_\\Phi$, aleshores existeixen uns valors únics $\\lambda_i$ tals que $(\\mathbf{a},\\boldsymbol{\\lambda})$ és punt crític de $L$ (només una implicació).",
+      "pista": "Un punt crític de la funció de Lagrange sempre és un extrem condicionat? Pensa en el cas sense restricció efectiva."
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "Com que $\\Phi$ és de classe $\\mathcal{C}^1$, els vectors",
+      "inici": 0,
+      "fi": 56,
+      "tipus": "pas_injustificat",
+      "explicacio": "La regularitat de $\\Phi$ no dona independència lineal dels gradients (per exemple, $\\Phi_1=\\Phi_2$ és $\\mathcal{C}^\\infty$). La independència prové de la hipòtesi $\\mathrm{rang}\\,D\\Phi(\\mathbf{a})=n-m$.",
+      "correccio": "Com que $\\mathrm{rang}\\,D\\Phi(\\mathbf{a})=n-m$, els vectors $\\nabla\\Phi_i(\\mathbf{a})$ són linealment independents.",
+      "pista": "Quina hipòtesi de l'enunciat parla de les files de $D\\Phi(\\mathbf{a})$ i no només de la seva regularitat?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t6.json",
+    "valoracio": "Un «si i només si» fals a l'enunciat i una justificació errònia de la independència lineal.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "si i només si existeixen uns valors únics",
+        "gravetat": "error",
+        "explicacio": "El teorema és només una condició necessària; el recíproc és fals (un punt crític de $L$ pot no ser extrem, p. ex. $f=x^3$ condicionat a $y=0$ en l'origen)."
+      },
+      {
+        "fragment": 5,
+        "cita": "Com que $\\Phi$ és de classe $\\mathcal{C}^1$, els vectors",
+        "gravetat": "error",
+        "explicacio": "La independència lineal dels $\\nabla\\Phi_i(\\mathbf{a})$ ve de $\\mathrm{rang}\\,D\\Phi(\\mathbf{a})=n-m$, no de la regularitat de $\\Phi$."
+      }
+    ]
+  },
+  "creat": 1791296017.238638
+}

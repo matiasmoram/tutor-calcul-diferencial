@@ -1,0 +1,986 @@
+problemes:
+  - num: 6
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t2-6"
+        apartat: null
+        tipus: teoric
+        enunciat: |
+          Siguin $A=\left\{(x,y)\in\mathbb{R}^2\mid 0<y<x^2\right\}$ i $f(x,y)=\begin{cases}0 & \text{si } (x,y)\in A,\\ 1 & \text{altrament.}\end{cases}$
+
+          Demostreu que el límit quan $(x,y)\to(0,0)$ de la restricció de $f$ a qualsevol recta que passi per $(0,0)$ val 1; però tanmateix no existeix $\lim_{(x,y)\to(0,0)}f(x,y)$.
+        teoria: ["T2.6"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Sobre la recta $x=0$ i sobre $y=0$, $f\equiv1$. Sobre $y=mx$ amb $m\neq0$, el punt $(x,mx)$ és a $A$ només si $0<mx<x^2$, cosa que exigeix $|x|>|m|$; per tant $f(x,mx)=1$ per a $0<|x|<|m|$ i el límit sobre cada recta val $1$. En canvi, sobre la paràbola $y=\frac{x^2}{2}$ (que és dins $A$ per a $x\neq0$) $f\equiv0$, i el límit sobre aquest camí val $0\neq1$. Per la proposició de límit per camins, $\lim_{(x,y)\to(0,0)}f(x,y)$ no existeix.
+          fuites: []
+        passos:
+          - id: rectes
+            titol: "Restricció a les rectes per l'origen"
+            objectiu: |
+              Veure que, sobre cada recta que passa per $(0,0)$, la funció val $1$ en tots els punts prou propers a l'origen.
+            idea: |
+              Separar la recta vertical $x=0$ de les rectes $y=mx$. Per a cada recta, esbrinar per a quins $x$ el punt de la recta satisfà les dues desigualtats que defineixen $A$.
+            detall: |
+              - $x=0$: cap punt $(0,y)$ compleix $0<y<0$, així que $f(0,y)=1$.
+              - $y=0$: no es compleix $0<0$, així que $f(x,0)=1$.
+              - $y=mx$, $m>0$: cal $mx>0$ (és a dir $x>0$) i $mx<x^2$ (és a dir $x>m$). Si $m<0$: cal $x<0$ i, dividint per $x<0$, $x<m$. En tots dos casos el punt és a $A$ només si $|x|>|m|$.
+              Per tant, si $0<|x|<|m|$, $f(x,mx)=1$, i el límit de la restricció quan $x\to0$ és $1$ (la restricció és constant a prop de $0$).
+            fuites: ['\|x\|\s*>\s*\|m\|', '\|x\|\s*<\s*\|m\|']
+            teoria: ["T2.6"]
+          - id: cami_dins_A
+            titol: "Un camí per dins d'A"
+            objectiu: |
+              Trobar una corba que passi per l'origen sobre la qual $f$ tingui un límit diferent de $1$.
+            idea: |
+              El conjunt $A$ és la regió compresa entre l'eix $y=0$ i la paràbola $y=x^2$; cap recta no hi entra a prop de l'origen, però una corba que quedi entre aquestes dues sí que hi pot quedar.
+            detall: |
+              Sobre $y=\frac{x^2}{2}$ (o $y=cx^2$ amb $0<c<1$) i $x\neq0$ es té $0<\frac{x^2}{2}<x^2$, és a dir, el punt és a $A$ i $f=0$. Per tant $\lim_{x\to0}f\left(x,\frac{x^2}{2}\right)=0$.
+            fuites: ['\\[dt]?frac\{x\^\{?2\}?\}\{2\}', 'x\^\{?2\}?\s*/\s*2', 'y\s*=\s*c\s*x\^\{?2\}?', 'y\s*=\s*\\[dt]?frac\{?1\}?\{?2\}?\s*x\^\{?2\}?']
+            teoria: ["T2.10"]
+          - id: concloure
+            titol: "Concloure la no existència"
+            objectiu: |
+              Deduir de tot plegat que el límit doble no existeix.
+            idea: |
+              Si el límit existís valdria el mateix sobre qualsevol corba contínua que passi per l'origen.
+            detall: |
+              Si existís $\lim_{(x,y)\to(0,0)}f(x,y)=L$, per la proposició de límit per camins hauria de ser $L=1$ (sobre $y=0$) i també $L=0$ (sobre la paràbola de l'apartat anterior). Per unicitat del límit, això és impossible: el límit no existeix.
+            fuites: []
+            teoria: ["T2.10", "T2.8"]
+        errors_comuns:
+          - id: rectes_suficients
+            descripcio: |
+              Creu que si el límit sobre totes les rectes per l'origen val el mateix, aleshores el límit doble existeix.
+            pregunta: |
+              Les rectes són els únics camins per arribar a l'origen? Quina forma té la frontera del conjunt $A$ a prop de $(0,0)$?
+          - id: A_lluny_origen
+            descripcio: |
+              Pensa que $A$ no s'acosta a l'origen (perquè cap recta hi entra) i que per tant $f=1$ en un entorn de $(0,0)$.
+            pregunta: |
+              Dins de qualsevol bola centrada a l'origen, hi ha punts de $A$? Prova de trobar-ne un explícitament per a un radi petit.
+          - id: oblida_vertical
+            descripcio: |
+              Només estudia les rectes $y=mx$ i oblida la recta vertical $x=0$.
+            pregunta: |
+              Totes les rectes per l'origen es poden escriure com $y=mx$?
+        nota_professor: |
+          El valor $f(0,0)=1$ és irrellevant per al límit. Es pot fer també amb successions: $(1/n,\,1/(2n^2))\in A$ dona $f=0$, mentre que $(1/n,0)$ dona $f=1$.
+
+  - num: 7
+    font: null
+    preambul: |
+      Límits i coordenades polars.
+    indicacio: null
+    exercicis:
+      - id: "t2-7a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          Considerem una funció $f:U\to\mathbb{R}$ on $U\subseteq\mathbb{R}^2$ és un entorn de $(0,0)$. Suposem que existeix una funció $h(r)$ no negativa tal que
+
+          - $|f(r\cos\varphi,r\sin\varphi)|\leqslant h(r)$ per a tot $\varphi\in[0,2\pi)$, $r>0$,
+          - $\displaystyle\lim_{r\to0^+}h(r)=0$.
+
+          Demostreu que $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)=0$.
+
+          De manera similar, si $|f(r\cos\varphi,r\sin\varphi)-L|\leqslant h(r)$ i $\displaystyle\lim_{h\to0^+}h(r)=0$, llavors $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)=L$.
+        teoria: ["T2.6"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Donat $\epsilon>0$, com que $h(r)\to0$ quan $r\to0^+$, existeix $\delta>0$ (que podem prendre prou petit perquè $B((0,0),\delta)\subseteq U$) tal que $0\le h(r)<\epsilon$ si $0<r<\delta$. Tot punt $(x,y)$ amb $0<\|(x,y)\|<\delta$ s'escriu $(r\cos\varphi,r\sin\varphi)$ amb $r=\|(x,y)\|\in(0,\delta)$ i algun $\varphi\in[0,2\pi)$, i llavors $|f(x,y)|\le h(r)<\epsilon$. Per la definició $\epsilon$-$\delta$, el límit és $0$. Per al cas general s'aplica el mateix a $g=f-L$, que compleix $|g(r\cos\varphi,r\sin\varphi)|\le h(r)$, i per tant $f=g+L\to L$.
+          fuites: []
+        passos:
+          - id: fixar_epsilon
+            titol: "Traduir la hipòtesi sobre h"
+            objectiu: |
+              Escriure què vol dir, en termes $\epsilon$-$\delta$, la hipòtesi sobre $h$, i què cal demostrar sobre $f$.
+            idea: |
+              Escriure la definició $\epsilon$-$\delta$ del límit doble que volem i la del límit lateral de $h$, i buscar quin $\delta$ pot servir per a totes dues.
+            detall: |
+              Volem: $\forall\epsilon>0\ \exists\delta>0$ tal que $0<\|(x,y)\|<\delta\Rightarrow|f(x,y)|<\epsilon$. Donat $\epsilon>0$, la hipòtesi $h(r)\to0^+$ dona $\rho>0$ amb $0\le h(r)<\epsilon$ per a $0<r<\rho$. Prenem $\delta\le\rho$ prou petit perquè, a més, $B((0,0),\delta)\subseteq U$ (és possible perquè $U$ és un entorn de l'origen).
+            fuites: []
+            teoria: ["T2.6"]
+          - id: polars
+            titol: "Passar a polars i fitar"
+            objectiu: |
+              Comprovar que el $\delta$ triat funciona per a tots els punts de la bola, independentment de la direcció.
+            idea: |
+              Escriure qualsevol punt de la bola foradada en coordenades polars i observar quin paper fa $r$; la fita de la hipòtesi no depèn de l'angle.
+            detall: |
+              Si $0<\|(x,y)\|<\delta$, posem $r=\sqrt{x^2+y^2}\in(0,\delta)$ i triem $\varphi\in[0,2\pi)$ amb $(x,y)=(r\cos\varphi,r\sin\varphi)$. Llavors $|f(x,y)|=|f(r\cos\varphi,r\sin\varphi)|\le h(r)<\epsilon$. Com que la fita és vàlida per a tot $\varphi$, el mateix $\delta$ serveix per a tots els punts: $\lim_{(x,y)\to(0,0)}f(x,y)=0$.
+            fuites: []
+            teoria: ["T2.6"]
+          - id: cas_L
+            titol: "El cas amb límit L"
+            objectiu: |
+              Obtenir la segona afirmació (límit $L$) a partir de la primera.
+            idea: |
+              Reduir-ho al cas ja demostrat amb una funció auxiliar adequada.
+            detall: |
+              Sigui $g=f-L$. La hipòtesi diu $|g(r\cos\varphi,r\sin\varphi)|\le h(r)$ amb $h(r)\to0$, i per la primera part $g\to0$; per tant $f=g+L\to L$ (àlgebra de límits, o directament $|f(x,y)-L|<\epsilon$ amb el mateix $\delta$).
+            fuites: []
+            teoria: ["T2.9"]
+        errors_comuns:
+          - id: fita_depen_angle
+            descripcio: |
+              No s'adona que és essencial que la fita $h$ depengui només de $r$; acceptaria una fita $h(r,\varphi)$ amb $h(r,\varphi)\to0$ per a cada $\varphi$ fix.
+            pregunta: |
+              Si la fita depengués també de $\varphi$, el $\delta$ que obtens per a cada direcció seria el mateix per a totes? Què necessites per poder triar un únic $\delta$?
+          - id: nomes_radials
+            descripcio: |
+              Demostra només que $\lim_{r\to0}f(r\cos\varphi,r\sin\varphi)=0$ per a cada $\varphi$ fix i ho dona per bo.
+            pregunta: |
+              Saber el límit sobre cada semirecta per separat, et garanteix el límit sobre una corba que no sigui recta?
+          - id: oblida_entorn
+            descripcio: |
+              Oblida que $f$ només està definida a $U$ i no ajusta $\delta$ perquè la bola hi quedi continguda.
+            pregunta: |
+              Per a quins punts està definida $f$? El teu $\delta$ assegura que tots els punts que consideres hi pertanyen?
+        nota_professor: |
+          Errata a l'enunciat: a la segona part hi diu $\lim_{h\to0^+}h(r)=0$; ha de ser $\lim_{r\to0^+}h(r)=0$. Aquest resultat justifica el mètode de les polars quan la fita és uniforme en $\varphi$.
+
+      - id: "t2-7b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          Sigui $f(x,y)=\dfrac{x^2y}{x^4+y^2}$. Calculeu $\displaystyle\lim_{r\to0}f(r\cos\varphi,r\sin\varphi)$, per a tot valor de $\varphi\in[0,2\pi]$. Què podem deduir sobre $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)$ ?
+        teoria: ["T2.6"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Per a tot $\varphi$, $\lim_{r\to0}f(r\cos\varphi,r\sin\varphi)=0$: si $\sin\varphi\neq0$, $f(r\cos\varphi,r\sin\varphi)=\frac{r\cos^2\varphi\sin\varphi}{r^2\cos^4\varphi+\sin^2\varphi}\to\frac{0}{\sin^2\varphi}=0$; si $\sin\varphi=0$, $f=0$ sobre la recta. Això només dona el candidat $0$ (la convergència no és uniforme en $\varphi$). De fet el límit doble no existeix: sobre $y=x^2$, $f(x,x^2)=\frac12$ (i sobre $y=mx^2$ val $\frac{m}{1+m^2}$).
+          fuites: ['l[íi]mit\s+(doble\s+)?no\s+existeix', 'no\s+existeix\s+(el\s+)?l[íi]mit', 'no\s+t[ée]\s+l[íi]mit']
+        passos:
+          - id: radials
+            titol: "Límits radials"
+            objectiu: |
+              Calcular el límit de $f$ sobre cada semirecta que surt de l'origen, per a cada angle.
+            idea: |
+              Substituir $x=r\cos\varphi$, $y=r\sin\varphi$, simplificar potències de $r$ i distingir segons si el denominador del resultat s'anul·la o no en $r=0$.
+            detall: |
+              $f(r\cos\varphi,r\sin\varphi)=\frac{r^3\cos^2\varphi\sin\varphi}{r^4\cos^4\varphi+r^2\sin^2\varphi}=\frac{r\cos^2\varphi\sin\varphi}{r^2\cos^4\varphi+\sin^2\varphi}$. Si $\sin\varphi\neq0$, el denominador tendeix a $\sin^2\varphi\neq0$ i el límit és $0$. Si $\sin\varphi=0$ ($\varphi=0,\pi,2\pi$), $f=0$ sobre l'eix $x$. Tots els límits radials valen $0$.
+            fuites: ['r\^\{?2\}?\s*\\cos\^\{?4\}?\s*\\?varphi\s*\+\s*\\sin\^\{?2\}?']
+            teoria: []
+          - id: corba
+            titol: "Provar corbes no rectes"
+            objectiu: |
+              Esbrinar si els límits radials determinen el límit doble, estudiant també camins cap a l'origen que no siguin rectes.
+            idea: |
+              Buscar camins on els dos sumands del denominador ($x^4$ i $y^2$) siguin del mateix ordre de magnitud.
+            detall: |
+              Sobre $y=x^2$: $f(x,x^2)=\frac{x^4}{2x^4}=\frac12$. En general, sobre $y=mx^2$: $f=\frac{m}{1+m^2}$, que depèn de $m$.
+            fuites: ['y\s*=\s*m?\s*x\^\{?2\}?', '\\[dt]?frac\{?m\}?\{?1\s*\+\s*m\^\{?2\}?\}?']
+            teoria: ["T2.10"]
+          - id: deduir
+            titol: "Deduir"
+            objectiu: |
+              Respondre què podem deduir sobre el límit doble.
+            idea: |
+              Si el límit doble existís, quin valor hauria de prendre sobre cada corba contínua que passa per l'origen?
+            detall: |
+              Si existís $\lim f=L$, per la proposició de límit per camins hauria de ser $L=0$ (eix $x$) i $L=\frac12$ (paràbola): contradicció. El límit doble no existeix. Els límits radials iguals només donen un candidat; aquí la convergència no és uniforme en $\varphi$ (per exemple, prenent $\sin\varphi=r\cos^2\varphi$ el valor és $\frac12$), i no es pot aplicar l'apartat (a).
+            fuites: []
+            teoria: ["T2.10", "T2.8"]
+        errors_comuns:
+          - id: radials_suficients
+            descripcio: |
+              Conclou que el límit doble val $0$ perquè tots els límits radials valen $0$.
+            pregunta: |
+              El resultat de l'apartat (a) demana una fita que depengui només de $r$. La teva expressió en polars admet una fita així, o depèn de l'angle d'una manera que es pot fer dolenta?
+          - id: oblida_sin_zero
+            descripcio: |
+              Divideix per $\sin^2\varphi$ sense tractar a part els angles en què $\sin\varphi=0$.
+            pregunta: |
+              Per a quins angles el denominador en polars s'anul·la quan $r=0$? Què val $f$ sobre aquestes semirectes?
+          - id: nomes_rectes
+            descripcio: |
+              Només prova rectes i no considera corbes adaptades al denominador.
+            pregunta: |
+              Quina relació entre $x$ i $y$ fa que $x^4$ i $y^2$ siguin comparables?
+        nota_professor: |
+          Exemple clàssic que mostra que els límits radials (fins i tot tots iguals) no garanteixen el límit doble.
+
+      - id: "t2-7c"
+        apartat: "c"
+        tipus: calcul
+        enunciat: |
+          Discutiu l'existència de $\displaystyle\lim_{(x,y)\to(0,0)}\frac{x^py^q}{x^2+y^2-xy}$, segons els valors de $p,q\in\mathbb{N}$.
+        teoria: ["T2.6"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            El denominador compleix $\frac12(x^2+y^2)\le x^2+y^2-xy\le\frac32(x^2+y^2)$ (en particular, només s'anul·la a l'origen).
+            - Si $p+q\ge3$: el límit existeix i val $0$, ja que $|f|\le2r^{p+q-2}\to0$.
+            - Si $p+q=2$: sobre $y=mx$ el quocient val $\frac{m^q}{1-m+m^2}$, que depèn de $m$; el límit no existeix.
+            - Si $p+q\le1$ (només si $0\in\mathbb{N}$): el quocient no és fitat a prop de l'origen (per exemple $p=q=0$ dona $+\infty$; $p=1,q=0$ dona $\frac1x$ sobre $y=0$); no hi ha límit finit.
+            Amb el conveni $\mathbb{N}=\{1,2,\dots\}$: el límit existeix (i val $0$) si i només si $(p,q)\neq(1,1)$.
+          fuites: ['p\s*\+\s*q\s*(\\ge|\\geq|≥)\s*3', 'p\s*\+\s*q\s*>\s*2', '\(p,\s*q\)\s*(\\neq|\\ne|≠)\s*\(1,\s*1\)']
+        passos:
+          - id: denominador
+            titol: "Comparar el denominador amb la norma"
+            objectiu: |
+              Trobar fites superior i inferior del denominador en termes de $x^2+y^2$.
+            idea: |
+              Fitar el terme creuat $xy$ en funció de $x^2+y^2$ (desigualtat elemental a partir d'un quadrat no negatiu).
+            detall: |
+              De $(|x|-|y|)^2\ge0$ surt $|xy|\le\frac{x^2+y^2}{2}$. Per tant $\frac12(x^2+y^2)\le x^2+y^2-xy\le\frac32(x^2+y^2)$: el denominador es comporta com $r^2$ i només s'anul·la a l'origen.
+            fuites: ['\|xy\|\s*(\\le|\\leq|≤)', '\\[dt]?frac\{?1\}?\{?2\}?\s*\(x\^\{?2\}?\s*\+\s*y\^\{?2\}?\)\s*(\\le|\\leq|≤)']
+            teoria: []
+          - id: grau_gran
+            titol: "Cas en què el numerador domina"
+            objectiu: |
+              Determinar per a quins $p,q$ el quocient tendeix a $0$ i demostrar-ho.
+            idea: |
+              Fitar el numerador per una potència de $r=\sqrt{x^2+y^2}$ i usar la fita inferior del denominador; després aplicar l'apartat (a) (fita que només depèn de $r$).
+            detall: |
+              $|x^py^q|\le r^{p+q}$, de manera que $\left|\frac{x^py^q}{x^2+y^2-xy}\right|\le\frac{r^{p+q}}{r^2/2}=2r^{p+q-2}$. Si $p+q\ge3$, aquesta fita tendeix a $0$ quan $r\to0^+$ i, per l'apartat (a), el límit és $0$.
+            fuites: ['2\s*r\^\{?p\s*\+\s*q\s*-\s*2\}?', 'p\s*\+\s*q\s*(\\ge|\\geq|≥)\s*3']
+            teoria: ["T2.6"]
+          - id: grau_petit
+            titol: "Casos sense límit"
+            objectiu: |
+              Estudiar els valors de $p,q$ restants i veure si hi ha límit.
+            idea: |
+              Provar les rectes $y=mx$ i mirar si el resultat depèn de $m$, o si el quocient no és fitat.
+            detall: |
+              Sobre $y=mx$: $\frac{m^qx^{p+q}}{x^2(1-m+m^2)}$ (notem $1-m+m^2>0$). Si $p+q=2$, el límit és $\frac{m^q}{1-m+m^2}$, que depèn de $m$: per $(1,1)$ val $0$ per $m=0$ i $1$ per $m=1$; si $0\in\mathbb{N}$, per $(2,0)$ val $1$ per $m=0$ i $\frac13$ per $m=2$, i per $(0,2)$ val $0$ per $m=0$ i $1$ per $m=1$. No hi ha límit. Si $p+q\le1$ (cas $0\in\mathbb{N}$), el valor absolut és $\ge\frac{|x|^p|y|^q}{\frac32 r^2}$ i sobre els eixos adequats val $\frac1{x}$, $\frac1{y}$ o $\frac{1}{x^2}$: no és fitat i no hi ha límit finit.
+            fuites: ['\\[dt]?frac\{m\^\{?q\}?\}\{1\s*-\s*m\s*\+\s*m\^\{?2\}?\}', 'm\^\{?q\}?\s*/\s*\(1\s*-\s*m']
+            teoria: ["T2.10"]
+        errors_comuns:
+          - id: denominador_zero
+            descripcio: |
+              Pensa que el denominador $x^2+y^2-xy$ es pot anul·lar fora de l'origen (o hi tracta com si pogués ser negatiu).
+            pregunta: |
+              Pots escriure $x^2+y^2-xy$ com una suma de quadrats o comparar-lo amb $x^2+y^2$? Pot ser zero si $(x,y)\neq(0,0)$?
+          - id: polars_sense_fita
+            descripcio: |
+              Passa a polars i obté $r^{p+q-2}\cdot\frac{\cos^p\varphi\sin^q\varphi}{1-\cos\varphi\sin\varphi}$ però no comprova que el factor angular és fitat.
+            pregunta: |
+              El factor que depèn de $\varphi$ pot fer-se arbitràriament gran per algun angle? Quin és el valor mínim de $1-\cos\varphi\sin\varphi$?
+          - id: cas_frontera
+            descripcio: |
+              Inclou el cas $p+q=2$ entre els que tenen límit $0$ (per exemple, pensa que $\frac{xy}{x^2+y^2-xy}$ tendeix a $0$).
+            pregunta: |
+              Quan el numerador i el denominador tenen el mateix grau, què passa amb el quocient sobre rectes de pendents diferents?
+        nota_professor: |
+          La resposta depèn del conveni sobre $\mathbb{N}$. Si $0\in\mathbb{N}$, també cal discutir $p+q\le1$ (no hi ha límit finit; per $p=q=0$ el quocient tendeix a $+\infty$). Si $\mathbb{N}=\{1,2,\dots\}$, l'únic cas sense límit és $p=q=1$.
+
+  - num: 8
+    font: null
+    preambul: |
+      Considerem les funcions
+      $$f(x,y)=\begin{cases}0 & \text{si } (x,y)=(0,0),\\ \dfrac{xy^2}{x^2+y^4} & \text{altrament,}\end{cases}\qquad g(x,y)=\begin{cases}0 & \text{si } (x,y)=(0,0),\\ \dfrac{xy^2}{x^2+y^6} & \text{altrament.}\end{cases}$$
+      Demostreu la veracitat o falsedat de les afirmacions següents:
+    indicacio: null
+    exercicis:
+      - id: "t2-8a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          Les restriccions de $f$ i $g$ a qualsevol recta de $\mathbb{R}^2$ són funcions contínues.
+        teoria: ["T2.14"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Cert. Sobre una recta que no passa per l'origen, $f$ i $g$ coincideixen amb quocients de polinomis amb denominador no nul, i la restricció (composició amb la parametrització afí de la recta) és contínua. Sobre $x=0$, $f=g=0$. Sobre $y=mx$: $f(x,mx)=\frac{m^2x}{1+m^4x^2}$ i $g(x,mx)=\frac{m^2x}{1+m^6x^4}$, expressions vàlides també per a $x=0$ i contínues.
+          fuites: ['afirmaci[óo]\s+(és\s+)?(certa|veritable|falsa)']
+        passos:
+          - id: rectes_sense_origen
+            titol: "Rectes que no passen per l'origen"
+            objectiu: |
+              Decidir si la restricció de $f$ i $g$ a una recta que no passa per $(0,0)$ és contínua.
+            idea: |
+              Fora de l'origen, $f$ i $g$ són quocients de polinomis; la restricció a una recta és la composició amb una parametrització de la recta.
+            detall: |
+              A $\mathbb{R}^2\setminus\{(0,0)\}$ els denominadors $x^2+y^4$ i $x^2+y^6$ no s'anul·len, així que $f$ i $g$ hi són contínues (àlgebra de funcions contínues). Si la recta és $\{p+tv\}$ i no passa per l'origen, $t\mapsto f(p+tv)$ és composició de funcions contínues.
+            fuites: []
+            teoria: ["T2.20", "T2.19"]
+          - id: rectes_origen
+            titol: "Rectes que passen per l'origen"
+            objectiu: |
+              Calcular explícitament la restricció de $f$ i de $g$ a cada recta per l'origen i estudiar-ne la continuïtat a $0$.
+            idea: |
+              Tractar a part la recta vertical; per a $y=mx$, simplificar la potència de $x$ comuna i comparar amb el valor a l'origen.
+            detall: |
+              Sobre $x=0$: $f(0,y)=g(0,y)=0$ per a tot $y$. Sobre $y=mx$, per a $x\neq0$: $f(x,mx)=\frac{m^2x^3}{x^2+m^4x^4}=\frac{m^2x}{1+m^4x^2}$ i $g(x,mx)=\frac{m^2x^3}{x^2+m^6x^6}=\frac{m^2x}{1+m^6x^4}$. Aquestes expressions valen $0$ per a $x=0$, que és el valor de $f$ i $g$ a l'origen; són quocients de polinomis amb denominador positiu, per tant contínues en tot $\mathbb{R}$.
+            fuites: ['1\s*\+\s*m\^\{?4\}?\s*x\^\{?2\}?', '1\s*\+\s*m\^\{?6\}?\s*x\^\{?4\}?']
+            teoria: ["T2.14"]
+        errors_comuns:
+          - id: confon_amb_continuitat
+            descripcio: |
+              Creu que, si les restriccions a totes les rectes són contínues, aleshores la funció és contínua (i viceversa, que si no és contínua alguna restricció ha de fallar).
+            pregunta: |
+              Que la funció sigui contínua sobre cada recta et diu alguna cosa sobre què passa sobre una paràbola?
+          - id: oblida_rectes_generals
+            descripcio: |
+              Només estudia les rectes per l'origen i oblida que l'enunciat parla de qualsevol recta.
+            pregunta: |
+              L'enunciat parla només de rectes que passen per $(0,0)$? Què passa amb una recta qualsevol del pla?
+        nota_professor: |
+          Prepara els apartats següents: les funcions són contínues sobre rectes però (c), (e) mostren que no ho són a l'origen.
+
+      - id: "t2-8b"
+        apartat: "b"
+        tipus: teoric
+        enunciat: |
+          $f$ és fitada a $\mathbb{R}^2$.
+        teoria: ["T1.33"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Cert: $2|x|y^2\le x^2+y^4$ (perquè $(|x|-y^2)^2\ge0$), d'on $|f(x,y)|\le\frac12$ per a tot $(x,y)\neq(0,0)$, i $f(0,0)=0$.
+          fuites: ['afirmaci[óo]\s+(és\s+)?(certa|veritable|falsa)', '\|f(\(x,\s*y\))?\|\s*(\\le|\\leq|≤)\s*(\\[dt]?frac\{?1\}?\{?2\}?|1/2)']
+        passos:
+          - id: desigualtat
+            titol: "Comparar numerador i denominador"
+            objectiu: |
+              Trobar una desigualtat que relacioni $|xy^2|$ amb $x^2+y^4$.
+            idea: |
+              Pensar en $|x|$ i $y^2$ com dos nombres no negatius $a,b$: quina relació hi ha entre $ab$ i $a^2+b^2$?
+            detall: |
+              $(|x|-y^2)^2\ge0$ dona $2|x|y^2\le x^2+y^4$.
+            fuites: ['\(\|x\|\s*-\s*y\^\{?2\}?\)\^\{?2\}?', '2\s*\|x\|\s*y\^\{?2\}?\s*(\\le|\\leq|≤)']
+            teoria: []
+          - id: concloure
+            titol: "Concloure la fita"
+            objectiu: |
+              Decidir si $|f|$ admet una fita vàlida a tot el pla.
+            idea: |
+              Dividir la desigualtat anterior pel denominador i no oblidar el valor a l'origen.
+            detall: |
+              Per a $(x,y)\neq(0,0)$: $|f(x,y)|=\frac{|x|y^2}{x^2+y^4}\le\frac12$, i $f(0,0)=0$. Per tant $f(\mathbb{R}^2)\subseteq[-\frac12,\frac12]$ i $f$ és fitada (la fita s'assoleix: $f(y^2,y)=\frac12$).
+            fuites: ['\\[dt]?frac\{\|x\|\s*y\^\{?2\}?\}\{x\^\{?2\}?\s*\+\s*y\^\{?4\}?\}\s*(\\le|\\leq|≤)', '\[-\s*\\[dt]?frac\{?1\}?\{?2\}?\s*,', '\|f(\(x,\s*y\))?\|\s*(\\le|\\leq|≤)\s*(\\[dt]?frac\{?1\}?\{?2\}?|1/2)']
+            teoria: ["T1.33"]
+        errors_comuns:
+          - id: nomes_rectes
+            descripcio: |
+              Argumenta la fitació només sobre rectes o camins concrets.
+            pregunta: |
+              Saber que $f$ és fitada sobre cada recta et dona una fita comuna per a tots els punts del pla?
+          - id: polars_dolent
+            descripcio: |
+              Passa a polars i obté una expressió que sembla no fitada, sense trobar la desigualtat adequada.
+            pregunta: |
+              En lloc de polars, pots comparar directament $|x|y^2$ amb $x^2+y^4$ pensant en un quadrat no negatiu?
+        nota_professor: |
+          Desigualtat clau: $2ab\le a^2+b^2$ amb $a=|x|$, $b=y^2$.
+
+      - id: "t2-8c"
+        apartat: "c"
+        tipus: teoric
+        enunciat: |
+          $f$ no és contínua a $(0,0)$.
+        teoria: ["T2.14"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Cert. Sobre la paràbola $x=y^2$ ($y\neq0$), $f(y^2,y)=\frac{y^4}{2y^4}=\frac12$, que no tendeix a $f(0,0)=0$. Per tant no es compleix $\lim_{(x,y)\to(0,0)}f(x,y)=f(0,0)$ i $f$ no és contínua a l'origen.
+          fuites: ['afirmaci[óo]\s+(és\s+)?(certa|veritable|falsa)']
+        passos:
+          - id: candidat
+            titol: "Candidat i rectes"
+            objectiu: |
+              Recordar què cal per a la continuïtat a l'origen i quin valor donen les rectes.
+            idea: |
+              Continuïtat vol dir que el límit existeix i coincideix amb $f(0,0)$; l'apartat (a) ja dona el comportament sobre rectes.
+            detall: |
+              $f(0,0)=0$ i, per (a), el límit sobre cada recta per l'origen és $0$. Això no prova la continuïtat; cal buscar altres camins.
+            fuites: []
+            teoria: ["T2.14"]
+          - id: cami
+            titol: "Un camí que dona un altre valor"
+            objectiu: |
+              Esbrinar si hi ha alguna corba per l'origen sobre la qual $f$ no tendeixi a $f(0,0)$.
+            idea: |
+              Escollir una relació entre $x$ i $y$ que faci comparables els dos sumands del denominador ($x^2$ i $y^4$); és la mateixa que fa la desigualtat de (b) una igualtat.
+            detall: |
+              Sobre $x=y^2$: $f(y^2,y)=\frac{y^2\cdot y^2}{y^4+y^4}=\frac12$ per a $y\neq0$. El límit sobre aquest camí és $\frac12\neq0$ (el camí és una gràfica $x=y^2$: s'aplica la proposició de límit per camins amb els papers de $x$ i $y$ intercanviats).
+            fuites: ['x\s*=\s*y\^\{?2\}?', 'f\(y\^\{?2\}?,\s*y\)']
+            teoria: ["T2.10"]
+          - id: concloure
+            titol: "Concloure"
+            objectiu: |
+              Decidir sobre la continuïtat a l'origen.
+            idea: |
+              Si el límit existís, quant hauria de valer sobre cada camí?
+            detall: |
+              Si existís el límit hauria de valer $0$ (rectes) i $\frac12$ (paràbola); no existeix. Per tant $f$ no és contínua a $(0,0)$.
+            fuites: []
+            teoria: ["T2.10", "T2.14"]
+        errors_comuns:
+          - id: rectes_suficients
+            descripcio: |
+              Com que totes les rectes donen $0$, conclou que $f$ és contínua a l'origen.
+            pregunta: |
+              Les rectes són les úniques maneres d'acostar-se a l'origen? Quina corba fa iguals d'ordre $x^2$ i $y^4$?
+          - id: fitada_implica_continua
+            descripcio: |
+              Pensa que, com que $f$ és fitada (apartat b), ha de ser contínua.
+            pregunta: |
+              Una funció fitada pot tenir límits diferents per camins diferents? Coneixes algun exemple en una variable?
+        nota_professor: |
+          El camí $x=y^2$ és exactament on la fita $\frac12$ de (b) s'assoleix. El camí és una gràfica $x=g(y)$; la proposició de límit per camins s'aplica intercanviant els papers de $x$ i $y$ (o bé amb la successió $(1/n^2,1/n)$).
+
+      - id: "t2-8d"
+        apartat: "d"
+        tipus: teoric
+        enunciat: |
+          $g$ no és fitada a qualsevol obert que contingui el punt $(0,0)$.
+        teoria: ["T1.11", "T1.33"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Cert. Sobre la corba $x=y^3$ ($y\neq0$), $g(y^3,y)=\frac{y^5}{y^6+y^6}=\frac{1}{2y}$, que no és fitat quan $y\to0$. Tot obert $V\ni(0,0)$ conté una bola $B((0,0),\varepsilon)$, i aquesta conté els punts $(y^3,y)$ per a $y>0$ prou petit; per tant $g$ no és fitada a $V$.
+          fuites: ['afirmaci[óo]\s+(és\s+)?(certa|veritable|falsa)']
+        passos:
+          - id: cami_no_fitat
+            titol: "Una corba on g explota"
+            objectiu: |
+              Esbrinar si hi ha alguna corba que acabi a l'origen sobre la qual $|g|$ es faci arbitràriament gran.
+            idea: |
+              Buscar una relació $x=y^k$ que faci comparables els sumands del denominador i deixi el numerador d'un ordre més baix.
+            detall: |
+              Sobre $x=y^3$: $g(y^3,y)=\frac{y^3y^2}{y^6+y^6}=\frac{1}{2y}$, que tendeix a $\pm\infty$ quan $y\to0^\pm$.
+            fuites: ['x\s*=\s*y\^\{?3\}?', '\\[dt]?frac\{1\}\{2\s*y\}', '1\s*/\s*\(2\s*y\)']
+            teoria: []
+          - id: qualsevol_obert
+            titol: "Qualsevol obert que contingui l'origen"
+            objectiu: |
+              Passar d'aquesta corba a la conclusió per a un obert arbitrari que contingui l'origen.
+            idea: |
+              Usar la definició d'obert: conté una bola centrada en cadascun dels seus punts.
+            detall: |
+              Si $V$ és obert i $(0,0)\in V$, existeix $\varepsilon>0$ amb $B((0,0),\varepsilon)\subseteq V$. Per a $0<y<\min(1,\varepsilon/\sqrt2)$, $\|(y^3,y)\|\le\sqrt2\,y<\varepsilon$, així que $(y^3,y)\in V$ i $|g(y^3,y)|=\frac{1}{2y}$, que supera qualsevol fita quan $y\to0^+$: $g$ no és fitada a $V$.
+            fuites: []
+            teoria: ["T1.11", "T1.33"]
+        errors_comuns:
+          - id: copia_f
+            descripcio: |
+              Usa la mateixa corba que per a $f$ ($x=y^2$) i conclou que $g$ és fitada.
+            pregunta: |
+              Amb el denominador $x^2+y^6$, quina potència de $y$ ha de ser $x$ perquè els dos sumands siguin del mateix ordre?
+          - id: un_sol_obert
+            descripcio: |
+              Mostra que $g$ no és fitada en un obert concret (per exemple tot $\mathbb{R}^2$) en lloc de qualsevol obert que contingui l'origen.
+            pregunta: |
+              El teu argument val per a un obert molt petit al voltant de l'origen? Què té en comú qualsevol obert que contingui $(0,0)$?
+        nota_professor: |
+          Equivalentment: $g$ no és fitada en cap entorn de l'origen, i en particular no és contínua a $(0,0)$ (cosa que s'usa a l'apartat (e)).
+
+      - id: "t2-8e"
+        apartat: "e"
+        tipus: teoric
+        enunciat: |
+          $g$ no és contínua a $\mathbb{R}^2$ però ho és a la regió
+          $$D_\delta=\left\{(r\cos\varphi,r\sin\varphi)\mid r\geqslant0,\ |\cos\varphi|>\delta\right\}\qquad(0<\delta<1).$$
+        teoria: ["T2.14", "T1.14"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Cert. $g$ no és contínua a l'origen (per (d), o perquè sobre $x=y^3$ val $\frac1{2y}$). Però $D_\delta=\{(0,0)\}\cup\{(x,y)\mid |x|>\delta\|(x,y)\|\}$ i, per a $(x,y)\in D_\delta\setminus\{(0,0)\}$, amb $r=\|(x,y)\|$: $|g(x,y)|\le\frac{|x|y^2}{x^2}=\frac{y^2}{|x|}<\frac{r^2}{\delta r}=\frac{r}{\delta}\to0$. Per tant el límit de $g|_{D_\delta}$ a l'origen és $0=g(0,0)$ i $g|_{D_\delta}$ és contínua a l'origen; als altres punts de $D_\delta$ ho és perquè $g$ ja és contínua a $\mathbb{R}^2\setminus\{(0,0)\}$.
+          fuites: ['afirmaci[óo]\s+(és\s+)?(certa|veritable|falsa)']
+        passos:
+          - id: no_continua
+            titol: "No continuïtat a tot el pla"
+            objectiu: |
+              Decidir si $g$ és contínua com a funció definida a tot $\mathbb{R}^2$.
+            idea: |
+              Aprofitar l'apartat (d): una funció contínua en un punt és fitada en algun entorn d'aquest punt.
+            detall: |
+              Si $g$ fos contínua a $(0,0)$, existiria $\rho>0$ amb $|g|<|g(0,0)|+1=1$ a $B((0,0),\rho)$, en contradicció amb (d). (Directament: sobre $x=y^3$, $g=\frac1{2y}\not\to0$.)
+            fuites: []
+            teoria: ["T2.14", "T2.6"]
+          - id: regio
+            titol: "Entendre la regió"
+            objectiu: |
+              Descriure $D_\delta$ en coordenades cartesianes i veure que l'origen hi és un punt d'acumulació.
+            idea: |
+              Traduir la condició sobre $\cos\varphi$ usant $x=r\cos\varphi$ i $r=\|(x,y)\|$.
+            detall: |
+              Per a $r>0$, $|\cos\varphi|>\delta$ equival a $|x|>\delta\|(x,y)\|$: és un parell de sectors angulars oberts al voltant de l'eix $x$ (que no toquen l'eix $y$). Amb $r=0$ s'obté l'origen. Els punts $(t,0)$, $t\neq0$, són a $D_\delta$, així que $(0,0)\in D_\delta'$.
+            fuites: []
+            teoria: ["T1.14"]
+          - id: fita
+            titol: "Fitar g dins la regió"
+            objectiu: |
+              Esbrinar si $|g|$ admet a $D_\delta\setminus\{(0,0)\}$ una fita que només depengui de $r$ i tendeixi a $0$ amb $r$.
+            idea: |
+              Dins la regió, $|x|$ és comparable a $r$; eliminar un sumand del denominador i usar aquesta comparació.
+            detall: |
+              $|g(x,y)|=\frac{|x|y^2}{x^2+y^6}\le\frac{|x|y^2}{x^2}=\frac{y^2}{|x|}<\frac{r^2}{\delta r}=\frac{r}{\delta}$.
+            fuites: ['\\[dt]?frac\{r\}\{\\delta\}', 'r\s*/\s*\\delta', '\\[dt]?frac\{y\^\{?2\}?\}\{\|x\|\}']
+            teoria: []
+          - id: concloure
+            titol: "Concloure la continuïtat a la regió"
+            objectiu: |
+              Decidir si la restricció $g|_{D_\delta}$ és contínua a tots els punts de $D_\delta$.
+            idea: |
+              Aplicar la definició de continuïtat a la funció restringida, separant l'origen dels altres punts.
+            detall: |
+              Per la fita anterior, el límit de $g|_{D_\delta}$ quan $(x,y)\to(0,0)$ és $0=g(0,0)$, de manera que $g|_{D_\delta}$ és contínua a l'origen. Als altres punts de $D_\delta$, $g$ és contínua (quocient de polinomis amb denominador no nul), i per tant també ho és la restricció.
+            fuites: []
+            teoria: ["T2.14", "T2.20"]
+        errors_comuns:
+          - id: confon_restriccio
+            descripcio: |
+              Entén "contínua a $D_\delta$" com que $g$, definida a tot $\mathbb{R}^2$, és contínua a cada punt de $D_\delta$, i conclou que és fals perquè l'origen hi pertany.
+            pregunta: |
+              Quan diem que una funció és contínua en un conjunt $\Omega$, quins punts es fan servir a la definició de límit?
+          - id: fita_sense_delta
+            descripcio: |
+              Fita $|g|$ sense usar la condició $|x|>\delta r$, i obté una fita que no tendeix a $0$.
+            pregunta: |
+              On has fet servir la condició que defineix la regió? Què et diu sobre la mida de $|x|$ comparada amb $r$?
+          - id: oblida_origen_regio
+            descripcio: |
+              No s'adona que l'origen pertany a $D_\delta$ (amb $r=0$) i només estudia punts amb $r>0$.
+            pregunta: |
+              Quin punt s'obté prenent $r=0$ a la definició de $D_\delta$? Cal estudiar-hi la continuïtat?
+        nota_professor: |
+          La regió exclou un con al voltant de l'eix $y$, precisament on viuen les corbes $x=y^3$ que fan explotar $g$. "No és contínua a $\mathbb{R}^2$" s'ha d'entendre com "no és contínua en algun punt de $\mathbb{R}^2$" (l'origen).
+
+  - num: 9
+    font: null
+    preambul: |
+      Considereu la funció $F:\mathbb{R}^2\to\mathbb{R}^2$ que té components
+      $$F_1(x,y)=\begin{cases}\dfrac{xy}{(x^2+y^2)^{1/2}} & \text{si } (x,y)\neq(0,0),\\ 0 & \text{si } (x,y)=(0,0),\end{cases}\qquad F_2(x,y)=\begin{cases}\dfrac{x}{x+y^2} & \text{si } x\neq-y^2,\\ 0 & \text{si } x=-y^2.\end{cases}$$
+    indicacio: null
+    exercicis:
+      - id: "t2-9a"
+        apartat: "a"
+        tipus: calcul
+        enunciat: |
+          Estudieu la continuïtat de $F$ i proveu que el seu conjunt de punts de discontinuïtat és tancat.
+        teoria: ["T2.14", "T1.11"]
+        teoria_reservada: ["T2.11"]
+        resultat:
+          valor: |
+            $F_1$ és contínua a tot $\mathbb{R}^2$ (a l'origen, $|F_1|\le\frac12\sqrt{x^2+y^2}\to0$). $F_2$ és contínua a $\{x+y^2\neq0\}$ i discontínua a tots els punts de la paràbola $P=\{(x,y)\mid x+y^2=0\}$: als punts $(a,b)\in P$ diferents de l'origen no és fitada a prop (numerador $\to a\neq0$, denominador $\to0$), i a l'origen val $1$ sobre $y=0$ i $0$ sobre $x=0$. Per tant $F$ és contínua exactament a $\mathbb{R}^2\setminus P$, i el conjunt de discontinuïtats és $P=h^{-1}(\{0\})$ amb $h(x,y)=x+y^2$ contínua: és tancat.
+          fuites: ['discontinu\w*\s+(a|en)\s+(tots\s+els\s+punts\s+de\s+)?la\s+par[àa]bola', 'conjunt\s+de\s+(punts\s+de\s+)?discontinu\w*\s+(és|=)\s+(la\s+par[àa]bola|\$?P\b)']
+        passos:
+          - id: components
+            titol: "Reduir a les components"
+            objectiu: |
+              Relacionar la continuïtat de $F$ amb la de les seves components.
+            idea: |
+              Un límit a $\mathbb{R}^2$ existeix si i només si existeixen els límits de cada component.
+            detall: |
+              $F$ és contínua en un punt si i només si $F_1$ i $F_2$ ho són: si les components tenen límit, $F$ també (àlgebra de límits), i recíprocament $|F_i(x)-L_i|\le\|F(x)-L\|$. El conjunt de discontinuïtats de $F$ és la unió dels de $F_1$ i $F_2$.
+            fuites: []
+            teoria: ["T2.9", "T2.14"]
+          - id: F1
+            titol: "Continuïtat de la primera component"
+            objectiu: |
+              Estudiar la continuïtat de $F_1$, en particular a l'origen.
+            idea: |
+              Fora de l'origen és un quocient de funcions contínues; a l'origen, fitar $|xy|$ en termes de $x^2+y^2$.
+            detall: |
+              A $\mathbb{R}^2\setminus\{(0,0)\}$, $F_1$ és quocient de funcions contínues ($xy$ i la norma) amb denominador no nul. A l'origen: $|xy|\le\frac{x^2+y^2}{2}$, d'on $|F_1(x,y)|\le\frac12\sqrt{x^2+y^2}\to0=F_1(0,0)$. $F_1$ és contínua a tot $\mathbb{R}^2$.
+            fuites: ['\|xy\|\s*(\\le|\\leq|≤)', '\\[dt]?frac\{?1\}?\{?2\}?\s*\\sqrt\{x\^\{?2\}?\s*\+\s*y\^\{?2\}?\}']
+            teoria: ["T2.20", "T2.14"]
+          - id: F2
+            titol: "Continuïtat de la segona component"
+            objectiu: |
+              Determinar en quins punts $F_2$ és contínua i en quins no.
+            idea: |
+              Separar els punts on el denominador no s'anul·la dels punts on sí; en aquests últims, mirar si el numerador també s'anul·la i provar camins.
+            detall: |
+              Sigui $P=\{x+y^2=0\}$. A $\mathbb{R}^2\setminus P$ (obert), $F_2$ coincideix amb el quocient $\frac{x}{x+y^2}$ de polinomis amb denominador no nul: contínua. Si $(a,b)\in P$ i $(a,b)\neq(0,0)$, aleshores $a=-b^2\neq0$ i $F_2(a+t,b)=\frac{a+t}{t}$ per a $t\neq0$, que no és fitat quan $t\to0$: discontínua. A l'origen: $F_2(x,0)=1$ per a $x\neq0$ i $F_2(0,y)=0$ per a $y\neq0$; no hi ha límit: discontínua.
+            fuites: ['\\[dt]?frac\{a\s*\+\s*t\}\{t\}', '\(a\s*\+\s*t\)\s*/\s*t']
+            teoria: ["T2.20", "T2.10", "T2.14"]
+          - id: tancat
+            titol: "El conjunt de discontinuïtats és tancat"
+            objectiu: |
+              Demostrar que el conjunt de punts de discontinuïtat obtingut és tancat.
+            idea: |
+              Escriure'l com l'antiimatge d'un tancat per una funció contínua definida a tot $\mathbb{R}^2$.
+            detall: |
+              El conjunt de discontinuïtats de $F$ és $P=\{(x,y)\mid x+y^2=0\}=h^{-1}(\{0\})$ amb $h(x,y)=x+y^2$ polinòmica, contínua a $\mathbb{R}^2$. Com que $\{0\}$ és tancat a $\mathbb{R}$, $P$ és tancat (caracterització de la continuïtat amb tancats). Alternativament, $\mathbb{R}^2\setminus P=\{h>0\}\cup\{h<0\}$ és unió d'oberts.
+            fuites: []
+            teoria: ["T2.17", "T2.18"]
+        errors_comuns:
+          - id: origen_continua_F2
+            descripcio: |
+              Pensa que a l'origen $F_2$ és contínua perquè el numerador també s'anul·la, o només comprova un camí.
+            pregunta: |
+              Què val $F_2$ sobre l'eix $x$ (fora de l'origen)? I sobre l'eix $y$? Coincideixen?
+          - id: nomes_origen
+            descripcio: |
+              Només estudia l'origen i oblida els altres punts de la corba on s'anul·la el denominador.
+            pregunta: |
+              On s'anul·la el denominador de $F_2$? Són només punts aïllats?
+          - id: tancat_sense_justificar
+            descripcio: |
+              Afirma que el conjunt és tancat "perquè és una corba" sense cap justificació.
+            pregunta: |
+              Pots escriure aquest conjunt com el conjunt de punts on una funció contínua pren un valor concret? Què en saps, d'aquests conjunts?
+        nota_professor: |
+          La component $F_1$ és contínua; tota la discontinuïtat ve de $F_2$, que és la funció de l'Exemple 11 dels apunts (amb els papers de $x,y$ intercanviats) i del problema 5(d).
+
+      - id: "t2-9b"
+        apartat: "b"
+        tipus: teoric
+        enunciat: |
+          Proveu que $F\left(\left\{(x,y)\in\mathbb{R}^2\mid(x-2)^2+y^2\leqslant1\right\}\right)$ és compacte.
+        teoria: ["T1.24"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Sigui $K=\{(x-2)^2+y^2\le1\}$, la bola tancada de centre $(2,0)$ i radi $1$: és tancada i fitada, i per Heine-Borel és compacta. Per a $(x,y)\in K$, $x\in[1,3]$, així que $x+y^2\ge1>0$: $K$ no talla la paràbola de discontinuïtats de l'apartat (a), i $F$ és contínua a tots els punts de $K$ (per tant $F|_K$ és contínua). La imatge contínua d'un compacte és compacta: $F(K)$ és compacte.
+          fuites: []
+        passos:
+          - id: K_compacte
+            titol: "El conjunt és compacte"
+            objectiu: |
+              Veure que el conjunt $K$ de l'enunciat és compacte.
+            idea: |
+              Identificar $K$ geomètricament i usar la caracterització dels compactes de $\mathbb{R}^n$.
+            detall: |
+              $K=\overline{B}((2,0),1)$ és una bola tancada, per tant tancada, i és fitada ($K\subseteq B((2,0),2)$). Per Heine-Borel, $K$ és compacte.
+            fuites: []
+            teoria: ["T1.13", "T1.33", "T1.34"]
+          - id: evita_discontinuitats
+            titol: "F és contínua sobre K"
+            objectiu: |
+              Comprovar que $F$ és contínua en tots els punts de $K$.
+            idea: |
+              Usar l'apartat (a): cal veure que $K$ no conté cap punt de discontinuïtat, mirant el rang de valors de $x$ a $K$.
+            detall: |
+              Si $(x,y)\in K$, $(x-2)^2\le1$, és a dir $x\in[1,3]$, i llavors $x+y^2\ge1>0$. Així $K$ no talla $\{x+y^2=0\}$ i, per (a), $F$ és contínua a cada punt de $K$; en particular la restricció $F|_K$ és contínua.
+            fuites: ['x\s*\+\s*y\^\{?2\}?\s*(\\ge|\\geq|≥)\s*1', 'x\s*\\in\s*\[\s*1\s*,\s*3\s*\]']
+            teoria: ["T2.14"]
+          - id: imatge
+            titol: "Imatge contínua d'un compacte"
+            objectiu: |
+              Concloure que $F(K)$ és compacte.
+            idea: |
+              Aplicar el resultat sobre la imatge d'un compacte per una funció contínua.
+            detall: |
+              $F|_K:K\to\mathbb{R}^2$ és contínua i $K$ és compacte; per la proposició d'imatge contínua de compactes, $F(K)$ és compacte.
+            fuites: []
+            teoria: ["T2.21"]
+        errors_comuns:
+          - id: F_no_continua
+            descripcio: |
+              Argumenta que no es pot aplicar el resultat perquè $F$ no és contínua a $\mathbb{R}^2$.
+            pregunta: |
+              El resultat sobre imatges de compactes necessita la continuïtat a tot el pla, o només als punts del compacte?
+          - id: compacte_sense_justificar
+            descripcio: |
+              Diu que $K$ és compacte sense justificar-ho, o només diu que és tancat (o només fitat).
+            pregunta: |
+              Quines dues propietats caracteritzen els compactes de $\mathbb{R}^n$? Les has comprovat totes dues?
+          - id: antiimatge
+            descripcio: |
+              Confon imatge i antiimatge: intenta usar que l'antiimatge d'un compacte és compacta.
+            pregunta: |
+              El resultat que coneixes parla de $F(K)$ o de $F^{-1}(K)$? Quin dels dos et demanen?
+        nota_professor: |
+          Clau: el disc és a la regió $x\ge1$, lluny de la paràbola $x=-y^2$.
+
+  - num: 10
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t2-10"
+        apartat: null
+        tipus: calcul
+        enunciat: |
+          Estudieu la continuïtat a $\mathbb{R}^2$ de la funció
+          $$f(x,y)=\begin{cases}\dfrac{x^3y}{x^2+y^2-1} & \text{si } x^2+y^2-1\neq0\\ 0 & \text{si } x^2+y^2-1=0.\end{cases}$$
+        teoria: ["T2.14"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $f$ és contínua a $\mathbb{R}^2\setminus S$, on $S=\{x^2+y^2=1\}$, i discontínua a tots els punts de $S$. Si $(a,b)\in S$ amb $ab\neq0$, el numerador tendeix a $a^3b\neq0$ i el denominador a $0$ ($f$ no és fitada a prop). Als quatre punts $(\pm1,0)$, $(0,\pm1)$, on el numerador s'anul·la, tampoc no és contínua: $f(\pm1,y)=\pm\frac1y$ i, sobre $y=\pm\sqrt{1-x^2+x^4}$, $f=\frac{y}{x}$, no fitada.
+          fuites: ['discontinu\w*\s+(a|en)\s+tots\s+(els\s+)?punts\s+de\s+la\s+circumfer', 'cont[íi]nua\s+(exactament\s+)?(a|en)\s+\$\\mathbb\{R\}\^\{?2\}?\s*\\setminus\s*S', 'discontinu\w*\s+(a|en)\s+tots\s+(els\s+)?punts\s+de\s+\$?S\b']
+        passos:
+          - id: fora_cercle
+            titol: "Fora de la circumferència"
+            objectiu: |
+              Estudiar la continuïtat als punts on el denominador no s'anul·la.
+            idea: |
+              Aquests punts formen un obert on $f$ coincideix amb un quocient de polinomis.
+            detall: |
+              $U=\{x^2+y^2\neq1\}$ és obert (unió de $\{x^2+y^2<1\}$ i $\{x^2+y^2>1\}$) i a $U$ la funció és un quocient de polinomis amb denominador no nul: $f$ és contínua a cada punt de $U$.
+            fuites: []
+            teoria: ["T2.18", "T2.20"]
+          - id: punts_generics
+            titol: "Punts de la circumferència amb numerador no nul"
+            objectiu: |
+              Estudiar la continuïtat als punts $(a,b)$ de la circumferència on el numerador no s'anul·la.
+            idea: |
+              Comparar a què tendeixen el numerador i el denominador a prop d'aquests punts, i triar un camí concret cap al punt (que no vagi per sobre la circumferència) per fer-ho explícit.
+            detall: |
+              Si $a^2+b^2=1$ i $ab\neq0$, prenem $(x,y)=(1+t)(a,b)$, $t\to0$, $t\neq0$: $f=\frac{(1+t)^4a^3b}{(1+t)^2-1}=\frac{(1+t)^4a^3b}{t(2+t)}$, que no és fitat. $f$ no és contínua a $(a,b)$.
+            fuites: ['\(1\s*\+\s*t\)\^\{?2\}?\s*-\s*1', 't\s*\(2\s*\+\s*t\)']
+            teoria: ["T2.10", "T2.14"]
+          - id: punts_especials
+            titol: "Els quatre punts on el numerador s'anul·la"
+            objectiu: |
+              Estudiar la continuïtat als punts de la circumferència on també s'anul·la el numerador.
+            idea: |
+              Són $(\pm1,0)$ i $(0,\pm1)$. Busca camins cap a aquests punts sobre els quals el denominador sigui molt més petit que el numerador.
+            detall: |
+              A $(1,0)$: $f(1,y)=\frac{y}{1+y^2-1}=\frac{1}{y}$ per a $y\neq0$, no fitat (anàlogament a $(-1,0)$, $f(-1,y)=-\frac1y$). A $(0,1)$: sobre $y=\sqrt{1-x^2+x^4}$ (que tendeix a $1$) el denominador val $x^4$ i $f=\frac{x^3y}{x^4}=\frac{y}{x}$, no fitat quan $x\to0$ (anàlogament a $(0,-1)$ amb $y=-\sqrt{1-x^2+x^4}$). $f$ no és contínua en cap d'aquests punts.
+            fuites: ['\\[dt]?frac\{1\}\{y\}', '1\s*/\s*y', '1\s*-\s*x\^\{?2\}?\s*\+\s*x\^\{?4\}?', 'f\(\s*(\\pm\s*)?-?1\s*,\s*y\s*\)', '\\[dt]?frac\{y\}\{x\}']
+            teoria: ["T2.10", "T2.14"]
+          - id: conclusio
+            titol: "Conclusió"
+            objectiu: |
+              Resumir on és contínua $f$.
+            idea: |
+              Ajuntar els tres casos.
+            detall: |
+              $f$ és contínua exactament a $\{x^2+y^2\neq1\}$ i discontínua a tots els punts de la circumferència unitat.
+            fuites: []
+            teoria: ["T2.14"]
+        errors_comuns:
+          - id: especials_continus
+            descripcio: |
+              Conclou que als punts $(\pm1,0)$, $(0,\pm1)$ la funció és contínua perquè el numerador s'hi anul·la (o perquè sobre la circumferència i sobre rectes radials val $0$).
+            pregunta: |
+              Que numerador i denominador s'anul·lin al mateix punt decideix el límit? Pots acostar-te a $(1,0)$ per un camí on el denominador sigui molt més petit que el numerador?
+          - id: nomes_circumferencia
+            descripcio: |
+              Estudia el límit només movent-se per sobre la circumferència (on $f=0$) i conclou continuïtat.
+            pregunta: |
+              Per estudiar el límit en un punt de la circumferència, n'hi ha prou amb punts de la circumferència?
+          - id: fora_sense_justificar
+            descripcio: |
+              No justifica la continuïtat fora de la circumferència o no s'adona que cal que el conjunt sigui obert.
+            pregunta: |
+              Per què el fet que $f$ coincideixi amb un quocient de polinomis prop d'un punt n'assegura la continuïtat? Quina propietat del conjunt $\{x^2+y^2\neq1\}$ fas servir?
+        nota_professor: |
+          Atenció: és temptador (i erroni) concloure que $f$ és contínua als quatre punts $(\pm1,0)$, $(0,\pm1)$. El numerador s'hi anul·la només com $|y|$ o $|x|^3$, mentre que el denominador pot fer-se arbitràriament petit: el quocient no és fitat. Comprovat: $f(1,y)=1/y$; a $(0,1)$, $f\left(x,\sqrt{1-x^2+x^4}\right)=\sqrt{1-x^2+x^4}/x$.
+
+  - num: 11
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t2-11"
+        apartat: null
+        tipus: calcul
+        enunciat: |
+          Estudieu la continuïtat de la funció $f:\mathbb{R}^2\to\mathbb{R}$ definida per
+          $$f(x,y)=\frac{(x-1)^3y^2}{(x-1)^4+y^4},\quad\text{si }(x,y)\neq(1,0)\ \text{ i }\ f(1,0)=0.$$
+        teoria: ["T2.14"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $f$ és contínua a tot $\mathbb{R}^2$. Fora de $(1,0)$ és un quocient de polinomis amb denominador no nul. A $(1,0)$, amb $u=x-1$: $u^2y^2\le\frac{u^4+y^4}{2}$, d'on $|f(x,y)|\le\frac{|u|}{2}=\frac{|x-1|}{2}\to0=f(1,0)$.
+          fuites: ['cont[íi]nua\s+(a|en)\s+tot\s+\$?\\mathbb\{R\}', '(és\s+)?(també\s+)?cont[íi]nua\s+(a|en)\s+(el\s+punt\s+)?\$\(1,\s*0\)\$']
+        passos:
+          - id: fora
+            titol: "Fora del punt (1,0)"
+            objectiu: |
+              Estudiar la continuïtat als punts diferents de $(1,0)$.
+            idea: |
+              Mirar on s'anul·la el denominador i usar l'àlgebra de funcions contínues.
+            detall: |
+              $(x-1)^4+y^4=0$ només si $(x,y)=(1,0)$. A l'obert $\mathbb{R}^2\setminus\{(1,0)\}$, $f$ és quocient de polinomis amb denominador no nul: contínua.
+            fuites: []
+            teoria: ["T2.20"]
+          - id: fita
+            titol: "Fitar a prop de (1,0)"
+            objectiu: |
+              Trobar una fita de $|f(x,y)-f(1,0)|$ que tendeixi a $0$ quan $(x,y)\to(1,0)$.
+            idea: |
+              Traslladar el punt a l'origen ($u=x-1$) i comparar el producte $u^2y^2$ amb la suma $u^4+y^4$.
+            detall: |
+              Amb $u=x-1$: de $(u^2-y^2)^2\ge0$ surt $u^2y^2\le\frac{u^4+y^4}{2}$, i llavors $|f|=\frac{|u|\,u^2y^2}{u^4+y^4}\le\frac{|u|}{2}=\frac{|x-1|}{2}$.
+            fuites: ['\\frac\{\|u\|\}\{2\}', '\\frac\{\|x\s*-\s*1\|\}\{2\}', 'u\^\{?2\}?\s*y\^\{?2\}?\s*(\\le|\\leq|≤)']
+            teoria: []
+          - id: concloure
+            titol: "Concloure"
+            objectiu: |
+              Decidir la continuïtat al punt $(1,0)$ i donar la conclusió global.
+            idea: |
+              Criteri del sandvitx amb la fita trobada i definició de continuïtat.
+            detall: |
+              $0\le|f(x,y)|\le\frac{|x-1|}{2}\to0$, per tant $\lim_{(x,y)\to(1,0)}f(x,y)=0=f(1,0)$. La funció és contínua a $(1,0)$ i, per tant, a tot $\mathbb{R}^2$.
+            fuites: []
+            teoria: ["T2.6", "T2.14"]
+        errors_comuns:
+          - id: camins_com_a_prova
+            descripcio: |
+              Prova rectes $y=m(x-1)$ (totes donen $0$) i conclou la continuïtat sense una fita.
+            pregunta: |
+              Que totes les rectes que passen per $(1,0)$ donin el mateix valor, demostra que el límit existeix?
+          - id: grau_igual
+            descripcio: |
+              Pensa que, com que numerador i denominador tenen grau $5$ i $4$ en "variables barrejades", el límit no existeix (confonent amb el cas $\frac{u^2y^2}{u^4+y^4}$).
+            pregunta: |
+              El quocient $\frac{u^2y^2}{u^4+y^4}$ és fitat? Què passa quan el multipliques per $u$?
+        nota_professor: |
+          Es pot fer també en polars centrades a $(1,0)$: $|f|=r\frac{|\cos^3\varphi|\sin^2\varphi}{\cos^4\varphi+\sin^4\varphi}\le r\cdot\frac{1}{1/2}$, fita uniforme en $\varphi$ (perquè $\cos^4\varphi+\sin^4\varphi\ge\frac12$).
+
+  - num: 12
+    font: null
+    preambul: |
+      Considerem la funció $f:\mathbb{R}^2\to\mathbb{R}$ definida per
+      $$f(x,y)=\begin{cases}\dfrac{x^2+y^2}{x+y} & \text{si } x+y\neq0,\\ 0 & \text{si } x+y=0.\end{cases}$$
+    indicacio: null
+    exercicis:
+      - id: "t2-12a"
+        apartat: "a"
+        tipus: calcul
+        enunciat: |
+          Estudieu la continuïtat de $f$ en $\mathbb{R}^2\setminus\{(0,0)\}$.
+        teoria: ["T2.14"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            A $\mathbb{R}^2\setminus\{(0,0)\}$, $f$ és contínua exactament als punts amb $x+y\neq0$ i discontínua a tots els punts $(a,-a)$ amb $a\neq0$: allà el numerador tendeix a $2a^2\neq0$ i el denominador a $0$, de manera que $f$ no és fitada a prop (per exemple $f(a+t,-a)=\frac{(a+t)^2+a^2}{t}$).
+          fuites: ['discontinu\w*\s+(a|en)\s+(tots\s+)?(els\s+)?punts\s+(de\s+la\s+recta\s+)?\$?(x\s*\+\s*y\s*=\s*0|\(a,\s*-\s*a\))']
+        passos:
+          - id: fora_recta
+            titol: "Fora de la recta x+y=0"
+            objectiu: |
+              Estudiar la continuïtat als punts on el denominador no s'anul·la.
+            idea: |
+              Aquests punts formen un obert on $f$ és quocient de polinomis.
+            detall: |
+              $\{x+y\neq0\}=\{x+y>0\}\cup\{x+y<0\}$ és obert i hi $f=\frac{x^2+y^2}{x+y}$, quocient de polinomis amb denominador no nul: contínua.
+            fuites: []
+            teoria: ["T2.18", "T2.20"]
+          - id: sobre_recta
+            titol: "Sobre la recta, fora de l'origen"
+            objectiu: |
+              Estudiar la continuïtat als punts $(a,-a)$ amb $a\neq0$.
+            idea: |
+              Mirar cap a on tendeixen numerador i denominador i buscar un camí que ho faci explícit.
+            detall: |
+              A $(a,-a)$, $a\neq0$, el numerador tendeix a $2a^2\neq0$ i el denominador a $0$. Sobre el camí $(a+t,-a)$: $f=\frac{(a+t)^2+a^2}{t}$, que no és fitat quan $t\to0$. $f$ no té límit a $(a,-a)$: discontínua.
+            fuites: ['2\s*a\^\{?2\}?\s*(\\neq|\\ne|≠)\s*0', '\\[dt]?frac\{\(a\s*\+\s*t\)\^\{?2\}?\s*\+\s*a\^\{?2\}?\}\{t\}']
+            teoria: ["T2.10", "T2.14"]
+        errors_comuns:
+          - id: valor_definit
+            descripcio: |
+              Pensa que, com que $f$ està definida com $0$ sobre la recta, és contínua allà.
+            pregunta: |
+              Per a la continuïtat a $(a,-a)$, n'hi ha prou amb saber el valor de $f$ en aquest punt? Què passa amb els valors de $f$ als punts propers fora de la recta?
+          - id: nomes_sobre_recta
+            descripcio: |
+              Calcula el límit només movent-se sobre la recta $x+y=0$ (on $f=0$).
+            pregunta: |
+              Quins punts propers a $(a,-a)$ no són a la recta? Què val $f$ en aquests?
+        nota_professor: |
+          L'origen s'exclou expressament perquè allà el numerador també s'anul·la; es tracta a (c).
+
+      - id: "t2-12b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          Escriviu les equacions de les corbes de nivell $0$, $2$ i $-2$ de $f$. Dibuixeu-les.
+        teoria: ["T2.4"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            - $C_0$: la recta $x+y=0$ (incloent-hi l'origen); fora d'ella el numerador $x^2+y^2$ no s'anul·la.
+            - $C_2$: $(x-1)^2+(y-1)^2=2$ menys l'origen; circumferència de centre $(1,1)$ i radi $\sqrt2$, sense el punt $(0,0)$.
+            - $C_{-2}$: $(x+1)^2+(y+1)^2=2$ menys l'origen; circumferència de centre $(-1,-1)$ i radi $\sqrt2$, sense $(0,0)$.
+            Totes dues circumferències passen per l'origen i hi són tangents a la recta $x+y=0$.
+          fuites: ['\(x\s*-\s*1\)\^\{?2\}?\s*\+\s*\(y\s*-\s*1\)\^\{?2\}?', '\(x\s*\+\s*1\)\^\{?2\}?\s*\+\s*\(y\s*\+\s*1\)\^\{?2\}?', 'centre\s+\$?\(\s*-?1\s*,\s*-?1\s*\)']
+        passos:
+          - id: nivell0
+            titol: "Corba de nivell 0"
+            objectiu: |
+              Determinar el conjunt de punts on $f$ val $0$.
+            idea: |
+              Separar els punts on $f$ es defineix pel quocient dels punts on es defineix com $0$.
+            detall: |
+              Si $x+y\neq0$, $f=0$ exigeix $x^2+y^2=0$, és a dir $(0,0)$, que no compleix $x+y\neq0$. Per tant $C_0=\{x+y=0\}$: és tota la recta $y=-x$.
+            fuites: ['C_\{?0\}?\s*=\s*\\\{\s*x\s*\+\s*y\s*=\s*0', 'tota\s+la\s+recta']
+            teoria: ["T2.4"]
+          - id: nivell_k
+            titol: "Corbes de nivell 2 i -2"
+            objectiu: |
+              Escriure les equacions de $C_2$ i $C_{-2}$ i identificar-les.
+            idea: |
+              Plantejar $x^2+y^2=k(x+y)$ amb $x+y\neq0$ i completar quadrats; comprovar quins punts de la corba obtinguda no compleixen $x+y\neq0$.
+            detall: |
+              $x^2+y^2=2(x+y)\iff(x-1)^2+(y-1)^2=2$: circumferència de centre $(1,1)$ i radi $\sqrt2$. La intersecció amb $x+y=0$: $(x-1)^2+(x+1)^2=2\iff x=0$, és a dir, només l'origen, que cal treure. Anàlogament $x^2+y^2=-2(x+y)\iff(x+1)^2+(y+1)^2=2$, centre $(-1,-1)$, radi $\sqrt2$, sense l'origen.
+            fuites: ['\(x\s*-\s*1\)\^\{?2\}?\s*\+\s*\(y\s*-\s*1\)\^\{?2\}?', '\(x\s*\+\s*1\)\^\{?2\}?\s*\+\s*\(y\s*\+\s*1\)\^\{?2\}?']
+            teoria: ["T2.4"]
+          - id: dibuix
+            titol: "Dibuix"
+            objectiu: |
+              Dibuixar les tres corbes i observar com es disposen a prop de l'origen.
+            idea: |
+              Situar centres i radis i mirar per quin punt passen totes.
+            detall: |
+              Les dues circumferències són simètriques respecte de l'origen, passen per $(0,0)$ (on hi ha un forat) i en aquest punt són tangents a la recta $x+y=0$ (el radi des de $(1,1)$ fins a $(0,0)$ és perpendicular a la recta). En general, $C_k$ ($k\neq0$) és la circumferència de centre $(\frac k2,\frac k2)$ i radi $\frac{|k|}{\sqrt2}$ menys l'origen.
+            fuites: []
+            teoria: []
+        errors_comuns:
+          - id: oblida_forat
+            descripcio: |
+              No treu l'origen de les circumferències (on $f$ val $0$ per definició).
+            pregunta: |
+              Quant val $f$ a l'origen? Pot ser aquest punt a la corba de nivell $2$?
+          - id: nivell0_buit
+            descripcio: |
+              Diu que $C_0$ és buit o només l'origen, perquè $x^2+y^2=0$ només a l'origen, oblidant la definició a trossos.
+            pregunta: |
+              On val $f$ zero per definició, independentment del quocient?
+          - id: quadrats
+            descripcio: |
+              S'equivoca completant quadrats (radi $2$ en lloc de $\sqrt2$, o centre mal situat).
+            pregunta: |
+              Si desenvolupes la teva equació de la circumferència, recuperes exactament $x^2+y^2-2x-2y=0$?
+        nota_professor: |
+          Les corbes de nivell $k\neq0$ són totes circumferències que passen per l'origen; això prepara l'apartat (c).
+
+      - id: "t2-12c"
+        apartat: "c"
+        tipus: calcul
+        enunciat: |
+          Utilitzeu l'apartat anterior per deduir si $f$ és contínua en $(0,0)$.
+        teoria: ["T2.14"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            No és contínua a l'origen. $f(0,0)=0$, però $C_2$ (circumferència de centre $(1,1)$ i radi $\sqrt2$ sense l'origen) s'acosta a $(0,0)$: sobre aquesta corba $f$ val constantment $2$, i per tant el límit per aquest camí és $2\neq0$. (Igualment $C_{-2}$ dona $-2$.) El límit a l'origen no existeix.
+          fuites: ['no\s+(és\s+)?cont[íi]nua\s+(a|en)\s+(l.origen|\$\(0,\s*0\)\$)', 'discontinu\w*\s+(a|en)\s+(l.origen|\$\(0,\s*0\)\$)']
+        passos:
+          - id: corbes_origen
+            titol: "Les corbes de nivell passen per l'origen"
+            objectiu: |
+              Assumint l'apartat (b), observar quines corbes de nivell s'acosten a l'origen.
+            idea: |
+              Mirar el dibuix de (b): per quin punt passen totes les corbes de nivell?
+            detall: |
+              Les corbes $C_2$ i $C_{-2}$ (i en general totes les $C_k$) tenen l'origen com a punt d'acumulació: en tot entorn de $(0,0)$ hi ha punts on $f=2$ i punts on $f=-2$, a més dels de la recta on $f=0$.
+            fuites: []
+            teoria: ["T2.4"]
+          - id: concloure
+            titol: "Concloure"
+            objectiu: |
+              Deduir si existeix el límit a l'origen i si coincideix amb $f(0,0)$.
+            idea: |
+              Calcular el límit de $f$ seguint una corba de nivell que acabi a l'origen.
+            detall: |
+              Prop de l'origen, $C_2$ és la gràfica $y=1-\sqrt{2-(x-1)^2}$ (contínua, val $0$ a $x=0$), i per a $x\neq0$ petit $f$ hi val constantment $2$: el límit per aquest camí és $2$. Sobre la recta $x+y=0$ el límit és $0$. No existeix el límit, i en particular $f$ no és contínua a $(0,0)$.
+            fuites: ['1\s*-\s*\\sqrt\{2\s*-\s*\(x\s*-\s*1\)\^\{?2\}?\}', 'constantment\s+\$?-?2']
+            teoria: ["T2.10", "T2.14"]
+        errors_comuns:
+          - id: fitat_continu
+            descripcio: |
+              Calcula límits sobre rectes $y=mx$ ($m\neq-1$), obté $0$ i conclou que $f$ és contínua a l'origen.
+            pregunta: |
+              Les corbes de nivell que has dibuixat a (b), per on passen? Quin valor pren $f$ sobre elles?
+          - id: forat
+            descripcio: |
+              Argumenta que, com que l'origen no és a $C_2$, aquesta corba no diu res sobre l'origen.
+            pregunta: |
+              Per estudiar un límit a $(0,0)$, importa el valor de $f$ al punt, o els valors als punts propers?
+        nota_professor: |
+          Bona il·lustració: si totes les corbes de nivell passen per un punt, la funció no pot tenir límit allà (llevat que sigui constant). Les rectes $y=mx$ ($m\neq-1$) donen $\frac{(1+m^2)x}{1+m}\to0$, que és enganyós.

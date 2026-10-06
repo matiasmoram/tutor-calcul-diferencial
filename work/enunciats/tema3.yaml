@@ -1,0 +1,319 @@
+tema: 3
+titol: "Diferenciabilitat"
+problemes:
+  - num: 1
+    font: null
+    preambul: |
+      Calculeu les derivades parcials de les funcions següents en un punt arbitrari del seu domini:
+    apartats:
+      - lletra: a
+        text: |
+          $u(x,y)=\dfrac{x^2+y^2}{x^2-y^2}$;
+      - lletra: b
+        text: |
+          $h(x,y,z)=\left(\sqrt{1-y^2-z^2},\sqrt{1-z^2-x^2},\sqrt{1-x^2-y^2}\right)$;
+      - lletra: c
+        text: |
+          $v(x_1,\ldots,x_n)=\displaystyle\sum_{i=1}^n x_i+\sum_{i=1}^n x_i^2$.
+    indicacio: null
+
+  - num: 2
+    font: null
+    preambul: |
+      Donada $f(x,y)=y+x^{(\log x)(\arctan(\sin(\cos xy)))}$, calculeu $\dfrac{\partial f}{\partial y}(1,1)$.
+    apartats: []
+    indicacio: null
+
+  - num: 3
+    font: null
+    preambul: |
+      Trobeu totes les derivades direccionals a l'origen de
+      $$f(x,y)=\begin{cases}\dfrac{x^2y}{x^2+y^2} & \text{si } (x,y)\neq(0,0)\\ 0 & \text{si } (x,y)=(0,0).\end{cases}$$
+    apartats: []
+    indicacio: null
+
+  - num: 4
+    font: null
+    preambul: |
+      Trobeu totes les direccions respecte de les quals les funcions següents tenen derivades direccionals a l'origen:
+      $$f(x,y)=\begin{cases}\dfrac{2xy}{x^2+y^2} & \text{si } (x,y)\neq(0,0)\\ 1 & \text{si } (x,y)=(0,0)\end{cases},\qquad g(x,y)=\begin{cases}\dfrac{x^3}{x^2+y^2} & \text{si } (x,y)\neq(0,0)\\ 0 & \text{si } (x,y)=(0,0).\end{cases}$$
+    apartats: []
+    indicacio: null
+
+  - num: 5
+    font: null
+    preambul: |
+      Estudieu la continuïtat i l'existència de derivades direccionals a $\mathbb{R}^2$ de la funció
+      $$f(x,y)=\begin{cases}\dfrac{x^2}{y} & \text{si } y\neq0\\ 0 & \text{si } y=0.\end{cases}$$
+    apartats: []
+    indicacio: null
+
+  - num: 6
+    font: null
+    preambul: |
+      Sigui $f:\mathbb{R}^2\longrightarrow\mathbb{R}$ una funció diferenciable en $(0,0)$ tal que $f(x,y)=f(y,x)$ per tot $(x,y)\in\mathbb{R}^2$ i $Df(0,0)\neq0$. Determineu el nucli de $Df(0,0)$.
+    apartats: []
+    indicacio: null
+
+  - num: 7
+    font: null
+    preambul: |
+      Estudieu la continuïtat i la diferenciabilitat de la funció
+      $$f(x,y)=\begin{cases}\dfrac{x|y|}{\sqrt{x^2+y^2}} & \text{si } (x,y)\neq(0,0)\\ 0 & \text{si } (x,y)=(0,0).\end{cases}$$
+    apartats: []
+    indicacio: null
+
+  - num: 8
+    font: null
+    preambul: |
+      Raoneu si la funció
+      $$f(x,y)=\begin{cases}\dfrac{(x+y)^2}{x^2+y^2} & \text{si } (x,y)\neq(0,0)\\ 1 & \text{si } (x,y)=(0,0).\end{cases}$$
+      és contínua, si té derivades parcials i si és diferenciable.
+    apartats: []
+    indicacio: null
+
+  - num: 9
+    font: null
+    preambul: |
+      Estudieu la continuïtat, l'existència de derivades direccionals, i la diferenciabilitat de la funció $f(x,y)=x^{1/3}y^{1/3}$, definida a $\mathbb{R}^2$.
+    apartats: []
+    indicacio: null
+
+  - num: 10
+    font: null
+    preambul: |
+      Sigui $D\subseteq\mathbb{R}^2$ obert i $f:D\to\mathbb{R}$ tal que les seves derivades parcials existeixen i estan fitades en $D$. Demostreu que $f(x,y)$ és contínua en $D$. És cert a $\mathbb{R}^m$, per $m>2$?
+    apartats: []
+    indicacio: |
+      per a provar que $f(x_n,y_n)\to f(x,y)$ per a tota successió $(x_n,y_n)$ que tendeixi a $(x,y)$, sumeu i resteu $f(x_n,y)$ a $|f(x_n,y_n)-f(x,y)|$, apliqueu la desigualtat triangular i fiteu els termes obtinguts.
+
+  - num: 11
+    font: null
+    preambul: null
+    apartats:
+      - lletra: a
+        text: |
+          Considerem la funció $f(x,y)=\log(x+y+1)+\displaystyle\int_0^x y\cos t^2\,dt$. Justifiqueu que és diferenciable en el seu domini, calculeu-ne la diferencial en el punt $(0,0)$, i useu-la per calcular un valor aproximat de $f(0.03,0.02)$.
+      - lletra: b
+        text: |
+          Considerem la funció $f(x,y)=(\arctan(x^2y)+2y,\ \log(4x+y^2)-x)$. Justifiqueu que és diferenciable en el seu domini, calculeu-ne la diferencial en el punt $(0,1)$, i useu-la per calcular un valor aproximat de $f(-0.1,1.2)$.
+    indicacio: null
+
+  - num: 12
+    font: null
+    preambul: |
+      Considerem la funció $f(x,y)=(xy^{3/2},\ x^{3/2}-y^2)$. Justifiqueu que és diferenciable en un entorn del punt $(4,1)$, calculeu l'aproximació lineal de $f$ en el punt $(4,1)$, i useu-la per calcular una aproximació de $f(4.2,1.1)$.
+    apartats: []
+    indicacio: null
+
+  - num: 13
+    font: null
+    preambul: |
+      Calculeu un valor aproximat de $\sqrt{3+e^{-0.1}\cos0.05+5\sin0.05}$.
+    apartats: []
+    indicacio: null
+
+  - num: 14
+    font: null
+    preambul: |
+      Calculeu les derivades direccionals de les funcions següents en els punts i direccions que s'indiquen:
+    apartats:
+      - lletra: a
+        text: |
+          $f(x,y)=\log\left(\sqrt{x^2+y^2}\right)$, $a=(1,0)$, $\mathbf{v}=(2,1)$;
+      - lletra: b
+        text: |
+          $f(x,y)=e^x\cos(\pi y)$, $a=(0,-1)$, $\mathbf{v}=(-1,2)$.
+    indicacio: null
+
+  - num: 15
+    font: null
+    preambul: |
+      Justifiqueu l'existència d'hiperplà tangent a les gràfiques de les funcions següents en el punt $(a,f(a))$ i calculeu-lo:
+    apartats:
+      - lletra: a
+        text: |
+          $f(x,y,z)=y\arcsin(x\log y)+2^{x/y}$, $a=(0,1,2)$;
+      - lletra: b
+        text: |
+          $f(x,y,z)=xy^2+y^2z^3+xz^3$, $a=(4,-2,-1)$;
+      - lletra: c
+        text: |
+          $f(x,y,z)=x^{yz}$, $a=(e,e,0)$.
+    indicacio: null
+
+  - num: 16
+    font: null
+    preambul: |
+      Calculeu tots els punts de $\mathbb{R}^2$ on la gràfica de la funció $f(x,y)=(1-\sin x)\,y+y^3$ té pla tangent paral·lel al pla $XY$. Escriviu també l'equació d'aquests plans tangents.
+    apartats: []
+    indicacio: null
+
+  - num: 17
+    font: null
+    preambul: |
+      Estudieu la continuïtat, l'existència de les derivades direccionals i la diferenciabilitat de la funció $f(x,y)=e^{\sqrt{|xy|}}$, definida a $\mathbb{R}^2$.
+    apartats: []
+    indicacio: null
+
+  - num: 18
+    font: null
+    preambul: |
+      Considerem el conjunt $A=\{(x,y)\in\mathbb{R}^2\mid0<y<x^2\}$ i la funció
+      $$f(x,y)=\begin{cases}0 & \text{si } (x,y)\in A\\ 1 & \text{altrament.}\end{cases}$$
+      Proveu que existeixen i tenen el mateix valor totes les derivades direccionals a l'origen, però la funció no hi és diferenciable.
+    apartats: []
+    indicacio: null
+
+  - num: 19
+    font: null
+    preambul: |
+      Considerem $g(x,y)=f(x,y)+x+2y$, on $f(x,y)$ és la funció de l'exercici anterior. Calculeu les derivades parcials de $g(x,y)$ a l'origen. Comproveu que, usant la matriu de les derivades parcials, no se satisfà la condició de diferenciabilitat a l'origen. És $z=x+2y+1$ el pla tangent a la gràfica de la funció $g(x,y)$?
+    apartats: []
+    indicacio: null
+
+  - num: 20
+    font: null
+    preambul: |
+      Calculeu les derivades parcials de la funció $f(x,y,z)=g(u(x,y,z),v(x,y,z))$, on $g(u,v)=uv^2+\sin(uv)$, $u(x,y,z)=xe^y$ i $v(x,y,z)=xy-z$.
+    apartats: []
+    indicacio: null
+
+  - num: 21
+    font: null
+    preambul: |
+      Calculeu les derivades parcials $D_1F$, $D_2F$ de les funcions compostes següents:
+    apartats:
+      - lletra: a
+        text: |
+          $F=f\circ g$, amb $f(x,y,z)=x^2y+y^2z-xyz$, $g(u,v)=(u+v,u-v,u)$.
+      - lletra: b
+        text: |
+          $F=f\circ g$, amb $f(x,y)=\dfrac{x+y}{1-xy}$, $g(u,v)=(\tan u,\tan v)$.
+    indicacio: null
+
+  - num: 22
+    font: null
+    preambul: |
+      Calculeu, si existeix, la derivada en el punt zero de la funció $(f\circ\gamma)(t)$, on
+      $$f(x,y)=\begin{cases}\dfrac{x^2y}{x^2+y^2} & \text{si } (x,y)\neq(0,0),\\ 0 & \text{si } (x,y)=(0,0).\end{cases}$$
+      i $\gamma(t)=(t,t)$, $\forall t\in\mathbb{R}$. Raoneu si es pot obtenir el resultat aplicant la regla de la cadena.
+    apartats: []
+    indicacio: null
+
+  - num: 23
+    font: null
+    preambul: |
+      Considerem la funció $f(x,y)=(\sin(y\log x),(y\log x)^2)$ definida a $D=\{(x,y)\in\mathbb{R}^2:x>0\}$. Determineu dues funcions $g:\mathbb{R}\to\mathbb{R}^2$ i $h:D\to\mathbb{R}$ tals que $f=g\circ h$ i useu la regla de la cadena per calcular $Df(x,y)$.
+    apartats: []
+    indicacio: null
+
+  - num: 24
+    font: null
+    preambul: |
+      Sigui $f:\mathbb{R}\to\mathbb{R}$ diferenciable. Proveu que la funció $\varphi(x,y)=f(2x+3y)$, definida en $\mathbb{R}^2$, satisfà l'equació en derivades parcials $3\dfrac{\partial\varphi}{\partial x}-2\dfrac{\partial\varphi}{\partial y}=0$.
+    apartats: []
+    indicacio: null
+
+  - num: 25
+    font: null
+    preambul: |
+      Sigui $G$ la funció que dona el canvi de variables a coordenades polars:
+      $$\begin{aligned}G:\mathbb{R}^+\times(0,2\pi)\subset\mathbb{R}^2&\to\mathbb{R}^2\\(r,\varphi)&\mapsto(r\cos\varphi,r\sin\varphi).\end{aligned}$$
+    apartats:
+      - lletra: a
+        text: |
+          Si $f:\mathbb{R}^2\to\mathbb{R}$ és una funció de classe $\mathcal{C}^1$, obteniu les relacions entre les derivades parcials primeres en els dos sistemes de coordenades; és a dir, si $F=f\circ G$, demostreu que:
+          $$\frac{\partial F}{\partial r}=\frac{\partial f}{\partial x}\cos\varphi+\frac{\partial f}{\partial y}\sin\varphi,\qquad\frac{\partial F}{\partial\varphi}=-\frac{\partial f}{\partial x}r\sin\varphi+\frac{\partial f}{\partial y}r\cos\varphi,$$
+          $$\frac{\partial f}{\partial x}=\frac{\partial F}{\partial r}\frac{x}{\sqrt{x^2+y^2}}-\frac{\partial F}{\partial\varphi}\frac{y}{x^2+y^2},\qquad\frac{\partial f}{\partial y}=\frac{\partial F}{\partial r}\frac{y}{\sqrt{x^2+y^2}}+\frac{\partial F}{\partial\varphi}\frac{x}{x^2+y^2}.$$
+      - lletra: b
+        text: |
+          Sigui $f:\mathbb{R}^2\to\mathbb{R}^2$ una funció de classe $\mathcal{C}^1$, $f(x,y)=(f_1(x,y),f_2(x,y))$, i $F=f\circ G$, amb $F=(F_1,F_2)=(f_1\circ G,f_2\circ G)$. Si
+          $$\frac{\partial f_1}{\partial x}=\frac{\partial f_2}{\partial y},\qquad\frac{\partial f_1}{\partial y}=-\frac{\partial f_2}{\partial x},$$
+          proveu que
+          $$\frac{\partial F_1}{\partial r}=\frac{1}{r}\frac{\partial F_2}{\partial\varphi},\qquad\frac{\partial F_1}{\partial\varphi}=-r\frac{\partial F_2}{\partial r}.$$
+    indicacio: null
+
+  - num: 26
+    font: null
+    preambul: |
+      Considereu la funció
+      $$f(x,y)=\begin{cases}2(x^2+y^2)\sin\left(\dfrac{1}{\sqrt{x^2+y^2}}\right) & \text{si } (x,y)\neq(0,0)\\ 0 & \text{si } (x,y)=(0,0).\end{cases}$$
+    apartats:
+      - lletra: a
+        text: |
+          Proveu que existeixen les derivades parcials de $f$, però que no són contínues a $(0,0)$.
+      - lletra: b
+        text: |
+          Proveu que $f$ és diferenciable en tot el seu domini.
+    indicacio: null
+
+  - num: 27
+    font: null
+    preambul: |
+      Considerem la funció
+      $$f(x,y)=\begin{cases}xy^2\sin\left(\dfrac{1}{y}\right) & \text{si } y\neq0,\\ 0 & \text{si } y=0.\end{cases}$$
+    apartats:
+      - lletra: a
+        text: |
+          Estudieu la diferenciabilitat de $f$ a $\mathbb{R}^2$.
+      - lletra: b
+        text: |
+          Trobeu un obert $U\subseteq\mathbb{R}^2$ maximal tal que $f\in\mathcal{C}^1(U)$.
+    indicacio: null
+
+  - num: 28
+    font: null
+    preambul: |
+      Donats $f:\mathbb{R}^n\to\mathbb{R}$ de classe $\mathcal{C}^1$ i $x_0\in\mathbb{R}^n$ tal que $f(x_0)=0$ i $Df(x_0)\neq0$, trobeu un vector $v$ de $\mathbb{R}^n$ tal que la funció $\phi(t)=f(x_0+tv)$ sigui creixent en un entorn de l'origen.
+    apartats: []
+    indicacio: null
+
+  - num: 29
+    font: null
+    preambul: |
+      Considerem la funció $f(x,y)=\displaystyle\int_y^x e^{xyt}\,dt$. Calculeu $\dfrac{\partial f}{\partial x}$ i $\dfrac{\partial f}{\partial y}$ usant la fórmula de Leibniz. Comproveu el resultat calculant primer la integral i derivant després.
+    apartats: []
+    indicacio: null
+
+  - num: 30
+    font: null
+    preambul: |
+      Donada $f:\mathbb{R}\to\mathbb{R}$ contínua, comproveu que la funció $\varphi(x)=\displaystyle\int_0^x f(\xi)\sin(x-\xi)\,d\xi$ satisfà l'equació $\varphi''(x)+\varphi(x)=f(x)$, per a tot $x\in\mathbb{R}$.
+    apartats: []
+    indicacio: null
+
+  - num: 31
+    font: null
+    preambul: |
+      Sigui $F:\mathbb{R}\to\mathbb{R}^2$ definida per $F(t)=(t^2,t^3)$. Existeix algun valor $t_0\in(0,1)$ tal que $F(1)-F(0)=DF(t_0)\cdot(1-0)$? Contradiu això el teorema del valor mitjà?
+    apartats: []
+    indicacio: null
+
+  - num: 32
+    font: null
+    preambul: |
+      Sigui $f\in\mathcal{C}^1(\mathbb{R}^2)$ tal que $f(x,x)=0$ per tot $x\in\mathbb{R}$ i $\dfrac{\partial f}{\partial x}(0,0)=1$. Determineu $\mathbf{v}$ (de norma 1) de manera que $D_{\mathbf{v}}f(0,0)$ sigui màxima.
+    apartats: []
+    indicacio: null
+
+  - num: 33
+    font: null
+    preambul: |
+      Sigui $M_2(\mathbb{R})$ el conjunt de matrius quadrades $2\times2$ amb coeficients reals, que identifiquem amb $\mathbb{R}^4$ mitjançant l'aplicació $F:M_2(\mathbb{R})\longrightarrow\mathbb{R}^4$ donada per
+      $$F\begin{pmatrix}a&c\\b&d\end{pmatrix}=(a,b,c,d)^T$$
+      Considerem l'aplicació $\det:M_2(\mathbb{R})\longrightarrow\mathbb{R}$, que associa a cada matriu el seu determinant.
+    apartats:
+      - lletra: a
+        text: |
+          Demostreu que $\det$ és diferenciable.
+      - lletra: b
+        text: |
+          Calculeu la diferencial de $\det$ en $I$.
+      - lletra: c
+        text: |
+          Calculeu la derivada direccional de $\det$ en el punt $I$ i en la direcció $v=\begin{pmatrix}0&-1\\1&0\end{pmatrix}$.
+      - lletra: d
+        text: |
+          En quina direcció és màxima la derivada direccional de $\det$ en el punt $P=\begin{pmatrix}0&-1\\1&0\end{pmatrix}$?
+    indicacio: null

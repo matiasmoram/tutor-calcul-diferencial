@@ -1,0 +1,66 @@
+{
+  "id": "d545a4e56669",
+  "exercici": "T3.23",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Siguin $f,g:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}$ diferenciables en $a\\in\\mathring{\\Omega}$ i sigui $\\lambda\\in\\mathbb{R}$. Llavors: (i) $f+g$ és diferenciable en $a$ i $D(f+g)(a)=Df(a)+Dg(a)$; (ii) $\\lambda f$ és diferenciable en $a$ i $D(\\lambda f)(a)=\\lambda Df(a)$.",
+    "(iii) $fg$ és diferenciable en $a$ i $J(fg)(a)=g(a)Jf(a)+f(a)Jg(a)$; (iv) si $g(a)\\neq0$, $\\dfrac{f}{g}$ és diferenciable en $a$ i, a més, $J\\left(\\dfrac{f}{g}\\right)(a)=\\dfrac{g(a)Jf(a)-f(a)Jg(a)}{g(a)}$.",
+    "Farem la demostració de l'afirmació (i); la resta es basen en idees similars i queden com a exercici. Cal veure que, fixat $\\varepsilon>0$, existeix $\\delta=\\delta(\\varepsilon)>0$ tal que si $x\\in\\Omega$ i $0<\\|x-a\\|<\\delta$, aleshores $|(f+g)(x)-(f+g)(a)-D(f+g)(a)(x-a)|<\\varepsilon\\|x-a\\|$, on $D(f+g)(a)$ és una aplicació lineal.",
+    "Definim $D(f+g)(a)$ com l'aplicació lineal de $\\mathbb{R}^n$ a $\\mathbb{R}$ que té matriu associada, en les bases canòniques, $J(f+g)(a)=Jf(a)+Jg(a)$.",
+    "Com que $f$ i $g$ són diferenciables en $a$, existeixen $\\delta_1,\\delta_2>0$ tals que si $x\\in\\Omega$ i $0<\\|x-a\\|<\\delta_1$, llavors $|f(x)-f(a)-Jf(a)(x-a)|<\\frac{\\varepsilon}{2}\\|x-a\\|$, i si $x\\in\\Omega$ i $0<\\|x-a\\|<\\delta_2$, llavors $|g(x)-g(a)-Jg(a)(x-a)|<\\frac{\\varepsilon}{2}\\|x-a\\|$.",
+    "Prenem $\\delta=\\max\\{\\delta_1,\\delta_2\\}$ i sigui $x\\in\\Omega$ amb $0<\\|x-a\\|<\\delta$.",
+    "Per la desigualtat triangular, $|(f+g)(x)-(f+g)(a)-(Jf(a)+Jg(a))(x-a)|\\leq|f(x)-f(a)-Jf(a)(x-a)|+|g(x)-g(a)-Jg(a)(x-a)|<\\frac{\\varepsilon}{2}\\|x-a\\|+\\frac{\\varepsilon}{2}\\|x-a\\|=\\varepsilon\\|x-a\\|$, i per tant $f+g$ és diferenciable en $a$ amb $D(f+g)(a)=Df(a)+Dg(a)$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$J\\left(\\dfrac{f}{g}\\right)(a)=\\dfrac{g(a)Jf(a)-f(a)Jg(a)}{g(a)}$",
+      "inici": 139,
+      "fi": 204,
+      "tipus": "calcul",
+      "explicacio": "El denominador de la regla del quocient és $g(a)^2$, no $g(a)$. Contraexemple: $n=1$, $f=1$, $g(x)=x$, $a=2$: $(1/x)'(2)=-\\frac14$, però la fórmula dona $-\\frac12$.",
+      "correccio": "$J\\left(\\frac{f}{g}\\right)(a)=\\frac{g(a)Jf(a)-f(a)Jg(a)}{g(a)^2}$.",
+      "pista": "Comprova la fórmula amb un exemple d'una variable, com ara $1/x$. Quin denominador surt?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "Prenem $\\delta=\\max\\{\\delta_1,\\delta_2\\}$",
+      "inici": 0,
+      "fi": 41,
+      "tipus": "pas_injustificat",
+      "explicacio": "Amb el màxim, un $x$ amb $\\|x-a\\|<\\delta$ pot no complir $\\|x-a\\|<\\delta_1$ o $\\|x-a\\|<\\delta_2$, i aleshores no es poden usar les dues fites alhora.",
+      "correccio": "Cal prendre $\\delta\\leq\\min\\{\\delta_1,\\delta_2\\}$ (als apunts, $\\delta<\\min\\{\\delta_1,\\delta_2\\}$).",
+      "pista": "Per poder aplicar simultàniament les dues fites, quina condició ha de complir $\\|x-a\\|$ respecte de $\\delta_1$ i de $\\delta_2$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t3.json",
+    "valoracio": "Error al denominador de (iv) i $\\delta$ definit com a màxim, que invalida la fita final.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "\\dfrac{g(a)Jf(a)-f(a)Jg(a)}{g(a)}",
+        "gravetat": "error",
+        "explicacio": "El denominador de la jacobiana del quocient és $g(a)^2$, no $g(a)$."
+      },
+      {
+        "fragment": 6,
+        "cita": "$\\delta=\\max\\{\\delta_1,\\delta_2\\}$",
+        "gravetat": "error",
+        "explicacio": "Cal $\\delta\\leq\\min\\{\\delta_1,\\delta_2\\}$ perquè valguin simultàniament les dues fites; amb el màxim, una d'elles pot no valer."
+      },
+      {
+        "fragment": 7,
+        "cita": "<\\frac{\\varepsilon}{2}\\|x-a\\|+\\frac{\\varepsilon}{2}\\|x-a\\|",
+        "gravetat": "consequencia",
+        "explicacio": "La fita és la dels apunts, però amb $\\delta=\\max$ no està garantit que $\\|x-a\\|<\\delta_1$ i $\\|x-a\\|<\\delta_2$ alhora."
+      }
+    ]
+  },
+  "creat": 1791296233.744986
+}

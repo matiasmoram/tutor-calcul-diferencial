@@ -1,0 +1,66 @@
+{
+  "id": "ad10e82a62cf",
+  "exercici": "t1-8e",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Si $y\\geq0$, la condició és $y=5-x^2$ (amb $x^2\\leq5$); si $y<0$, és $y=x^2-5$ (amb $x^2<5$). Així $E$ és la unió de dos arcs de paràbola que s'uneixen als punts $(\\pm\\sqrt5,0)$: una corba tancada i fitada.",
+    "Interior: sigui $p=(x_0,y_0)\\in E$ (llavors $p\\neq(0,0)$) i $r>0$. Per a $s>1$, $s^2x_0^2+s|y_0|>x_0^2+|y_0|=5$, de manera que $sp\\notin E$, i $\\|sp-p\\|=(s-1)\\|p\\|<r$ si $s$ és prou proper a $1$. Per tant cap punt de $E$ és interior: $\\mathring{E}=\\varnothing$.",
+    "Adherència: com que $E$ és fitat ($|x|\\leq\\sqrt5$ i $|y|\\leq5$), és un conjunt tancat, i per tant $\\overline{E}=E$.",
+    "Frontera: tota bola centrada en un punt de $E$ conté aquest punt i, com que $\\mathring{E}=\\varnothing$, també punts de $E^c$; i els punts de fora de $E$ són exteriors, perquè $E^c$ és obert. Per tant $\\mathrm{Fr}\\,E=E$.",
+    "Punts d'acumulació: sigui $p=(x_0,y_0)\\in E$. Prenem $x_n=(1-\\frac1n)x_0$, que compleix $x_n\\to x_0$, $x_n\\neq x_0$ i $x_n^2<5$. Si $y_0\\geq0$, posem $p_n=(x_n,5-x_n^2)$, i si $y_0<0$, $p_n=(x_n,x_n^2-5)$.",
+    "En tots dos casos $p_n\\in E$, $p_n\\neq p$ i $p_n\\to p$, així que $p\\in E'$. Com que $E'\\subseteq\\overline{E}=E$, obtenim $E'=E$.",
+    "Finalment, $\\overline{E}=E$, de manera que $E$ és tancat, i $\\mathring{E}=\\varnothing\\neq E$, de manera que no és obert."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "com que $E$ és fitat ($|x|\\leq\\sqrt5$ i $|y|\\leq5$), és un conjunt tancat",
+      "inici": 12,
+      "fi": 85,
+      "tipus": "logica",
+      "explicacio": "Ser fitat no implica ser tancat (per exemple, una bola oberta és fitada i no és tancada). La conclusió és certa, però la justificació no.",
+      "correccio": "$E=f^{-1}(\\{5\\})$ amb $f(x,y)=x^2+|y|$ contínua i $\\{5\\}$ tancat, per tant $E$ és tancat i $\\overline{E}=E$.",
+      "pista": "Coneixes algun conjunt fitat que no sigui tancat? Quina propietat de $f(x,y)=x^2+|y|$ podries usar?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "Prenem $x_n=(1-\\frac1n)x_0$, que compleix $x_n\\to x_0$, $x_n\\neq x_0$",
+      "inici": 46,
+      "fi": 115,
+      "tipus": "logica",
+      "explicacio": "Si $x_0=0$ (punts $(0,\\pm5)$ de $E$), aleshores $x_n=0=x_0$ per a tot $n$ i $p_n=p$: la successió no té termes diferents de $p$. Aquest cas queda sense tractar.",
+      "correccio": "Prendre $x_n=(1-\\frac1n)x_0$ si $x_0\\neq0$ i $x_n=\\frac1n$ si $x_0=0$; en tots dos casos $x_n\\to x_0$, $x_n\\neq x_0$ i $x_n^2<5$ per a $n\\geq3$.",
+      "pista": "Què passa amb $x_n$ si el punt és $(0,5)$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t12.json",
+    "valoracio": "El tancament de E es justifica amb un argument fals (fitat implica tancat) i la successió per a E' no serveix als punts (0,±5).",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "com que $E$ és fitat ($|x|\\leq\\sqrt5$ i $|y|\\leq5$), és un conjunt tancat",
+        "gravetat": "error",
+        "explicacio": "Ser fitat no implica ser tancat. Cal justificar-ho com $E=f^{-1}(\\{5\\})$ amb $f(x,y)=x^2+|y|$ contínua."
+      },
+      {
+        "fragment": 5,
+        "cita": "Prenem $x_n=(1-\\frac1n)x_0$, que compleix $x_n\\to x_0$, $x_n\\neq x_0$",
+        "gravetat": "error",
+        "explicacio": "Si $x_0=0$ (punts $(0,\\pm5)\\in E$), $x_n=0=x_0$ i $p_n=p$; cal tractar aquest cas a part (p. ex. $x_n=\\frac1n$)."
+      },
+      {
+        "fragment": 6,
+        "cita": "En tots dos casos $p_n\\in E$, $p_n\\neq p$",
+        "gravetat": "consequencia",
+        "explicacio": "$p_n\\neq p$ falla als punts amb $x_0=0$ per la tria de $x_n$ anterior."
+      }
+    ]
+  },
+  "creat": 1791295812.8882813
+}

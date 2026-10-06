@@ -1,0 +1,59 @@
+{
+  "id": "8fb43ae8a262",
+  "exercici": "t6-8",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Les derivades $f_x=1-2x$ i $f_y=-2y$ s'anul·len només a $\\left(\\frac12,0\\right)$, que és del disc perquè $\\frac14<1$; hi val $f\\left(\\frac12,0\\right)=\\frac12-\\frac14=\\frac14$.",
+    "Completant quadrats, $f(x,y)=\\frac14-\\left(x-\\frac12\\right)^2-y^2\\leq\\frac14$, amb igualtat només a $\\left(\\frac12,0\\right)$. Per tant el màxim absolut és $\\frac14$, assolit a $\\left(\\frac12,0\\right)$.",
+    "Per al mínim, observem que el disc és obert, de manera que no s'hi pot aplicar el teorema de Weierstrass i, per tant, $f$ no hi té mínim absolut.",
+    "Ho podem confirmar: si $f$ tingués un mínim absolut en un punt del disc, com que el disc és obert, seria un mínim local i, per tant, un punt crític. L'únic punt crític és $\\left(\\frac12,0\\right)$, que és el màxim estricte, així que no hi ha mínim absolut.",
+    "Per veure què passa, fitem $f$: al disc, $x^2+y^2<1$, de manera que $f=x-(x^2+y^2)<x-1$, i com que $x>-1$, obtenim $f>-2$.",
+    "A més, $f(x,0)=x-x^2\\to-2$ quan $x\\to-1^+$, de manera que $\\inf f=-2$, però aquest valor no s'assoleix al disc."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "no s'hi pot aplicar el teorema de Weierstrass i, per tant, $f$ no hi té mínim absolut",
+      "inici": 59,
+      "fi": 144,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "Weierstrass és una condició suficient, no necessària: que no es pugui aplicar no implica que no hi hagi mínim (de fet, $f$ sí que té màxim absolut al mateix disc obert).",
+      "correccio": "Com que el disc és obert, Weierstrass no garanteix res i cal estudiar el mínim d'una altra manera (amb l'argument dels punts crítics i l'ínfim).",
+      "pista": "Si no es compleixen les hipòtesis de Weierstrass, què en pots concloure? El màxim d'aquest mateix exercici, d'on surt?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$f=x-(x^2+y^2)<x-1$",
+      "inici": 68,
+      "fi": 87,
+      "tipus": "desigualtat",
+      "explicacio": "De $x^2+y^2<1$ es dedueix $-(x^2+y^2)>-1$, i per tant $f>x-1$; amb la desigualtat girada, $f<x-1$ i $x-1>-2$ no permeten concloure $f>-2$.",
+      "correccio": "$f=x-(x^2+y^2)>x-1>-2$.",
+      "pista": "Si $x^2+y^2<1$, quina desigualtat compleix $-(x^2+y^2)$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t56.json",
+    "valoracio": "Màxim i no-existència del mínim correctes (fragment 4), però hi ha un raonament fals amb Weierstrass i una desigualtat girada en la fita.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "no s'hi pot aplicar el teorema de Weierstrass i, per tant, $f$ no hi té mínim absolut",
+        "gravetat": "error",
+        "explicacio": "Que Weierstrass no s'apliqui no implica que no hi hagi mínim: és una condició suficient, no necessària. La no-existència s'ha de justificar (com fa el fragment 4)."
+      },
+      {
+        "fragment": 5,
+        "cita": "$f=x-(x^2+y^2)<x-1$",
+        "gravetat": "error",
+        "explicacio": "Com que $x^2+y^2<1$, $-(x^2+y^2)>-1$ i per tant $f>x-1$; la desigualtat està girada i amb $f<x-1$ no se'n pot deduir $f>-2$."
+      }
+    ]
+  },
+  "creat": 1791295917.0130165
+}

@@ -1,0 +1,81 @@
+{
+  "id": "f04afb54e9eb",
+  "exercici": "T1.34",
+  "font": "teoria",
+  "dificultat": "dificil",
+  "fragments": [
+    "(Heine-Borel.) Sigui $A\\subseteq\\mathbb{R}^n$.",
+    "Aleshores, $A$ és compacte $\\Leftrightarrow$ $A$ és tancat i fitat, és a dir, $A$ és tancat i per a tot $a\\in A$ existeix $L>0$ tal que $\\|a\\|<L$.",
+    "$\\Rightarrow$) Si $A$ és compacte, pel Teorema de Bolzano-Weierstrass és seqüencialment compacte i podem aplicar el Lema 30 amb $\\varepsilon=1$: existeixen $y_1,\\ldots,y_r\\in A$ tals que $A\\subseteq\\bigcup_{i=1}^r B(y_i,1)$.",
+    "Sigui $L=\\max\\{d(y_1,y_2),\\ldots,d(y_1,y_r)\\}$, ben definit perquè el conjunt $\\{y_1,\\ldots,y_r\\}$ és finit. Donat $a\\in A$, existeix $i$ amb $d(a,y_i)<1$ i aleshores $d(a,y_1)\\leq d(a,y_i)+d(y_i,y_1)<1+L$. Per tant, $A\\subseteq B(y_1,L+1)$ i $A$ és fitat.",
+    "D'altra banda, pel Lema 27, com que $A$ és compacte també és tancat.",
+    "$\\Leftarrow$) Suposem ara que $A\\subseteq\\mathbb{R}^n$ és tancat i fitat. Si $n=1$, ja és conegut: tota successió $(a_m)_m\\subseteq A$ és fitada i, per tant, admet una parcial $(a_{m_k})_k$ convergent a un $a^*\\in\\overline{A}=A$, perquè $A$ és tancat; així $A$ és seqüencialment compacte i, pel Teorema 26, compacte.",
+    "Per a $n>1$ fem l'argument per a $n=2$ (per a $n\\geq 3$ és anàleg). Com que $A$ és fitat, existeix $L>0$ tal que $A\\subseteq B(0,L)$; en particular, les projeccions $\\pi_i(x_1,x_2)=x_i$ satisfan $\\pi_i(A)\\subseteq[-L,L]$, i per tant $A\\subseteq[-L,L]\\times[-L,L]$.",
+    "Com que $A$ és fitat i està contingut en $[-L,L]\\times[-L,L]$, pel Lema 28 n'hi ha prou de veure que $[-L,L]\\times[-L,L]$ és compacte i, pel Teorema 26 (Bolzano-Weierstrass), que és seqüencialment compacte.",
+    "Sigui $(a_m,b_m)_m$ una successió de punts de $[-L,L]\\times[-L,L]$. La successió $(a_m)_m\\subseteq[-L,L]$ és fitada i, per tant, admet una parcial $(a_{m_k})_k$ convergent a un punt $a^*\\in[-L,L]$.",
+    "La successió $(b_m)_m\\subseteq[-L,L]$ també és fitada i admet una parcial $(b_{m_s})_s$ convergent a un punt $b^*\\in[-L,L]$; per tant, la parcial $(a_{m_s},b_{m_s})_s$ convergeix a $(a^*,b^*)$.",
+    "Així, $[-L,L]\\times[-L,L]$ és seqüencialment compacte i, en conclusió, $A$ és compacte."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "per a tot $a\\in A$ existeix $L>0$ tal que $\\|a\\|<L$",
+      "inici": 94,
+      "fi": 145,
+      "tipus": "quantificador",
+      "explicacio": "Amb aquest ordre de quantificadors la condició la compleix qualsevol conjunt (prenent $L=\\|a\\|+1$), i l'enunciat diria que tot tancat és compacte. Contraexemple: $A=\\mathbb{R}$ és tancat i no és compacte. Fitat vol dir que existeix un $L$ comú per a tots els punts.",
+      "correccio": "$A$ és fitat: existeix $L>0$ tal que $\\|a\\|<L$ per a tot $a\\in A$ (és a dir, $A\\subseteq B(0,L)$).",
+      "pista": "El $L$ pot dependre del punt $a$? Quin conjunt no compleix aquesta condició?"
+    },
+    {
+      "id": "e2",
+      "fragment": 8,
+      "cita": "Com que $A$ és fitat i està contingut en $[-L,L]\\times[-L,L]$, pel Lema 28",
+      "inici": 0,
+      "fi": 74,
+      "tipus": "hipotesi",
+      "explicacio": "El Lema 28 diu que un TANCAT d'un compacte és compacte; ser fitat no basta (p. ex. $(0,1)^2\\subseteq[-1,1]^2$ no és compacte). Aquí s'ha d'usar que $A$ és tancat.",
+      "correccio": "Com que $A$ és tancat i està contingut en $[-L,L]\\times[-L,L]$, pel Lema 28 n'hi ha prou de veure que $[-L,L]\\times[-L,L]$ és compacte.",
+      "pista": "Quina hipòtesi demana el Lema 28 al subconjunt per assegurar que és compacte?"
+    },
+    {
+      "id": "e3",
+      "fragment": 10,
+      "cita": "La successió $(b_m)_m\\subseteq[-L,L]$ també és fitada i admet una parcial $(b_{m_s})_s$",
+      "inici": 0,
+      "fi": 87,
+      "tipus": "pas_injustificat",
+      "explicacio": "La parcial s'ha d'extreure de $(b_{m_k})_k$, no de $(b_m)_m$: altrament $(a_{m_s})_s$ no és una parcial de $(a_{m_k})_k$ i no té per què convergir. Exemple: $a_m=(-1)^m$, $b_m=0$, amb $(a_{m_k})_k$ els termes parells i $(b_{m_s})_s=(b_m)_m$.",
+      "correccio": "La successió $(b_{m_k})_k$ admet una parcial $(b_{m_{k_s}})_s$ convergent a $b^*$, i $(a_{m_{k_s}})_s$, com a parcial de $(a_{m_k})_k$, convergeix a $a^*$.",
+      "pista": "Si extraieu la parcial de $(b_m)_m$ en lloc de $(b_{m_k})_k$, qui us assegura que les primeres coordenades continuen convergint?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t1b.json",
+    "valoracio": "Definició de fitat amb quantificadors invertits, Lema 28 aplicat amb 'fitat' i extracció de parcials diagonal incorrecta.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "per a tot $a\\in A$ existeix $L>0$ tal que $\\|a\\|<L$",
+        "gravetat": "error",
+        "explicacio": "Quantificadors invertits: així qualsevol conjunt seria 'fitat'. Fitat vol dir que existeix $L>0$ tal que $\\|a\\|<L$ per a tot $a\\in A$."
+      },
+      {
+        "fragment": 8,
+        "cita": "Com que $A$ és fitat i està contingut en $[-L,L]\\times[-L,L]$, pel Lema 28",
+        "gravetat": "error",
+        "explicacio": "El Lema 28 requereix que $A$ sigui tancat, no fitat."
+      },
+      {
+        "fragment": 10,
+        "cita": "La successió $(b_m)_m\\subseteq[-L,L]$ també és fitada i admet una parcial $(b_{m_s})_s$",
+        "gravetat": "error",
+        "explicacio": "Cal extreure la parcial de $(b_{m_k})_k$, no de $(b_m)_m$: amb índexs $m_s$ arbitraris, $(a_{m_s})_s$ no té per què convergir a $a^*$, i la conclusió no se segueix."
+      }
+    ]
+  },
+  "creat": 1791295842.2572107
+}

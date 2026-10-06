@@ -1,0 +1,58 @@
+{
+  "id": "b0ba9a0776cf",
+  "exercici": "T1.30",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Suposem que $A\\subseteq M$ és seqüencialment compacte. Aleshores, per a tot $\\varepsilon>0$, existeixen $y_1,y_2,\\ldots,y_r\\in A$ tals que $A=\\bigcup_{i=1}^rB_\\varepsilon(y_i)$, és a dir, $A$ és una unió finita de boles de radi $\\varepsilon$ centrades en punts de $A$.",
+    "Per reducció a l'absurd, suposem que existeix $\\varepsilon_0>0$ tal que $A$ no està recobert per cap unió finita de boles de radi $\\varepsilon_0$ centrades en punts de $A$.",
+    "Definim la successió $(y_n)_n$ així: $y_1\\in A$ qualsevol, $y_2\\in A\\setminus B_{\\varepsilon_0}(y_1)$, $y_3\\in A\\setminus\\left(B_{\\varepsilon_0}(y_1)\\cup B_{\\varepsilon_0}(y_2)\\right)$ i, en general, $y_k\\in A\\setminus\\bigcup_{j=1}^{k-1}B_{\\varepsilon_0}(y_j)$. Aquests punts existeixen perquè les boles $B_{\\varepsilon_0}(y_1),\\ldots,B_{\\varepsilon_0}(y_{k-1})$ no recobreixen $A$.",
+    "Per construcció, si $k>j$ aleshores $y_k\\notin B_{\\varepsilon_0}(y_j)$, és a dir, $d(y_k,y_j)\\geq\\varepsilon_0$.",
+    "Per tant, $(y_n)_n$ no és fitada i, en conseqüència, no admet cap parcial convergent, en contradicció amb el fet que $A$ és seqüencialment compacte."
+  ],
+  "n_enunciat": 1,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "$A=\\bigcup_{i=1}^rB_\\varepsilon(y_i)$",
+      "inici": 139,
+      "fi": 176,
+      "tipus": "conclusio",
+      "explicacio": "Les boles poden sortir d'$A$: el lema només dona la inclusió $A\\subseteq\\bigcup_{i=1}^rB_\\varepsilon(y_i)$. Contraexemple: $A=[0,1]\\subseteq\\mathbb{R}$; la bola que conté el $0$ té centre $y_i<\\varepsilon$ i conté punts negatius, que no són d'$A$.",
+      "correccio": "$A\\subseteq\\bigcup_{i=1}^rB_\\varepsilon(y_i)$: $A$ està recobert per una unió finita de boles de radi $\\varepsilon$ centrades en punts de $A$.",
+      "pista": "Per a $A=[0,1]$, una bola de $\\mathbb{R}$ centrada en un punt d'$A$ queda sempre dins d'$A$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$(y_n)_n$ no és fitada i, en conseqüència, no admet cap parcial convergent",
+      "inici": 10,
+      "fi": 84,
+      "tipus": "implicacio",
+      "explicacio": "Que els termes estiguin a distància $\\geq\\varepsilon_0$ no implica que la successió no sigui fitada (p. ex. amb la mètrica discreta), i una successió no fitada pot tenir parcials convergents. El que s'obté és que cap parcial és de Cauchy.",
+      "correccio": "Com que $d(y_k,y_j)\\geq\\varepsilon_0$ per a $k\\neq j$, cap parcial de $(y_n)_n$ és de Cauchy i, per tant, no n'hi ha cap de convergent.",
+      "pista": "Què impedeix exactament que una parcial de $(y_n)_n$ convergeixi: que la successió no sigui fitada, o una altra cosa?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t1b.json",
+    "valoracio": "Enunciat amb igualtat en lloc d'inclusió i conclusió basada en una falsa no-fitació.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "$A=\\bigcup_{i=1}^rB_\\varepsilon(y_i)$, és a dir, $A$ és una unió finita de boles",
+        "gravetat": "error",
+        "explicacio": "Les boles poden sortir de $A$; el lema només dona $A\\subseteq\\bigcup B_\\varepsilon(y_i)$ (p. ex. $A=[0,1]\\subset\\mathbb{R}$, $\\varepsilon=1$)."
+      },
+      {
+        "fragment": 5,
+        "cita": "$(y_n)_n$ no és fitada i, en conseqüència, no admet cap parcial convergent",
+        "gravetat": "error",
+        "explicacio": "No se segueix: punts a distància $\\geq\\varepsilon_0$ dos a dos poden formar una successió fitada, i una successió no fitada pot tenir parcials convergents. El motiu correcte és que cap parcial és de Cauchy (els termes distan $\\geq\\varepsilon_0$)."
+      }
+    ]
+  },
+  "creat": 1791295842.2489161
+}

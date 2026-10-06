@@ -1,0 +1,771 @@
+problemes:
+  - num: 20
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t4-20"
+        apartat: null
+        tipus: calcul
+        enunciat: |
+          Demostreu que l'equació $x^2y+e^x+z=0$ defineix implícitament $x$ en funció de $y$ i $z$ al voltant del punt $(0,1,-1)$. Calculeu les derivades primeres i segones de $x(y,z)$ en el punt $(1,-1)$.
+        teoria: []
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Amb $F(x,y,z)=x^2y+e^x+z$ (de classe $\mathcal{C}^\infty$), $F(0,1,-1)=0$ i $\frac{\partial F}{\partial x}(0,1,-1)=1\neq 0$, el teorema de la funció implícita (amb $r=2$) dona $x=x(y,z)$ de classe $\mathcal{C}^2$ (de fet $\mathcal{C}^\infty$) en un entorn de $(1,-1)$ amb $x(1,-1)=0$. Derivades en $(1,-1)$: $x_y=0$, $x_z=-1$, $x_{yy}=0$, $x_{yz}=x_{zy}=0$, $x_{zz}=-3$.
+          fuites: ['x_\{?zz\}?\s*(\(1,\s*-1\))?\s*=\s*-\s*3', '\\partial\s*z\^\{?2\}?\}?\s*(\(1,\s*-1\))?\s*=\s*-\s*3']
+        passos:
+          - id: hipotesis_tfi
+            titol: "Comprovar les hipòtesis del teorema de la funció implícita"
+            objectiu: |
+              Justificar que l'equació defineix $x$ com a funció diferenciable de $(y,z)$ prop de $(1,-1)$.
+            idea: |
+              Escriure l'equació com $F(x,y,z)=0$ i comprovar les hipòtesis del teorema de la funció implícita respecte de la variable que es vol aïllar.
+            detall: |
+              $F(x,y,z)=x^2y+e^x+z$ és de classe $\mathcal{C}^\infty$ i $F(0,1,-1)=0+1-1=0$. A més $\frac{\partial F}{\partial x}=2xy+e^x$, que en $(0,1,-1)$ val $e^0=1\neq 0$. Pel teorema de la funció implícita (aplicat amb $r=2$, ja que $F\in\mathcal{C}^2$) existeixen un entorn obert $\Omega$ de $(1,-1)$ i $x=x(y,z)$ de classe $\mathcal{C}^2(\Omega)$, amb $x(1,-1)=0$ i $F(x(y,z),y,z)=0$ per a tot $(y,z)\in\Omega$; a més, prop de $(0,1,-1)$ aquestes són totes les solucions. La classe $\mathcal{C}^2$ és la que cal per parlar de derivades segones (i per Schwarz).
+            fuites: []
+            teoria: ["T4.13", "T3.31"]
+          - id: derivades_primeres
+            titol: "Derivades primeres"
+            objectiu: |
+              Calcular $\frac{\partial x}{\partial y}(1,-1)$ i $\frac{\partial x}{\partial z}(1,-1)$.
+            idea: |
+              Derivar la identitat $F(x(y,z),y,z)=0$ respecte de cada variable amb la regla de la cadena i avaluar en el punt.
+            detall: |
+              Derivant respecte de $y$: $2x\,x_y\,y+x^2+e^x x_y=0$; en $(1,-1)$ (on $x=0$): $x_y=0$, és a dir $x_y(1,-1)=0$.
+              Derivant respecte de $z$: $2x\,x_z\,y+e^x x_z+1=0$; en el punt: $x_z(1,-1)=-1$.
+            fuites: ['x_\{?z\}?\s*(\(1,\s*-1\))?\s*=\s*-\s*1\b', '\\partial\s*x\}?\s*\{\\partial\s*z\}\s*(\(1,\s*-1\))?\s*=\s*-\s*1\b']
+            teoria: ["T4.15", "T3.21"]
+          - id: derivades_segones
+            titol: "Derivades segones"
+            objectiu: |
+              Calcular $x_{yy}$, $x_{yz}$ i $x_{zz}$ en $(1,-1)$.
+            idea: |
+              Tornar a derivar les identitats del pas anterior (recordant que $x$ i les seves derivades depenen de $(y,z)$) i substituir els valors ja coneguts. Com que $x$ és $\mathcal{C}^2$, les derivades creuades coincideixen.
+            detall: |
+              Derivant $2x\,x_y\,y+x^2+e^xx_y=0$ respecte de $y$: $4x\,x_y+2x_y^2y+2x\,x_{yy}y+e^xx_y^2+e^xx_{yy}=0$; en el punt ($x=0$, $x_y=0$): $x_{yy}=0$.
+              Derivant $2x\,x_z\,y+e^xx_z+1=0$ respecte de $y$: $2x_yx_zy+2x\,x_{zy}y+2x\,x_z+e^xx_yx_z+e^xx_{zy}=0$; en el punt: $x_{zy}=0$, i per Schwarz $x_{yz}=0$.
+              Derivant la mateixa identitat respecte de $z$: $2x_z^2y+2x\,x_{zz}y+e^xx_z^2+e^xx_{zz}=0$; en el punt ($x_z=-1$, $y=1$): $2+1+x_{zz}=0$, per tant $x_{zz}(1,-1)=-3$.
+            fuites: ['x_\{?zz\}?\s*(\(1,\s*-1\))?\s*=\s*-\s*3', '\\partial\s*z\^\{?2\}?\}?\s*(\(1,\s*-1\))?\s*=\s*-\s*3', '2\s*\+\s*1\s*\+\s*x_\{?zz']
+            teoria: ["T3.21", "T5.6"]
+        errors_comuns:
+          - id: variable_equivocada
+            descripcio: |
+              Comprova la hipòtesi del teorema amb la derivada respecte d'una variable que no és la que es vol aïllar (per exemple $\partial F/\partial z$).
+            pregunta: |
+              Quina és la variable que vols escriure en funció de les altres? La derivada parcial que has comprovat és respecte d'aquesta variable?
+          - id: oblidar_dependencia
+            descripcio: |
+              En derivar per segon cop tracta $x$ o $x_z$ com a constants i perd termes de la regla de la cadena (per exemple el terme $2x_z^2y$).
+            pregunta: |
+              En l'expressió que tornes a derivar, quins factors depenen encara de $z$ a través de $x(y,z)$?
+          - id: punt_equivocat
+            descripcio: |
+              Avalua en $(y,z)=(1,-1)$ però substitueix un valor de $x$ incorrecte, o confon el punt de $\mathbb{R}^3$ amb el de $\mathbb{R}^2$.
+            pregunta: |
+              Quant val $x(1,-1)$? Quines coordenades has de substituir a l'expressió de les derivades?
+        nota_professor: |
+          Alternativa: fórmula $x_z=-F_z/F_x$ i derivar-la com a quocient. Les derivades segones en $y$ s'anul·len perquè $x(1,-1)=0$ i $x_y(1,-1)=0$.
+
+  - num: 21
+    font: null
+    preambul: |
+      Considereu l'equació $x^2+y^2+z^2=\psi(ax+by+cz)$, amb $a,b,c\in\mathbb{R}$, $c\neq 0$, on $\psi:\mathbb{R}\to\mathbb{R}$ és de classe $\mathcal{C}^2$ i satisfà $\psi(0)=0$ i $\psi'(0)\neq 0$.
+    indicacio: null
+    exercicis:
+      - id: "t4-21a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          Proveu que en un entorn de $(0,0,0)$ les solucions de l'equació es poden expressar de la forma $(x,y,f(x,y))$, amb $f$ diferenciable en un entorn de $(0,0)$.
+        teoria: ["T3.8"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Sigui $G(x,y,z)=x^2+y^2+z^2-\psi(ax+by+cz)$, de classe $\mathcal{C}^2$, amb $G(0,0,0)=0$ i $\frac{\partial G}{\partial z}(0,0,0)=-c\psi'(0)\neq 0$. Pel teorema de la funció implícita existeixen entorns oberts $U$ de $(0,0,0)$ i $\Omega$ de $(0,0)$ i $f\in\mathcal{C}^2(\Omega)$ amb $f(0,0)=0$ tals que $\{(x,y,z)\in U: G=0\}=\{(x,y,f(x,y)):(x,y)\in\Omega\}$; en particular $f$ és diferenciable.
+          fuites: []
+        passos:
+          - id: plantejar_g
+            titol: "Escriure l'equació com G=0"
+            objectiu: |
+              Escriure el problema en el llenguatge del teorema de la funció implícita i comprovar la regularitat i que l'origen és solució.
+            idea: |
+              Passar-ho tot a un costat i justificar la classe de la funció resultant (polinomi més composició de $\psi$ amb una funció lineal).
+            detall: |
+              $G(x,y,z)=x^2+y^2+z^2-\psi(ax+by+cz)$. És de classe $\mathcal{C}^2$ perquè $\psi\in\mathcal{C}^2$ i $ax+by+cz$ és lineal, i $G(0,0,0)=-\psi(0)=0$.
+            fuites: []
+            teoria: ["T3.31", "T3.21"]
+          - id: derivada_z
+            titol: "Condició sobre la derivada respecte de z"
+            objectiu: |
+              Comprovar la hipòtesi del teorema que permet aïllar $z$ i concloure.
+            idea: |
+              Calcular la derivada parcial de $G$ respecte de la variable que es vol aïllar en l'origen (regla de la cadena per al terme amb $\psi$) i usar les hipòtesis sobre $c$ i $\psi'(0)$.
+            detall: |
+              $\frac{\partial G}{\partial z}=2z-c\,\psi'(ax+by+cz)$, que en l'origen val $-c\,\psi'(0)\neq 0$ perquè $c\neq 0$ i $\psi'(0)\neq 0$. El teorema de la funció implícita (amb $r=2$) dona entorns $U\ni(0,0,0)$, $\Omega\ni(0,0)$ i $f\in\mathcal{C}^2(\Omega)$, $f(0,0)=0$, amb $\{(x,y,z)\in U:G=0\}=\{(x,y,f(x,y)):(x,y)\in\Omega\}$. En particular $f$ és diferenciable en $\Omega$.
+            fuites: ['-\s*c\s*\\,?\s*\\psi''\s*\(0\)']
+            teoria: ["T4.13", "T3.21"]
+        errors_comuns:
+          - id: oblidar_cadena_psi
+            descripcio: |
+              Deriva $\psi(ax+by+cz)$ respecte de $z$ oblidant el factor $c$ de la regla de la cadena, i aleshores no veu per què cal $c\neq 0$.
+            pregunta: |
+              Quina hipòtesi de l'enunciat no has fet servir? On hauria d'aparèixer?
+          - id: nomes_existencia
+            descripcio: |
+              Conclou només que hi ha alguna funció $f$ amb $G(x,y,f(x,y))=0$, sense dir que totes les solucions properes a l'origen són d'aquesta forma.
+            pregunta: |
+              L'enunciat parla de "les solucions" en un entorn de l'origen. Quina part del teorema garanteix que no n'hi ha d'altres?
+        nota_professor: |
+          $f$ és de fet $\mathcal{C}^2$, cosa que fa falta a l'apartat (b).
+
+      - id: "t4-21b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          Calculeu $\frac{\partial f}{\partial x}(0,0)$, $\frac{\partial f}{\partial y}(0,0)$, $\frac{\partial^2 f}{\partial x^2}(0,0)$, i $\frac{\partial^2 f}{\partial y^2}(0,0)$.
+        teoria: []
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $\frac{\partial f}{\partial x}(0,0)=-\frac{a}{c}$, $\frac{\partial f}{\partial y}(0,0)=-\frac{b}{c}$, $\frac{\partial^2 f}{\partial x^2}(0,0)=\frac{2(a^2+c^2)}{c^3\psi'(0)}$, $\frac{\partial^2 f}{\partial y^2}(0,0)=\frac{2(b^2+c^2)}{c^3\psi'(0)}$.
+          fuites: ['-\s*\\[dt]?frac\s*\{?a\}?\s*\{?c\}?', '-\s*a\s*/\s*c\b', '-\s*\\[dt]?frac\s*\{?b\}?\s*\{?c\}?', '-\s*b\s*/\s*c\b', 'c\^\{?3\}?\s*\\psi', '\(\s*a\^\{?2\}?\s*\+\s*c\^\{?2\}?\s*\)']
+        passos:
+          - id: primeres
+            titol: "Derivades primeres"
+            objectiu: |
+              Sabent per (a) que $f$ és $\mathcal{C}^2$ amb $f(0,0)=0$ i $x^2+y^2+f^2=\psi(ax+by+cf)$, calcular $f_x(0,0)$ i $f_y(0,0)$.
+            idea: |
+              Derivar la identitat respecte de $x$ (i de $y$) amb la regla de la cadena i avaluar en l'origen.
+            detall: |
+              Respecte de $x$: $2x+2ff_x=\psi'(ax+by+cf)\,(a+cf_x)$. En $(0,0)$: $0=\psi'(0)(a+cf_x(0,0))$ i, com que $\psi'(0)\neq0$, $f_x(0,0)=-\frac{a}{c}$. Anàlogament $f_y(0,0)=-\frac{b}{c}$.
+            fuites: ['-\s*\\[dt]?frac\s*\{?a\}?\s*\{?c\}?', '-\s*a\s*/\s*c\b', '-\s*\\[dt]?frac\s*\{?b\}?\s*\{?c\}?', '-\s*b\s*/\s*c\b']
+            teoria: ["T4.15", "T3.21"]
+          - id: segones
+            titol: "Derivades segones pures"
+            objectiu: |
+              Calcular $f_{xx}(0,0)$ i $f_{yy}(0,0)$.
+            idea: |
+              Tornar a derivar la identitat del pas anterior respecte de la mateixa variable, sense oblidar que $f$, $f_x$ i l'argument de $\psi'$ depenen de $x$; observar quins termes s'anul·len en l'origen.
+            detall: |
+              Derivant $2x+2ff_x=\psi'(\cdot)(a+cf_x)$ respecte de $x$: $2+2f_x^2+2ff_{xx}=\psi''(\cdot)(a+cf_x)^2+\psi'(\cdot)\,c\,f_{xx}$. En l'origen $f=0$ i $a+cf_x=0$, de manera que el terme amb $\psi''$ desapareix: $2+\frac{2a^2}{c^2}=c\,\psi'(0)f_{xx}(0,0)$, és a dir $f_{xx}(0,0)=\frac{2(a^2+c^2)}{c^3\psi'(0)}$. Anàlogament $f_{yy}(0,0)=\frac{2(b^2+c^2)}{c^3\psi'(0)}$.
+            fuites: ['c\^\{?3\}?\s*\\psi', '\(\s*a\^\{?2\}?\s*\+\s*c\^\{?2\}?\s*\)']
+            teoria: ["T3.21"]
+        errors_comuns:
+          - id: perdre_termes_segona
+            descripcio: |
+              En derivar per segon cop oblida el terme $2f_x^2$ o el factor $(a+cf_x)$ de $\psi''$ (no aplica bé la regla del producte i de la cadena).
+            pregunta: |
+              El terme $2ff_x$ és un producte de dues funcions de $x$. Has derivat els dos factors?
+          - id: psi_segona_desconeguda
+            descripcio: |
+              Creu que el resultat depèn de $\psi''(0)$, que no és conegut, i s'encalla.
+            pregunta: |
+              Quant val el factor que multiplica $\psi''$ quan avalues en l'origen?
+          - id: formula_signe
+            descripcio: |
+              Usa $f_x=-G_x/G_z$ amb un signe equivocat o avalua $G_x$ en un punt que no és l'origen.
+            pregunta: |
+              Si substitueixes el teu valor de $f_x$ a la identitat derivada, es compleix en l'origen?
+        nota_professor: |
+          També es pot fer amb $f_x=-G_x/G_z$ i derivant el quocient, però derivar implícitament la identitat és més net.
+
+  - num: 22
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t4-22"
+        apartat: null
+        tipus: calcul
+        enunciat: |
+          Proveu que l'equació $2x^2+y^2+z^3-5xz-2=0$ defineix implícitament $z=g(x,y)$, amb $g$ de classe $C^\infty$, en un entorn de $p=(1,2,1)$. Proveu que el gradient de $g$ en el punt $(1,2)$ val $(-1/2,2)$.
+        teoria: ["T3.10", "T3.31"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Amb $G(x,y,z)=2x^2+y^2+z^3-5xz-2$ (polinòmica, $\mathcal{C}^\infty$), $G(1,2,1)=0$ i $\frac{\partial G}{\partial z}(1,2,1)=3-5=-2\neq0$; el teorema de la funció implícita dona $g\in\mathcal{C}^\infty$ amb $g(1,2)=1$. A més $\nabla g(1,2)=-\frac{1}{G_z}(G_x,G_y)=-\frac{1}{-2}(-1,4)=(-1/2,2)$.
+          fuites: []
+        passos:
+          - id: hipotesis
+            titol: "Hipòtesis del teorema de la funció implícita"
+            objectiu: |
+              Justificar l'existència de $g$ de classe $\mathcal{C}^\infty$ en un entorn de $(1,2)$.
+            idea: |
+              Comprovar que $p$ és solució, la regularitat de la funció que defineix l'equació i la condició sobre la derivada respecte de $z$. Per a la classe $\mathcal{C}^\infty$, pensar en com depèn la classe de la funció implícita de la de $G$.
+            detall: |
+              $G(x,y,z)=2x^2+y^2+z^3-5xz-2$ és un polinomi, per tant $\mathcal{C}^r$ per a tot $r$. $G(1,2,1)=2+4+1-5-2=0$. $\frac{\partial G}{\partial z}=3z^2-5x$, i en $p$ val $3-5=-2\neq 0$. Pel teorema de la funció implícita (amb $r=1$) existeixen un obert $\Omega\ni(1,2)$ i $g\in\mathcal{C}^1(\Omega)$ amb $g(1,2)=1$ i $G(x,y,g(x,y))=0$, i $G_z(x,y,g(x,y))\neq0$ en $\Omega$ (apartat (i) del teorema). Per la regla de la cadena, $g_x=-\frac{G_x(x,y,g)}{G_z(x,y,g)}$ i $g_y=-\frac{G_y(x,y,g)}{G_z(x,y,g)}$ en $\Omega$; si $g\in\mathcal{C}^k$, el segon membre és $\mathcal{C}^k$ i per tant $g\in\mathcal{C}^{k+1}$. Per inducció, $g\in\mathcal{C}^\infty(\Omega)$. (Les notes ho abreugen aplicant directament el teorema amb $r=\infty$.)
+            fuites: ['3\s*-\s*5\s*=\s*-\s*2']
+            teoria: ["T4.13", "T3.31", "T3.21"]
+          - id: gradient
+            titol: "Calcular el gradient"
+            objectiu: |
+              Calcular $\nabla g(1,2)$.
+            idea: |
+              Derivar $G(x,y,g(x,y))=0$ respecte de $x$ i de $y$ amb la regla de la cadena, o usar la fórmula de la diferencial de la funció implícita.
+            detall: |
+              $\frac{\partial G}{\partial x}=4x-5z$, que en $p$ val $-1$; $\frac{\partial G}{\partial y}=2y$, que val $4$. Llavors $g_x(1,2)=-\frac{G_x}{G_z}=-\frac{-1}{-2}=-\frac12$ i $g_y(1,2)=-\frac{G_y}{G_z}=-\frac{4}{-2}=2$. Per tant $\nabla g(1,2)=(-1/2,2)$.
+            fuites: ['4x\s*-\s*5z']
+            teoria: ["T4.15", "T3.21"]
+        errors_comuns:
+          - id: signe_formula
+            descripcio: |
+              Oblida el signe menys de $g_x=-G_x/G_z$ o fa el quocient al revés.
+            pregunta: |
+              Si derives $G(x,y,g(x,y))=0$ respecte de $x$, quina equació obtens? D'on surt el signe?
+          - id: cinf_sense_justificar
+            descripcio: |
+              Afirma que $g$ és $\mathcal{C}^\infty$ sense lligar-ho amb la regularitat de $G$.
+            pregunta: |
+              De quina classe és la funció implícita segons el teorema, en funció de la classe de $G$?
+          - id: derivada_z_xz
+            descripcio: |
+              En derivar respecte de $z$ oblida el terme $-5x$ del producte $-5xz$.
+            pregunta: |
+              El terme $-5xz$ depèn de $z$? Quina contribució dona a $\partial G/\partial z$?
+        nota_professor: |
+          Com que el resultat ja és a l'enunciat, l'interès és la justificació. Per a la classe $\mathcal{C}^\infty$, aplicar el teorema "per a cada $r$" és delicat (l'entorn podria encongir-se amb $r$); l'argument net és el bootstrap del detall a partir de la fórmula de $\nabla g$. Acceptar també la versió de les notes (teorema amb $r=\infty$).
+
+  - num: 23
+    font: null
+    preambul: |
+      Sigui $F:\mathbb{R}^3\to\mathbb{R}$ de classe $\mathcal{C}^1$ tal que per a tot punt $p$ on $F(p)=0$ se satisfà $\frac{\partial F}{\partial x}(p)\neq 0$, $\frac{\partial F}{\partial y}(p)\neq 0$ i $\frac{\partial F}{\partial z}(p)\neq 0$.
+    indicacio: null
+    exercicis:
+      - id: "t4-23a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          Proveu que si $F(p)=0$, aleshores en un entorn de $p$ es pot escriure cadascuna de les variables $x,y,z$ en termes de les altres dues; és a dir, existeixen funcions $X,Y,Z$ diferenciables tals que $F(X(y,z),y,z)=0$, $F(x,Y(x,z),z)=0$ i $F(x,y,Z(x,y))=0$.
+        teoria: ["T3.2", "T3.20"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Sigui $p=(p_1,p_2,p_3)$ amb $F(p)=0$. Com que $F\in\mathcal{C}^1$ i $\frac{\partial F}{\partial z}(p)\neq0$, el teorema de la funció implícita (amb $z$ com a variable a aïllar) dona $Z$ de classe $\mathcal{C}^1$ (per tant diferenciable) en un entorn de $(p_1,p_2)$ amb $Z(p_1,p_2)=p_3$ i $F(x,y,Z(x,y))=0$. Igualment, amb $\frac{\partial F}{\partial x}(p)\neq0$ s'obté $X(y,z)$ i amb $\frac{\partial F}{\partial y}(p)\neq0$ s'obté $Y(x,z)$ (reordenant les variables).
+          fuites: []
+        passos:
+          - id: aillar_z
+            titol: "Aïllar una variable"
+            objectiu: |
+              Obtenir $Z(x,y)$ diferenciable amb $F(x,y,Z(x,y))=0$ prop de $p$.
+            idea: |
+              Aplicar el teorema de la funció implícita amb $n=2$, $m=1$, prenent com a variable "dependent" la que es vol aïllar.
+            detall: |
+              $F\in\mathcal{C}^1$, $F(p)=0$ i $\frac{\partial F}{\partial z}(p)\neq0$ (el determinant $1\times1$ del teorema). Per tant existeix $Z\in\mathcal{C}^1$ en un entorn de $(p_1,p_2)$, amb $Z(p_1,p_2)=p_3$ i $F(x,y,Z(x,y))=0$. Com que és $\mathcal{C}^1$, és diferenciable.
+            fuites: []
+            teoria: ["T4.13", "T3.31"]
+          - id: altres_variables
+            titol: "Les altres dues variables"
+            objectiu: |
+              Obtenir també $X(y,z)$ i $Y(x,z)$.
+            idea: |
+              El teorema no depèn de quines variables posem al final: reordenar les variables (o aplicar-lo a $F$ composta amb una permutació de coordenades) i usar les altres dues hipòtesis.
+            detall: |
+              Considerant $\tilde F(y,z,x)=F(x,y,z)$, que és $\mathcal{C}^1$ i té $\frac{\partial\tilde F}{\partial x}=\frac{\partial F}{\partial x}(p)\neq0$, s'obté $X\in\mathcal{C}^1$ prop de $(p_2,p_3)$ amb $X(p_2,p_3)=p_1$ i $F(X(y,z),y,z)=0$. Anàlogament, amb $\frac{\partial F}{\partial y}(p)\neq0$, $Y\in\mathcal{C}^1$ prop de $(p_1,p_3)$ amb $Y(p_1,p_3)=p_2$ i $F(x,Y(x,z),z)=0$.
+            fuites: []
+            teoria: ["T4.13"]
+        errors_comuns:
+          - id: global_vs_local
+            descripcio: |
+              Pensa que les funcions $X,Y,Z$ estan definides globalment, no només en un entorn.
+            pregunta: |
+              El teorema que uses, quina mena de conclusió dona: global o en un entorn del punt?
+          - id: diferenciable_sense_justificar
+            descripcio: |
+              Obté les funcions implícites però no justifica que siguin diferenciables.
+            pregunta: |
+              De quina classe són les funcions que dona el teorema? Què implica aquesta classe sobre la diferenciabilitat?
+        nota_professor: |
+          Només cal la hipòtesi en el punt $p$ concret; l'enunciat la dona per a tots els zeros de $F$.
+
+      - id: "t4-23b"
+        apartat: "b"
+        tipus: teoric
+        enunciat: |
+          Proveu que, amb les notacions anteriors, $\frac{\partial Y}{\partial x}(p)\frac{\partial X}{\partial z}(p)\frac{\partial Z}{\partial y}(p)=-1$.
+        teoria: []
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Derivant les identitats de (a): $\frac{\partial Y}{\partial x}=-\frac{F_x}{F_y}$, $\frac{\partial X}{\partial z}=-\frac{F_z}{F_x}$, $\frac{\partial Z}{\partial y}=-\frac{F_y}{F_z}$ (avaluades al punt corresponent, on les parcials de $F$ es prenen en $p$). El producte és $(-1)^3\frac{F_xF_zF_y}{F_yF_xF_z}=-1$.
+          fuites: []
+        passos:
+          - id: derivades_implicites
+            titol: "Derivada de cada funció implícita"
+            objectiu: |
+              Usant (a), expressar $\frac{\partial Y}{\partial x}$, $\frac{\partial X}{\partial z}$ i $\frac{\partial Z}{\partial y}$ en el punt en termes de les derivades parcials de $F$ en $p$.
+            idea: |
+              Derivar cadascuna de les tres identitats de l'apartat (a) respecte de la variable adequada amb la regla de la cadena.
+            detall: |
+              De $F(x,Y(x,z),z)=0$, derivant respecte de $x$: $F_x+F_y\frac{\partial Y}{\partial x}=0$, és a dir $\frac{\partial Y}{\partial x}=-\frac{F_x(p)}{F_y(p)}$. De $F(X(y,z),y,z)=0$ respecte de $z$: $\frac{\partial X}{\partial z}=-\frac{F_z(p)}{F_x(p)}$. De $F(x,y,Z(x,y))=0$ respecte de $y$: $\frac{\partial Z}{\partial y}=-\frac{F_y(p)}{F_z(p)}$. (Cada funció s'avalua a les dues coordenades de $p$ que li corresponen.)
+            fuites: ['F_\{?z\}?\s*(\(p\))?\s*\}\s*\{\s*F_\{?x', 'F_\{?x\}?\s*(\(p\))?\s*\}\s*\{\s*F_\{?y', 'F_\{?y\}?\s*(\(p\))?\s*\}\s*\{\s*F_\{?z', 'F_[xyz]\s*/\s*F_[xyz]']
+            teoria: ["T4.15", "T3.21"]
+          - id: producte
+            titol: "Multiplicar"
+            objectiu: |
+              Calcular el producte de les tres derivades.
+            idea: |
+              Multiplicar les tres expressions: comptar signes i veure què se simplifica.
+            detall: |
+              $\left(-\frac{F_x}{F_y}\right)\left(-\frac{F_z}{F_x}\right)\left(-\frac{F_y}{F_z}\right)=(-1)^3\cdot 1=-1$, ja que cada derivada parcial apareix una vegada al numerador i una al denominador (i totes són no nul·les).
+            fuites: ['\(-1\)\^\{?3\}?']
+            teoria: []
+        errors_comuns:
+          - id: cancel_lacio_ingenua
+            descripcio: |
+              "Simplifica" formalment $\frac{\partial Y}{\partial x}\frac{\partial X}{\partial z}\frac{\partial Z}{\partial y}$ com si fossin fraccions i conclou que el producte és $1$.
+            pregunta: |
+              Els símbols $\partial Y$, $\partial X$… són nombres que es poden simplificar? Què obtens si calcules cada derivada per separat?
+          - id: signe_formula
+            descripcio: |
+              Oblida el signe menys en la derivada de cada funció implícita.
+            pregunta: |
+              Si derives $F(x,Y(x,z),z)=0$ respecte de $x$, quina igualtat surt exactament?
+        nota_professor: |
+          Exemple clàssic (relació cíclica de la termodinàmica). Estrictament, $\frac{\partial Y}{\partial x}(p)$ vol dir $\frac{\partial Y}{\partial x}(p_1,p_3)$, etc.
+
+  - num: 24
+    font: null
+    preambul: |
+      Considerem el sistema d'equacions
+      $$\left.\begin{aligned}tx^3+xy^2+y-\tfrac{25}{4}t^3&=0\\ 3xy+t^2y^3-3x^2(t+1)-t+3&=0\end{aligned}\right\}$$
+    indicacio: null
+    exercicis:
+      - id: "t4-24a"
+        apartat: "a"
+        tipus: calcul
+        enunciat: |
+          Al voltant de quins punts solució del sistema, de la forma $(x,y,t)=(1,0,t_0)$, el sistema defineix localment $x,y$ com a funcions derivables de $t$?
+
+          Considerem $\gamma(t)=(x(t),y(t))$, on les funcions $x(t),y(t)$ venen definides localment per l'anterior sistema d'equacions. A $\gamma$ se l'anomena corba parametritzada.
+        teoria: []
+        teoria_reservada: []
+        resultat:
+          valor: |
+            L'únic punt solució de la forma $(1,0,t_0)$ és $(1,0,0)$, i en ell el determinant de la jacobiana respecte de $(x,y)$ val $6\neq0$: el sistema defineix $x(t),y(t)$ de classe $\mathcal{C}^\infty$ en un entorn de $t=0$, amb $x(0)=1$, $y(0)=0$.
+          fuites: ['\(1,\s*0,\s*0\)', 't_\{?0\}?\s*=\s*0\b']
+        passos:
+          - id: punts_solucio
+            titol: "Trobar els punts solució"
+            objectiu: |
+              Determinar per a quins $t_0$ el punt $(1,0,t_0)$ és solució del sistema.
+            idea: |
+              Substituir $x=1$, $y=0$ a les dues equacions i imposar que s'anul·lin les dues alhora.
+            detall: |
+              Primera equació: $t_0-\frac{25}{4}t_0^3=0$, amb solucions $t_0\in\{0,\pm\frac25\}$. Segona: $-3(t_0+1)-t_0+3=-4t_0=0$, és a dir $t_0=0$. L'únic punt solució és $(1,0,0)$.
+            fuites: ['-\s*4\s*t_\{?0\}?\s*=\s*0', '\(1,\s*0,\s*0\)']
+            teoria: []
+          - id: jacobiana
+            titol: "Hipòtesi del teorema de la funció implícita"
+            objectiu: |
+              Decidir si en el punt trobat es pot aplicar el teorema per aïllar $(x,y)$ en funció de $t$.
+            idea: |
+              Calcular la submatriu jacobiana respecte de les variables que es volen aïllar, avaluar-la i mirar-ne el determinant.
+            detall: |
+              Amb $\Phi_1=tx^3+xy^2+y-\frac{25}{4}t^3$, $\Phi_2=3xy+t^2y^3-3x^2(t+1)-t+3$ (polinòmiques, $\mathcal{C}^\infty$): $\frac{\partial(\Phi_1,\Phi_2)}{\partial(x,y)}=\begin{pmatrix}3tx^2+y^2 & 2xy+1\\ 3y-6x(t+1) & 3x+3t^2y^2\end{pmatrix}$, que en $(1,0,0)$ és $\begin{pmatrix}0&1\\-6&3\end{pmatrix}$, amb determinant $0\cdot3-1\cdot(-6)=6\neq0$. Pel teorema de la funció implícita, $x(t),y(t)$ existeixen i són $\mathcal{C}^\infty$ (en particular derivables) en un entorn de $t=0$.
+            fuites: ['=\s*6\s*\\neq\s*0', 'pmatrix\}\s*0\s*&\s*1\s*\\\\\s*-\s*6\s*&\s*3']
+            teoria: ["T4.13"]
+        errors_comuns:
+          - id: nomes_una_equacio
+            descripcio: |
+              Imposa només la primera equació i dona també $t_0=\pm\frac25$ com a punts vàlids.
+            pregunta: |
+              Un punt solució del sistema ha de satisfer quantes equacions? Has comprovat la segona per a cada candidat?
+          - id: jacobiana_variables
+            descripcio: |
+              Calcula el determinant amb columnes equivocades (inclou la derivada respecte de $t$) o la jacobiana completa $2\times3$.
+            pregunta: |
+              Quines són les variables que vols escriure en funció de les altres? Respecte de quines has de derivar per a la condició del teorema?
+        nota_professor: |
+          Equacions verificades contra el PDF (pàgina 18). La pregunta "al voltant de quins punts" té resposta única perquè la segona equació força $t_0=0$.
+
+      - id: "t4-24b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          Calculeu $(x'(0),y'(0))$ (aquest vector és el vector tangent a la corba $\gamma$ en $t=0$).
+        teoria: []
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $(x'(0),y'(0))=\left(-\frac76,-1\right)$.
+          fuites: ['-\s*\\[dt]?frac\s*\{?7\}?\s*\{?6\}?', '-\s*7\s*/\s*6', 'y''\s*\(0\)\s*=\s*-\s*1\b']
+        passos:
+          - id: sistema_lineal
+            titol: "Plantejar el sistema per a les derivades"
+            objectiu: |
+              Sabent per (a) que $x(t),y(t)$ són derivables prop de $t=0$ amb $x(0)=1$, $y(0)=0$, obtenir un sistema lineal per a $x'(0)$, $y'(0)$.
+            idea: |
+              Derivar respecte de $t$ les dues identitats $\Phi_i(x(t),y(t),t)=0$ amb la regla de la cadena i avaluar en $t=0$ (o usar la fórmula matricial de la diferencial de la funció implícita).
+            detall: |
+              Necessitem també $\frac{\partial\Phi_1}{\partial t}=x^3-\frac{75}{4}t^2$, que en $(1,0,0)$ val $1$, i $\frac{\partial\Phi_2}{\partial t}=2ty^3-3x^2-1$, que val $-4$. Amb la jacobiana de (a): $0\cdot x'(0)+1\cdot y'(0)+1=0$ i $-6x'(0)+3y'(0)-4=0$.
+            fuites: ['-\s*6\s*x''\s*\(0\)\s*\+\s*3\s*y''\s*\(0\)\s*-\s*4']
+            teoria: ["T4.15", "T3.21"]
+          - id: resoldre
+            titol: "Resoldre"
+            objectiu: |
+              Calcular $x'(0)$ i $y'(0)$.
+            idea: |
+              Resoldre el sistema lineal $2\times2$ (la matriu és invertible per (a)).
+            detall: |
+              De la primera equació $y'(0)=-1$. Substituint: $-6x'(0)-3-4=0$, d'on $x'(0)=-\frac76$. Per tant $(x'(0),y'(0))=\left(-\frac76,-1\right)$.
+            fuites: ['-\s*\\[dt]?frac\s*\{?7\}?\s*\{?6\}?', '-\s*7\s*/\s*6', 'y''\s*\(0\)\s*=\s*-\s*1\b']
+            teoria: []
+        errors_comuns:
+          - id: oblidar_derivada_t
+            descripcio: |
+              Oblida la dependència explícita de $t$ (els termes $\partial\Phi_i/\partial t$) i obté un sistema homogeni amb solució nul·la.
+            pregunta: |
+              Les equacions depenen de $t$ només a través de $x(t)$ i $y(t)$? Què passa amb termes com $-\frac{25}{4}t^3$ o $-t$?
+          - id: termes_producte
+            descripcio: |
+              En derivar $tx^3$ o $-3x^2(t+1)$ només deriva un factor.
+            pregunta: |
+              El terme $-3x^2(t+1)$ és un producte de dues funcions de $t$. Quantes contribucions dona la seva derivada?
+          - id: signe_sistema
+            descripcio: |
+              Escriu $J\,(x',y')^T=+\partial\Phi/\partial t$ en lloc de $-\partial\Phi/\partial t$.
+            pregunta: |
+              Si substitueixes la teva solució a la identitat derivada, dona realment zero?
+        nota_professor: |
+          Comprovat amb sympy.
+
+      - id: "t4-24c"
+        apartat: "c"
+        tipus: calcul
+        enunciat: |
+          Donada $f(x,y)=x^2-2y+3$, calculeu la derivada de la funció $f\circ\gamma$ a l'origen.
+        teoria: []
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $(f\circ\gamma)'(0)=\nabla f(1,0)\cdot\gamma'(0)=(2,-2)\cdot\left(-\frac76,-1\right)=-\frac13$.
+          fuites: ['-\s*\\[dt]?frac\s*\{?1\}?\s*\{?3\}?', '-\s*1\s*/\s*3\b']
+        passos:
+          - id: regla_cadena
+            titol: "Aplicar la regla de la cadena"
+            objectiu: |
+              Expressar $(f\circ\gamma)'(0)$ en termes de $f$ i $\gamma$, usant els resultats de (a) i (b).
+            idea: |
+              Regla de la cadena: jacobiana de $f$ en $\gamma(0)$ per $\gamma'(0)$. "L'origen" aquí és $t=0$; cal saber quin punt és $\gamma(0)$.
+            detall: |
+              $(f\circ\gamma)'(0)=\nabla f(\gamma(0))\cdot\gamma'(0)$, amb $\gamma(0)=(1,0)$ i $\gamma'(0)=\left(-\frac76,-1\right)$.
+            fuites: []
+            teoria: ["T3.21"]
+          - id: calcular
+            titol: "Calcular"
+            objectiu: |
+              Obtenir el valor numèric.
+            idea: |
+              Calcular el gradient de $f$, avaluar-lo en $\gamma(0)$ i fer el producte escalar.
+            detall: |
+              $\nabla f(x,y)=(2x,-2)$, $\nabla f(1,0)=(2,-2)$. Llavors $(2,-2)\cdot\left(-\frac76,-1\right)=-\frac73+2=-\frac13$.
+            fuites: ['-\s*\\[dt]?frac\s*\{?1\}?\s*\{?3\}?', '-\s*1\s*/\s*3\b', '-\s*\\[dt]?frac\s*\{?7\}?\s*\{?3\}?\s*\+\s*2']
+            teoria: ["T3.10"]
+        errors_comuns:
+          - id: gradient_a_l_origen
+            descripcio: |
+              Avalua $\nabla f$ en $(0,0)$ en lloc de $\gamma(0)=(1,0)$, interpretant "l'origen" com l'origen del pla $(x,y)$.
+            pregunta: |
+              La funció $f\circ\gamma$ depèn de $t$. Quin punt del pla $(x,y)$ correspon a $t=0$?
+          - id: suma_en_lloc_de_producte
+            descripcio: |
+              Suma els vectors o multiplica components sense sumar-les (no fa el producte escalar).
+            pregunta: |
+              La derivada de $f\circ\gamma$ és un nombre. Quina operació entre $\nabla f$ i $\gamma'$ dona un nombre?
+        nota_professor: |
+          "A l'origen" vol dir en $t=0$ (origen del paràmetre); $\gamma(0)=(1,0)$ no és l'origen del pla.
+
+  - num: 25
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t4-25"
+        apartat: null
+        tipus: calcul
+        enunciat: |
+          Determineu si la corba definida en forma implícita per $x^2+y+\cos(xy)=1$ es pot escriure de la forma $y=g(x)$ en un entorn de l'origen. I de la forma $x=h(y)$?
+        teoria: []
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Sí de la forma $y=g(x)$ (amb $g\in\mathcal{C}^\infty$, $g(0)=0$), perquè $\frac{\partial F}{\partial y}(0,0)=1\neq0$ per a $F=x^2+y+\cos(xy)-1$. No de la forma $x=h(y)$: per a $0<y<\sqrt2$ no hi ha cap punt de la corba amb aquesta ordenada (de $1-\cos u\le u^2/2$ surt $y\le x^2(y^2/2-1)\le 0$), de manera que cap $h$ pot estar definida en un entorn de $y=0$; a més, per a $y<0$ petit hi ha dos punts $(\pm x,y)$ de la corba.
+          fuites: ['x\s*=\s*h\(y\)\$?[^.?]{0,25}\bno\b', '\bno\b\s+(es\s+pot|existeix|és\s+possible|pot)[^.?]{0,40}x\s*=\s*h', '\bno\s+existeix[^.?]{0,25}\bh\b', 'no\s+(hi\s+ha|t[ée])\s+(cap\s+)?punts?[^.?]{0,40}y\s*>\s*0']
+        passos:
+          - id: y_de_x
+            titol: "Forma y=g(x)"
+            objectiu: |
+              Decidir si la corba es pot escriure com $y=g(x)$ prop de l'origen.
+            idea: |
+              Escriure la corba com $F(x,y)=0$, comprovar que l'origen hi és i la hipòtesi del teorema de la funció implícita per aïllar $y$.
+            detall: |
+              $F(x,y)=x^2+y+\cos(xy)-1$, de classe $\mathcal{C}^\infty$, $F(0,0)=0$. $\frac{\partial F}{\partial y}=1-x\sin(xy)$, que en $(0,0)$ val $1\neq0$. Pel teorema de la funció implícita existeix $g\in\mathcal{C}^\infty$ en un entorn de $0$, $g(0)=0$, i prop de l'origen la corba és exactament la gràfica de $g$.
+            fuites: []
+            teoria: ["T4.13"]
+          - id: x_de_y_tfi
+            titol: "El teorema no decideix x=h(y)"
+            objectiu: |
+              Veure si el teorema de la funció implícita permet aïllar $x$.
+            idea: |
+              Comprovar la hipòtesi del teorema respecte de $x$ i recordar que és una condició suficient, no necessària.
+            detall: |
+              $\frac{\partial F}{\partial x}=2x-y\sin(xy)$, i $\frac{\partial F}{\partial x}(0,0)=0$. El teorema no s'aplica; cal estudiar la corba directament.
+            fuites: ['\\partial\s*F\}?\s*\{\\partial\s*x\}\s*\(0,\s*0\)\s*=\s*0', 'F_\{?x\}?\s*\(0,\s*0\)\s*=\s*0']
+            teoria: ["T4.13"]
+          - id: x_de_y_directe
+            titol: "Estudi directe"
+            objectiu: |
+              Decidir si existeix alguna $h$ definida en un entorn de $y=0$ amb $x=h(y)$ descrivint la corba prop de l'origen.
+            idea: |
+              Mirar quin signe pot tenir $y$ en els punts de la corba propers a l'origen. Una fita útil d'una variable: $1-\cos u\le \frac{u^2}{2}$ per a tot $u$ (no és a les notes, és de Càlcul d'una variable).
+            detall: |
+              A la corba, $y=1-\cos(xy)-x^2\le\frac{x^2y^2}{2}-x^2=x^2\left(\frac{y^2}{2}-1\right)$. Si $|y|<\sqrt2$, el segon membre és $\le0$, per tant tot punt de la corba amb $|y|<\sqrt2$ té $y\le0$. Així, per a $0<y<\sqrt2$ no hi ha cap $x$ amb $(x,y)$ a la corba, i no pot existir $h$ definida en un entorn de $0$. (A més, $F(-x,y)=F(x,y)$: per a $y<0$ petit els punts són parells $(\pm x,y)$, i tampoc hi hauria unicitat.) Coherentment, $g'(0)=0$ i $g''(0)=-2$: la corba és com la paràbola $y=-x^2$.
+            fuites: ['\\[dt]?frac\s*\{y\^\{?2\}?\}\s*\{?2\}?\s*-\s*1', 'y\^\{?2\}?\s*/\s*2\s*-\s*1', 'g''''\s*\(0\)\s*=\s*-\s*2', '\by\s*(\\le|\\leq|\\leqslant|≤)\s*0\b']
+            teoria: []
+        errors_comuns:
+          - id: tfi_necessaria
+            descripcio: |
+              Conclou que no es pot escriure $x$ en funció de $y$ només perquè $\partial F/\partial x(0,0)=0$.
+            pregunta: |
+              El teorema de la funció implícita dona una condició suficient o necessària? Què et diu quan la hipòtesi falla?
+          - id: confondre_variables
+            descripcio: |
+              Comprova la derivada respecte de $x$ per a la forma $y=g(x)$ (intercanvia els papers).
+            pregunta: |
+              Si vols $y$ en funció de $x$, respecte de quina variable ha de ser no nul·la la derivada?
+          - id: argument_camins
+            descripcio: |
+              Argumenta amb dibuixos o aproximacions ($y\approx-x^2$) sense una justificació rigorosa que per a $y>0$ no hi ha solucions.
+            pregunta: |
+              El que afirmes sobre els punts de la corba propers a l'origen, ho pots demostrar amb una desigualtat en lloc d'una aproximació o un dibuix?
+        nota_professor: |
+          Argument alternatiu: $g$ és parella (unicitat més simetria) amb $g(0)=0$, $g'(0)=0$, $g''(0)=-2$, per tant màxim local estricte en 0; cada $y<0$ petit té dues antiimatges i cap $y>0$ en té.
+
+  - num: 26
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t4-26"
+        apartat: null
+        tipus: teoric
+        enunciat: |
+          Demostreu que existeix un entorn obert $U\subseteq\mathbb{R}$ de $-1$ i funcions $u,v:U\to\mathbb{R}$ de classe $\mathcal{C}^1$ tals que $u(-1)=v(-1)=1$ i
+          $$\left.\begin{aligned}xe^{u(x)}+u(x)e^{v(x)}&=0\\ xe^{v(x)}+v(x)e^{u(x)}&=0\end{aligned}\right\}$$
+        teoria: ["T3.31"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Sigui $\Phi(x,u,v)=(xe^u+ue^v,\,xe^v+ve^u)$, de classe $\mathcal{C}^\infty$, amb $\Phi(-1,1,1)=(0,0)$ i $\det\frac{\partial\Phi}{\partial(u,v)}(-1,1,1)=\det\begin{pmatrix}0&e\\e&0\end{pmatrix}=-e^2\neq0$. Pel teorema de la funció implícita existeixen un entorn obert $U$ de $-1$ i $(u,v):U\to\mathbb{R}^2$ de classe $\mathcal{C}^\infty$ (en particular $\mathcal{C}^1$) amb $u(-1)=v(-1)=1$ i $\Phi(x,u(x),v(x))=0$.
+          fuites: []
+        passos:
+          - id: plantejar
+            titol: "Plantejar el sistema com Φ=0"
+            objectiu: |
+              Escriure el problema en el llenguatge del teorema de la funció implícita i comprovar que el punt de partida és solució.
+            idea: |
+              Definir $\Phi:\mathbb{R}^3\to\mathbb{R}^2$ amb variables $(x,u,v)$, on $x$ és la independent, i avaluar-la en el punt que dicten les condicions inicials.
+            detall: |
+              $\Phi(x,u,v)=(xe^u+ue^v,\,xe^v+ve^u)$ és $\mathcal{C}^\infty$ (sumes i productes d'exponencials i polinomis). $\Phi(-1,1,1)=(-e+e,-e+e)=(0,0)$.
+            fuites: []
+            teoria: ["T3.31"]
+          - id: jacobiana
+            titol: "Determinant respecte de (u,v)"
+            objectiu: |
+              Comprovar la hipòtesi del teorema que permet aïllar $(u,v)$ en funció de $x$, i concloure.
+            idea: |
+              Calcular la matriu de derivades parcials de $\Phi$ respecte de $u$ i $v$ en el punt i el seu determinant.
+            detall: |
+              $\frac{\partial\Phi}{\partial(u,v)}=\begin{pmatrix}xe^u+e^v & ue^v\\ ve^u & xe^v+e^u\end{pmatrix}$, que en $(-1,1,1)$ és $\begin{pmatrix}0&e\\e&0\end{pmatrix}$, amb determinant $-e^2\neq0$. El teorema de la funció implícita dona un obert $U\ni-1$ i $(u,v)\in\mathcal{C}^\infty(U)\subseteq\mathcal{C}^1(U)$ amb $(u,v)(-1)=(1,1)$ i que satisfan el sistema per a tot $x\in U$.
+            fuites: ['-\s*e\^\{?2\}?']
+            teoria: ["T4.13"]
+        errors_comuns:
+          - id: derivar_respecte_x
+            descripcio: |
+              Calcula el determinant respecte de variables equivocades (inclou $x$) o pren la jacobiana $2\times3$ completa.
+            pregunta: |
+              Quines són les incògnites que vols posar en funció de $x$? Respecte de quines cal derivar?
+          - id: oblidar_derivar_productes
+            descripcio: |
+              En derivar $ue^v$ respecte de $u$ oblida un dels termes, o respecte de $v$ oblida el factor $u$.
+            pregunta: |
+              Quantes dependències de $u$ i de $v$ hi ha a la primera equació? Has derivat cadascuna?
+        nota_professor: |
+          Derivant: $\begin{pmatrix}0&e\\e&0\end{pmatrix}\begin{pmatrix}u'\\v'\end{pmatrix}=-\begin{pmatrix}e\\e\end{pmatrix}$, d'on $u'(-1)=v'(-1)=-1$ (no demanat).
+
+  - num: 27
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t4-27"
+        apartat: null
+        tipus: calcul
+        enunciat: |
+          Demostreu que la corba d'equació
+          $$xy=\log\left(\frac{x}{y}\right)$$
+          és la gràfica d'una funció $f$ de classe $\mathcal{C}^\infty$ en un entorn de $x=\sqrt{e}$. Té $f$ un extrem local en $x=\sqrt{e}$?
+        teoria: ["T3.31", "T5.9"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Per a $x=\sqrt e$ l'únic punt de la corba és $y_0=1/\sqrt e$. Amb $F(x,y)=xy-\log x+\log y$ ($x,y>0$), $\frac{\partial F}{\partial y}(\sqrt e,1/\sqrt e)=2\sqrt e\neq0$, i el teorema de la funció implícita dona $f\in\mathcal{C}^\infty$ amb $f(\sqrt e)=1/\sqrt e$. A més $f'(\sqrt e)=0$ i $f''(\sqrt e)=-\frac{1}{2e^{3/2}}<0$: $f$ té un màxim local estricte en $x=\sqrt e$.
+          fuites: ['m[àa]xim\s+local', '\bés\s+un\s+m[àa]xim', '-\s*\\[dt]?frac\s*\{1\}\s*\{2\s*e\s*(\^|\\sqrt)']
+        passos:
+          - id: punt
+            titol: "Trobar el punt de la corba"
+            objectiu: |
+              Trobar quin punt $(\sqrt e,y_0)$ és a la corba.
+            idea: |
+              Observar el domini (cal $x/y>0$) i provar valors que simplifiquin el logaritme; justificar la unicitat per monotonia en $y$.
+            detall: |
+              Com que $x=\sqrt e>0$, cal $y>0$. L'equació és $\sqrt e\,y=\frac12-\log y$; el membre esquerre és creixent i el dret decreixent en $y$, per tant hi ha com a màxim una solució, i $y_0=\frac{1}{\sqrt e}$ ho és: $1=\frac12+\frac12$.
+            fuites: ['\\[dt]?frac\s*\{?1\}?\s*\{\\sqrt\s*\{?e\}?\}', '1\s*/\s*\\sqrt\s*\{?e\}?', 'e\^\{\s*-\s*(1/2|\\[dt]?frac\s*\{?1\}?\s*\{?2\}?)\s*\}']
+            teoria: []
+          - id: tfi
+            titol: "Aplicar el teorema de la funció implícita"
+            objectiu: |
+              Justificar que, prop d'aquest punt, la corba és la gràfica d'una funció $\mathcal{C}^\infty$ de $x$.
+            idea: |
+              Escriure $F(x,y)=0$ en un obert on $F$ sigui $\mathcal{C}^\infty$ i comprovar la hipòtesi sobre la derivada respecte de $y$.
+            detall: |
+              A l'obert $x,y>0$, $F(x,y)=xy-\log x+\log y$ és $\mathcal{C}^\infty$. $\frac{\partial F}{\partial y}=x+\frac1y$, que en el punt val $\sqrt e+\sqrt e=2\sqrt e\neq0$. Pel teorema de la funció implícita hi ha un interval obert $I\ni\sqrt e$ i $f\in\mathcal{C}^1(I)$ amb $f(\sqrt e)=1/\sqrt e$, $f>0$, $F_y(x,f(x))\neq0$ en $I$, i prop del punt la corba és exactament la gràfica de $f$. A més $f'=-\frac{F_x(x,f)}{F_y(x,f)}$; si $f\in\mathcal{C}^k$ el segon membre és $\mathcal{C}^k$, així que $f\in\mathcal{C}^{k+1}$, i per inducció $f\in\mathcal{C}^\infty(I)$ (les notes ho abreugen aplicant el teorema amb $r=\infty$).
+            fuites: ['2\s*\\sqrt\s*\{?e\}?\s*\\neq']
+            teoria: ["T4.13", "T3.31"]
+          - id: punt_critic
+            titol: "Derivada primera"
+            objectiu: |
+              Calcular $f'(\sqrt e)$.
+            idea: |
+              Derivar la identitat $F(x,f(x))=0$ respecte de $x$ i avaluar.
+            detall: |
+              $f+xf'-\frac1x+\frac{f'}{f}=0$. En $x=\sqrt e$, $f=1/\sqrt e$: $\frac{1}{\sqrt e}-\frac{1}{\sqrt e}+2\sqrt e\,f'(\sqrt e)=0$, per tant $f'(\sqrt e)=0$: és un punt crític.
+            fuites: ['f''\s*\(\\sqrt\s*\{?e\}?\)\s*=\s*0']
+            teoria: ["T4.15", "T3.21"]
+          - id: segona_derivada
+            titol: "Classificar amb la derivada segona"
+            objectiu: |
+              Decidir si hi ha extrem local i de quin tipus.
+            idea: |
+              Tornar a derivar la identitat, usar $f'(\sqrt e)=0$ per simplificar i aplicar el criteri de la derivada segona.
+            detall: |
+              Derivant de nou: $2f'+xf''+\frac{1}{x^2}+\frac{f''}{f}-\frac{f'^2}{f^2}=0$. En el punt ($f'=0$): $f''(\sqrt e)\,(\sqrt e+\sqrt e)=-\frac1e$, d'on $f''(\sqrt e)=-\frac{1}{2e^{3/2}}<0$. Pel criteri de la derivada $r$-èsima amb $r=2$, $x=\sqrt e$ és un màxim local estricte de $f$.
+            fuites: ['-\s*\\[dt]?frac\s*\{1\}\s*\{2\s*e\s*(\^|\\sqrt)', 'm[àa]xim\s+local', '\bés\s+un\s+m[àa]xim']
+            teoria: ["T5.11"]
+        errors_comuns:
+          - id: domini_log
+            descripcio: |
+              Treballa amb $\log x-\log y$ sense comprovar que $x,y>0$, o busca solucions amb $y<0$.
+            pregunta: |
+              Per a quins valors de $y$ té sentit $\log(x/y)$ quan $x=\sqrt e$?
+          - id: critic_implica_extrem
+            descripcio: |
+              Conclou que hi ha extrem només perquè $f'(\sqrt e)=0$.
+            pregunta: |
+              Que la derivada s'anul·li, és suficient per tenir un extrem? Quina informació addicional necessites?
+          - id: termes_segona_derivada
+            descripcio: |
+              En derivar per segon cop oblida el terme de $\log f$ (la derivada de $f'/f$) o el de $xf'$.
+            pregunta: |
+              La derivada de $\log f(x)$ és $f'/f$. Què dona derivar aquest quocient?
+        nota_professor: |
+          Alternativa: $f''(\sqrt e)=-\frac{F_{xx}}{F_y}$ en un punt crític, amb $F_{xx}=1/x^2=1/e$. Comprovat amb sympy.
+
+  - num: 28
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t4-28a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          Considereu $F:U\subseteq\mathbb{R}^2\to\mathbb{R}$ de classe $\mathcal{C}^1$ i $p\in U$ tal que $F(p)=0$. Suposem que, en un entorn de $p$, l'equació $F(x,y)=0$ defineix localment $y$ com a funció implícita de $x$, $y=g(x)$. Demostreu que, si $\frac{\partial F}{\partial x}(p)\neq 0$ i $\frac{\partial F}{\partial y}(p)=0$, llavors $g$ no és de classe $\mathcal{C}^1$.
+        teoria: ["T3.2", "T3.31"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Sigui $p=(x_0,y_0)$. Si $g$ fos $\mathcal{C}^1$ (en particular derivable en $x_0$), derivant $F(x,g(x))=0$ amb la regla de la cadena en $x_0$ s'obtindria $\frac{\partial F}{\partial x}(p)+\frac{\partial F}{\partial y}(p)\,g'(x_0)=0$, és a dir $\frac{\partial F}{\partial x}(p)=0$, contradicció. Per tant $g$ no és $\mathcal{C}^1$ (de fet, ni tan sols derivable en $x_0$).
+          fuites: []
+        passos:
+          - id: suposar
+            titol: "Plantejar per reducció a l'absurd"
+            objectiu: |
+              Escriure què es té si se suposa que $g$ és $\mathcal{C}^1$.
+            idea: |
+              Suposar el contrari i escriure la identitat que satisfà $g$ en un entorn de $x_0$, on $p=(x_0,y_0)$.
+            detall: |
+              Suposem $g\in\mathcal{C}^1$ en un entorn de $x_0$, amb $g(x_0)=y_0$ i $F(x,g(x))=0$ per a tot $x$ d'aquest entorn.
+            fuites: []
+            teoria: []
+          - id: derivar
+            titol: "Derivar la identitat i arribar a contradicció"
+            objectiu: |
+              Obtenir una contradicció amb les hipòtesis sobre les derivades parcials de $F$.
+            idea: |
+              Derivar la identitat amb la regla de la cadena (cal que $F$ sigui diferenciable i $g$ derivable) i avaluar en $x_0$.
+            detall: |
+              $F$ és $\mathcal{C}^1$, per tant diferenciable, i $x\mapsto(x,g(x))$ és derivable. Per la regla de la cadena, $0=\frac{d}{dx}F(x,g(x))\big|_{x_0}=\frac{\partial F}{\partial x}(p)+\frac{\partial F}{\partial y}(p)g'(x_0)=\frac{\partial F}{\partial x}(p)$, que contradiu $\frac{\partial F}{\partial x}(p)\neq0$.
+            fuites: []
+            teoria: ["T3.21", "T3.18"]
+        errors_comuns:
+          - id: aplicar_formula
+            descripcio: |
+              Escriu $g'=-F_x/F_y$ i diu que "divideix per zero", sense justificar d'on surt la fórmula ni que sigui aplicable.
+            pregunta: |
+              La fórmula $g'=-F_x/F_y$ d'on surt? Què pots escriure abans de dividir per $F_y$?
+          - id: invoca_tfi
+            descripcio: |
+              Diu que el teorema de la funció implícita "no s'aplica" i per tant $g$ no és $\mathcal{C}^1$.
+            pregunta: |
+              Si les hipòtesis d'un teorema no es compleixen, la conclusió és necessàriament falsa?
+        nota_professor: |
+          Només cal la derivabilitat de $g$ en $x_0$; la conclusió és més forta: $g$ no és derivable en $x_0$. Exemple: $F=x-y^3$ en $(0,0)$, $g(x)=x^{1/3}$.
+
+      - id: "t4-28b"
+        apartat: "b"
+        tipus: teoric
+        enunciat: |
+          Doneu un exemple de funció $F:U\subseteq\mathbb{R}^2\to\mathbb{R}$ de classe $\mathcal{C}^1$ i un punt $p\in U$, tals que $F(p)=0$, $\nabla F(p)=0$ i l'equació $F(x,y)=0$ defineixi $y$ com a funció de classe $\mathcal{C}^1$ de $x$, en un entorn de $p$. Contradiu això el teorema de la funció implícita?
+        teoria: ["T3.10", "T3.31"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Per exemple $F(x,y)=y^3$ (o $F(x,y)=(y-x)^2$) i $p=(0,0)$: $F(p)=0$, $\nabla F(p)=(0,0)$ i $F(x,y)=0\iff y=0$ (resp. $y=x$), funció $\mathcal{C}^1$ de $x$. No contradiu el teorema: la condició $\frac{\partial F}{\partial y}(p)\neq0$ és suficient però no necessària.
+          fuites: []
+        passos:
+          - id: exemple
+            titol: "Construir un exemple"
+            objectiu: |
+              Trobar $F$ de classe $\mathcal{C}^1$ i $p$ amb $F(p)=0$, $\nabla F(p)=0$, el conjunt de zeros de la qual sigui la gràfica d'una funció $\mathcal{C}^1$ prop de $p$.
+            idea: |
+              Partir d'una corba que sigui la gràfica d'una funció suau (per exemple una recta) i elevar l'equació a una potència: el conjunt de zeros no canvia però el gradient s'anul·la.
+            detall: |
+              $F(x,y)=y^3$, $p=(0,0)$: $F$ és $\mathcal{C}^\infty$, $F(p)=0$, $\nabla F=(0,3y^2)$ i $\nabla F(p)=(0,0)$. $F(x,y)=0\iff y=0$, és a dir, $y=g(x)\equiv0$, que és $\mathcal{C}^1$. (Igualment $F=(y-x)^2$ amb $g(x)=x$.)
+            fuites: ['F\s*\(x,\s*y\)\s*=\s*y\^\{?3\}?']
+            teoria: ["T3.10"]
+          - id: no_contradiccio
+            titol: "Relació amb el teorema"
+            objectiu: |
+              Decidir si l'exemple contradiu el teorema de la funció implícita.
+            idea: |
+              Analitzar l'estructura lògica del teorema: què afirma quan es compleixen les hipòtesis i què (no) afirma quan fallen.
+            detall: |
+              No el contradiu. El teorema diu: si $\frac{\partial F}{\partial y}(p)\neq0$, aleshores existeix la funció implícita. És una condició suficient; quan falla, el teorema no afirma res, i la funció implícita pot existir o no.
+            fuites: []
+            teoria: ["T4.13"]
+        errors_comuns:
+          - id: suficient_necessaria
+            descripcio: |
+              Creu que $\frac{\partial F}{\partial y}(p)\neq0$ és necessària per a l'existència de la funció implícita.
+            pregunta: |
+              El teorema té la forma "si A llavors B". Què pots deduir si A és fals?
+          - id: exemple_amb_a
+            descripcio: |
+              Proposa un exemple amb $\frac{\partial F}{\partial x}(p)\neq0$ (per exemple $F=x-y^3$), que per l'apartat (a) no pot donar $g$ de classe $\mathcal{C}^1$, o oblida comprovar $\nabla F(p)=0$.
+            pregunta: |
+              El teu exemple compleix totes les condicions de l'enunciat? Què et diu l'apartat (a) si alguna derivada parcial no s'anul·la?
+        nota_professor: |
+          Qualsevol $F=(y-g(x))^k$ amb $k\ge2$ i $g\in\mathcal{C}^1$ serveix.

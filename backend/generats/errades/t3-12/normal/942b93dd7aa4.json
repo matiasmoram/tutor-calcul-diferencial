@@ -1,0 +1,65 @@
+{
+  "id": "942b93dd7aa4",
+  "exercici": "t3-12",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Les components de $f$ són $f_1(x,y)=xy^{3/2}$ i $f_2(x,y)=x^{3/2}-y^2$. Hem de justificar la diferenciabilitat a prop de $(4,1)$, escriure l'aproximació lineal en aquest punt i avaluar-la en $(4.2,1.1)$.",
+    "Les dues components són sumes i productes de potències de $x$ i de $y$, que són funcions elementals; per tant $f$ és diferenciable a tot $\\mathbb{R}^2$, i en particular en un entorn de $(4,1)$.",
+    "Les derivades parcials són $\\frac{\\partial f_1}{\\partial x}=y^{3/2}$, $\\frac{\\partial f_1}{\\partial y}=\\frac32xy^{1/2}$, $\\frac{\\partial f_2}{\\partial x}=\\frac32x^{1/2}$ i $\\frac{\\partial f_2}{\\partial y}=-2y$. Al punt, com que $\\frac32\\cdot4\\cdot1=6$ i $\\frac32\\sqrt4=3$, queda $Jf(4,1)=\\begin{pmatrix}1&6\\\\3&-2\\end{pmatrix}$.",
+    "A més, $f(4,1)=(4\\cdot1,\\ 4^{3/2}-1)=(4,7)$, i l'aproximació lineal és $L(x,y)=(4,7)+\\begin{pmatrix}1&6\\\\3&-2\\end{pmatrix}\\begin{pmatrix}x-4\\\\y-1\\end{pmatrix}=\\big(4+(x-4)+6(y-1),\\ 7+3(x-4)-2(y-1)\\big)$.",
+    "Per aproximar $f(4.2,1.1)$ apliquem la jacobiana al punt: $f(4.2,1.1)\\approx(4+4.2+6\\cdot1.1,\\ 7+3\\cdot4.2-2\\cdot1.1)=(14.8,\\ 17.4)$.",
+    "Per tant, l'aproximació lineal dona $f(4.2,1.1)\\approx(14.8,\\ 17.4)$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "per tant $f$ és diferenciable a tot $\\mathbb{R}^2$",
+      "inici": 101,
+      "fi": 151,
+      "tipus": "hipotesi",
+      "explicacio": "Ser «elemental» no garanteix la diferenciabilitat: $y^{3/2}$ i $x^{3/2}$ ni tan sols estan definides per a $y<0$ o $x<0$. Cal comprovar on les parcials existeixen i són contínues.",
+      "correccio": "A l'obert $U=\\{x>0,\\ y>0\\}$, que conté $(4,1)$, les quatre derivades parcials existeixen i són contínues; per la condició suficient, $f$ és diferenciable a tot $U$.",
+      "pista": "Està definida $y^{3/2}$ per a valors negatius de $y$? On són contínues les derivades parcials?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$f(4.2,1.1)\\approx(4+4.2+6\\cdot1.1,\\ 7+3\\cdot4.2-2\\cdot1.1)=(14.8,\\ 17.4)$",
+      "inici": 58,
+      "fi": 132,
+      "tipus": "calcul",
+      "explicacio": "La jacobiana s'ha d'aplicar a l'increment $(4.2-4,\\ 1.1-1)=(0.2,\\ 0.1)$, no a les coordenades del punt; a més, no és coherent amb la fórmula de $L$ escrita al pas anterior.",
+      "correccio": "$L(4.2,1.1)=(4+0.2+6\\cdot0.1,\\ 7+3\\cdot0.2-2\\cdot0.1)=(4.8,\\ 7.4)$.",
+      "pista": "A quin vector s'ha d'aplicar la jacobiana en l'aproximació lineal: al punt o al desplaçament respecte de $(4,1)$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t34.json",
+    "valoracio": "Jacobiana i aproximació lineal correctes, però la diferenciabilitat es justifica malament i l'avaluació usa el punt en lloc de l'increment.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "que són funcions elementals; per tant $f$ és diferenciable a tot $\\mathbb{R}^2$",
+        "gravetat": "error",
+        "explicacio": "$x^{3/2}$ i $y^{3/2}$ no estan definides per a $x<0$ o $y<0$, i 'elemental' no justifica la diferenciabilitat: cal un obert com $\\{x>0,y>0\\}$ on les parcials existeixen i són contínues (condició suficient)."
+      },
+      {
+        "fragment": 5,
+        "cita": "$f(4.2,1.1)\\approx(4+4.2+6\\cdot1.1,\\ 7+3\\cdot4.2-2\\cdot1.1)=(14.8,\\ 17.4)$",
+        "gravetat": "error",
+        "explicacio": "Aplica la jacobiana al punt $(4.2,1.1)$ en lloc de l'increment $(0.2,0.1)$; correcte: $(4.8,\\ 7.4)$."
+      },
+      {
+        "fragment": 6,
+        "cita": "$f(4.2,1.1)\\approx(14.8,\\ 17.4)$",
+        "gravetat": "consequencia",
+        "explicacio": "Hereta el valor erroni del fragment anterior."
+      }
+    ]
+  },
+  "creat": 1791295851.9240322
+}

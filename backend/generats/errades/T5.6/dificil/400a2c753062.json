@@ -1,0 +1,84 @@
+{
+  "id": "400a2c753062",
+  "exercici": "T5.6",
+  "font": "teoria",
+  "dificultat": "dificil",
+  "fragments": [
+    "(Schwarz) Sigui $\\Omega\\subseteq\\mathbb{R}^n$ obert i $f:\\Omega\\to\\mathbb{R}^m$ una funció tal que les derivades parcials $D_if$, $D_jf$, $D_iD_jf$ i $D_jD_if$ existeixen en $\\Omega$.",
+    "Si $D_iD_jf$ i $D_jD_if$ són contínues en $\\Omega\\setminus\\{\\mathbf{a}\\}$, on $\\mathbf{a}\\in\\Omega$, aleshores $D_iD_jf(\\mathbf{a})=D_jD_if(\\mathbf{a})$.",
+    "Ho demostrem per a $n=2$, $m=1$ i $\\mathbf{a}=(a,b)$; el cas general és anàleg. Prenem $h,k$ no nuls tals que el rectangle $R(h,k)$ de vèrtexs $(a,b)$, $(a+h,b)$, $(a+h,b+k)$ i $(a,b+k)$ sigui dins de $\\Omega$, i considerem $\\Delta(h,k)=f(a+h,b+k)-f(a+h,b)-f(a,b+k)+f(a,b)$.",
+    "Sigui $G(x)=f(x,b+k)-f(x,b)$, de manera que $\\Delta(h,k)=G(a+h)-G(a)$. Com que $D_1f$ existeix en $\\Omega$, $G$ és derivable (i, per tant, contínua) entre $a$ i $a+h$, amb $G'(x)=D_1f(x,b+k)-D_1f(x,b)$.",
+    "Pel teorema del valor mitjà, per a tot $\\xi_x\\in(a,a+h)$ es té $\\Delta(h,k)=h\\,G'(\\xi_x)=h\\big(D_1f(\\xi_x,b+k)-D_1f(\\xi_x,b)\\big)$.",
+    "Fixat $\\xi_x$, apliquem de nou el teorema del valor mitjà a la funció $y\\mapsto D_1f(\\xi_x,y)$, que és derivable amb derivada $D_2D_1f(\\xi_x,y)$: existeix $\\xi_y\\in(b,b+k)$ tal que $\\Delta(h,k)=h\\,k\\,D_2D_1f(\\xi_x,\\xi_y)$ (1), amb $(\\xi_x,\\xi_y)\\in R(h,k)$.",
+    "Anàlogament, amb $H(y)=f(a+h,y)-f(a,y)$ tenim $\\Delta(h,k)=H(b+k)-H(b)$; aplicant el teorema del valor mitjà primer en $y$ i després en $x$, obtenim $(\\eta_x,\\eta_y)\\in R(h,k)$ tal que $\\Delta(h,k)=h\\,k\\,D_1D_2f(\\eta_x,\\eta_y)$ (2).",
+    "Igualant (1) i (2) i dividint per $hk\\neq0$, obtenim $D_2D_1f(\\xi_x,\\xi_y)=D_1D_2f(\\eta_x,\\eta_y)$. Fem ara tendir $h\\to0$, amb $k$ fix: tots dos punts tendeixen a $(a,b)$, ja que són de $R(h,k)$, i per la continuïtat de $D_2D_1f$ i $D_1D_2f$ en un entorn de $(a,b)$ concloem que $D_2D_1f(a,b)=D_1D_2f(a,b)$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "són contínues en $\\Omega\\setminus\\{\\mathbf{a}\\}$",
+      "inici": 25,
+      "fi": 73,
+      "tipus": "hipotesi",
+      "explicacio": "La continuïtat fora d'$\\mathbf{a}$ no basta: $f(x,y)=\\frac{xy(x^2-y^2)}{x^2+y^2}$, $f(0,0)=0$, té les derivades mixtes contínues en $\\mathbb{R}^2\\setminus\\{(0,0)\\}$, però $D_2D_1f(0,0)=-1\\neq1=D_1D_2f(0,0)$.",
+      "correccio": "Els apunts demanen que $D_iD_jf$ i $D_jD_if$ siguin contínues en un entorn d'$\\mathbf{a}$ (que conté el mateix punt $\\mathbf{a}$).",
+      "pista": "El pas final de la demostració avalua un límit quan els punts s'acosten a $\\mathbf{a}$: necessites la continuïtat en $\\mathbf{a}$ mateix o només al seu voltant?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "per a tot $\\xi_x\\in(a,a+h)$ es té",
+      "inici": 29,
+      "fi": 62,
+      "tipus": "quantificador",
+      "explicacio": "El teorema del valor mitjà només garanteix que existeix algun $\\xi_x\\in(a,a+h)$ amb $G(a+h)-G(a)=h\\,G'(\\xi_x)$, no que la igualtat valgui per a tots els punts de l'interval.",
+      "correccio": "Pel teorema del valor mitjà, existeix $\\xi_x\\in(a,a+h)$ tal que $\\Delta(h,k)=h\\,G'(\\xi_x)$.",
+      "pista": "Què afirma exactament el teorema del valor mitjà sobre el punt intermedi: existència o per a tot?"
+    },
+    {
+      "id": "e3",
+      "fragment": 8,
+      "cita": "Fem ara tendir $h\\to0$, amb $k$ fix: tots dos punts tendeixen a $(a,b)$",
+      "inici": 100,
+      "fi": 171,
+      "tipus": "pas_injustificat",
+      "explicacio": "Amb $k$ fix, el rectangle $R(h,k)$ es redueix al segment vertical de $(a,b)$ a $(a,b+k)$, de manera que $\\xi_y$ i $\\eta_y$ no tenen per què tendir a $b$; cal fer tendir $(h,k)\\to(0,0)$.",
+      "correccio": "Es fa tendir $(h,k)\\to(0,0)$; llavors $R(h,k)$ es redueix al punt $(a,b)$ i els dos punts intermedis hi tendeixen.",
+      "pista": "Si només $h$ tendeix a $0$, a què es redueix el rectangle $R(h,k)$? On poden quedar les segones coordenades dels punts?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t5.json",
+    "valoracio": "Hipòtesi de continuïtat afeblida, quantificador del TVM canviat i pas al límit incorrecte amb $k$ fix.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "contínues en $\\Omega\\setminus\\{\\mathbf{a}\\}$",
+        "gravetat": "error",
+        "explicacio": "Hipòtesi afeblida: cal continuïtat en un entorn de $\\mathbf{a}$ (incloent-hi $\\mathbf{a}$). El contraexemple $xy\\frac{x^2-y^2}{x^2+y^2}$ té derivades segones contínues fora de l'origen i no hi coincideixen."
+      },
+      {
+        "fragment": 5,
+        "cita": "per a tot $\\xi_x\\in(a,a+h)$ es té",
+        "gravetat": "error",
+        "explicacio": "El teorema del valor mitjà garanteix l'existència d'algun $\\xi_x$, no que la igualtat valgui per a tot punt de l'interval."
+      },
+      {
+        "fragment": 8,
+        "cita": "Fem ara tendir $h\\to0$, amb $k$ fix",
+        "gravetat": "error",
+        "explicacio": "Amb $k$ fix, els punts $(\\xi_x,\\xi_y)$ i $(\\eta_x,\\eta_y)$ de $R(h,k)$ no tendeixen a $(a,b)$ (la segona coordenada queda a $(b,b+k)$). Cal fer $(h,k)\\to(0,0)$."
+      },
+      {
+        "fragment": 8,
+        "cita": "per la continuïtat de $D_2D_1f$ i $D_1D_2f$ en un entorn de $(a,b)$",
+        "gravetat": "consequencia",
+        "explicacio": "Pas dels apunts, però usa la continuïtat en un entorn de $(a,b)$ (en particular en $(a,b)$), hipòtesi que l'enunciat [2] ha tret."
+      }
+    ]
+  },
+  "creat": 1791296162.0899277
+}

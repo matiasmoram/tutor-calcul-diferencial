@@ -1,0 +1,67 @@
+{
+  "id": "690f67a52194",
+  "exercici": "T2.28",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $f:\\Omega\\subseteq M\\to N$. Aleshores, $f$ Lipschitz $\\Rightarrow$ $f$ uniformement contínua $\\Rightarrow$ $f$ contínua. Els recíprocs són falsos, fins i tot quan $\\Omega$ és compacte.",
+    "Si $f$ és Lipschitz, existeix $C>0$ tal que $d'(f(x),f(y))\\leq C\\,d(x,y)$ per a tot $x,y\\in\\Omega$. Donat $\\epsilon>0$, prenem $\\delta=C\\,\\epsilon$: si $x,y\\in\\Omega$ i $d(x,y)<\\delta$, aleshores $d'(f(x),f(y))\\leq C\\,d(x,y)<\\epsilon$. Per tant, $f$ és uniformement contínua.",
+    "Per definició, si $f$ és uniformement contínua en $\\Omega$, aleshores és contínua en tot punt $x_0\\in\\Omega$ (el mateix $\\delta$ serveix per a tots els punts).",
+    "Vegem que els recíprocs no són certs. La funció $f:(0,1]\\to\\mathbb{R}$, $f(x)=1/x$, és contínua però no uniformement contínua: cal veure que existeix $\\epsilon>0$ tal que per a tot $\\delta>0$ hi ha $x,y\\in(0,1]$ amb $|x-y|<\\delta$ i $|f(x)-f(y)|\\geq\\epsilon$.",
+    "Prenem $\\epsilon=1$ i, donat $\\delta>0$ (podem suposar $\\delta<1$), $x=\\delta/2$ i $y=\\delta/3$. Aleshores $|x-y|=\\delta/6<\\delta$ i $|f(x)-f(y)|=\\left|\\frac{2}{\\delta}-\\frac{3}{\\delta}\\right|=\\frac{1}{\\delta}>1$.",
+    "La funció $f:[0,1]\\to\\mathbb{R}$, $f(x)=\\sqrt{x}$, és uniformement contínua però no és Lipschitz. Suposem que existeix $C>0$ tal que $|\\sqrt{x}-\\sqrt{y}|\\leq C\\,|x-y|$ per a tot $x,y\\in[0,1]$.",
+    "Pel teorema del valor mitjà, per a $0<x<y\\leq1$ existeix $\\xi\\in(x,y)$ tal que $|\\sqrt{x}-\\sqrt{y}|=\\frac{1}{2\\sqrt{\\xi}}\\,|x-y|$. Caldria, doncs, que $\\frac{1}{2\\sqrt{\\xi}}\\leq C$ per a totes les $\\xi$ obtingudes així.",
+    "Però, prenent $x,y$ prou propers a zero, $\\xi$ és tan petit com vulguem i $\\frac{1}{2\\sqrt{\\xi}}$ tan gran com vulguem, en contradicció amb l'existència de $C$."
+  ],
+  "n_enunciat": 1,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "fins i tot quan $\\Omega$ és compacte",
+      "inici": 153,
+      "fi": 189,
+      "tipus": "conclusio",
+      "explicacio": "Pel teorema de Heine-Cantor, si $\\Omega$ és compacte tota funció contínua és uniformement contínua, de manera que el recíproc de la segona implicació és cert en compactes. El contraexemple de la demostració, $1/x$ a $(0,1]$, té domini no compacte.",
+      "correccio": "Lipschitz $\\Rightarrow$ uniformement contínua $\\Rightarrow$ contínua. Els recíprocs són falsos (en general).",
+      "pista": "El domini del contraexemple $1/x$ és compacte? Què diu el teorema de Heine-Cantor?"
+    },
+    {
+      "id": "e2",
+      "fragment": 2,
+      "cita": "prenem $\\delta=C\\,\\epsilon$",
+      "inici": 120,
+      "fi": 147,
+      "tipus": "calcul",
+      "explicacio": "Amb $\\delta=C\\epsilon$ només s'obté $d'(f(x),f(y))<C^2\\epsilon$, que no és menor que $\\epsilon$ si $C>1$.",
+      "correccio": "Cal prendre $\\delta=\\epsilon/C$, i aleshores $d'(f(x),f(y))\\leq C\\,d(x,y)<C\\,\\delta=\\epsilon$.",
+      "pista": "Si $d(x,y)<\\delta$, quant val com a màxim $C\\,d(x,y)$ amb aquest $\\delta$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t2a.json",
+    "valoracio": "Afegeix una afirmació falsa sobre compactes i tria $\\delta=C\\epsilon$ en lloc de $\\epsilon/C$.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "fins i tot quan $\\Omega$ és compacte",
+        "gravetat": "error",
+        "explicacio": "Fals: en un compacte, contínua implica uniformement contínua (Heine). A més, el contraexemple $1/x$ és sobre $(0,1]$, no compacte."
+      },
+      {
+        "fragment": 2,
+        "cita": "prenem $\\delta=C\\,\\epsilon$",
+        "gravetat": "error",
+        "explicacio": "Cal $\\delta=\\epsilon/C$; amb $\\delta=C\\epsilon$ es té $C\\,d(x,y)<C^2\\epsilon$, no $<\\epsilon$."
+      },
+      {
+        "fragment": 2,
+        "cita": "$d'(f(x),f(y))\\leq C\\,d(x,y)<\\epsilon$",
+        "gravetat": "consequencia",
+        "explicacio": "La desigualtat $C\\,d(x,y)<\\epsilon$ no se segueix amb $\\delta=C\\epsilon$."
+      }
+    ]
+  },
+  "creat": 1791295999.565266
+}

@@ -1,0 +1,75 @@
+{
+  "id": "76f612d1ddff",
+  "exercici": "t4-27",
+  "font": "problema",
+  "dificultat": "dificil",
+  "fragments": [
+    "Per a $x=\\sqrt e>0$, l'equació demana $\\frac{x}{y}>0$, és a dir $y>0$, i es pot escriure $\\sqrt e\\,y=\\frac12-\\log y$. Els dos membres són funcions creixents de $y$, i per tant hi ha com a màxim una solució; $y_0=\\frac{1}{\\sqrt e}$ ho és, ja que $1=\\frac12+\\frac12$.",
+    "A l'obert $\\{x>0,\\ y>0\\}$ considerem $F(x,y)=xy-\\log x+\\log y$, de classe $\\mathcal{C}^\\infty$, amb $F\\left(\\sqrt e,\\frac{1}{\\sqrt e}\\right)=0$. Com que $\\frac{\\partial F}{\\partial y}=x+\\frac1y$ val $\\sqrt e+\\sqrt e=2\\sqrt e\\neq0$ en el punt, el teorema de la funció implícita (amb $r=\\infty$) dona un interval obert $I\\ni\\sqrt e$ i $f\\in\\mathcal{C}^\\infty(I)$ amb $f(\\sqrt e)=\\frac{1}{\\sqrt e}$ tal que, prop del punt, la corba és exactament la gràfica de $f$.",
+    "Derivant $xf(x)-\\log x+\\log f(x)=0$: $f+xf'-\\frac1x+\\frac{f'}{f}=0$. En $x=\\sqrt e$, amb $f=\\frac{1}{\\sqrt e}$: $\\frac{1}{\\sqrt e}-\\frac{1}{\\sqrt e}+2\\sqrt e\\,f'(\\sqrt e)=0$, per tant $f'(\\sqrt e)=0$ i $f$ té un extrem local en $x=\\sqrt e$.",
+    "Per saber de quin tipus és, derivem de nou: $2f'+xf''+\\frac{1}{x^2}+\\frac{f''}{f}=0$.",
+    "En el punt, amb $f'(\\sqrt e)=0$: $f''(\\sqrt e)\\,(\\sqrt e+\\sqrt e)=-\\frac1e$, d'on $f''(\\sqrt e)=-\\frac{1}{2e^{3/2}}<0$. Per tant $x=\\sqrt e$ és un màxim local estricte de $f$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "Els dos membres són funcions creixents de $y$, i per tant hi ha com a màxim una solució",
+      "inici": 118,
+      "fi": 205,
+      "tipus": "logica",
+      "explicacio": "El membre dret $\\frac12-\\log y$ és decreixent, no creixent; i, si tots dos fossin creixents, no se'n podria deduir que hi ha com a màxim una solució (dues funcions creixents es poden tallar moltes vegades).",
+      "correccio": "El membre esquerre és creixent i el dret és decreixent en $y$, de manera que la seva diferència és estrictament monòtona i hi ha com a màxim una solució.",
+      "pista": "Com és $\\log y$ quan $y$ creix? Dues funcions creixents es poden tallar en més d'un punt?"
+    },
+    {
+      "id": "e2",
+      "fragment": 3,
+      "cita": "$f'(\\sqrt e)=0$ i $f$ té un extrem local en $x=\\sqrt e$",
+      "inici": 184,
+      "fi": 239,
+      "tipus": "conclusio",
+      "explicacio": "Que la derivada s'anul·li només diu que és un punt crític; no garanteix que hi hagi extrem (p. ex. $x^3$ en $0$). Cal l'estudi de la derivada segona per concloure-ho.",
+      "correccio": "$f'(\\sqrt e)=0$: $x=\\sqrt e$ és un punt crític, i cal classificar-lo (amb la derivada segona).",
+      "pista": "Tota funció amb derivada nul·la en un punt hi té un extrem?"
+    },
+    {
+      "id": "e3",
+      "fragment": 4,
+      "cita": "$2f'+xf''+\\frac{1}{x^2}+\\frac{f''}{f}=0$",
+      "inici": 44,
+      "fi": 84,
+      "tipus": "calcul",
+      "explicacio": "Falta el terme de derivar el denominador de $\\frac{f'}{f}$: $\\left(\\frac{f'}{f}\\right)'=\\frac{f''}{f}-\\frac{f'^2}{f^2}$. En aquest punt no canvia el valor perquè $f'=0$, però l'equació és incorrecta.",
+      "correccio": "$2f'+xf''+\\frac{1}{x^2}+\\frac{f''}{f}-\\frac{f'^2}{f^2}=0$.",
+      "pista": "Quina és la derivada d'un quocient $\\frac{f'}{f}$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t34.json",
+    "valoracio": "Resultat correcte (màxim local estricte), però amb una justificació d'unicitat falsa, una conclusió prematura d'extrem i un terme oblidat a la derivada segona.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "Els dos membres són funcions creixents de $y$, i per tant hi ha com a màxim una solució",
+        "gravetat": "error",
+        "explicacio": "$\\frac12-\\log y$ és decreixent; la unicitat ve de comparar una funció creixent amb una decreixent (dues creixents poden tallar-se diverses vegades)."
+      },
+      {
+        "fragment": 3,
+        "cita": "per tant $f'(\\sqrt e)=0$ i $f$ té un extrem local en $x=\\sqrt e$",
+        "gravetat": "error",
+        "explicacio": "Un punt crític no és necessàriament un extrem; cal el criteri de la derivada segona."
+      },
+      {
+        "fragment": 4,
+        "cita": "$2f'+xf''+\\frac{1}{x^2}+\\frac{f''}{f}=0$",
+        "gravetat": "error",
+        "explicacio": "Falta el terme $-\\frac{f'^2}{f^2}$ de la derivada de $\\frac{f'}{f}$ (al punt s'anul·la perquè $f'=0$, així que el valor final és correcte)."
+      }
+    ]
+  },
+  "creat": 1791295851.9497292
+}

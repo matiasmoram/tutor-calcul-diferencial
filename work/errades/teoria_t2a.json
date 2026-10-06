@@ -1,0 +1,379 @@
+[
+ {
+  "font": "teoria",
+  "id": "T2.7",
+  "dificultat": "normal",
+  "n_enunciat": 2,
+  "fragments": [
+   "Siguin $(M,d)$ i $(N,d')$ dos espais mètrics, $f:\\Omega\\subseteq M\\longrightarrow N$, $x_0\\in\\Omega'$ i $b\\in N$. Les condicions següents són equivalents: (a) $\\forall\\epsilon>0,\\exists\\delta>0$ tal que $\\forall x\\in\\Omega$ amb $0<d(x,x_0)<\\delta$, es té que $d'(f(x),b)<\\epsilon$; (b) per a tot obert $\\mathcal{V}$ que conté $b$, existeix un obert $\\mathcal{U}$ que conté $x_0$ tal que $f\\left((\\mathcal{U}\\setminus\\{x_0\\})\\cap\\Omega\\right)\\subseteq\\mathcal{V}$;",
+   "(c) per a tota successió $(x_n)_{n\\in\\mathbb{N}}\\subseteq\\Omega$ amb $\\lim_{n\\to+\\infty}x_n=x_0$, es té que $\\lim_{n\\to+\\infty}f(x_n)=b$.",
+   "(a) $\\Rightarrow$ (b). Sigui $\\mathcal{V}$ un obert que conté $b$. Aleshores existeix $\\epsilon>0$ tal que $B(b,\\epsilon)\\subseteq\\mathcal{V}$ i, per (a), existeix $\\delta>0$ tal que $\\forall x\\in\\Omega$ amb $0<d(x,x_0)<\\delta$ es té $d'(f(x),b)<\\epsilon$.",
+   "Prenent $\\mathcal{U}=B(x_0,\\delta)$, que és un obert que conté $x_0$, es dedueix que $f\\left((\\mathcal{U}\\setminus\\{x_0\\})\\cap\\Omega\\right)\\subseteq B(b,\\epsilon)\\subseteq\\mathcal{V}$.",
+   "(b) $\\Rightarrow$ (c). Prenem una successió $(x_n)_{n\\in\\mathbb{N}}$ amb $x_0\\neq x_n\\in\\Omega$ i $\\lim_{n\\to+\\infty}x_n=x_0$, i un $\\epsilon>0$ qualsevol. Per (b) aplicat a $\\mathcal{V}=B(b,\\epsilon)$, existeix un obert $\\mathcal{U}$ que conté $x_0$ tal que $f\\left((\\mathcal{U}\\setminus\\{x_0\\})\\cap\\Omega\\right)\\subseteq\\mathcal{V}$.",
+   "Com que $\\mathcal{U}$ és obert, existeix $\\delta>0$ tal que $B(x_0,\\delta)\\subseteq\\mathcal{U}$, i com que $x_n\\to x_0$, existeix $n_0$ tal que $d(x_n,x_0)<\\delta$ si $n\\geq n_0$. Així, per a $n\\geq n_0$, $x_n\\in(\\mathcal{U}\\setminus\\{x_0\\})\\cap\\Omega$ i, per tant, $d'(f(x_n),b)<\\epsilon$.",
+   "(c) $\\Rightarrow$ (a). Ho farem per reducció a l'absurd: suposem que (a) no es compleix, és a dir, que existeixen $\\epsilon>0$ i $\\delta>0$ tals que hi ha algun $x\\in\\Omega$ amb $0<d(x,x_0)<\\delta$ i $d'(f(x),b)\\geq\\epsilon$. Prenent $\\delta=1/n$, per a cada $n$ podem escollir $x_n\\in\\Omega$ amb $0<d(x_n,x_0)<1/n$ i $d'(f(x_n),b)\\geq\\epsilon$.",
+   "Aleshores $x_n\\neq x_0$ i $\\lim_{n\\to+\\infty}x_n=x_0$, de manera que, per (c), caldria que $\\lim_{n\\to+\\infty}f(x_n)=b$, cosa incompatible amb $d'(f(x_n),b)\\geq\\epsilon$ per a tota $n$. Aquesta contradicció demostra (a)."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "per a tota successió $(x_n)_{n\\in\\mathbb{N}}\\subseteq\\Omega$ amb $\\lim_{n\\to+\\infty}x_n=x_0$",
+    "tipus": "definicio",
+    "explicacio": "S'ha tret la condició $x_n\\neq x_0$, i aleshores (c) ja no equival a (a): si $x_0\\in\\Omega$ i $f(x_0)\\neq b$, la successió constant $x_n=x_0$ la falla. Contraexemple: $f(x)=0$ si $x\\neq0$, $f(0)=1$, a $x_0=0$ amb $b=0$, compleix (a) però no (c).",
+    "correccio": "(c) per a tota successió $(x_n)_{n\\in\\mathbb{N}}$ amb $x_0\\neq x_n\\in\\Omega$ i $\\lim_{n\\to+\\infty}x_n=x_0$, es té que $\\lim_{n\\to+\\infty}f(x_n)=b$.",
+    "pista": "El límit en $x_0$ ha de dependre del valor $f(x_0)$? Què passa amb la successió constant igual a $x_0$?"
+   },
+   {
+    "fragment": 7,
+    "cita": "existeixen $\\epsilon>0$ i $\\delta>0$ tals que hi ha algun $x\\in\\Omega$",
+    "tipus": "quantificador",
+    "explicacio": "La negació de (a) és $\\exists\\epsilon>0$ tal que $\\forall\\delta>0$ hi ha un $x$ dolent; amb «existeix un $\\delta$» no es pot prendre després $\\delta=1/n$ per a tota $n$.",
+    "correccio": "Suposem que existeix un $\\epsilon>0$ tal que per a qualsevol $\\delta>0$ existeix $x\\in\\Omega$ amb $0<d(x,x_0)<\\delta$ i $d(f(x),b)\\geq\\epsilon$.",
+    "pista": "Com es nega correctament «$\\forall\\epsilon\\,\\exists\\delta\\,\\forall x$»? Quin quantificador ha de portar $\\delta$ perquè es pugui triar $\\delta=1/n$ per a cada $n$?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T2.8",
+  "dificultat": "normal",
+  "n_enunciat": 1,
+  "fragments": [
+   "Siguin $(M,d)$ i $(N,d')$ dos espais mètrics, $f:\\Omega\\subseteq M\\longrightarrow N$ i $x_0\\in\\overline{\\Omega}$. Si existeix $\\lim_{x\\to x_0}f(x)$, aquest és únic.",
+   "Suposem que $\\lim_{x\\to x_0}f(x)=b$ i que $\\lim_{x\\to x_0}f(x)=c$, amb $b\\neq c$, i sigui $\\epsilon=d'(b,c)/2>0$.",
+   "Prenem una successió $(x_n)_{n\\in\\mathbb{N}}\\subseteq\\Omega$ tal que $x_n\\to x_0$ i $x_n\\neq x_0$ per a tota $n$.",
+   "Per l'apartat (c) de la proposició 7, existeix $n_0$ tal que $d'(f(x_n),b)<\\epsilon$ per a tota $n\\geq n_0$; anàlogament, existeix $n_0'$ tal que $d'(f(x_n),c)<\\epsilon$ per a tota $n\\geq n_0'$.",
+   "Per tant, per a tota $n\\geq\\min(n_0,n_0')$, aplicant la desigualtat triangular, tenim $d'(b,c)\\leq d'(b,f(x_n))+d'(f(x_n),c)<2\\epsilon=d'(b,c)$.",
+   "Arribem, doncs, a una contradicció, i per tant $b=c$."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "$x_0\\in\\overline{\\Omega}$",
+    "tipus": "hipotesi",
+    "explicacio": "Si $x_0$ és adherent però aïllat, la definició de límit es compleix buidament per a qualsevol $b$ i el límit no és únic. Contraexemple: $\\Omega=\\{0\\}\\cup[1,2]$, $x_0=0$.",
+    "correccio": "Cal $x_0\\in\\Omega'$ (punt d'acumulació d'$\\Omega$), com a la definició 6 de límit.",
+    "pista": "Per a quins punts $x_0$ té sentit la definició de límit? Sempre existeix una successió $x_n\\to x_0$ amb $x_n\\neq x_0$?"
+   },
+   {
+    "fragment": 5,
+    "cita": "per a tota $n\\geq\\min(n_0,n_0')$",
+    "tipus": "desigualtat",
+    "explicacio": "Per tenir alhora les dues fites cal $n\\geq n_0$ i $n\\geq n_0'$, és a dir, $n\\geq\\max(n_0,n_0')$; amb el mínim només es garanteix una de les dues.",
+    "correccio": "Per a tota $n\\geq\\max(n_0,n_0')$.",
+    "pista": "A partir de quin índex es compleixen simultàniament les dues desigualtats?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T2.10",
+  "dificultat": "normal",
+  "n_enunciat": 1,
+  "fragments": [
+   "Siguin $F:D\\subseteq\\mathbb{R}^2\\longrightarrow\\mathbb{R}^m$ i $(a,b)\\in D'$. Aleshores, $\\lim_{(x,y)\\to(a,b)}F(x,y)=L$ si i només si, per a tota funció real i contínua $g$ definida en un entorn d'$a$ tal que $g(a)=b$, es compleix que $\\lim_{x\\to a}F(x,g(x))=L$.",
+   "Com que $\\lim_{(x,y)\\to(a,b)}F(x,y)=L$, per a tot $\\epsilon>0$ existeix $\\delta_1=\\delta_1(\\epsilon)>0$ tal que si $0<\\|(x,y)-(a,b)\\|<\\delta_1(\\epsilon)$, aleshores $\\|F(x,y)-L\\|<\\epsilon$. (1)",
+   "Com que $g$ és contínua en $a$ i $g(a)=b$, tenim $\\lim_{x\\to a}g(x)=b$: per a tot $\\epsilon>0$ existeix $\\delta_2=\\delta_2(\\epsilon)>0$ tal que si $0<|x-a|<\\delta_2(\\epsilon)$, aleshores $|g(x)-b|<\\epsilon$. (2)",
+   "Volem veure que, donat $\\epsilon>0$, existeix $\\delta>0$ tal que si $0<|x-a|<\\delta$, aleshores $\\|F(x,g(x))-L\\|<\\epsilon$.",
+   "Donat $\\epsilon>0$, definim $\\delta=\\min\\left\\{\\delta_1(\\epsilon),\\ \\delta_2\\!\\left(\\delta_1(\\epsilon)/\\sqrt{2}\\right)\\right\\}$. Així, si $0<|x-a|<\\delta$, és clar que $|x-a|<\\delta_1(\\epsilon)/\\sqrt{2}$ i, aplicant (2) amb $\\delta_1(\\epsilon)/\\sqrt{2}$ en lloc d'$\\epsilon$, també $|g(x)-b|<\\delta_1(\\epsilon)/\\sqrt{2}$.",
+   "Amb aquestes dues fites, $\\|(x,g(x))-(a,b)\\|=\\sqrt{(x-a)^2+(g(x)-b)^2}<\\sqrt{\\left(\\frac{\\delta_1(\\epsilon)}{\\sqrt{2}}\\right)^2+\\left(\\frac{\\delta_1(\\epsilon)}{\\sqrt{2}}\\right)^2}=\\delta_1(\\epsilon)$, i aquesta distància és positiva perquè $x\\neq a$.",
+   "Llavors, substituint $y$ per $g(x)$ a (1), deduïm que $\\|F(x,g(x))-L\\|<\\epsilon$."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "si i només si",
+    "tipus": "implicacio",
+    "explicacio": "El recíproc és fals: el límit per tots els camins de la forma $y=g(x)$ no garanteix el límit doble. Contraexemple: $F(x,y)=1$ si $x=0$, $y\\neq0$, i $F(x,y)=0$ altrament, a $(0,0)$: per a tota $g$ el límit és $0$, però sobre l'eix $x=0$ val $1$. A més, la demostració només prova una implicació.",
+    "correccio": "Només la implicació: si $\\exists\\lim_{(x,y)\\to(a,b)}F(x,y)=L$, llavors per a tota $g$ contínua amb $g(a)=b$, $\\lim_{x\\to a}F(x,g(x))=L$.",
+    "pista": "Tots els camins cap a $(a,b)$ són gràfiques de funcions $y=g(x)$? Quina direcció demostra realment la demostració?"
+   },
+   {
+    "fragment": 5,
+    "cita": "$\\delta=\\min\\left\\{\\delta_1(\\epsilon),\\ \\delta_2\\!\\left(\\delta_1(\\epsilon)/\\sqrt{2}\\right)\\right\\}$. Així, si $0<|x-a|<\\delta$, és clar que $|x-a|<\\delta_1(\\epsilon)/\\sqrt{2}$",
+    "tipus": "pas_injustificat",
+    "explicacio": "Amb $\\delta\\leq\\delta_1(\\epsilon)$ només es té $|x-a|<\\delta_1(\\epsilon)$, no $|x-a|<\\delta_1(\\epsilon)/\\sqrt{2}$, i aleshores la distància a $(a,b)$ pot arribar a $\\sqrt{2}\\,\\delta_1(\\epsilon)$.",
+    "correccio": "$\\delta=\\min\\left\\{\\frac{\\delta_1(\\epsilon)}{\\sqrt{2}},\\ \\delta_2\\!\\left(\\frac{\\delta_1(\\epsilon)}{\\sqrt{2}}\\right)\\right\\}$.",
+    "pista": "Si $|x-a|<\\delta_1(\\epsilon)$, quina fita en surt per a $|x-a|$? És la que fa falta per al càlcul següent?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T2.12",
+  "dificultat": "normal",
+  "n_enunciat": 2,
+  "fragments": [
+   "Sigui $f:\\Omega\\subseteq\\mathbb{R}^2\\to\\mathbb{R}^m$ i $(a,b)\\in\\Omega$ tal que $(a-\\eta,a+\\eta)\\times(b-\\eta,b+\\eta)\\subseteq\\Omega$ per a cert $\\eta>0$. Suposem que $\\lim_{(x,y)\\to(a,b)}f(x,y)=L$, que $\\forall x\\in(a-\\eta,a+\\eta)$ existeix $\\lim_{y\\to b}f(x,y)$ i que $\\forall y\\in(b-\\eta,b+\\eta)$ existeix $\\lim_{x\\to a}f(x,y)$.",
+   "Llavors, $\\lim_{x\\to a}\\lim_{y\\to b}f(x,y)=L=\\lim_{y\\to b}\\lim_{x\\to a}f(x,y)$ i, a més, $\\lim_{y\\to b}f(x,y)=L$ per a tot $x\\in(a-\\eta,a+\\eta)$.",
+   "Farem la demostració només per a un dels límits iterats i, sense pèrdua de generalitat, per a $m=1$. Per l'existència del límit doble, per a tot $\\epsilon>0$ existeix $\\delta_1=\\delta_1(\\epsilon)>0$ tal que si $0<\\|(x,y)-(a,b)\\|<\\delta_1$, aleshores $|f(x,y)-L|<\\epsilon$. (1)",
+   "D'altra banda, per a cada $x\\in(a-\\eta,a+\\eta)$ sigui $g(x):=\\lim_{y\\to b}f(x,y)$; com que aquests límits existeixen per a tot $x$, donat $\\epsilon>0$ existeix $\\delta_2=\\delta_2(\\epsilon)>0$, el mateix per a tots els $x$, tal que si $0<|y-b|<\\delta_2$, aleshores $|f(x,y)-g(x)|<\\epsilon$. (2)",
+   "Volem veure que $\\lim_{x\\to a}g(x)=L$, és a dir, que donat $\\epsilon>0$ existeix $\\delta>0$ tal que si $0<|x-a|<\\delta$, aleshores $|g(x)-L|<\\epsilon$.",
+   "Observem que si per a algun $y$ es té $|f(x,y)-L|<\\epsilon/2$ i $|g(x)-f(x,y)|<\\epsilon/2$, llavors $|g(x)-L|\\leq|g(x)-f(x,y)|+|f(x,y)-L|<\\epsilon$.",
+   "Prenem $\\delta=\\min\\{\\delta_1(\\epsilon/2)/\\sqrt{2},\\,\\eta\\}$. Donat $x$ amb $0<|x-a|<\\delta$, escollim $y\\neq b$ amb $|y-b|<\\min\\left\\{\\delta_2(\\epsilon/2,x),\\ \\delta_1(\\epsilon/2)/\\sqrt{2}\\right\\}$, on $\\delta_2(\\epsilon/2,x)$ és el radi que dona la definició de $g(x)$ per a aquest $x$.",
+   "Aleshores $0<\\|(x,y)-(a,b)\\|=\\sqrt{(x-a)^2+(y-b)^2}<\\delta_1(\\epsilon/2)$ i, per (1) i la tria de $y$, $|f(x,y)-L|<\\epsilon/2$ i $|f(x,y)-g(x)|<\\epsilon/2$. Per l'observació anterior, $|g(x)-L|<\\epsilon$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "$\\lim_{y\\to b}f(x,y)=L$ per a tot $x\\in(a-\\eta,a+\\eta)$",
+    "tipus": "conclusio",
+    "explicacio": "Els límits interiors no tenen per què valer $L$; només el seu límit quan $x\\to a$. Contraexemple: $f(x,y)=x+y$ a $(0,0)$, amb $L=0$, però $\\lim_{y\\to0}f(x,y)=x\\neq0$ per a $x\\neq0$.",
+    "correccio": "La conclusió és només $\\lim_{x\\to a}\\lim_{y\\to b}f(x,y)=L=\\lim_{y\\to b}\\lim_{x\\to a}f(x,y)$.",
+    "pista": "Quant val $\\lim_{y\\to b}f(x,y)$ per a la funció $f(x,y)=x+y$ en un $x$ fix diferent de $0$?"
+   },
+   {
+    "fragment": 4,
+    "cita": "existeix $\\delta_2=\\delta_2(\\epsilon)>0$, el mateix per a tots els $x$,",
+    "tipus": "quantificador",
+    "explicacio": "L'existència del límit per a cada $x$ dona un $\\delta_2$ que depèn de $\\epsilon$ i també de $x$; no hi ha cap motiu perquè n'hi hagi un de comú (convergència uniforme), que no es té per hipòtesi.",
+    "correccio": "Existeix $\\delta_2=\\delta_2(\\epsilon,x)>0$ (que depèn de $x$) tal que si $|y-b|<\\delta_2$, aleshores $|f(x,y)-g(x)|<\\epsilon$.",
+    "pista": "De què depèn el radi que surt de la definició de $\\lim_{y\\to b}f(x,y)$ per a un $x$ fix?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T2.17",
+  "dificultat": "facil",
+  "n_enunciat": 2,
+  "fragments": [
+   "Sigui $f:\\Omega\\subseteq M\\to N$. Aleshores, són equivalents: (a) $f$ és uniformement contínua en $\\Omega$; (b) per a tota successió convergent $(x_n)_n\\subseteq\\Omega$ tal que $\\lim_{n\\to\\infty}x_n=x_0\\in\\Omega$, tenim $\\lim_{n\\to\\infty}f(x_n)=f(x_0)$;",
+   "(c) per a tot obert $V\\subseteq N$, $\\exists U\\subseteq M$ obert tal que $f^{-1}(V)=U\\cap\\Omega$; (d) per a tot tancat $E\\subseteq N$, $\\exists D\\subseteq M$ tancat tal que $f^{-1}(E)=D\\cap\\Omega$.",
+   "(a)$\\Rightarrow$(b). Sigui $(x_n)_n\\subseteq\\Omega$ amb $\\lim_{n\\to\\infty}x_n=x_0\\in\\Omega$. Com que $f$ és contínua en $x_0$, hi ha dues possibilitats. Si $x_0\\notin\\Omega'$, $x_0$ és aïllat i, com que $x_n\\to x_0$, per força $x_n=x_0$ a partir d'un cert terme, de manera que $f(x_n)=f(x_0)$ a partir d'aquest terme.",
+   "Altrament, existeix $\\lim_{x\\to x_0}f(x)=f(x_0)$: donat $\\epsilon>0$, existeix $\\delta_1=\\delta_1(\\epsilon)>0$ tal que si $x\\in\\Omega$ i $d(x,x_0)<\\delta_1$, aleshores $d'(f(x),f(x_0))<\\epsilon$. Com que $x_n\\to x_0$, existeix $n_0=n_0(\\delta_1)$ tal que $d(x_n,x_0)<\\delta_1$ per a $n\\geq n_0$ i, per tant, $d'(f(x_n),f(x_0))<\\epsilon$ per a $n\\geq n_0$.",
+   "(b)$\\Rightarrow$(d). Sigui $E\\subseteq N$ tancat. Prenem $D=\\overline{f^{-1}(E)}$, que és tancat, i demostrem que $f^{-1}(E)=D\\cap\\Omega$. La inclusió $f^{-1}(E)\\subseteq\\overline{f^{-1}(E)}\\cap\\Omega$ és evident, ja que $f^{-1}(E)\\subseteq\\Omega$ i tot conjunt està contingut en la seva adherència.",
+   "Per a la inclusió inversa, sigui $x_0\\in\\overline{f^{-1}(E)}\\cap\\Omega$. Per la proposició 19 del tema 1, existeix una successió $(x_n)_n\\subseteq f^{-1}(E)\\subseteq\\Omega$ amb $\\lim_{n\\to\\infty}x_n=x_0$ i, per (b), $\\lim_{n\\to\\infty}f(x_n)=f(x_0)$.",
+   "Com que $f(x_n)\\in E$ per a tota $n$ i $f(x_n)\\to f(x_0)$, tenim $f(x_0)\\in\\overline{E}=E$, per ser $E$ tancat. Per tant, $x_0\\in f^{-1}(E)$.",
+   "(d)$\\Rightarrow$(c). Sigui $V\\subseteq N$ obert. Aleshores $V^c$ és tancat i, per (d), existeix $D\\subseteq M$ tancat amb $f^{-1}(V^c)=D\\cap\\Omega$. Com que $f^{-1}(V^c)=\\Omega\\setminus f^{-1}(V)$, resulta $f^{-1}(V)=\\Omega\\setminus(D\\cap\\Omega)=D^c\\cap\\Omega$, on $U=D^c$ és un obert de $M$.",
+   "(c)$\\Rightarrow$(a). Sigui $x_0\\in\\Omega$. Si $x_0\\notin\\Omega'$, $f$ és contínua en $x_0$ per definició. Altrament, donat $\\epsilon>0$, prenem $V=B(f(x_0),\\epsilon)$; per (c), existeix $U\\subseteq M$ obert amb $f^{-1}(V)=U\\cap\\Omega$ i, com que $x_0\\in f^{-1}(V)\\subseteq U$, existeix $\\delta>0$ tal que $B(x_0,\\delta)\\subseteq U$.",
+   "Si $x\\in\\Omega$ i $d(x,x_0)<\\delta$, aleshores $x\\in U\\cap\\Omega=f^{-1}(V)$, és a dir, $d'(f(x),f(x_0))<\\epsilon$. Per tant, $\\lim_{x\\to x_0}f(x)=f(x_0)$ i $f$ és contínua en $x_0$."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "$f$ és uniformement contínua en $\\Omega$",
+    "tipus": "definicio",
+    "explicacio": "Les condicions (b), (c) i (d) caracteritzen la continuïtat, no la continuïtat uniforme. Contraexemple: $f(x)=1/x$ a $\\Omega=(0,1]$ és contínua (compleix (b), (c) i (d)) però no és uniformement contínua.",
+    "correccio": "(a) $f$ és contínua en $\\Omega$.",
+    "pista": "Les condicions amb successions i antiimatges d'oberts són locals o globals? Què conclou exactament la darrera implicació de la demostració?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T2.17",
+  "dificultat": "normal",
+  "n_enunciat": 2,
+  "fragments": [
+   "Sigui $f:\\Omega\\subseteq M\\to N$. Aleshores, són equivalents: (a) $f$ és contínua en $\\Omega$; (b) per a tota successió convergent $(x_n)_n\\subseteq\\Omega$ tal que $\\lim_{n\\to\\infty}x_n=x_0\\in\\Omega$, tenim $\\lim_{n\\to\\infty}f(x_n)=f(x_0)$;",
+   "(c) per a tot obert $V\\subseteq N$, $f^{-1}(V)$ és un obert de $M$; (d) per a tot tancat $E\\subseteq N$, $\\exists D\\subseteq M$ tancat tal que $f^{-1}(E)=D\\cap\\Omega$.",
+   "(a)$\\Rightarrow$(b). Sigui $(x_n)_n\\subseteq\\Omega$ amb $\\lim_{n\\to\\infty}x_n=x_0\\in\\Omega$. Com que $f$ és contínua en $x_0$, hi ha dues possibilitats. Si $x_0\\notin\\Omega'$, $x_0$ és aïllat i, com que $x_n\\to x_0$, per força $x_n=x_0$ a partir d'un cert terme, de manera que $f(x_n)=f(x_0)$ a partir d'aquest terme.",
+   "Altrament, existeix $\\lim_{x\\to x_0}f(x)=f(x_0)$: donat $\\epsilon>0$, existeix $\\delta_1=\\delta_1(\\epsilon)>0$ tal que si $x\\in\\Omega$ i $d(x,x_0)<\\delta_1$, aleshores $d'(f(x),f(x_0))<\\epsilon$. Com que $x_n\\to x_0$, existeix $n_0$ tal que $d(x_n,x_0)<\\epsilon$ per a $n\\geq n_0$ i, per tant, $d'(f(x_n),f(x_0))<\\epsilon$ per a $n\\geq n_0$.",
+   "(b)$\\Rightarrow$(d). Sigui $E\\subseteq N$ tancat. Prenem $D=\\overline{f^{-1}(E)}$, que és tancat, i demostrem que $f^{-1}(E)=D\\cap\\Omega$. La inclusió $f^{-1}(E)\\subseteq\\overline{f^{-1}(E)}\\cap\\Omega$ és evident, ja que $f^{-1}(E)\\subseteq\\Omega$ i tot conjunt està contingut en la seva adherència.",
+   "Per a la inclusió inversa, sigui $x_0\\in\\overline{f^{-1}(E)}\\cap\\Omega$. Per la proposició 19 del tema 1, existeix una successió $(x_n)_n\\subseteq f^{-1}(E)\\subseteq\\Omega$ amb $\\lim_{n\\to\\infty}x_n=x_0$ i, per (b), $\\lim_{n\\to\\infty}f(x_n)=f(x_0)$.",
+   "Com que $f(x_n)\\in E$ per a tota $n$ i $f(x_n)\\to f(x_0)$, tenim $f(x_0)\\in\\overline{E}=E$, per ser $E$ tancat. Per tant, $x_0\\in f^{-1}(E)$.",
+   "(d)$\\Rightarrow$(c). Sigui $V\\subseteq N$ obert. Aleshores $V^c$ és tancat i, per (d), existeix $D\\subseteq M$ tancat amb $f^{-1}(V^c)=D\\cap\\Omega$. Com que $f^{-1}(V^c)=\\Omega\\setminus f^{-1}(V)$, resulta $f^{-1}(V)=\\Omega\\setminus(D\\cap\\Omega)=D^c\\cap\\Omega$, on $U=D^c$ és un obert de $M$.",
+   "(c)$\\Rightarrow$(a). Sigui $x_0\\in\\Omega$. Si $x_0\\notin\\Omega'$, $f$ és contínua en $x_0$ per definició. Altrament, donat $\\epsilon>0$, prenem $V=B(f(x_0),\\epsilon)$; per (c), existeix $U\\subseteq M$ obert amb $f^{-1}(V)=U\\cap\\Omega$ i, com que $x_0\\in f^{-1}(V)\\subseteq U$, existeix $\\delta>0$ tal que $B(x_0,\\delta)\\subseteq U$.",
+   "Si $x\\in\\Omega$ i $d(x,x_0)<\\delta$, aleshores $x\\in U\\cap\\Omega=f^{-1}(V)$, és a dir, $d'(f(x),f(x_0))<\\epsilon$. Per tant, $\\lim_{x\\to x_0}f(x)=f(x_0)$ i $f$ és contínua en $x_0$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "$f^{-1}(V)$ és un obert de $M$",
+    "tipus": "conclusio",
+    "explicacio": "Si $\\Omega$ no és obert, l'antiimatge d'un obert només és oberta relativament a $\\Omega$. Contraexemple: $f\\equiv0$ a $\\Omega=[0,1]\\subseteq\\mathbb{R}$ és contínua, però $f^{-1}(\\mathbb{R})=[0,1]$ no és obert de $\\mathbb{R}$.",
+    "correccio": "(c) per a tot obert $V\\subseteq N$, $\\exists U\\subseteq M$ obert tal que $f^{-1}(V)=U\\cap\\Omega$.",
+    "pista": "Què passa amb $f^{-1}(N)$ si el domini $\\Omega$ no és un obert de $M$?"
+   },
+   {
+    "fragment": 4,
+    "cita": "existeix $n_0$ tal que $d(x_n,x_0)<\\epsilon$ per a $n\\geq n_0$",
+    "tipus": "pas_injustificat",
+    "explicacio": "La continuïtat dona la fita $d'(f(x),f(x_0))<\\epsilon$ quan $d(x,x_0)<\\delta_1$; saber $d(x_n,x_0)<\\epsilon$ no serveix, perquè $\\epsilon$ i $\\delta_1$ són radis diferents.",
+    "correccio": "Existeix $n_0=n_0(\\delta_1(\\epsilon))$ tal que $d(x_n,x_0)<\\delta_1$ per a $n\\geq n_0$ i, per tant, $d'(f(x_n),f(x_0))<\\epsilon$.",
+    "pista": "Quina distància entre $x_n$ i $x_0$ garanteix que $f(x_n)$ és a menys d'$\\epsilon$ de $f(x_0)$?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T2.17",
+  "dificultat": "dificil",
+  "n_enunciat": 2,
+  "fragments": [
+   "Sigui $f:\\Omega\\subseteq M\\to N$. Aleshores, són equivalents: (a) $f$ és contínua en $\\Omega$; (b) per a tota successió convergent $(x_n)_n\\subseteq\\Omega$ tal que $\\lim_{n\\to\\infty}x_n=x_0\\in\\Omega$, tenim $\\lim_{n\\to\\infty}f(x_n)=f(x_0)$;",
+   "(c) per a tot obert $V\\subseteq N$, $\\exists U\\subseteq M$ obert tal que $f^{-1}(V)=U\\cap\\Omega$; (d) per a tot tancat $E\\subseteq N$, $\\exists D\\subseteq M$ tancat tal que $f^{-1}(E)\\subseteq D\\cap\\Omega$.",
+   "(a)$\\Rightarrow$(b). Sigui $(x_n)_n\\subseteq\\Omega$ amb $\\lim_{n\\to\\infty}x_n=x_0\\in\\Omega$. Com que $f$ és contínua en $x_0$, hi ha dues possibilitats. Si $x_0\\notin\\Omega'$, $x_0$ és aïllat i, com que $x_n\\to x_0$, per força $x_n=x_0$ a partir d'un cert terme, de manera que $f(x_n)=f(x_0)$ a partir d'aquest terme.",
+   "Altrament, existeix $\\lim_{x\\to x_0}f(x)=f(x_0)$: donat $\\epsilon>0$, existeix $\\delta_1=\\delta_1(\\epsilon)>0$ tal que si $x\\in\\Omega$ i $d(x,x_0)<\\delta_1$, aleshores $d'(f(x),f(x_0))<\\epsilon$. Com que $x_n\\to x_0$, existeix $n_0=n_0(\\delta_1)$ tal que $d(x_n,x_0)<\\delta_1$ per a $n\\geq n_0$ i, per tant, $d'(f(x_n),f(x_0))<\\epsilon$ per a $n\\geq n_0$.",
+   "(b)$\\Rightarrow$(d). Sigui $E\\subseteq N$ tancat. Prenem $D=\\overline{f^{-1}(E)}$, que és tancat, i demostrem que $f^{-1}(E)=D\\cap\\Omega$. La inclusió $f^{-1}(E)\\subseteq\\overline{f^{-1}(E)}\\cap\\Omega$ és evident, ja que $f^{-1}(E)\\subseteq\\Omega$ i tot conjunt està contingut en la seva adherència.",
+   "Per a la inclusió inversa, sigui $x_0\\in\\overline{f^{-1}(E)}\\cap\\Omega$. Per la proposició 19 del tema 1, existeix una successió $(x_n)_n\\subseteq f^{-1}(E)\\subseteq\\Omega$ amb $\\lim_{n\\to\\infty}x_n=x_0$ i, per (b), $\\lim_{n\\to\\infty}f(x_n)=f(x_0)$.",
+   "Com que $f(x_n)\\in E$ per a tota $n$ i $f(x_n)\\to f(x_0)$, $f(x_0)$ és un punt d'acumulació d'$E$ i, com que $E$ és tancat, $f(x_0)\\in E$. Per tant, $x_0\\in f^{-1}(E)$.",
+   "(d)$\\Rightarrow$(c). Sigui $V\\subseteq N$ obert. Aleshores $V^c$ és tancat i, per (d), existeix $D\\subseteq M$ tancat amb $f^{-1}(V^c)=D\\cap\\Omega$. Com que $f^{-1}(V^c)=\\Omega\\setminus f^{-1}(V)$, resulta $f^{-1}(V)=\\Omega\\setminus(D\\cap\\Omega)=D^c\\cap\\Omega$, on $U=D^c$ és un obert de $M$.",
+   "(c)$\\Rightarrow$(a). Sigui $x_0\\in\\Omega$. Si $x_0\\notin\\Omega'$, $f$ és contínua en $x_0$ per definició. Altrament, donat $\\epsilon>0$, prenem $V=B(f(x_0),\\epsilon)$; per (c), existeix $U\\subseteq M$ obert amb $f^{-1}(V)=U\\cap\\Omega$ i, com que $x_0\\in f^{-1}(V)\\subseteq U$, existeix $\\delta>0$ tal que $B(x_0,\\delta)\\subseteq U\\cap\\Omega$.",
+   "Si $x\\in\\Omega$ i $d(x,x_0)<\\delta$, aleshores $x\\in U\\cap\\Omega=f^{-1}(V)$, és a dir, $d'(f(x),f(x_0))<\\epsilon$. Per tant, $\\lim_{x\\to x_0}f(x)=f(x_0)$ i $f$ és contínua en $x_0$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "$f^{-1}(E)\\subseteq D\\cap\\Omega$",
+    "tipus": "conclusio",
+    "explicacio": "Amb només la inclusió, la condició (d) es compleix sempre prenent $D=M$, per a qualsevol funció; per tant no equival a la continuïtat (p. ex. la funció signe de $\\mathbb{R}$ la compleix).",
+    "correccio": "(d) per a tot tancat $E\\subseteq N$, $\\exists D\\subseteq M$ tancat tal que $f^{-1}(E)=D\\cap\\Omega$.",
+    "pista": "Hi ha algun tancat $D$ que compleixi aquesta condició per a qualsevol $f$?"
+   },
+   {
+    "fragment": 7,
+    "cita": "$f(x_0)$ és un punt d'acumulació d'$E$",
+    "tipus": "pas_injustificat",
+    "explicacio": "El límit d'una successió de punts d'$E$ és adherent a $E$, però no necessàriament d'acumulació: si $f(x_n)=f(x_0)$ per a tota $n$ i $f(x_0)$ és un punt aïllat d'$E$, no ho és.",
+    "correccio": "$f(x_0)\\in\\overline{E}=E$, perquè $E$ és tancat.",
+    "pista": "Si la successió $f(x_n)$ és constant, $f(x_0)$ és necessàriament un punt d'acumulació d'$E$?"
+   },
+   {
+    "fragment": 9,
+    "cita": "$B(x_0,\\delta)\\subseteq U\\cap\\Omega$",
+    "tipus": "pas_injustificat",
+    "explicacio": "Com que $x_0\\in U$ i $U$ és obert, existeix una bola continguda en $U$, però no en $\\Omega$: $\\Omega$ no té per què ser obert (i $x_0$ pot ser a la frontera d'$\\Omega$).",
+    "correccio": "Existeix $\\delta>0$ tal que $B(x_0,\\delta)\\subseteq U$; després es prenen només els $x\\in\\Omega$ de la bola.",
+    "pista": "Per què una bola centrada en $x_0$ hauria d'estar continguda en $\\Omega$, si $\\Omega$ és un conjunt qualsevol?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T2.18",
+  "dificultat": "normal",
+  "n_enunciat": 2,
+  "fragments": [
+   "Siguin $f,g:\\mathbb{R}^n\\longrightarrow\\mathbb{R}$ funcions contínues. Llavors: (i) $A=\\{x\\in\\mathbb{R}^n:f(x)>g(x)\\}$ és un conjunt obert;",
+   "(ii) $B=\\{x\\in\\mathbb{R}^n:f(x)\\geq g(x)\\}$ és un conjunt tancat, i és l'adherència de $A$.",
+   "(i) Considerem la funció $h(x)=f(x)-g(x)$. Per la proposició 20(i), $h$ és contínua en tot $\\mathbb{R}^n$.",
+   "Prenem $V=(0,+\\infty)$, que és un obert de $\\mathbb{R}$. Per la continuïtat de $h$ (teorema 17(c)), existeix $U\\subseteq\\mathbb{R}^n$ obert tal que $h(U)=V$ i, per tant, $h^{-1}(V)=U$.",
+   "A més, $h^{-1}(V)=\\{x\\in\\mathbb{R}^n:h(x)>0\\}=\\{x\\in\\mathbb{R}^n:f(x)>g(x)\\}=A$, de manera que $A=U$ és obert.",
+   "(ii) Per (i), intercanviant els papers de $f$ i $g$, el conjunt $\\{x\\in\\mathbb{R}^n:f(x)<g(x)\\}$ és obert, i $B=\\mathbb{R}^n\\setminus\\{x\\in\\mathbb{R}^n:f(x)<g(x)\\}$. És a dir, $B$ és el complementari d'un obert i, per tant, és tancat."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "és l'adherència de $A$",
+    "tipus": "conclusio",
+    "explicacio": "$\\overline{A}\\subseteq B$ perquè $B$ és un tancat que conté $A$, però no tenen per què coincidir. Contraexemple: $f=g=0$ dona $A=\\emptyset$ i $B=\\mathbb{R}^n$.",
+    "correccio": "(ii) només afirma que $B=\\{x\\in\\mathbb{R}^n:f(x)\\geq g(x)\\}$ és un conjunt tancat.",
+    "pista": "Què val $A$ i què val $B$ si $f=g$?"
+   },
+   {
+    "fragment": 4,
+    "cita": "existeix $U\\subseteq\\mathbb{R}^n$ obert tal que $h(U)=V$",
+    "tipus": "pas_injustificat",
+    "explicacio": "La caracterització (c) del teorema 17 parla d'antiimatges: dona $U$ obert amb $h^{-1}(V)=U\\cap\\mathbb{R}^n$, no un $U$ amb $h(U)=V$ (que d'altra banda no implicaria $h^{-1}(V)=U$, i pot no existir si $h$ no pren tots els valors positius).",
+    "correccio": "Per la continuïtat de $h$, existeix $U\\subseteq\\mathbb{R}^n$ obert tal que $h^{-1}(V)=U\\cap\\mathbb{R}^n=U$.",
+    "pista": "La caracterització topològica de la continuïtat parla d'imatges o d'antiimatges d'oberts?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T2.20",
+  "dificultat": "normal",
+  "n_enunciat": 2,
+  "fragments": [
+   "Siguin $f,g:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}^m$ contínues i $h:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}$ fitada. Llavors: (i) $f+g$ i $\\lambda f:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}^m$, amb $\\lambda\\in\\mathbb{R}$, són contínues; (ii) $hf:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}^m$ és contínua;",
+   "(iii) per a $m=1$, si $g(x)\\neq0$ per a tot $x\\in\\Omega$, $f/g:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}$ és contínua; (iv) $\\langle f,g\\rangle:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}$ és contínua; (v) $\\|f\\|:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}$ és contínua.",
+   "Fent servir el teorema 17(b), (i) es desprèn de les propietats dels límits. Si demostrem (ii), (iii) és immediata prenent $h=1/g$; per a (iv) n'hi ha prou amb (i) i (ii), ja que $\\langle f,g\\rangle=\\sum_i f_ig_i$, i per a (v) amb (iv) i l'observació 19 (composició amb l'arrel quadrada), ja que $\\|f\\|=\\sqrt{\\langle f,f\\rangle}$.",
+   "Per demostrar (ii), fixem $x_0\\in\\Omega$. Per la continuïtat de $f$ i de $h$ en $x_0$, per a qualsevol $\\epsilon>0$ existeixen $\\delta_1=\\delta_1(\\epsilon)$ i $\\delta_2=\\delta_2(\\epsilon)$ tals que si $\\|x-x_0\\|<\\delta_1$, aleshores $\\|f(x)-f(x_0)\\|<\\epsilon$, i si $\\|x-x_0\\|<\\delta_2$, aleshores $|h(x)-h(x_0)|<\\epsilon$. (3)",
+   "Per la desigualtat triangular, $\\|h(x)f(x)-h(x_0)f(x_0)\\|\\leq\\|h(x)f(x)-h(x)f(x_0)\\|+\\|h(x)f(x_0)-h(x_0)f(x_0)\\|=|h(x)|\\,\\|f(x)-f(x_0)\\|+\\|f(x_0)\\|\\,|h(x)-h(x_0)|$.",
+   "El terme $\\|f(x_0)\\|$ és fix. Per fitar $|h(x)|$, apliquem (3) amb $\\epsilon=1$: si $\\|x-x_0\\|<\\delta_2(1)$, aleshores $|h(x)-h(x_0)|<1$ i, per tant, $|h(x)|<1+|h(x_0)|$.",
+   "Donat $\\epsilon>0$, definim $\\delta:=\\min\\left\\{\\delta_1\\!\\left(\\frac{\\epsilon}{2(1+|h(x_0)|)}\\right),\\ \\delta_2\\!\\left(\\frac{\\epsilon}{2\\|f(x_0)\\|}\\right)\\right\\}$ (si $f(x_0)=0$, el segon sumand és nul i no cal la segona condició).",
+   "Aleshores, si $\\|x-x_0\\|<\\delta$, $\\|h(x)f(x)-h(x_0)f(x_0)\\|<(1+|h(x_0)|)\\frac{\\epsilon}{2(1+|h(x_0)|)}+\\|f(x_0)\\|\\frac{\\epsilon}{2\\|f(x_0)\\|}=\\epsilon$, i $hf$ és contínua en $x_0$."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "$h:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}$ fitada",
+    "tipus": "hipotesi",
+    "explicacio": "Amb $h$ només fitada, (ii) és falsa: $h(x)=\\operatorname{sign}(x)$ a $\\mathbb{R}$ és fitada i $f\\equiv1$ és contínua, però $hf=h$ no és contínua a $0$. La demostració usa la continuïtat de $h$.",
+    "correccio": "$h:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}$ contínua.",
+    "pista": "Si $f$ és constant igual a $1$, què ha de complir $h$ perquè $hf$ sigui contínua?"
+   },
+   {
+    "fragment": 7,
+    "cita": "$\\delta:=\\min\\left\\{\\delta_1\\!\\left(\\frac{\\epsilon}{2(1+|h(x_0)|)}\\right),\\ \\delta_2\\!\\left(\\frac{\\epsilon}{2\\|f(x_0)\\|}\\right)\\right\\}$",
+    "tipus": "pas_injustificat",
+    "explicacio": "Falta $\\delta_2(1)$ al mínim: sense $\\|x-x_0\\|<\\delta_2(1)$ no es té la fita $|h(x)|<1+|h(x_0)|$ que s'usa al pas següent.",
+    "correccio": "$\\delta:=\\min\\left\\{\\delta_2(1),\\ \\delta_1\\!\\left(\\frac{\\epsilon}{2(1+|h(x_0)|)}\\right),\\ \\delta_2\\!\\left(\\frac{\\epsilon}{2\\|f(x_0)\\|}\\right)\\right\\}$.",
+    "pista": "Per a quins $x$ s'ha demostrat que $|h(x)|<1+|h(x_0)|$? El $\\delta$ triat ho garanteix?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T2.21",
+  "dificultat": "normal",
+  "n_enunciat": 1,
+  "fragments": [
+   "Siguin $(M,d)$ i $(N,d')$ dos espais mètrics, $f:\\Omega\\subseteq M\\to N$ contínua i $K\\subseteq\\Omega$. Aleshores: (i) $K$ tancat $\\Rightarrow f(K)$ tancat; (ii) $K$ connex $\\Rightarrow f(K)$ connex.",
+   "(i) Ho demostrem primer per successions: sigui $(y_n)_n\\subseteq f(K)$; volem veure que admet una parcial convergent en $f(K)$. Per construcció, existeix $(x_n)_n\\subseteq K$ amb $y_n=f(x_n)$ per a tota $n$.",
+   "Per ser $K$ compacte, existeix una parcial $(x_{n_k})_k$ convergent a un $x_0\\in K$ i, per la continuïtat de $f$, $\\lim_{k\\to\\infty}y_{n_k}=\\lim_{k\\to\\infty}f(x_{n_k})=f(x_0)\\in f(K)$. Per tant, $f(K)$ és compacte.",
+   "També es pot demostrar amb recobriments d'oberts: suposem que $f(K)\\subseteq\\bigcup_{i\\in I}V_i$, amb $V_i$ oberts de $N$. Per l'apartat (c) del teorema 17, existeixen oberts $U_i$ de $M$ amb $f^{-1}(V_i)=U_i\\cap\\Omega$ i, per tant, $f(U_i\\cap\\Omega)\\subseteq V_i$ per a tot $i\\in I$.",
+   "Si $x\\in K$, aleshores $f(x)\\in V_j$ per a algun $j\\in I$ i $x\\in f^{-1}(V_j)=U_j\\cap\\Omega$; així, $K\\subseteq\\bigcup_{i\\in I}U_i$. Per ser $K$ compacte, existeixen $i_1,\\dots,i_r$ tals que $K\\subseteq(U_{i_1}\\cup\\cdots\\cup U_{i_r})\\cap\\Omega=(U_{i_1}\\cap\\Omega)\\cup\\cdots\\cup(U_{i_r}\\cap\\Omega)$.",
+   "Aleshores $f(K)\\subseteq f(U_{i_1}\\cap\\Omega)\\cup\\cdots\\cup f(U_{i_r}\\cap\\Omega)\\subseteq V_{i_1}\\cup\\cdots\\cup V_{i_r}$, que és un subrecobriment finit de $f(K)$.",
+   "(ii) Demostrem el contrarecíproc: suposem que $f(K)$ no és connex, és a dir, que existeixen dos oberts $V_1,V_2\\subseteq N$ amb $f(K)\\subseteq V_1\\cup V_2$, $f(K)\\cap V_1\\neq\\emptyset$, $f(K)\\cap V_2\\neq\\emptyset$ i $f(K)\\cap V_1\\cap V_2=\\emptyset$. Per continuïtat, existeixen oberts $U_1,U_2\\subseteq M$ amb $f^{-1}(V_i)=U_i\\cap\\Omega$ per a $i=1,2$.",
+   "Si $x\\in K$, aleshores $f(x)\\in V_1\\cup V_2$, és a dir, $x\\in f^{-1}(V_1)\\cup f^{-1}(V_2)\\subseteq U_1\\cup U_2$; per tant, $K\\subseteq U_1\\cup U_2$.",
+   "D'altra banda, com que $f(K)\\cap V_1\\cap V_2=\\emptyset$, per construcció tenim $U_1\\cap U_2=\\emptyset$ i, en particular, $U_1\\cap U_2\\cap K=\\emptyset$.",
+   "Finalment, $K\\cap U_1\\neq\\emptyset$ i $K\\cap U_2\\neq\\emptyset$: existeix $y_i\\in f(K)\\cap V_i$, és a dir, $y_i=f(x_i)$ amb $x_i\\in K$ i $x_i\\in f^{-1}(V_i)\\subseteq U_i$, per a $i=1,2$. Per tant, $K$ és disconnex."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "$K$ tancat $\\Rightarrow f(K)$ tancat",
+    "tipus": "hipotesi",
+    "explicacio": "La imatge contínua d'un tancat no és necessàriament tancada. Contraexemple: $f(x)=\\arctan x$ a $\\mathbb{R}$, amb $K=\\mathbb{R}$ tancat, però $f(K)=(-\\pi/2,\\pi/2)$ no és tancat. La demostració usa la compacitat de $K$.",
+    "correccio": "(i) $K$ compacte $\\Rightarrow f(K)$ compacte.",
+    "pista": "Quina propietat de $K$ fa servir realment la demostració de (i)? Quina és la imatge de $\\mathbb{R}$ per $\\arctan$?"
+   },
+   {
+    "fragment": 9,
+    "cita": "per construcció tenim $U_1\\cap U_2=\\emptyset$",
+    "tipus": "pas_injustificat",
+    "explicacio": "De $f(K)\\cap V_1\\cap V_2=\\emptyset$ només se'n dedueix $U_1\\cap U_2\\cap K=\\{x\\in K:f(x)\\in V_1\\cap V_2\\}=\\emptyset$; els oberts $U_1,U_2$ es poden tallar fora de $K$ (o fora d'$\\Omega$, on no estan determinats).",
+    "correccio": "$U_1\\cap U_2\\cap K=\\{x\\in K:f(x)\\in V_1\\cap V_2\\}=\\emptyset$, perquè $f(K)\\cap V_1\\cap V_2=\\emptyset$.",
+    "pista": "Què saps dels punts d'$U_1\\cap U_2$ que no són de $K$, o que no són d'$\\Omega$?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T2.28",
+  "dificultat": "normal",
+  "n_enunciat": 1,
+  "fragments": [
+   "Sigui $f:\\Omega\\subseteq M\\to N$. Aleshores, $f$ Lipschitz $\\Rightarrow$ $f$ uniformement contínua $\\Rightarrow$ $f$ contínua. Els recíprocs són falsos, fins i tot quan $\\Omega$ és compacte.",
+   "Si $f$ és Lipschitz, existeix $C>0$ tal que $d'(f(x),f(y))\\leq C\\,d(x,y)$ per a tot $x,y\\in\\Omega$. Donat $\\epsilon>0$, prenem $\\delta=C\\,\\epsilon$: si $x,y\\in\\Omega$ i $d(x,y)<\\delta$, aleshores $d'(f(x),f(y))\\leq C\\,d(x,y)<\\epsilon$. Per tant, $f$ és uniformement contínua.",
+   "Per definició, si $f$ és uniformement contínua en $\\Omega$, aleshores és contínua en tot punt $x_0\\in\\Omega$ (el mateix $\\delta$ serveix per a tots els punts).",
+   "Vegem que els recíprocs no són certs. La funció $f:(0,1]\\to\\mathbb{R}$, $f(x)=1/x$, és contínua però no uniformement contínua: cal veure que existeix $\\epsilon>0$ tal que per a tot $\\delta>0$ hi ha $x,y\\in(0,1]$ amb $|x-y|<\\delta$ i $|f(x)-f(y)|\\geq\\epsilon$.",
+   "Prenem $\\epsilon=1$ i, donat $\\delta>0$ (podem suposar $\\delta<1$), $x=\\delta/2$ i $y=\\delta/3$. Aleshores $|x-y|=\\delta/6<\\delta$ i $|f(x)-f(y)|=\\left|\\frac{2}{\\delta}-\\frac{3}{\\delta}\\right|=\\frac{1}{\\delta}>1$.",
+   "La funció $f:[0,1]\\to\\mathbb{R}$, $f(x)=\\sqrt{x}$, és uniformement contínua però no és Lipschitz. Suposem que existeix $C>0$ tal que $|\\sqrt{x}-\\sqrt{y}|\\leq C\\,|x-y|$ per a tot $x,y\\in[0,1]$.",
+   "Pel teorema del valor mitjà, per a $0<x<y\\leq1$ existeix $\\xi\\in(x,y)$ tal que $|\\sqrt{x}-\\sqrt{y}|=\\frac{1}{2\\sqrt{\\xi}}\\,|x-y|$. Caldria, doncs, que $\\frac{1}{2\\sqrt{\\xi}}\\leq C$ per a totes les $\\xi$ obtingudes així.",
+   "Però, prenent $x,y$ prou propers a zero, $\\xi$ és tan petit com vulguem i $\\frac{1}{2\\sqrt{\\xi}}$ tan gran com vulguem, en contradicció amb l'existència de $C$."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "fins i tot quan $\\Omega$ és compacte",
+    "tipus": "conclusio",
+    "explicacio": "Pel teorema de Heine-Cantor, si $\\Omega$ és compacte tota funció contínua és uniformement contínua, de manera que el recíproc de la segona implicació és cert en compactes. El contraexemple de la demostració, $1/x$ a $(0,1]$, té domini no compacte.",
+    "correccio": "Lipschitz $\\Rightarrow$ uniformement contínua $\\Rightarrow$ contínua. Els recíprocs són falsos (en general).",
+    "pista": "El domini del contraexemple $1/x$ és compacte? Què diu el teorema de Heine-Cantor?"
+   },
+   {
+    "fragment": 2,
+    "cita": "prenem $\\delta=C\\,\\epsilon$",
+    "tipus": "calcul",
+    "explicacio": "Amb $\\delta=C\\epsilon$ només s'obté $d'(f(x),f(y))<C^2\\epsilon$, que no és menor que $\\epsilon$ si $C>1$.",
+    "correccio": "Cal prendre $\\delta=\\epsilon/C$, i aleshores $d'(f(x),f(y))\\leq C\\,d(x,y)<C\\,\\delta=\\epsilon$.",
+    "pista": "Si $d(x,y)<\\delta$, quant val com a màxim $C\\,d(x,y)$ amb aquest $\\delta$?"
+   }
+  ]
+ }
+]

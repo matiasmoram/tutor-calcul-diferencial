@@ -1,0 +1,84 @@
+{
+  "id": "80e3a773ec6f",
+  "exercici": "T2.23",
+  "font": "teoria",
+  "dificultat": "dificil",
+  "fragments": [
+    "Sigui $f:\\Omega\\subseteq M\\to\\mathbb{R}$ contínua i $K\\subseteq\\Omega$ compacte.",
+    "Llavors $f(\\Omega)$ és fitat i existeixen $x_0,x_1\\in K$ tals que $f(x_0)=\\min_{x\\in K}f(x)$ i $f(x_1)=\\max_{x\\in K}f(x)$.",
+    "La primera part és immediata: com que $f$ és contínua i $K$ és compacte, per la proposició 21 el conjunt $f(K)\\subset\\mathbb{R}$ és compacte i, per tant, fitat.",
+    "Com que $f(K)$ és fitat, podem considerar els nombres reals $f_M:=\\sup_{x\\in K}f(x)$ i $f_m:=\\inf_{x\\in K}f(x)$. Demostrarem que s'assoleixen en punts de $K$; ho fem només per al màxim, ja que el cas del mínim s'obté aplicant el resultat a la funció $1/f$.",
+    "Per la definició de suprem, podem prendre una successió $(x_n)_n\\subset K$ tal que $f(x_n)\\to f_M$ quan $n\\to\\infty$.",
+    "Com que $K$ és compacte, la successió $(x_n)_n$ és convergent, amb $x_n\\to x^*\\in K$ quan $n\\to\\infty$.",
+    "Per continuïtat de $f$, tenim que $f(x_n)\\to f(x^*)$. Però, com que també $f(x_n)\\to f_M$, per la unicitat del límit deduïm que $f(x^*)=f_M$.",
+    "Per tant, $f$ ateny el seu màxim al punt $x^*\\in K$, i $x_1:=x^*$ compleix el que volíem."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$f(\\Omega)$ és fitat",
+      "inici": 8,
+      "fi": 28,
+      "tipus": "conclusio",
+      "explicacio": "La compacitat és de $K$, no de $\\Omega$: només es pot afirmar que $f(K)$ és fitat. Contraexemple: $\\Omega=\\mathbb{R}$, $K=\\{0\\}$, $f(x)=x$; $f(\\Omega)=\\mathbb{R}$ no és fitat.",
+      "correccio": "$f(K)$ és fitat.",
+      "pista": "Quin conjunt és compacte a les hipòtesis? De quina imatge podem dir alguna cosa?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "aplicant el resultat a la funció $1/f$",
+      "inici": 217,
+      "fi": 255,
+      "tipus": "pas_injustificat",
+      "explicacio": "$1/f$ no està definida on $f$ s'anul·la i, si $f$ canvia de signe, el màxim de $1/f$ no correspon al mínim de $f$ (p. ex. $f(x)=x$ a $[-1,1]$). El mínim s'obté aplicant el resultat a $-f$, que també és contínua, o repetint l'argument.",
+      "correccio": "Per al mínim la demostració és anàloga (o s'aplica el resultat a $-f$).",
+      "pista": "Quina transformació de $f$ intercanvia màxims i mínims i està sempre ben definida?"
+    },
+    {
+      "id": "e3",
+      "fragment": 6,
+      "cita": "la successió $(x_n)_n$ és convergent",
+      "inici": 25,
+      "fi": 61,
+      "tipus": "pas_injustificat",
+      "explicacio": "La compacitat (seqüencial) només garanteix una parcial convergent, no que tota la successió convergeixi (p. ex. a $K=[-1,1]$ amb $f(x)=x^2$ es pot prendre $x_n=(-1)^n$, que no convergeix).",
+      "correccio": "La successió $(x_n)_n$ admet una parcial convergent $(x_{n_k})_k$, amb $x_{n_k}\\to x^*\\in K$, i es treballa amb aquesta parcial.",
+      "pista": "Què assegura exactament la compacitat sobre una successió de $K$: que convergeix ella, o alguna cosa més feble?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t2b.json",
+    "valoracio": "Tres errors (conjunt $f(\\Omega)$ a l'enunciat, reducció via $1/f$, convergència de tota la successió) i una conseqüència.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "Llavors $f(\\Omega)$ és fitat",
+        "gravetat": "error",
+        "explicacio": "Els apunts diuen $f(K)$ fitat; $f(\\Omega)$ no ho és en general (p. ex. $f(x)=1/x$ a $\\Omega=(0,1)$)."
+      },
+      {
+        "fragment": 4,
+        "cita": "aplicant el resultat a la funció $1/f$",
+        "gravetat": "error",
+        "explicacio": "$1/f$ no està definida si $f$ s'anul·la, i el màxim de $1/f$ no correspon al mínim de $f$ si $f$ canvia de signe; cal aplicar-ho a $-f$ (o fer la demostració anàloga)."
+      },
+      {
+        "fragment": 6,
+        "cita": "la successió $(x_n)_n$ és convergent",
+        "gravetat": "error",
+        "explicacio": "La compacitat només garanteix una parcial convergent, no que tota la successió convergeixi."
+      },
+      {
+        "fragment": 7,
+        "cita": "tenim que $f(x_n)\\to f(x^*)$",
+        "gravetat": "consequencia",
+        "explicacio": "Pas correcte només si $x_n\\to x^*$, que s'ha afirmat erròniament al fragment 6; caldria treballar amb la parcial $(x_{n_k})$."
+      }
+    ]
+  },
+  "creat": 1791295930.3425274
+}

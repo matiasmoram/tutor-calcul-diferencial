@@ -1,0 +1,54 @@
+{
+  "id": "7b0e250f11af",
+  "exercici": "t3-31",
+  "font": "problema",
+  "dificultat": "facil",
+  "fragments": [
+    "Tenim $F(1)=(1,1)$ i $F(0)=(0,0)$, de manera que $F(1)-F(0)=(1,1)$. Per tant, el costat esquerre de la igualtat és el vector $(1,1)$.",
+    "D'altra banda, derivant component a component, $DF(t)=(2t,2t)$. Com que $1-0=1$, el costat dret queda $DF(t_0)\\cdot(1-0)=(2t_0,2t_0)$.",
+    "Així, la igualtat que cal comprovar és $(1,1)=(2t_0,2t_0)$. Igualar vectors vol dir igualar les dues components corresponents.",
+    "El sistema resultant és $2t_0=1$ i $2t_0=1$, que dona $t_0=\\frac12$. Com que $\\frac12\\in(0,1)$, concloem que existeix aquest valor de $t_0$.",
+    "Això no contradiu el teorema del valor mitjà. El TVM amb igualtat s'enuncia per a funcions reals d'una variable, i per a funcions vectorials no garanteix en general una igualtat vectorial amb un mateix punt.",
+    "Per a aplicacions vectorials, el resultat general és una estimació del tipus $\\|F(1)-F(0)\\|\\leq \\sup_{t\\in[0,1]}\\|F'(t)\\|\\,(1-0)$. Per tant, trobar una igualtat en un cas concret seria només una coincidència, no una conseqüència obligada del TVM."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "derivant component a component, $DF(t)=(2t,2t)$",
+      "inici": 15,
+      "fi": 62,
+      "tipus": "calcul",
+      "explicacio": "La segona component de $F(t)$ és $t^3$, i la seva derivada no és $2t$. Aquest càlcul fa que després s'obtingui un sistema equivocat.",
+      "correccio": "Hauria de ser $DF(t)=(2t,3t^2)$.",
+      "pista": "Quina és la derivada exacta de la segona component $t^3$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "antics.json",
+    "valoracio": "Un error de derivació ($t^3\\mapsto 2t$) porta a concloure que existeix $t_0$, quan en realitat no n'hi ha cap; la discussió sobre el TVM és raonable.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$DF(t)=(2t,2t)$",
+        "gravetat": "error",
+        "explicacio": "La derivada de $t^3$ és $3t^2$: $DF(t)=(2t,3t^2)$."
+      },
+      {
+        "fragment": 3,
+        "cita": "$(1,1)=(2t_0,2t_0)$",
+        "gravetat": "consequencia",
+        "explicacio": "Hereta la derivada errònia; la igualtat correcta és $(1,1)=(2t_0,3t_0^2)$."
+      },
+      {
+        "fragment": 4,
+        "cita": "concloem que existeix aquest valor de $t_0$",
+        "gravetat": "consequencia",
+        "explicacio": "Amb la derivada correcta, $2t_0=1$ dona $t_0=1/2$ però $3t_0^2=3/4\\neq1$: no existeix cap $t_0$."
+      }
+    ]
+  },
+  "creat": 1791295369.4060009
+}

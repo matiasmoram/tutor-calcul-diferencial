@@ -1,0 +1,60 @@
+{
+  "id": "7137db6fdb6c",
+  "exercici": "T1.27",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $(M,d)$ espai mètric i $A\\subseteq M$. Aleshores, $A$ és compacte si i només si $A$ és tancat.",
+    "Vegem que $A^c$ és obert, és a dir, que per a cada $x\\in A^c$ existeix una bola centrada en $x$ continguda en $A^c$. Fixat $x\\in A^c$, definim $U_n=\\left(\\overline{B}_{1/n}(x)\\right)^c$ per a $n\\geq 1$.",
+    "Cada $U_n$ és obert, perquè és el complementari d'un tancat.",
+    "Com que $\\overline{B}_1(x)\\supset\\overline{B}_{1/2}(x)\\supset\\overline{B}_{1/3}(x)\\supset\\cdots$, prenent complementaris tenim $U_1\\subset U_2\\subset U_3\\subset\\cdots$.",
+    "A més, $\\bigcup_{n\\geq 1}U_n=M$, ja que tot punt de $M$ és a algun $U_n$; per tant, la família $(U_n)_n$ és un recobriment d'$A$ per oberts.",
+    "Com que $A$ és compacte, d'aquest recobriment en podem extreure un de finit: existeixen índexs $i_1\\leq i_2\\leq\\cdots\\leq i_r$ tals que $A\\subseteq U_{i_1}\\cup\\cdots\\cup U_{i_r}$ i, com que els $U_n$ són encaixats, aquesta unió és $U_{i_r}$.",
+    "Per tant, $A\\subseteq U_{i_r}=\\left(\\overline{B}_{1/i_r}(x)\\right)^c$, és a dir, $\\overline{B}_{1/i_r}(x)\\subseteq A^c$ i, en particular, $B_{1/i_r}(x)\\subseteq A^c$. Així $A^c$ és obert i $A$ és tancat."
+  ],
+  "n_enunciat": 1,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "$A$ és compacte si i només si $A$ és tancat",
+      "inici": 56,
+      "fi": 99,
+      "tipus": "implicacio",
+      "explicacio": "El lema només afirma que compacte implica tancat; el recíproc és fals. Contraexemple: $A=\\mathbb{R}$ (o $[0,+\\infty)$) és tancat a $\\mathbb{R}$ però no és compacte.",
+      "correccio": "Si $A$ és compacte, aleshores $A$ és tancat.",
+      "pista": "Un tancat de $\\mathbb{R}$ com $[0,+\\infty)$ és compacte? La demostració prova les dues implicacions?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$\\bigcup_{n\\geq 1}U_n=M$",
+      "inici": 7,
+      "fi": 31,
+      "tipus": "calcul",
+      "explicacio": "El punt $x$ pertany a totes les boles tancades $\\overline{B}_{1/n}(x)$, i per tant a cap $U_n$: la unió és $M\\setminus\\{x\\}$, no $M$.",
+      "correccio": "$\\bigcup_{n\\geq 1}U_n=M\\setminus\\{x\\}$, que conté $A$ perquè $x\\notin A$.",
+      "pista": "El mateix punt $x$, a quin $U_n$ pertany?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t1b.json",
+    "valoracio": "Enunciat convertit en equivalència falsa i unió dels $U_n$ mal calculada (oblida que exclou $x$).",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "$A$ és compacte si i només si $A$ és tancat",
+        "gravetat": "error",
+        "explicacio": "El lema diu només compacte $\\Rightarrow$ tancat; el recíproc és fals (p. ex. $\\mathbb{R}$ és tancat i no compacte)."
+      },
+      {
+        "fragment": 5,
+        "cita": "$\\bigcup_{n\\geq 1}U_n=M$, ja que tot punt de $M$ és a algun $U_n$",
+        "gravetat": "error",
+        "explicacio": "Fals: $x\\notin U_n$ per a cap $n$, de manera que $\\bigcup_n U_n=M\\setminus\\{x\\}$. Recobreix $A$ perquè $x\\notin A$, no perquè sigui tot $M$."
+      }
+    ]
+  },
+  "creat": 1791295842.2401488
+}

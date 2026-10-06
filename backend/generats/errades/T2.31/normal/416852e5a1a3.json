@@ -1,0 +1,70 @@
+{
+  "id": "416852e5a1a3",
+  "exercici": "T2.31",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $(M,d)$ un espai mètric, i sigui $f:M\\to M$ una funció contractiva, és a dir, tal que existeix $0<k<1$ amb $d(f(x),f(y))\\leq k\\,d(x,y)$ per a tot $x,y\\in M$.",
+    "(a) $f$ té un únic punt fix $x^*$ a $M$, és a dir, existeix un únic $x^*\\in M$ tal que $f(x^*)=x^*$.",
+    "(b) Per a qualsevol punt inicial $x_0\\in M$, la successió definida per iteració $x_{n+1}=f(x_n)$ convergeix cap a $x^*$.",
+    "Prenem $x_0\\in M$ qualsevol i construïm la successió $x_{n+1}=f(x_n)$, $n\\geq0$; és a dir, $x_n=f^n(x_0)$. Demostrarem primer que $(x_n)_n$ és de Cauchy.",
+    "Per a tot $n\\geq1$, $d(x_{n+1},x_n)=d(f(x_n),f(x_{n-1}))\\leq k\\,d(x_n,x_{n-1})$ i, aplicant-ho repetidament, $d(x_{n+1},x_n)\\leq k^n\\,d(x_1,x_0)$ per a tot $n\\geq0$.",
+    "Per a $m>n$, per la desigualtat triangular, $d(x_m,x_n)\\leq\\sum_{i=n}^{m-1}d(x_{i+1},x_i)\\leq d(x_1,x_0)\\sum_{i=n}^{m-1}k^i$.",
+    "Com que $d(x_{n+1},x_n)\\leq k^n\\,d(x_1,x_0)\\to0$, els termes consecutius de la successió s'acosten tant com vulguem i, per tant, $(x_n)_n$ és de Cauchy.",
+    "Com que $M$ és complet, la successió de Cauchy $(x_n)_n$ té límit $x^*\\in M$.",
+    "Vegem que $x^*$ és un punt fix. Com que $f$ és contractiva, és de Lipschitz i, per tant, contínua; així, de $x_n\\to x^*$ obtenim $x_{n+1}=f(x_n)\\to f(x^*)$. Per la unicitat del límit (proposició 8), $f(x^*)=x^*$.",
+    "Per a la unicitat, siguin $x^*$ i $y^*$ punts fixos. Llavors $d(x^*,y^*)=d(f(x^*),f(y^*))\\leq k\\,d(x^*,y^*)$ i, com que $0<k<1$, això implica que $d(x^*,y^*)=0$, és a dir, $x^*=y^*$.",
+    "Finalment, com que $x_0$ era arbitrari i el punt fix és únic, per a qualsevol condició inicial la successió iterada convergeix al mateix punt $x^*$."
+  ],
+  "n_enunciat": 3,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "Sigui $(M,d)$ un espai mètric,",
+      "inici": 0,
+      "fi": 30,
+      "tipus": "hipotesi",
+      "explicacio": "Sense completesa el resultat és fals: a $M=(0,1]$, $f(x)=x/2$ és contractiva ($k=1/2$) i no té cap punt fix (el candidat $0$ no és a $M$).",
+      "correccio": "$(M,d)$ ha de ser un espai mètric complet.",
+      "pista": "On fa servir la demostració que les successions de Cauchy convergeixen? Què passa a $(0,1]$ amb $f(x)=x/2$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "els termes consecutius de la successió s'acosten tant com vulguem i, per tant, $(x_n)_n$ és de Cauchy",
+      "inici": 50,
+      "fi": 151,
+      "tipus": "pas_injustificat",
+      "explicacio": "Que $d(x_{n+1},x_n)\\to0$ no implica que la successió sigui de Cauchy (p. ex. les sumes parcials de la sèrie harmònica). Cal fitar $d(x_m,x_n)$ per a tots $m>n$ amb la cua de la sèrie geomètrica, $d(x_1,x_0)\\sum_{i=n}^{m-1}k^i$, que tendeix a $0$ perquè $\\sum k^i$ convergeix.",
+      "correccio": "Com que $0<k<1$, $\\sum k^i$ convergeix i les seves cues $\\sum_{i=n}^{m-1}k^i$ es fan tan petites com vulguem; per tant $d(x_m,x_n)<\\epsilon$ per a $m,n$ grans i $(x_n)_n$ és de Cauchy.",
+      "pista": "Si els termes consecutius s'acosten, ja s'acosten tots entre ells? Penses en $\\sum 1/i$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t2b.json",
+    "valoracio": "Dos errors: completesa eliminada de l'enunciat i un argument de Cauchy que no se segueix.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "Sigui $(M,d)$ un espai mètric, i",
+        "gravetat": "error",
+        "explicacio": "S'ha eliminat la completesa: p. ex. $M=(0,1]$, $f(x)=x/2$ és contractiva i no té punt fix."
+      },
+      {
+        "fragment": 7,
+        "cita": "els termes consecutius de la successió s'acosten tant com vulguem i, per tant, $(x_n)_n$ és de Cauchy",
+        "gravetat": "error",
+        "explicacio": "$d(x_{n+1},x_n)\\to0$ no implica Cauchy (p. ex. sumes parcials de la sèrie harmònica); cal fitar $d(x_m,x_n)$ amb la cua de la sèrie geomètrica, com al fragment 6."
+      },
+      {
+        "fragment": 8,
+        "cita": "Com que $M$ és complet",
+        "gravetat": "consequencia",
+        "explicacio": "Pas dels apunts, però usa la completesa que l'enunciat erroni ha eliminat."
+      }
+    ]
+  },
+  "creat": 1791295930.349666
+}

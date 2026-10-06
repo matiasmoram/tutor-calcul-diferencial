@@ -1,0 +1,505 @@
+[
+ {
+  "font": "teoria",
+  "id": "T4.4",
+  "dificultat": "normal",
+  "n_enunciat": 3,
+  "fragments": [
+   "Sigui $\\Omega\\subseteq\\mathbb{R}^n$ obert, $f:\\Omega\\to\\mathbb{R}^m$ una funció i $a\\in\\Omega$. (i) Si $f$ és diferenciable en $a$, llavors per a tot $\\varepsilon>0$ existeix $\\delta>0$ tal que per a tot $x,y\\in B(a,\\delta)\\subseteq\\Omega$ es compleix $\\|f(x)-f(y)\\|\\leq\\big(\\|Df(a)\\|+\\varepsilon\\big)\\|x-y\\|$.",
+   "(ii) Si $f\\in\\mathcal{C}^1(\\Omega)$, llavors per a tot $\\varepsilon>0$ existeix $\\delta>0$ tal que per a tot $x,y\\in B(a,\\delta)\\subseteq\\Omega$ es compleix $\\|f(x)-f(y)\\|\\leq\\big(\\|Df(a)\\|+\\varepsilon\\big)\\|x-y\\|$.",
+   "(iii) Si $n=m$, $f\\in\\mathcal{C}^1(\\Omega)$ i $\\det Jf(a)\\neq 0$, llavors per a tot $\\varepsilon>0$ existeix $\\delta>0$ tal que per a tot $x,y\\in B(a,\\delta)\\subseteq\\Omega$ es compleix $\\|f(x)-f(y)\\|\\geq(c-\\varepsilon)\\|x-y\\|$, on $c=1/\\|(Df(a))^{-1}\\|$. (En particular, $f$ és localment injectiva.)",
+   "(i) Com que $f$ és diferenciable en $a$, donat $\\varepsilon>0$ existeix $\\delta>0$ tal que $\\|f(x)-f(a)-Df(a)(x-a)\\|\\leq\\varepsilon\\|x-a\\|$ per a tot $x\\in B(a,\\delta)\\subseteq\\Omega$. Per la desigualtat triangular i la consistència entre normes de matrius i vectors, $\\|f(x)-f(a)\\|\\leq\\|f(x)-f(a)-Df(a)(x-a)\\|+\\|Df(a)(x-a)\\|\\leq(\\varepsilon+\\|Df(a)\\|)\\|x-a\\|$.",
+   "(ii) Com que $f\\in\\mathcal{C}^1(\\Omega)$, la diferencial $Df$ i la seva norma $\\|Df\\|$ són contínues en $\\Omega$. Per tant, donat $\\varepsilon>0$, existeix $\\delta>0$ tal que $\\|Df(z)\\|<\\|Df(a)\\|+\\varepsilon$ per a tot $z\\in B(a,\\delta)\\subseteq\\Omega$.",
+   "Siguin $x,y\\in B(a,\\delta)$. Pel teorema del valor mitjà per a camps vectorials, aplicat amb $u=f(x)-f(y)$, existeix $z\\in[x,y]\\subseteq B(a,\\delta)$ tal que $\\langle f(x)-f(y),f(x)-f(y)\\rangle=\\langle f(x)-f(y),Df(z)(x-y)\\rangle$, és a dir, $\\|f(x)-f(y)\\|^2=\\langle f(x)-f(y),Df(z)(x-y)\\rangle$.",
+   "Per la desigualtat de Cauchy-Schwarz i la consistència de normes, $\\|f(x)-f(y)\\|^2\\leq\\|f(x)-f(y)\\|\\,\\|Df(z)\\|\\,\\|x-y\\|\\leq\\|f(x)-f(y)\\|\\big(\\|Df(a)\\|+\\varepsilon\\big)\\|x-y\\|$. Dividint per $\\|f(x)-f(y)\\|$ (si és nul, la desigualtat és immediata), obtenim $\\|f(x)-f(y)\\|\\leq\\big(\\|Df(a)\\|+\\varepsilon\\big)\\|x-y\\|$.",
+   "(iii) Sigui $h(x)=f(x)-Df(a)(x-a)$, que és de classe $\\mathcal{C}^1$ amb $Dh(x)=Df(x)-Df(a)$; en particular, $Dh(a)=0$. Per l'apartat (ii) aplicat a $h$, donat $\\varepsilon>0$ existeix $\\delta>0$ tal que $\\|h(x)-h(y)\\|\\leq\\varepsilon\\|x-y\\|$ per a tot $x,y\\in B(a,\\delta)\\subseteq\\Omega$, és a dir, $\\|f(x)-f(y)-Df(a)(x-y)\\|\\leq\\varepsilon\\|x-y\\|$.",
+   "Usant que $\\|A-B\\|\\geq\\|A\\|-\\|B\\|$, tenim $\\|f(x)-f(y)\\|\\geq\\|Df(a)(x-y)\\|-\\|f(x)-f(y)-Df(a)(x-y)\\|\\geq\\|Df(a)(x-y)\\|-\\varepsilon\\|x-y\\|$. N'hi ha prou, doncs, de veure que $\\|Df(a)(x-y)\\|\\geq c\\|x-y\\|$.",
+   "Com que $\\det Jf(a)\\neq 0$, existeix $(Df(a))^{-1}$ i $\\|x-y\\|=\\|(Df(a))^{-1}Df(a)(x-y)\\|\\geq\\|(Df(a))^{-1}\\|\\,\\|Df(a)(x-y)\\|$, d'on $c\\|x-y\\|\\leq\\|Df(a)(x-y)\\|$. Per tant, $\\|f(x)-f(y)\\|\\geq(c-\\varepsilon)\\|x-y\\|$ per a tot $x,y\\in B(a,\\delta)$."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "per a tot $x,y\\in B(a,\\delta)\\subseteq\\Omega$ es compleix $\\|f(x)-f(y)\\|\\leq\\big(\\|Df(a)\\|+\\varepsilon\\big)\\|x-y\\|$",
+    "tipus": "conclusio",
+    "explicacio": "Amb només diferenciabilitat en $a$ no es pot fitar $\\|f(x)-f(y)\\|$ per a dos punts qualssevol a prop de $a$: això requereix $\\mathcal{C}^1$ (apartat (ii)). Contraexemple: $f(x)=x^2\\sin(1/x)$, $f(0)=0$, és diferenciable en $0$ amb $f'(0)=0$, però en tota bola centrada en $0$ hi ha punts on $f'$ val gairebé $-1$, i per tant parells $x,y$ amb $|f(x)-f(y)|/|x-y|$ proper a $1>0+\\varepsilon$ si $\\varepsilon<1$. La demostració de (i) només compara $x$ amb $a$.",
+    "correccio": "L'apartat (i) només afirma $\\|f(x)-f(a)\\|\\leq\\big(\\|Df(a)\\|+\\varepsilon\\big)\\|x-a\\|$ per a tot $x\\in B(a,\\delta)$: la comparació és amb el punt $a$.",
+    "pista": "Quina diferència hi ha entre la conclusió de (i) i la de (ii), i quina hipòtesi addicional té (ii)?"
+   },
+   {
+    "fragment": 10,
+    "cita": "$\\|x-y\\|=\\|(Df(a))^{-1}Df(a)(x-y)\\|\\geq\\|(Df(a))^{-1}\\|\\,\\|Df(a)(x-y)\\|$",
+    "tipus": "desigualtat",
+    "explicacio": "La consistència de normes dona $\\|Av\\|\\leq\\|A\\|\\,\\|v\\|$; aplicada a $A=(Df(a))^{-1}$ i $v=Df(a)(x-y)$ la desigualtat va en sentit contrari. Amb $\\geq$ no se'n dedueix $c\\|x-y\\|\\leq\\|Df(a)(x-y)\\|$ (i, en general, és falsa: per a $Df(a)=\\mathrm{diag}(1,10)$ i $x-y=e_2$ dona $1\\geq 10$).",
+    "correccio": "$\\|x-y\\|=\\|(Df(a))^{-1}Df(a)(x-y)\\|\\leq\\|(Df(a))^{-1}\\|\\,\\|Df(a)(x-y)\\|$, i dividint per $\\|(Df(a))^{-1}\\|$ s'obté $c\\|x-y\\|\\leq\\|Df(a)(x-y)\\|$.",
+    "pista": "Quina desigualtat dona la consistència entre la norma d'una matriu i la d'un vector, $\\|Av\\|$ versus $\\|A\\|\\,\\|v\\|$?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T4.8",
+  "dificultat": "normal",
+  "n_enunciat": 2,
+  "fragments": [
+   "Sigui $f:U\\subseteq\\mathbb{R}^n\\to V\\subseteq\\mathbb{R}^n$ una funció $\\mathcal{C}^1(U)$, amb $U$ obert, tal que $\\det Jf(a)\\neq 0$ per a tot $a\\in U$.",
+   "Aleshores, per a tot obert $B\\subseteq U$, $f(B)$ és també un obert i $f|_B:B\\to f(B)$ és bijectiva.",
+   "Sigui $B\\subseteq U$ un obert, i siguin $y_0\\in f(B)$ i $x_0\\in B$ amb $f(x_0)=y_0$.",
+   "La restricció de $f$ a l'obert $B$ és de classe $\\mathcal{C}^1$ i $\\det Jf(x_0)\\neq 0$. Pel teorema de la funció inversa aplicat a $f|_B$ en $x_0$, existeixen entorns oberts $U'\\in\\mathcal{E}_{x_0}$, amb $U'\\subseteq B$, i $V'=f(U')\\in\\mathcal{E}_{f(x_0)}$ tals que $f|_{U'}:U'\\to V'$ és bijectiva, diferenciable i amb inversa diferenciable.",
+   "En particular, $V'$ és un obert que conté $y_0=f(x_0)$ i, com que $U'\\subseteq B$, $V'=f(U')\\subseteq f(B)$.",
+   "Per tant, $f(B)$ conté un obert no buit, $V'$, i en conseqüència $f(B)$ és obert."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "i $f|_B:B\\to f(B)$ és bijectiva",
+    "tipus": "conclusio",
+    "explicacio": "El teorema de la funció inversa només dona injectivitat local; la condició $\\det Jf\\neq 0$ a tot arreu no impedeix que $f$ deixi de ser injectiva en un obert gran. Contraexemple: $f(x,y)=e^x(\\cos y,\\sin y)$ a $U=B=\\mathbb{R}^2$ té $\\det Jf=e^{2x}\\neq 0$ i no és injectiva.",
+    "correccio": "L'enunciat només afirma que $f(B)$ és obert per a tot obert $B\\subseteq U$ (aplicació oberta), sense cap afirmació d'injectivitat.",
+    "pista": "El teorema de la funció inversa garanteix injectivitat a tot $B$ o només a prop de cada punt? Penseu en $e^z$ vista com a funció de $\\mathbb{R}^2$."
+   },
+   {
+    "fragment": 6,
+    "cita": "$f(B)$ conté un obert no buit, $V'$, i en conseqüència $f(B)$ és obert",
+    "tipus": "conclusio",
+    "explicacio": "Que un conjunt contingui un obert no buit no implica que sigui obert (per exemple, $[0,2]\\supseteq(0,1)$). El que s'ha provat és que $y_0$ és interior de $f(B)$, i cal usar que $y_0$ era un punt qualsevol de $f(B)$.",
+    "correccio": "Com que $y_0\\in V'\\subseteq f(B)$, $y_0$ és interior a $f(B)$; com que $y_0\\in f(B)$ era arbitrari, tot punt de $f(B)$ és interior i $f(B)$ és obert.",
+    "pista": "Quina és la definició d'obert? N'hi ha prou que el conjunt contingui algun obert?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T4.5",
+  "dificultat": "facil",
+  "n_enunciat": 3,
+  "fragments": [
+   "Sigui $\\Omega\\subseteq\\mathbb{R}^n$ obert, $f:\\Omega\\to\\mathbb{R}^n$ una funció $\\mathcal{C}^r(\\Omega)$, $r\\geq 1$, i $a\\in\\Omega$ tal que $\\det\\big(Jf(a)\\big)\\neq 0$. Llavors existeix $U\\in\\mathcal{E}_a$, $U\\subseteq\\Omega$, tal que:",
+   "(i) $f|_U:U\\to\\mathbb{R}^n$ és injectiva i $\\det\\big(Jf(z)\\big)\\neq 0$ per a tot $z\\in U$; (ii) $V=f(U)\\subseteq\\mathbb{R}^n$ és obert;",
+   "(iii) la inversa $f^{-1}:V\\to U$ és de classe $\\mathcal{C}^r(V)$ i, per a tot $y_0\\in V$, $Df^{-1}(y_0)=\\big(Df(y_0)\\big)^{-1}$.",
+   "Com que $f\\in\\mathcal{C}^1$, la funció $x\\mapsto\\det Df(x)$ és contínua i, per tant, existeix $\\delta_1>0$ tal que $\\det Df(z)\\neq 0$ per a tot $z\\in B(a,\\delta_1)$. Per l'apartat (iii) de la proposició 4 amb $\\varepsilon=c/2$, on $c=1/\\|(Df(a))^{-1}\\|$, existeix $\\delta_2>0$ tal que $\\|f(x)-f(y)\\|\\geq\\frac{c}{2}\\|x-y\\|$ per a tot $x,y\\in B(a,\\delta_2)\\subseteq\\Omega$. Prenem $\\delta=\\min\\{\\delta_1,\\delta_2\\}$ i $U=B(a,\\delta)$.",
+   "(i) Si $z\\in U$, aleshores $z\\in B(a,\\delta_1)$ i, per tant, $\\det Df(z)\\neq 0$. A més, si $x,y\\in U$ compleixen $f(x)=f(y)$, la desigualtat anterior dona $\\frac{c}{2}\\|x-y\\|\\leq 0$, és a dir, $x=y$; per tant, $f|_U$ és injectiva.",
+   "(ii) Sigui $y_0\\in V$ i sigui $x_0\\in U$ l'únic punt amb $f(x_0)=y_0$. Prenem $\\eta>0$ tal que $U_0=B(x_0,\\eta)$ compleixi $\\overline{U_0}\\subseteq U$. La frontera $\\mathrm{Fr}(U_0)$ és compacta; per tant, també ho és $f(\\mathrm{Fr}(U_0))$, que no conté $y_0$ per la injectivitat de $f|_U$. Així, $\\sigma=\\min_{x\\in\\mathrm{Fr}(U_0)}\\|y_0-f(x)\\|>0$.",
+   "Vegem que $V_0=B(y_0,\\sigma/2)\\subseteq V$. Fixat $y\\in V_0$, la funció $\\varphi(x)=\\|f(x)-y\\|$ és contínua i, pel teorema de Weierstrass, assoleix el mínim sobre el compacte $\\overline{U_0}$ en un punt $z$.",
+   "D'una banda, $\\varphi(z)\\leq\\varphi(x_0)=\\|y_0-y\\|<\\sigma/2$. De l'altra, per a tot $x\\in\\mathrm{Fr}(U_0)$, $\\varphi(x)=\\|f(x)-y\\|\\geq\\|f(x)-y_0\\|-\\|y_0-y\\|>\\sigma-\\sigma/2=\\sigma/2$. Per tant, el mínim no és a la frontera, i $z\\in U_0$, que és obert.",
+   "Aleshores $\\varphi^2=\\sum_{k=1}^n(f_k-y_k)^2$ també assoleix el mínim sobre $\\overline{U_0}$ en $z$, que és un punt interior, i per a $i=1,\\ldots,n$ es té $0=\\frac{\\partial(\\varphi^2)}{\\partial x_i}(z)=2\\sum_{k=1}^n(f_k(z)-y_k)\\frac{\\partial f_k}{\\partial x_i}(z)$, és a dir, $(f(z)-y)^{T}Jf(z)=0$. Com que $z\\in U$, $\\det Jf(z)\\neq 0$, i per tant $f(z)=y$. Així, $y\\in f(U)=V$, i $V_0\\subseteq V$.",
+   "(iii) Sigui $y_0\\in V$, $x_0=f^{-1}(y_0)$, $c_1=1/\\|(Df(x_0))^{-1}\\|$ i, per a $y\\in V$, $x=f^{-1}(y)$. Per a tot $u\\in\\mathbb{R}^n$, $\\|u\\|=\\|(Df(x_0))^{-1}Df(x_0)u\\|\\leq\\|(Df(x_0))^{-1}\\|\\,\\|Df(x_0)u\\|$, és a dir, $c_1\\|u\\|\\leq\\|Df(x_0)u\\|$. Aplicat a $u=f^{-1}(y)-f^{-1}(y_0)-(Df(x_0))^{-1}(y-y_0)$, per al qual $Df(x_0)u=Df(x_0)(x-x_0)-(f(x)-f(x_0))$, obtenim $c_1\\|u\\|\\leq\\|f(x)-f(x_0)-Df(x_0)(x-x_0)\\|$.",
+   "Donat $\\varepsilon>0$, per la diferenciabilitat de $f$ en $x_0$ existeix un obert $U_3$, amb $x_0\\in U_3\\subseteq U$, tal que $\\|f(x)-f(x_0)-Df(x_0)(x-x_0)\\|\\leq\\frac{\\varepsilon c c_1}{2}\\|x-x_0\\|$ per a tot $x\\in U_3$. D'altra banda, per la desigualtat de l'inici de la demostració, $\\|y-y_0\\|\\geq\\frac{c}{2}\\|x-x_0\\|$ per a tot $x\\in U$; en particular, $f^{-1}$ és contínua i, si $y$ és prou a prop de $y_0$, $x=f^{-1}(y)\\in U_3$.",
+   "Combinant-ho, per a $y$ prou a prop de $y_0$, $\\|u\\|\\leq\\frac{1}{c_1}\\cdot\\frac{\\varepsilon c c_1}{2}\\|x-x_0\\|\\leq\\frac{\\varepsilon c}{2}\\cdot\\frac{2}{c}\\|y-y_0\\|=\\varepsilon\\|y-y_0\\|$. Per tant, $f^{-1}$ és diferenciable en $y_0$ i $Df^{-1}(y_0)=(Df(x_0))^{-1}=\\big(Df(f^{-1}(y_0))\\big)^{-1}$.",
+   "Finalment, $Df^{-1}(y)=\\big(Df(f^{-1}(y))\\big)^{-1}$ per a tot $y\\in V$. Com que $f^{-1}$ i $Df$ són contínues, $Df(f^{-1}(y))$ és contínua, i les components de la seva inversa (que existeix per (i)) són quocients de polinomis en les seves components amb denominador $\\det Df(f^{-1}(y))\\neq 0$; per tant, $f^{-1}\\in\\mathcal{C}^1(V)$. Iterant, si $f^{-1}\\in\\mathcal{C}^k(V)$ amb $k<r$, aleshores $Df(f^{-1}(y))$ i la seva inversa són de classe $\\mathcal{C}^k$, és a dir, $f^{-1}\\in\\mathcal{C}^{k+1}(V)$; així arribem a $f^{-1}\\in\\mathcal{C}^r(V)$."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "$Df^{-1}(y_0)=\\big(Df(y_0)\\big)^{-1}$",
+    "tipus": "conclusio",
+    "explicacio": "La diferencial de $f$ s'ha d'avaluar en el punt $x_0=f^{-1}(y_0)$, no en $y_0$ (que ni tan sols ha de pertànyer a $\\Omega$). Contraexemple: $f(x)=x^2$ prop de $a=1$; $(f^{-1})'(4)=1/4$, però $1/f'(4)=1/8$.",
+    "correccio": "$Df^{-1}(y_0)=\\big(Df(f^{-1}(y_0))\\big)^{-1}$ per a tot $y_0\\in V$.",
+    "pista": "En quin espai viu $y_0$ i en quin està definida $Df$? En quin punt s'ha d'avaluar $Df$?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T4.5",
+  "dificultat": "normal",
+  "n_enunciat": 3,
+  "fragments": [
+   "Sigui $\\Omega\\subseteq\\mathbb{R}^n$ obert, $f:\\Omega\\to\\mathbb{R}^n$ una funció $\\mathcal{C}^r(\\Omega)$, $r\\geq 1$, i $a\\in\\Omega$ tal que $\\det\\big(Jf(a)\\big)\\neq 0$. Llavors existeix $U\\in\\mathcal{E}_a$, $U\\subseteq\\Omega$, tal que:",
+   "(i) $f|_U:U\\to\\mathbb{R}^n$ és injectiva i $\\det\\big(Jf(z)\\big)\\neq 0$ per a tot $z\\in U$; (ii) $V=f(U)\\subseteq\\mathbb{R}^n$ és obert, i també ho és $f(\\Omega)$;",
+   "(iii) la inversa $f^{-1}:V\\to U$ és de classe $\\mathcal{C}^r(V)$ i, per a tot $y_0\\in V$, $Df^{-1}(y_0)=\\big(Df(f^{-1}(y_0))\\big)^{-1}$.",
+   "Com que $f\\in\\mathcal{C}^1$, la funció $x\\mapsto\\det Df(x)$ és contínua i, per tant, existeix $\\delta_1>0$ tal que $\\det Df(z)\\neq 0$ per a tot $z\\in B(a,\\delta_1)$. Per l'apartat (iii) de la proposició 4 amb $\\varepsilon=c/2$, on $c=1/\\|(Df(a))^{-1}\\|$, existeix $\\delta_2>0$ tal que $\\|f(x)-f(y)\\|\\geq\\frac{c}{2}\\|x-y\\|$ per a tot $x,y\\in B(a,\\delta_2)\\subseteq\\Omega$. Prenem $\\delta=\\min\\{\\delta_1,\\delta_2\\}$ i $U=B(a,\\delta)$.",
+   "(i) Si $z\\in U$, aleshores $z\\in B(a,\\delta_1)$ i, per tant, $\\det Df(z)\\neq 0$. A més, si $x,y\\in U$ compleixen $f(x)=f(y)$, la desigualtat anterior dona $\\frac{c}{2}\\|x-y\\|\\leq 0$, és a dir, $x=y$; per tant, $f|_U$ és injectiva.",
+   "(ii) Sigui $y_0\\in V$ i sigui $x_0\\in U$ l'únic punt amb $f(x_0)=y_0$. Prenem $\\eta>0$ tal que $U_0=B(x_0,\\eta)$ compleixi $\\overline{U_0}\\subseteq U$. La frontera $\\mathrm{Fr}(U_0)$ és compacta; per tant, també ho és $f(\\mathrm{Fr}(U_0))$, que no conté $y_0$ per la injectivitat de $f|_U$. Així, $\\sigma=\\min_{x\\in\\mathrm{Fr}(U_0)}\\|y_0-f(x)\\|>0$.",
+   "Vegem que $V_0=B(y_0,\\sigma/2)\\subseteq V$. Fixat $y\\in V_0$, la funció $\\varphi(x)=\\|f(x)-y\\|$ és contínua i, pel teorema de Weierstrass, assoleix el mínim sobre el compacte $\\overline{U_0}$ en un punt $z$.",
+   "D'una banda, $\\varphi(z)\\leq\\varphi(x_0)=\\|y_0-y\\|<\\sigma/2$. De l'altra, per a tot $x\\in\\mathrm{Fr}(U_0)$, $\\varphi(x)=\\|f(x)-y\\|\\geq\\|f(x)-y_0\\|+\\|y_0-y\\|>\\sigma/2$. Per tant, el mínim no és a la frontera, i $z\\in U_0$, que és obert.",
+   "Aleshores $\\varphi^2=\\sum_{k=1}^n(f_k-y_k)^2$ també assoleix el mínim sobre $\\overline{U_0}$ en $z$, que és un punt interior, i per a $i=1,\\ldots,n$ es té $0=\\frac{\\partial(\\varphi^2)}{\\partial x_i}(z)=2\\sum_{k=1}^n(f_k(z)-y_k)\\frac{\\partial f_k}{\\partial x_i}(z)$, és a dir, $(f(z)-y)^{T}Jf(z)=0$. Com que $z\\in U$, $\\det Jf(z)\\neq 0$, i per tant $f(z)=y$. Així, $y\\in f(U)=V$, i $V_0\\subseteq V$.",
+   "(iii) Sigui $y_0\\in V$, $x_0=f^{-1}(y_0)$, $c_1=1/\\|(Df(x_0))^{-1}\\|$ i, per a $y\\in V$, $x=f^{-1}(y)$. Per a tot $u\\in\\mathbb{R}^n$, $\\|u\\|=\\|(Df(x_0))^{-1}Df(x_0)u\\|\\leq\\|(Df(x_0))^{-1}\\|\\,\\|Df(x_0)u\\|$, és a dir, $c_1\\|u\\|\\leq\\|Df(x_0)u\\|$. Aplicat a $u=f^{-1}(y)-f^{-1}(y_0)-(Df(x_0))^{-1}(y-y_0)$, per al qual $Df(x_0)u=Df(x_0)(x-x_0)-(f(x)-f(x_0))$, obtenim $c_1\\|u\\|\\leq\\|f(x)-f(x_0)-Df(x_0)(x-x_0)\\|$.",
+   "Donat $\\varepsilon>0$, per la diferenciabilitat de $f$ en $x_0$ existeix un obert $U_3$, amb $x_0\\in U_3\\subseteq U$, tal que $\\|f(x)-f(x_0)-Df(x_0)(x-x_0)\\|\\leq\\frac{\\varepsilon c c_1}{2}\\|x-x_0\\|$ per a tot $x\\in U_3$. D'altra banda, per la desigualtat de l'inici de la demostració, $\\|y-y_0\\|\\geq\\frac{c}{2}\\|x-x_0\\|$ per a tot $x\\in U$; en particular, $f^{-1}$ és contínua i, si $y$ és prou a prop de $y_0$, $x=f^{-1}(y)\\in U_3$.",
+   "Combinant-ho, per a $y$ prou a prop de $y_0$, $\\|u\\|\\leq\\frac{1}{c_1}\\cdot\\frac{\\varepsilon c c_1}{2}\\|x-x_0\\|\\leq\\frac{\\varepsilon c}{2}\\cdot\\frac{2}{c}\\|y-y_0\\|=\\varepsilon\\|y-y_0\\|$. Per tant, $f^{-1}$ és diferenciable en $y_0$ i $Df^{-1}(y_0)=(Df(x_0))^{-1}=\\big(Df(f^{-1}(y_0))\\big)^{-1}$.",
+   "Finalment, $Df^{-1}(y)=\\big(Df(f^{-1}(y))\\big)^{-1}$ per a tot $y\\in V$. Com que $f^{-1}$ i $Df$ són contínues, $Df(f^{-1}(y))$ és contínua, i les components de la seva inversa (que existeix per (i)) són quocients de polinomis en les seves components amb denominador $\\det Df(f^{-1}(y))\\neq 0$; per tant, $f^{-1}\\in\\mathcal{C}^1(V)$. Iterant, si $f^{-1}\\in\\mathcal{C}^k(V)$ amb $k<r$, aleshores $Df(f^{-1}(y))$ i la seva inversa són de classe $\\mathcal{C}^k$, és a dir, $f^{-1}\\in\\mathcal{C}^{k+1}(V)$; així arribem a $f^{-1}\\in\\mathcal{C}^r(V)$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "i també ho és $f(\\Omega)$",
+    "tipus": "conclusio",
+    "explicacio": "El teorema és local: la hipòtesi només és en el punt $a$, i no diu res de la imatge de tot $\\Omega$. Contraexemple: $f(x)=x^2$ a $\\Omega=(-1,1)$ amb $a=1/2$; $f'(a)\\neq 0$ però $f(\\Omega)=[0,1)$ no és obert.",
+    "correccio": "Només s'afirma que $V=f(U)$ és obert, per a l'entorn $U$ de $a$ que dona el teorema.",
+    "pista": "La hipòtesi $\\det Jf\\neq 0$ es demana a tot $\\Omega$ o només en $a$? Què pot passar lluny de $a$?"
+   },
+   {
+    "fragment": 8,
+    "cita": "$\\varphi(x)=\\|f(x)-y\\|\\geq\\|f(x)-y_0\\|+\\|y_0-y\\|>\\sigma/2$",
+    "tipus": "desigualtat",
+    "explicacio": "La desigualtat triangular dona $\\|f(x)-y\\|\\geq\\|f(x)-y_0\\|-\\|y_0-y\\|$, amb un signe menys; la versió amb $+$ és falsa en general (per exemple si $y$ és entre $y_0$ i $f(x)$).",
+    "correccio": "$\\varphi(x)\\geq\\|f(x)-y_0\\|-\\|y_0-y\\|>\\sigma-\\sigma/2=\\sigma/2$, ja que $\\|f(x)-y_0\\|\\geq\\sigma$ i $\\|y_0-y\\|<\\sigma/2$.",
+    "pista": "Quina és la desigualtat triangular inversa? És cert que $\\|p-q\\|\\geq\\|p-r\\|+\\|r-q\\|$?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T4.5",
+  "dificultat": "dificil",
+  "n_enunciat": 3,
+  "fragments": [
+   "Sigui $\\Omega\\subseteq\\mathbb{R}^n$ obert, $f:\\Omega\\to\\mathbb{R}^n$ una funció $\\mathcal{C}^r(\\Omega)$, $r\\geq 1$, i $a\\in\\Omega$ tal que $\\det\\big(Jf(a)\\big)\\neq 0$. Llavors, per a tot $U\\in\\mathcal{E}_a$ amb $U\\subseteq\\Omega$, es compleix:",
+   "(i) $f|_U:U\\to\\mathbb{R}^n$ és injectiva i $\\det\\big(Jf(z)\\big)\\neq 0$ per a tot $z\\in U$; (ii) $V=f(U)\\subseteq\\mathbb{R}^n$ és obert;",
+   "(iii) la inversa $f^{-1}:V\\to U$ és de classe $\\mathcal{C}^r(V)$ i, per a tot $y_0\\in V$, $Df^{-1}(y_0)=\\big(Df(f^{-1}(y_0))\\big)^{-1}$.",
+   "Com que $f\\in\\mathcal{C}^1$, la funció $x\\mapsto\\det Df(x)$ és contínua i, per tant, existeix $\\delta_1>0$ tal que $\\det Df(z)\\neq 0$ per a tot $z\\in B(a,\\delta_1)$. Per l'apartat (iii) de la proposició 4 amb $\\varepsilon=c/2$, on $c=1/\\|(Df(a))^{-1}\\|$, existeix $\\delta_2>0$ tal que $\\|f(x)-f(y)\\|\\geq\\frac{c}{2}\\|x-y\\|$ per a tot $x,y\\in B(a,\\delta_2)\\subseteq\\Omega$. Prenem $\\delta=\\min\\{\\delta_1,\\delta_2\\}$ i $U=B(a,\\delta)$.",
+   "(i) Si $z\\in U$, aleshores $z\\in B(a,\\delta_1)$ i, per tant, $\\det Df(z)\\neq 0$. A més, si $x,y\\in U$ compleixen $f(x)=f(y)$, la desigualtat anterior dona $\\frac{c}{2}\\|x-y\\|\\leq 0$, és a dir, $x=y$; per tant, $f|_U$ és injectiva.",
+   "(ii) Sigui $y_0\\in V$ i sigui $x_0\\in U$ l'únic punt amb $f(x_0)=y_0$. Prenem $\\eta>0$ tal que $U_0=B(x_0,\\eta)$ compleixi $\\overline{U_0}\\subseteq U$. La frontera $\\mathrm{Fr}(U_0)$ és compacta; per tant, també ho és $f(\\mathrm{Fr}(U_0))$, que no conté $y_0$ per la injectivitat de $f|_U$. Així, $\\sigma=\\min_{x\\in\\mathrm{Fr}(U_0)}\\|y_0-f(x)\\|>0$.",
+   "Vegem que $V_0=B(y_0,\\sigma/2)\\subseteq V$. Fixat $y\\in V_0$, la funció $\\varphi(x)=\\|f(x)-y\\|$ és contínua i, pel teorema de Weierstrass, assoleix el mínim sobre el compacte $\\overline{U_0}$ en un punt $z$.",
+   "D'una banda, $\\varphi(z)\\leq\\varphi(x_0)=\\|y_0-y\\|<\\sigma/2$. De l'altra, per a tot $x\\in\\mathrm{Fr}(U_0)$, $\\varphi(x)=\\|f(x)-y\\|\\geq\\|f(x)-y_0\\|-\\|y_0-y\\|>\\sigma-\\sigma/2=\\sigma/2$. Per tant, el mínim no és a la frontera, i $z\\in U_0$, que és obert.",
+   "Aleshores $\\varphi^2=\\sum_{k=1}^n(f_k-y_k)^2$ també assoleix el mínim sobre $\\overline{U_0}$ en $z$, que és un punt interior, i per a $i=1,\\ldots,n$ es té $0=\\frac{\\partial(\\varphi^2)}{\\partial x_i}(z)=2\\sum_{k=1}^n(f_k(z)-y_k)\\frac{\\partial f_k}{\\partial x_i}(z)$, és a dir, $(f(z)-y)^{T}Jf(z)=0$. Com que $\\det Jf(x_0)\\neq 0$, aquest sistema lineal només té la solució nul·la, i per tant $f(z)=y$. Així, $y\\in f(U)=V$, i $V_0\\subseteq V$.",
+   "(iii) Sigui $y_0\\in V$, $x_0=f^{-1}(y_0)$, $c_1=1/\\|(Df(x_0))^{-1}\\|$ i, per a $y\\in V$, $x=f^{-1}(y)$. Per a tot $u\\in\\mathbb{R}^n$, $\\|u\\|=\\|(Df(x_0))^{-1}Df(x_0)u\\|\\leq\\|(Df(x_0))^{-1}\\|\\,\\|Df(x_0)u\\|$, és a dir, $c_1\\|u\\|\\leq\\|Df(x_0)u\\|$. Aplicat a $u=f^{-1}(y)-f^{-1}(y_0)-(Df(x_0))^{-1}(y-y_0)$, per al qual $Df(x_0)u=Df(x_0)(x-x_0)-(f(x)-f(x_0))$, obtenim $c_1\\|u\\|\\leq\\|f(x)-f(x_0)-Df(x_0)(x-x_0)\\|$.",
+   "Donat $\\varepsilon>0$, per la diferenciabilitat de $f$ en $x_0$ existeix un obert $U_3$, amb $x_0\\in U_3\\subseteq U$, tal que $\\|f(x)-f(x_0)-Df(x_0)(x-x_0)\\|\\leq\\frac{\\varepsilon c c_1}{2}\\|x-x_0\\|$ per a tot $x\\in U_3$. D'altra banda, per la desigualtat de l'inici de la demostració, $\\|x-x_0\\|\\geq\\frac{c}{2}\\|y-y_0\\|$ per a tot $x\\in U$; en particular, $f^{-1}$ és contínua i, si $y$ és prou a prop de $y_0$, $x=f^{-1}(y)\\in U_3$.",
+   "Combinant-ho, per a $y$ prou a prop de $y_0$, $\\|u\\|\\leq\\frac{1}{c_1}\\cdot\\frac{\\varepsilon c c_1}{2}\\|x-x_0\\|\\leq\\frac{\\varepsilon c}{2}\\cdot\\frac{2}{c}\\|y-y_0\\|=\\varepsilon\\|y-y_0\\|$. Per tant, $f^{-1}$ és diferenciable en $y_0$ i $Df^{-1}(y_0)=(Df(x_0))^{-1}=\\big(Df(f^{-1}(y_0))\\big)^{-1}$.",
+   "Finalment, $Df^{-1}(y)=\\big(Df(f^{-1}(y))\\big)^{-1}$ per a tot $y\\in V$. Com que $f^{-1}$ i $Df$ són contínues, $Df(f^{-1}(y))$ és contínua, i les components de la seva inversa (que existeix per (i)) són quocients de polinomis en les seves components amb denominador $\\det Df(f^{-1}(y))\\neq 0$; per tant, $f^{-1}\\in\\mathcal{C}^1(V)$. Iterant, si $f^{-1}\\in\\mathcal{C}^k(V)$ amb $k<r$, aleshores $Df(f^{-1}(y))$ i la seva inversa són de classe $\\mathcal{C}^k$, és a dir, $f^{-1}\\in\\mathcal{C}^{k+1}(V)$; així arribem a $f^{-1}\\in\\mathcal{C}^r(V)$."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "per a tot $U\\in\\mathcal{E}_a$ amb $U\\subseteq\\Omega$",
+    "tipus": "quantificador",
+    "explicacio": "El teorema garanteix l'existència d'algun entorn $U$ prou petit, no que les conclusions valguin per a qualsevol entorn. Contraexemple: $f(x)=x^2$ a $\\Omega=\\mathbb{R}$, $a=1$, $U=(-2,2)$: $f|_U$ no és injectiva i $f'(0)=0$.",
+    "correccio": "Llavors existeix $U\\in\\mathcal{E}_a$, $U\\subseteq\\Omega$, tal que es compleixen (i), (ii) i (iii).",
+    "pista": "La demostració construeix un $U$ concret o treballa amb un entorn qualsevol de $a$?"
+   },
+   {
+    "fragment": 9,
+    "cita": "Com que $\\det Jf(x_0)\\neq 0$, aquest sistema lineal només té la solució nul·la",
+    "tipus": "hipotesi",
+    "explicacio": "El sistema és $(f(z)-y)^{T}Jf(z)=0$, amb la matriu avaluada en $z$, no en $x_0$; que $Jf(x_0)$ sigui invertible no diu res de $Jf(z)$. Cal usar que $z\\in U$ i que $\\det Jf\\neq 0$ a tot $U$ per (i).",
+    "correccio": "Com que $z\\in U_0\\subseteq U$, per (i) $\\det Jf(z)\\neq 0$, i per tant $f(z)-y=0$.",
+    "pista": "En quin punt està avaluada la jacobiana del sistema que s'ha obtingut?"
+   },
+   {
+    "fragment": 11,
+    "cita": "$\\|x-x_0\\|\\geq\\frac{c}{2}\\|y-y_0\\|$ per a tot $x\\in U$",
+    "tipus": "desigualtat",
+    "explicacio": "La desigualtat de l'inici és $\\|f(x)-f(x_0)\\|\\geq\\frac{c}{2}\\|x-x_0\\|$, és a dir, $\\|y-y_0\\|\\geq\\frac{c}{2}\\|x-x_0\\|$; s'han intercanviat els papers de $x$ i $y$. La versió escrita fita $\\|x-x_0\\|$ inferiorment i no implica la continuïtat de $f^{-1}$ ni que $x\\in U_3$.",
+    "correccio": "$\\|y-y_0\\|\\geq\\frac{c}{2}\\|x-x_0\\|$ per a tot $x\\in U$, és a dir, $\\|f^{-1}(y)-f^{-1}(y_0)\\|\\leq\\frac{2}{c}\\|y-y_0\\|$.",
+    "pista": "Què diu exactament la desigualtat $\\|f(x)-f(y)\\|\\geq\\frac{c}{2}\\|x-y\\|$ quan la reescrius amb $y=f(x)$? Quina de les dues distàncies queda fitada?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T4.13",
+  "dificultat": "facil",
+  "n_enunciat": 3,
+  "fragments": [
+   "Sigui $G\\subseteq\\mathbb{R}^{n+m}$ obert, $\\Phi:G\\to\\mathbb{R}^m$, $(x,y)\\mapsto\\Phi(x,y)$, una funció $\\mathcal{C}^r(G)$, $r\\geq 1$, i $(a,b)\\in G$ tal que $\\Phi(a,b)=0$ i $\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$.",
+   "Aleshores existeixen dos oberts $U$ i $\\Omega$, amb $a\\in\\Omega\\subseteq\\mathbb{R}^n$ i $(a,b)\\in U\\subseteq G$, i una funció $\\varphi:\\Omega\\to\\mathbb{R}^m$ tals que: (i) $\\det\\big(\\partial\\Phi_i/\\partial y_j(z)\\big)_{i,j=1,\\ldots,m}\\neq 0$ per a tot $z\\in U$; (ii) $\\varphi\\in\\mathcal{C}^\\infty(\\Omega)$ i $\\varphi(a)=b$;",
+   "(iii) $\\{(x,y)\\in U\\mid\\Phi(x,y)=0\\}=\\{(u,\\varphi(u))\\mid u\\in\\Omega\\}$; en particular, $\\Phi(x,\\varphi(x))=0$ per a tot $x\\in\\Omega$.",
+   "(i) Considerem $f:G\\to\\mathbb{R}^{n+m}$, $f(x,y)=(x,\\Phi(x,y))$. Clarament $f\\in\\mathcal{C}^r(G)$ i $f(a,b)=(a,0)$. La matriu $Jf$ és triangular inferior per blocs, amb blocs diagonals $\\mathrm{Id}_n$ i $\\big(\\partial\\Phi_i/\\partial y_j\\big)_{i,j=1,\\ldots,m}$; per tant, $\\det Jf(a,b)=\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)\\neq 0$.",
+   "Pel teorema de la funció inversa, existeix un obert $U\\subseteq G$ amb $(a,b)\\in U$ tal que $f|_U$ és injectiva i $\\det Jf(z)\\neq 0$ per a tot $z\\in U$, $V=f(U)$ és obert i $f^{-1}:V\\to U$ és de classe $\\mathcal{C}^r(V)$. Com que $\\det Jf(z)=\\det\\big(\\partial\\Phi_i/\\partial y_j(z)\\big)$, això demostra (i).",
+   "(ii) Com que $f$ conserva les $n$ primeres coordenades, $f^{-1}$ és de la forma $f^{-1}(u,v)=(u,h(u,v))$ per a $(u,v)\\in V$. Definim $\\Omega=\\{x\\in\\mathbb{R}^n:(x,0)\\in V\\}$ i $\\varphi:\\Omega\\to\\mathbb{R}^m$, $\\varphi(u)=h(u,0)$. Observem que $a\\in\\Omega$, ja que $(a,0)=f(a,b)\\in V$.",
+   "$\\Omega$ és obert: si $x_0\\in\\Omega$, aleshores $(x_0,0)\\in V$, que és obert, i existeix $\\varepsilon>0$ amb $B((x_0,0),\\varepsilon)\\subseteq V$. Si $\\|x-x_0\\|<\\varepsilon$, aleshores $\\|(x,0)-(x_0,0)\\|=\\|x-x_0\\|<\\varepsilon$, de manera que $(x,0)\\in V$, és a dir, $x\\in\\Omega$.",
+   "$\\varphi$ està ben definida, perquè $(u,0)\\in V$ per a tot $u\\in\\Omega$; i com que $f^{-1}(u,0)=(u,h(u,0))=(u,\\varphi(u))$, $\\varphi$ és una component de $f^{-1}$, i per tant $\\varphi\\in\\mathcal{C}^r(\\Omega)$.",
+   "Per la bijectivitat de $f:U\\to V$, per a $(x,y)\\in U$ i $(u,v)\\in V$ es té $(x,y)=f^{-1}(f(x,y))=(x,h(x,\\Phi(x,y)))$ i $(u,v)=f(f^{-1}(u,v))=(u,\\Phi(u,h(u,v)))$; és a dir, $y=h(x,\\Phi(x,y))$ i $\\Phi(u,h(u,v))=v$. En particular, $b=h(a,\\Phi(a,b))=h(a,0)=\\varphi(a)$, i queda demostrat (ii).",
+   "(iii) $\\subseteq$: sigui $(x,y)\\in U$ amb $\\Phi(x,y)=0$. Aleshores $f(x,y)=(x,0)\\in V$, és a dir, $x\\in\\Omega$, i per la primera de les igualtats anteriors, $y=h(x,\\Phi(x,y))=h(x,0)=\\varphi(x)$.",
+   "$\\supseteq$: sigui $u\\in\\Omega$. Aleshores $(u,0)\\in V$ i $(u,\\varphi(u))=f^{-1}(u,0)\\in U$, ja que $f^{-1}:V\\to U$; a més, per la segona igualtat, $\\Phi(u,\\varphi(u))=\\Phi(u,h(u,0))=0$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "$\\varphi\\in\\mathcal{C}^\\infty(\\Omega)$",
+    "tipus": "conclusio",
+    "explicacio": "La funció implícita hereta exactament la regularitat de $\\Phi$, no més. Contraexemple: $\\Phi(x,y)=y-x|x|$, de classe $\\mathcal{C}^1$ i no $\\mathcal{C}^2$, amb $(a,b)=(0,0)$; la funció implícita és $\\varphi(x)=x|x|$, que no és $\\mathcal{C}^\\infty$.",
+    "correccio": "(ii) $\\varphi\\in\\mathcal{C}^r(\\Omega)$ i $\\varphi(a)=b$, amb el mateix $r$ que $\\Phi$.",
+    "pista": "Si $\\Phi$ només és de classe $\\mathcal{C}^1$, d'on podria sortir més regularitat per a $\\varphi$?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T4.13",
+  "dificultat": "normal",
+  "n_enunciat": 3,
+  "fragments": [
+   "Sigui $G\\subseteq\\mathbb{R}^{n+m}$ obert, $\\Phi:G\\to\\mathbb{R}^m$, $(x,y)\\mapsto\\Phi(x,y)$, una funció $\\mathcal{C}^r(G)$, $r\\geq 1$, i $(a,b)\\in G$ tal que $\\Phi(a,b)=0$ i $\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$.",
+   "Aleshores existeixen dos oberts $U$ i $\\Omega$, amb $a\\in\\Omega\\subseteq\\mathbb{R}^n$ i $(a,b)\\in U\\subseteq G$, i una funció $\\varphi:\\Omega\\to\\mathbb{R}^m$ tals que: (i) $\\det\\big(\\partial\\Phi_i/\\partial y_j(z)\\big)_{i,j=1,\\ldots,m}\\neq 0$ per a tot $z\\in G$; (ii) $\\varphi\\in\\mathcal{C}^r(\\Omega)$ i $\\varphi(a)=b$;",
+   "(iii) $\\{(x,y)\\in U\\mid\\Phi(x,y)=0\\}=\\{(u,\\varphi(u))\\mid u\\in\\Omega\\}$; en particular, $\\Phi(x,\\varphi(x))=0$ per a tot $x\\in\\Omega$.",
+   "(i) Considerem $f:G\\to\\mathbb{R}^{n+m}$, $f(x,y)=(x,\\Phi(x,y))$. Clarament $f\\in\\mathcal{C}^r(G)$ i $f(a,b)=(a,0)$. La matriu $Jf$ és triangular inferior per blocs, amb blocs diagonals $\\mathrm{Id}_n$ i $\\big(\\partial\\Phi_i/\\partial y_j\\big)_{i,j=1,\\ldots,m}$; per tant, $\\det Jf(a,b)=\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)\\neq 0$.",
+   "Pel teorema de la funció inversa, existeix un obert $U\\subseteq G$ amb $(a,b)\\in U$ tal que $f|_U$ és injectiva i $\\det Jf(z)\\neq 0$ per a tot $z\\in U$, $V=f(U)$ és obert i $f^{-1}:V\\to U$ és de classe $\\mathcal{C}^r(V)$. Com que $\\det Jf(z)=\\det\\big(\\partial\\Phi_i/\\partial x_j(z)\\big)$, això demostra (i).",
+   "(ii) Com que $f$ conserva les $n$ primeres coordenades, $f^{-1}$ és de la forma $f^{-1}(u,v)=(u,h(u,v))$ per a $(u,v)\\in V$. Definim $\\Omega=\\{x\\in\\mathbb{R}^n:(x,0)\\in V\\}$ i $\\varphi:\\Omega\\to\\mathbb{R}^m$, $\\varphi(u)=h(u,0)$. Observem que $a\\in\\Omega$, ja que $(a,0)=f(a,b)\\in V$.",
+   "$\\Omega$ és obert: si $x_0\\in\\Omega$, aleshores $(x_0,0)\\in V$, que és obert, i existeix $\\varepsilon>0$ amb $B((x_0,0),\\varepsilon)\\subseteq V$. Si $\\|x-x_0\\|<\\varepsilon$, aleshores $\\|(x,0)-(x_0,0)\\|=\\|x-x_0\\|<\\varepsilon$, de manera que $(x,0)\\in V$, és a dir, $x\\in\\Omega$.",
+   "$\\varphi$ està ben definida, perquè $(u,0)\\in V$ per a tot $u\\in\\Omega$; i com que $f^{-1}(u,0)=(u,h(u,0))=(u,\\varphi(u))$, $\\varphi$ és una component de $f^{-1}$, i per tant $\\varphi\\in\\mathcal{C}^r(\\Omega)$.",
+   "Per la bijectivitat de $f:U\\to V$, per a $(x,y)\\in U$ i $(u,v)\\in V$ es té $(x,y)=f^{-1}(f(x,y))=(x,h(x,\\Phi(x,y)))$ i $(u,v)=f(f^{-1}(u,v))=(u,\\Phi(u,h(u,v)))$; és a dir, $y=h(x,\\Phi(x,y))$ i $\\Phi(u,h(u,v))=v$. En particular, $b=h(a,\\Phi(a,b))=h(a,0)=\\varphi(a)$, i queda demostrat (ii).",
+   "(iii) $\\subseteq$: sigui $(x,y)\\in U$ amb $\\Phi(x,y)=0$. Aleshores $f(x,y)=(x,0)\\in V$, és a dir, $x\\in\\Omega$, i per la primera de les igualtats anteriors, $y=h(x,\\Phi(x,y))=h(x,0)=\\varphi(x)$.",
+   "$\\supseteq$: sigui $u\\in\\Omega$. Aleshores $(u,0)\\in V$ i $(u,\\varphi(u))=f^{-1}(u,0)\\in U$, ja que $f^{-1}:V\\to U$; a més, per la segona igualtat, $\\Phi(u,\\varphi(u))=\\Phi(u,h(u,0))=0$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "per a tot $z\\in G$",
+    "tipus": "conclusio",
+    "explicacio": "La condició sobre el determinant només es pot garantir en un entorn $U$ de $(a,b)$, no a tot el domini $G$. Contraexemple: $\\Phi(x,y)=x^2+y^2-1$ a $G=\\mathbb{R}^2$, $(a,b)=(0,1)$: $\\partial\\Phi/\\partial y(1,0)=0$.",
+    "correccio": "(i) $\\det\\big(\\partial\\Phi_i/\\partial y_j(z)\\big)\\neq 0$ per a tot $z\\in U$, l'obert que dona el teorema.",
+    "pista": "La hipòtesi sobre el determinant és en un sol punt: fins on se'n pot propagar la conclusió per continuïtat?"
+   },
+   {
+    "fragment": 5,
+    "cita": "$\\det Jf(z)=\\det\\big(\\partial\\Phi_i/\\partial x_j(z)\\big)$",
+    "tipus": "calcul",
+    "explicacio": "$Jf$ és triangular per blocs amb blocs diagonals $\\mathrm{Id}_n$ i $\\big(\\partial\\Phi_i/\\partial y_j\\big)$, de manera que el determinant és el del bloc de derivades respecte de $y$; el bloc $\\big(\\partial\\Phi_i/\\partial x_j\\big)$ és $m\\times n$ i ni tan sols és quadrat en general.",
+    "correccio": "$\\det Jf(z)=\\det\\big(\\partial\\Phi_i/\\partial y_j(z)\\big)$, i per tant aquest determinant és no nul a tot $U$.",
+    "pista": "Quins blocs hi ha a la diagonal de $Jf$, i de quina mida és el bloc de derivades respecte de $x$?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T4.13",
+  "dificultat": "dificil",
+  "n_enunciat": 3,
+  "fragments": [
+   "Sigui $G\\subseteq\\mathbb{R}^{n+m}$ obert, $\\Phi:G\\to\\mathbb{R}^m$, $(x,y)\\mapsto\\Phi(x,y)$, una funció $\\mathcal{C}^r(G)$, $r\\geq 1$, i $(a,b)\\in G$ tal que $\\Phi(a,b)=0$ i $\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$.",
+   "Aleshores existeixen dos oberts $U$ i $\\Omega$, amb $a\\in\\Omega\\subseteq\\mathbb{R}^n$ i $(a,b)\\in U\\subseteq G$, i una funció $\\varphi:\\Omega\\to\\mathbb{R}^m$ tals que: (i) $\\det\\big(\\partial\\Phi_i/\\partial y_j(z)\\big)_{i,j=1,\\ldots,m}\\neq 0$ per a tot $z\\in U$; (ii) $\\varphi\\in\\mathcal{C}^r(\\Omega)$ i $\\varphi(a)=b$;",
+   "(iii) $\\{(x,y)\\in G\\mid\\Phi(x,y)=0\\}=\\{(u,\\varphi(u))\\mid u\\in\\Omega\\}$; en particular, $\\Phi(x,\\varphi(x))=0$ per a tot $x\\in\\Omega$.",
+   "(i) Considerem $f:G\\to\\mathbb{R}^{n+m}$, $f(x,y)=(x,\\Phi(x,y))$. Clarament $f\\in\\mathcal{C}^r(G)$ i $f(a,b)=(a,0)$. La matriu $Jf$ és triangular inferior per blocs, amb blocs diagonals $\\mathrm{Id}_n$ i $\\big(\\partial\\Phi_i/\\partial y_j\\big)_{i,j=1,\\ldots,m}$; per tant, $\\det Jf(a,b)=\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)\\neq 0$.",
+   "Pel teorema de la funció inversa, existeix un obert $U\\subseteq G$ amb $(a,b)\\in U$ tal que $f|_U$ és injectiva i $\\det Jf(z)\\neq 0$ per a tot $z\\in U$, $V=f(U)$ és obert i $f^{-1}:V\\to U$ és de classe $\\mathcal{C}^r(V)$. Com que $\\det Jf(z)=\\det\\big(\\partial\\Phi_i/\\partial y_j(z)\\big)$, això demostra (i).",
+   "(ii) Com que $f$ conserva les $n$ primeres coordenades, $f^{-1}$ és de la forma $f^{-1}(u,v)=(u,h(u,v))$ per a $(u,v)\\in V$. Definim $\\Omega=\\{x\\in\\mathbb{R}^n:(x,0)\\in V\\}$ i $\\varphi:\\Omega\\to\\mathbb{R}^m$, $\\varphi(u)=h(u,0)$. Observem que $a\\in\\Omega$, ja que $(a,0)=f(a,b)\\in V$.",
+   "$\\Omega$ és obert: si $x_0\\in\\Omega$, aleshores $(x_0,0)\\in V$, que és obert, i existeix $\\varepsilon>0$ amb $B((x_0,0),\\varepsilon)\\subseteq V$. Si $\\|x-x_0\\|<\\varepsilon$, aleshores $\\|(x,0)-(x_0,0)\\|=\\|x-x_0\\|<\\varepsilon$, de manera que $(x,0)\\in V$, és a dir, $x\\in\\Omega$.",
+   "$\\varphi$ està ben definida, perquè $(u,0)\\in V$ per a tot $u\\in\\Omega$; i com que $f^{-1}(u,0)=(u,h(u,0))=(u,\\varphi(u))$, $\\varphi$ és una component de $f^{-1}$, i per tant $\\varphi\\in\\mathcal{C}^r(\\Omega)$.",
+   "Per la bijectivitat de $f:U\\to V$, per a $(x,y)\\in U$ i $(u,v)\\in V$ es té $(x,y)=f^{-1}(f(x,y))=(x,h(x,\\Phi(x,y)))$ i $(u,v)=f(f^{-1}(u,v))=(u,\\Phi(u,h(u,v)))$; és a dir, $y=h(x,\\Phi(x,y))$ i $\\Phi(u,h(u,v))=v$. En particular, $b=h(a,\\Phi(a,b))=h(a,0)=\\varphi(a)$, i queda demostrat (ii).",
+   "(iii) $\\subseteq$: sigui $(x,y)\\in U$ amb $\\Phi(x,y)=0$. Aleshores $f(x,y)=(x,0)\\in V$, és a dir, $x\\in\\Omega$, i, com que $\\Phi(x,y)=0=\\Phi(x,\\varphi(x))$, la injectivitat de $\\Phi$ dona $y=\\varphi(x)$.",
+   "$\\supseteq$: sigui $u\\in\\Omega$. Aleshores $(u,\\varphi(u))\\in U$, ja que $\\Omega\\times\\mathbb{R}^m\\subseteq U$; a més, per la segona igualtat, $\\Phi(u,\\varphi(u))=\\Phi(u,h(u,0))=0$."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "$\\{(x,y)\\in G\\mid\\Phi(x,y)=0\\}=\\{(u,\\varphi(u))\\mid u\\in\\Omega\\}$",
+    "tipus": "conclusio",
+    "explicacio": "La descripció com a gràfica només és local, dins de l'obert $U$. Contraexemple: $\\Phi(x,y)=x^2+y^2-1$ a $G=\\mathbb{R}^2$, $(a,b)=(0,1)$: $(0,-1)$ és un zero de $\\Phi$ a $G$, però no és de la forma $(0,\\varphi(0))=(0,1)$.",
+    "correccio": "$\\{(x,y)\\in U\\mid\\Phi(x,y)=0\\}=\\{(u,\\varphi(u))\\mid u\\in\\Omega\\}$: la igualtat és dins de $U$.",
+    "pista": "En el cas del cercle unitat, la gràfica de $\\varphi$ prop de $(0,1)$ conté tots els zeros de $\\Phi$ del pla?"
+   },
+   {
+    "fragment": 10,
+    "cita": "la injectivitat de $\\Phi$ dona $y=\\varphi(x)$",
+    "tipus": "pas_injustificat",
+    "explicacio": "$\\Phi:G\\subseteq\\mathbb{R}^{n+m}\\to\\mathbb{R}^m$ no és injectiva (ni tan sols en cap obert, si $n\\geq 1$); la injectiva és $f$ restringida a $U$. La igualtat $y=\\varphi(x)$ s'ha de treure de $y=h(x,\\Phi(x,y))$.",
+    "correccio": "Per la primera igualtat, $y=h(x,\\Phi(x,y))=h(x,0)=\\varphi(x)$ (equivalentment, $f(x,y)=(x,0)=f(x,\\varphi(x))$ amb tots dos punts a $U$, i $f|_U$ és injectiva).",
+    "pista": "Quina de les funcions que apareixen a la demostració és injectiva, i on?"
+   },
+   {
+    "fragment": 11,
+    "cita": "ja que $\\Omega\\times\\mathbb{R}^m\\subseteq U$",
+    "tipus": "pas_injustificat",
+    "explicacio": "No hi ha cap motiu perquè $\\Omega\\times\\mathbb{R}^m\\subseteq U$: $U$ és un entorn de $(a,b)$ que pot ser fitat en la direcció de $y$. El que es té és que $(u,0)\\in V$ i $(u,\\varphi(u))=f^{-1}(u,0)\\in U$.",
+    "correccio": "Com que $u\\in\\Omega$, $(u,0)\\in V$, i $(u,\\varphi(u))=f^{-1}(u,0)\\in U$ perquè $f^{-1}:V\\to U$.",
+    "pista": "Com és $U$? Pot contenir tota una recta vertical $\\{u\\}\\times\\mathbb{R}^m$?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T4.18",
+  "dificultat": "facil",
+  "n_enunciat": 2,
+  "fragments": [
+   "Sigui $G\\subseteq\\mathbb{R}^{n+m}$ obert, $\\Phi:G\\to\\mathbb{R}^m$ una funció $\\mathcal{C}^r(G)$, i $(a,b)\\in G$ tal que $D\\Phi(a,b)\\neq 0$.",
+   "Llavors existeixen oberts $U,V\\subseteq\\mathbb{R}^{n+m}$, amb $(a,b)\\in U\\subseteq G$, i un $\\mathcal{C}^r$-difeomorfisme $g:V\\to U$ tals que $\\Phi\\circ g:V\\to\\mathbb{R}^m$ és la projecció $(\\Phi\\circ g)(u,v)=v$.",
+   "Suposem primer que $\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$. La hipòtesi sobre el rang només assegura que hi ha algun menor d'ordre $m$ no nul, no necessàriament el de les variables $y$; el cas general el tractarem al final.",
+   "Com a la demostració del teorema de la funció implícita, considerem $f(x,y)=(x,\\Phi(x,y))$, que és de classe $\\mathcal{C}^r(G)$ i compleix $\\det Jf(a,b)=\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)\\neq 0$. Pel teorema de la funció inversa, existeix un obert $U\\subseteq G$ amb $(a,b)\\in U$ tal que $V=f(U)$ és obert, $f:U\\to V$ és bijectiva i $f^{-1}:V\\to U$ és de classe $\\mathcal{C}^r$.",
+   "Prenem $g=f^{-1}:V\\to U$, que és de la forma $g(u,v)=(u,h(u,v))$. És un $\\mathcal{C}^r$-difeomorfisme: és bijectiva, de classe $\\mathcal{C}^r$, i la seva inversa $f$ també és de classe $\\mathcal{C}^r$.",
+   "Per la segona igualtat de l'observació 14, $\\Phi(u,h(u,v))=v$ per a tot $(u,v)\\in V$; per tant, $(\\Phi\\circ g)(u,v)=\\Phi(u,h(u,v))=v$, tal com volíem.",
+   "En el cas general, escrivint $z=(x,y)$, hi ha índexs diferents $k_1,\\ldots,k_m\\in\\{1,\\ldots,n+m\\}$ tals que $\\det\\big(\\partial\\Phi_i/\\partial z_{k_j}(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$. Sigui $p$ la permutació de coordenades de $\\mathbb{R}^{n+m}$ tal que les darreres $m$ columnes de $D(\\Phi\\circ p)=D\\Phi\\,Dp$ són les columnes $k_1,\\ldots,k_m$ de $D\\Phi$.",
+   "Aplicant el cas anterior a $\\Phi\\circ p$, definida a l'obert $p^{-1}(G)$, en el punt $p^{-1}(a,b)$, obtenim un $\\mathcal{C}^r$-difeomorfisme $g$ amb $((\\Phi\\circ p)\\circ g)(u,v)=v$. Com que $p$ és lineal i invertible, $p\\circ g$ és un $\\mathcal{C}^r$-difeomorfisme, la seva imatge conté $(a,b)$, i $(\\Phi\\circ(p\\circ g))(u,v)=v$."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "tal que $D\\Phi(a,b)\\neq 0$",
+    "tipus": "hipotesi",
+    "explicacio": "Cal rang màxim $m$, no només que la diferencial sigui no nul·la: si $\\Phi\\circ g$ és la projecció, $D\\Phi\\,Dg=(0\\mid\\mathrm{Id}_m)$ té rang $m$ i, com que $Dg$ és invertible, $D\\Phi$ també. Contraexemple ($n=1$, $m=2$): $\\Phi(z_1,z_2,z_3)=(z_1,z_1)$ té $D\\Phi\\neq 0$ però rang $1$.",
+    "correccio": "La hipòtesi és $\\mathrm{rang}\\big(D\\Phi(a,b)\\big)=m$.",
+    "pista": "Quin rang té la diferencial de la projecció $(u,v)\\mapsto v$? Què implica això per a $D\\Phi$?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T4.18",
+  "dificultat": "normal",
+  "n_enunciat": 2,
+  "fragments": [
+   "Sigui $G\\subseteq\\mathbb{R}^{n+m}$ obert, $\\Phi:G\\to\\mathbb{R}^m$ una funció $\\mathcal{C}^r(G)$, i $(a,b)\\in G$ tal que $\\mathrm{rang}\\big(D\\Phi(a,b)\\big)=m$.",
+   "Llavors existeixen oberts $U,V\\subseteq\\mathbb{R}^{n+m}$, amb $(a,b)\\in U\\subseteq G$, i un $\\mathcal{C}^r$-difeomorfisme lineal $g:V\\to U$ tals que $\\Phi\\circ g:V\\to\\mathbb{R}^m$ és la projecció $(\\Phi\\circ g)(u,v)=v$.",
+   "Suposem primer que $\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$. La hipòtesi sobre el rang només assegura que hi ha algun menor d'ordre $m$ no nul, no necessàriament el de les variables $y$; el cas general el tractarem al final.",
+   "Com a la demostració del teorema de la funció implícita, considerem $f(x,y)=(x,\\Phi(x,y))$, que és de classe $\\mathcal{C}^r(G)$ i compleix $\\det Jf(a,b)=\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)\\neq 0$. Pel teorema de la funció inversa, existeix un obert $U\\subseteq G$ amb $(a,b)\\in U$ tal que $V=f(U)$ és obert, $f:U\\to V$ és bijectiva i $f^{-1}:V\\to U$ és de classe $\\mathcal{C}^r$.",
+   "Prenem $g=f^{-1}:V\\to U$, que és de la forma $g(u,v)=(u,h(u,v))$. És un $\\mathcal{C}^r$-difeomorfisme: és bijectiva, de classe $\\mathcal{C}^r$, i la seva inversa $f$ també és de classe $\\mathcal{C}^r$.",
+   "Per la segona igualtat de l'observació 14, $\\Phi(u,h(u,v))=v$ per a tot $(u,v)\\in V$; per tant, $(\\Phi\\circ g)(u,v)=\\Phi(u,h(u,v))=v$, tal com volíem.",
+   "En el cas general, escrivint $z=(x,y)$, hi ha índexs diferents $k_1,\\ldots,k_m\\in\\{1,\\ldots,n+m\\}$ tals que $\\det\\big(\\partial\\Phi_i/\\partial z_{k_j}(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$. Sigui $p$ la permutació de coordenades de $\\mathbb{R}^{n+m}$ tal que les darreres $m$ columnes de $D(\\Phi\\circ p)=D\\Phi\\,Dp$ són les columnes $k_1,\\ldots,k_m$ de $D\\Phi$.",
+   "Aplicant el cas anterior a $\\Phi\\circ p$, definida a l'obert $p^{-1}(G)$, en el punt $p^{-1}(a,b)$, obtenim un $\\mathcal{C}^r$-difeomorfisme $g$ amb $((\\Phi\\circ p)\\circ g)(u,v)=v$. Com que $p$ és lineal i invertible, $g\\circ p$ és un $\\mathcal{C}^r$-difeomorfisme, la seva imatge conté $(a,b)$, i $(\\Phi\\circ(g\\circ p))(u,v)=v$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "un $\\mathcal{C}^r$-difeomorfisme lineal $g:V\\to U$",
+    "tipus": "conclusio",
+    "explicacio": "Si $g$ fos lineal, $\\Phi=(\\Phi\\circ g)\\circ g^{-1}$ seria lineal a $U$, cosa que no passa en general. Contraexemple ($n=m=1$): $\\Phi(x,y)=y-x^2$ a $(0,0)$ té rang $1$ però no és afí en cap obert.",
+    "correccio": "$g$ és un $\\mathcal{C}^r$-difeomorfisme (en general no lineal; a la demostració, $g=f^{-1}$).",
+    "pista": "Si $g$ i la projecció fossin lineals, com hauria de ser $\\Phi$?"
+   },
+   {
+    "fragment": 8,
+    "cita": "$g\\circ p$ és un $\\mathcal{C}^r$-difeomorfisme, la seva imatge conté $(a,b)$, i $(\\Phi\\circ(g\\circ p))(u,v)=v$",
+    "tipus": "pas_injustificat",
+    "explicacio": "El que s'ha obtingut és $((\\Phi\\circ p)\\circ g)(u,v)=v$, és a dir, $\\Phi\\circ(p\\circ g)$; l'ordre de la composició no es pot canviar, i $\\Phi\\circ g\\circ p$ no té per què ser la projecció.",
+    "correccio": "$p\\circ g$ és el $\\mathcal{C}^r$-difeomorfisme buscat, ja que $(\\Phi\\circ(p\\circ g))(u,v)=((\\Phi\\circ p)\\circ g)(u,v)=v$.",
+    "pista": "En l'expressió $(\\Phi\\circ p)\\circ g$, quina funció s'aplica primer i quina just abans de $\\Phi$?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T4.18",
+  "dificultat": "dificil",
+  "n_enunciat": 2,
+  "fragments": [
+   "Sigui $G\\subseteq\\mathbb{R}^{n+m}$ obert, $\\Phi:G\\to\\mathbb{R}^m$ una funció $\\mathcal{C}^r(G)$, i $(a,b)\\in G$ tal que $\\mathrm{rang}\\big(D\\Phi(a,b)\\big)=m$.",
+   "Llavors, per a tot obert $U$ amb $(a,b)\\in U\\subseteq G$, existeixen un obert $V\\subseteq\\mathbb{R}^{n+m}$ i un $\\mathcal{C}^r$-difeomorfisme $g:V\\to U$ tals que $\\Phi\\circ g:V\\to\\mathbb{R}^m$ és la projecció $(\\Phi\\circ g)(u,v)=v$.",
+   "Suposem primer que $\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$. La hipòtesi sobre el rang només assegura que hi ha algun menor d'ordre $m$ no nul, no necessàriament el de les variables $y$; el cas general el tractarem al final.",
+   "Com a la demostració del teorema de la funció implícita, considerem $f(x,y)=(x,\\Phi(x,y))$, que és de classe $\\mathcal{C}^r(G)$ i compleix $\\det Jf(a,b)=\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)\\neq 0$. Pel teorema de la funció inversa, existeix un obert $U\\subseteq G$ amb $(a,b)\\in U$ tal que $V=f(U)$ és obert, $f:U\\to V$ és bijectiva i $f^{-1}:V\\to U$ és de classe $\\mathcal{C}^r$.",
+   "Prenem $g=f^{-1}:V\\to U$, que és de la forma $g(u,v)=(u,h(u,v))$. És un $\\mathcal{C}^r$-difeomorfisme perquè és bijectiva i de classe $\\mathcal{C}^r$, i tota bijecció de classe $\\mathcal{C}^r$ entre oberts és un $\\mathcal{C}^r$-difeomorfisme.",
+   "Per la segona igualtat de l'observació 14, $\\Phi(u,h(u,v))=v$ per a tot $(u,v)\\in V$; per tant, $(\\Phi\\circ g)(u,v)=\\Phi(u,h(u,v))=v$, tal com volíem.",
+   "En el cas general, escrivint $z=(x,y)$, hi ha índexs diferents $k_1,\\ldots,k_m\\in\\{1,\\ldots,n+m\\}$ tals que $\\det\\big(\\partial\\Phi_i/\\partial z_{k_j}(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$. Sigui $p$ la permutació de coordenades de $\\mathbb{R}^{n+m}$ tal que les darreres $m$ columnes de $D(\\Phi\\circ p)=Dp\\,D\\Phi$ són les columnes $k_1,\\ldots,k_m$ de $D\\Phi$.",
+   "Aplicant el cas anterior a $\\Phi\\circ p$, definida a l'obert $p^{-1}(G)$, en el punt $p^{-1}(a,b)$, obtenim un $\\mathcal{C}^r$-difeomorfisme $g$ amb $((\\Phi\\circ p)\\circ g)(u,v)=v$. Com que $p$ és lineal i invertible, $p\\circ g$ és un $\\mathcal{C}^r$-difeomorfisme, la seva imatge conté $(a,b)$, i $(\\Phi\\circ(p\\circ g))(u,v)=v$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "per a tot obert $U$ amb $(a,b)\\in U\\subseteq G$",
+    "tipus": "quantificador",
+    "explicacio": "El redreçament és local: només existeix per a algun entorn $U$ prou petit. Si $\\Phi\\circ g$ és la projecció, $D\\Phi$ ha de tenir rang $m$ a tot $U$. Contraexemple ($n=m=1$): $\\Phi(x,y)=x^2+y^2$, $(a,b)=(0,1)$, $U=B((0,1),2)$, que conté l'origen, on $D\\Phi=0$.",
+    "correccio": "Existeixen oberts $U,V$, amb $(a,b)\\in U\\subseteq G$, i un $\\mathcal{C}^r$-difeomorfisme $g:V\\to U$ amb $\\Phi\\circ g$ la projecció.",
+    "pista": "Si l'entorn $U$ conté un punt on $D\\Phi$ no té rang $m$, pot $\\Phi\\circ g$ ser la projecció?"
+   },
+   {
+    "fragment": 5,
+    "cita": "tota bijecció de classe $\\mathcal{C}^r$ entre oberts és un $\\mathcal{C}^r$-difeomorfisme",
+    "tipus": "implicacio",
+    "explicacio": "Una bijecció $\\mathcal{C}^r$ entre oberts no té per què tenir inversa diferenciable: $x\\mapsto x^3$ de $\\mathbb{R}$ en $\\mathbb{R}$ és bijectiva i $\\mathcal{C}^\\infty$, però la inversa no és diferenciable en $0$. Cal dir que la inversa de $g$, que és $f$, també és $\\mathcal{C}^r$.",
+    "correccio": "$g$ és bijectiva, de classe $\\mathcal{C}^r$, i la seva inversa $f$ també és de classe $\\mathcal{C}^r$; per tant, és un $\\mathcal{C}^r$-difeomorfisme.",
+    "pista": "Penseu en $x\\mapsto x^3$: és bijectiva i $\\mathcal{C}^\\infty$; és un difeomorfisme?"
+   },
+   {
+    "fragment": 7,
+    "cita": "$D(\\Phi\\circ p)=Dp\\,D\\Phi$",
+    "tipus": "calcul",
+    "explicacio": "Per la regla de la cadena, $D(\\Phi\\circ p)=D\\Phi\\,Dp$; el producte $Dp\\,D\\Phi$ (d'una matriu $(n+m)\\times(n+m)$ per una $m\\times(n+m)$) ni tan sols està definit, i són les columnes de $D\\Phi\\,Dp$ les que es permuten.",
+    "correccio": "$D(\\Phi\\circ p)=D\\Phi\\,Dp$, que té per columnes les de $D\\Phi$ permutades.",
+    "pista": "En quin ordre es multipliquen les diferencials a la regla de la cadena, i quines mides tenen?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T4.20",
+  "dificultat": "facil",
+  "n_enunciat": 2,
+  "fragments": [
+   "Sigui $G\\subseteq\\mathbb{R}^m$ obert, $\\Phi:G\\to\\mathbb{R}^{n+m}$ una funció $\\mathcal{C}^r(G)$, i $b\\in G$ tal que $\\mathrm{rang}\\big(D\\Phi(b)\\big)=m$.",
+   "Llavors existeixen oberts $U,V\\subseteq\\mathbb{R}^{n+m}$, amb $\\Phi(b)\\in V$, un $\\mathcal{C}^r$-difeomorfisme $h:V\\to U$ i un obert $U'\\subseteq G$ amb $b\\in U'$, tals que $(h\\circ\\Phi)(y)=(0,y)$ per a tot $y\\in G$.",
+   "Escrivim $\\Phi=(\\Phi_1,\\Phi_2)$, amb $\\Phi_1:G\\to\\mathbb{R}^n$ i $\\Phi_2:G\\to\\mathbb{R}^m$. Suposem que $\\det\\big(\\partial\\Phi_2/\\partial y\\big)(b)\\neq 0$; si el menor d'ordre $m$ no nul de $D\\Phi(b)$ correspon a unes altres $m$ components de $\\Phi$, aplicarem una permutació al final.",
+   "Considerem $f:\\mathbb{R}^n\\times G\\to\\mathbb{R}^{n+m}$, $f(x,y)=(x+\\Phi_1(y),\\Phi_2(y))$, que és de classe $\\mathcal{C}^r$ i compleix $f(0,b)=\\Phi(b)$. La seva jacobiana és $\\begin{pmatrix}\\mathrm{Id}_n&D\\Phi_1(y)\\\\ 0&D\\Phi_2(y)\\end{pmatrix}$, i per tant $\\det Df(0,b)=\\det\\big(\\partial\\Phi_2/\\partial y\\big)(b)\\neq 0$.",
+   "Pel teorema de la funció inversa, existeixen oberts $U\\subseteq\\mathbb{R}^n\\times G$, amb $(0,b)\\in U$, i $V=f(U)\\subseteq\\mathbb{R}^{n+m}$, amb $\\Phi(b)=f(0,b)\\in V$, tals que $f:U\\to V$ és bijectiva i la seva inversa és de classe $\\mathcal{C}^r$. Definim $h=f^{-1}:V\\to U$, que és un $\\mathcal{C}^r$-difeomorfisme.",
+   "Prenem $U'=\\{y\\in\\mathbb{R}^m\\mid(0,y)\\in U\\}$. Com que $U\\subseteq\\mathbb{R}^n\\times G$, tenim $U'\\subseteq G$, i $b\\in U'$ perquè $(0,b)\\in U$. Com a l'apartat (ii) del teorema de la funció implícita, $U'$ és obert.",
+   "Si $y\\in U'$, aleshores $(0,y)\\in U$ i, per definició de $f$, $f(0,y)=(\\Phi_1(y),\\Phi_2(y))=\\Phi(y)\\in V$; per tant, $h\\circ\\Phi$ està ben definida en $U'$.",
+   "A més, per a tot $y\\in U'$, $(h\\circ\\Phi)(y)=f^{-1}(f(0,y))=(0,y)$.",
+   "Si el menor no nul correspon a unes altres components, prenem una permutació $p$ de les coordenades de $\\mathbb{R}^{n+m}$ tal que $p\\circ\\Phi$ compleix la suposició anterior; obtenim un $\\mathcal{C}^r$-difeomorfisme $h$ amb $(h\\circ p\\circ\\Phi)(y)=(0,y)$, i aleshores $h\\circ p$ és el $\\mathcal{C}^r$-difeomorfisme buscat."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "per a tot $y\\in G$",
+    "tipus": "conclusio",
+    "explicacio": "La conclusió només val en un entorn $U'$ de $b$, no a tot $G$: $h\\circ\\Phi(y)=(0,y)$ obligaria $\\Phi$ a ser injectiva a tot $G$. Contraexemple ($n=m=1$): $\\Phi(t)=(\\cos t,\\sin t)$ a $G=\\mathbb{R}$ té rang $1$ arreu però no és injectiva.",
+    "correccio": "$(h\\circ\\Phi)(y)=(0,y)$ per a tot $y\\in U'$, un obert de $G$ que conté $b$.",
+    "pista": "Per a quins $y$ té sentit la igualtat? Per què l'enunciat introdueix l'obert $U'$?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T4.20",
+  "dificultat": "normal",
+  "n_enunciat": 2,
+  "fragments": [
+   "Sigui $G\\subseteq\\mathbb{R}^m$ obert, $\\Phi:G\\to\\mathbb{R}^{n+m}$ una funció $\\mathcal{C}^r(G)$, i $b\\in G$ tal que $\\mathrm{rang}\\big(D\\Phi(b)\\big)=m$.",
+   "Llavors existeixen oberts $U,V\\subseteq\\mathbb{R}^{n+m}$, amb $\\Phi(b)\\in V$, un $\\mathcal{C}^r$-difeomorfisme $h:V\\to U$ i un obert $U'\\subseteq G$ amb $b\\in U'$ i $\\Phi(U')=V$, tals que $(h\\circ\\Phi)(y)=(0,y)$ per a tot $y\\in U'$.",
+   "Escrivim $\\Phi=(\\Phi_1,\\Phi_2)$, amb $\\Phi_1:G\\to\\mathbb{R}^n$ i $\\Phi_2:G\\to\\mathbb{R}^m$. Suposem que $\\det\\big(\\partial\\Phi_2/\\partial y\\big)(b)\\neq 0$; si el menor d'ordre $m$ no nul de $D\\Phi(b)$ correspon a unes altres $m$ components de $\\Phi$, aplicarem una permutació al final.",
+   "Considerem $f:\\mathbb{R}^n\\times G\\to\\mathbb{R}^{n+m}$, $f(x,y)=(x+\\Phi_1(y),\\Phi_2(y))$, que és de classe $\\mathcal{C}^r$ i compleix $f(0,b)=\\Phi(b)$. La seva jacobiana és $\\begin{pmatrix}\\mathrm{Id}_n&D\\Phi_1(y)\\\\ 0&D\\Phi_2(y)\\end{pmatrix}$, i per tant $\\det Df(0,b)=\\det\\big(\\partial\\Phi_2/\\partial y\\big)(b)\\neq 0$.",
+   "Pel teorema de la funció inversa, existeixen oberts $U\\subseteq\\mathbb{R}^n\\times G$, amb $(0,b)\\in U$, i $V=f(U)\\subseteq\\mathbb{R}^{n+m}$, amb $\\Phi(b)=f(0,b)\\in V$, tals que $f:U\\to V$ és bijectiva i la seva inversa és de classe $\\mathcal{C}^r$. Definim $h=f^{-1}:V\\to U$, que és un $\\mathcal{C}^r$-difeomorfisme.",
+   "Prenem $U'=\\{y\\in\\mathbb{R}^m\\mid(0,y)\\in U\\}$. Com que $U\\subseteq\\mathbb{R}^n\\times G$, tenim $U'\\subseteq G$, i $b\\in U'$ perquè $(0,b)\\in U$. Com a l'apartat (ii) del teorema de la funció implícita, $U'$ és obert.",
+   "Si $y\\in U'$, aleshores $(0,y)\\in U$ i, per definició de $f$, $f(0,y)=(\\Phi_1(y),\\Phi_2(y))=\\Phi(y)\\in V$; per tant, $h\\circ\\Phi$ està ben definida en $U'$.",
+   "A més, per a tot $y\\in U'$, com que $\\Phi(y)=f^{-1}(0,y)$, tenim $(h\\circ\\Phi)(y)=h(f^{-1}(0,y))=(0,y)$.",
+   "Si el menor no nul correspon a unes altres components, prenem una permutació $p$ de les coordenades de $\\mathbb{R}^{n+m}$ tal que $p\\circ\\Phi$ compleix la suposició anterior; obtenim un $\\mathcal{C}^r$-difeomorfisme $h$ amb $(h\\circ p\\circ\\Phi)(y)=(0,y)$, i aleshores $h\\circ p$ és el $\\mathcal{C}^r$-difeomorfisme buscat."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "$b\\in U'$ i $\\Phi(U')=V$",
+    "tipus": "conclusio",
+    "explicacio": "$V$ és un obert de $\\mathbb{R}^{n+m}$, mentre que $\\Phi(U')$ és la imatge d'un obert de $\\mathbb{R}^m$, que si $n\\geq 1$ té interior buit. Contraexemple ($n=m=1$): $\\Phi(y)=(0,y)$; $\\Phi(U')$ és un segment del pla, que no és obert.",
+    "correccio": "Només s'afirma que $\\Phi(b)\\in V$ (i, de fet, $\\Phi(U')\\subseteq V$), no que $\\Phi(U')$ sigui tot $V$.",
+    "pista": "Pot la imatge d'un obert de $\\mathbb{R}^m$ per $\\Phi$ ser un obert de $\\mathbb{R}^{n+m}$ quan $n\\geq 1$?"
+   },
+   {
+    "fragment": 8,
+    "cita": "com que $\\Phi(y)=f^{-1}(0,y)$",
+    "tipus": "calcul",
+    "explicacio": "Per definició de $f$, $\\Phi(y)=f(0,y)$, no $f^{-1}(0,y)$ (com s'acaba de veure al fragment anterior). Amb la igualtat correcta, $h(\\Phi(y))=f^{-1}(f(0,y))=(0,y)$.",
+    "correccio": "$(h\\circ\\Phi)(y)=f^{-1}(f(0,y))=(0,y)$, ja que $\\Phi(y)=f(0,y)$.",
+    "pista": "Quant val $f(0,y)$ segons la definició de $f$?"
+   }
+  ]
+ },
+ {
+  "font": "teoria",
+  "id": "T4.20",
+  "dificultat": "dificil",
+  "n_enunciat": 2,
+  "fragments": [
+   "Sigui $G\\subseteq\\mathbb{R}^m$ obert, $\\Phi:G\\to\\mathbb{R}^{n+m}$ una funció $\\mathcal{C}^r(G)$, i $b\\in G$ tal que $\\mathrm{rang}\\big(D\\Phi(b)\\big)=m$.",
+   "Llavors existeixen oberts $U,V\\subseteq\\mathbb{R}^{n+m}$, amb $\\Phi(b)\\in V$, un $\\mathcal{C}^{r+1}$-difeomorfisme $h:V\\to U$ i un obert $U'\\subseteq G$ amb $b\\in U'$, tals que $(h\\circ\\Phi)(y)=(0,y)$ per a tot $y\\in U'$.",
+   "Escrivim $\\Phi=(\\Phi_1,\\Phi_2)$, amb $\\Phi_1:G\\to\\mathbb{R}^n$ i $\\Phi_2:G\\to\\mathbb{R}^m$. Suposem que $\\det\\big(\\partial\\Phi_2/\\partial y\\big)(b)\\neq 0$; si el menor d'ordre $m$ no nul de $D\\Phi(b)$ correspon a unes altres $m$ components de $\\Phi$, aplicarem una permutació al final.",
+   "Considerem $f:\\mathbb{R}^n\\times G\\to\\mathbb{R}^{n+m}$, $f(x,y)=(x+\\Phi_1(y),\\Phi_2(y))$, que és de classe $\\mathcal{C}^r$ i compleix $f(0,b)=\\Phi(b)$. La seva jacobiana és $\\begin{pmatrix}\\mathrm{Id}_n&0\\\\ D\\Phi_1(y)&D\\Phi_2(y)\\end{pmatrix}$, i per tant $\\det Df(0,b)=\\det\\big(\\partial\\Phi_2/\\partial y\\big)(b)\\neq 0$.",
+   "Pel teorema de la funció inversa, existeixen oberts $U\\subseteq\\mathbb{R}^n\\times G$, amb $(0,b)\\in U$, i $V=f(U)\\subseteq\\mathbb{R}^{n+m}$, amb $\\Phi(b)=f(0,b)\\in V$, tals que $f:U\\to V$ és bijectiva i la seva inversa és de classe $\\mathcal{C}^r$. Definim $h=f^{-1}:V\\to U$, que és un $\\mathcal{C}^r$-difeomorfisme.",
+   "Prenem $U'=\\{y\\in\\mathbb{R}^m\\mid(0,y)\\in U\\}$. Com que $U\\subseteq\\mathbb{R}^n\\times G$, tenim $U'\\subseteq G$, i $b\\in U'$ perquè $(0,b)\\in U$. A més, $U'$ és obert perquè és la projecció de l'obert $U$ sobre les darreres $m$ coordenades.",
+   "Si $y\\in U'$, aleshores $(0,y)\\in U$ i, per definició de $f$, $f(0,y)=(\\Phi_1(y),\\Phi_2(y))=\\Phi(y)\\in V$; per tant, $h\\circ\\Phi$ està ben definida en $U'$.",
+   "A més, per a tot $y\\in U'$, $(h\\circ\\Phi)(y)=f^{-1}(f(0,y))=(0,y)$.",
+   "Si el menor no nul correspon a unes altres components, prenem una permutació $p$ de les coordenades de $\\mathbb{R}^{n+m}$ tal que $p\\circ\\Phi$ compleix la suposició anterior; obtenim un $\\mathcal{C}^r$-difeomorfisme $h$ amb $(h\\circ p\\circ\\Phi)(y)=(0,y)$, i aleshores $h\\circ p$ és el $\\mathcal{C}^r$-difeomorfisme buscat."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "un $\\mathcal{C}^{r+1}$-difeomorfisme $h:V\\to U$",
+    "tipus": "conclusio",
+    "explicacio": "Si $h$ fos de classe $\\mathcal{C}^{r+1}$, aleshores $\\Phi(y)=h^{-1}(0,y)$ seria $\\mathcal{C}^{r+1}$ prop de $b$, cosa falsa en general. Contraexemple ($n=m=1$, $r=1$): $\\Phi(y)=(y|y|,y)$ a $b=0$ és $\\mathcal{C}^1$ i no $\\mathcal{C}^2$.",
+    "correccio": "$h$ és un $\\mathcal{C}^r$-difeomorfisme, amb la mateixa regularitat que $\\Phi$.",
+    "pista": "Si $h\\circ\\Phi(y)=(0,y)$, com es pot escriure $\\Phi$ en termes de $h^{-1}$? Quina regularitat tindria?"
+   },
+   {
+    "fragment": 4,
+    "cita": "La seva jacobiana és $\\begin{pmatrix}\\mathrm{Id}_n&0\\\\ D\\Phi_1(y)&D\\Phi_2(y)\\end{pmatrix}$",
+    "tipus": "calcul",
+    "explicacio": "Les primeres $n$ components de $f$ són $x+\\Phi_1(y)$, de manera que les seves derivades respecte de $y$ formen el bloc superior dret $D\\Phi_1$; les últimes components, $\\Phi_2(y)$, no depenen de $x$, i el bloc inferior esquerre és $0$.",
+    "correccio": "$Df(x,y)=\\begin{pmatrix}\\mathrm{Id}_n&D\\Phi_1(y)\\\\ 0&D\\Phi_2(y)\\end{pmatrix}$, triangular superior per blocs.",
+    "pista": "Les components $\\Phi_2(y)$ depenen de $x$? On ha d'anar, doncs, el bloc nul?"
+   },
+   {
+    "fragment": 6,
+    "cita": "$U'$ és obert perquè és la projecció de l'obert $U$ sobre les darreres $m$ coordenades",
+    "tipus": "definicio",
+    "explicacio": "$U'$ no és la projecció de $U$ sinó la secció de $U$ per $x=0$: la projecció contindria tots els $y$ amb algun $(x,y)\\in U$, encara que $(0,y)\\notin U$. L'obertura de $U'$ es demostra com la de $\\Omega$ al teorema de la funció implícita: si $(0,y_0)\\in U$ i $B((0,y_0),\\varepsilon)\\subseteq U$, aleshores $B(y_0,\\varepsilon)\\subseteq U'$.",
+    "correccio": "$U'=\\{y\\mid(0,y)\\in U\\}$ és la secció de $U$ per $x=0$, i és obert pel mateix argument que l'apartat (ii) del teorema de la funció implícita.",
+    "pista": "És el mateix el conjunt $\\{y\\mid(0,y)\\in U\\}$ que $\\{y\\mid\\exists x,\\ (x,y)\\in U\\}$?"
+   }
+  ]
+ }
+]

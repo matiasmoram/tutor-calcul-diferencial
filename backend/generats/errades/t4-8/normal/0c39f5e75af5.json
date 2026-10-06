@@ -1,0 +1,58 @@
+{
+  "id": "0c39f5e75af5",
+  "exercici": "t4-8",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Primer situem el punt: $G(1,-1,2)=(1-1+4,\\ 1+1+2,\\ 2-1-2)=(4,4,-1)$. Per tant $DG^{-1}(4,4,-1)$ és la diferencial de la inversa local definida al voltant de $(1,-1,2)$.",
+    "$G$ és polinòmica, de classe $\\mathcal{C}^\\infty$, i $JG(x,y,z)=\\begin{pmatrix}1&1&2z\\\\ 1&-1&1\\\\ 2&1&-1\\end{pmatrix}$. Desenvolupant per la primera fila, $\\det JG(x,y,z)=1\\cdot(1-1)-1\\cdot(-1-2)+2z\\cdot(1+2)=3+6z$.",
+    "En $(1,-1,2)$, $\\det JG(1,-1,2)=15\\neq0$. Pel teorema de la funció inversa, hi ha un entorn $U$ de $(1,-1,2)$ tal que $G|_U$ és injectiva, $G(U)$ és obert i la inversa és de classe $\\mathcal{C}^\\infty$, amb $DG^{-1}(4,4,-1)=\\big(JG(1,-1,2)\\big)^{-1}$.",
+    "Amb $JG(1,-1,2)=\\begin{pmatrix}1&1&4\\\\ 1&-1&1\\\\ 2&1&-1\\end{pmatrix}$, calculem els adjunts i dividim pel determinant: $DG^{-1}(4,4,-1)=\\frac{1}{15}\\begin{pmatrix}0&3&3\\\\ 5&-9&1\\\\ 5&3&-2\\end{pmatrix}$.",
+    "Pel que fa a la inversa global: com que $\\det JG(x,y,z)=3+6z$ s'anul·la als punts del pla $z=-\\frac12$, $G$ no pot ser injectiva a $\\mathbb{R}^3$, i per tant no admet inversa global."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "$DG^{-1}(4,4,-1)=\\frac{1}{15}\\begin{pmatrix}0&3&3\\\\ 5&-9&1\\\\ 5&3&-2\\end{pmatrix}$",
+      "inici": 118,
+      "fi": 199,
+      "tipus": "calcul",
+      "explicacio": "S'ha posat la matriu de cofactors sense transposar: la inversa és la transposada de la matriu d'adjunts dividida pel determinant. Es comprova que el producte per $JG(1,-1,2)$ no dona la identitat.",
+      "correccio": "$DG^{-1}(4,4,-1)=\\frac{1}{15}\\begin{pmatrix}0&5&5\\\\ 3&-9&3\\\\ 3&1&-2\\end{pmatrix}$.",
+      "pista": "Si multipliques la matriu obtinguda per $JG(1,-1,2)$, dona la identitat? Què cal fer amb la matriu de cofactors abans de dividir pel determinant?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "s'anul·la als punts del pla $z=-\\frac12$, $G$ no pot ser injectiva a $\\mathbb{R}^3$",
+      "inici": 62,
+      "fi": 145,
+      "tipus": "logica",
+      "explicacio": "Que el jacobià s'anul·li en alguns punts no impedeix la injectivitat (p. ex. $x\\mapsto x^3$ és bijectiva i $f'(0)=0$); només impedeix que la inversa sigui diferenciable en aquells punts. La conclusió és certa, però no està justificada.",
+      "correccio": "$G$ no és injectiva: per exemple $G(0,0,0)=G(0,-1,-1)=(0,0,0)$; per tant no té inversa global.",
+      "pista": "Coneixes alguna funció bijectiva la derivada de la qual s'anul·li en un punt? Pots trobar dos punts diferents amb la mateixa imatge?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t34.json",
+    "valoracio": "Aplicació del TFI correcta, però la inversa de la jacobiana surt transposada i la no-existència d'inversa global es justifica amb un argument fals.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "\\frac{1}{15}\\begin{pmatrix}0&3&3\\\\ 5&-9&1\\\\ 5&3&-2\\end{pmatrix}",
+        "gravetat": "error",
+        "explicacio": "És la matriu d'adjunts sense transposar; la inversa correcta és $\\frac{1}{15}\\begin{pmatrix}0&5&5\\\\3&-9&3\\\\3&1&-2\\end{pmatrix}$."
+      },
+      {
+        "fragment": 5,
+        "cita": "s'anul·la als punts del pla $z=-\\frac12$, $G$ no pot ser injectiva",
+        "gravetat": "error",
+        "explicacio": "Que el jacobià s'anul·li en alguns punts no implica no-injectivitat (p. ex. $t\\mapsto t^3$). Cal exhibir dos punts amb la mateixa imatge, p. ex. $G(0,0,0)=G(0,-1,-1)$."
+      }
+    ]
+  },
+  "creat": 1791295851.9397433
+}

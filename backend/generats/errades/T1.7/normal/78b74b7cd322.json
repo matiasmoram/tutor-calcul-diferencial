@@ -1,0 +1,60 @@
+{
+  "id": "78b74b7cd322",
+  "exercici": "T1.7",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "(Desigualtat de Cauchy-Schwarz.) Sigui $(E,\\langle\\cdot,\\cdot\\rangle)$ un espai euclidià, normat amb $\\|u\\|=\\sqrt{\\langle u,u\\rangle}$. Aleshores, per a tot $u,v\\in E$, es verifica que $|\\langle u,v\\rangle|<\\|u\\|\\cdot\\|v\\|$.",
+    "Comencem pel cas $u=0$. D'una banda, $\\|0\\|=0$ i, per tant, $\\|u\\|\\cdot\\|v\\|=0$. De l'altra, $\\langle 0,v\\rangle=\\langle 0+0,v\\rangle=2\\langle 0,v\\rangle$, d'on $\\langle 0,v\\rangle=0$. Així, $|\\langle 0,v\\rangle|\\leq\\|0\\|\\cdot\\|v\\|$.",
+    "Suposem ara que $u\\neq 0$. Aleshores $\\|u\\|\\neq 0$ i podem definir $u'=\\frac{1}{\\|u\\|}u$ i $v'=\\frac{1}{\\|v\\|}v$, que compleixen $\\|u'\\|=\\frac{1}{\\|u\\|}\\|u\\|=1$ i, anàlogament, $\\|v'\\|=1$.",
+    "Aleshores $0\\leq\\|u'-v'\\|^2=\\langle u',u'\\rangle-2\\langle u',v'\\rangle+\\langle v',v'\\rangle=2-2\\langle u',v'\\rangle$, i per tant $\\langle u',v'\\rangle\\leq 1$.",
+    "Com que $\\langle u',v'\\rangle=\\frac{1}{\\|u\\|\\,\\|v\\|}\\langle u,v\\rangle$, es dedueix que $\\langle u,v\\rangle\\leq\\|u\\|\\cdot\\|v\\|$. (1)",
+    "Per a la desigualtat contrària, apliquem (1) als vectors $u$ i $-v$: $-\\langle u,v\\rangle=\\langle u,-v\\rangle\\leq\\|u\\|\\,\\|-v\\|=\\|u\\|\\,\\|v\\|$, és a dir, $\\langle u,v\\rangle\\geq-\\|u\\|\\,\\|v\\|$. (2)",
+    "De (1) i (2) obtenim $-\\|u\\|\\,\\|v\\|\\leq\\langle u,v\\rangle\\leq\\|u\\|\\,\\|v\\|$, és a dir, $|\\langle u,v\\rangle|\\leq\\|u\\|\\,\\|v\\|$."
+  ],
+  "n_enunciat": 1,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "$|\\langle u,v\\rangle|<\\|u\\|\\cdot\\|v\\|$",
+      "inici": 185,
+      "fi": 223,
+      "tipus": "desigualtat",
+      "explicacio": "La desigualtat estricta és falsa: per a $u=v\\neq 0$ (o per a $u=0$) hi ha igualtat, $|\\langle u,u\\rangle|=\\|u\\|^2$.",
+      "correccio": "$|\\langle u,v\\rangle|\\leq\\|u\\|\\cdot\\|v\\|$ (desigualtat no estricta).",
+      "pista": "Què passa si prens $v=u$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 3,
+      "cita": "Suposem ara que $u\\neq 0$.",
+      "inici": 0,
+      "fi": 26,
+      "tipus": "cas_oblidat",
+      "explicacio": "Queda sense tractar el cas $u\\neq 0$, $v=0$: aleshores $\\|v\\|=0$ i $v'=\\frac{1}{\\|v\\|}v$ no està definit.",
+      "correccio": "Cal tractar també el cas $v=0$ (anàleg al de $u=0$) i suposar aquí $u\\neq 0$ i $v\\neq 0$.",
+      "pista": "Està ben definit $v'$ per a qualsevol $v$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t1a.json",
+    "valoracio": "Enunciat amb desigualtat estricta (fals) i cas $v=0$ oblidat a la demostració.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "$|\\langle u,v\\rangle|<\\|u\\|\\cdot\\|v\\|$",
+        "gravetat": "error",
+        "explicacio": "La desigualtat és no estricta ($\\leq$); amb $<$ és falsa (p. ex. $u=0$ o $v=\\lambda u$ donen igualtat), i la mateixa demostració (cas $u=0$ i [7]) només prova $\\leq$."
+      },
+      {
+        "fragment": 3,
+        "cita": "Suposem ara que $u\\neq 0$.",
+        "gravetat": "error",
+        "explicacio": "Només se suposa $u\\neq 0$, però es defineix $v'=\\frac{1}{\\|v\\|}v$, que requereix $v\\neq 0$. El cas $v=0$ (que els apunts tracten anàlogament al de $u=0$) queda oblidat i la divisió per $\\|v\\|$ no està justificada."
+      }
+    ]
+  },
+  "creat": 1791295858.0147846
+}

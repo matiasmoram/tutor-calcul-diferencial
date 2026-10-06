@@ -1,0 +1,125 @@
+{
+  "id": "998562c871b6",
+  "exercici": "t3-31",
+  "dificultat": "facil",
+  "fragments": [
+    "Tenim $F(1)=(1,1)$ i $F(0)=(0,0)$, de manera que $F(1)-F(0)=(1,1)$. Per tant, el costat esquerre de la igualtat és el vector $(1,1)$.",
+    "D'altra banda, derivant component a component, $DF(t)=(2t,2t)$. Com que $1-0=1$, el costat dret queda $DF(t_0)\\cdot(1-0)=(2t_0,2t_0)$.",
+    "Així, la igualtat que cal comprovar és $(1,1)=(2t_0,2t_0)$. Igualar vectors vol dir igualar les dues components corresponents.",
+    "El sistema resultant és $2t_0=1$ i $2t_0=1$, que dona $t_0=\\frac12$. Com que $\\frac12\\in(0,1)$, concloem que existeix aquest valor de $t_0$.",
+    "Això no contradiu el teorema del valor mitjà. El TVM amb igualtat s'enuncia per a funcions reals d'una variable, i per a funcions vectorials no garanteix en general una igualtat vectorial amb un mateix punt.",
+    "Per a aplicacions vectorials, el resultat general és una estimació del tipus $\\|F(1)-F(0)\\|\\leq \\sup_{t\\in[0,1]}\\|F'(t)\\|\\,(1-0)$. Per tant, trobar una igualtat en un cas concret seria només una coincidència, no una conseqüència obligada del TVM."
+  ],
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "derivant component a component, $DF(t)=(2t,2t)$",
+      "inici": 15,
+      "fi": 62,
+      "tipus": "calcul",
+      "explicacio": "La segona component de $F(t)$ és $t^3$, i la seva derivada no és $2t$. Aquest càlcul fa que després s'obtingui un sistema equivocat.",
+      "correccio": "Hauria de ser $DF(t)=(2t,3t^2)$.",
+      "pista": "Quina és la derivada exacta de la segona component $t^3$?"
+    }
+  ],
+  "verificacio": {
+    "valoracio": "La interpretació del teorema del valor mitjà als fragments finals és essencialment correcta, però la resolució queda invalidada pel càlcul incorrecte de la derivada de la segona component, que porta a afirmar erròniament que existeix un $t_0$.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$DF(t)=(2t,2t)$",
+        "gravetat": "error",
+        "explicacio": "La derivada de $F(t)=(t^2,t^3)$ component a component és $DF(t)=(2t,3t^2)$, no pas $(2t,2t)$. La segona component s'ha derivat incorrectament."
+      },
+      {
+        "fragment": 2,
+        "cita": "$DF(t_0)\\cdot(1-0)=(2t_0,2t_0)$",
+        "gravetat": "consequencia",
+        "explicacio": "Aquest costat dret hereta l'error anterior en la derivada. Hauria de ser $DF(t_0)\\cdot 1=(2t_0,3t_0^2)$."
+      },
+      {
+        "fragment": 3,
+        "cita": "$(1,1)=(2t_0,2t_0)$",
+        "gravetat": "consequencia",
+        "explicacio": "La igualtat vectorial plantejada és incorrecta perquè usa la derivada mal calculada. La igualtat correcta a comprovar és $(1,1)=(2t_0,3t_0^2)$."
+      },
+      {
+        "fragment": 4,
+        "cita": "El sistema resultant és $2t_0=1$ i $2t_0=1$",
+        "gravetat": "consequencia",
+        "explicacio": "El sistema resulta de la igualtat errònia anterior. El sistema correcte seria $2t_0=1$ i $3t_0^2=1$."
+      },
+      {
+        "fragment": 4,
+        "cita": "concloem que existeix aquest valor de $t_0$",
+        "gravetat": "consequencia",
+        "explicacio": "La conclusió és falsa per al problema original. Amb el sistema correcte, la primera equació dona $t_0=1/2$, però llavors $3t_0^2=3/4\\neq1$; per tant no existeix cap $t_0\\in(0,1)$ que satisfaci la igualtat vectorial."
+      }
+    ],
+    "intents": [
+      {
+        "intent": 1,
+        "generacio": {
+          "model": "gpt-5.5",
+          "latency_ms": 8354,
+          "input_tokens": 1425,
+          "output_tokens": 678
+        },
+        "validacio": [
+          "la cita de l'error 1 no apareix literalment al fragment 4: «$\\frac34$, que podem identificar amb $1$»"
+        ]
+      },
+      {
+        "intent": 2,
+        "generacio": {
+          "model": "gpt-5.5",
+          "latency_ms": 20175,
+          "input_tokens": 1485,
+          "output_tokens": 1549
+        },
+        "validacio": [],
+        "verificacio": {
+          "model": "gpt-5.5",
+          "latency_ms": 11993,
+          "input_tokens": 1395,
+          "output_tokens": 1041
+        },
+        "problemes_verificador": [
+          {
+            "fragment": 2,
+            "cita": "$DF(t)=(2t,2t)$",
+            "gravetat": "error",
+            "explicacio": "La derivada de $F(t)=(t^2,t^3)$ component a component és $DF(t)=(2t,3t^2)$, no pas $(2t,2t)$. La segona component s'ha derivat incorrectament."
+          },
+          {
+            "fragment": 2,
+            "cita": "$DF(t_0)\\cdot(1-0)=(2t_0,2t_0)$",
+            "gravetat": "consequencia",
+            "explicacio": "Aquest costat dret hereta l'error anterior en la derivada. Hauria de ser $DF(t_0)\\cdot 1=(2t_0,3t_0^2)$."
+          },
+          {
+            "fragment": 3,
+            "cita": "$(1,1)=(2t_0,2t_0)$",
+            "gravetat": "consequencia",
+            "explicacio": "La igualtat vectorial plantejada és incorrecta perquè usa la derivada mal calculada. La igualtat correcta a comprovar és $(1,1)=(2t_0,3t_0^2)$."
+          },
+          {
+            "fragment": 4,
+            "cita": "El sistema resultant és $2t_0=1$ i $2t_0=1$",
+            "gravetat": "consequencia",
+            "explicacio": "El sistema resulta de la igualtat errònia anterior. El sistema correcte seria $2t_0=1$ i $3t_0^2=1$."
+          },
+          {
+            "fragment": 4,
+            "cita": "concloem que existeix aquest valor de $t_0$",
+            "gravetat": "consequencia",
+            "explicacio": "La conclusió és falsa per al problema original. Amb el sistema correcte, la primera equació dona $t_0=1/2$, però llavors $3t_0^2=3/4\\neq1$; per tant no existeix cap $t_0\\in(0,1)$ que satisfaci la igualtat vectorial."
+          }
+        ],
+        "discrepancies": []
+      }
+    ]
+  },
+  "creat": 1790752600.3063102
+}

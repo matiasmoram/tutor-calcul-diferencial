@@ -1,0 +1,77 @@
+{
+  "id": "e8a02c6b876c",
+  "exercici": "t3-5",
+  "font": "problema",
+  "dificultat": "dificil",
+  "fragments": [
+    "A l'obert $U=\\{(x,y):y\\neq0\\}$ la funció coincideix amb $x^2/y$. Com que és un quocient de polinomis i el denominador no s'anul·la en $U$, $f$ és contínua en tots aquests punts.",
+    "Considerem ara un punt $(x_0,0)$ amb $x_0\\neq0$. Si ens hi acostem per la recta vertical $x=x_0$, tenim $f(x_0,y)=x_0^2/y$, que no tendeix a cap valor finit quan $y\\to0$, mentre que $f(x_0,0)=0$; per tant, $f$ no és contínua en aquests punts.",
+    "A l'origen cal mirar algun camí no lineal. Prenent $y=x^2$ amb $x\\neq0$, resulta $f(x,x^2)=1$, de manera que el límit al llarg d'aquest camí és $1\\neq0=f(0,0)$; així doncs, tampoc és contínua a $(0,0)$.",
+    "Si $y_0\\neq0$, per a $t$ prou petit el denominador $y_0+tv_2$ continua sent no nul, i la funció d'una variable $t\\mapsto f(x_0+tv_1,y_0+tv_2)$ és derivable a $0$. Aplicant la regla del quocient s'obté $D_vf(x_0,y_0)=\\frac{2x_0y_0v_1+x_0^2v_2}{y_0^2}$, de manera que existeixen totes les derivades direccionals fora de l'eix.",
+    "Per a $(x_0,0)$ amb $x_0\\neq0$, si $v_2\\neq0$ aleshores $\\frac{f(x_0+tv_1,tv_2)-f(x_0,0)}{t}=\\frac{(x_0+tv_1)^2}{t^2v_2}$. El terme dominant és $\\frac{x_0^2}{t^2v_2}$, de manera que els dos límits laterals són de signes oposats i no hi ha límit finit; si $v_2=0$, el recorregut queda sobre l'eix i la derivada direccional val $0$.",
+    "A l'origen, si $v_2\\neq0$, la definició dona $\\frac{f(tv_1,tv_2)-f(0,0)}{t}$, que queda $\\frac{t^2v_1^2}{t^2|v_2|}=\\frac{v_1^2}{|v_2|}$. Si $v_2=0$, tots els punts $(tv_1,0)$ són a l'eix i el quocient incremental és $0$, així que en aquest punt existeixen totes les derivades direccionals.",
+    "En resum, $f$ és contínua exactament fora de l'eix $y=0$. Les derivades direccionals existeixen totes quan $y_0\\neq0$, a l'eix fora de l'origen només en direccions horitzontals, i a l'origen existeixen en totes les direccions; per tant, tenir totes les derivades direccionals en un punt no garanteix la continuïtat."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "s'obté $D_vf(x_0,y_0)=\\frac{2x_0y_0v_1+x_0^2v_2}{y_0^2}$",
+      "inici": 194,
+      "fi": 250,
+      "tipus": "calcul",
+      "explicacio": "En derivar el quocient, el terme provinent de la derivada del denominador ha de restar, no sumar. La regla del quocient dona numerator derivat per denominador menys numerator per denominador derivat.",
+      "correccio": "Ha de ser $D_vf(x_0,y_0)=\\frac{2x_0y_0v_1-x_0^2v_2}{y_0^2}$.",
+      "pista": "Quan apliques la regla del quocient, quin signe té el terme amb $v_2$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "els dos límits laterals són de signes oposats",
+      "inici": 182,
+      "fi": 227,
+      "tipus": "conclusio",
+      "explicacio": "El terme principal és $x_0^2/(t^2v_2)$ i $t^2$ és positiu pels dos costats, de manera que els límits laterals tenen el mateix signe, determinat per $v_2$. Tot i així, no hi ha límit finit.",
+      "correccio": "Cal dir que el quocient divergeix cap a $+\\infty$ si $v_2>0$ i cap a $-\\infty$ si $v_2<0$, i per això la derivada direccional no existeix com a nombre real.",
+      "pista": "El signe de $1/t^2$ canvia quan $t$ passa de positiu a negatiu?"
+    },
+    {
+      "id": "e3",
+      "fragment": 6,
+      "cita": "queda $\\frac{t^2v_1^2}{t^2|v_2|}=\\frac{v_1^2}{|v_2|}$",
+      "inici": 82,
+      "fi": 135,
+      "tipus": "calcul",
+      "explicacio": "El denominador de $f(tv_1,tv_2)$ és $tv_2$, no $t|v_2|$; per tant, el signe de $v_2$ no desapareix. La derivada direccional pot ser negativa si $v_2<0$.",
+      "correccio": "Per a $v_2\\neq0$, $\\frac{f(tv_1,tv_2)}{t}=\\frac{t^2v_1^2}{t^2v_2}=\\frac{v_1^2}{v_2}$.",
+      "pista": "En substituir $y=tv_2$, apareix $v_2$ o $|v_2|$ al denominador?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "antics.json",
+    "valoracio": "Les conclusions qualitatives són correctes, però hi ha un error de signe a la derivada fora de l'eix, una justificació falsa de la no-existència a l'eix i un valor absolut espuri a la derivada a l'origen.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "$D_vf(x_0,y_0)=\\frac{2x_0y_0v_1+x_0^2v_2}{y_0^2}$",
+        "gravetat": "error",
+        "explicacio": "Regla del quocient: la derivada de $\\frac{(x_0+tv_1)^2}{y_0+tv_2}$ a $t=0$ és $\\frac{2x_0y_0v_1-x_0^2v_2}{y_0^2}$ (signe menys)."
+      },
+      {
+        "fragment": 5,
+        "cita": "els dos límits laterals són de signes oposats",
+        "gravetat": "error",
+        "explicacio": "$\\frac{x_0^2}{t^2v_2}$ té el mateix signe (el de $v_2$) per a $t>0$ i $t<0$, perquè $t^2>0$: el quocient tendeix a $+\\infty$ o a $-\\infty$ pels dos costats. La no-existència és certa, però el motiu donat és fals."
+      },
+      {
+        "fragment": 6,
+        "cita": "$\\frac{t^2v_1^2}{t^2|v_2|}=\\frac{v_1^2}{|v_2|}$",
+        "gravetat": "error",
+        "explicacio": "$\\frac{f(tv_1,tv_2)}{t}=\\frac{t^2v_1^2}{tv_2\\cdot t}=\\frac{v_1^2}{v_2}$; no hi ha cap valor absolut (per a $v_2<0$ la derivada és negativa)."
+      }
+    ]
+  },
+  "creat": 1791295369.4084804
+}

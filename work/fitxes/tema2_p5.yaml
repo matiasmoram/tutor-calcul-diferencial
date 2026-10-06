@@ -1,0 +1,846 @@
+problemes:
+  - num: 17
+    font: null
+    preambul: |
+      Sigui $E$ un subespai vectorial de $\mathbb{R}^m$.
+    indicacio: null
+    exercicis:
+      - id: "t2-17a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          Demostreu que si $E$ té punts interiors, llavors existeix una bola oberta centrada a l'origen i continguda a $E$.
+        teoria: ["T1.11", "T1.14"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Si $p\in E$ és interior, existeix $r>0$ amb $B(p,r)\subseteq E$. Aleshores $B(0,r)\subseteq E$: si $\|x\|<r$, llavors $p+x\in B(p,r)\subseteq E$ i, com que $E$ és subespai i $p\in E$, $x=(p+x)-p\in E$.
+          fuites: []
+        passos:
+          - id: hipotesi
+            titol: "Escriure la hipòtesi"
+            objectiu: |
+              Escriure amb precisió què vol dir que $E$ tingui un punt interior.
+            idea: |
+              Aplicar la definició de punt interior: hi ha una bola al voltant del punt continguda al conjunt.
+            detall: |
+              Existeixen $p\in E$ i $r>0$ tals que $B(p,r)=\{y\in\mathbb{R}^m:\|y-p\|<r\}\subseteq E$.
+            fuites: []
+            teoria: ["T1.14", "T1.11"]
+          - id: traslladar
+            titol: "Traslladar la bola a l'origen"
+            objectiu: |
+              Relacionar els punts de la bola centrada a l'origen amb els de la bola centrada al punt interior.
+            idea: |
+              Una translació conserva les distàncies: sumar un vector fix porta boles de radi $r$ en boles de radi $r$.
+            detall: |
+              Si $x\in B(0,r)$, és a dir $\|x\|<r$, llavors $\|(p+x)-p\|=\|x\|<r$, per tant $p+x\in B(p,r)\subseteq E$.
+            fuites: ['p\s*\+\s*x\b', 'x\s*\+\s*p\b']
+            teoria: ["T1.11"]
+          - id: subespai
+            titol: "Usar l'estructura de subespai"
+            objectiu: |
+              Deduir que tot punt de la bola centrada a l'origen és de $E$.
+            idea: |
+              Un subespai vectorial és tancat per diferències (combinacions lineals) dels seus elements.
+            detall: |
+              Com que $p\in E$ i $p+x\in E$, i $E$ és subespai, $x=(p+x)-p\in E$. Per tant $B(0,r)\subseteq E$, amb el mateix radi $r$.
+            fuites: ['x\s*=\s*\(\s*p\s*\+\s*x\s*\)\s*-\s*p']
+            teoria: []
+        errors_comuns:
+          - id: suposa_0_interior
+            descripcio: |
+              Suposa directament que $0$ és punt interior perquè $0\in E$, sense fer servir el punt interior donat.
+            pregunta: |
+              Que $0$ pertanyi a $E$ garanteix que hi hagi una bola al seu voltant dins de $E$? D'on surt aquesta bola?
+          - id: oblida_subespai
+            descripcio: |
+              Trasllada la bola però no justifica per què els punts traslladats tornen a ser de $E$ (no usa que $E$ és subespai).
+            pregunta: |
+              Saps que un cert punt és de $E$; quina propietat de $E$ et permet deduir que un altre vector, obtingut per una operació lineal, també ho és?
+          - id: radi_canvia
+            descripcio: |
+              Creu que el radi de la nova bola ha de ser diferent (més petit) que el de la bola original, o no l'especifica.
+            pregunta: |
+              Una translació canvia la distància entre dos punts? Quin radi pots prendre, doncs?
+        nota_professor: |
+          També es pot usar que la translació $x\mapsto x-p$ és una isometria que deixa $E$ invariant.
+
+      - id: "t2-17b"
+        apartat: "b"
+        tipus: teoric
+        enunciat: |
+          Demostreu que si $E$ té punts interiors, aleshores $E=\mathbb{R}^m$.
+        teoria: ["T1.14"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Per l'apartat (a), $B(0,r)\subseteq E$ per a algun $r>0$. Donat $v\in\mathbb{R}^m$, $v\neq0$, el vector $w=\frac{r}{2\|v\|}v$ té norma $r/2<r$, per tant $w\in E$, i $v=\frac{2\|v\|}{r}w\in E$ perquè $E$ és subespai. Com que també $0\in E$, $E=\mathbb{R}^m$.
+          fuites: []
+        passos:
+          - id: usar_a
+            titol: "Partir de l'apartat (a)"
+            objectiu: |
+              Suposant demostrat l'apartat (a), escriure què en tenim: una bola centrada a l'origen dins de $E$.
+            idea: |
+              Aplicar directament (a) a la hipòtesi.
+            detall: |
+              Existeix $r>0$ tal que $B(0,r)\subseteq E$.
+            fuites: []
+            teoria: ["T1.11"]
+          - id: reescalar
+            titol: "Portar qualsevol vector dins la bola"
+            objectiu: |
+              Donat un vector arbitrari $v\neq0$ de $\mathbb{R}^m$, trobar un vector de la bola centrada a l'origen relacionat amb $v$.
+            idea: |
+              Multiplicar $v$ per un escalar prou petit perquè la seva norma sigui menor que el radi.
+            detall: |
+              $w=\frac{r}{2\|v\|}\,v$ compleix $\|w\|=\frac r2<r$, per tant $w\in B(0,r)\subseteq E$.
+            fuites: ['\\[dt]?frac\s*\{\s*r\s*\}\s*\{\s*2\s*\\\|\s*v\s*\\\|\s*\}', '\\[dt]?frac\s*\{?\s*r\s*\}?\s*\{?\s*2\s*\}?\s*\\[dt]?frac\s*\{\s*v\s*\}\s*\{\s*\\\|\s*v\s*\\\|\s*\}']
+            teoria: []
+          - id: concloure
+            titol: "Concloure"
+            objectiu: |
+              Deduir que $v\in E$ i acabar.
+            idea: |
+              Un subespai és tancat per producte per escalars.
+            detall: |
+              $v=\frac{2\|v\|}{r}\,w\in E$ per ser $E$ subespai; i $0\in E$. Per tant $\mathbb{R}^m\subseteq E$, és a dir, $E=\mathbb{R}^m$.
+            fuites: []
+            teoria: []
+        errors_comuns:
+          - id: nomes_bola
+            descripcio: |
+              Conclou $E=\mathbb{R}^m$ només perquè conté una bola, sense usar l'estructura lineal.
+            pregunta: |
+              Un conjunt qualsevol que contingui una bola centrada a l'origen ha de ser tot $\mathbb{R}^m$? Què té d'especial $E$?
+          - id: base_dins_bola
+            descripcio: |
+              Afirma que la base canònica $e_i$ és dins de la bola sense comprovar que $\|e_i\|=1<r$.
+            pregunta: |
+              El radi $r$ de la bola pot ser molt petit. Segur que els vectors que fas servir hi caben?
+          - id: oblida_zero
+            descripcio: |
+              Divideix per $\|v\|$ sense separar el cas $v=0$.
+            pregunta: |
+              La teva construcció funciona per a tots els vectors de $\mathbb{R}^m$, inclòs el vector nul?
+        nota_professor: |
+          Alternativa: $\frac r2 e_1,\dots,\frac r2 e_m\in B(0,r)\subseteq E$ són $m$ vectors linealment independents, per tant $\dim E=m$.
+
+      - id: "t2-17c"
+        apartat: "c"
+        tipus: teoric
+        enunciat: |
+          Demostreu que $E$ és tancat.
+        teoria: ["T1.11"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Si $E=\mathbb{R}^m$ és tancat. Altrament, sigui $u_1,\dots,u_k$ una base de $E^\perp$; com que $(E^\perp)^\perp=E$, $E=\ker L$ amb $L:\mathbb{R}^m\to\mathbb{R}^k$, $L(x)=(\langle x,u_1\rangle,\dots,\langle x,u_k\rangle)$, lineal. $L$ és Lipschitz, per tant contínua, i $\{0\}$ és tancat a $\mathbb{R}^k$; per la caracterització de la continuïtat amb tancats, $E=L^{-1}(\{0\})$ és tancat.
+          fuites: []
+        passos:
+          - id: equacions
+            titol: "Descriure $E$ amb equacions"
+            objectiu: |
+              Escriure $E$ com el conjunt de solucions d'unes equacions, és a dir, com el conjunt on s'anul·la una certa funció.
+            idea: |
+              Àlgebra lineal: tot subespai de $\mathbb{R}^m$ és el nucli d'una aplicació lineal (per exemple, usant el complement ortogonal i que $(E^\perp)^\perp=E$).
+            detall: |
+              Si $E=\mathbb{R}^m$ no hi ha res a fer ($\mathbb{R}^m$ és tancat). Si no, prenem una base $u_1,\dots,u_k$ de $E^\perp$ i $L(x)=(\langle x,u_1\rangle,\dots,\langle x,u_k\rangle)$; aleshores $E=\{x:L(x)=0\}=\ker L=L^{-1}(\{0\})$.
+            fuites: ['\\ker\s*L', 'L\^\{-1\}\s*\(\s*\\\{\s*0\s*\\\}']
+            teoria: ["T1.13"]
+          - id: continuitat
+            titol: "Continuïtat de la funció"
+            objectiu: |
+              Justificar que la funció que defineix $E$ és contínua.
+            idea: |
+              Les aplicacions lineals de $\mathbb{R}^m$ a $\mathbb{R}^k$ són de Lipschitz, i Lipschitz implica contínua.
+            detall: |
+              $L(x)=Ax$ per a una matriu $A$ de mida $k\times m$; per l'exemple 27 és de Lipschitz i per la proposició 28 és contínua.
+            fuites: []
+            teoria: ["T2.27", "T2.28"]
+          - id: antiimatge
+            titol: "Antiimatge d'un tancat"
+            objectiu: |
+              Concloure que $E$ és tancat.
+            idea: |
+              Caracterització de la continuïtat per tancats: l'antiimatge d'un tancat per una funció contínua definida a tot l'espai és tancada.
+            detall: |
+              $\{0\}$ és tancat a $\mathbb{R}^k$ (el seu complementari és obert). Pel teorema 17(d) amb $\Omega=\mathbb{R}^m$, $L^{-1}(\{0\})=D\cap\mathbb{R}^m=D$ amb $D$ tancat. Per tant $E$ és tancat.
+            fuites: []
+            teoria: ["T2.17"]
+        errors_comuns:
+          - id: confon_no_obert
+            descripcio: |
+              Argumenta que, com que $E$ no és obert (per (b), si $E\neq\mathbb{R}^m$), ha de ser tancat.
+            pregunta: |
+              Un conjunt que no és obert és necessàriament tancat? Coneixes algun subconjunt de $\mathbb{R}$ que no sigui ni una cosa ni l'altra?
+          - id: continuitat_sense_justificar
+            descripcio: |
+              Diu que l'antiimatge és tancada sense justificar la continuïtat de l'aplicació (o sense dir quin resultat usa).
+            pregunta: |
+              Quina hipòtesi necessita el resultat que dona antiimatges tancades? L'has comprovada?
+          - id: successions_sense_coordenades
+            descripcio: |
+              Amb successions, afirma que el límit d'una successió de $E$ és de $E$ "perquè $E$ és subespai", sense cap argument de continuïtat.
+            pregunta: |
+              Les operacions lineals asseguren que els límits de successions de $E$ es queden a $E$? Quina eina topològica et falta?
+        nota_professor: |
+          Alternativa per successions (Prop. 19(iii) del Tema 1): si $x_n\in E$, $x_n\to x$, aleshores $L(x_n)=0\to L(x)$ per continuïtat, i $L(x)=0$. També: $E=\bigcap_i\{\langle x,u_i\rangle=0\}$, intersecció finita de tancats. El fet clau és la dimensió finita.
+
+      - id: "t2-17d"
+        apartat: "d"
+        tipus: teoric
+        enunciat: |
+          Demostreu que $E$ és compacte si i només si $E=\{0\}$.
+        teoria: ["T1.24"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $\Leftarrow$: $\{0\}$ és tancat i fitat, per tant compacte (Heine-Borel; o directament, de tot recobriment n'hi ha prou amb un obert que contingui $0$). $\Rightarrow$: si $E\neq\{0\}$, existeix $v\in E$, $v\neq0$, i $tv\in E$ per a tot $t\in\mathbb{R}$, amb $\|tv\|=|t|\,\|v\|\to\infty$; $E$ no és fitat i, per Heine-Borel, no és compacte.
+          fuites: []
+        passos:
+          - id: zero_compacte
+            titol: "Implicació $\\Leftarrow$"
+            objectiu: |
+              Veure que el subespai trivial és compacte.
+            idea: |
+              Un conjunt d'un sol punt és tancat i fitat (o bé usar directament la definició amb recobriments).
+            detall: |
+              $\{0\}\subseteq B(0,1)$ és fitat i és tancat; per Heine-Borel és compacte. Directament: de qualsevol recobriment per oberts n'hi ha prou amb un obert que contingui $0$.
+            fuites: []
+            teoria: ["T1.34", "T1.24"]
+          - id: no_fitat
+            titol: "Implicació $\\Rightarrow$: un subespai no trivial no és fitat"
+            objectiu: |
+              Suposant $E\neq\{0\}$, veure que $E$ no pot estar dins de cap bola.
+            idea: |
+              Un subespai no trivial conté tota la recta generada per un vector no nul.
+            detall: |
+              Sigui $v\in E$, $v\neq0$. Per a tot $t\in\mathbb{R}$, $tv\in E$ i $\|tv\|=|t|\,\|v\|$, que no està fitat quan $t\to\infty$. Per tant cap bola $B(x,L)$ conté $E$.
+            fuites: ['\\\|t\s*v\\\|\s*=\s*\|t\|']
+            teoria: ["T1.33"]
+          - id: concloure
+            titol: "Concloure"
+            objectiu: |
+              Deduir que $E$ no és compacte si $E\neq\{0\}$.
+            idea: |
+              A $\mathbb{R}^m$, compacte equival a tancat i fitat.
+            detall: |
+              Per Heine-Borel, tot compacte de $\mathbb{R}^m$ és fitat; com que $E$ no és fitat, no és compacte. (Pel contrarecíproc, $E$ compacte $\Rightarrow E=\{0\}$.)
+            fuites: []
+            teoria: ["T1.34"]
+        errors_comuns:
+          - id: tancat_implica_compacte
+            descripcio: |
+              Usa l'apartat (c) i conclou que $E$ és compacte perquè és tancat.
+            pregunta: |
+              Ser tancat és suficient per ser compacte a $\mathbb{R}^m$? Quina altra condició cal?
+          - id: oblida_reciproc
+            descripcio: |
+              Només demostra una de les dues implicacions.
+            pregunta: |
+              L'enunciat és un "si i només si". Has demostrat els dos sentits?
+          - id: fitat_mal_justificat
+            descripcio: |
+              Diu que $E$ no és fitat "perquè és infinit", confonent infinit amb no fitat.
+            pregunta: |
+              Un conjunt amb infinits punts ha de ser no fitat? Pensa en $[0,1]$. Què has de mostrar exactament?
+        nota_professor: |
+          Combinat amb (c): $E$ és sempre tancat, de manera que compacte $\Leftrightarrow$ fitat $\Leftrightarrow E=\{0\}$. L'enunciat de Heine-Borel a les notes diu "$n>1$", però val per a tot $n\geq1$.
+
+  - num: 18
+    font: null
+    preambul: |
+      Sigui $M_2(\mathbb{R})$ el conjunt de matrius quadrades $2\times2$ amb coeficients reals, que identifiquem amb $\mathbb{R}^4$ mitjançant l'aplicació $F:M_2(\mathbb{R})\longrightarrow\mathbb{R}^4$ donada per
+      $$F\left(\begin{pmatrix}a&c\\b&d\end{pmatrix}\right)=(a,b,c,d)^T$$
+    indicacio: null
+    exercicis:
+      - id: "t2-18a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          Demostreu que l'aplicació $\det:M_2(\mathbb{R})\longrightarrow\mathbb{R}$, que associa a cada matriu el seu determinant, és contínua.
+        teoria: ["T2.14"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Amb la identificació $F$, $\det$ correspon a la funció $D:\mathbb{R}^4\to\mathbb{R}$, $D(a,b,c,d)=ad-bc$. Les projeccions $(a,b,c,d)\mapsto a$, etc. són lineals, per tant de Lipschitz i contínues; productes i diferències de funcions contínues són contínues. Per tant $\det$ és contínua.
+          fuites: []
+        passos:
+          - id: coordenades
+            titol: "Escriure el determinant en coordenades"
+            objectiu: |
+              Expressar $\det$ com una funció de $\mathbb{R}^4$ a $\mathbb{R}$ a través de la identificació $F$.
+            idea: |
+              Calcular el determinant de la matriu genèrica en funció de les seves entrades.
+            detall: |
+              $\det\circ F^{-1}(a,b,c,d)=ad-bc$. Dir que $\det$ és contínua vol dir que $D(a,b,c,d)=ad-bc$ és contínua a $\mathbb{R}^4$.
+            fuites: ['a\s*d\s*-\s*b\s*c']
+            teoria: []
+          - id: projeccions
+            titol: "Continuïtat de les coordenades"
+            objectiu: |
+              Justificar que cada funció coordenada $(a,b,c,d)\mapsto a$ (i les altres) és contínua.
+            idea: |
+              Les projeccions són aplicacions lineals; les lineals són Lipschitz i Lipschitz implica contínua.
+            detall: |
+              $\pi_1(a,b,c,d)=a$ és lineal, i $|\pi_1(x)-\pi_1(y)|\leq\|x-y\|$; per l'exemple 27 i la proposició 28 és contínua. Igual per a $b,c,d$.
+            fuites: []
+            teoria: ["T2.27", "T2.28"]
+          - id: algebra
+            titol: "Àlgebra de funcions contínues"
+            objectiu: |
+              Concloure la continuïtat del determinant a partir de la de les coordenades.
+            idea: |
+              Productes, sumes i múltiples de funcions contínues són contínues.
+            detall: |
+              $ad=\pi_1\pi_4$ i $bc=\pi_2\pi_3$ són contínues (prop. 20(ii)) i $ad-bc=ad+(-1)bc$ també (prop. 20(i)). Per tant $\det$ és contínua.
+            fuites: []
+            teoria: ["T2.20"]
+        errors_comuns:
+          - id: sense_identificacio
+            descripcio: |
+              Diu que el determinant és "una operació contínua" sense explicar respecte de quina distància ni com s'identifica amb una funció de $\mathbb{R}^4$.
+            pregunta: |
+              Per parlar de continuïtat necessites una distància a $M_2(\mathbb{R})$. D'on surt, en aquest problema?
+          - id: polinomi_sense_justificar
+            descripcio: |
+              Afirma que els polinomis són continus sense justificar-ho amb els resultats del curs.
+            pregunta: |
+              Quins resultats del tema et permeten passar de funcions senzilles a sumes i productes d'elles?
+          - id: lineal
+            descripcio: |
+              Creu que el determinant és lineal i en dedueix la continuïtat per aquest motiu.
+            pregunta: |
+              Es compleix $\det(A+B)=\det A+\det B$? Prova-ho amb la identitat.
+        nota_professor: |
+          $F$ és una bijecció lineal; la topologia de $M_2(\mathbb{R})$ és la transportada de $\mathbb{R}^4$ per $F$ (norma de Frobenius si es pren l'euclidiana).
+
+      - id: "t2-18b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          Determineu si els conjunts següents són oberts, tancats o compactes:
+          $$C_1=\{A\in M_2(\mathbb{R})\text{ invertibles}\},\ C_2=\{A\in M_2(\mathbb{R})\mid\det A=1\},\ C_3=\{A\in M_2(\mathbb{R})\mid\det A>0\}.$$
+        teoria: ["T1.11", "T1.24"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $C_1=\det^{-1}(\mathbb{R}\setminus\{0\})$: obert, no tancat, no compacte.
+            $C_2=\det^{-1}(\{1\})$: tancat, no obert, no compacte (no fitat).
+            $C_3=\det^{-1}((0,+\infty))$: obert, no tancat, no compacte.
+          fuites: ['C_\{?1\}?\$?\s*(és|es)\s+(un\s+)?obert', 'C_\{?2\}?\$?\s*(és|es)\s+(un\s+)?tancat', 'C_\{?3\}?\$?\s*(és|es)\s+(un\s+)?obert', 'cap\s+(d.ells\s+)?(no\s+)?és\s+compacte']
+        passos:
+          - id: c1
+            titol: "Estudiar $C_1$"
+            objectiu: |
+              Classificar $C_1$ quant a obertura i tancament.
+            idea: |
+              Escriure $C_1$ com l'antiimatge per $\det$ (contínua per l'apartat (a)) d'un subconjunt de $\mathbb{R}$, i buscar una successió de $C_1$ que convergeixi fora de $C_1$.
+            detall: |
+              $C_1=\det^{-1}(\mathbb{R}\setminus\{0\})$ i $\mathbb{R}\setminus\{0\}$ és obert, per tant $C_1$ és obert (teorema 17(c) amb $\Omega=M_2(\mathbb{R})$). No és tancat: $\frac1n I\in C_1$ ($\det=\frac1{n^2}\neq0$) i $\frac1n I\to 0\notin C_1$.
+            fuites: ['\\det\^\{-1\}\s*\(\s*\\mathbb\{R\}\s*\\setminus', '\\[dt]?frac\s*\{?1\}?\s*\{?n\}?\s*I']
+            teoria: ["T2.17", "T1.19"]
+          - id: c2
+            titol: "Estudiar $C_2$"
+            objectiu: |
+              Classificar $C_2$ quant a obertura i tancament.
+            idea: |
+              Antiimatge per $\det$ d'un subconjunt de $\mathbb{R}$; per veure si un punt és interior, mirar matrius properes a la identitat.
+            detall: |
+              $C_2=\det^{-1}(\{1\})$ amb $\{1\}$ tancat, per tant $C_2$ és tancat (teorema 17(d)). No és obert: $I\in C_2$ però $(1+\frac1n)I\to I$ i $\det\big((1+\frac1n)I\big)=(1+\frac1n)^2\neq1$; tota bola centrada a $I$ conté punts fora de $C_2$, i $I$ no és interior.
+            fuites: ['\\det\^\{-1\}\s*\(\s*\\\{\s*1\s*\\\}', '\(\s*1\s*\+\s*\\[dt]?frac\s*\{?1\}?\s*\{?n\}?\s*\)\s*I']
+            teoria: ["T2.17", "T1.14"]
+          - id: c3
+            titol: "Estudiar $C_3$"
+            objectiu: |
+              Classificar $C_3$ quant a obertura i tancament.
+            idea: |
+              Mateixa estratègia: antiimatge d'un subconjunt de $\mathbb{R}$ i, per al tancament, una successió que surti del conjunt al límit.
+            detall: |
+              $C_3=\det^{-1}((0,+\infty))$ amb $(0,+\infty)$ obert, per tant $C_3$ és obert (també pel corol·lari 18(i) amb $f=\det$, $g=0$). No és tancat: $\frac1n I\in C_3$ ($\det=\frac1{n^2}>0$) i $\frac1nI\to0$, amb $\det 0=0$.
+            fuites: ['\\det\^\{-1\}\s*\(\s*\(\s*0\s*,\s*\+?\\infty']
+            teoria: ["T2.17", "T2.18", "T1.19"]
+          - id: compacitat
+            titol: "Compacitat"
+            objectiu: |
+              Decidir quins dels tres conjunts són compactes.
+            idea: |
+              A $\mathbb{R}^4$, compacte equival a tancat i fitat: només cal estudiar els que són tancats, i mirar si són fitats.
+            detall: |
+              $C_1$ i $C_3$ no són tancats, per tant no són compactes (compacte $\Rightarrow$ tancat). $C_2$ és tancat però no fitat: $\begin{pmatrix}n&0\\0&1/n\end{pmatrix}\in C_2$ i $\|F(A_n)\|\geq n\to\infty$ per a aquesta matriu $A_n$. Per Heine-Borel, $C_2$ no és compacte. Cap dels tres és compacte.
+            fuites: ['n\s*&\s*0\s*\\\\\s*0\s*&\s*(1/n|\\[dt]?frac\s*\{?1\}?\s*\{?n\}?)', 'diag\}?\s*\(\s*n\s*,\s*(1/n|\\[dt]?frac\s*\{?1\}?\s*\{?n\}?)']
+            teoria: ["T1.27", "T1.33", "T1.34"]
+        errors_comuns:
+          - id: no_obert_implica_tancat
+            descripcio: |
+              Conclou que un conjunt és tancat perquè no és obert (o a l'inrevés).
+            pregunta: |
+              Ser obert i ser tancat són propietats complementàries? Pot un conjunt no ser ni una cosa ni l'altra?
+          - id: imatge_vs_antiimatge
+            descripcio: |
+              Aplica el teorema al revés: dedueix propietats de la imatge per $\det$ en lloc de l'antiimatge, o pensa que $\det$ de tancat és tancat.
+            pregunta: |
+              El resultat que estàs usant parla d'imatges o d'antiimatges per una funció contínua?
+          - id: tancat_implica_compacte
+            descripcio: |
+              Diu que $C_2$ és compacte perquè és tancat.
+            pregunta: |
+              A $\mathbb{R}^4$, quines dues condicions caracteritzen els compactes? Les has comprovat totes dues per a aquest conjunt?
+          - id: fitat_falsament
+            descripcio: |
+              Creu que $\det A=1$ obliga les entrades a ser petites.
+            pregunta: |
+              Pots trobar matrius amb determinant fix però amb alguna entrada tan gran com vulguis?
+        nota_professor: |
+          Cap dels tres és alhora obert i tancat, coherent amb que $\mathbb{R}^4$ és connex i cap és buit ni tot l'espai.
+
+  - num: 19
+    font: null
+    preambul: |
+      Volem demostrar que el conjunt $O_2(\mathbb{R})=\{A\in M_2(\mathbb{R})\,:\,A^T\cdot A=I\}$ és un compacte de $M_2(\mathbb{R})$.
+    indicacio: |
+      Comentaris: els resultats anteriors es poden generalitzar al cas $M_n(\mathbb{R})$, $n\in\mathbb{N}$.
+      El conjunt $O_2(\mathbb{R})$, amb l'operació producte de matrius, s'anomena grup ortogonal de dimensió 2. Els seus elements són les matrius ortogonals i ens descriuen els girs i les simetries al pla.
+    exercicis:
+      - id: "t2-19a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          Useu la funció $g:M_2(\mathbb{R})\to M_2(\mathbb{R})$, tal que $g(A)=A\cdot A^T$, per demostrar que $O_2(\mathbb{R})$ és tancat.
+        teoria: ["T1.11"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Per a matrius quadrades, $A^TA=I\Leftrightarrow AA^T=I$ (la inversa per l'esquerra és també per la dreta), per tant $O_2(\mathbb{R})=g^{-1}(\{I\})$. Amb $A=\begin{pmatrix}a&c\\b&d\end{pmatrix}$, $g(A)=\begin{pmatrix}a^2+c^2&ab+cd\\ab+cd&b^2+d^2\end{pmatrix}$: les components de $g$ (via $F$) són polinomis, per tant $g$ és contínua. Com que $\{I\}$ és tancat, $g^{-1}(\{I\})$ és tancat.
+          fuites: []
+        passos:
+          - id: reescriure
+            titol: "Expressar $O_2(\\mathbb{R})$ amb $g$"
+            objectiu: |
+              Expressar $O_2(\mathbb{R})$ en termes de la funció $g$.
+            idea: |
+              La definició usa $A^T A$ i $g$ usa $AA^T$: cal relacionar les dues condicions. Per a matrius quadrades, una inversa per l'esquerra és també inversa per la dreta.
+            detall: |
+              Si $A^TA=I$, aleshores $(\det A)^2=\det(A^T)\det A=1$, de manera que $A$ és invertible i $A^T=A^T(AA^{-1})=(A^TA)A^{-1}=A^{-1}$; per tant també $AA^T=I$. Recíprocament, si $AA^T=I$, el mateix argument dona $A^T=A^{-1}$ i $A^TA=I$. Per tant $O_2(\mathbb{R})=\{A:g(A)=I\}=g^{-1}(\{I\})$.
+            fuites: ['g\^\{-1\}\s*\(\s*\\\{\s*I\s*\\\}']
+            teoria: []
+          - id: g_continua
+            titol: "Continuïtat de $g$"
+            objectiu: |
+              Justificar que $g$ és contínua.
+            idea: |
+              Calcular $g(A)$ en coordenades: cada component és un polinomi en $a,b,c,d$, i una funció vectorial és contínua si ho són les seves components.
+            detall: |
+              $g(A)=\begin{pmatrix}a^2+c^2&ab+cd\\ab+cd&b^2+d^2\end{pmatrix}$, és a dir, $F\circ g\circ F^{-1}(a,b,c,d)=(a^2+c^2,\,ab+cd,\,ab+cd,\,b^2+d^2)$. Les coordenades $a,b,c,d$ són funcions lineals de $\mathbb{R}^4$, per tant contínues (exemple 27 i proposició 28); cada component $h_i$ és suma de productes de coordenades, contínua per la proposició 20(i)(ii). Aleshores $F\circ g\circ F^{-1}=\sum_{i=1}^4 h_i\,e_i$ és contínua, també per la proposició 20(i)(ii) (funció escalar contínua per un vector constant, i sumes); per tant $g$ és contínua.
+            fuites: ['a\^\{?2\}?\s*\+\s*c\^\{?2\}?']
+            teoria: ["T2.20", "T2.27", "T2.28"]
+          - id: tancat
+            titol: "Antiimatge d'un tancat"
+            objectiu: |
+              Concloure que $O_2(\mathbb{R})$ és tancat.
+            idea: |
+              Caracterització de la continuïtat per tancats, amb la funció definida a tot l'espai.
+            detall: |
+              Un punt $\{I\}$ és tancat a $M_2(\mathbb{R})\cong\mathbb{R}^4$. Pel teorema 17(d) amb $\Omega=M_2(\mathbb{R})$, $g^{-1}(\{I\})=D$ és tancat. Per tant $O_2(\mathbb{R})$ és tancat.
+            fuites: []
+            teoria: ["T2.17"]
+        errors_comuns:
+          - id: confon_AtA_AAt
+            descripcio: |
+              Escriu $O_2(\mathbb{R})=g^{-1}(\{I\})$ sense observar que la definició usa $A^TA$ i $g$ usa $AA^T$.
+            pregunta: |
+              La condició que defineix el conjunt i la que dona $g(A)=I$ són literalment la mateixa? Per què són equivalents?
+          - id: antiimatge_de_quin
+            descripcio: |
+              No identifica quin conjunt tancat del codomini es pren (o pren l'antiimatge d'un conjunt que no és tancat).
+            pregunta: |
+              Quin subconjunt de $M_2(\mathbb{R})$ has de prendre perquè la seva antiimatge sigui exactament $O_2(\mathbb{R})$? És tancat?
+          - id: continuitat_g
+            descripcio: |
+              Afirma que $g$ és contínua sense justificar-ho, o diu que és lineal.
+            pregunta: |
+              $g(2A)$ és igual a $2g(A)$? Com justificaries la continuïtat de $g$, doncs?
+        nota_professor: |
+          Alternativament, $O_2(\mathbb{R})=h^{-1}(\{I\})$ amb $h(A)=A^TA$, sense necessitat de l'equivalència; l'enunciat proposa $g$, cosa que obliga a observar $A^TA=I\Leftrightarrow AA^T=I$.
+
+      - id: "t2-19b"
+        apartat: "b"
+        tipus: teoric
+        enunciat: |
+          Demostreu que $O_2(\mathbb{R})$ està contingut en $S(0,\sqrt{2})$. És una inclusió estricta?
+        teoria: ["T1.11"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Si $A^TA=I$, les columnes $(a,b)$ i $(c,d)$ són ortonormals: $a^2+b^2=1$, $c^2+d^2=1$, $ac+bd=0$. Per tant $\|F(A)\|^2=a^2+b^2+c^2+d^2=2$, és a dir $A\in S(0,\sqrt2)$. La inclusió és estricta: $A=\begin{pmatrix}\sqrt2&0\\0&0\end{pmatrix}$ té $\|F(A)\|=\sqrt2$ però $A^TA\neq I$ ($\det A=0$).
+          fuites: ['és\s+(una\s+inclusió\s+)?estricta(?!\s*\?)', 'no\s+(és\s+)?(una\s+)?igualtat']
+        passos:
+          - id: coordenades
+            titol: "Traduir la condició a coordenades"
+            objectiu: |
+              Escriure què diu $A^TA=I$ sobre les entrades $a,b,c,d$.
+            idea: |
+              Les entrades de $A^TA$ són els productes escalars de les columnes de $A$.
+            detall: |
+              $A^TA=\begin{pmatrix}a^2+b^2&ac+bd\\ac+bd&c^2+d^2\end{pmatrix}=I$ dona $a^2+b^2=1$, $c^2+d^2=1$, $ac+bd=0$.
+            fuites: ['a\^\{?2\}?\s*\+\s*b\^\{?2\}?\s*=\s*1']
+            teoria: []
+          - id: norma
+            titol: "Calcular la norma"
+            objectiu: |
+              Calcular la norma euclidiana de $F(A)$ per a $A\in O_2(\mathbb{R})$.
+            idea: |
+              Sumar les condicions obtingudes i comparar amb la definició d'esfera $S(0,r)=\{x:\|x\|=r\}$.
+            detall: |
+              $\|F(A)\|^2=a^2+b^2+c^2+d^2=1+1=2$, per tant $\|F(A)\|=\sqrt2$ i $A\in S(0,\sqrt2)$.
+            fuites: ['a\^\{?2\}?\s*\+\s*b\^\{?2\}?\s*\+\s*c\^\{?2\}?\s*\+\s*d\^\{?2\}?\s*=\s*(1\s*\+\s*1\s*=\s*)?2']
+            teoria: []
+          - id: estricta
+            titol: "Comparar els dos conjunts"
+            objectiu: |
+              Decidir si tot punt de $S(0,\sqrt2)$ correspon a una matriu de $O_2(\mathbb{R})$.
+            idea: |
+              Només s'ha usat la suma de dues de les tres condicions; buscar un punt de l'esfera que en falli alguna.
+            detall: |
+              $A=\begin{pmatrix}\sqrt2&0\\0&0\end{pmatrix}$, és a dir $F(A)=(\sqrt2,0,0,0)$, té norma $\sqrt2$ però $a^2+b^2=2\neq1$ (de fet $\det A=0$, i una matriu ortogonal té $\det=\pm1$). Per tant la inclusió és estricta.
+            fuites: ['\(\s*\\sqrt\{?2\}?\s*,\s*0\s*,\s*0\s*,\s*0\s*\)', '\\sqrt\{?2\}?\s*&\s*0\s*\\\\\s*0\s*&\s*0']
+            teoria: []
+        errors_comuns:
+          - id: files_vs_columnes
+            descripcio: |
+              Calcula malament $A^TA$ (per exemple, confon files i columnes o obté només dues condicions).
+            pregunta: |
+              Quina és l'entrada $(1,2)$ de $A^TA$? Quantes condicions independents en surten?
+          - id: esfera_vs_bola
+            descripcio: |
+              Confon l'esfera $S(0,\sqrt2)$ amb la bola, o demostra només $\|F(A)\|\le\sqrt2$.
+            pregunta: |
+              Què significa exactament $S(0,\sqrt2)$? N'hi ha prou amb una desigualtat?
+          - id: reciproc_sense_contraexemple
+            descripcio: |
+              Respon la segona pregunta sense donar cap matriu concreta que ho justifiqui.
+            pregunta: |
+              Per justificar la resposta a la segona pregunta, quin tipus d'argument necessites: una demostració general o un exemple concret?
+        nota_professor: |
+          $O_2(\mathbb{R})$ és la unió de dues circumferències (girs i simetries) dins de l'esfera tridimensional $S(0,\sqrt2)\subset\mathbb{R}^4$. Cal la norma euclidiana a $\mathbb{R}^4$ (norma de Frobenius).
+
+      - id: "t2-19c"
+        apartat: "c"
+        tipus: teoric
+        enunciat: |
+          Deduïu-ne la compacitat de $O_2(\mathbb{R})$.
+        teoria: ["T1.24"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Per (a), $O_2(\mathbb{R})$ és tancat; per (b), $O_2(\mathbb{R})\subseteq S(0,\sqrt2)\subseteq B(0,2)$, per tant és fitat. Per Heine-Borel (via la identificació $F$ amb $\mathbb{R}^4$), $O_2(\mathbb{R})$ és compacte.
+          fuites: []
+        passos:
+          - id: fitat
+            titol: "Fitació"
+            objectiu: |
+              Suposant demostrats (a) i (b), veure que $O_2(\mathbb{R})$ és fitat.
+            idea: |
+              Usar la definició de conjunt fitat amb una bola que contingui l'esfera de l'apartat (b).
+            detall: |
+              $O_2(\mathbb{R})\subseteq S(0,\sqrt2)\subseteq B(0,2)$, ja que $\sqrt2<2$. Per tant és fitat.
+            fuites: []
+            teoria: ["T1.33"]
+          - id: heine_borel
+            titol: "Aplicar Heine-Borel"
+            objectiu: |
+              Concloure la compacitat.
+            idea: |
+              A $\mathbb{R}^n$, tancat i fitat equival a compacte.
+            detall: |
+              Per (a) és tancat i acabem de veure que és fitat; com que $F$ identifica $M_2(\mathbb{R})$ amb $\mathbb{R}^4$, pel teorema de Heine-Borel $O_2(\mathbb{R})$ és compacte.
+            fuites: []
+            teoria: ["T1.34"]
+        errors_comuns:
+          - id: nomes_fitat
+            descripcio: |
+              Conclou compacitat només de la fitació (o només del tancament).
+            pregunta: |
+              El teorema de Heine-Borel té dues hipòtesis. D'on surt cadascuna en aquest problema?
+          - id: espai_general
+            descripcio: |
+              Aplica "tancat i fitat implica compacte" sense indicar que estem a un espai de dimensió finita ($\mathbb{R}^4$).
+            pregunta: |
+              En un espai mètric qualsevol, tancat i fitat implica compacte? Què fa que aquí sí que funcioni?
+        nota_professor: |
+          Alternativa: $O_2(\mathbb{R})$ és un tancat dins del compacte $\overline{B}(0,\sqrt2)$ (lema 28 del Tema 1).
+
+  - num: 20
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t2-20"
+        apartat: null
+        tipus: teoric
+        enunciat: |
+          Doneu un exemple de dues funcions $f,g:A\subset\mathbb{R}^m\to\mathbb{R}$ uniformement contínues, tals que el producte $h=f\cdot g$ no ho sigui.
+        teoria: ["T2.25"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $m=1$, $A=\mathbb{R}$, $f(x)=g(x)=x$. $f$ és uniformement contínua (amb $\delta=\varepsilon$), però $h(x)=x^2$ no ho és: per a $\varepsilon=1$ i qualsevol $\delta>0$, $x=\frac1\delta$, $y=\frac1\delta+\frac\delta2$ compleixen $|x-y|<\delta$ i $|x^2-y^2|=\frac\delta2\left(\frac2\delta+\frac\delta2\right)=1+\frac{\delta^2}4\geq1$.
+          fuites: ['f\(x\)\s*=\s*g\(x\)\s*=\s*x\b', 'h\(x\)\s*=\s*x\^\{?2\}?', 'f\(x\)\s*=\s*x\s*\$?\s*(i|,)\s*\$?\s*g\(x\)\s*=\s*x\b']
+        passos:
+          - id: on_buscar
+            titol: "On buscar l'exemple"
+            objectiu: |
+              Entendre quina característica han de tenir $f$ i $g$ perquè el producte pugui deixar de ser uniformement continu.
+            idea: |
+              Mirar què passa si $f$ i $g$ són fitades: estimar $|f(x)g(x)-f(y)g(y)|$ sumant i restant un terme creuat. Si això ja dona continuïtat uniforme, l'exemple ha de tenir funcions no fitades (domini no fitat).
+            detall: |
+              Si $|f|,|g|\leq K$: $|fg(x)-fg(y)|\leq K|f(x)-f(y)|+K|g(x)-g(y)|$, i $h$ seria uniformement contínua. Cal, doncs, funcions no fitades: la més senzilla és la identitat $f(x)=g(x)=x$ a $A=\mathbb{R}$.
+            fuites: ['f\(x\)\s*=\s*g\(x\)\s*=\s*x\b', 'f\(x\)\s*=\s*x\s*\$?\s*(i|,)\s*\$?\s*g\(x\)\s*=\s*x\b']
+            teoria: ["T2.25"]
+          - id: f_uniforme
+            titol: "Les funcions són uniformement contínues"
+            objectiu: |
+              Demostrar que les funcions triades són uniformement contínues.
+            idea: |
+              Aplicar la definició: trobar un $\delta$ que només depengui de $\varepsilon$.
+            detall: |
+              Per a $f(x)=x$: donat $\varepsilon>0$, prenem $\delta=\varepsilon$; si $|x-y|<\delta$, $|f(x)-f(y)|=|x-y|<\varepsilon$.
+            fuites: ['\\delta\s*=\s*\\(var)?epsilon']
+            teoria: ["T2.25"]
+          - id: negacio
+            titol: "Negar la continuïtat uniforme del producte"
+            objectiu: |
+              Escriure què cal demostrar per veure que $h$ no és uniformement contínua.
+            idea: |
+              Negar la definició amb els quantificadors en ordre: existeix un $\varepsilon$ per al qual cap $\delta$ funciona.
+            detall: |
+              Cal: $\exists\varepsilon>0$ tal que $\forall\delta>0$ $\exists x,y\in A$ amb $|x-y|<\delta$ i $|h(x)-h(y)|\geq\varepsilon$.
+            fuites: []
+            teoria: ["T2.25"]
+          - id: parells
+            titol: "Construir els parells de punts"
+            objectiu: |
+              Per a cada $\delta>0$, trobar dos punts propers on $h$ prengui valors allunyats.
+            idea: |
+              Factoritzar la diferència de valors de $h$: un factor és $|x-y|$ i l'altre creix amb la mida dels punts. Prendre punts lluny de l'origen, tant més lluny com més petit sigui $\delta$.
+            detall: |
+              $\varepsilon=1$, $x=\frac1\delta$, $y=\frac1\delta+\frac\delta2$: $|x-y|=\frac\delta2<\delta$ i $|x^2-y^2|=|x-y|\,|x+y|=\frac\delta2\left(\frac2\delta+\frac\delta2\right)=1+\frac{\delta^2}4\geq1$.
+            fuites: ['x\s*=\s*\\[dt]?frac\s*\{?1\}?\s*\{?\\delta\}?', '1\s*\+\s*\\frac\{\\delta\^\{?2\}?\}\{4\}']
+            teoria: ["T2.25"]
+        errors_comuns:
+          - id: domini_fitat
+            descripcio: |
+              Proposa funcions sobre un domini compacte o fitat (per exemple $[0,1]$), on el producte acaba sent uniformement continu.
+            pregunta: |
+              Si el domini és compacte, què diu el teorema de Heine-Cantor sobre el producte (que és continu)?
+          - id: quantificadors
+            descripcio: |
+              Nega malament la definició: tria $\delta$ concret i troba punts, o fa dependre $\varepsilon$ de $\delta$.
+            pregunta: |
+              A la negació de la continuïtat uniforme, qui es tria primer, $\varepsilon$ o $\delta$? Qui pot dependre de qui?
+          - id: punts_fixos
+            descripcio: |
+              Mostra que la diferència de valors és gran per a uns punts fixos, sense que s'acostin quan $\delta\to0$.
+            pregunta: |
+              Els punts que tries compleixen $|x-y|<\delta$ per a qualsevol $\delta$ que et donin?
+          - id: no_continu
+            descripcio: |
+              Proposa funcions que no són uniformement contínues (per exemple $1/x$ a $(0,1)$) com a $f$ o $g$.
+            pregunta: |
+              Has comprovat que cadascuna de les dues funcions que proposes és uniformement contínua per separat?
+        nota_professor: |
+          Altres exemples: $f(x)=x$, $g(x)=\sin x$ a $\mathbb{R}$ (el producte $x\sin x$ no és uniformement continu). A $\mathbb{R}^m$ val $f=g=x_1$. Evitem citar la definició de Lipschitz de les notes perquè hi apareix amb desigualtat estricta, que falla per a $x=y$.
+
+  - num: 21
+    font: "Exercici d'examen, maig 2000"
+    preambul: |
+      Siguin $F:\mathbb{R}^m\to\mathbb{R}^n$ una funció contínua i $A\subseteq\mathbb{R}^m$ un conjunt fitat.
+    indicacio: null
+    exercicis:
+      - id: "t2-21a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          Demostreu que $\overline{F(A)}\subseteq F(\overline{A})$.
+        teoria: ["T1.16", "T1.33", "T2.14"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $\overline A$ és tancat i fitat (si $A\subseteq B(x,L)$, aleshores $\overline A\subseteq\overline B(x,L)$), per tant compacte per Heine-Borel. Com que $F$ és contínua, $F(\overline A)$ és compacte i, per tant, tancat. Com que $F(A)\subseteq F(\overline A)$ i $\overline{F(A)}$ és el tancat més petit que conté $F(A)$, $\overline{F(A)}\subseteq F(\overline A)$.
+          fuites: []
+        passos:
+          - id: clausura_compacta
+            titol: "L'adherència d'$A$ és compacta"
+            objectiu: |
+              Obtenir una propietat forta de $\overline{A}$ a partir de la fitació d'$A$.
+            idea: |
+              Veure que $\overline A$ és tancat i fitat, i aplicar Heine-Borel.
+            detall: |
+              $\overline A$ és tancat. Si $A\subseteq B(x,L)\subseteq\overline B(x,L)$, que és tancat, aleshores $\overline A\subseteq\overline B(x,L)\subseteq B(x,L+1)$: $\overline A$ és fitat. Per Heine-Borel, $\overline A$ és compacte.
+            fuites: ['\\overline\s*\{?B\}?\s*\(\s*x\s*,\s*L\s*\)']
+            teoria: ["T1.16", "T1.13", "T1.17", "T1.33", "T1.34"]
+          - id: imatge
+            titol: "La imatge és tancada"
+            objectiu: |
+              Deduir una propietat topològica de $F(\overline A)$.
+            idea: |
+              La imatge contínua d'un compacte és compacta, i els compactes són tancats.
+            detall: |
+              Per la proposició 21(i), $F(\overline A)$ és compacte; pel lema 27 del Tema 1, és tancat.
+            fuites: []
+            teoria: ["T2.21", "T1.27"]
+          - id: concloure
+            titol: "Concloure la inclusió"
+            objectiu: |
+              Comparar $\overline{F(A)}$ amb $F(\overline A)$.
+            idea: |
+              Usar que l'adherència d'un conjunt és el tancat més petit que el conté.
+            detall: |
+              $A\subseteq\overline A\Rightarrow F(A)\subseteq F(\overline A)$, i $F(\overline A)$ és tancat; per tant $\overline{F(A)}\subseteq\overline{F(\overline A)}=F(\overline A)$.
+            fuites: []
+            teoria: ["T1.17", "T1.16"]
+        errors_comuns:
+          - id: inclusio_inversa
+            descripcio: |
+              Demostra (o creu demostrar) la inclusió contrària $F(\overline A)\subseteq\overline{F(A)}$, que és la que val sempre per continuïtat.
+            pregunta: |
+              Quin és el conjunt de l'esquerra i quin el de la dreta a l'enunciat? Quina de les dues inclusions estàs provant?
+          - id: no_usa_fitat
+            descripcio: |
+              Fa una demostració que no usa que $A$ és fitat (i que, per tant, no pot ser correcta, vegeu l'apartat (b)).
+            pregunta: |
+              On has fet servir que $A$ és fitat? Si no l'has fet servir, la teva demostració també valdria per a conjunts no fitats?
+          - id: continua_tanca
+            descripcio: |
+              Afirma que una funció contínua envia tancats a tancats.
+            pregunta: |
+              La continuïtat garanteix que les imatges de tancats siguin tancades, o és una propietat de les antiimatges?
+          - id: subsuccessio
+            descripcio: |
+              Amb successions: pren $y_n=F(x_n)\to y$ i suposa que $(x_n)$ convergeix, sense extreure una parcial.
+            pregunta: |
+              Per què hauria de convergir la successió $(x_n)$? Què et garanteix que en tingui una parcial convergent?
+        nota_professor: |
+          Alternativa per successions: si $y\in\overline{F(A)}$, $y=\lim F(x_n)$ amb $x_n\in A$; $(x_n)$ és dins del compacte $\overline A$, té una parcial $x_{n_k}\to x\in\overline A$, i per continuïtat $y=F(x)$. La inclusió $F(\overline A)\subseteq\overline{F(A)}$ val sempre per continuïtat, de manera que de fet hi ha igualtat.
+
+      - id: "t2-21b"
+        apartat: "b"
+        tipus: teoric
+        enunciat: |
+          És cert l'enunciat si $A$ no és fitat?
+        teoria: ["T1.16", "T1.33"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            No en general. Contraexemple: $m=n=1$, $F(x)=\frac1{1+x^2}$, $A=\mathbb{R}$ (tancat, no fitat). $F(A)=(0,1]$, $\overline{F(A)}=[0,1]$, però $F(\overline A)=F(\mathbb{R})=(0,1]$; $0\in\overline{F(A)}\setminus F(\overline A)$.
+          fuites: ['\\[dt]?frac\s*\{?1\}?\s*\{\s*1\s*\+\s*x\^\{?2\}?\s*\}', '(l.enunciat|la\s+inclusió|l.afirmació|el\s+resultat)\s+(ja\s+)?no\s+(és|es|seria)\s+(certa?|vàlida?)', 'no\s+(és\s+)?cert\s+en\s+general', 'deixa\s+de\s+ser\s+cert']
+        passos:
+          - id: on_falla
+            titol: "Identificar on es fa servir la fitació"
+            objectiu: |
+              Detectar quin pas de la demostració de (a) depèn de la fitació d'$A$ i quin fenomen podria trencar la inclusió.
+            idea: |
+              Sense fitació, $\overline A$ no és compacte i $F(\overline A)$ pot no ser tancat: cal una funció que s'acosti a un valor quan $|x|\to\infty$ sense assolir-lo.
+            detall: |
+              La fitació s'usa per tenir $\overline A$ compacte i, per tant, $F(\overline A)$ tancat. Busquem $A$ tancat no fitat ($\overline A=A$) amb $F(A)$ no tancat: una funció contínua amb una asímptota horitzontal que no s'assoleix.
+            fuites: []
+            teoria: ["T1.34", "T2.21"]
+          - id: contraexemple
+            titol: "Construir el contraexemple"
+            objectiu: |
+              Donar $F$ i $A$ concrets i calcular $\overline{F(A)}$ i $F(\overline A)$.
+            idea: |
+              Prendre $A$ tot $\mathbb{R}$ i una funció contínua positiva que tendeixi a $0$ a l'infinit.
+            detall: |
+              $F(x)=\frac1{1+x^2}$, $A=\mathbb{R}=\overline A$. $F(\mathbb{R})=(0,1]$. $0=\lim_n F(n)$ amb $F(n)\in F(A)$, per tant $0\in\overline{F(A)}=[0,1]$, però $0\notin F(\overline A)=(0,1]$.
+            fuites: ['\\[dt]?frac\s*\{?1\}?\s*\{\s*1\s*\+\s*x\^\{?2\}?\s*\}', '\\arctan\s*\(?\s*x', 'e\^\{?x\}?\b', '=\s*\(\s*0\s*,\s*1\s*\]']
+            teoria: ["T1.19", "T1.16"]
+        errors_comuns:
+          - id: a_no_tancat
+            descripcio: |
+              Busca el contraexemple amb $A$ obert i confon $F(A)$ amb $F(\overline A)$.
+            pregunta: |
+              En el teu exemple, quin conjunt és $\overline A$ i quina és la seva imatge? Has comparat amb el conjunt correcte?
+          - id: resposta_sense_exemple
+            descripcio: |
+              Respon només "no, perquè la demostració usa la fitació", sense exemple concret.
+            pregunta: |
+              Que una demostració concreta deixi de funcionar prova que l'afirmació sigui falsa? Què necessites per refutar-la?
+          - id: imatge_tancada
+            descripcio: |
+              Proposa una funció amb $F(\overline A)$ tancat (per exemple, polinomis a $\mathbb{R}$ amb imatge $\mathbb{R}$ o $[0,\infty)$), que no és contraexemple.
+            pregunta: |
+              En el teu exemple, la imatge de $\overline A$ és un tancat? Si ho és, pot fallar la inclusió?
+        nota_professor: |
+          Altres contraexemples: $F(x)=e^x$ o $\arctan x$ a $A=\mathbb{R}$; o $F(x,y)=x$ amb $A=\{xy=1\}$ (tancat no fitat), $F(A)=\mathbb{R}\setminus\{0\}$.
+
+  - num: 22
+    font: "Exercici d'examen, maig 2000"
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t2-22"
+        apartat: null
+        tipus: teoric
+        enunciat: |
+          Sigui $f:\mathbb{R}^2\to\mathbb{R}$ definida per
+          $$f(x,y)=\begin{cases}0 & \text{si } y\neq0\\ 1+x^2 & \text{si } y=0.\end{cases}$$
+          Demostreu que $f$ no és contínua trobant un $A\subseteq\mathbb{R}$ tancat tal que $f^{-1}(A)$ no sigui tancat.
+          Escriviu el resultat teòric que utilitzeu, i demostreu explícitament que $f^{-1}(A)$ no és tancat.
+        teoria: ["T1.11", "T2.14"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Teorema 17 ((a)$\Leftrightarrow$(d)) amb $\Omega=\mathbb{R}^2$: $f$ contínua $\Leftrightarrow$ $f^{-1}(E)$ tancat per a tot tancat $E\subseteq\mathbb{R}$. Prenem $A=\{0\}$ (tancat): com que $1+x^2\neq0$, $f^{-1}(\{0\})=\{(x,y):y\neq0\}$. No és tancat: $(0,\frac1n)\in f^{-1}(\{0\})$ i $(0,\frac1n)\to(0,0)\notin f^{-1}(\{0\})$. Per tant $f$ no és contínua.
+          fuites: ['A\s*=\s*\\\{\s*0\s*\\\}', 'f\^\{-1\}\s*\(\s*\\\{\s*0\s*\\\}\s*\)\s*=']
+        passos:
+          - id: teorema
+            titol: "Resultat teòric"
+            objectiu: |
+              Enunciar el resultat que relaciona la continuïtat amb antiimatges de tancats, adaptat a una funció definida a tot $\mathbb{R}^2$.
+            idea: |
+              Caracterització de la continuïtat per tancats (teorema de caracteritzacions de la continuïtat), amb $\Omega=\mathbb{R}^2$.
+            detall: |
+              Teorema 17, (a)$\Leftrightarrow$(d): $f:\mathbb{R}^2\to\mathbb{R}$ és contínua si i només si per a tot tancat $E\subseteq\mathbb{R}$, $f^{-1}(E)=D\cap\mathbb{R}^2=D$ és tancat. Per tant, n'hi ha prou de trobar un tancat amb antiimatge no tancada.
+            fuites: []
+            teoria: ["T2.17"]
+          - id: triar_A
+            titol: "Triar el tancat"
+            objectiu: |
+              Triar un tancat $A\subseteq\mathbb{R}$ i calcular $f^{-1}(A)$.
+            idea: |
+              Mirar els valors que pren $f$ i escollir un tancat que capturi només una de les dues "branques" de la definició, de manera que l'antiimatge sigui un conjunt obert gran de $\mathbb{R}^2$.
+            detall: |
+              $A=\{0\}$, tancat a $\mathbb{R}$. Com que $1+x^2\geq1\neq0$, $f(x,y)=0\Leftrightarrow y\neq0$; per tant $f^{-1}(\{0\})=\{(x,y)\in\mathbb{R}^2:y\neq0\}$, el pla sense l'eix $OX$.
+            fuites: ['A\s*=\s*\\\{\s*0\s*\\\}', 'y\s*\\neq\s*0\s*\\\}']
+            teoria: []
+          - id: no_tancat
+            titol: "Demostrar que l'antiimatge no és tancada"
+            objectiu: |
+              Demostrar explícitament que $f^{-1}(A)$ no és tancat.
+            idea: |
+              Caracterització dels tancats per successions: trobar una successió del conjunt que convergeixi a un punt de fora.
+            detall: |
+              $p_n=(0,\frac1n)\in f^{-1}(\{0\})$ i $p_n\to(0,0)$, però $f(0,0)=1\neq0$, de manera que $(0,0)\notin f^{-1}(\{0\})$. Per la proposició 19(iii) del Tema 1, $f^{-1}(\{0\})$ no és tancat. Per tant $f$ no és contínua.
+            fuites: ['\(\s*0\s*,\s*(\\[dt]?frac\s*\{?1\}?\s*\{?n\}?|1/n)\s*\)']
+            teoria: ["T1.19"]
+        errors_comuns:
+          - id: tancat_trivial
+            descripcio: |
+              Tria un tancat com $A=[1,+\infty)$ o $A=\{1\}$, l'antiimatge del qual (l'eix $OX$ o un punt) sí que és tancada.
+            pregunta: |
+              Calcula l'antiimatge del tancat que has triat: és realment no tancada? Quins valors pren $f$ fora de l'eix?
+          - id: obert_no_tancat
+            descripcio: |
+              Justifica que l'antiimatge no és tancada dient només que és oberta.
+            pregunta: |
+              Un conjunt obert no pot ser tancat? Pensa en $\mathbb{R}^2$. Què has de mostrar realment?
+          - id: imatge_en_lloc_antiimatge
+            descripcio: |
+              Treballa amb imatges $f(B)$ de tancats de $\mathbb{R}^2$ en lloc d'antiimatges.
+            pregunta: |
+              El resultat de continuïtat que fas servir parla d'imatges o d'antiimatges? De quin espai ha de ser el tancat?
+        nota_professor: |
+          També val qualsevol tancat que contingui $0$ i no talli $[1,+\infty)$, com $A=(-\infty,\frac12]$. La discontinuïtat és a tots els punts de l'eix $OX$.

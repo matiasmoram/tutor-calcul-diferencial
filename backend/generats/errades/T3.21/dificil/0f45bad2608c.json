@@ -1,0 +1,80 @@
+{
+  "id": "0f45bad2608c",
+  "exercici": "T3.21",
+  "font": "teoria",
+  "dificultat": "dificil",
+  "fragments": [
+    "Siguin $f:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}^m$ i $g:\\Theta\\subseteq\\mathbb{R}^m\\to\\mathbb{R}^p$, amb $f(\\Omega)\\subseteq\\Theta$, i sigui $a\\in\\mathring{\\Omega}$ tal que $f(a)\\in\\mathring{\\Theta}$. Si $f$ és diferenciable en $a$ i $g$ és diferenciable en $f(a)$, llavors $g\\circ f$ és diferenciable en $a$.",
+    "A més, $J(g\\circ f)(a)=Jg(f(a))\\cdot Jf(a)$, és a dir, per a tots $i=1,\\ldots,p$ i $j=1,\\ldots,n$, $\\frac{\\partial(g\\circ f)_i}{\\partial x_j}(a)=\\sum_{\\ell=1}^n\\frac{\\partial g_i}{\\partial x_\\ell}(f(a))\\cdot\\frac{\\partial f_\\ell}{\\partial x_j}(a)$.",
+    "Que $f$ i $g$ siguin diferenciables en $a$ i $f(a)$, respectivament, vol dir que per a tot $\\tilde\\varepsilon>0$ existeixen $\\delta_1(\\tilde\\varepsilon),\\delta_2(\\tilde\\varepsilon)>0$ tals que: (a) si $x\\in\\Omega$ i $\\|x-a\\|<\\delta_1(\\tilde\\varepsilon)$, aleshores $\\|f(x)-f(a)-Jf(a)(x-a)\\|\\leq\\tilde\\varepsilon\\|x-a\\|$; (b) si $y\\in\\Theta$ i $\\|y-f(a)\\|<\\delta_2(\\tilde\\varepsilon)$, aleshores $\\|g(y)-g(f(a))-Jg(f(a))(y-f(a))\\|\\leq\\tilde\\varepsilon\\|y-f(a)\\|$.",
+    "Per composició de les jacobianes de $f$ en $a$ i de $g$ en $f(a)$, l'única candidata a matriu de $D(g\\circ f)(a)$ és $Jg(f(a))\\cdot Jf(a)$. Cal veure, doncs, que fixat $\\varepsilon>0$ existeix $\\delta>0$ tal que si $x\\in\\Omega$ i $\\|x-a\\|<\\delta$, aleshores $\\|g(f(x))-g(f(a))-Jg(f(a))\\,Jf(a)(x-a)\\|\\leq\\varepsilon\\|x-a\\|$.",
+    "Sumant i restant $Jg(f(a))\\,(f(x)-f(a))$ i aplicant la desigualtat triangular, aquesta norma és menor o igual que $\\|g(f(x))-g(f(a))-Jg(f(a))\\,(f(x)-f(a))\\|+\\|Jg(f(a))\\big(f(x)-f(a)+Jf(a)(x-a)\\big)\\|$. Fitem cada terme per separat.",
+    "Primer terme. Com que $f$ és contínua en $a$, $f$ és puntualment localment Lipschitz en $a$: existeixen $\\delta_3>0$ i $M>0$ tals que $\\|f(x)-f(a)\\|\\leq M\\|x-a\\|$ per a tot $x\\in\\Omega$ amb $\\|x-a\\|<\\delta_3$.",
+    "Apliquem (b) amb $\\tilde\\varepsilon=\\frac{\\varepsilon}{2M}$ i $y=f(x)\\in\\Theta$. Si $x\\in\\Omega$ i $\\|x-a\\|<\\min\\left\\{\\delta_3,\\frac{1}{M}\\delta_2\\left(\\frac{\\varepsilon}{2M}\\right)\\right\\}$, aleshores $\\|f(x)-f(a)\\|\\leq M\\|x-a\\|<\\delta_2\\left(\\frac{\\varepsilon}{2M}\\right)$ i, per tant, $\\|g(f(x))-g(f(a))-Jg(f(a))\\,(f(x)-f(a))\\|\\leq\\frac{\\varepsilon}{2M}\\|f(x)-f(a)\\|\\leq\\frac{\\varepsilon}{2}\\|x-a\\|$. (11)",
+    "Segon terme. Per a qualsevol norma matricial consistent amb la norma vectorial, $\\|Jg(f(a))\\big(f(x)-f(a)-Jf(a)(x-a)\\big)\\|\\leq\\|Jg(f(a))\\|\\,\\|f(x)-f(a)-Jf(a)(x-a)\\|$.",
+    "Apliquem (a) amb $\\tilde\\varepsilon=\\frac{\\varepsilon}{2(\\|Jg(f(a))\\|+1)}$ (el $+1$ evita dividir per zero quan $Jg(f(a))$ és la matriu nul·la): si $x\\in\\Omega$ i $\\|x-a\\|<\\delta_1(\\tilde\\varepsilon)$, el segon terme és menor o igual que $\\frac{\\varepsilon\\,\\|Jg(f(a))\\|}{2(\\|Jg(f(a))\\|+1)}\\|x-a\\|\\leq\\frac{\\varepsilon}{2}\\|x-a\\|$. (12)",
+    "Per tant, si $x\\in\\Omega$ i $\\|x-a\\|<\\delta:=\\min\\left\\{\\delta_3,\\frac{1}{M}\\delta_2\\left(\\frac{\\varepsilon}{2M}\\right),\\delta_1(\\tilde\\varepsilon)\\right\\}$, de (11) i (12) s'obté $\\|(g\\circ f)(x)-(g\\circ f)(a)-Jg(f(a))\\,Jf(a)(x-a)\\|\\leq\\varepsilon\\|x-a\\|$, és a dir, $g\\circ f$ és diferenciable en $a$ amb $J(g\\circ f)(a)=Jg(f(a))\\cdot Jf(a)$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "\\sum_{\\ell=1}^n\\frac{\\partial g_i}{\\partial x_\\ell}(f(a))",
+      "inici": 145,
+      "fi": 202,
+      "tipus": "calcul",
+      "explicacio": "L'índex $\\ell$ recorre les variables de $g$, que són les $m$ components de $f$: la suma ha d'anar fins a $m$, no fins a $n$ (si $n>m$ apareixen $f_\\ell$ que no existeixen, i si $n<m$ falten termes).",
+      "correccio": "$\\frac{\\partial(g\\circ f)_i}{\\partial x_j}(a)=\\sum_{\\ell=1}^m\\frac{\\partial g_i}{\\partial x_\\ell}(f(a))\\cdot\\frac{\\partial f_\\ell}{\\partial x_j}(a)$.",
+      "pista": "Quantes variables té $g$? I quantes components té $f$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "\\|Jg(f(a))\\big(f(x)-f(a)+Jf(a)(x-a)\\big)\\|",
+      "inici": 157,
+      "fi": 199,
+      "tipus": "calcul",
+      "explicacio": "Després de sumar i restar $Jg(f(a))(f(x)-f(a))$, el segon terme és $Jg(f(a))(f(x)-f(a))-Jg(f(a))Jf(a)(x-a)=Jg(f(a))\\big(f(x)-f(a)-Jf(a)(x-a)\\big)$: el signe de $Jf(a)(x-a)$ està canviat.",
+      "correccio": "$\\|Jg(f(a))\\big(f(x)-f(a)-Jf(a)(x-a)\\big)\\|$.",
+      "pista": "Agrupa els termes que contenen $Jg(f(a))$ i comprova el signe de cadascun."
+    },
+    {
+      "id": "e3",
+      "fragment": 6,
+      "cita": "Com que $f$ és contínua en $a$",
+      "inici": 14,
+      "fi": 44,
+      "tipus": "implicacio",
+      "explicacio": "La continuïtat no implica la propietat de Lipschitz puntual (p. ex. $\\sqrt{|x|}$ és contínua en $0$ però $\\sqrt{|x|}\\leq M|x|$ falla prop de $0$); el que la dona és la diferenciabilitat de $f$ en $a$.",
+      "correccio": "Com que $f$ és diferenciable en $a$, és puntualment localment Lipschitz en $a$.",
+      "pista": "Tota funció contínua en $a$ compleix $\\|f(x)-f(a)\\|\\leq M\\|x-a\\|$ prop de $a$? Prova amb $\\sqrt{|x|}$."
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t3.json",
+    "valoracio": "Tres errors: límit superior del sumatori, signe a la descomposició i justificació del Lipschitz per continuïtat.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "\\sum_{\\ell=1}^n",
+        "gravetat": "error",
+        "explicacio": "L'índex $\\ell$ recorre les components de $f$ (variables de $g$), de $1$ a $m$, no fins a $n$."
+      },
+      {
+        "fragment": 5,
+        "cita": "f(x)-f(a)+Jf(a)(x-a)",
+        "gravetat": "error",
+        "explicacio": "Signe incorrecte: sumant i restant $Jg(f(a))(f(x)-f(a))$ queda $Jg(f(a))\\big(f(x)-f(a)-Jf(a)(x-a)\\big)$, com s'usa a [8]."
+      },
+      {
+        "fragment": 6,
+        "cita": "Com que $f$ és contínua en $a$",
+        "gravetat": "error",
+        "explicacio": "La continuïtat no implica Lipschitz puntual (p. ex. $\\sqrt{|x|}$ en $0$); és la diferenciabilitat de $f$ en $a$ la que ho dona (proposició 14)."
+      }
+    ]
+  },
+  "creat": 1791296233.7637908
+}

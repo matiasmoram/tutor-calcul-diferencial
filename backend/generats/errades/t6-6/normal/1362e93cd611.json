@@ -1,0 +1,66 @@
+{
+  "id": "1362e93cd611",
+  "exercici": "t6-6",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "La distància d'un punt $(x,y)$ a la recta $x+y=4$ és $\\frac{|x+y-4|}{2}$. La distància entre les dues corbes és el mínim d'aquesta funció sobre l'el·lipse $E:\\ x^2+4y^2=4$.",
+    "L'el·lipse és tancada i fitada, per tant compacta, i la funció és contínua: pel teorema de Weierstrass el mínim existeix.",
+    "Busquem els extrems de $x+y$ sobre $E$. Com que $\\nabla(x^2+4y^2)=(2x,8y)\\neq(0,0)$ a $E$, podem aplicar Lagrange: $(1,1)=\\lambda(2x,8y)$ dona $2\\lambda x=8\\lambda y=1$, de manera que $\\lambda\\neq0$ i $x=4y$.",
+    "Substituint a l'equació de l'el·lipse: $16y^2+4y^2=4$, és a dir $y^2=\\frac15$, $y=\\pm\\frac{1}{\\sqrt5}$ i $x=\\pm\\frac{4}{\\sqrt5}$ (amb el mateix signe). Els valors de $x+y$ són $\\pm\\frac{5}{\\sqrt5}=\\pm\\sqrt5$.",
+    "Per tant, sobre $E$, $-\\sqrt5\\leq x+y\\leq\\sqrt5<4$: tots els punts de l'el·lipse compleixen $x+y-4<0$, i les corbes no es tallen.",
+    "Així $|x+y-4|=4-(x+y)$, que és mínim quan $x+y$ és mínim, és a dir al punt $\\left(-\\frac{4}{\\sqrt5},-\\frac{1}{\\sqrt5}\\right)$, on $x+y=-\\sqrt5$.",
+    "La distància entre les corbes és $d=\\frac{|-\\sqrt5-4|}{2}=\\frac{4+\\sqrt5}{2}\\approx3.12$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "és $\\frac{|x+y-4|}{2}$",
+      "inici": 50,
+      "fi": 72,
+      "tipus": "calcul",
+      "explicacio": "La distància d'un punt a la recta $x+y=4$ es divideix per la norma del vector normal, $\\|(1,1)\\|=\\sqrt2$, no per $2$.",
+      "correccio": "És $\\frac{|x+y-4|}{\\sqrt2}$.",
+      "pista": "A la fórmula de la distància punt-recta, què hi ha al denominador? Quant val per a la recta $x+y=4$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "que és mínim quan $x+y$ és mínim",
+      "inici": 24,
+      "fi": 56,
+      "tipus": "logica",
+      "explicacio": "$4-(x+y)$ decreix quan $x+y$ creix: el mínim de $4-(x+y)$ s'assoleix on $x+y$ és màxim, és a dir a $\\left(\\frac{4}{\\sqrt5},\\frac{1}{\\sqrt5}\\right)$ amb $x+y=\\sqrt5$.",
+      "correccio": "Que és mínim quan $x+y$ és màxim, al punt $\\left(\\frac{4}{\\sqrt5},\\frac{1}{\\sqrt5}\\right)$, i la distància és $\\frac{4-\\sqrt5}{\\sqrt2}\\approx1.25$.",
+      "pista": "Si $x+y$ augmenta, què fa $4-(x+y)$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t56.json",
+    "valoracio": "Fórmula de distància punt-recta errònia i elecció del mínim en lloc del màxim de x+y: la distància final és incorrecta.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "$\\frac{|x+y-4|}{2}$",
+        "gravetat": "error",
+        "explicacio": "La distància d'un punt a la recta $x+y=4$ és $\\frac{|x+y-4|}{\\sqrt{1^2+1^2}}=\\frac{|x+y-4|}{\\sqrt2}$."
+      },
+      {
+        "fragment": 6,
+        "cita": "que és mínim quan $x+y$ és mínim",
+        "gravetat": "error",
+        "explicacio": "$4-(x+y)$ és mínim quan $x+y$ és màxim, és a dir al punt $\\left(\\frac{4}{\\sqrt5},\\frac{1}{\\sqrt5}\\right)$ amb $x+y=\\sqrt5$."
+      },
+      {
+        "fragment": 7,
+        "cita": "$d=\\frac{|-\\sqrt5-4|}{2}=\\frac{4+\\sqrt5}{2}\\approx3.12$",
+        "gravetat": "consequencia",
+        "explicacio": "Hereta el denominador 2 del fragment 1 i el punt erroni del fragment 6; el correcte és $d=\\frac{4-\\sqrt5}{\\sqrt2}\\approx1.25$."
+      }
+    ]
+  },
+  "creat": 1791295917.0106857
+}

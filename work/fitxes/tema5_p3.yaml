@@ -1,0 +1,772 @@
+problemes:
+  # ==================================================================== 6
+  - num: 6
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t5-6"
+        apartat: null
+        tipus: calcul
+        enunciat: |
+          Estudieu, en funció de $k$, el caràcter dels punts crítics de la funció $f(x,y)=\frac{1}{2}(x^2+y^2)+kxy$.
+        teoria: ["T5.21", "T5.22"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            - Si $k\neq\pm1$, l'únic punt crític és $(0,0)$. Si $|k|<1$ és un mínim local estricte (de fet, mínim absolut, $f\geq0$); si $|k|>1$ és un punt de sella.
+            - Si $k=1$, $f=\frac12(x+y)^2$ i els punts crítics són tots els de la recta $y=-x$; si $k=-1$, $f=\frac12(x-y)^2$ i els punts crítics són tots els de la recta $y=x$. En tots dos casos cada punt crític és un mínim local (i absolut) no estricte, amb $f=0$.
+          fuites: ['(\|k\|\s*(<|\\lt)\s*1|-\s*1\s*<\s*k\s*<\s*1)[^.\n]{0,50}m[íi]nim', '\|k\|\s*(>|\\gt)\s*1[^.\n]{0,50}sella', 'm[íi]nims?\s+(locals?\s+)?(i\s+absoluts?\s+)?no\s+estrictes?']
+        passos:
+          - id: punts_critics
+            titol: "Trobar els punts crítics segons $k$"
+            objectiu: |
+              Trobar els punts crítics de $f$, distingint els valors de $k$ per als quals el conjunt de punts crítics canvia.
+            idea: |
+              El sistema $f_x=0$, $f_y=0$ és lineal i homogeni en $(x,y)$: té solució única si i només si el determinant de la matriu del sistema és no nul.
+            detall: |
+              $f_x=x+ky$, $f_y=kx+y$. El determinant del sistema és $1-k^2$. Si $k\neq\pm1$, l'única solució és $(0,0)$. Si $k=1$, les dues equacions són $x+y=0$: tots els punts de la recta $y=-x$ són crítics. Si $k=-1$, queda $x-y=0$: tots els punts de la recta $y=x$ són crítics.
+            fuites: ['1\s*-\s*k\^\{?2\}?', 'recta\s+\$?\s*y\s*=\s*-?\s*x']
+            teoria: ["T5.22"]
+          - id: hessiana
+            titol: "Calcular la hessiana"
+            objectiu: |
+              Obtenir la matriu hessiana de $f$ i el seu determinant i traça.
+            idea: |
+              $f$ és polinòmica de grau 2, de manera que la hessiana és constant.
+            detall: |
+              $Hf(x,y)=\begin{pmatrix}1&k\\k&1\end{pmatrix}$ a tot punt, amb $\det Hf=1-k^2$ i $\mathrm{tr}\,Hf=2>0$.
+            fuites: ['1\s*&\s*k\s*\\\\\s*k\s*&\s*1']
+            teoria: ["T5.32"]
+          - id: classificar_no_degenerat
+            titol: "Classificar l'origen quan $k\\neq\\pm1$"
+            objectiu: |
+              Decidir el caràcter de l'origen en els casos en què la hessiana no és degenerada.
+            idea: |
+              Aplicar les condicions suficients d'extrem; en dues variables el signe de la forma hessiana es llegeix del signe del determinant i de la traça.
+            detall: |
+              Si $|k|<1$: $\det=1-k^2>0$ i $\mathrm{tr}=2>0$, la hessiana és definida positiva, i l'origen és un mínim local estricte (de fet absolut: $f$ és la mateixa forma quadràtica, que és $\geq0$).
+              Si $|k|>1$: $\det<0$, la hessiana és indefinida i l'origen és un punt de sella (per exemple, $f(t,t)=(1+k)t^2$ i $f(t,-t)=(1-k)t^2$ tenen signes oposats).
+            fuites: ['definida\s+positiva', 'indefinida']
+            teoria: ["T5.33", "T5.30"]
+          - id: casos_degenerats
+            titol: "Estudiar els casos $k=\\pm1$"
+            objectiu: |
+              Decidir el caràcter dels punts crítics quan $k=1$ i quan $k=-1$, on el criteri de la hessiana no decideix.
+            idea: |
+              Mirar l'expressió de $f$ per a aquests valors concrets de $k$: es pot escriure de manera que el seu signe sigui evident, i comparar directament amb el valor de $f$ als punts crítics.
+            detall: |
+              Si $k=1$: $f=\frac12(x^2+2xy+y^2)=\frac12(x+y)^2\geq0$, i val $0$ exactament a la recta $y=-x$. Cada punt crític té $f=0\leq f(x,y)$ per a tot $(x,y)$: és un mínim local (i absolut), però no estricte, perquè a qualsevol bola hi ha altres punts de la recta amb el mateix valor.
+              Si $k=-1$: $f=\frac12(x-y)^2$, i el mateix raonament sobre la recta $y=x$.
+            fuites: ['\\frac\s*\{?1\}?\s*\{?2\}?\s*\(\s*x\s*[+-]\s*y\s*\)\^\{?2', '\(\s*x\s*[+-]\s*y\s*\)\^\{?2\}?\s*/\s*2', 'no\s+estricte']
+            teoria: ["T5.21"]
+        errors_comuns:
+          - id: oblida_cas_degenerat
+            descripcio: |
+              Afirma que l'únic punt crític és sempre l'origen, sense adonar-se que per a $k=\pm1$ el sistema té infinites solucions.
+            pregunta: |
+              El sistema que has resolt és lineal. Té sempre solució única, sigui quin sigui el valor de $k$?
+          - id: hessiana_degenerada_conclou
+            descripcio: |
+              Per a $k=\pm1$ (determinant zero) conclou que no hi ha extrem, o aplica el criteri de la hessiana com si decidís.
+            pregunta: |
+              Quan el determinant de la hessiana és zero, què et diu exactament el teorema de condicions suficients? Podries estudiar el signe de $f$ directament?
+          - id: estricte_vs_no_estricte
+            descripcio: |
+              Per a $k=\pm1$ diu que els punts crítics són mínims locals estrictes.
+            pregunta: |
+              En una bola petita al voltant d'un d'aquests punts crítics, hi ha altres punts on $f$ pren exactament el mateix valor?
+        nota_professor: |
+          $f$ és ella mateixa una forma quadràtica de matriu $\begin{pmatrix}1&k\\k&1\end{pmatrix}$, de valors propis $1\pm k$, i tot el problema es redueix a classificar-la. Als casos $k=\pm1$ la hessiana és semidefinida positiva, compatible amb mínim, i l'estudi directe ho confirma.
+
+  # ==================================================================== 7
+  - num: 7
+    font: null
+    preambul: |
+      Considereu la funció $f(x,y)=(y-3x^2)(y-x^2)$.
+    indicacio: null
+    exercicis:
+      # ------------------------------------------------------------------ a
+      - id: "t5-7a"
+        apartat: "a"
+        tipus: calcul
+        enunciat: |
+          Proveu que l'origen n'és l'únic punt crític, i estudieu-ne el caràcter.
+        teoria: ["T5.21", "T5.22"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $f_x=4x(3x^2-2y)$, $f_y=2y-4x^2$ s'anul·len només a $(0,0)$. La hessiana a l'origen és $\begin{pmatrix}0&0\\0&2\end{pmatrix}$ (semidefinida, no decideix). Com que $f<0$ entre les dues paràboles $y=x^2$ i $y=3x^2$ (per exemple $f(x,2x^2)=-x^4$) i $f>0$ fora (per exemple $f(0,y)=y^2$), l'origen és un punt de sella.
+          fuites: ['(\(\s*0\s*,\s*0\s*\)|origen)\$?\s*(és|es)\s+(un\s+)?punt\s+de\s+sella', 'f\s*\(\s*x\s*,\s*2\s*x\^\{?2\}?\s*\)\s*=\s*-\s*x\^\{?4']
+        passos:
+          - id: punts_critics
+            titol: "Trobar els punts crítics"
+            objectiu: |
+              Veure que l'únic punt on s'anul·len les dues derivades parcials és l'origen.
+            idea: |
+              Desenvolupar $f$ (o derivar el producte), resoldre l'equació més senzilla per expressar $y$ en funció de $x$ i substituir a l'altra.
+            detall: |
+              $f=y^2-4x^2y+3x^4$, $f_x=-8xy+12x^3=4x(3x^2-2y)$, $f_y=2y-4x^2$. De $f_y=0$, $y=2x^2$; substituint, $f_x=4x(3x^2-4x^2)=-4x^3=0$, d'on $x=0$ i $y=0$.
+            fuites: ['y\s*=\s*2\s*x\^\{?2', '-\s*4\s*x\^\{?3']
+            teoria: ["T5.22"]
+          - id: hessiana
+            titol: "Provar el criteri de la hessiana"
+            objectiu: |
+              Calcular la hessiana a l'origen i veure si permet decidir el caràcter del punt crític.
+            idea: |
+              Calcular les derivades segones, avaluar-les a l'origen i mirar el signe de la forma quadràtica resultant.
+            detall: |
+              $f_{xx}=36x^2-8y$, $f_{xy}=-8x$, $f_{yy}=2$. A l'origen, $Hf(0,0)=\begin{pmatrix}0&0\\0&2\end{pmatrix}$: valors propis $0$ i $2$, semidefinida positiva però no definida. Les condicions suficients no decideixen (només descarten que sigui un màxim local).
+            fuites: ['0\s*&\s*0\s*\\\\\s*0\s*&\s*2', 'semidefinida\s+positiva']
+            teoria: ["T5.32", "T5.33"]
+          - id: estudi_directe
+            titol: "Estudiar el signe de $f$ a prop de l'origen"
+            objectiu: |
+              Decidir el caràcter de l'origen comparant $f$ amb $f(0,0)$ en punts propers.
+            idea: |
+              $f$ és un producte de dos factors que s'anul·len sobre dues corbes que passen per l'origen: estudiar el signe de cada factor a les regions que determinen.
+            detall: |
+              $f(0,0)=0$. Els factors s'anul·len a les paràboles $y=x^2$ i $y=3x^2$. Entre elles ($x^2<y<3x^2$) un factor és positiu i l'altre negatiu: $f<0$; per exemple $f(x,2x^2)=(-x^2)(x^2)=-x^4<0$ per a $x\neq0$. Fora d'elles, $f>0$; per exemple $f(0,y)=y^2>0$ per a $y\neq0$. Tota bola centrada a l'origen conté punts de tots dos tipus: l'origen és un punt de sella.
+            fuites: ['-\s*x\^\{?4\}?\s*<\s*0', 'x\^\{?2\}?\s*<\s*y\s*<\s*3\s*x\^\{?2']
+            teoria: ["T5.25"]
+        errors_comuns:
+          - id: hessiana_semidefinida_minim
+            descripcio: |
+              Com que la hessiana és semidefinida positiva, conclou que l'origen és un mínim local.
+            pregunta: |
+              La propietat de la hessiana que has trobat, el teorema de condicions suficients la presenta com a condició necessària o com a condició suficient de mínim local?
+          - id: nomes_rectes
+            descripcio: |
+              Estudia $f$ només sobre rectes que passen per l'origen (on sempre té mínim) i conclou que l'origen és un mínim.
+            pregunta: |
+              Les rectes per l'origen són les úniques maneres d'acostar-s'hi? Què passa si t'hi acostes per una corba situada entre les dues paràboles on s'anul·la $f$?
+          - id: perd_solucio
+            descripcio: |
+              En resoldre el sistema divideix per $x$ i no comprova el cas $x=0$, o no justifica que no hi ha altres solucions.
+            pregunta: |
+              En simplificar les equacions, has dividit per alguna expressió que es pugui anul·lar?
+        nota_professor: |
+          Exemple clàssic de Peano: l'origen és mínim estricte sobre cada recta (apartat b) però és punt de sella.
+
+      # ------------------------------------------------------------------ b
+      - id: "t5-7b"
+        apartat: "b"
+        tipus: teoric
+        enunciat: |
+          Proveu que la funció $\varphi=f\circ c$, on $c(t)=(at,bt)$ és una recta que passa per l'origen, té un mínim a $t=0$ independentment de la recta triada.
+        teoria: ["T5.9"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $\varphi(t)=b^2t^2-4a^2b\,t^3+3a^4t^4$ (amb $(a,b)\neq(0,0)$). Si $b\neq0$: $\varphi'(0)=0$, $\varphi''(0)=2b^2>0$, mínim local estricte. Si $b=0$: $\varphi(t)=3a^4t^4$, amb $a\neq0$, que té un mínim estricte (absolut) a $t=0$. En tots els casos $t=0$ és un mínim local estricte de $\varphi$.
+          fuites: []
+        passos:
+          - id: calcular_phi
+            titol: "Escriure $\\varphi$"
+            objectiu: |
+              Obtenir l'expressió explícita de $\varphi(t)=f(at,bt)$.
+            idea: |
+              Substituir $x=at$, $y=bt$ a $f$ i ordenar per potències de $t$. Cal que $(a,b)\neq(0,0)$ perquè $c$ sigui una recta.
+            detall: |
+              $\varphi(t)=(bt-3a^2t^2)(bt-a^2t^2)=b^2t^2-4a^2b\,t^3+3a^4t^4$.
+            fuites: ['b\^\{?2\}?\s*t\^\{?2\}?\s*-\s*4\s*a\^\{?2\}?\s*b']
+            teoria: []
+          - id: cas_b_no_nul
+            titol: "Cas $b\\neq0$"
+            objectiu: |
+              Veure que $t=0$ és un mínim de $\varphi$ quan $b\neq0$.
+            idea: |
+              Criteri de les derivades successives en una variable: mirar la primera derivada de $\varphi$ que no s'anul·la a $t=0$ i el seu signe.
+            detall: |
+              $\varphi'(0)=0$ i $\varphi''(0)=2b^2>0$. Pel criteri de la derivada $r$-èsima amb $r=2$ (parell), $t=0$ és un mínim local estricte.
+            fuites: ['2\s*b\^\{?2\}?\s*>\s*0']
+            teoria: ["T5.11"]
+          - id: cas_b_nul
+            titol: "Cas $b=0$"
+            objectiu: |
+              Veure que $t=0$ també és un mínim quan la recta és l'eix horitzontal ($b=0$).
+            idea: |
+              Amb $b=0$ desapareixen els termes de grau 2 i 3: mirar què queda i el seu signe.
+            detall: |
+              $\varphi(t)=3a^4t^4$ amb $a\neq0$, que és $>0=\varphi(0)$ per a $t\neq0$: mínim estricte (també es pot veure amb el criteri de la derivada $r$-èsima amb $r=4$, $\varphi^{(4)}(0)=72a^4>0$).
+            fuites: ['3\s*a\^\{?4\}?\s*t\^\{?4']
+            teoria: ["T5.11"]
+        errors_comuns:
+          - id: oblida_b_zero
+            descripcio: |
+              Usa $\varphi''(0)=2b^2>0$ per a totes les rectes i oblida el cas $b=0$, on $\varphi''(0)=0$.
+            pregunta: |
+              Hi ha alguna recta per a la qual la segona derivada de $\varphi$ a $t=0$ no sigui estrictament positiva? Què hi passa?
+          - id: conclou_minim_de_f
+            descripcio: |
+              Dedueix que, com que hi ha mínim sobre totes les rectes, l'origen és un mínim local de $f$ (contradient l'apartat a).
+            pregunta: |
+              Ser mínim sobre cada recta per l'origen és el mateix que ser mínim sobre tota una bola? Recorda què has trobat a l'apartat anterior.
+        nota_professor: |
+          La moral del problema: el comportament sobre totes les rectes no determina el caràcter d'un punt crític. Al cas $b\neq0$ es pot argumentar també factoritzant $\varphi(t)=t^2(b^2-4a^2bt+3a^4t^2)$, amb el segon factor positiu prop de $t=0$.
+
+  # ==================================================================== 8
+  - num: 8
+    font: null
+    preambul: |
+      Trobeu i classifiqueu tots els punts crítics de les funcions següents:
+    indicacio: null
+    exercicis:
+      # ------------------------------------------------------------------ a
+      - id: "t5-8a"
+        apartat: "a"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=(x-y)^3+(x+y)^2$;
+        teoria: ["T5.21", "T5.22"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            L'únic punt crític és $(0,0)$. La hessiana hi és $\begin{pmatrix}2&2\\2&2\end{pmatrix}$ (semidefinida positiva, no decideix). Sobre la recta $y=-x$, $f(x,-x)=8x^3$ canvia de signe: l'origen és un punt de sella.
+          fuites: ['(\(\s*0\s*,\s*0\s*\)|origen)\$?\s*(és|es)\s+(un\s+)?punt\s+de\s+sella', 'f\s*\(\s*x\s*,\s*-\s*x\s*\)\s*=\s*8\s*x\^\{?3']
+        passos:
+          - id: punts_critics
+            titol: "Trobar els punts crítics"
+            objectiu: |
+              Trobar tots els punts on s'anul·len les dues derivades parcials.
+            idea: |
+              Les dues derivades parcials comparteixen els mateixos termes amb signes diferents: sumar-les i restar-les dona dues equacions molt senzilles.
+            detall: |
+              $f_x=3(x-y)^2+2(x+y)$, $f_y=-3(x-y)^2+2(x+y)$. Sumant: $4(x+y)=0$; restant: $6(x-y)^2=0$. Per tant $x=y$ i $x=-y$, i l'únic punt crític és $(0,0)$.
+            fuites: ['4\s*\(\s*x\s*\+\s*y\s*\)\s*=\s*0', '6\s*\(\s*x\s*-\s*y\s*\)\^\{?2\}?\s*=\s*0']
+            teoria: ["T5.22"]
+          - id: hessiana
+            titol: "Provar el criteri de la hessiana"
+            objectiu: |
+              Calcular la hessiana a l'origen i veure si decideix.
+            idea: |
+              Calcular les derivades segones, avaluar a l'origen i estudiar el signe de la forma quadràtica (determinant i traça).
+            detall: |
+              $f_{xx}=6(x-y)+2$, $f_{xy}=-6(x-y)+2$, $f_{yy}=6(x-y)+2$. $Hf(0,0)=\begin{pmatrix}2&2\\2&2\end{pmatrix}$, $\det=0$, $\mathrm{tr}=4$: semidefinida positiva (valors propis $0$ i $4$). No decideix.
+            fuites: ['2\s*&\s*2\s*\\\\\s*2\s*&\s*2']
+            teoria: ["T5.32", "T5.33", "T5.30"]
+          - id: estudi_directe
+            titol: "Estudiar $f$ sobre la direcció degenerada"
+            objectiu: |
+              Decidir el caràcter de l'origen estudiant directament el signe de $f$ a prop seu.
+            idea: |
+              Restringir $f$ a la recta en la direcció del vector propi de valor propi $0$, on el terme quadràtic desapareix, i mirar el signe del que queda.
+            detall: |
+              Sobre $y=-x$: $f(x,-x)=(2x)^3+0=8x^3$, positiu per a $x>0$ i negatiu per a $x<0$. Com que $f(0,0)=0$, tota bola centrada a l'origen conté punts amb $f>0$ i amb $f<0$: l'origen és un punt de sella.
+            fuites: ['8\s*x\^\{?3']
+            teoria: ["T5.25"]
+        errors_comuns:
+          - id: semidefinida_minim
+            descripcio: |
+              Conclou que l'origen és un mínim perquè la hessiana és semidefinida positiva.
+            pregunta: |
+              Una hessiana semidefinida positiva és una condició necessària o suficient per tenir un mínim local?
+          - id: direccio_equivocada
+            descripcio: |
+              Estudia $f$ només sobre rectes com $y=0$ o $y=x$, on $f$ sembla tenir mínim, i conclou que és un mínim.
+            pregunta: |
+              Sobre quina recta per l'origen desapareix el terme de grau 2 de $f$? Què hi passa amb el terme de grau 3?
+        nota_professor: |
+          Amb el canvi lineal $u=x-y$, $v=x+y$, $f=u^3+v^2$, i el caràcter de sella és immediat.
+
+      # ------------------------------------------------------------------ b
+      - id: "t5-8b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          $g(x,y)=x^4+x^2y^2+2xy^2+12y^2$.
+        teoria: ["T5.21", "T5.22"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            L'únic punt crític és $(0,0)$. La hessiana hi és $\begin{pmatrix}0&0\\0&24\end{pmatrix}$ (no decideix). Com que $g(x,y)=x^4+y^2\big((x+1)^2+11\big)>0=g(0,0)$ per a $(x,y)\neq(0,0)$, l'origen és un mínim local estricte (de fet, mínim absolut).
+          fuites: ['(\(\s*0\s*,\s*0\s*\)|origen)\$?\s*(és|es)\s+(un\s+)?m[íi]nim', '\(\s*x\s*\+\s*1\s*\)\^\{?2\}?\s*\+\s*11']
+        passos:
+          - id: punts_critics
+            titol: "Trobar els punts crítics"
+            objectiu: |
+              Trobar tots els punts on s'anul·len les dues derivades parcials de $g$.
+            idea: |
+              Factoritzar $g_y$: un dels factors no s'anul·la mai (completar quadrats). Després substituir a $g_x=0$.
+            detall: |
+              $g_x=4x^3+2xy^2+2y^2$, $g_y=2y(x^2+2x+12)=2y\big((x+1)^2+11\big)$. El segon factor és sempre $\geq11$, per tant $g_y=0\iff y=0$. Llavors $g_x=4x^3=0$, $x=0$. Únic punt crític: $(0,0)$.
+            fuites: ['\(\s*x\s*\+\s*1\s*\)\^\{?2\}?\s*\+\s*11']
+            teoria: ["T5.22"]
+          - id: hessiana
+            titol: "Provar el criteri de la hessiana"
+            objectiu: |
+              Calcular la hessiana a l'origen i veure si decideix.
+            idea: |
+              Calcular les derivades segones a l'origen i estudiar el signe de la forma quadràtica.
+            detall: |
+              $g_{xx}=12x^2+2y^2$, $g_{xy}=4xy+4y$, $g_{yy}=2x^2+4x+24$. $Hg(0,0)=\begin{pmatrix}0&0\\0&24\end{pmatrix}$: semidefinida positiva, $\det=0$. No decideix (només descarta un màxim).
+            fuites: ['0\s*&\s*0\s*\\\\\s*0\s*&\s*24']
+            teoria: ["T5.32", "T5.33"]
+          - id: estudi_directe
+            titol: "Estudiar el signe de $g$"
+            objectiu: |
+              Decidir el caràcter de l'origen comparant $g(x,y)$ amb $g(0,0)$.
+            idea: |
+              Agrupar els termes que contenen $y^2$ i reconèixer, com al primer pas, un factor que és sempre positiu.
+            detall: |
+              $g(x,y)=x^4+y^2(x^2+2x+12)=x^4+y^2\big((x+1)^2+11\big)$. Els dos sumands són $\geq0$ i la suma val $0$ només si $x=0$ i $y=0$. Per tant $g(x,y)>0=g(0,0)$ per a $(x,y)\neq(0,0)$: mínim local estricte, i de fet mínim absolut.
+            fuites: ['x\^\{?4\}?\s*\+\s*y\^\{?2\}?\s*\(\s*x\^\{?2\}?\s*\+\s*2\s*x\s*\+\s*12']
+            teoria: ["T5.21"]
+        errors_comuns:
+          - id: perd_factor
+            descripcio: |
+              No veu que $x^2+2x+12$ no s'anul·la mai, o en cerca arrels reals i s'hi encalla, o divideix per $y$ sense considerar $y=0$.
+            pregunta: |
+              El polinomi $x^2+2x+12$ té arrels reals? Com ho pots veure ràpidament?
+          - id: hessiana_conclou
+            descripcio: |
+              Amb $\det Hg(0,0)=0$ conclou que no es pot dir res, o que és un punt de sella.
+            pregunta: |
+              Que la hessiana no decideixi vol dir que no hi ha extrem? Pots comparar directament $g(x,y)$ amb $g(0,0)$?
+          - id: nomes_eixos
+            descripcio: |
+              Comprova $g>0$ només sobre els eixos i en conclou el mínim.
+            pregunta: |
+              Has comprovat que $g>0$ a tots els punts propers a l'origen, o només a alguns?
+        nota_professor: |
+          Contrast amb l'apartat (a): la mateixa situació (hessiana semidefinida) acaba en mínim aquí i en sella allà.
+
+  # ==================================================================== 9
+  - num: 9
+    font: null
+    preambul: |
+      Considerem la funció $f(x,y)=(x^2+y^2+2x)\,x^3$.
+    indicacio: null
+    exercicis:
+      # ------------------------------------------------------------------ a
+      - id: "t5-9a"
+        apartat: "a"
+        tipus: calcul
+        enunciat: |
+          Dibuixeu $C_0$, la corba de nivell 0 de $f$.
+        teoria: ["T2.4"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $C_0=\{x=0\}\cup\{(x+1)^2+y^2=1\}$: la unió de l'eix vertical i la circumferència de centre $(-1,0)$ i radi $1$, que és tangent a l'eix vertical a l'origen.
+          fuites: ['centre\s+\$?\s*\(\s*-\s*1\s*,\s*0\s*\)', '\(\s*x\s*\+\s*1\s*\)\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*=\s*1']
+        passos:
+          - id: factors
+            titol: "Descompondre l'equació $f=0$"
+            objectiu: |
+              Escriure el conjunt $C_0$ com a unió de conjunts més senzills.
+            idea: |
+              Un producte s'anul·la si i només si s'anul·la algun dels factors.
+            detall: |
+              $f=0\iff x^3=0$ o $x^2+y^2+2x=0$. El primer dona la recta $x=0$.
+            fuites: []
+            teoria: ["T2.4"]
+          - id: circumferencia
+            titol: "Identificar la segona corba"
+            objectiu: |
+              Reconèixer geomètricament el conjunt $x^2+y^2+2x=0$ i dibuixar $C_0$.
+            idea: |
+              Completar quadrats en $x$.
+            detall: |
+              $x^2+2x+y^2=(x+1)^2+y^2-1=0$: circumferència de centre $(-1,0)$ i radi $1$. Passa per l'origen i hi és tangent a l'eix $x=0$ (està continguda a $-2\leq x\leq0$). $C_0$ és la unió d'aquesta circumferència i l'eix vertical.
+            fuites: ['\(\s*x\s*\+\s*1\s*\)\^\{?2\}?\s*\+\s*y\^\{?2', 'centre\s+\$?\s*\(\s*-\s*1\s*,\s*0']
+            teoria: []
+        errors_comuns:
+          - id: oblida_recta
+            descripcio: |
+              Només dibuixa la circumferència i oblida el factor $x^3$ (la recta $x=0$).
+            pregunta: |
+              Quan s'anul·la un producte de dos factors? Has tingut en compte tots dos?
+          - id: centre_equivocat
+            descripcio: |
+              Completa malament el quadrat i situa la circumferència centrada a $(1,0)$ o amb radi equivocat.
+            pregunta: |
+              Si desenvolupes l'expressió que has obtingut en completar quadrats, recuperes exactament $x^2+y^2+2x$?
+        nota_professor: |
+          Convé que el dibuix mostri la tangència a l'origen: és la clau de l'apartat (c).
+
+      # ------------------------------------------------------------------ b
+      - id: "t5-9b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          Estudieu el signe de la funció $f$ en les diferents regions en què la corba $C_0$ divideix $\mathbb{R}^2$.
+        teoria: ["T2.4"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            - Semiplà $x>0$: $f>0$.
+            - Interior del disc $(x+1)^2+y^2<1$: $f>0$.
+            - Punts amb $x<0$ exteriors al disc, $(x+1)^2+y^2>1$: $f<0$.
+          fuites: ['interior\s+del\s+(disc|cercle)[^.\n]{0,40}f\s*>\s*0', 'exteriors?[^.\n]{0,60}f\s*<\s*0']
+        passos:
+          - id: regions
+            titol: "Identificar les regions"
+            objectiu: |
+              Determinar en quantes regions divideix $C_0$ el pla i descriure-les.
+            idea: |
+              Fer servir el dibuix de l'apartat (a): l'eix vertical separa dos semiplans, i la circumferència (continguda en un d'ells) en separa l'interior de l'exterior.
+            detall: |
+              Tres regions: el semiplà $x>0$; l'interior del disc $(x+1)^2+y^2<1$ (contingut a $x<0$); i la resta del semiplà $x<0$, és a dir els punts amb $x<0$ i $(x+1)^2+y^2>1$.
+            fuites: []
+            teoria: []
+          - id: signes
+            titol: "Signe a cada regió"
+            objectiu: |
+              Determinar el signe de $f$ a cada regió.
+            idea: |
+              Estudiar per separat el signe de cada factor: $x^3$ té el signe de $x$, i $x^2+y^2+2x=(x+1)^2+y^2-1$ és negatiu dins el disc i positiu fora.
+            detall: |
+              Si $x>0$: $x^3>0$ i $(x+1)^2>1$, per tant el segon factor és $>0$ i $f>0$.
+              Dins el disc: segon factor $<0$ i $x<0$, per tant $f>0$.
+              Exterior del disc amb $x<0$: segon factor $>0$ i $x^3<0$, per tant $f<0$.
+            fuites: ['exterior[^.\n]{0,80}f\s*<\s*0', 'dins\s+(el\s+)?disc[^.\n]{0,60}f\s*>\s*0']
+            teoria: []
+        errors_comuns:
+          - id: signe_x3
+            descripcio: |
+              Oblida que $x^3$ és negatiu per a $x<0$ i dona el mateix signe a tot el semiplà esquerre.
+            pregunta: |
+              Quin signe té $x^3$ quan $x$ és negatiu? I el segon factor, dins i fora del disc?
+          - id: regio_dreta
+            descripcio: |
+              No justifica que el segon factor és positiu al semiplà $x>0$ (per exemple, pensa que la circumferència també talla aquest semiplà).
+            pregunta: |
+              La circumferència té algun punt amb $x>0$? Què implica això sobre el signe de $x^2+y^2+2x$ en aquell semiplà?
+        nota_professor: |
+          Les tres regions són connexes i $f$ és contínua i no s'anul·la a cap d'elles, de manera que n'hi ha prou a avaluar-la en un punt de cada una (per exemple $(1,0)$, $(-1,0)$, $(-3,0)$).
+
+      # ------------------------------------------------------------------ c
+      - id: "t5-9c"
+        apartat: "c"
+        tipus: teoric
+        enunciat: |
+          Useu els apartats anteriors per determinar si el punt $(0,0)$ és un extrem local de $f$.
+        teoria: ["T5.21"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $(0,0)$ no és un extrem local de $f$: $f(0,0)=0$ i tota bola centrada a l'origen conté punts del semiplà $x>0$ (on $f>0$) i punts amb $x<0$ exteriors al disc (on $f<0$), per exemple $(-s,\sqrt{2s})$ amb $f=-s^5$. De fet, com que $Df(0,0)=0$, és un punt de sella.
+          fuites: ['no\s+(és|es)\s+(un\s+)?extrem', '(és|es)\s+(un\s+)?punt\s+de\s+sella']
+        passos:
+          - id: punts_positius
+            titol: "Punts propers amb $f>0$"
+            objectiu: |
+              Assumint els apartats (a) i (b), veure que tota bola centrada a l'origen conté punts on $f$ és més gran que $f(0,0)$.
+            idea: |
+              Mirar quines regions de l'apartat (b) tenen l'origen a la seva frontera.
+            detall: |
+              $f(0,0)=0$. Els punts $(t,0)$ amb $t>0$ petit són al semiplà $x>0$, on $f>0$ (per exemple $f(t,0)=t^5+2t^4>0$).
+            fuites: []
+            teoria: []
+          - id: punts_negatius
+            titol: "Punts propers amb $f<0$"
+            objectiu: |
+              Veure que tota bola centrada a l'origen conté també punts on $f<0$.
+            idea: |
+              La regió on $f<0$ és la part del semiplà esquerre fora del disc; com que la circumferència és tangent a l'eix vertical a l'origen, aquesta regió arriba fins a l'origen. Cal trobar una família explícita de punts en aquesta regió que tendeixin a l'origen.
+            detall: |
+              Per a $s>0$ petit, el punt $(-s,\sqrt{2s})$ compleix $x^2+y^2+2x=s^2+2s-2s=s^2>0$ i $x<0$: és exterior al disc, i $f(-s,\sqrt{2s})=s^2\cdot(-s^3)=-s^5<0$. La seva distància a l'origen, $\sqrt{s^2+2s}$, tendeix a $0$.
+            fuites: ['-\s*s\^\{?5', '\\sqrt\s*\{\s*2\s*s\s*\}']
+            teoria: []
+          - id: concloure
+            titol: "Concloure"
+            objectiu: |
+              Decidir si l'origen és un extrem local de $f$.
+            idea: |
+              Comparar amb la definició de màxim i mínim local: cap de les dues desigualtats es pot complir en tota una bola.
+            detall: |
+              En tota bola $B((0,0),\epsilon)$ hi ha punts amb $f>f(0,0)$ i punts amb $f<f(0,0)$, de manera que l'origen no és ni màxim ni mínim local. Com que $f=2x^4+x^5+x^3y^2$ només té termes de grau $\geq4$, $Df(0,0)=0$: l'origen és un punt crític i, de fet, un punt de sella.
+            fuites: ['ni\s+m[àa]xim\s+ni\s+m[íi]nim']
+            teoria: ["T5.21", "T5.25"]
+        errors_comuns:
+          - id: nomes_eix_horitzontal
+            descripcio: |
+              Mira $f$ només sobre l'eix $y=0$, on $f(x,0)=x^4(x+2)\geq0$ prop de l'origen, i conclou que l'origen és un mínim.
+            pregunta: |
+              L'eix horitzontal passa per totes les regions de l'apartat (b) que toquen l'origen? N'hi ha alguna que no hagis visitat?
+          - id: regio_negativa_lluny
+            descripcio: |
+              Creu que la regió on $f<0$ queda lluny de l'origen (a $x<-2$) perquè no veu que la circumferència és tangent a l'eix vertical.
+            pregunta: |
+              Al dibuix de l'apartat (a), entre la circumferència i l'eix vertical, hi ha punts del semiplà esquerre arbitràriament a prop de l'origen que no siguin dins el disc?
+          - id: hessiana
+            descripcio: |
+              Intenta usar la hessiana, que a l'origen és nul·la, i conclou que no es pot decidir (o que és un extrem).
+            pregunta: |
+              L'enunciat et demana usar els apartats anteriors. Què et diu l'estudi de signes sobre els valors de $f$ a prop de l'origen?
+        nota_professor: |
+          La hessiana a l'origen és la matriu nul·la, de manera que l'estudi de signes és el mètode natural. També serveix qualsevol família de punts dins la regió negativa que tendeixi a l'origen, per exemple $(-s^3,s)$; en canvi $(-s^2,s)$ és dins el disc per a $s$ petit.
+
+  # ==================================================================== 10
+  - num: 10
+    font: null
+    preambul: |
+      Considereu la funció $f(x,y)=-y^4-e^{-x^2}+2y^2\sqrt{e^x+e^{-x^2}}$.
+    indicacio: "Podeu considerar $f(0,y)$. (Indicació de l'apartat e.)"
+    exercicis:
+      # ------------------------------------------------------------------ a
+      - id: "t5-10a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          Quin és el seu domini? Hi és de classe $\mathcal{C}^\infty$?
+        teoria: ["T3.31"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            El domini és tot $\mathbb{R}^2$, perquè $e^x+e^{-x^2}>0$ sempre. $f$ hi és de classe $\mathcal{C}^\infty$: és suma i producte de polinomis, exponencials i l'arrel quadrada composta amb una funció $\mathcal{C}^\infty$ estrictament positiva, i l'arrel és $\mathcal{C}^\infty$ a $(0,+\infty)$.
+          fuites: []
+        passos:
+          - id: domini
+            titol: "Determinar el domini"
+            objectiu: |
+              Determinar el conjunt de punts on l'expressió de $f$ té sentit.
+            idea: |
+              L'única operació que pot fallar és l'arrel quadrada: cal estudiar el signe del radicand.
+            detall: |
+              $e^x+e^{-x^2}>0$ per a tot $x$, ja que les exponencials són positives. Domini: $\mathbb{R}^2$.
+            fuites: []
+            teoria: []
+          - id: regularitat
+            titol: "Regularitat"
+            objectiu: |
+              Justificar si $f$ és de classe $\mathcal{C}^\infty$ a $\mathbb{R}^2$.
+            idea: |
+              Polinomis i exponencials són $\mathcal{C}^\infty$; sumes, productes i composicions de funcions $\mathcal{C}^\infty$ ho són (regla de la cadena aplicada repetidament). Cal comprovar que l'arrel s'aplica on és derivable.
+            detall: |
+              $\sqrt{\cdot}$ és $\mathcal{C}^\infty$ a $(0,+\infty)$ i el radicand és $\mathcal{C}^\infty$ i estrictament positiu, per tant $\sqrt{e^x+e^{-x^2}}$ és $\mathcal{C}^\infty$ a $\mathbb{R}^2$, i $f$, que s'obté amb sumes i productes, també.
+            fuites: []
+            teoria: ["T3.21", "T3.31"]
+        errors_comuns:
+          - id: arrel_no_derivable
+            descripcio: |
+              Diu que l'arrel no és derivable i per tant $f$ no és $\mathcal{C}^\infty$, sense mirar si el radicand s'anul·la.
+            pregunta: |
+              On deixa de ser derivable la funció $\sqrt{u}$? El radicand d'aquesta funció pot arribar a aquest valor?
+          - id: domini_restringit
+            descripcio: |
+              Imposa alguna restricció innecessària al domini (per exemple $x\geq0$).
+            pregunta: |
+              Pot ser negatiu $e^x+e^{-x^2}$ per a algun $x$ real?
+        nota_professor: |
+          Apartat de rutina, però prepara els següents: cal $\mathcal{C}^2$ per aplicar el criteri de la hessiana i el teorema de Taylor.
+
+      # ------------------------------------------------------------------ b
+      - id: "t5-10b"
+        apartat: "b"
+        tipus: teoric
+        enunciat: |
+          Proveu que el seu únic punt crític és $(0,0)$.
+        teoria: ["T5.22"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Amb $g(x)=e^x+e^{-x^2}$: $f_y=4y\big(\sqrt{g(x)}-y^2\big)$ i $f_x=2xe^{-x^2}+y^2\dfrac{e^x-2xe^{-x^2}}{\sqrt{g(x)}}$. Si $y=0$, $f_x=2xe^{-x^2}=0$ dona $x=0$. Si $y^2=\sqrt{g(x)}$, $f_x=e^x>0$, sense solucions. L'únic punt crític és $(0,0)$.
+          fuites: []
+        passos:
+          - id: derivades
+            titol: "Calcular les derivades parcials"
+            objectiu: |
+              Calcular $f_x$ i $f_y$.
+            idea: |
+              Anomenar $g(x)=e^x+e^{-x^2}$ i derivar $\sqrt{g(x)}$ amb la regla de la cadena; factoritzar $f_y$.
+            detall: |
+              $f_y=-4y^3+4y\sqrt{g(x)}=4y\big(\sqrt{g(x)}-y^2\big)$.
+              $f_x=2xe^{-x^2}+2y^2\dfrac{g'(x)}{2\sqrt{g(x)}}=2xe^{-x^2}+y^2\dfrac{e^x-2xe^{-x^2}}{\sqrt{g(x)}}$.
+            fuites: ['4\s*y\s*\\big\(|4\s*y\s*\(\s*\\sqrt']
+            teoria: ["T3.21"]
+          - id: cas_y_zero
+            titol: "Cas $y=0$"
+            objectiu: |
+              Trobar els punts crítics amb $y=0$.
+            idea: |
+              Substituir $y=0$ a l'equació $f_x=0$.
+            detall: |
+              $f_x(x,0)=2xe^{-x^2}=0\iff x=0$. Punt crític $(0,0)$.
+            fuites: []
+            teoria: ["T5.22"]
+          - id: cas_altre_factor
+            titol: "L'altre factor de $f_y$"
+            objectiu: |
+              Veure que no hi ha punts crítics on s'anul·la l'altre factor de $f_y$.
+            idea: |
+              Substituir la relació que dona aquest factor a l'expressió de $f_x$: hi ha una simplificació que deixa una expressió de signe constant.
+            detall: |
+              Si $y^2=\sqrt{g(x)}$: $f_x=2xe^{-x^2}+\big(e^x-2xe^{-x^2}\big)=e^x>0$. Mai s'anul·la, per tant no hi ha punts crítics en aquest cas.
+            fuites: ['f_x\s*=\s*e\^\{?x\}?\s*>\s*0', '=\s*e\^\{?x\}?\s*>\s*0']
+            teoria: ["T5.22"]
+        errors_comuns:
+          - id: divideix_per_y
+            descripcio: |
+              Divideix $f_y=0$ per $y$ i perd el cas $y=0$, o al revés, només considera $y=0$ i oblida l'altre factor.
+            pregunta: |
+              Quan un producte s'anul·la, quins casos cal estudiar? Els has estudiat tots dos?
+          - id: derivada_arrel
+            descripcio: |
+              Deriva malament $\sqrt{e^x+e^{-x^2}}$ (oblida la regla de la cadena o el signe de la derivada de $e^{-x^2}$).
+            pregunta: |
+              Quina és la derivada de $e^{-x^2}$? I com es deriva l'arrel d'una funció de $x$?
+          - id: no_simplifica
+            descripcio: |
+              En el segon cas s'encalla intentant resoldre una equació transcendent sense substituir la relació $y^2=\sqrt{g(x)}$.
+            pregunta: |
+              En aquest cas tens una relació entre $y^2$ i l'arrel. Què passa si la substitueixes dins de $f_x$ abans de fer res més?
+        nota_professor: |
+          La simplificació $f_x=e^x$ al segon cas és el punt clau i és molt neta.
+
+      # ------------------------------------------------------------------ c
+      - id: "t5-10c"
+        apartat: "c"
+        tipus: calcul
+        enunciat: |
+          Calculeu el polinomi de Taylor de $f$ de grau $\leqslant3$ en $(0,0)$.
+        teoria: ["T5.14"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $P_3(x,y)=-1+x^2+2\sqrt2\,y^2+\dfrac{\sqrt2}{2}\,xy^2$.
+          fuites: ['2\s*\\sqrt\s*\{?2\}?\s*\\?,?\s*y\^\{?2', '\\frac\s*\{\s*\\sqrt\s*\{?2\}?\s*\}\s*\{\s*2\s*\}\s*\\?,?\s*x\s*y\^\{?2', '\\sqrt\s*\{?2\}?\s*/\s*2\s*\)?\s*\\?,?\s*x\s*y\^\{?2', '-\s*1\s*\+\s*x\^\{?2']
+        passos:
+          - id: estrategia
+            titol: "Triar el mètode"
+            objectiu: |
+              Decidir com calcular el polinomi sense haver de fer totes les derivades fins a ordre 3.
+            idea: |
+              Per la unicitat del polinomi de Taylor, n'hi ha prou a combinar desenvolupaments d'una variable (exponencial, arrel) i quedar-se amb els termes de grau $\leq3$. El terme $-y^4$ no hi contribueix, i com que $\sqrt{\cdot}$ va multiplicat per $2y^2$, de l'arrel només cal el desenvolupament fins a grau 1 en $x$.
+            detall: |
+              $f=-y^4-e^{-x^2}+2y^2\,h(x)$ amb $h(x)=\sqrt{e^x+e^{-x^2}}$. Cal: $e^{-x^2}$ fins a grau 3 i $h(x)$ fins a grau 1.
+            fuites: []
+            teoria: ["T5.16", "T5.17"]
+          - id: desenvolupaments
+            titol: "Desenvolupaments d'una variable"
+            objectiu: |
+              Obtenir els desenvolupaments necessaris de $e^{-x^2}$ i de $\sqrt{e^x+e^{-x^2}}$ a $x=0$.
+            idea: |
+              Substituir $-x^2$ al desenvolupament de l'exponencial; per a l'arrel, desenvolupar el radicand i usar $\sqrt{2+u}=\sqrt2\sqrt{1+u/2}\approx\sqrt2(1+u/4)$.
+            detall: |
+              $e^{-x^2}=1-x^2+O(x^4)$. $e^x+e^{-x^2}=2+x+O(x^2)$, per tant $\sqrt{e^x+e^{-x^2}}=\sqrt2\big(1+\frac{x}{4}\big)+O(x^2)=\sqrt2+\frac{\sqrt2}{4}x+O(x^2)$.
+            fuites: ['\\frac\s*\{\s*\\sqrt\s*\{?2\}?\s*\}\s*\{\s*4\s*\}', '1\s*\+\s*\\frac\s*\{?\s*x\s*\}?\s*\{?\s*4']
+            teoria: ["T5.8"]
+          - id: combinar
+            titol: "Combinar i truncar"
+            objectiu: |
+              Obtenir el polinomi de Taylor de grau $\leq3$ de $f$ a l'origen.
+            idea: |
+              Substituir els desenvolupaments a $f$ i quedar-se amb els monomis de grau total $\leq3$.
+            detall: |
+              $f=-y^4-(1-x^2)+2y^2\big(\sqrt2+\frac{\sqrt2}{4}x\big)+O_4=-1+x^2+2\sqrt2\,y^2+\frac{\sqrt2}{2}xy^2+O_4(x,y)$. Per tant $P_3(x,y)=-1+x^2+2\sqrt2\,y^2+\frac{\sqrt2}{2}xy^2$.
+            fuites: ['2\s*\\sqrt\s*\{?2\}?\s*\\?,?\s*y\^\{?2', '\\frac\s*\{\s*\\sqrt\s*\{?2\}?\s*\}\s*\{\s*2\s*\}\s*\\?,?\s*x\s*y\^\{?2']
+            teoria: ["T5.14", "T5.16"]
+        errors_comuns:
+          - id: termes_sobrants
+            descripcio: |
+              Inclou termes de grau 4 (com $-y^4$ o $x^4/2$) al polinomi de grau 3.
+            pregunta: |
+              Quin és el grau total del monomi $y^4$? Ha d'aparèixer en un polinomi de grau $\leq3$?
+          - id: arrel_mal_desenvolupada
+            descripcio: |
+              Desenvolupa l'arrel com $\sqrt{e^x}+\sqrt{e^{-x^2}}$ o oblida el factor $\sqrt2$.
+            pregunta: |
+              L'arrel d'una suma és la suma de les arrels? Quant val $\sqrt{e^x+e^{-x^2}}$ a $x=0$?
+          - id: oblida_terme_xy2
+            descripcio: |
+              Només desenvolupa l'arrel fins a grau 0 i perd el terme $xy^2$, que és de grau 3.
+            pregunta: |
+              El factor $2y^2$ ja té grau 2. Fins a quin grau en $x$ necessites l'arrel perquè el producte arribi a grau 3?
+        nota_professor: |
+          Comprovat amb sympy. Alternativament es poden calcular les derivades parcials a l'origen: $f_{xx}=2$, $f_{yy}=4\sqrt2$, $f_{xyy}=\sqrt2$, la resta de derivades d'ordre $\leq3$ nul·les.
+
+      # ------------------------------------------------------------------ d
+      - id: "t5-10d"
+        apartat: "d"
+        tipus: calcul
+        enunciat: |
+          Determineu el caràcter del punt crític de $f$.
+        teoria: ["T5.21", "T5.22"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $Hf(0,0)=\begin{pmatrix}2&0\\0&4\sqrt2\end{pmatrix}$, definida positiva: $(0,0)$ és un mínim local estricte, amb $f(0,0)=-1$.
+          fuites: ['m[íi]nim\s+local', '2\s*&\s*0\s*\\\\\s*0\s*&\s*4\s*\\sqrt']
+        passos:
+          - id: hessiana
+            titol: "Obtenir la hessiana a l'origen"
+            objectiu: |
+              Obtenir la matriu hessiana de $f$ a $(0,0)$.
+            idea: |
+              Llegir-la del polinomi de Taylor de l'apartat (c): la part de grau 2 és $\frac12$ de la forma hessiana (o bé derivar directament).
+            detall: |
+              La part de grau 2 de $P_3$ és $x^2+2\sqrt2\,y^2=\frac12\big(2x^2+4\sqrt2\,y^2\big)$, per tant $Hf(0,0)=\begin{pmatrix}2&0\\0&4\sqrt2\end{pmatrix}$.
+            fuites: ['2\s*&\s*0\s*\\\\\s*0\s*&\s*4\s*\\sqrt']
+            teoria: ["T5.14", "T5.16", "T5.32"]
+          - id: classificar
+            titol: "Classificar"
+            objectiu: |
+              Decidir el caràcter del punt crític a partir de la hessiana.
+            idea: |
+              Aplicar les condicions suficients d'extrem: determinar el signe de la forma hessiana pels seus valors propis.
+            detall: |
+              La hessiana és diagonal amb valors propis $2>0$ i $4\sqrt2>0$: definida positiva. Per tant $(0,0)$ és un mínim local estricte, amb $f(0,0)=-1$.
+            fuites: ['definida\s+positiva', 'm[íi]nim\s+local']
+            teoria: ["T5.33", "T5.29"]
+        errors_comuns:
+          - id: factor_un_mig
+            descripcio: |
+              Llegeix la hessiana del polinomi de Taylor oblidant el factor $\frac12$ (per exemple, posa $1$ i $2\sqrt2$ a la diagonal).
+            pregunta: |
+              Quin coeficient acompanya la forma hessiana al terme de grau 2 de la fórmula de Taylor?
+          - id: confon_local_absolut
+            descripcio: |
+              Afirma que l'origen és un mínim absolut perquè és l'únic punt crític i és un mínim local.
+            pregunta: |
+              El teorema de condicions suficients et dona informació local o global?
+        nota_professor: |
+          Encara que el signe de la diagonal no canviaria la conclusió, convé insistir en el factor $\frac12$. L'error `confon_local_absolut` és justament el que desmunta l'apartat (e).
+
+      # ------------------------------------------------------------------ e
+      - id: "t5-10e"
+        apartat: "e"
+        tipus: teoric
+        enunciat: |
+          Proveu que $f$ no té mínim absolut. (Indicació: podeu considerar $f(0,y)$.)
+        teoria: ["T5.21"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $f(0,y)=-y^4+2\sqrt2\,y^2-1\to-\infty$ quan $y\to\infty$, de manera que $f$ no està fitada inferiorment i no té mínim absolut (tot i que $(0,0)$ és un mínim local estricte i l'únic punt crític).
+          fuites: []
+        passos:
+          - id: restriccio
+            titol: "Restringir a l'eix vertical"
+            objectiu: |
+              Calcular $f(0,y)$.
+            idea: |
+              Substituir $x=0$ a l'expressió de $f$.
+            detall: |
+              $f(0,y)=-y^4-1+2y^2\sqrt{1+1}=-y^4+2\sqrt2\,y^2-1$.
+            fuites: ['-\s*y\^\{?4\}?\s*\+\s*2\s*\\sqrt\s*\{?2']
+            teoria: []
+          - id: no_fitada
+            titol: "Concloure"
+            objectiu: |
+              Deduir que $f$ no té mínim absolut.
+            idea: |
+              Estudiar el comportament de $f(0,y)$ quan $|y|$ creix: el terme dominant decideix. Si una funció no està fitada inferiorment, no pot tenir mínim absolut.
+            detall: |
+              $f(0,y)=-y^4+2\sqrt2\,y^2-1\to-\infty$ quan $|y|\to\infty$, ja que domina $-y^4$. Per tant per a qualsevol candidat $p$ existeix $y$ amb $f(0,y)<f(p)$: no hi ha mínim absolut. Per exemple, $f(0,2)=-17+8\sqrt2<-1=f(0,0)$, de manera que el mínim local de l'apartat (d) no és absolut.
+            fuites: ['-\s*\\infty', '-\s*17\s*\+\s*8\s*\\sqrt']
+            teoria: []
+        errors_comuns:
+          - id: unic_critic_absolut
+            descripcio: |
+              Argumenta que, com que $(0,0)$ és l'únic punt crític i és mínim local, ha de ser el mínim absolut.
+            pregunta: |
+              Si $f$ tingués mínim absolut, on hauria d'estar? Compara $f(0,0)$ amb el valor de $f$ en algun punt de l'eix vertical llunyà.
+          - id: compara_un_punt
+            descripcio: |
+              Troba un punt amb $f<f(0,0)$ i conclou que no hi ha mínim absolut, sense descartar que el mínim s'assoleixi en un altre punt.
+            pregunta: |
+              Trobar un punt amb valor menor que $f(0,0)$ descarta l'origen. Descarta també tots els altres punts del pla?
+        nota_professor: |
+          Fenomen notable: en una variable, una funció derivable amb un únic punt crític que és mínim local té mínim absolut; en dues variables no. Un argument alternatiu complet: si hi hagués mínim absolut seria un punt crític, per tant $(0,0)$, però $f(0,2)<f(0,0)$.

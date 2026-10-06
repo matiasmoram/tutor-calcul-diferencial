@@ -1,0 +1,46 @@
+{
+  "id": "cff12ce5122b",
+  "exercici": "T2.33",
+  "font": "teoria",
+  "dificultat": "facil",
+  "fragments": [
+    "A $\\mathbb{R}^n$ totes les normes són equivalents.",
+    "És a dir, donades dues normes $\\|\\cdot\\|_a$ i $\\|\\cdot\\|_b$ de $\\mathbb{R}^n$, existeix $\\mu>0$ tal que $\\|x\\|_a=\\mu\\,\\|x\\|_b$ per a tot $x\\in\\mathbb{R}^n$.",
+    "Sigui $\\{e_i\\}$ una base de $\\mathbb{R}^n$ i escrivim $x=\\sum_{i=1}^n\\alpha_i\\,e_i$. Considerem la 1-norma $\\|x\\|_1=\\sum_{i=1}^n|\\alpha_i|$.",
+    "Podem reduir-nos al cas que una de les normes és $\\|\\cdot\\|_1$: si $\\lambda\\|x\\|_1\\leq\\|x\\|_a\\leq\\mu\\|x\\|_1$ i $\\lambda'\\|x\\|_1\\leq\\|x\\|_b\\leq\\mu'\\|x\\|_1$, amb $0<\\lambda\\leq\\mu$ i $0<\\lambda'\\leq\\mu'$, aleshores $\\frac{\\lambda'}{\\mu}\\|x\\|_a\\leq\\|x\\|_b\\leq\\frac{\\mu'}{\\lambda}\\|x\\|_a$.",
+    "També ens podem restringir a l'esfera unitat: per a $x=0$ la desigualtat $\\lambda\\|x\\|_1\\leq\\|x\\|_a\\leq\\mu\\|x\\|_1$ és trivial, i per a $x\\neq0$, dividint per $\\|x\\|_1$, equival a $\\lambda\\leq\\|u\\|_a\\leq\\mu$ amb $u=x/\\|x\\|_1$, que compleix $\\|u\\|_1=1$.",
+    "Vegem que $\\|\\cdot\\|_a$ és contínua respecte de $\\|\\cdot\\|_1$. Per la desigualtat triangular, $\\|x\\|_a-\\|x'\\|_a\\leq\\|x-x'\\|_a$ i $\\|x'\\|_a-\\|x\\|_a\\leq\\|x-x'\\|_a$, és a dir, $\\big|\\|x\\|_a-\\|x'\\|_a\\big|\\leq\\|x-x'\\|_a$.",
+    "A més, prenent coordenades i aplicant de nou la desigualtat triangular, $\\|x-x'\\|_a\\leq\\sum_{i=1}^n|\\alpha_i-\\alpha_i'|\\,\\|e_i\\|_a\\leq\\|x-x'\\|_1\\max_i\\|e_i\\|_a$.",
+    "Per tant, donat $\\epsilon>0$, si prenem $\\delta=\\epsilon/\\max_i\\|e_i\\|_a$, de $\\|x-x'\\|_1<\\delta$ es dedueix $\\big|\\|x\\|_a-\\|x'\\|_a\\big|\\leq\\|x-x'\\|_a<\\epsilon$.",
+    "Així, $\\|\\cdot\\|_a$ és una funció contínua definida sobre el compacte $\\{x\\in\\mathbb{R}^n:\\|x\\|_1=1\\}$ i, pel teorema de Weierstrass, existeixen $C_1:=\\min_{\\|u\\|_1=1}\\|u\\|_a$ i $C_2:=\\max_{\\|u\\|_1=1}\\|u\\|_a$.",
+    "El mínim s'assoleix en algun $u_0$ amb $\\|u_0\\|_1=1$, de manera que $u_0\\neq0$ i $C_1=\\|u_0\\|_a>0$. Per tant, $0<C_1\\leq\\|u\\|_a\\leq C_2$ per a tot $u$ amb $\\|u\\|_1=1$, i n'hi ha prou de prendre $\\lambda=C_1$ i $\\mu=C_2$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "existeix $\\mu>0$ tal que $\\|x\\|_a=\\mu\\,\\|x\\|_b$",
+      "inici": 79,
+      "fi": 126,
+      "tipus": "definicio",
+      "explicacio": "Normes equivalents no vol dir proporcionals, sinó fitades l'una per l'altra per dues constants. Contraexemple: a $\\mathbb{R}^2$, $\\|(1,0)\\|_1=\\|(1,0)\\|_\\infty=1$ però $\\|(1,1)\\|_1=2\\neq1=\\|(1,1)\\|_\\infty$, així que no hi ha cap $\\mu$.",
+      "correccio": "Existeixen $\\lambda,\\mu>0$ tals que $\\lambda\\,\\|x\\|_b\\leq\\|x\\|_a\\leq\\mu\\,\\|x\\|_b$ per a tot $x$.",
+      "pista": "Les normes $\\|\\cdot\\|_1$ i $\\|\\cdot\\|_\\infty$ de $\\mathbb{R}^2$ són proporcionals? Què demostra realment la prova al final?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t2b.json",
+    "valoracio": "Un sol error a l'enunciat (normes proporcionals en lloc d'equivalents); la demostració és correcta.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "existeix $\\mu>0$ tal que $\\|x\\|_a=\\mu\\,\\|x\\|_b$",
+        "gravetat": "error",
+        "explicacio": "L'equivalència és $\\lambda\\|x\\|_b\\le\\|x\\|_a\\le\\mu\\|x\\|_b$; la proporcionalitat és falsa (p. ex. $\\|\\cdot\\|_1$ i $\\|\\cdot\\|_\\infty$ a $\\mathbb{R}^2$)."
+      }
+    ]
+  },
+  "creat": 1791295930.3514752
+}

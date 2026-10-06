@@ -1,0 +1,60 @@
+{
+  "id": "757344abbf6b",
+  "exercici": "t1-7g",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Interior: el conjunt $U=\\{x^2+y^2<1\\}\\cap\\{x\\neq0\\}$ és obert, perquè és intersecció de dos oberts (antiimatges d'oberts per funcions contínues), i $U\\subseteq G$; per tant $U\\subseteq\\mathring{G}$.",
+    "Cap punt $p\\in G$ amb $\\|p\\|=1$ no és interior: els punts $(1+t)p$, amb $t>0$ petit, són a tota bola centrada en $p$ i no són de $G$. Per tant $\\mathring{G}=\\{(x,y)\\mid x^2+y^2<1,\\ x\\neq0\\}$.",
+    "Frontera: si $x_0^2+y_0^2=1$ i $x_0\\neq0$, el punt és de $G$ i tota bola centrada en ell conté punts $(1+t)(x_0,y_0)\\notin G$; per tant és de la frontera.",
+    "Si $x_0=0$ i $|y_0|\\leq1$, el punt $(0,y_0)$ no és de $G$, i tota bola centrada en ell conté punts $(s,(1-s)y_0)$ amb $s>0$ petit, que són de $G$ perquè $s\\neq0$ i $s^2+(1-s)^2y_0^2\\leq s^2+y_0^2\\leq1$. Per tant també és de la frontera.",
+    "Els punts amb $x^2+y^2>1$ són exteriors (formen un obert disjunt de $G$) i els de $\\mathring{G}$ són interiors. Així, $\\mathrm{Fr}\\,G=\\{x^2+y^2=1\\}\\cup\\{(0,y)\\mid |y|\\leq1\\}$: la circumferència unitat i el diàmetre vertical.",
+    "Adherència: el disc tancat $\\{x^2+y^2\\leq1\\}$ és un tancat que conté $G$, així que $\\overline{G}$ hi està contingut. Recíprocament, els punts del disc amb $x_0\\neq0$ ja són de $G$, i si $x_0=0$ la successió $(1/n,(1-1/n)y_0)$ és de $G$ i hi convergeix. Per tant $\\overline{G}=\\{x^2+y^2\\leq1\\}$.",
+    "Punts d'acumulació: sigui $p=(x_0,y_0)$ del disc tancat. Si $x_0\\neq0$, la successió $p_n=(1+\\frac1n)(x_0,y_0)$ és de $G$, té termes diferents de $p$ i convergeix a $p$; si $x_0=0$, la successió $(1/n,(1-1/n)y_0)$ anterior té primera coordenada no nul·la i convergeix a $p$. Per tant $G'=\\{x^2+y^2\\leq1\\}$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "$s^2+(1-s)^2y_0^2\\leq s^2+y_0^2\\leq1$",
+      "inici": 164,
+      "fi": 201,
+      "tipus": "desigualtat",
+      "explicacio": "La desigualtat $s^2+y_0^2\\leq1$ és falsa en general: per a $|y_0|=1$ (o $y_0$ proper a $1$) dona $s^2+y_0^2>1$. Fitar $(1-s)^2y_0^2$ per $y_0^2$ perd massa.",
+      "correccio": "Fitar $y_0^2\\leq1$: $s^2+(1-s)^2y_0^2\\leq s^2+(1-s)^2=1-2s+2s^2<1$ per a $0<s<1$.",
+      "pista": "Prova $y_0=1$: quant val $s^2+y_0^2$? És $\\leq1$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "$p_n=(1+\\frac1n)(x_0,y_0)$ és de $G$",
+      "inici": 85,
+      "fi": 121,
+      "tipus": "logica",
+      "explicacio": "Si $p$ és de la circumferència ($x_0^2+y_0^2=1$), els punts $(1+\\frac1n)p$ tenen norma $>1$ i no són de $G$; la successió no serveix per a aquests punts.",
+      "correccio": "Prendre $p_n=(1-\\frac1n)(x_0,y_0)$, que per a $n\\geq2$ té norma $<1$ i primera coordenada no nul·la, i per tant és de $G$, és diferent de $p$ i convergeix a $p$.",
+      "pista": "Si $\\|p\\|=1$, quina norma té $(1+\\frac1n)p$? Encara és dins del disc?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t12.json",
+    "valoracio": "Resultats correctes, però la pertinença a G al voltant del segment vertical usa una desigualtat falsa i la successió per a G' surt de G als punts de la circumferència.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "s^2+(1-s)^2y_0^2\\leq s^2+y_0^2\\leq1",
+        "gravetat": "error",
+        "explicacio": "$s^2+y_0^2\\le1$ és fals si $|y_0|$ és proper a 1 (p. ex. $|y_0|=1$ dona $s^2+1>1$). Cal $s^2+(1-s)^2y_0^2\\le s^2+(1-s)^2<1$ per a $0<s<1$."
+      },
+      {
+        "fragment": 7,
+        "cita": "$p_n=(1+\\frac1n)(x_0,y_0)$",
+        "gravetat": "error",
+        "explicacio": "Si $x_0^2+y_0^2=1$, $(1+\\frac1n)p$ té norma $>1$ i no és de $G$; cal $(1-\\frac1n)p$ (amb $n\\ge2$)."
+      }
+    ]
+  },
+  "creat": 1791295812.8823671
+}

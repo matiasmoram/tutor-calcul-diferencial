@@ -1,0 +1,50 @@
+{
+ "exercici": "t6-9",
+ "tema": 6,
+ "persona": "error:oblida_extrems_interval",
+ "arquetip": "error",
+ "persona_descripcio": "Ets un alumne que creu sincerament el següent; és la teva manera de pensar i no saps que és un error:\n«Als trossos de frontera només busca on s'anul·la la derivada i oblida els vèrtexs, que són precisament on hi ha el màxim i el mínim.»\nTreballes l'exercici mostrant el raonament i, quan arribes al punt on importa, cometes aquest error amb convicció. Si el tutor et qüestiona, al principi defenses el teu raonament; només el canvies si les preguntes del tutor et fan veure clarament el problema. Després continues intentant resoldre l'exercici.",
+ "final": "error_tutor",
+ "torns": [
+  {
+   "n": 1,
+   "alumne": "He calculat les derivades: $\\partial_x f=\\dfrac{8y-2x}{8xy-x^2+1}$ i $\\partial_y f=\\dfrac{8x}{8xy-x^2+1}$, així l'única possibilitat interior amb $x>0$ seria $8x=0$ (impossible) o $y=\\tfrac x4$, però això no dóna punt admissible amb $xy\\le8$ i $1\\le y\\le x^2$. Per tant miro les fronteres: parametritzo $y=1$, $y=x^2$ i $xy=8$ i busco on s'anul·la la derivada respecte del paràmetre en cada tros; com que als trossos de frontera només busco on s'anul·la la derivada, conclouré que els extrems estan als vèrtexs del compacte.",
+   "error": "RateLimitError: Error code: 429 - {'error': {'message': 'You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.', 'type': 'insufficient_quota', 'param': None, 'code': 'credit_balance_exhausted'}}"
+  }
+ ],
+ "crides_alumne": [
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 7029,
+   "input_tokens": 584,
+   "output_tokens": 463,
+   "cached_tokens": 0,
+   "extra": {}
+  }
+ ],
+ "crides_jutge": [],
+ "durada_s": 14.9,
+ "metriques": {
+  "torns": 0,
+  "torns_error": 1,
+  "completat": false,
+  "torns_fins_tancar": null,
+  "final": "error_tutor",
+  "loops": [],
+  "fallbacks": 0,
+  "drafts": 0,
+  "rebuigs": {},
+  "preguntes_conceptuals": 0,
+  "preguntes_ignorades": 0,
+  "torns_jutjats": 0,
+  "fuites": [],
+  "fuites_resultat": [],
+  "accions": {},
+  "cost_tutor_usd": 0,
+  "cost_simulacio_usd": 0.00107,
+  "models_sense_preu": []
+ },
+ "config": "default",
+ "_fitxer": "default__t6-9__error-oblida_extrems_interval.json"
+}

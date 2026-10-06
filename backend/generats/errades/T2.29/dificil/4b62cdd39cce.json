@@ -1,0 +1,78 @@
+{
+  "id": "4b62cdd39cce",
+  "exercici": "T2.29",
+  "font": "teoria",
+  "dificultat": "dificil",
+  "fragments": [
+    "Siguin $(M,d)$ i $(N,d')$ espais mètrics, i $K\\subseteq M$ un conjunt compacte.",
+    "Si $f:K\\to N$ és una funció contínua, llavors $f$ és uniformement contínua en $K$, és a dir, existeix $\\delta>0$ tal que per a tot $\\epsilon>0$ i per a tot $x,y\\in K$ amb $d(x,y)<\\delta$ es té $d'(f(x),f(y))<\\epsilon$.",
+    "Ho demostrem per contradicció. Suposem que $f$ no és uniformement contínua: aleshores existeix algun $\\epsilon_0>0$ tal que per a tot $\\delta>0$ es poden trobar dos punts $x,y\\in K$ amb $d(x,y)<\\delta$ i $d'(f(x),f(y))\\geq\\epsilon_0$.",
+    "Prenent, en particular, $\\delta_n=1/n$, per a cada $n$ trobem dos punts $x_n,y_n\\in K$ tals que $d(x_n,y_n)<1/n$ però $d'(f(x_n),f(y_n))\\geq\\epsilon_0$.",
+    "Com que $K$ és compacte, la successió $(x_n)_n$ admet una subsuccessió convergent $(x_{n_k})_k$, amb $x_{n_k}\\to x^*\\in K$ quan $k\\to\\infty$.",
+    "Tanmateix, també $y_{n_k}\\to x^*$, perquè $d(y_{n_k},x^*)\\geq\\big|d(y_{n_k},x_{n_k})-d(x_{n_k},x^*)\\big|$ i tots dos termes tendeixen a $0$.",
+    "Ara bé, com que $f$ és contínua en $K$, es compleix que $d'(f(x_{n_k}),f(y_{n_k}))\\to0$, simplement perquè $d(x_{n_k},y_{n_k})\\to0$.",
+    "Això contradiu que $d'(f(x_n),f(y_n))\\geq\\epsilon_0$ per a tota $n$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "existeix $\\delta>0$ tal que per a tot $\\epsilon>0$",
+      "inici": 93,
+      "fi": 143,
+      "tipus": "quantificador",
+      "explicacio": "L'ordre dels quantificadors és $\\forall\\epsilon\\,\\exists\\delta$; amb $\\exists\\delta\\,\\forall\\epsilon$ la funció hauria de ser constant a distàncies menors que $\\delta$. Contraexemple: $f(x)=x$ a $K=[0,1]$ és contínua i no compleix aquesta propietat.",
+      "correccio": "Per a tot $\\epsilon>0$ existeix $\\delta>0$ tal que per a tot $x,y\\in K$ amb $d(x,y)<\\delta$, $d'(f(x),f(y))<\\epsilon$.",
+      "pista": "El $\\delta$ pot dependre de $\\epsilon$? Què passaria amb $f(x)=x$ si no pogués?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "perquè $d(y_{n_k},x^*)\\geq\\big|d(y_{n_k},x_{n_k})-d(x_{n_k},x^*)\\big|$",
+      "inici": 35,
+      "fi": 105,
+      "tipus": "desigualtat",
+      "explicacio": "La desigualtat triangular inversa dona una cota INFERIOR de $d(y_{n_k},x^*)$, que no permet concloure que tendeix a $0$. Cal la cota superior $d(y_{n_k},x^*)\\leq d(y_{n_k},x_{n_k})+d(x_{n_k},x^*)$.",
+      "correccio": "$d(y_{n_k},x^*)\\leq d(y_{n_k},x_{n_k})+d(x_{n_k},x^*)\\to0$.",
+      "pista": "Per veure que una distància tendeix a $0$, necessites fitar-la per sobre o per sota?"
+    },
+    {
+      "id": "e3",
+      "fragment": 7,
+      "cita": "simplement perquè $d(x_{n_k},y_{n_k})\\to0$",
+      "inici": 89,
+      "fi": 131,
+      "tipus": "pas_injustificat",
+      "explicacio": "Deduir que les imatges s'acosten només perquè els punts s'acosten és justament la continuïtat uniforme que volem demostrar (raonament circular). Cal usar la continuïtat en el punt $x^*$: $f(x_{n_k})\\to f(x^*)$ i $f(y_{n_k})\\to f(x^*)$.",
+      "correccio": "Com que $f$ és contínua en $x^*\\in K$ i $x_{n_k},y_{n_k}\\to x^*$, $f(x_{n_k})\\to f(x^*)$ i $f(y_{n_k})\\to f(x^*)$, i per la desigualtat triangular $d'(f(x_{n_k}),f(y_{n_k}))\\to0$.",
+      "pista": "La propietat «punts propers tenen imatges properes» és continuïtat o continuïtat uniforme? Quin punt concret fa servir la continuïtat?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t2b.json",
+    "valoracio": "Tres errors: definició de continuïtat uniforme amb quantificadors invertits, desigualtat triangular girada i pas circular.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "existeix $\\delta>0$ tal que per a tot $\\epsilon>0$",
+        "gravetat": "error",
+        "explicacio": "Ordre de quantificadors invertit: obligaria $f(x)=f(y)$ quan $d(x,y)<\\delta$ (p. ex. $f(x)=x$ a $[0,1]$ no ho compleix); ha de ser per a tot $\\epsilon$ existeix $\\delta$."
+      },
+      {
+        "fragment": 6,
+        "cita": "$d(y_{n_k},x^*)\\geq\\big|d(y_{n_k},x_{n_k})-d(x_{n_k},x^*)\\big|$",
+        "gravetat": "error",
+        "explicacio": "Una fita inferior que tendeix a 0 no implica $d(y_{n_k},x^*)\\to0$; cal la fita superior $d(y_{n_k},x^*)\\le d(y_{n_k},x_{n_k})+d(x_{n_k},x^*)$."
+      },
+      {
+        "fragment": 7,
+        "cita": "simplement perquè $d(x_{n_k},y_{n_k})\\to0$",
+        "gravetat": "error",
+        "explicacio": "Deduir $d'(f(x_{n_k}),f(y_{n_k}))\\to0$ de $d(x_{n_k},y_{n_k})\\to0$ és justament la continuïtat uniforme (raonament circular); cal usar la continuïtat en $x^*$ i que totes dues successions hi convergeixen."
+      }
+    ]
+  },
+  "creat": 1791295930.34795
+}

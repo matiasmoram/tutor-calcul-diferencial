@@ -1,0 +1,978 @@
+problemes:
+  - num: 14
+    font: null
+    preambul: |
+      Sigui $f:\mathbb{R}\to\mathbb{R}$ de classe $\mathcal{C}^1$ tal que existeix $k\in\mathbb{R}$ satisfent $|f'(x)|\leqslant k<1$ per a tot $x\in\mathbb{R}$. Considerem la funció $F:\mathbb{R}^2\to\mathbb{R}^2$ definida per $F(x,y)=(x+f(y),y+f(x))$.
+    indicacio: |
+      useu el teorema del valor mitjà.
+    exercicis:
+      - id: "t4-14a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          Demostreu que $F$ admet inversa global de classe $\mathcal{C}^1$.
+        teoria: ["T3.20"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $F\in\mathcal{C}^1(\mathbb{R}^2)$ i $\det JF(x,y)=1-f'(x)f'(y)\geq 1-k^2>0$ a tot punt. $F$ és injectiva (pel teorema del valor mitjà, $|x-x'|\le k^2|x-x'|$ obliga $x=x'$, i llavors $y=y'$) i exhaustiva (per a $(u,v)$ donat, $x\mapsto u-f(v-f(x))$ és contractiva amb constant $k^2$ i té un punt fix). Per tant $F:\mathbb{R}^2\to\mathbb{R}^2$ és bijectiva, i pel teorema de la funció inversa aplicat a cada punt la inversa global coincideix localment amb una inversa $\mathcal{C}^1$: $F^{-1}\in\mathcal{C}^1(\mathbb{R}^2)$ ($F$ és un difeomorfisme $\mathcal{C}^1$ de $\mathbb{R}^2$).
+          fuites: []
+        passos:
+          - id: jacobia
+            titol: "Determinant jacobià"
+            objectiu: |
+              Estudiar la regularitat de $F$ i el signe del seu determinant jacobià a tot punt de $\mathbb{R}^2$.
+            idea: |
+              Calcular la matriu jacobiana de $F$ i fitar el determinant fent servir la hipòtesi sobre $|f'|$.
+            detall: |
+              Les components de $F$ són sumes de funcions $\mathcal{C}^1$, així que $F\in\mathcal{C}^1(\mathbb{R}^2)$, i
+              $JF(x,y)=\begin{pmatrix}1 & f'(y)\\ f'(x) & 1\end{pmatrix}$, amb $\det JF(x,y)=1-f'(x)f'(y)\geq 1-|f'(x)|\,|f'(y)|\geq 1-k^2>0$.
+            fuites: ['1\s*-\s*k\^\{?2\}?', '1\s*-\s*f''\s*\(x\)\s*f''\s*\(y\)']
+            teoria: ["T3.10", "T3.20"]
+          - id: injectivitat
+            titol: "Injectivitat global"
+            objectiu: |
+              Demostrar que $F$ és injectiva a tot $\mathbb{R}^2$.
+            idea: |
+              Suposar $F(x,y)=F(x',y')$ i fitar les diferències de coordenades aplicant el teorema del valor mitjà a $f$ (una variable).
+            detall: |
+              Si $F(x,y)=F(x',y')$, aleshores $x-x'=f(y')-f(y)$ i $y-y'=f(x')-f(x)$. Pel teorema del valor mitjà, $|f(s)-f(t)|\le k|s-t|$ per a tot $s,t$. Per tant
+              $|x-x'|\le k|y-y'|= k|f(x')-f(x)|\le k^2|x-x'|$. Com que $k^2<1$, $x=x'$, i aleshores $y-y'=f(x')-f(x)=0$.
+            fuites: ['(\\le|\\leq|\\leqslant|≤)\s*k\^\{?2\}?\s*\|']
+            teoria: ["T3.26"]
+          - id: exhaustivitat
+            titol: "Exhaustivitat"
+            objectiu: |
+              Demostrar que tot $(u,v)\in\mathbb{R}^2$ té alguna antiimatge per $F$.
+            idea: |
+              Reduir el sistema $F(x,y)=(u,v)$ a una sola equació en $x$ i justificar que té solució; el teorema del punt fix és una via natural.
+            detall: |
+              $F(x,y)=(u,v)$ equival a $y=v-f(x)$ i $x=u-f(v-f(x))=:\varphi(x)$. Per la regla de la cadena, $|\varphi'(x)|=|f'(v-f(x))|\,|f'(x)|\le k^2<1$, i pel teorema del valor mitjà $\varphi$ és Lipschitz amb constant $k^2<1$ (si $k=0$, amb qualsevol constant de $(0,1)$), és a dir, contractiva a $\mathbb{R}$, que és complet. Pel teorema del punt fix existeix (un únic) $x^*$ amb $\varphi(x^*)=x^*$, i $(x^*,v-f(x^*))$ és antiimatge de $(u,v)$.
+              (Alternativa: $\psi(x)=x+f(v-f(x))-u$ té $\psi'\ge 1-k^2>0$, per tant $\psi(x)\to\pm\infty$ quan $x\to\pm\infty$ i, pel valor intermedi, s'anul·la.)
+            fuites: ['x\s*=\s*u\s*-\s*f\s*\(\s*v\s*-\s*f\s*\(\s*x\s*\)', 'y\s*=\s*v\s*-\s*f\s*\(\s*x\s*\)']
+            teoria: ["T2.30", "T2.31", "T3.26"]
+          - id: regularitat_inversa
+            titol: "La inversa global és $\\mathcal{C}^1$"
+            objectiu: |
+              Deduir que la inversa global $F^{-1}:\mathbb{R}^2\to\mathbb{R}^2$ és de classe $\mathcal{C}^1$.
+            idea: |
+              Combinar la bijectivitat global amb el teorema de la funció inversa aplicat a cada punt.
+            detall: |
+              $F$ és bijectiva. Donat $(u_0,v_0)=F(a)$, com que $F\in\mathcal{C}^1$ i $\det JF(a)\neq 0$, el teorema de la funció inversa dona oberts $U\ni a$ i $V=F(U)\ni(u_0,v_0)$ i una inversa local $\mathcal{C}^1$ de $F|_U$ definida a $V$. Per la injectivitat global, aquesta inversa local és exactament la restricció de $F^{-1}$ a $V$. Per tant $F^{-1}$ és $\mathcal{C}^1$ en un entorn de cada punt, és a dir, $F^{-1}\in\mathcal{C}^1(\mathbb{R}^2)$: $F$ és un difeomorfisme $\mathcal{C}^1$ de $\mathbb{R}^2$ en $\mathbb{R}^2$.
+            fuites: []
+            teoria: ["T4.5", "T4.9"]
+        errors_comuns:
+          - id: global_per_jacobia
+            descripcio: |
+              Dedueix l'existència d'inversa global només del fet que $\det JF\neq 0$ a tot punt.
+            pregunta: |
+              El teorema de la funció inversa et dona informació local o global? Coneixes alguna funció de $\mathbb{R}^2$ amb jacobià no nul arreu que no sigui injectiva?
+          - id: oblida_exhaustivitat
+            descripcio: |
+              Demostra la injectivitat però no comprova que $F$ sigui exhaustiva sobre $\mathbb{R}^2$ (inversa global vol dir definida a tot $\mathbb{R}^2$).
+            pregunta: |
+              Per parlar d'una inversa definida a tot $\mathbb{R}^2$, n'hi ha prou que $F$ sigui injectiva? Què passa amb els punts que potser no són imatge de res?
+          - id: fita_sense_k
+            descripcio: |
+              Fa servir només $|f'|<1$ punt a punt en lloc de la fita uniforme $k<1$, i no pot concloure (per exemple, la contracció necessita una constant fixa menor que $1$).
+            pregunta: |
+              Si només saps que $|f'(x)|<1$ a cada punt, pots assegurar una constant de Lipschitz menor que $1$ vàlida per a tots els punts alhora?
+          - id: regularitat_sense_tfi
+            descripcio: |
+              Un cop té la bijectivitat, afirma que la inversa és $\mathcal{C}^1$ sense cap argument.
+            pregunta: |
+              Una bijecció $\mathcal{C}^1$ sempre té inversa diferenciable? Pensa en $t\mapsto t^3$ a $\mathbb{R}$. Quina hipòtesi addicional fa falta?
+        nota_professor: |
+          Alternativa elegant: $F=\mathrm{Id}+H$ amb $H(x,y)=(f(y),f(x))$, que és contractiva amb constant $k$ per a la norma euclidiana ($\|H(p)-H(q)\|\le k\|p-q\|$ pel TVM a cada component). Llavors $\|F(p)-F(q)\|\ge(1-k)\|p-q\|$ (injectivitat) i $F(p)=w\iff p=w-H(p)$, punt fix d'una contracció (exhaustivitat). La condició $\det JF\geq 1-k^2$ també surt de $\|DH\|\le k$.
+
+      - id: "t4-14b"
+        apartat: "b"
+        tipus: teoric
+        enunciat: |
+          Si $f(0)=0$, demostreu que $\|F(x,y)\|\leqslant(1+k)\,\|(x,y)\|$, per a tot $(x,y)\in\mathbb{R}^2$.
+        teoria: ["T1.3"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Pel TVM i $f(0)=0$, $|f(t)|\le k|t|$. Com que $F(x,y)=(x,y)+(f(y),f(x))$ i $\|(f(y),f(x))\|=\sqrt{f(y)^2+f(x)^2}\le k\sqrt{x^2+y^2}=k\|(x,y)\|$, la desigualtat triangular dona $\|F(x,y)\|\le(1+k)\|(x,y)\|$.
+          fuites: []
+        passos:
+          - id: fita_f
+            titol: "Fita lineal de $f$"
+            objectiu: |
+              Fitar $|f(t)|$ en termes de $|t|$, per a tot $t\in\mathbb{R}$.
+            idea: |
+              Fer servir $f(0)=0$ i el teorema del valor mitjà per a $f$ entre $0$ i $t$.
+            detall: |
+              $|f(t)|=|f(t)-f(0)|=|f'(\xi)|\,|t|\le k|t|$, amb $\xi$ entre $0$ i $t$.
+            fuites: ['\|f\s*\(t\)\|\s*(\\le|\\leq|\\leqslant|≤)\s*k\s*\|t\|', '(\\le|\\leq|\\leqslant|≤)\s*k\s*\|t\|']
+            teoria: ["T3.26"]
+          - id: descomposicio
+            titol: "Separar la identitat"
+            objectiu: |
+              Reescriure $F(x,y)$ de manera que el vector $(x,y)$ hi aparegui com a sumand.
+            idea: |
+              Separar en $F$ la part que és la identitat de la part on intervé $f$.
+            detall: |
+              $F(x,y)=(x,y)+(f(y),f(x))$.
+            fuites: ['\(x,\s*y\)\s*\+\s*\(f\s*\(y\)']
+            teoria: []
+          - id: concloure
+            titol: "Fitar i concloure"
+            objectiu: |
+              Fitar la norma de $F(x,y)$ i obtenir la desigualtat de l'enunciat.
+            idea: |
+              Desigualtat triangular de la norma i la fita del primer pas aplicada a cada component del segon sumand.
+            detall: |
+              $\|(f(y),f(x))\|=\sqrt{f(y)^2+f(x)^2}\le\sqrt{k^2y^2+k^2x^2}=k\|(x,y)\|$. Per la desigualtat triangular,
+              $\|F(x,y)\|\le\|(x,y)\|+\|(f(y),f(x))\|\le(1+k)\|(x,y)\|$.
+            fuites: ['\\sqrt\{\s*k\^\{?2\}?\s*y\^\{?2\}?', 'k\s*\\\|\s*\(x,\s*y\)\s*\\\|']
+            teoria: ["T1.3"]
+        errors_comuns:
+          - id: suma_de_moduls
+            descripcio: |
+              Fita $\|(f(y),f(x))\|\le|f(y)|+|f(x)|\le k(|x|+|y|)$ i després escriu $k(|x|+|y|)\le k\|(x,y)\|$, que és fals per a la norma euclidiana.
+            pregunta: |
+              Compara $|x|+|y|$ amb $\sqrt{x^2+y^2}$ per a $(x,y)=(1,1)$. Quina desigualtat és la certa?
+          - id: oblida_f0
+            descripcio: |
+              Aplica el teorema del valor mitjà sense fer servir $f(0)=0$ i obté una fita de $|f(t)-f(0)|$, no de $|f(t)|$.
+            pregunta: |
+              Quina fita tens de $|f(t)|$ si no saps quant val $f(0)$? On entra la hipòtesi $f(0)=0$?
+          - id: fita_component_a_component
+            descripcio: |
+              Fita cada component de $F$ per separat ($|x+f(y)|\le|x|+k|y|$) i no sap recompondre la norma.
+            pregunta: |
+              Si mires $F(x,y)$ com una suma de dos vectors en lloc de dues components, quina propietat de la norma pots aplicar directament?
+        nota_professor: |
+          L'argument val per a qualsevol norma $\ell^p$ (o qualsevol norma monòtona i invariant per permutació de coordenades): $\|(f(y),f(x))\|\le k\|(y,x)\|=k\|(x,y)\|$. També es pot veure com $\|F(p)-F(0)\|\le\|DF\|\,\|p\|$ amb $\|DF\|\le 1+k$.
+
+  - num: 15
+    font: null
+    preambul: |
+      Sigui $f:\mathbb{R}\to\mathbb{R}$ de classe $\mathcal{C}^1$ i tal que $f'(x)\neq 0$, $\forall x\in\mathbb{R}$. Considerem $G:\mathbb{R}^2\to\mathbb{R}^2$ definida per
+      $$G(x,y)=(f(x),-y+xf(x)).$$
+    indicacio: null
+    exercicis:
+      - id: "t4-15a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          Demostreu que $G$ satisfà les hipòtesis del teorema de la funció inversa en tot punt de $\mathbb{R}^2$.
+        teoria: ["T4.5"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $G\in\mathcal{C}^1(\mathbb{R}^2)$ (components formades per sumes i productes de funcions $\mathcal{C}^1$), $\mathbb{R}^2$ és obert i
+            $JG(x,y)=\begin{pmatrix}f'(x)&0\\ f(x)+xf'(x)&-1\end{pmatrix}$, amb $\det JG(x,y)=-f'(x)\neq 0$ per a tot $(x,y)$.
+          fuites: []
+        passos:
+          - id: regularitat
+            titol: "Regularitat de $G$"
+            objectiu: |
+              Comprovar que $G$ té la regularitat que demana el teorema de la funció inversa sobre un obert.
+            idea: |
+              Mirar de quines operacions amb funcions $\mathcal{C}^1$ estan fetes les components de $G$.
+            detall: |
+              $G_1(x,y)=f(x)$ i $G_2(x,y)=-y+xf(x)$ són sumes i productes de funcions $\mathcal{C}^1$, per tant $G\in\mathcal{C}^1(\mathbb{R}^2)$, i $\mathbb{R}^2$ és obert.
+            fuites: []
+            teoria: ["T3.20"]
+          - id: jacobia
+            titol: "Determinant jacobià"
+            objectiu: |
+              Calcular el determinant jacobià de $G$ i veure on s'anul·la.
+            idea: |
+              Derivar les components (la segona conté un producte) i fer servir la hipòtesi sobre $f'$.
+            detall: |
+              $JG(x,y)=\begin{pmatrix}f'(x)&0\\ f(x)+xf'(x)&-1\end{pmatrix}$, $\det JG(x,y)=-f'(x)\neq 0$ per a tot $(x,y)\in\mathbb{R}^2$. Per tant se satisfan les hipòtesis del TFI a tot punt.
+            fuites: ['=\s*-\s*f''\s*\(x\)', 'f\s*\(x\)\s*\+\s*x\s*f''\s*\(x\)']
+            teoria: ["T3.10", "T4.5"]
+        errors_comuns:
+          - id: producte_mal_derivat
+            descripcio: |
+              Deriva $xf(x)$ com $f'(x)$ o com $xf'(x)$, oblidant la regla del producte.
+            pregunta: |
+              Quina és la derivada respecte de $x$ d'un producte de dues funcions de $x$?
+          - id: conclou_injectivitat
+            descripcio: |
+              Afirma que, com que les hipòtesis del TFI es compleixen arreu, $G$ és globalment injectiva.
+            pregunta: |
+              Què garanteix exactament el TFI: una inversa a tot el pla o en un entorn de cada punt?
+          - id: oblida_regularitat
+            descripcio: |
+              Només comprova $\det JG\neq 0$ i no justifica que $G$ sigui $\mathcal{C}^1$ en un obert.
+            pregunta: |
+              El TFI té alguna hipòtesi sobre la regularitat de la funció i el seu domini, a més del determinant?
+        nota_professor: |
+          El càlcul és directe. El determinant no depèn de $y$ i val $-f'(x)$; el signe és irrellevant.
+
+      - id: "t4-15b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          Donat $(u_0,v_0)\in\mathrm{Im}\,G$, calculeu $DG^{-1}(u_0,v_0)$.
+        teoria: ["T4.5"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Amb $x_0=f^{-1}(u_0)$ (l'únic $x$ amb $f(x)=u_0$):
+            $DG^{-1}(u_0,v_0)=\begin{pmatrix}\frac{1}{f'(x_0)}&0\\ x_0+\frac{u_0}{f'(x_0)}&-1\end{pmatrix}$.
+          fuites: ['x_\{?0\}?\s*\+\s*\\[dt]?frac\{\s*u_\{?0\}?\s*\}\{\s*f''\s*\(\s*x_\{?0\}?\s*\)\s*\}', '\\[dt]?frac\{\s*u_\{?0\}?\s*\}\{\s*f''\s*\(\s*x_\{?0\}?\s*\)\s*\}\s*\+\s*x_\{?0\}?', '\\[dt]?frac\{\s*u_\{?0\}?\s*\+\s*x_\{?0\}?\s*f''\s*\(\s*x_\{?0\}?\s*\)\s*\}\{\s*f''\s*\(\s*x_\{?0\}?\s*\)\s*\}']
+        passos:
+          - id: antiimatge
+            titol: "Punt on avaluar la jacobiana"
+            objectiu: |
+              Identificar el punt $(x_0,y_0)$ tal que $G(x_0,y_0)=(u_0,v_0)$.
+            idea: |
+              La primera component de $G$ només depèn de $x$; fer servir que $f$ és injectiva perquè la seva derivada no s'anul·la.
+            detall: |
+              $f'$ és contínua i no s'anul·la, per tant té signe constant i $f$ és estrictament monòtona: $f:\mathbb{R}\to f(\mathbb{R})$ és bijectiva. De $f(x_0)=u_0$ surt $x_0=f^{-1}(u_0)$, i de $-y_0+x_0f(x_0)=v_0$, $y_0=x_0u_0-v_0$.
+            fuites: ['y_\{?0\}?\s*=\s*x_\{?0\}?\s*u_\{?0\}?\s*-\s*v_\{?0\}?']
+            teoria: ["T4.1"]
+          - id: jacobiana
+            titol: "Jacobiana al punt"
+            objectiu: |
+              Calcular $JG(x_0,y_0)$, expressada en termes de $x_0$ i $u_0$.
+            idea: |
+              Derivar les components de $G$ i substituir $f(x_0)=u_0$.
+            detall: |
+              $JG(x_0,y_0)=\begin{pmatrix}f'(x_0)&0\\ u_0+x_0f'(x_0)&-1\end{pmatrix}$.
+            fuites: ['u_\{?0\}?\s*\+\s*x_\{?0\}?\s*f''\s*\(\s*x_\{?0\}?\s*\)']
+            teoria: ["T3.10"]
+          - id: invertir
+            titol: "Diferencial de la inversa"
+            objectiu: |
+              Obtenir $DG^{-1}(u_0,v_0)$.
+            idea: |
+              Aplicar la fórmula de la diferencial de la inversa que dona el teorema de la funció inversa i invertir una matriu $2\times 2$.
+            detall: |
+              $DG^{-1}(u_0,v_0)=\big(DG(x_0,y_0)\big)^{-1}=\frac{1}{-f'(x_0)}\begin{pmatrix}-1&0\\ -(u_0+x_0f'(x_0))&f'(x_0)\end{pmatrix}=\begin{pmatrix}\frac{1}{f'(x_0)}&0\\ x_0+\frac{u_0}{f'(x_0)}&-1\end{pmatrix}$.
+            fuites: ['x_\{?0\}?\s*\+\s*\\[dt]?frac\{\s*u_\{?0\}?\s*\}\{\s*f''\s*\(\s*x_\{?0\}?\s*\)\s*\}', '\\[dt]?frac\{\s*1\s*\}\{\s*f''\s*\(\s*x_\{?0\}?\s*\)\s*\}\s*&\s*0']
+            teoria: ["T4.5"]
+        errors_comuns:
+          - id: punt_equivocat
+            descripcio: |
+              Avalua $JG$ al punt $(u_0,v_0)$ en lloc de l'antiimatge $(x_0,y_0)=G^{-1}(u_0,v_0)$.
+            pregunta: |
+              A la fórmula de la diferencial de la inversa, en quin espai viu el punt on avalues $DG$: en el de sortida o en el d'arribada de $G$?
+          - id: inversa_entrada_a_entrada
+            descripcio: |
+              Inverteix la matriu prenent l'invers de cada entrada.
+            pregunta: |
+              Multiplica la teva matriu per $JG(x_0,y_0)$: obtens la identitat?
+          - id: no_identifica_x0
+            descripcio: |
+              Deixa el resultat en termes d'un $x_0$ indeterminat, sense justificar que és únic i val $f^{-1}(u_0)$.
+            pregunta: |
+              Quants $x$ compleixen $f(x)=u_0$? Per què?
+        nota_professor: |
+          Es pot comprovar amb la inversa explícita de l'apartat (c): $G^{-1}(u,v)=(f^{-1}(u),uf^{-1}(u)-v)$, i derivant amb $(f^{-1})'(u)=1/f'(f^{-1}(u))$ s'obté la mateixa matriu.
+
+      - id: "t4-15c"
+        apartat: "c"
+        tipus: calcul
+        enunciat: |
+          Demostreu que $G$ és injectiva i calculeu l'expressió explícita de $G^{-1}$.
+        teoria: []
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $f$ és estrictament monòtona (perquè $f'$ és contínua i no s'anul·la), per tant injectiva; si $G(x,y)=G(x',y')$, llavors $f(x)=f(x')$, $x=x'$ i després $y=y'$. $\mathrm{Im}\,G=f(\mathbb{R})\times\mathbb{R}$ i
+            $G^{-1}(u,v)=\big(f^{-1}(u),\,uf^{-1}(u)-v\big)$.
+          fuites: ['u\s*f\^\{?-1\}?\s*\(\s*u\s*\)\s*-\s*v', 'f\^\{?-1\}?\s*\(\s*u\s*\)\s*u\s*-\s*v']
+        passos:
+          - id: monotonia
+            titol: "Injectivitat de $f$"
+            objectiu: |
+              Justificar que $f$ és injectiva.
+            idea: |
+              Una derivada contínua que no s'anul·la en un interval té signe constant (valor intermedi); en deduir la monotonia de $f$.
+            detall: |
+              $f'$ és contínua i $f'(x)\neq 0$ per a tot $x$; si canviés de signe, pel teorema del valor intermedi s'anul·laria. Per tant $f'>0$ o $f'<0$ arreu, $f$ és estrictament monòtona i $f:\mathbb{R}\to f(\mathbb{R})$ és bijectiva amb inversa $\mathcal{C}^1$.
+            fuites: []
+            teoria: ["T2.24", "T4.1"]
+          - id: injectivitat_G
+            titol: "Injectivitat de $G$"
+            objectiu: |
+              Demostrar que $G$ és injectiva.
+            idea: |
+              Suposar $G(x,y)=G(x',y')$ i comparar primer les primeres components.
+            detall: |
+              $G(x,y)=G(x',y')\Rightarrow f(x)=f(x')\Rightarrow x=x'$; aleshores la segona component dona $-y+xf(x)=-y'+xf(x)$, és a dir, $y=y'$.
+            fuites: []
+            teoria: []
+          - id: inversa
+            titol: "Imatge i inversa explícita"
+            objectiu: |
+              Determinar la imatge de $G$ i l'expressió de $G^{-1}$.
+            idea: |
+              Resoldre el sistema $G(x,y)=(u,v)$ aïllant primer $x$ i després $y$.
+            detall: |
+              $f(x)=u$ té solució si i només si $u\in f(\mathbb{R})$, i aleshores $x=f^{-1}(u)$; després $y=xf(x)-v=uf^{-1}(u)-v$. Per tant $\mathrm{Im}\,G=f(\mathbb{R})\times\mathbb{R}$ i
+              $G^{-1}(u,v)=\big(f^{-1}(u),\,uf^{-1}(u)-v\big)$. Comprovació: $G(f^{-1}(u),uf^{-1}(u)-v)=(u,-uf^{-1}(u)+v+f^{-1}(u)\,u)=(u,v)$.
+            fuites: ['u\s*f\^\{?-1\}?\s*\(\s*u\s*\)\s*-\s*v']
+            teoria: []
+        errors_comuns:
+          - id: injectivitat_per_tfi
+            descripcio: |
+              Dedueix la injectivitat de $G$ del fet que el jacobià no s'anul·la arreu.
+            pregunta: |
+              El teorema de la funció inversa garanteix injectivitat a tot $\mathbb{R}^2$ o només a prop de cada punt?
+          - id: imatge_tot_el_pla
+            descripcio: |
+              Suposa que $\mathrm{Im}\,G=\mathbb{R}^2$ i que $f^{-1}$ està definida a tot $\mathbb{R}$.
+            pregunta: |
+              Si $f=\arctan$, quins valors pot prendre la primera component de $G$?
+          - id: monotonia_sense_continuitat
+            descripcio: |
+              Afirma que $f'\neq 0$ implica monotonia sense justificar per què $f'$ no pot canviar de signe.
+            pregunta: |
+              Què impedeix que $f'$ sigui positiva en un punt i negativa en un altre? Quina hipòtesi sobre $f'$ fas servir?
+        nota_professor: |
+          La imatge pot ser una banda: per exemple, amb $f=\arctan$, $\mathrm{Im}\,G=(-\pi/2,\pi/2)\times\mathbb{R}$.
+
+  - num: 16
+    font: null
+    preambul: |
+      Sigui $f:\mathbb{R}^2\to\mathbb{R}^2$ definida per $f(u,v)=(u^3-3uv^2,\ 3u^2v-v^3)$.
+    indicacio: null
+    exercicis:
+      - id: "t4-16a"
+        apartat: "a"
+        tipus: calcul
+        enunciat: |
+          En quins punts existeix inversa local diferenciable?
+        teoria: ["T4.5"]
+        teoria_reservada: ["T4.3"]
+        resultat:
+          valor: |
+            A tots els punts $(u,v)\neq(0,0)$: allà $\det Jf(u,v)=9(u^2+v^2)^2\neq 0$ i el TFI dona inversa local $\mathcal{C}^\infty$. A l'origen no n'hi ha: $Df(0,0)=0$, i si existís $h$ diferenciable amb $h\circ f=\mathrm{Id}$ a prop de l'origen, la regla de la cadena donaria $Dh(0,0)\,Df(0,0)=I$, impossible (a més, $f$ ni tan sols és localment injectiva a l'origen).
+          fuites: ['(excepte|menys|tret\s+de)\s+(a\s+)?l''origen', '\\neq\s*\(0,\s*0\)', '\\setminus\s*\\\{\s*(\(0,\s*0\)|0)\s*\\\}']
+        passos:
+          - id: jacobia
+            titol: "Jacobiana i determinant"
+            objectiu: |
+              Calcular la matriu jacobiana de $f$ i el seu determinant en un punt qualsevol.
+            idea: |
+              Derivar les components; el determinant es pot escriure de manera compacta com una suma de quadrats.
+            detall: |
+              $Jf(u,v)=\begin{pmatrix}3u^2-3v^2&-6uv\\ 6uv&3u^2-3v^2\end{pmatrix}$, $\det Jf(u,v)=(3u^2-3v^2)^2+36u^2v^2=9(u^2+v^2)^2$.
+            fuites: ['9\s*\(\s*u\^\{?2\}?\s*\+\s*v\^\{?2\}?\s*\)\^\{?2\}?']
+            teoria: ["T3.10"]
+          - id: aplicar_tfi
+            titol: "Punts on s'aplica el TFI"
+            objectiu: |
+              Decidir en quins punts el teorema de la funció inversa assegura una inversa local diferenciable.
+            idea: |
+              Comprovar la regularitat de $f$ i veure on s'anul·la el determinant jacobià.
+            detall: |
+              $f$ és polinòmica, $f\in\mathcal{C}^\infty(\mathbb{R}^2)$, i $9(u^2+v^2)^2=0$ només a l'origen. Per tant, a tot $(u,v)\neq(0,0)$ hi ha inversa local de classe $\mathcal{C}^\infty$.
+            fuites: ['\\neq\s*\(0,\s*0\)']
+            teoria: ["T4.5", "T3.31"]
+          - id: origen
+            titol: "Què passa a l'origen"
+            objectiu: |
+              Decidir si a l'origen, on el TFI no s'aplica, hi pot haver igualment una inversa local diferenciable.
+            idea: |
+              Suposar que existeix i aplicar la regla de la cadena a la composició amb $f$; o bé estudiar la injectivitat de $f$ a prop de l'origen.
+            detall: |
+              $Df(0,0)=0$. Si hi hagués $h$ diferenciable en $f(0,0)=(0,0)$ amb $h(f(p))=p$ per a $p$ a prop de l'origen, la regla de la cadena donaria $Dh(0,0)\,Df(0,0)=I$, però el producte és $0$: contradicció. De fet, $f$ no és ni localment injectiva: en polars $f(r\cos\theta,r\sin\theta)=(r^3\cos 3\theta,r^3\sin 3\theta)$, així que $(r,0)$ i $(r\cos\frac{2\pi}{3},r\sin\frac{2\pi}{3})$ tenen la mateixa imatge per a tot $r>0$.
+            fuites: ['D\s*f\s*\(0,\s*0\)\s*=\s*0', 'r\^\{?3\}?\s*\\cos\s*3\s*\\theta']
+            teoria: ["T3.21"]
+        errors_comuns:
+          - id: tfi_com_a_equivalencia
+            descripcio: |
+              Conclou que a l'origen no hi ha inversa local només perquè el determinant s'hi anul·la, com si la condició del TFI fos necessària.
+            pregunta: |
+              El TFI diu què passa quan el determinant és zero? Recorda $t\mapsto t^3$ a $\mathbb{R}$: té inversa? És diferenciable?
+          - id: determinant_mal
+            descripcio: |
+              Calcula malament el determinant (signes de $\pm 6uv$) i obté una expressió que s'anul·la en més punts.
+            pregunta: |
+              Quin signe té el producte dels termes fora de la diagonal, i com afecta el determinant?
+          - id: local_vs_global
+            descripcio: |
+              Respon sobre la inversa global (o diu que no n'hi ha enlloc perquè $f$ no és injectiva).
+            pregunta: |
+              La pregunta és sobre una inversa en un entorn de cada punt o a tot el pla? La no-injectivitat global hi influeix?
+        nota_professor: |
+          És l'exemple paradigmàtic de les notes ($f(z)=z^3$ en variable complexa). Matís: a l'origen no hi ha inversa local diferenciable, i de fet no n'hi ha cap (ni contínua), perquè $f$ no és localment injectiva.
+
+      - id: "t4-16b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          Calculeu les antiimatges dels punts $(0,0)$ i $(1,0)$. Té $f$ inversa global?
+        teoria: []
+        teoria_reservada: ["T4.3"]
+        resultat:
+          valor: |
+            $f^{-1}(0,0)=\{(0,0)\}$; $f^{-1}(1,0)=\{(1,0),\ (-\frac12,\frac{\sqrt3}{2}),\ (-\frac12,-\frac{\sqrt3}{2})\}$. Com que $(1,0)$ té tres antiimatges, $f$ no és injectiva i no té inversa global.
+          fuites: ['\\[dt]?frac\{\\sqrt\s*\{?3\}?\}\{2\}', '\\sqrt\s*\{?3\}?\s*/\s*2', 'tres\s+antiimatges', 'no\s+(té|admet)\s+inversa\s+global']
+        passos:
+          - id: antiimatges_origen
+            titol: "Antiimatges de $(0,0)$"
+            objectiu: |
+              Resoldre $f(u,v)=(0,0)$.
+            idea: |
+              Factoritzar les dues equacions i discutir els casos.
+            detall: |
+              $u(u^2-3v^2)=0$ i $v(3u^2-v^2)=0$. Si $u=0$, la segona dona $-v^3=0$, $v=0$. Si $u^2=3v^2$, la segona dona $8v^3=0$, $v=0$ i $u=0$. Només $(0,0)$.
+            fuites: ['8\s*v\^\{?3\}?\s*=\s*0']
+            teoria: []
+          - id: antiimatges_1_0
+            titol: "Antiimatges de $(1,0)$"
+            objectiu: |
+              Resoldre $f(u,v)=(1,0)$.
+            idea: |
+              Començar per l'equació igualada a zero, factoritzar-la i substituir cada cas a l'altra equació.
+            detall: |
+              $v(3u^2-v^2)=0$. Si $v=0$: $u^3=1$, $u=1$. Si $v^2=3u^2$: $u^3-9u^3=-8u^3=1$, $u=-\frac12$, $v^2=\frac34$, $v=\pm\frac{\sqrt3}{2}$. Antiimatges: $(1,0)$, $(-\frac12,\frac{\sqrt3}{2})$, $(-\frac12,-\frac{\sqrt3}{2})$.
+            fuites: ['-\s*8\s*u\^\{?3\}?', '\\[dt]?frac\{\\sqrt\s*\{?3\}?\}\{2\}']
+            teoria: []
+          - id: inversa_global
+            titol: "Inversa global"
+            objectiu: |
+              Decidir si $f$ té inversa global.
+            idea: |
+              Una inversa global requereix injectivitat; el TFI només dona informació local.
+            detall: |
+              $(1,0)$ té tres antiimatges diferents, per tant $f$ no és injectiva i no té inversa global, tot i que $\det Jf\neq 0$ fora de l'origen.
+            fuites: ['tres\s+antiimatges', 'no\s+és\s+injectiva']
+            teoria: ["T4.5"]
+        errors_comuns:
+          - id: perd_solucions
+            descripcio: |
+              Resol $u^3=1$ i $v=0$ i s'oblida de l'altre factor $3u^2-v^2=0$.
+            pregunta: |
+              Quan un producte s'anul·la, quants casos cal estudiar?
+          - id: jacobia_implica_global
+            descripcio: |
+              Argumenta que, com que el jacobià no s'anul·la (fora de l'origen), $f$ té inversa global.
+            pregunta: |
+              Què et diuen les antiimatges que has calculat sobre la injectivitat de $f$?
+          - id: arrels_reals
+            descripcio: |
+              Pensa que $u^3=1$ té una única solució i conclou que $(1,0)$ només té una antiimatge, sense mirar les solucions amb $v\neq 0$.
+            pregunta: |
+              Has comprovat si hi ha antiimatges amb $v\neq 0$?
+        nota_professor: |
+          Interpretació complexa: $f(z)=z^3$, $z=u+iv$; les antiimatges de $1$ són les tres arrels cúbiques de la unitat. Aquesta via és vàlida, però el càlcul real directe és el que s'espera.
+
+      - id: "t4-16c"
+        apartat: "c"
+        tipus: calcul
+        enunciat: |
+          Sigui $h=f^{-1}$ una inversa local de $f$ definida en un entorn de $(1,0)$. Calculeu $h(1,0)$ sabent que
+          $$Dh(1,0)=\begin{pmatrix}-\frac{3}{2}&\frac{3\sqrt3}{2}\\ -\frac{3\sqrt3}{2}&-\frac{3}{2}\end{pmatrix}^{-1}$$
+        teoria: ["T4.5"]
+        teoria_reservada: ["T4.3"]
+        resultat:
+          valor: |
+            $h(1,0)=\big(-\frac12,\frac{\sqrt3}{2}\big)$.
+          fuites: ['-\s*(\\[dt]?frac\s*\{?1\}?\s*\{?2\}?|1\s*/\s*2)\s*,\s*(\\[dt]?frac\s*\{\s*\\sqrt\s*\{?3\}?\s*\}\s*\{?2\}?|\\sqrt\s*\{?3\}?\s*/\s*2)']
+        passos:
+          - id: candidats
+            titol: "Candidats"
+            objectiu: |
+              Assumint conegudes les antiimatges de $(1,0)$ de l'apartat (b), determinar quins valors pot prendre $h(1,0)$.
+            idea: |
+              Si $h$ és una inversa local de $f$, cal que $f(h(1,0))=(1,0)$.
+            detall: |
+              $f(h(1,0))=(1,0)$, per tant $h(1,0)\in\{(1,0),\ (-\frac12,\pm\frac{\sqrt3}{2})\}$.
+            fuites: []
+            teoria: []
+          - id: relacio_tfi
+            titol: "Relació amb la jacobiana de $f$"
+            objectiu: |
+              Traduir la dada sobre $Dh(1,0)$ en una condició sobre la jacobiana de $f$.
+            idea: |
+              Fórmula de la diferencial de la inversa local del teorema de la funció inversa.
+            detall: |
+              $Dh(1,0)=\big(Df(h(1,0))\big)^{-1}$, per tant $Df(h(1,0))=M:=\begin{pmatrix}-\frac32&\frac{3\sqrt3}{2}\\ -\frac{3\sqrt3}{2}&-\frac32\end{pmatrix}$. No cal invertir cap matriu.
+            fuites: []
+            teoria: ["T4.5"]
+          - id: comparar
+            titol: "Comparar als candidats"
+            objectiu: |
+              Identificar el candidat on la jacobiana de $f$ coincideix amb la matriu donada.
+            idea: |
+              Avaluar $Jf$ a cada candidat i comparar.
+            detall: |
+              $Jf(1,0)=\begin{pmatrix}3&0\\0&3\end{pmatrix}$; a $(-\frac12,\frac{\sqrt3}{2})$: $3u^2-3v^2=-\frac32$, $-6uv=\frac{3\sqrt3}{2}$, $6uv=-\frac{3\sqrt3}{2}$, que és $M$; a $(-\frac12,-\frac{\sqrt3}{2})$ els termes de fora de la diagonal canvien de signe. Per tant $h(1,0)=(-\frac12,\frac{\sqrt3}{2})$.
+            fuites: ['-\s*(\\[dt]?frac\{?1\}?\{?2\}?|1\s*/\s*2)\s*,\s*(\\[dt]?frac\{\\sqrt\s*\{?3\}?\}\{?2\}?|\\sqrt\s*\{?3\}?\s*/\s*2)']
+            teoria: ["T3.10"]
+        errors_comuns:
+          - id: h_identitat
+            descripcio: |
+              Respon $h(1,0)=(1,0)$ perquè $f(1,0)=(1,0)$, sense fer servir la dada de $Dh(1,0)$.
+            pregunta: |
+              Quantes inverses locals diferents hi ha a prop de $(1,0)$? Quina informació distingeix la que et donen?
+          - id: compara_amb_df_del_punt_imatge
+            descripcio: |
+              Compara $M$ amb $Df(1,0)$ (avaluant al punt d'arribada) en lloc de $Df(h(1,0))$.
+            pregunta: |
+              A la fórmula del TFI, en quin punt s'avalua $Df$ per obtenir $Dh(1,0)$?
+          - id: inverteix_innecessariament
+            descripcio: |
+              Inverteix la matriu donada i la compara amb $Jf$, barrejant $Dh$ i $Df$.
+            pregunta: |
+              Si $Dh(1,0)=M^{-1}$, quina matriu ha de ser $Df(h(1,0))$?
+        nota_professor: |
+          En notació complexa, $Jf(z)$ és la matriu de multiplicar per $3z^2$. $M$ correspon a $3z^2=-\frac32-\frac{3\sqrt3}{2}i$, és a dir $z^2=e^{4\pi i/3}$, i entre les arrels cúbiques de $1$ només $z=e^{2\pi i/3}$ ho compleix.
+
+  - num: 17
+    font: null
+    preambul: |
+      Considereu el sistema
+      $$\left.\begin{aligned}x-2y-z&=0\\ x+yt&=0\end{aligned}\right\}$$
+    indicacio: null
+    exercicis:
+      - id: "t4-17a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          Proveu que defineix implícitament funcions diferenciables $z=g_1(x,y)$ i $t=g_2(x,y)$ al voltant del punt $(1,1,-1,-1)$.
+        teoria: ["T4.12"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Amb $\Phi(x,y,z,t)=(x-2y-z,\,x+yt)\in\mathcal{C}^\infty$, $\Phi(1,1,-1,-1)=(0,0)$ i $\det\frac{\partial\Phi}{\partial(z,t)}(1,1,-1,-1)=\det\begin{pmatrix}-1&0\\0&1\end{pmatrix}=-1\neq 0$. Pel teorema de la funció implícita existeixen $g_1,g_2$ de classe $\mathcal{C}^\infty$ en un entorn de $(1,1)$, amb $g_1(1,1)=-1$, $g_2(1,1)=-1$.
+          fuites: []
+        passos:
+          - id: comprovar_punt
+            titol: "El punt és solució"
+            objectiu: |
+              Escriure el sistema com $\Phi=0$ i comprovar que el punt donat hi pertany.
+            idea: |
+              Definir $\Phi:\mathbb{R}^4\to\mathbb{R}^2$ amb les dues equacions i avaluar-la al punt, respectant l'ordre $(x,y,z,t)$.
+            detall: |
+              $\Phi(x,y,z,t)=(x-2y-z,\,x+yt)$; $\Phi(1,1,-1,-1)=(1-2+1,\,1-1)=(0,0)$.
+            fuites: []
+            teoria: []
+          - id: menor
+            titol: "Menor respecte de $(z,t)$"
+            objectiu: |
+              Comprovar la condició de no-degeneració respecte de les variables que es volen aïllar.
+            idea: |
+              Calcular la submatriu de la jacobiana de $\Phi$ formada per les derivades respecte de $z$ i $t$, i el seu determinant al punt.
+            detall: |
+              $\frac{\partial\Phi}{\partial(z,t)}=\begin{pmatrix}-1&0\\0&y\end{pmatrix}$, de determinant $-y$, que al punt val $-1\neq 0$.
+            fuites: ['-\s*1\s*\\neq\s*0']
+            teoria: ["T3.10"]
+          - id: aplicar_tfi
+            titol: "Aplicar el teorema de la funció implícita"
+            objectiu: |
+              Concloure l'existència de $g_1$ i $g_2$ diferenciables.
+            idea: |
+              Comprovar totes les hipòtesis del teorema de la funció implícita (regularitat, punt solució, determinant) i llegir-ne la conclusió.
+            detall: |
+              $\Phi$ és polinòmica, per tant $\mathcal{C}^\infty$. Pel teorema de la funció implícita existeixen un entorn $\Omega$ de $(1,1)$ i $(g_1,g_2)\in\mathcal{C}^\infty(\Omega)$ amb $g_1(1,1)=-1$, $g_2(1,1)=-1$ i $\Phi(x,y,g_1(x,y),g_2(x,y))=0$; a més, a prop del punt aquestes són les úniques solucions.
+            fuites: []
+            teoria: ["T4.13", "T3.31"]
+        errors_comuns:
+          - id: menor_equivocat
+            descripcio: |
+              Calcula el determinant respecte de $(x,y)$ en lloc de $(z,t)$.
+            pregunta: |
+              Quines variables vols escriure en funció de les altres? Respecte de quines cal que el menor sigui invertible?
+          - id: no_comprova_punt
+            descripcio: |
+              No comprova que el punt satisfà el sistema.
+            pregunta: |
+              El teorema de la funció implícita demana alguna condició sobre el valor de $\Phi$ al punt?
+          - id: ordre_coordenades
+            descripcio: |
+              Assigna malament les coordenades del punt (per exemple, pren $z=1$, $t=-1$ o $y=-1$).
+            pregunta: |
+              En quin ordre estan escrites les variables del punt $(1,1,-1,-1)$?
+        nota_professor: |
+          El determinant és $-y$, així que el teorema s'aplica a tot punt solució amb $y\neq 0$.
+
+      - id: "t4-17b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          Calculeu $\frac{\partial g_1}{\partial x}(1,1)$, $\frac{\partial g_1}{\partial y}(1,1)$, $\frac{\partial g_2}{\partial x}(1,1)$ i $\frac{\partial g_2}{\partial y}(1,1)$ per derivació implícita.
+        teoria: ["T4.13"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $\frac{\partial g_1}{\partial x}(1,1)=1$, $\frac{\partial g_1}{\partial y}(1,1)=-2$, $\frac{\partial g_2}{\partial x}(1,1)=-1$, $\frac{\partial g_2}{\partial y}(1,1)=1$.
+          fuites: ['\\partial\s*g_\{?1\}?\}\{\\partial\s*y\}\s*\(1,\s*1\)\s*=\s*-\s*2', '\\partial\s*g_\{?2\}?\}\{\\partial\s*x\}\s*\(1,\s*1\)\s*=\s*-\s*1', '\\partial\s*g_\{?2\}?\}\{\\partial\s*y\}\s*\(1,\s*1\)\s*=\s*1', '1\s*&\s*-\s*2\s*\\\\\s*-\s*1\s*&\s*1']
+        passos:
+          - id: derivar_sistema
+            titol: "Derivar el sistema"
+            objectiu: |
+              Obtenir equacions lineals per a les derivades parcials de $g_1$ i $g_2$.
+            idea: |
+              Substituir $z=g_1(x,y)$, $t=g_2(x,y)$ al sistema i derivar cada equació respecte de $x$ i respecte de $y$ amb la regla de la cadena.
+            detall: |
+              $x-2y-g_1=0$: $1-\frac{\partial g_1}{\partial x}=0$, $-2-\frac{\partial g_1}{\partial y}=0$.
+              $x+y\,g_2=0$: $1+y\frac{\partial g_2}{\partial x}=0$, $g_2+y\frac{\partial g_2}{\partial y}=0$.
+            fuites: ['g_\{?2\}?\s*\+\s*y\s*\\[dt]?frac\{\\partial\s*g_\{?2\}?\}\{\\partial\s*y\}']
+            teoria: ["T4.15", "T3.21"]
+          - id: avaluar
+            titol: "Avaluar al punt"
+            objectiu: |
+              Obtenir els valors numèrics de les quatre derivades a $(1,1)$.
+            idea: |
+              Substituir $x=y=1$ i els valors de $g_1$, $g_2$ en aquest punt.
+            detall: |
+              Amb $y=1$, $g_2(1,1)=-1$: $\frac{\partial g_1}{\partial x}(1,1)=1$, $\frac{\partial g_1}{\partial y}(1,1)=-2$, $\frac{\partial g_2}{\partial x}(1,1)=-1$, $\frac{\partial g_2}{\partial y}(1,1)=-\frac{g_2(1,1)}{1}=1$.
+              (Matricialment: $Dg(1,1)=-\begin{pmatrix}-1&0\\0&1\end{pmatrix}^{-1}\begin{pmatrix}1&-2\\1&-1\end{pmatrix}=\begin{pmatrix}1&-2\\-1&1\end{pmatrix}$.)
+            fuites: ['\\partial\s*g_\{?2\}?\}\{\\partial\s*y\}\s*\(1,\s*1\)\s*=', '1\s*&\s*-\s*2\s*\\\\\s*-\s*1\s*&\s*1']
+            teoria: []
+        errors_comuns:
+          - id: regla_producte
+            descripcio: |
+              Deriva $y\,g_2(x,y)$ respecte de $y$ com $y\frac{\partial g_2}{\partial y}$, oblidant el terme $g_2$.
+            pregunta: |
+              El terme $y\,t$ depèn de $y$ de dues maneres quan $t=g_2(x,y)$. Quina regla de derivació s'hi aplica?
+          - id: valor_g2
+            descripcio: |
+              Substitueix $g_2(1,1)$ per un valor incorrecte (per exemple $1$) en lloc de $t=-1$.
+            pregunta: |
+              Quant val $g_2(1,1)$? D'on ho treus?
+          - id: signe_formula
+            descripcio: |
+              Aplica la fórmula matricial sense el signe menys: $Dg=\big(\frac{\partial\Phi}{\partial(z,t)}\big)^{-1}\frac{\partial\Phi}{\partial(x,y)}$.
+            pregunta: |
+              Si derives $\Phi(x,y,g(x,y))=0$ amb la regla de la cadena, quina relació obtens entre els dos blocs de la jacobiana?
+        nota_professor: |
+          Es pot fer component a component o amb la fórmula de l'observació 15 de les notes; tots dos camins són equivalents.
+
+      - id: "t4-17c"
+        apartat: "c"
+        tipus: calcul
+        enunciat: |
+          Calculeu explícitament $g_1$ i $g_2$ i comproveu directament els resultats de (b).
+        teoria: ["T4.13"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $g_1(x,y)=x-2y$, $g_2(x,y)=-\frac{x}{y}$ (en un entorn de $(1,1)$, on $y\neq 0$). Derivant: $\frac{\partial g_1}{\partial x}=1$, $\frac{\partial g_1}{\partial y}=-2$, $\frac{\partial g_2}{\partial x}=-\frac1y$, $\frac{\partial g_2}{\partial y}=\frac{x}{y^2}$, que a $(1,1)$ donen $1,-2,-1,1$, com a (b).
+          fuites: ['g_\{?2\}?\s*\(x,\s*y\)\s*=\s*-\s*\\[dt]?frac\{\s*x\s*\}\{\s*y\s*\}', 'g_\{?2\}?\s*\(x,\s*y\)\s*=\s*-\s*x\s*/\s*y', 'g_\{?1\}?\s*\(x,\s*y\)\s*=\s*x\s*-\s*2\s*y']
+        passos:
+          - id: aillar
+            titol: "Aïllar $z$ i $t$"
+            objectiu: |
+              Trobar les expressions explícites de $g_1$ i $g_2$ a prop de $(1,1)$.
+            idea: |
+              Cada equació permet aïllar directament una de les variables; cal vigilar on és vàlida l'expressió i comprovar el valor al punt.
+            detall: |
+              De la primera, $z=x-2y$; de la segona, $t=-\frac{x}{y}$ si $y\neq 0$. Així $g_1(x,y)=x-2y$ i $g_2(x,y)=-\frac{x}{y}$ en un entorn de $(1,1)$; $g_1(1,1)=-1$, $g_2(1,1)=-1$, i per la unicitat local del teorema de la funció implícita són les funcions de (a).
+            fuites: ['t\s*=\s*-\s*\\[dt]?frac\{\s*x\s*\}\{\s*y\s*\}', 'g_\{?2\}?\s*\(x,\s*y\)\s*=\s*-\s*\\[dt]?frac\{\s*x\s*\}\{\s*y\s*\}']
+            teoria: ["T4.13"]
+          - id: comprovar
+            titol: "Comprovar les derivades"
+            objectiu: |
+              Derivar les expressions explícites i comparar amb (b).
+            idea: |
+              Derivar directament i avaluar a $(1,1)$.
+            detall: |
+              $\frac{\partial g_1}{\partial x}=1$, $\frac{\partial g_1}{\partial y}=-2$, $\frac{\partial g_2}{\partial x}=-\frac{1}{y}$, $\frac{\partial g_2}{\partial y}=\frac{x}{y^2}$; a $(1,1)$: $1,\,-2,\,-1,\,1$. Coincideixen amb (b).
+            fuites: ['\\[dt]?frac\{\s*x\s*\}\{\s*y\^\{?2\}?\s*\}']
+            teoria: []
+        errors_comuns:
+          - id: domini_g2
+            descripcio: |
+              No indica que l'expressió de $g_2$ només té sentit per a $y\neq 0$ (i que això és compatible amb un entorn de $(1,1)$).
+            pregunta: |
+              On està definida l'expressió que has obtingut per a $t$? Conté un entorn de $(1,1)$?
+          - id: derivada_quocient
+            descripcio: |
+              S'equivoca de signe derivant $-\frac{x}{y}$ respecte de $y$.
+            pregunta: |
+              Quina és la derivada de $\frac1y$ respecte de $y$? Com afecta el signe menys i el factor $x$?
+          - id: unicitat
+            descripcio: |
+              No relaciona les funcions explícites amb les del teorema (podria haver-hi altres solucions).
+            pregunta: |
+              Com saps que les funcions que has aïllat són les mateixes que garanteix el teorema a (a)?
+        nota_professor: |
+          Cas didàctic: el sistema és prou senzill per resoldre'l explícitament i contrastar la derivació implícita.
+
+      - id: "t4-17d"
+        apartat: "d"
+        tipus: calcul
+        enunciat: |
+          Calculeu les derivades segones de $g_1$ i $g_2$ en el punt $(1,1)$.
+        teoria: ["T5.1"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Totes les derivades segones de $g_1$ són $0$. Per a $g_2$: $\frac{\partial^2 g_2}{\partial x^2}(1,1)=0$, $\frac{\partial^2 g_2}{\partial x\partial y}(1,1)=\frac{\partial^2 g_2}{\partial y\partial x}(1,1)=1$, $\frac{\partial^2 g_2}{\partial y^2}(1,1)=-2$.
+          fuites: ['\\partial\s*y\^\{?2\}?\}\s*\(1,\s*1\)\s*=\s*-\s*2', '\\partial\s*x\s*\\partial\s*y\}\s*\(1,\s*1\)\s*=\s*1', '\\partial\s*y\s*\\partial\s*x\}\s*\(1,\s*1\)\s*=\s*1']
+        passos:
+          - id: segones_g1
+            titol: "Derivades segones de $g_1$"
+            objectiu: |
+              Calcular les derivades segones de $g_1$ a $(1,1)$ (es poden fer servir els resultats dels apartats anteriors).
+            idea: |
+              Mirar la forma de $g_1$ (o de les seves derivades primeres obtingudes a (b)).
+            detall: |
+              $g_1(x,y)=x-2y$ és lineal (o bé: $\frac{\partial g_1}{\partial x}=1$ i $\frac{\partial g_1}{\partial y}=-2$ són constants), per tant totes les derivades segones de $g_1$ són $0$.
+            fuites: []
+            teoria: ["T5.1"]
+          - id: segones_g2
+            titol: "Derivades segones de $g_2$"
+            objectiu: |
+              Calcular les derivades segones de $g_2$ a $(1,1)$.
+            idea: |
+              Derivar una altra vegada l'expressió explícita de (c), o bé tornar a derivar implícitament les equacions de (b).
+            detall: |
+              Amb $g_2=-\frac{x}{y}$: $\frac{\partial g_2}{\partial x}=-\frac1y$, $\frac{\partial g_2}{\partial y}=\frac{x}{y^2}$; $\frac{\partial^2 g_2}{\partial x^2}=0$, $\frac{\partial^2 g_2}{\partial x\partial y}=\frac{\partial^2 g_2}{\partial y\partial x}=\frac{1}{y^2}$, $\frac{\partial^2 g_2}{\partial y^2}=-\frac{2x}{y^3}$. A $(1,1)$: $0$, $1$, $1$, $-2$.
+              (Implícitament: de $1+y\frac{\partial g_2}{\partial x}=0$ i $g_2+y\frac{\partial g_2}{\partial y}=0$, derivant: $y\frac{\partial^2 g_2}{\partial x^2}=0$, $\frac{\partial g_2}{\partial x}+y\frac{\partial^2 g_2}{\partial y\partial x}=0$, $2\frac{\partial g_2}{\partial y}+y\frac{\partial^2 g_2}{\partial y^2}=0$, que donen el mateix.)
+            fuites: ['-\s*\\[dt]?frac\{\s*2\s*x\s*\}\{\s*y\^\{?3\}?\s*\}', '\\[dt]?frac\{\s*1\s*\}\{\s*y\^\{?2\}?\s*\}']
+            teoria: ["T5.1", "T5.6"]
+        errors_comuns:
+          - id: oblida_g1
+            descripcio: |
+              Calcula només les de $g_2$ i no diu res de les de $g_1$, o en dona valors no nuls.
+            pregunta: |
+              Quina forma té $g_1$? Què passa quan derives dues vegades una funció així?
+          - id: derivada_y_quadrat
+            descripcio: |
+              S'equivoca derivant $\frac{x}{y^2}$ respecte de $y$ (signe o exponent).
+            pregunta: |
+              Quina és la derivada de $y^{-2}$?
+          - id: implicita_sense_producte
+            descripcio: |
+              Derivant implícitament per segona vegada, oblida termes de la regla del producte.
+            pregunta: |
+              Quan derives $y\frac{\partial g_2}{\partial y}$ respecte de $y$, quants termes surten?
+        nota_professor: |
+          Les derivades creuades coincideixen, com ha de ser per a $g_2\in\mathcal{C}^\infty$ (Schwarz).
+
+  - num: 18
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t4-18"
+        apartat: null
+        tipus: teoric
+        enunciat: |
+          Proveu que el sistema
+          $$\left.\begin{aligned}xz^3+y^2u^3&=1\\ 2xy^3+u^2z&=0\end{aligned}\right\}$$
+          permet definir $x$ i $y$ com a funcions implícites diferenciables de $z$ i de $u$ en un entorn de $(0,1,0,1)$. Si $x=g_1(z,u)$ i $y=g_2(z,u)$ són les funcions esmentades, proveu que la funció $g(z,u)=(g_1(z,u),g_2(z,u))$ té inversa local diferenciable al voltant del punt $(0,1)$.
+        teoria: ["T4.12"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Amb $\Phi(x,y,z,u)=(xz^3+y^2u^3-1,\,2xy^3+u^2z)\in\mathcal{C}^\infty$: $\Phi(0,1,0,1)=(0,0)$ i $\frac{\partial\Phi}{\partial(x,y)}(0,1,0,1)=\begin{pmatrix}0&2\\2&0\end{pmatrix}$, de determinant $-4\neq 0$. Pel teorema de la funció implícita, $g=(g_1,g_2)$ és $\mathcal{C}^\infty$ en un entorn de $(0,1)$ amb $g(0,1)=(0,1)$, i
+            $Dg(0,1)=-\begin{pmatrix}0&2\\2&0\end{pmatrix}^{-1}\begin{pmatrix}0&3\\1&0\end{pmatrix}=\begin{pmatrix}-\frac12&0\\0&-\frac32\end{pmatrix}$, amb $\det Dg(0,1)=\frac34\neq 0$. Pel teorema de la funció inversa, $g$ té inversa local diferenciable (de fet $\mathcal{C}^\infty$) a prop de $(0,1)$.
+          fuites: []
+        passos:
+          - id: comprovar_punt
+            titol: "El punt és solució"
+            objectiu: |
+              Escriure el sistema com $\Phi=0$ i comprovar que el punt hi pertany.
+            idea: |
+              Passar tot a un costat, definir $\Phi:\mathbb{R}^4\to\mathbb{R}^2$ i avaluar al punt amb l'ordre $(x,y,z,u)$.
+            detall: |
+              $\Phi(x,y,z,u)=(xz^3+y^2u^3-1,\,2xy^3+u^2z)$; $\Phi(0,1,0,1)=(0+1-1,\,0+0)=(0,0)$.
+            fuites: []
+            teoria: []
+          - id: menor_xy
+            titol: "Menor respecte de $(x,y)$"
+            objectiu: |
+              Comprovar la condició del teorema de la funció implícita respecte de les variables $x$, $y$.
+            idea: |
+              Submatriu de la jacobiana de $\Phi$ formada per les derivades respecte de $x$ i $y$, avaluada al punt.
+            detall: |
+              $\frac{\partial\Phi}{\partial(x,y)}=\begin{pmatrix}z^3&2yu^3\\2y^3&6xy^2\end{pmatrix}$; al punt, $\begin{pmatrix}0&2\\2&0\end{pmatrix}$, de determinant $-4\neq 0$.
+            fuites: ['-\s*4\s*\\neq\s*0', '\\begin\{pmatrix\}\s*0\s*&\s*2\s*\\\\\s*2\s*&\s*0\s*\\end']
+            teoria: ["T3.10"]
+          - id: implicita
+            titol: "Existència de $g$"
+            objectiu: |
+              Concloure que $x$ i $y$ són funcions diferenciables de $(z,u)$ a prop del punt.
+            idea: |
+              Aplicar el teorema de la funció implícita amb totes les seves hipòtesis.
+            detall: |
+              $\Phi$ és polinòmica, $\mathcal{C}^\infty$. Pel teorema de la funció implícita existeix $g=(g_1,g_2)$ de classe $\mathcal{C}^\infty$ en un entorn obert $\Omega$ de $(0,1)$, amb $g(0,1)=(0,1)$ i $\Phi(g_1(z,u),g_2(z,u),z,u)=0$.
+            fuites: []
+            teoria: ["T4.13", "T3.31"]
+          - id: diferencial_g
+            titol: "Diferencial de $g$ al punt"
+            objectiu: |
+              Calcular $Dg(0,1)$.
+            idea: |
+              Derivar $\Phi(g(z,u),z,u)=0$ amb la regla de la cadena (fórmula de la diferencial de la funció implícita).
+            detall: |
+              $\frac{\partial\Phi}{\partial(z,u)}=\begin{pmatrix}3xz^2&3y^2u^2\\u^2&2uz\end{pmatrix}$, al punt $\begin{pmatrix}0&3\\1&0\end{pmatrix}$. Llavors
+              $Dg(0,1)=-\begin{pmatrix}0&2\\2&0\end{pmatrix}^{-1}\begin{pmatrix}0&3\\1&0\end{pmatrix}=-\begin{pmatrix}0&\frac12\\ \frac12&0\end{pmatrix}\begin{pmatrix}0&3\\1&0\end{pmatrix}=\begin{pmatrix}-\frac12&0\\0&-\frac32\end{pmatrix}$.
+            fuites: ['-\s*\\[dt]?frac\{?3\}?\{?2\}?', '-\s*3\s*/\s*2']
+            teoria: ["T4.15"]
+          - id: inversa_g
+            titol: "Inversa local de $g$"
+            objectiu: |
+              Demostrar que $g$ té inversa local diferenciable a prop de $(0,1)$.
+            idea: |
+              Aplicar el teorema de la funció inversa a $g:\Omega\subseteq\mathbb{R}^2\to\mathbb{R}^2$.
+            detall: |
+              $g\in\mathcal{C}^\infty(\Omega)$, $\Omega$ obert, i $\det Dg(0,1)=\frac12\cdot\frac32=\frac34\neq 0$. Pel teorema de la funció inversa, $g$ és injectiva en un entorn de $(0,1)$, la imatge d'aquest entorn és un obert que conté $g(0,1)=(0,1)$ i la inversa local és $\mathcal{C}^\infty$ (en particular diferenciable).
+            fuites: ['\\[dt]?frac\{?3\}?\{?4\}?', '3\s*/\s*4']
+            teoria: ["T4.5"]
+        errors_comuns:
+          - id: menor_equivocat
+            descripcio: |
+              Calcula el menor respecte de $(z,u)$ en lloc de $(x,y)$.
+            pregunta: |
+              Quines són les variables que vols posar en funció de les altres?
+          - id: sense_formula_explicita
+            descripcio: |
+              Creu que cal trobar $g$ explícitament per poder aplicar el teorema de la funció inversa.
+            pregunta: |
+              Què necessita el teorema de la funció inversa: l'expressió de $g$ o només la seva regularitat i la seva diferencial en un punt?
+          - id: signe_o_ordre
+            descripcio: |
+              Oblida el signe menys a $Dg=-\big(\frac{\partial\Phi}{\partial(x,y)}\big)^{-1}\frac{\partial\Phi}{\partial(z,u)}$ o multiplica en l'ordre equivocat.
+            pregunta: |
+              Si derives $\Phi(g(z,u),z,u)=0$ amb la regla de la cadena, quina equació matricial obtens?
+          - id: regularitat_g
+            descripcio: |
+              Aplica el TFI a $g$ sense justificar que $g$ és de classe $\mathcal{C}^1$.
+            pregunta: |
+              D'on surt la regularitat de $g$ necessària per aplicar el teorema de la funció inversa?
+        nota_professor: |
+          Un error de signe a $Dg$ no canvia la conclusió (el determinant és el mateix), però sí el valor de la diferencial. Alternativa: com que $\det\frac{\partial\Phi}{\partial(z,u)}(0,1,0,1)=-3\neq 0$, el sistema també defineix $(z,u)$ en funció de $(x,y)$ a prop del punt, i aquesta funció és precisament la inversa local de $g$.
+
+  - num: 19
+    font: null
+    preambul: |
+      Considereu el sistema d'equacions
+      $$\left.\begin{aligned}x-u-v&=0\\ y-u^2-v^2&=0\\ z-u^3-v^3&=0\end{aligned}\right\}$$
+      Trobeu els punts $p=(x_0,y_0,z_0,u_0,v_0)\in\mathbb{R}^5$ que compleixin les dues condicions següents:
+    indicacio: null
+    exercicis:
+      - id: "t4-19a"
+        apartat: "a"
+        tipus: calcul
+        enunciat: |
+          el sistema defineix funcions implícites diferenciables, $z=f_1(x,y)$, $u=f_2(x,y)$ i $v=f_3(x,y)$ al voltant de $p$;
+        teoria: ["T4.12"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Els punts $p=(u_0+v_0,\ u_0^2+v_0^2,\ u_0^3+v_0^3,\ u_0,\ v_0)$ amb $u_0\neq v_0$.
+          fuites: ['u_\{?0\}?\s*(\\neq?|≠)\s*v_\{?0\}?', 'v_\{?0\}?\s*(\\neq?|≠)\s*u_\{?0\}?', 'u\s*(\\neq?|≠)\s*v', 'u_\{?0\}?\s*-\s*v_\{?0\}?\s*(\\neq?|≠)\s*0']
+        passos:
+          - id: punts_solucio
+            titol: "Punts del sistema"
+            objectiu: |
+              Descriure tots els punts $p\in\mathbb{R}^5$ que satisfan el sistema.
+            idea: |
+              Les equacions donen $x$, $y$, $z$ directament en funció de $u$, $v$.
+            detall: |
+              $p$ és solució si i només si $x_0=u_0+v_0$, $y_0=u_0^2+v_0^2$, $z_0=u_0^3+v_0^3$, amb $(u_0,v_0)\in\mathbb{R}^2$ arbitrari.
+            fuites: []
+            teoria: []
+          - id: menor
+            titol: "Menor respecte de $(z,u,v)$"
+            objectiu: |
+              Calcular el determinant que controla si $(z,u,v)$ es poden posar en funció de $(x,y)$.
+            idea: |
+              Submatriu $3\times 3$ de la jacobiana de $\Phi$ formada per les derivades respecte de $z$, $u$, $v$.
+            detall: |
+              Amb $\Phi=(x-u-v,\,y-u^2-v^2,\,z-u^3-v^3)$: $\frac{\partial\Phi}{\partial(z,u,v)}=\begin{pmatrix}0&-1&-1\\0&-2u&-2v\\1&-3u^2&-3v^2\end{pmatrix}$, de determinant $\begin{vmatrix}-1&-1\\-2u&-2v\end{vmatrix}=2v-2u=2(v-u)$.
+            fuites: ['2\s*\(\s*v\s*-\s*u\s*\)', '2\s*v\s*-\s*2\s*u', '-\s*2\s*\(\s*u\s*-\s*v\s*\)']
+            teoria: ["T3.10"]
+          - id: concloure
+            titol: "Condició sobre $p$"
+            objectiu: |
+              Determinar exactament en quins punts del sistema existeixen les funcions implícites diferenciables.
+            idea: |
+              On el determinant no s'anul·la, aplicar el teorema de la funció implícita; on s'anul·la, veure si la regla de la cadena porta a contradicció suposant que les funcions existeixen.
+            detall: |
+              $\Phi$ és polinòmica. Si $u_0\neq v_0$, el determinant és no nul i el teorema de la funció implícita dona $f_1,f_2,f_3$ de classe $\mathcal{C}^\infty$ a prop de $(x_0,y_0)$. Si $u_0=v_0$ i existissin $f_2,f_3$ diferenciables, derivant $x=f_2+f_3$ i $y=f_2^2+f_3^2$ respecte de $y$ al punt: $0=\frac{\partial f_2}{\partial y}+\frac{\partial f_3}{\partial y}$ i $1=2u_0\big(\frac{\partial f_2}{\partial y}+\frac{\partial f_3}{\partial y}\big)=0$, contradicció. Per tant la condició és exactament $u_0\neq v_0$.
+            fuites: ['u_\{?0\}?\s*(\\neq?|≠)\s*v_\{?0\}?']
+            teoria: ["T4.13", "T3.21"]
+        errors_comuns:
+          - id: menor_equivocat
+            descripcio: |
+              Calcula el determinant respecte d'unes variables que no són $(z,u,v)$, o una submatriu que no és quadrada.
+            pregunta: |
+              Quantes equacions hi ha i quantes variables vols aïllar? Respecte de quines variables derives?
+          - id: oblida_punts_solucio
+            descripcio: |
+              Dona la condició sobre $(u_0,v_0)$ però no imposa que $p$ satisfaci el sistema (deixa $x_0,y_0,z_0$ lliures).
+            pregunta: |
+              Un punt qualsevol de $\mathbb{R}^5$ serveix? Quina condició ha de complir $p$ respecte del sistema?
+          - id: condicio_nomes_suficient
+            descripcio: |
+              Diu que quan el determinant s'anul·la "no es pot aplicar el teorema" i conclou que no hi ha funcions implícites, sense justificar-ho.
+            pregunta: |
+              El teorema de la funció implícita dona una condició necessària o suficient? Com podries descartar els punts on el determinant s'anul·la?
+        nota_professor: |
+          La justificació de la necessitat (excloure $u_0=v_0$) és un plus de rigor; molts enunciats d'aquest tipus esperen només la condició del TFI. Geomètricament, $u_0=v_0$ correspon a $y_0=x_0^2/2$, la vora de la imatge de $(u,v)\mapsto(u+v,u^2+v^2)$.
+
+      - id: "t4-19b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          la derivada direccional de $f_1$ en $(x_0,y_0)$ és màxima en la direcció del vector $(1,0)$ i el valor d'aquesta derivada és 3.
+        teoria: ["T3.1"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Els punts que compleixen (a) i (b) són $p=(0,2,0,1,-1)$ i $p=(0,2,0,-1,1)$.
+          fuites: ['\(\s*0\s*,\s*2\s*,\s*0\s*,\s*1\s*,\s*-\s*1\s*\)', '\(\s*0\s*,\s*2\s*,\s*0\s*,\s*-\s*1\s*,\s*1\s*\)']
+        passos:
+          - id: traduir_condicio
+            titol: "Traduir la condició"
+            objectiu: |
+              Assumint el resultat de (a), expressar la condició sobre la derivada direccional màxima com una condició sobre $\nabla f_1(x_0,y_0)$.
+            idea: |
+              Relació entre la direcció de màxim creixement, el valor màxim de la derivada direccional i el gradient.
+            detall: |
+              El màxim de $D_wf_1(x_0,y_0)$ sobre $\|w\|=1$ val $\|\nabla f_1(x_0,y_0)\|$ i s'assoleix a $w=\nabla f_1/\|\nabla f_1\|$. Que sigui a $w=(1,0)$ amb valor $3$ equival a $\nabla f_1(x_0,y_0)=(3,0)$.
+            fuites: ['\\nabla\s*f_\{?1\}?\s*\(\s*x_\{?0\}?\s*,\s*y_\{?0\}?\s*\)\s*=\s*\(\s*3\s*,\s*0\s*\)', '=\s*\(\s*3\s*,\s*0\s*\)']
+            teoria: ["T3.13"]
+          - id: gradient
+            titol: "Gradient de $f_1$"
+            objectiu: |
+              Calcular $\nabla f_1(x_0,y_0)$ en termes de $u_0$, $v_0$.
+            idea: |
+              Derivar implícitament el sistema respecte de $x$ i de $y$ (amb $z=f_1$, $u=f_2$, $v=f_3$) i resoldre el sistema lineal per a les derivades de $u$, $v$.
+            detall: |
+              Respecte de $x$: $1=u_x+v_x$, $0=2uu_x+2vv_x$, $z_x=3u^2u_x+3v^2v_x$; d'aquí $u_x=\frac{v}{v-u}$, $v_x=\frac{-u}{v-u}$ i $z_x=\frac{3uv(u-v)}{v-u}=-3uv$.
+              Respecte de $y$: $0=u_y+v_y$, $1=2uu_y+2vv_y$; $u_y=\frac{1}{2(u-v)}$, $v_y=-\frac{1}{2(u-v)}$ i $z_y=\frac{3(u^2-v^2)}{2(u-v)}=\frac{3(u+v)}{2}$.
+              Per tant $\nabla f_1(x_0,y_0)=\big(-3u_0v_0,\ \frac32(u_0+v_0)\big)$. (Alternativa: $u^3+v^3=(u+v)^3-3uv(u+v)$ i $uv=\frac{x^2-y}{2}$ donen $f_1(x,y)=\frac{3xy-x^3}{2}$.)
+            fuites: ['=\s*-\s*3\s*u_?\{?0?\}?\s*v', '\\[dt]?frac\{\s*3\s*x\s*y\s*-\s*x\^\{?3\}?\s*\}\{\s*2\s*\}', '\\[dt]?frac\{\s*3\s*\(\s*u\s*\+\s*v\s*\)\s*\}\{\s*2\s*\}', '\\[dt]?frac\s*\{?3\}?\s*\{?2\}?\s*\(\s*u_?\{?0?\}?\s*\+\s*v']
+            teoria: ["T4.15", "T3.21"]
+          - id: resoldre
+            titol: "Resoldre i comprovar"
+            objectiu: |
+              Trobar els punts $p$ que compleixen totes les condicions.
+            idea: |
+              Igualar el gradient al vector obtingut al primer pas, resoldre per a $(u_0,v_0)$ i comprovar la condició de (a).
+            detall: |
+              $\frac32(u_0+v_0)=0\Rightarrow v_0=-u_0$; $-3u_0v_0=3u_0^2=3\Rightarrow u_0=\pm1$. Els parells $(1,-1)$ i $(-1,1)$ compleixen $u_0\neq v_0$. Llavors $x_0=0$, $y_0=2$, $z_0=0$: $p=(0,2,0,1,-1)$ i $p=(0,2,0,-1,1)$.
+            fuites: ['u_\{?0\}?\s*=\s*\\pm\s*1', '\(\s*0\s*,\s*2\s*,\s*0\s*,']
+            teoria: []
+        errors_comuns:
+          - id: nomes_paralel
+            descripcio: |
+              Imposa només que $\nabla f_1$ sigui paral·lel a $(1,0)$ i oblida el valor $3$ (o el sentit: un gradient que apunti cap a $(-1,0)$ no serveix).
+            pregunta: |
+              Quant val la derivada direccional màxima en funció del gradient? I en quin sentit apunta la direcció de màxim creixement?
+          - id: oblida_condicio_a
+            descripcio: |
+              No comprova que les solucions compleixen la condició de (a), o dona només $(x_0,y_0)$ i no el punt $p$ sencer de $\mathbb{R}^5$.
+            pregunta: |
+              El problema demana punts de $\mathbb{R}^5$ que compleixin les dues condicions. Els teus ho fan totes dues?
+          - id: derivada_parcial_z
+            descripcio: |
+              Calcula $\frac{\partial f_1}{\partial x}$ tractant $u$ i $v$ com a constants.
+            pregunta: |
+              Quan $x$ varia, $u$ i $v$ es queden fixos o també canvien?
+          - id: perd_una_solucio
+            descripcio: |
+              De $u_0^2=1$ pren només $u_0=1$.
+            pregunta: |
+              Quantes solucions té $u_0^2=1$? I cadascuna, quin $v_0$ dona?
+        nota_professor: |
+          Per simetria $u\leftrightarrow v$ les dues solucions són el mateix punt $(x_0,y_0,z_0)=(0,2,0)$ amb $u,v$ intercanviats; cadascun dona una tria diferent de funcions implícites $f_2,f_3$, però la mateixa $f_1$. La fórmula explícita $f_1=\frac{3xy-x^3}{2}$ dona $\nabla f_1=\big(\frac{3y-3x^2}{2},\frac{3x}{2}\big)=(3,0)$ a $(0,2)$.

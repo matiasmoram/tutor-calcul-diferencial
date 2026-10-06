@@ -1,0 +1,61 @@
+{
+  "id": "36e108c0fdf4",
+  "exercici": "T1.12",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "(Propietats dels conjunts oberts.) Sigui $(M,d)$ un espai mètric. Aleshores: i) tota bola oberta $B_r(x)$ és un conjunt obert i tancat; ii) la unió arbitrària (finita o infinita) d'oberts és un obert;",
+    "iii) la intersecció finita d'oberts és un obert; iv) $M$ i $\\varnothing$ són conjunts oberts.",
+    "i) Sigui $y\\in B_r(x)$; cal trobar $r_y>0$ tal que $B_{r_y}(y)\\subset B_r(x)$. Com que $d(x,y)<r$, definim $r_y:=r-d(x,y)>0$.",
+    "Si $z\\in B_{r_y}(y)$, aleshores $d(z,x)\\leq d(z,y)+d(y,x)<(r-d(x,y))+d(x,y)=r$, i per tant $B_{r_y}(y)\\subset B_r(x)$.",
+    "ii) Sigui $(A_\\mu)_{\\mu\\in I}$, amb $I$ un conjunt arbitrari, una família d'oberts de $M$. Si $x\\in\\bigcup_{\\mu\\in I}A_\\mu$, existeix $\\mu_0\\in I$ tal que $x\\in A_{\\mu_0}$ i, com que $A_{\\mu_0}$ és obert, existeix $r_0>0$ tal que $B_{r_0}(x)\\subseteq A_{\\mu_0}\\subseteq\\bigcup_{\\mu\\in I}A_\\mu$.",
+    "iii) N'hi ha prou de veure que si $A_1$ i $A_2$ són oberts, $A_1\\cap A_2$ també ho és; la resta s'obté per inducció. Sigui $x\\in A_1\\cap A_2$: existeixen $r_1>0$ i $r_2>0$ tals que $B_{r_1}(x)\\subseteq A_1$ i $B_{r_2}(x)\\subseteq A_2$.",
+    "Si definim $r=\\max\\{r_1,r_2\\}$, tenim $B_r(x)\\subseteq B_{r_1}(x)\\subseteq A_1$ i $B_r(x)\\subseteq B_{r_2}(x)\\subseteq A_2$, d'on $B_r(x)\\subseteq A_1\\cap A_2$.",
+    "iv) $M$ és obert: si $x\\in M$ i $r>0$, per definició $B_r(x)=\\{y\\in M\\mid d(x,y)<r\\}\\subseteq M$. I $\\varnothing$ és obert perquè no té cap punt, de manera que la condició de la definició es compleix trivialment."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "tota bola oberta $B_r(x)$ és un conjunt obert i tancat",
+      "inici": 80,
+      "fi": 134,
+      "tipus": "conclusio",
+      "explicacio": "Una bola oberta no és tancada en general (i la demostració només prova que és oberta): a $\\mathbb{R}$, $B_1(0)=(-1,1)$ no és tancat, ja que el seu complementari no és obert al voltant de $1$.",
+      "correccio": "Tota bola oberta $B_r(x)$ és un conjunt obert.",
+      "pista": "És tancat l'interval $(-1,1)$ de $\\mathbb{R}$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "$r=\\max\\{r_1,r_2\\}$",
+      "inici": 11,
+      "fi": 30,
+      "tipus": "desigualtat",
+      "explicacio": "Amb el màxim, $r\\geq r_1$ i $r\\geq r_2$, de manera que les inclusions $B_r(x)\\subseteq B_{r_1}(x)$ i $B_r(x)\\subseteq B_{r_2}(x)$ no són certes en general.",
+      "correccio": "Cal prendre $r=\\min\\{r_1,r_2\\}$, que compleix $r\\leq r_1$ i $r\\leq r_2$.",
+      "pista": "Quan és certa la inclusió $B_r(x)\\subseteq B_{r_1}(x)$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t1a.json",
+    "valoracio": "Enunciat i) amb afirmació falsa (bola oberta tancada) i ús de max en lloc de min a iii); la prova alternativa de que $\\varnothing$ és obert és correcta.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "és un conjunt obert i tancat",
+        "gravetat": "error",
+        "explicacio": "Una bola oberta no és en general tancada (p. ex. $(0,1)=B_{1/2}(1/2)$ a $\\mathbb{R}$); l'enunciat original només diu que és oberta."
+      },
+      {
+        "fragment": 7,
+        "cita": "$r=\\max\\{r_1,r_2\\}$",
+        "gravetat": "error",
+        "explicacio": "Cal prendre el mínim: amb el màxim, $B_r(x)\\subseteq B_{r_1}(x)$ i $B_r(x)\\subseteq B_{r_2}(x)$ no són certes en general."
+      }
+    ]
+  },
+  "creat": 1791295858.017215
+}

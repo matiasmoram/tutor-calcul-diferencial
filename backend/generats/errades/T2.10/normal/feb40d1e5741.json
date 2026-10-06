@@ -1,0 +1,66 @@
+{
+  "id": "feb40d1e5741",
+  "exercici": "T2.10",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Siguin $F:D\\subseteq\\mathbb{R}^2\\longrightarrow\\mathbb{R}^m$ i $(a,b)\\in D'$. Aleshores, $\\lim_{(x,y)\\to(a,b)}F(x,y)=L$ si i només si, per a tota funció real i contínua $g$ definida en un entorn d'$a$ tal que $g(a)=b$, es compleix que $\\lim_{x\\to a}F(x,g(x))=L$.",
+    "Com que $\\lim_{(x,y)\\to(a,b)}F(x,y)=L$, per a tot $\\epsilon>0$ existeix $\\delta_1=\\delta_1(\\epsilon)>0$ tal que si $0<\\|(x,y)-(a,b)\\|<\\delta_1(\\epsilon)$, aleshores $\\|F(x,y)-L\\|<\\epsilon$. (1)",
+    "Com que $g$ és contínua en $a$ i $g(a)=b$, tenim $\\lim_{x\\to a}g(x)=b$: per a tot $\\epsilon>0$ existeix $\\delta_2=\\delta_2(\\epsilon)>0$ tal que si $0<|x-a|<\\delta_2(\\epsilon)$, aleshores $|g(x)-b|<\\epsilon$. (2)",
+    "Volem veure que, donat $\\epsilon>0$, existeix $\\delta>0$ tal que si $0<|x-a|<\\delta$, aleshores $\\|F(x,g(x))-L\\|<\\epsilon$.",
+    "Donat $\\epsilon>0$, definim $\\delta=\\min\\left\\{\\delta_1(\\epsilon),\\ \\delta_2\\!\\left(\\delta_1(\\epsilon)/\\sqrt{2}\\right)\\right\\}$. Així, si $0<|x-a|<\\delta$, és clar que $|x-a|<\\delta_1(\\epsilon)/\\sqrt{2}$ i, aplicant (2) amb $\\delta_1(\\epsilon)/\\sqrt{2}$ en lloc d'$\\epsilon$, també $|g(x)-b|<\\delta_1(\\epsilon)/\\sqrt{2}$.",
+    "Amb aquestes dues fites, $\\|(x,g(x))-(a,b)\\|=\\sqrt{(x-a)^2+(g(x)-b)^2}<\\sqrt{\\left(\\frac{\\delta_1(\\epsilon)}{\\sqrt{2}}\\right)^2+\\left(\\frac{\\delta_1(\\epsilon)}{\\sqrt{2}}\\right)^2}=\\delta_1(\\epsilon)$, i aquesta distància és positiva perquè $x\\neq a$.",
+    "Llavors, substituint $y$ per $g(x)$ a (1), deduïm que $\\|F(x,g(x))-L\\|<\\epsilon$."
+  ],
+  "n_enunciat": 1,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "si i només si",
+      "inici": 120,
+      "fi": 133,
+      "tipus": "implicacio",
+      "explicacio": "El recíproc és fals: el límit per tots els camins de la forma $y=g(x)$ no garanteix el límit doble. Contraexemple: $F(x,y)=1$ si $x=0$, $y\\neq0$, i $F(x,y)=0$ altrament, a $(0,0)$: per a tota $g$ el límit és $0$, però sobre l'eix $x=0$ val $1$. A més, la demostració només prova una implicació.",
+      "correccio": "Només la implicació: si $\\exists\\lim_{(x,y)\\to(a,b)}F(x,y)=L$, llavors per a tota $g$ contínua amb $g(a)=b$, $\\lim_{x\\to a}F(x,g(x))=L$.",
+      "pista": "Tots els camins cap a $(a,b)$ són gràfiques de funcions $y=g(x)$? Quina direcció demostra realment la demostració?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$\\delta=\\min\\left\\{\\delta_1(\\epsilon),\\ \\delta_2\\!\\left(\\delta_1(\\epsilon)/\\sqrt{2}\\right)\\right\\}$. Així, si $0<|x-a|<\\delta$, és clar que $|x-a|<\\delta_1(\\epsilon)/\\sqrt{2}$",
+      "inici": 28,
+      "fi": 203,
+      "tipus": "pas_injustificat",
+      "explicacio": "Amb $\\delta\\leq\\delta_1(\\epsilon)$ només es té $|x-a|<\\delta_1(\\epsilon)$, no $|x-a|<\\delta_1(\\epsilon)/\\sqrt{2}$, i aleshores la distància a $(a,b)$ pot arribar a $\\sqrt{2}\\,\\delta_1(\\epsilon)$.",
+      "correccio": "$\\delta=\\min\\left\\{\\frac{\\delta_1(\\epsilon)}{\\sqrt{2}},\\ \\delta_2\\!\\left(\\frac{\\delta_1(\\epsilon)}{\\sqrt{2}}\\right)\\right\\}$.",
+      "pista": "Si $|x-a|<\\delta_1(\\epsilon)$, quina fita en surt per a $|x-a|$? És la que fa falta per al càlcul següent?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t2a.json",
+    "valoracio": "Enunciat convertit en equivalència (fals) i $\\delta$ mal definit que invalida la fita de la distància.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "si i només si",
+        "gravetat": "error",
+        "explicacio": "L'apunt només afirma la implicació límit doble ⇒ límit per camins. El recíproc és fals (p. ex. $F=1$ sobre la recta $x=a$, $y\\neq b$, i $F=0$ altrament: tots els camins $y=g(x)$ donen 0 però no hi ha límit), i la demostració només fa una direcció."
+      },
+      {
+        "fragment": 5,
+        "cita": "$\\delta=\\min\\left\\{\\delta_1(\\epsilon),\\ \\delta_2\\!\\left(\\delta_1(\\epsilon)/\\sqrt{2}\\right)\\right\\}$",
+        "gravetat": "error",
+        "explicacio": "Ha de ser $\\delta_1(\\epsilon)/\\sqrt{2}$ dins el mínim; amb $\\delta_1(\\epsilon)$ no se segueix que $|x-a|<\\delta_1(\\epsilon)/\\sqrt{2}$, com s'afirma tot seguit."
+      },
+      {
+        "fragment": 6,
+        "cita": "$\\|(x,g(x))-(a,b)\\|=\\sqrt{(x-a)^2+(g(x)-b)^2}<\\sqrt{\\left(\\frac{\\delta_1(\\epsilon)}{\\sqrt{2}}\\right)^2+\\left(\\frac{\\delta_1(\\epsilon)}{\\sqrt{2}}\\right)^2}=\\delta_1(\\epsilon)$",
+        "gravetat": "consequencia",
+        "explicacio": "La fita és la dels apunts però usa $|x-a|<\\delta_1(\\epsilon)/\\sqrt{2}$, que amb el $\\delta$ definit no es té."
+      }
+    ]
+  },
+  "creat": 1791295999.5517492
+}

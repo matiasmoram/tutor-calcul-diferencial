@@ -1,0 +1,60 @@
+{
+  "id": "c34a3e0c2a1c",
+  "exercici": "t3-22",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Per a $t\\neq0$ tenim $\\gamma(t)=(t,t)\\neq(0,0)$, i $(f\\circ\\gamma)(t)=\\dfrac{t^2\\cdot t}{t^2+t^2}=\\dfrac{t^3}{2t^2}=\\dfrac{t}{2}$.",
+    "Per a $t=0$, la mateixa expressió $\\dfrac{t^3}{2t^2}$ avaluada en $t=0$ dona $0$, de manera que $(f\\circ\\gamma)(t)=\\dfrac t2$ per a tot $t\\in\\mathbb{R}$.",
+    "Aleshores $(f\\circ\\gamma)'(0)=\\lim_{t\\to0}\\dfrac{t/2-0}{t}=\\dfrac12$: la derivada existeix i val $\\dfrac12$.",
+    "Les parcials de $f$ a l'origen: $f(t,0)=0$ i $f(0,t)=0$ per a tot $t$, així que $\\dfrac{\\partial f}{\\partial x}(0,0)=\\dfrac{\\partial f}{\\partial y}(0,0)=0$ i $\\nabla f(0,0)=(0,0)$.",
+    "Si apliquéssim la regla de la cadena obtindríem $\\nabla f(0,0)\\cdot\\gamma'(0)=(0,0)\\cdot(1,1)=0$, que és diferent de $\\dfrac12$.",
+    "La regla de la cadena exigeix que $f$ sigui diferenciable a $\\gamma(0)=(0,0)$, i aquí no ho és perquè $f$ no és contínua a l'origen: el límit de $\\dfrac{x^2y}{x^2+y^2}$ quan $(x,y)\\to(0,0)$ depèn del camí.",
+    "Per tant $(f\\circ\\gamma)'(0)=\\dfrac12$, i aquest resultat no es pot obtenir aplicant la regla de la cadena."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "la mateixa expressió $\\dfrac{t^3}{2t^2}$ avaluada en $t=0$ dona $0$",
+      "inici": 13,
+      "fi": 80,
+      "tipus": "calcul",
+      "explicacio": "En $t=0$ l'expressió $\\dfrac{t^3}{2t^2}$ és $\\dfrac00$, no està definida. El valor en $0$ s'ha d'obtenir de la definició de $f$ a l'origen.",
+      "correccio": "Per a $t=0$, $(f\\circ\\gamma)(0)=f(0,0)=0=\\dfrac02$, i per tant $(f\\circ\\gamma)(t)=\\dfrac t2$ per a tot $t$.",
+      "pista": "Quant val $\\dfrac{t^3}{2t^2}$ exactament en $t=0$? Com està definida $f$ a l'origen?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "$f$ no és contínua a l'origen: el límit de $\\dfrac{x^2y}{x^2+y^2}$ quan $(x,y)\\to(0,0)$ depèn del camí",
+      "inici": 102,
+      "fi": 204,
+      "tipus": "conclusio",
+      "explicacio": "$f$ sí que és contínua a l'origen: $\\left|\\dfrac{x^2y}{x^2+y^2}\\right|\\le|y|\\to0$. El motiu correcte és que no és diferenciable, cosa que es dedueix de la discrepància amb la derivada direccional.",
+      "correccio": "$f$ no és diferenciable a l'origen: $(f\\circ\\gamma)'(0)=D_{(1,1)}f(0,0)=\\frac12$, mentre que si ho fos caldria $D_{(1,1)}f(0,0)=\\nabla f(0,0)\\cdot(1,1)=0$.",
+      "pista": "Pots fitar $\\left|\\dfrac{x^2y}{x^2+y^2}\\right|$ per alguna cosa que tendeixi a $0$? Què hauria de valer $D_{(1,1)}f(0,0)$ si $f$ fos diferenciable?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t34.json",
+    "valoracio": "Càlculs correctes, però el valor a $t=0$ es justifica amb una expressió indefinida i la no-diferenciabilitat amb una falsa discontinuïtat.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "la mateixa expressió $\\dfrac{t^3}{2t^2}$ avaluada en $t=0$ dona $0$",
+        "gravetat": "error",
+        "explicacio": "L'expressió $t^3/(2t^2)$ no està definida a $t=0$ (és $0/0$); cal usar la definició $f(0,0)=0$ (el valor és correcte però la justificació no)."
+      },
+      {
+        "fragment": 6,
+        "cita": "$f$ no és contínua a l'origen",
+        "gravetat": "error",
+        "explicacio": "$f$ sí que és contínua a l'origen: $|x^2y/(x^2+y^2)|\\le|y|\\to0$ i el límit no depèn del camí. La no-diferenciabilitat s'ha de justificar p. ex. amb $D_{(1,1)}f(0,0)=\\frac12\\neq\\nabla f(0,0)\\cdot(1,1)=0$."
+      }
+    ]
+  },
+  "creat": 1791295851.934401
+}

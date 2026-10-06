@@ -1,0 +1,43 @@
+{
+  "id": "9f36e47d1205",
+  "exercici": "T2.24",
+  "font": "teoria",
+  "dificultat": "facil",
+  "fragments": [
+    "Sigui $f:\\Omega\\subseteq M\\to\\mathbb{R}$ contínua, $K\\subseteq\\Omega$ connex, i $x,y\\in K$.",
+    "Aleshores, per a tota $c\\in\\mathbb{R}$ tal que $c<f(y)$, existeix $\\xi\\in K$ tal que $f(\\xi)=c$.",
+    "Com que $f$ és contínua i $K$ és connex, per l'apartat (b) de la proposició 21 sabem que $f(K)$ és connex.",
+    "Suposem, per reducció a l'absurd, que existeix $c_0\\in\\mathbb{R}$ amb $f(x)<c_0<f(y)$ tal que $f(\\xi)\\neq c_0$ per a tot $\\xi\\in K$, és a dir, $c_0\\notin f(K)$.",
+    "Definim els oberts de $\\mathbb{R}$ $V_1:=(-\\infty,c_0)$ i $V_2:=(c_0,+\\infty)$. Com que $c_0\\notin f(K)$, és clar que $f(K)\\subseteq V_1\\cup V_2$.",
+    "A més, $f(x)\\in f(K)\\cap V_1$ i $f(y)\\in f(K)\\cap V_2$, mentre que $f(K)\\cap V_1\\cap V_2=\\emptyset$ perquè $V_1\\cap V_2=\\emptyset$.",
+    "Per tant, $f(K)$ és disconnex, cosa que contradiu que $f(K)$ és connex. Així, aquest $c_0$ no pot existir."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "per a tota $c\\in\\mathbb{R}$ tal que $c<f(y)$",
+      "inici": 11,
+      "fi": 55,
+      "tipus": "hipotesi",
+      "explicacio": "Falta la condició $f(x)<c$: els valors per sota de $f(x)$ no tenen per què ser assolits. Contraexemple: $K=[0,1]$, $f(t)=t$, $x=0$, $y=1$ i $c=-1$; no hi ha cap $\\xi\\in K$ amb $f(\\xi)=-1$.",
+      "correccio": "Per a tota $c\\in\\mathbb{R}$ tal que $f(x)<c<f(y)$.",
+      "pista": "Entre quins dos valors ha d'estar $c$ perquè el teorema tingui sentit?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t2b.json",
+    "valoracio": "Un sol error a l'enunciat (hipòtesi $f(x)<c$ eliminada); la demostració és correcta i fidel.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "per a tota $c\\in\\mathbb{R}$ tal que $c<f(y)$",
+        "gravetat": "error",
+        "explicacio": "S'ha eliminat la condició $f(x)<c$: l'enunciat és fals (p. ex. $K=[0,1]$, $f(t)=t$, $c=-1<f(1)$ no és imatge)."
+      }
+    ]
+  },
+  "creat": 1791295930.3434105
+}

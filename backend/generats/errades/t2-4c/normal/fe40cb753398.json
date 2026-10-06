@@ -1,0 +1,60 @@
+{
+  "id": "fe40cb753398",
+  "exercici": "t2-4c",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Considerem $f(x,y)=\\frac{x^5}{x^4+y^2}$. En acostar-nos a $(0,0)$, el numerador i el denominador tendeixen a $0$, així que tenim una indeterminació del tipus $0/0$ i cal estudiar el límit amb més detall.",
+    "Provem primer camins senzills. Si $y=kx$, llavors $f(x,kx)=\\frac{x^5}{x^4+k^2x^2}=\\frac{x^3}{x^2+k^2}$ per a $x\\neq 0$, i això tendeix a $0$.",
+    "També és natural provar $y=kx^2$, perquè aleshores $y^2$ i $x^4$ tenen el mateix ordre. En aquest cas $f(x,kx^2)=\\frac{x^5}{x^4+k^2x^4}=\\frac{x}{1+k^2}$, que tendeix a $0$.",
+    "Com que tant les rectes com les paràboles adaptades donen el mateix valor $0$, ja podem prendre aquest valor com a límit de la funció. Així, el candidat queda confirmat: $\\lim_{(x,y)\\to(0,0)} f(x,y)=0$.",
+    "Per donar una justificació més global, mirem el valor absolut: $\\left|\\frac{x^5}{x^4+y^2}\\right|=\\frac{|x|^5}{x^4+y^2}$. Com que $x^4+y^2\\ge x^4$ i el denominador és positiu fora de l'origen, obtenim $\\frac{|x|^5}{x^4+y^2}\\le \\frac{|x|^5}{x^4}=|x|$ quan $x\\neq 0$.",
+    "En el cas $x=0$, la funció val $0$, de manera que la mateixa fita $\\left|f(x,y)\\right|\\le |x|$ també és vàlida. Per tant, per a tots els punts del domini propers a l'origen tenim $0\\le |f(x,y)|\\le |x|$.",
+    "Finalment, com que $|x|\\to 0$ quan $(x,y)\\to(0,0)$, pel criteri del sandvitx deduïm que $|f(x,y)|\\to 0$. D'aquí se segueix que $f(x,y)$ tendeix a $1$, i per tant el límit existeix."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "ja podem prendre aquest valor com a límit",
+      "inici": 79,
+      "fi": 120,
+      "tipus": "conclusio",
+      "explicacio": "Que diversos camins donin el mateix valor només suggereix un candidat, però no demostra l'existència del límit en dues variables. Podrien existir altres camins amb un comportament diferent.",
+      "correccio": "Cal dir que aquests camins només indiquen que el candidat és $0$, i després demostrar-ho amb una fita o un altre argument global.",
+      "pista": "Haver comprovat algunes trajectòries garanteix el comportament en totes les trajectòries possibles?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "$f(x,y)$ tendeix a $1$",
+      "inici": 127,
+      "fi": 149,
+      "tipus": "conclusio",
+      "explicacio": "Si $|f(x,y)|\\to 0$, aleshores necessàriament $f(x,y)\\to 0$, no pas $1$. És una conclusió incompatible amb la convergència del valor absolut a zero.",
+      "correccio": "D'aquí se segueix que $f(x,y)$ tendeix a $0$, i per tant el límit és $0$.",
+      "pista": "Si el valor absolut d'una funció es fa arbitràriament petit, quin valor pot tenir el límit de la funció?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "antics.json",
+    "valoracio": "La fita $|f|\\le|x|$ és correcta, però el document dona per demostrat el límit amb camins i al final conclou un valor erroni ($1$ en lloc de $0$).",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "ja podem prendre aquest valor com a límit de la funció",
+        "gravetat": "error",
+        "explicacio": "Que les rectes i les paràboles donin $0$ només proporciona un candidat; uns quants camins no demostren que el límit existeixi."
+      },
+      {
+        "fragment": 7,
+        "cita": "tendeix a $1$",
+        "gravetat": "error",
+        "explicacio": "De $|f(x,y)|\\to0$ se segueix que $f(x,y)\\to0$, no $1$; el límit val $0$."
+      }
+    ]
+  },
+  "creat": 1791295369.391994
+}

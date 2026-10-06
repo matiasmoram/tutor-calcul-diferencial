@@ -1,0 +1,60 @@
+{
+  "id": "2e6f3a60fca3",
+  "exercici": "t6-10b",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "El quadrat $Q=[\\pi/2,\\pi]\\times[\\pi/2,\\pi]$ és tancat i fitat, per tant compacte, i $f$ és contínua, així que pel teorema de Weierstrass $f$ té màxim i mínim absoluts a $Q$.",
+    "Punts crítics: $f_x=\\cos(x+y)-\\sin(x-y)$ i $f_y=\\cos(x+y)+\\sin(x-y)$ s'anul·len si $\\cos(x+y)=0$ i $\\sin(x-y)=0$. A $Q$, $x+y\\in[\\pi,2\\pi]$ i $x-y\\in\\left[-\\frac{\\pi}{2},\\frac{\\pi}{2}\\right]$, i l'única possibilitat és $x+y=\\frac{3\\pi}{2}$, $x-y=0$: el punt interior $\\left(\\frac{3\\pi}{4},\\frac{3\\pi}{4}\\right)$, amb $f=\\sin\\frac{3\\pi}{2}+\\cos0=0$.",
+    "La hessiana en aquest punt és $\\begin{pmatrix}0&2\\\\2&0\\end{pmatrix}$; com que la traça és $0$, el criteri de la hessiana no decideix el seu caràcter, però és igualment un candidat amb $f=0$.",
+    "Costat $x=\\frac{\\pi}{2}$: $f=\\sin\\left(\\frac{\\pi}{2}+y\\right)+\\cos\\left(\\frac{\\pi}{2}-y\\right)=\\cos y+\\sin y$, amb derivada $\\cos y-\\sin y<0$ a $\\left(\\frac{\\pi}{2},\\pi\\right)$: decreix de $1$ a $-1$. Costat $x=\\pi$: $f=\\sin(\\pi+y)+\\cos(\\pi-y)=-\\sin y-\\cos y$, que creix de $-1$ a $1$.",
+    "Per la simetria $f(x,y)=f(y,x)$, el costat $y=\\frac{\\pi}{2}$ es comporta com el costat $x=\\pi$, i el costat $y=\\pi$ com el costat $x=\\frac{\\pi}{2}$.",
+    "Per tant, a la frontera els valors extrems són als vèrtexs: $f\\left(\\frac{\\pi}{2},\\frac{\\pi}{2}\\right)=f(\\pi,\\pi)=1$ i $f\\left(\\frac{\\pi}{2},\\pi\\right)=f\\left(\\pi,\\frac{\\pi}{2}\\right)=-1$.",
+    "Comparant els candidats ($0$ a l'interior i $\\pm1$ a la frontera), el màxim absolut és $1$, assolit a $\\left(\\frac{\\pi}{2},\\frac{\\pi}{2}\\right)$ i a $(\\pi,\\pi)$, i el mínim absolut és $-1$, assolit a $\\left(\\frac{\\pi}{2},\\pi\\right)$ i a $\\left(\\pi,\\frac{\\pi}{2}\\right)$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "com que la traça és $0$, el criteri de la hessiana no decideix el seu caràcter",
+      "inici": 70,
+      "fi": 148,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "El que decideix és el determinant: $\\det=-4<0$, de manera que la hessiana és indefinida i el punt és de sella. Una traça nul·la no fa que el criteri falli.",
+      "correccio": "Com que $\\det=-4<0$, la hessiana és indefinida i $\\left(\\frac{3\\pi}{4},\\frac{3\\pi}{4}\\right)$ és un punt de sella (candidat amb $f=0$).",
+      "pista": "Quan el criteri de la hessiana no decideix, què ha de valer el determinant? Quant val aquí?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "el costat $y=\\frac{\\pi}{2}$ es comporta com el costat $x=\\pi$, i el costat $y=\\pi$ com el costat $x=\\frac{\\pi}{2}$",
+      "inici": 33,
+      "fi": 147,
+      "tipus": "logica",
+      "explicacio": "La simetria $(x,y)\\mapsto(y,x)$ porta el costat $x=\\frac{\\pi}{2}$ al costat $y=\\frac{\\pi}{2}$ i el costat $x=\\pi$ al costat $y=\\pi$, no a l'inrevés. Per exemple, a $y=\\frac{\\pi}{2}$, $f=\\cos x+\\sin x$ decreix de $1$ a $-1$.",
+      "correccio": "El costat $y=\\frac{\\pi}{2}$ es comporta com el costat $x=\\frac{\\pi}{2}$ ($f=\\cos x+\\sin x$, decreix de $1$ a $-1$) i el costat $y=\\pi$ com el costat $x=\\pi$ (creix de $-1$ a $1$).",
+      "pista": "Si intercanvies $x$ i $y$, a quin costat va a parar la recta $x=\\frac{\\pi}{2}$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t56.json",
+    "valoracio": "Resultat final correcte, però la hessiana del punt interior es classifica malament i la simetria s'aplica emparellant els costats equivocats.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "com que la traça és $0$, el criteri de la hessiana no decideix el seu caràcter",
+        "gravetat": "error",
+        "explicacio": "El criteri depèn del determinant: $\\det=-4<0$, la hessiana és indefinida i el punt és de sella; la traça nul·la no el fa degenerat."
+      },
+      {
+        "fragment": 5,
+        "cita": "el costat $y=\\frac{\\pi}{2}$ es comporta com el costat $x=\\pi$, i el costat $y=\\pi$ com el costat $x=\\frac{\\pi}{2}$",
+        "gravetat": "error",
+        "explicacio": "La simetria $(x,y)\\mapsto(y,x)$ porta el costat $x=\\frac{\\pi}{2}$ al costat $y=\\frac{\\pi}{2}$ i $x=\\pi$ a $y=\\pi$: $y=\\frac{\\pi}{2}$ es comporta com $x=\\frac{\\pi}{2}$ (decreix de $1$ a $-1$) i $y=\\pi$ com $x=\\pi$."
+      }
+    ]
+  },
+  "creat": 1791295917.015402
+}

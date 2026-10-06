@@ -1,0 +1,807 @@
+tema: 5
+titol: "Fórmula de Taylor, extrems locals"
+seccions:
+  - id: "5.1"
+    titol: "Diferencials d'ordre superior"
+  - id: "5.2"
+    titol: "Teorema de Schwarz"
+  - id: "5.3"
+    titol: "Fórmula de Taylor en una variable (recordatori)"
+  - id: "5.4"
+    titol: "Polinomis en diverses variables"
+  - id: "5.5"
+    titol: "Fórmula de Taylor en diverses variables"
+  - id: "5.6"
+    titol: "Extrems locals"
+  - id: "5.7"
+    titol: "Formes quadràtiques"
+  - id: "5.8"
+    titol: "Condicions suficients de punts crítics"
+items:
+  - id: "T5.1"
+    tipus: definicio
+    num: 1
+    resum: 103
+    seccio: "5.1"
+    pagina: 2
+    nom: "Derivades parcials r-èsimes"
+    enunciat: |
+      Denotem les derivades parcials $r$-èsimes com $\dfrac{\partial^r f}{\partial x_{i_1}\cdots\partial x_{i_r}}(p)$. També farem servir la notació abreujada $D_{i_r}\ldots D_{i_1}f$ o $D_{i_1\cdots i_r}f$, i la notació $f_{i_1\ldots i_r}$. Fixem-nos que l'ordre dels subíndexos canvia segons la notació.
+    problemes: []
+  - id: "T5.2"
+    tipus: observacio
+    num: 2
+    resum: 104
+    seccio: "5.1"
+    pagina: 2
+    nom: "Diferencial d'ordre r"
+    enunciat: |
+      (Explicació.) Sigui $f:\Omega\subseteq\mathbb{R}^n\to\mathbb{R}^m$ diferenciable en tot $\Omega$. Interpretem la diferencial com una aplicació $Df:\Omega\subseteq\mathbb{R}^n\to\mathbb{R}^{nm}$. Anàlogament, la diferencial d'ordre $r$ de $f$ és una aplicació $D^rf:\Omega\subseteq\mathbb{R}^n\to\mathbb{R}^{n^r m}$ (si existeix).
+    problemes: []
+  - id: "T5.3"
+    tipus: definicio
+    num: 3
+    resum: 105
+    seccio: "5.1"
+    pagina: 2
+    nom: "Funció de classe C^r"
+    enunciat: |
+      Direm que una funció $f:\Omega\subset\mathbb{R}^n\to\mathbb{R}^m$ és de classe $\mathcal{C}^r$ si totes les derivades fins a ordre $r$ existeixen i són contínues.
+
+      Equivalentment, $f:\Omega\subset\mathbb{R}^n\to\mathbb{R}^m$ és de classe $\mathcal{C}^r\Leftrightarrow Df$ és de classe $\mathcal{C}^{r-1}$.
+    problemes: []
+  - id: "T5.4"
+    tipus: exemple
+    num: 4
+    resum: null
+    seccio: "5.1"
+    pagina: 2
+    nom: "Derivades segones d'una funció de R^3"
+    enunciat: |
+      Calculem les derivades d'ordre 2 de la funció $f:\mathbb{R}^3\longrightarrow\mathbb{R}$ donada per
+      $$f(x,y,z)=(1+x^2+2y^2)e^z.$$
+      $$\frac{\partial f}{\partial x}=2x\,e^z,\quad \frac{\partial f}{\partial y}=4y\,e^z,\quad \frac{\partial f}{\partial z}=(1+x^2+2y^2)\,e^z.$$
+      $$\begin{aligned}
+      &\frac{\partial^2 f}{\partial x^2}=f_{xx}=2\,e^z, & \frac{\partial^2 f}{\partial x\partial y}=f_{xy}=0, & & \frac{\partial^2 f}{\partial x\partial z}=f_{xz}=2x\,e^z;\\
+      &\frac{\partial^2 f}{\partial y\partial x}=f_{yx}=0, & \frac{\partial^2 f}{\partial y^2}=f_{yy}=4\,e^z, & & \frac{\partial^2 f}{\partial y\partial z}=f_{yz}=4y\,e^z;\\
+      &\frac{\partial^2 f}{\partial z\partial x}=f_{zx}=2x\,e^z, & \frac{\partial^2 f}{\partial z\partial y}=f_{zy}=4y\,e^z, & & \frac{\partial^2 f}{\partial z^2}=f_{zz}=(1+x^2+2y^2)\,e^z.
+      \end{aligned}$$
+    problemes: []
+  - id: "T5.x1"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "5.2"
+    pagina: 2
+    nom: "Motivació del teorema de Schwarz"
+    enunciat: |
+      Un resultat fonamental de derivades parcials $r$-èsimes posa en relació les derivades creuades. Per motivar-lo, vegem primer aquest exemple.
+    problemes: []
+  - id: "T5.5"
+    tipus: exemple
+    num: 5
+    resum: 106
+    seccio: "5.2"
+    pagina: 2
+    nom: "Derivades creuades diferents"
+    enunciat: |
+      Hi ha funcions $f:\Omega\subset\mathbb{R}^2\to\mathbb{R}$ i $p\in\Omega$ tals que $\dfrac{\partial^2 f}{\partial y\partial x}(p)\neq\dfrac{\partial f}{\partial x\partial y}(p)$.
+
+      Considerem la següent funció $f:\mathbb{R}^2\longrightarrow\mathbb{R}$:
+      $$f(x,y)=\begin{cases}\dfrac{xy(x^2-y^2)}{x^2+y^2} & \text{si } (x,y)\neq(0,0),\\[2mm] 0 & \text{si } (x,y)=(0,0).\end{cases}$$
+    problemes: []
+  - id: "T5.6"
+    tipus: teorema
+    num: 6
+    resum: 107
+    seccio: "5.2"
+    pagina: 2
+    nom: "Teorema de Schwarz"
+    enunciat: |
+      (Schwarz). Sigui $\Omega\subseteq\mathbb{R}^n$ obert, i $f:\Omega\to\mathbb{R}^m$ una funció tal que les derivades parcials $D_if$, $D_jf$ i $D_iD_jf$ i $D_jD_if$ existeixen en $\Omega$. Si $D_iD_jf$ i $D_jD_if$ són contínues en un entorn d'$\mathbf{a}\in\Omega$, aleshores
+      $$D_iD_jf(\mathbf{a})=D_jD_if(\mathbf{a}).$$
+    demostracio: |
+      Farem la demostració per a $n=2$ i $m=1$, però es pot generalitzar fàcilment.
+
+      Prenem $h$ i $k$ no nuls tals que el rectangle $R(h,k)$ amb vèrtexs a $(a,b)$, $(a+h,b)$, $(a+h,b+k)$ i $(a,b+k)$ estigui contingut en $\Omega$.
+
+      Considerem l'expressió
+      $$\Delta(h,k)=f(a+h,b+k)-f(a+h,b)-f(a,b+k)+f(a,b),$$
+      que expressarem tant en termes de $D_{21}f$ com en termes de $D_{12}f$.
+
+      Considerem una nova funció $G(x)=f(x,b+k)-f(x,b)$, $x\in(a,a+h)$. Clarament,
+      $$\Delta(h,k)=G(a+h)-G(a)=h\,G'(\xi_x),$$
+      aplicant el teorema del valor mitjà per a una variable real, on $\xi_x\in(a,a+h)$. Com que $G'(x)=D_1f(x,b+k)-D_1f(x,b)$, tenim que
+      $$\Delta(h,k)=h\,\left(D_1f(\xi_x,b+k)-D_1f(\xi_x,b)\right).$$
+      Ara tornem a aplicar el teorema del valor mitjà al terme de la dreta i obtenim que
+      $$\Delta(h,k)=h\,k\,D_{12}f(\xi_x,\xi_y),\qquad \xi_y\in(b,b+k). \tag{1}$$
+      És clar que $(\xi_x,\xi_y)\in R(h,k)$.
+
+      Considerem ara una funció $H(y)=f(a+h,y)-f(a,y)$, amb $y\in(b,b+k)$. Repetint els mateixos raonaments usats per a $G$, arribem a la conclusió que existeixen $(\eta_x,\eta_y)\in R(h,k)$ tals que
+      $$\Delta(h,k)=h\,k\,D_{21}f(\eta_x,\eta_y). \tag{2}$$
+      Igualant (1) i (2), tenim que $D_{12}f(\xi_x,\xi_y)=D_{21}f(\eta_x,\eta_y)$, i prenent ara el límit per a $(h,k)\to(0,0)$, i tenint en compte la hipòtesi de continuïtat de les dues derivades segones, arribem a la conclusió desitjada.
+    problemes: []
+  - id: "T5.x2"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "5.2"
+    pagina: 3
+    nom: "Versió més forta de Schwarz"
+    enunciat: |
+      Modificant el raonament anterior, es pot demostrar una versió més forta del teorema:
+    problemes: []
+  - id: "T5.7"
+    tipus: teorema
+    num: 7
+    resum: 108
+    seccio: "5.2"
+    pagina: 3
+    nom: "Schwarz, versió forta"
+    enunciat: |
+      (Schwarz, versió forta). Sigui $\Omega\subseteq\mathbb{R}^n$ obert, i $f:\Omega\to\mathbb{R}^m$ una funció tal que les derivades parcials $D_if$, $D_jf$ i $D_jD_if$ existeixen en $\Omega$. Si, a més, $D_jD_if$ és contínua en $\Omega$, aleshores $D_iD_jf(\mathbf{a})$ també existeix i $D_iD_jf(\mathbf{a})=D_jD_if(\mathbf{a})$.
+    problemes: []
+  - id: "T5.8"
+    tipus: teorema
+    num: 8
+    resum: 109
+    seccio: "5.3"
+    pagina: 3
+    nom: "Teorema de Taylor (una variable)"
+    enunciat: |
+      (de Taylor). Sigui $\Omega\subseteq\mathbb{R}$ obert, $f:\Omega\to\mathbb{R}$ una funció $\mathcal{C}^{r+1}(\Omega)$, i $a\in\Omega$. Per a tot $x\in\Omega$ amb $[a,x]\subseteq\Omega$ (Nota: Fem servir la notació d'intervals a $\mathbb{R}^n$ introduïda al tema 3, de manera que, a $\mathbb{R}$, $[a,x]$ pot ser tant $[a,x]$, si $x\geq a$, com $[x,a]$, si $x\leq a$.), existeix $\xi_x\in(a,x)$ tal que $f(x)=P_r(x)+R_{r+1}(x)$, on
+
+      (i) $P_r(x)=f(a)+f'(a)(x-a)+\dfrac{1}{2!}f''(a)(x-a)^2+\cdots+\dfrac{1}{r!}f^{(r)}(a)(x-a)^r$ s'anomena el polinomi de Taylor de grau $r$ de la funció $f$ en el punt $a$, i
+
+      (ii) $R_{r+1}(x)=\dfrac{1}{(r+1)!}f^{(r+1)}(\xi_x)(x-a)^{r+1}$ s'anomena el residu de grau $r$ de la funció $f$ en el punt $a$. A més,
+      $$\lim_{x\to a}\frac{R_{r+1}(x)}{(x-a)^r}=0.$$
+    problemes: []
+  - id: "T5.x3"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "5.3"
+    pagina: 4
+    nom: "Interpretació i unicitat del polinomi de Taylor"
+    enunciat: |
+      Una interpretació alternativa del rol de polinomi de Taylor és que $P_r(x)$ interpola els valors de $f(a),f'(a),\ldots,f^{(n)}(a)$, de manera que és una bona aproximació de la funció $f$ en un entorn del punt $a$.
+
+      Una conseqüència de la propietat $\lim_{x\to a}\frac{f(x)-P_r(x)}{(x-a)^r}=0$ és que el polinomi $P_r(x)$ és l'únic polinomi de grau menor o igual que $r$ que la compleix. En efecte, si existís un polinomi de grau menor o igual que $r$, $Q_r(x)=\sum_{i=0}^r q_i\,(x-a)^i$ tal que $\lim_{x\to a}\frac{f(x)-Q_r(x)}{(x-a)^r}=0$, aleshores
+      $$\lim_{x\to a}\frac{f(x)-P_r(x)}{(x-a)^r}=\lim_{x\to a}\frac{f(x)-Q_r(x)}{(x-a)^r}=0,$$
+      és a dir,
+      $$\lim_{x\to a}\frac{P_r(x)-Q_r(x)}{(x-a)^r}=0,$$
+      i, per tant, caldria que $P_r(x)-Q_r(x)=\sum_{i>r}\alpha_i\,(x-a)^i$ per a $\alpha_i\in\mathbb{R}$, fet que contradiu les hipòtesis de sortida, o bé que $P_r(x)\equiv Q_r(x)$.
+    problemes: []
+  - id: "T5.9"
+    tipus: definicio
+    num: 9
+    resum: 110
+    seccio: "5.3"
+    pagina: 4
+    nom: "Extrems locals (una variable)"
+    enunciat: |
+      Sigui $\Omega\subseteq\mathbb{R}$ obert i $f:\Omega\to\mathbb{R}$ una funció. Diem que un punt $a\in\Omega$ és un
+
+      (i) màxim local de $f$ si $\exists\,\epsilon>0$ t.q. $\forall x\in(a-\epsilon,a+\epsilon)\subseteq\Omega$, $f(x)\leqslant f(a)$;
+
+      (ii) mínim local de $f$ si $\exists\,\epsilon>0$ t.q. $\forall x\in(a-\epsilon,a+\epsilon)\subseteq\Omega$, $f(x)\geqslant f(a)$;
+
+      (iii) màxim local estricte de $f$ si $\exists\,\epsilon>0\ \forall\, a\neq x\in(a-\epsilon,a+\epsilon)\subseteq\Omega$, $f(x)<f(a)$;
+
+      (iv) mínim local estricte de $f$ si $\exists\,\epsilon>0\ \forall\, a\neq x\in(a-\epsilon,a+\epsilon)\subseteq\Omega$, $f(x)>f(a)$.
+    problemes: []
+  - id: "T5.x4"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "5.3"
+    pagina: 4
+    nom: "Propietats conegudes"
+    enunciat: |
+      Recordem ara algunes propietats conegudes.
+    problemes: []
+  - id: "T5.10"
+    tipus: proposicio
+    num: 10
+    resum: 111
+    seccio: "5.3"
+    pagina: 4
+    nom: "Condició necessària d'extrem (una variable)"
+    enunciat: |
+      Sigui $\Omega\subseteq\mathbb{R}$ obert i $f:\Omega\to\mathbb{R}$ una funció derivable en $a\in\Omega$. Si $a$ és un extrem ($\equiv$ màxim o mínim) local de $f$ llavors $f'(a)=0$. El recíproc no és cert.
+    problemes: []
+  - id: "T5.11"
+    tipus: teorema
+    num: 11
+    resum: 112
+    seccio: "5.3"
+    pagina: 4
+    nom: "Criteri de la derivada r-èsima"
+    enunciat: |
+      Sigui $\Omega\subseteq\mathbb{R}$ obert i $f:\Omega\to\mathbb{R}$ una funció $\mathcal{C}^r(\Omega)$. Si un punt $a\in\Omega$ compleix $f'(a)=f''(a)=\cdots=f^{(r-1)}(a)=0$, llavors
+
+      (i) $f^{(r)}(a)<0$ i $r$ parell $\Rightarrow$ $a$ és un màxim local estricte de $f$;
+
+      (ii) $f^{(r)}(a)>0$ i $r$ parell $\Rightarrow$ $a$ és un mínim local estricte de $f$;
+
+      (iii) $f^{(r)}(a)<0$ i $r$ senar $\Rightarrow$ $f$ és estrictament decreixent en $a$;
+
+      (iv) $f^{(r)}(a)>0$ i $r$ senar $\Rightarrow$ $f$ és estrictament creixent en $a$.
+    problemes: []
+  - id: "T5.x5"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "5.4"
+    pagina: 5
+    nom: "Notació multinomial (motivació)"
+    enunciat: |
+      En aquesta secció establim la notació multinomial, que ens és útil per a poder escriure de manera més compacta expressions que impliquin polinomis en diverses variables. Si el nombre de variables és relativament petit, la notació habitual és encara prou "sostenible". Per exemple, un polinomi de grau $r$ en dues variables es pot escriure com
+      $$p(x,y)=\sum_{m=0}^{r}\sum_{i=0}^{m}a_{i,m-i}x^i\,y^{m-i},$$
+      agrupat per polinomis homogenis de grau $m$.
+    problemes: []
+  - id: "T5.12"
+    tipus: definicio
+    num: 12
+    resum: 113
+    seccio: "5.4"
+    pagina: 5
+    nom: "Multiíndex, monomi i homogeneïtat"
+    enunciat: |
+      - Per a polinomis de diverses variables, escriurem
+        $$p(\mathbf{x})=\sum_{m=0}^{r}\ \sum_{\substack{\alpha_1,\ldots,\alpha_n\\ \alpha_1+\cdots+\alpha_n=m}}a_{\alpha_1,\ldots,\alpha_n}\,x_1^{\alpha_1}\ldots x_n^{\alpha_n}.$$
+        Per fer la notació més compacta, definim el multiíndex $\alpha=(\alpha_1,\ldots,\alpha_n)\in\mathbb{N}^n$ de manera que $\mathbf{x}^\alpha=x_1^{\alpha_1}\ldots x_n^{\alpha_n}$, on $\mathbf{x}=(x_1,\ldots,x_n)$. Llavors, un polinomi de grau $r$ en $n$ variables s'escriu com
+        $$p(x)=\sum_{m=0}^{r}\ \sum_{|\alpha|=m}a_\alpha\,\mathbf{x}^\alpha,$$
+        on $|\alpha|=\alpha_1+\cdots+\alpha_n$ s'anomena el grau d'$\alpha$.
+      - Cada element $\mathbf{x}^\alpha$ s'anomena monomi. (Nota: En alguns textos, la definició de monomi conté el coeficient: $a_\alpha\,\mathbf{x}^\alpha$.) Observem que hi ha $n^r$ monomis de grau $r$ si suposem que $x_ix_j$ i $x_jx_i$, per a tot $i,j$, no són el mateix monomi.
+      - El factorial d'un multiíndex es defineix com $\alpha!=\alpha_1!\ldots\alpha_n!$
+      - Una funció de $n$ variables és homogènia de grau $r$ si existeix un $r\in\mathbb{N}$ tal que
+        $$f(\lambda\,\mathbf{x})=\lambda^r\,f(\mathbf{x});$$
+        fixem-nos que els polinomis homogenis ho compleixen clarament.
+    problemes: []
+  - id: "T5.13"
+    tipus: lema
+    num: 13
+    resum: 114
+    seccio: "5.4"
+    pagina: 5
+    nom: "Límit d'un polinomi i grau dels monomis"
+    enunciat: |
+      Sigui $P(\mathbf{x})\neq0$ un polinomi, $\mathbf{x}=(x_1,\ldots,x_n)$. Llavors, $\displaystyle\lim_{\mathbf{x}\to\mathbf{0}}\dfrac{P(\mathbf{x})}{\|\mathbf{x}\|^r}=0$ si, i només si, tots els monomis de $P$ són de grau $\geqslant r+1$.
+    demostracio: |
+      $\Longleftarrow$ Suposem que $P(\mathbf{x})=\sum_{|\alpha|\geq r+1}a_\alpha\,\mathbf{x}^\alpha$. Aleshores, per a cada $\alpha$, existeix $\beta=\beta(\alpha)$ tal que $|\beta|\geq0$ i
+      $$\mathbf{x}^\alpha=x_{i_1}\ldots x_{i_{r+1}}\,\mathbf{x}^\beta,$$
+      atès que $\alpha$ té almenys $r+1$ factors.
+
+      Llavors,
+      $$\begin{aligned}
+      \left|\frac{P(\mathbf{x})}{\|\mathbf{x}\|^r}\right| &= \left|\sum_{|\alpha|\geq r+1}a_\alpha\,\frac{x_{i_1}\ldots x_{i_{r+1}}\,\mathbf{x}^\beta}{\|\mathbf{x}\|^r}\right|\\
+      &\leq\sum_{|\alpha|\geq r+1}|a_\alpha|\,\frac{|x_{i_1}|}{\|\mathbf{x}\|}\ldots\frac{|x_{i_r}|}{\|\mathbf{x}\|}\,|x_{i_{r+1}}|\,|\mathbf{x}^\beta|.
+      \end{aligned}$$
+      Com que $|a_\alpha|$ és una constant per a cada $\alpha$, els factors $\dfrac{|x_{i_j}|}{\|\mathbf{x}\|}$ estan fitats per a tot $j=0,\ldots,r$, el factor $|x_{i_{r+1}}|$ tendeix a zero quan $\mathbf{x}\to0$ i $|\mathbf{x}^\beta|\to0$ si $|\beta|>0$, aleshores $\left|\dfrac{P(\mathbf{x})}{\|\mathbf{x}\|^r}\right|$ també tendeix a zero, tal com volíem demostrar.
+
+      $\Longrightarrow$ Suposem ara que $\displaystyle\lim_{\mathbf{x}\to\mathbf{0}}\frac{P(\mathbf{x})}{\|\mathbf{x}\|^r}=0$ i volem demostrar que tots els monomis de $P$ són de grau $\geqslant r+1$.
+
+      Ho demostrarem per inducció en $r$.
+
+      Per a $r=0$, hem de veure que si $\displaystyle\lim_{\mathbf{x}\to\mathbf{0}}P(\mathbf{x})=0$, aleshores tots els monomis de $P$ són de grau $\geqslant1$. Com que $\displaystyle\lim_{\mathbf{x}\to\mathbf{0}}P(\mathbf{x})=P(0)$, per continuïtat, tenim que $P(0)=0$ i, per tant, el polinomi $P$ no té termes de grau zero.
+
+      Ara, suposem-ho cert fins a $r=m$ i ho volem demostrar per a $r=m+1$. Sabem, doncs, que si $\displaystyle\lim_{\mathbf{x}\to\mathbf{0}}\frac{P(\mathbf{x})}{\|\mathbf{x}\|^m}=0$, aleshores tots els monomis de $P$ són de grau $\geq m+1$.
+
+      Suposem ara que $\displaystyle\lim_{\mathbf{x}\to\mathbf{0}}\frac{P(\mathbf{x})}{\|\mathbf{x}\|^{m+1}}=0$. En particular, tenim que $\displaystyle\lim_{\mathbf{x}\to\mathbf{0}}\frac{P(\mathbf{x})}{\|\mathbf{x}\|^m}=0$ ja que $\dfrac{P(\mathbf{x})}{\|\mathbf{x}\|^{m+1}}=\dfrac{P(\mathbf{x})}{\|\mathbf{x}\|^m}\dfrac{1}{\|\mathbf{x}\|}$ i el darrer terme tendeix a infinit quan $\mathbf{x}$ tendeix a $0$. Per tant, tots els monomis de $P$ són de grau $\geq m+1$;$\ldots$ però volem demostrar que tots els monomis de $P$ són de grau $\geq m+2$. Ho farem per reducció a l'absurd.
+
+      Suposem, doncs, que $P$ té monomis de grau $m+1$, i separem $P$ en dos termes segons el grau dels seus monomis: $P(\mathbf{x})=P_{m+1}(\mathbf{x})+P_{\geq m+2}(\mathbf{x})$, on $P_{m+1}$ conté els termes de grau exactament $m+1$ i la resta, de grau superior, els posem a $P_{\geq m+2}$. Per hipòtesi, $P_{m+1}\not\equiv0$ i, per tant, existeix almenys un vector $\mathbf{v}\in\mathbb{R}^n$ tal que $P(\mathbf{v})\neq0$; a més, $P(t\,\mathbf{v})=t^{m+1}\,P(\mathbf{v})$, per a tot $t\in\mathbb{R}$.
+
+      Finalment, tenim per una banda que $\displaystyle\lim_{\mathbf{x}\to\mathbf{0}}\frac{P(t\mathbf{v})}{\|t\mathbf{v}\|^{m+1}}=0$, per hipòtesi. Però, per altra banda,
+      $$\lim_{\mathbf{x}\to\mathbf{0}}\frac{P(t\mathbf{v})}{\|t\mathbf{v}\|^{m+1}}=\lim_{t\to0}\frac{t^{m+1}}{|t|^{m+1}}\frac{P_{m+1}(\mathbf{v})}{\|\mathbf{v}\|^{m+1}}+\lim_{t\to0}\frac{P_{\geq m+2}(t\mathbf{v})}{\|t\mathbf{v}\|^{m+1}}\neq0$$
+      ja que $\displaystyle\lim_{t\to0}\frac{P_{m+1}(\mathbf{v})}{\|\mathbf{v}\|^{m+1}}\neq0$ i $\displaystyle\lim_{t\to0}\frac{P_{\geq m+2}(t\mathbf{v})}{\|t\mathbf{v}\|^{m+1}}=0$ per la implicació contrària del lema, ja demostrada anteriorment. Hem arribat, doncs, a contradicció i, per tant, queda demostrat que $P$ ha de tenir tots els monomis de grau $\geq m+2$.
+
+      NOTA: Amb tot rigor, cal prendre només un límit lateral, $\displaystyle\lim_{t\to0^+}$ o $\displaystyle\lim_{t\to0^-}$, per tal que $\displaystyle\lim_{t\to0}\frac{t^{m+1}}{|t|^{m+1}}$ existeixi.
+    problemes: []
+  - id: "T5.14"
+    tipus: teorema
+    num: 14
+    resum: 115
+    seccio: "5.5"
+    pagina: 7
+    nom: "Teorema de Taylor (diverses variables)"
+    enunciat: |
+      (de Taylor). Sigui $\Omega\subseteq\mathbb{R}^n$ obert, $f:\Omega\to\mathbb{R}$ una funció $\mathcal{C}^{r+1}(\Omega)$, i $\mathbf{a}\in\Omega$. Per a tot $\mathbf{x}\in\Omega$ amb $[\mathbf{a},\mathbf{x}]\subseteq\Omega$, existeix $\xi_\mathbf{x}\in(\mathbf{a},\mathbf{x})$ tal que $f(\mathbf{x})=P_r(\mathbf{x})+R_{r+1}(\mathbf{x})$, on
+
+      (i) El polinomi
+      $$\begin{aligned}P_r(\mathbf{x})={}&f(\mathbf{a})+\sum_{i=1}^{n}D_if(\mathbf{a})(x_i-a_i)+\frac{1}{2!}\sum_{i,j=1}^{n}D_{i,j}f(\mathbf{a})(x_i-a_i)(x_j-a_j)+\cdots\\
+      &\cdots+\frac{1}{r!}\sum_{i_1,\ldots,i_r=1}^{n}D_{i_1,\ldots,i_r}f(\mathbf{a})(x_{i_1}-a_{i_1})\cdots(x_{i_r}-a_{i_r})\end{aligned}$$
+      s'anomena el polinomi de Taylor de grau $r$ de la funció $f$ en el punt $\mathbf{a}$,
+
+      (ii) El residu de grau $r$ de la funció $f$ en el punt $\mathbf{a}$ és
+      $$R_{r+1}(\mathbf{x})=\frac{1}{(r+1)!}\sum_{i_1,\ldots,i_{r+1}=1}^{n}D_{i_1,\ldots,i_{r+1}}f(\xi_\mathbf{x})(x_{i_1}-a_{i_1})\cdots(x_{i_{r+1}}-a_{i_{r+1}}).$$
+      A més, $\displaystyle\lim_{\mathbf{x}\to\mathbf{a}}\frac{R_{r+1}(\mathbf{x})}{\|\mathbf{x}-\mathbf{a}\|^r}=0.$
+    demostracio: |
+      Construïm la següent funció $F(t)=f(h(t))$ a $\mathbb{R}$:
+      $$\begin{array}{ccccc}[0,1]\subset\mathbb{R}&\longrightarrow&\Omega\subseteq\mathbb{R}^n&\longrightarrow&\mathbb{R}\\ t&\longmapsto&\mathbf{a}+t(\mathbf{x}-\mathbf{a})&\longmapsto&f(\mathbf{a}+t(\mathbf{x}-\mathbf{a}))\end{array}$$
+      Observem que $F(1)=f(\mathbf{x})$ i $F(0)=f(\mathbf{a})$; d'altra banda, com que $f\in\mathcal{C}^{r+1}(\Omega)$ i $h$ és una funció lineal, $F(t)=f(h(t))$ és una funció de classe $r+1$ en algun obert $U$ tal que $[0,1]\subset U$. Si apliquem la fórmula de Taylor per a funcions d'una variable a $F(t)$, tenim que $F(t)=\sum_{k=0}^{r}\dfrac{F^{(k)}(0)}{k!}t^k+\dfrac{F^{(r+1)}(t_x)}{(r+1)!}t^{r+1}$, amb $t_x\in(0,t)$. Aplicant-la a $t=1$,
+      $$F(1)=\sum_{k=0}^{r}\frac{F^{(k)}(0)}{k!}+\frac{F^{(r+1)}(\tau)}{(r+1)!},\qquad\tau\in(0,1).$$
+      Ens basarem en aquest desenvolupament per a demostrar la fórmula de Taylor per al camp escalar $f$. D'entrada, doncs, caldrà calcular la funció $F$ i les seves derivades en $t=0$. Ja hem vist que $F(0)=f(\mathbf{a})$. Veurem que
+      $$F^{(k)}(t)=\sum_{i_1,\ldots,i_k=1}^{n}D_{i_1,\ldots,i_k}f(h(t))\,(x_{i_1}-a_{i_1})\ldots(x_{i_k}-a_{i_k}),\qquad\text{per a }k\leq r+1. \tag{3}$$
+      Fixem-nos que, per a $t=0$,
+      $$F^{(k)}(0)=\sum_{i_1,\ldots,i_k=1}^{n}D_{i_1,\ldots,i_k}f(\mathbf{a})\,(x_{i_1}-a_{i_1})\ldots(x_{i_k}-a_{i_k}),$$
+      que coincideix amb el terme d'ordre $k$ del polinomi $P_r$.
+
+      Per a $r=1$, clarament, per la regla de la cadena, es compleix la igualtat (3):
+      $$F'(t)=\sum_{i=1}^{n}D_if(h(t))\,h_i'(t)=\sum_{i=1}^{n}D_if(h(t))\,(x_i-a_i).$$
+      Suposem ara que la fórmula (3) és cert per a $k\leq m$ i demostrem que és certa per a $k=m+1$:
+      $$\begin{aligned}F^{(m+1)}(t)&=\frac{d}{dt}F^{(m)}(t)=\frac{d}{dt}\sum_{i_1,\ldots,i_m=1}^{n}D_{i_1,\ldots,i_m}f(h(t))\,(x_{i_1}-a_{i_1})\ldots(x_{i_m}-a_{i_m})\\
+      &=\sum_{j=1}^{n}D_j\left(\sum_{i_1,\ldots,i_m=1}^{n}D_{i_1,\ldots,i_m}f(h(t))\,(x_{i_1}-a_{i_1})\ldots(x_{i_m}-a_{i_m})\right)h_j'(t)\\
+      &=\sum_{i_1,\ldots,i_m=1}^{n}D_{i_1,\ldots,i_{m+1}}f(h(t))\,(x_{i_1}-a_{i_1})\ldots(x_{i_{m+1}}-a_{i_{m+1}}),\end{aligned}$$
+      prenent $j=i_{m+1}$. Per tant, hem demostrat (3) per inducció; aplicant-la fins a $k=r$, es demostra que $\sum_{k=0}^{r}\dfrac{F^{(k)}(0)}{k!}$ és exactament el polinomi $P_r(\mathbf{x})$ de l'enunciat.
+
+      Pel que fa al residu $R_{r+1}(\mathbf{x})$, atenent a la fórmula de Taylor de $F$,
+      $$R_{r+1}(\mathbf{x})=\frac{F^{(r+1)}(\tau)}{(r+1)!}=\frac{1}{(r+1)!}\sum_{i_1,\ldots,i_{r+1}=1}^{n}D_{i_1,\ldots,i_{r+1}}f(h(\tau))\,(x_{i_1}-a_{i_1})\ldots(x_{i_{r+1}}-a_{i_{r+1}}),$$
+      que, prenent $\xi_x=h(\tau)\in(\mathbf{a},\mathbf{x})$, coincideix amb la fórmula de l'enunciat.
+
+      Finalment,
+      $$\begin{aligned}\frac{|R_{r+1}(\mathbf{x})|}{\|\mathbf{x}-\mathbf{a}\|^r}&=\frac{1}{(r+1)!}\frac{1}{\|\mathbf{x}-\mathbf{a}\|^r}\left|\sum_{i_1,\ldots,i_{r+1}=1}^{n}D_{i_1,\ldots,i_{r+1}}f(\xi_\mathbf{x})\,(x_{i_1}-a_{i_1})\ldots(x_{i_{r+1}}-a_{i_{r+1}})\right|\\
+      &\leq\frac{1}{(r+1)!}\sum_{i_1,\ldots,i_{r+1}=1}^{n}\left|D_{i_1,\ldots,i_{r+1}}f(\xi_\mathbf{x})\right|\frac{|x_{i_1}-a_{i_1}|}{\|\mathbf{x}-\mathbf{a}\|}\ldots\frac{|x_{i_r}-a_{i_r}|}{\|\mathbf{x}-\mathbf{a}\|}\,|x_{i_{r+1}}-a_{i_{r+1}}|.\end{aligned}$$
+      Analitzant els termes de la fórmula que hem obtingut, observem que:
+
+      - $\left|D_{i_1,\ldots,i_{r+1}}f(\xi_\mathbf{x})\right|$ tendeix a $\left|D_{i_1,\ldots,i_{r+1}}f(\mathbf{a})\right|$ quan $\mathbf{x}$ tendeix a $\mathbf{a}$.
+      - Per a tot $i=1,\ldots,n$, $\dfrac{|x_i-a_i|}{\|\mathbf{x}-\mathbf{a}\|}\leq1$.
+      - El terme $|x_{i_{r+1}}-a_{i_{r+1}}|$ tendeix a $0$ quan $\mathbf{x}$ tendeix a $\mathbf{a}$.
+
+      Per tant,
+      $$\lim_{\mathbf{x}\to\mathbf{a}}\frac{R_{r+1}(x)}{\|\mathbf{x}-\mathbf{a}\|^r}=0.$$
+    problemes: []
+  - id: "T5.15"
+    tipus: corollari
+    num: 15
+    resum: 116
+    seccio: "5.5"
+    pagina: 9
+    nom: "Taylor amb hipòtesi C^r"
+    enunciat: |
+      Si $f\in\mathcal{C}^r(\Omega)$ i $\mathbf{a}\in\Omega$, aleshores $\displaystyle\lim_{\mathbf{x}\to\mathbf{a}}\frac{f(\mathbf{x})-P_r(x)}{\|\mathbf{x}-\mathbf{a}\|^r}=0.$
+
+      Abans de demostrar-lo, observem que si apliquéssim estrictament el teorema de Taylor tal com l'hem enunciat, per obtenir el resultat del corol·lari 15, usaríem que
+      $$\lim_{\mathbf{x}\to\mathbf{a}}\frac{f(\mathbf{x})-P_r(x)}{\|\mathbf{x}-\mathbf{a}\|^r}=\lim_{\mathbf{x}\to\mathbf{a}}\frac{R_{r+1}(\mathbf{x})}{\|\mathbf{x}-\mathbf{a}\|^r}=0,$$
+      i, per tant, necessitaríem suposar que $f\in\mathcal{C}^{\mathbf{r+1}}(\Omega)$. Així, doncs, el corol·lari 15 posa de manifest que l'exigència d'un ordre més de derivació es deu al fet que volem donar una expressió detallada del residu, i aquesta implica derivades d'ordre $r+1$; essencialment, però, només cal imposar $f\in\mathcal{C}^r(\Omega)$ per assegurar que $R_{r+1}(\mathbf{x})=o(\|\mathbf{x}-\mathbf{a}\|^r)$.
+    demostracio: |
+      Ho demostrem per a $f\in\mathcal{C}^2(\Omega)$; es generalitza fàcilment a ordre $r$.
+
+      Sabem que existeix $\xi_\mathbf{x}\in(\mathbf{a},\mathbf{x})$ tal que $f(\mathbf{x})-P_1(\mathbf{x})=R_2(\mathbf{x})$, amb $R_2(\mathbf{x})=\frac12\sum_{i,j=1}^{n}D_{ij}f(\xi_\mathbf{x})(x_i-a_i)(x_j-a_j)$. Fixades $\mathbf{x}=(x_1,\ldots,x_n)$ i $\mathbf{a}=(a_1,\ldots,a_n)$, denotem
+      $$T_2(\cdot):=\frac12\sum_{i,j=1}^{n}D_{ij}f(\cdot)(x_i-a_i)(x_j-a_j);$$
+      Observem que, en aquesta notació, $P_2(\mathbf{x})=P_1(\mathbf{x})+T_2(\mathbf{a})$ i $R_2(\mathbf{x})=T_2(\xi_\mathbf{x})$. Per tant,
+      $$f(\mathbf{x})-P_2(\mathbf{x})=f(\mathbf{x})-P_1(\mathbf{x})-T_2(\mathbf{a})=R_2(\mathbf{x})-T_2(\mathbf{a})=T_2(\xi_\mathbf{x})-T_2(\mathbf{a}).$$
+      Dividint per $\|\mathbf{x}-\mathbf{a}\|^2$ i prenent límits, arribem a
+      $$\begin{aligned}\lim_{\mathbf{x}\to\mathbf{a}}\frac{f(\mathbf{x})-P_2(\mathbf{x})}{\|\mathbf{x}-\mathbf{a}\|^2}&=\lim_{\mathbf{x}\to\mathbf{a}}\frac{T_2(\xi_\mathbf{x})-T_2(\mathbf{a})}{\|\mathbf{x}-\mathbf{a}\|^2}\\
+      &=\frac12\lim_{\mathbf{x}\to\mathbf{a}}\frac{\sum_{i,j=1}^{n}D_{ij}f(\xi_\mathbf{x})(x_i-a_i)(x_j-a_j)-\sum_{i,j=1}^{n}D_{ij}f(\mathbf{a})(x_i-a_i)(x_j-a_j)}{\|\mathbf{x}-\mathbf{a}\|^2}\\
+      &=\frac12\lim_{\mathbf{x}\to\mathbf{a}}\sum_{i,j=1}^{n}\left(D_{ij}f(\xi_\mathbf{x})-D_{i,j}f(\mathbf{a})\right)\frac{x_i-a_i}{\|\mathbf{x}-\mathbf{a}\|}\frac{x_j-a_j}{\|\mathbf{x}-\mathbf{a}\|}.\end{aligned}$$
+      Ara bé, d'una banda, $\displaystyle\lim_{\mathbf{x}\to\mathbf{a}}\left(D_{ij}f(\xi_\mathbf{x})-D_{i,j}f(\mathbf{a})\right)=0$ perquè $f\in\mathcal{C}^2(\Omega)$ i $\xi_\mathbf{x}$ tendeix a $\mathbf{a}$; de l'altra, els factors $\dfrac{|x_i-a_i|}{\|\mathbf{x}-\mathbf{a}\|}$ estan fitats per $1$, amb la qual cosa obtenim el resultat que volíem.
+    problemes: []
+  - id: "T5.16"
+    tipus: observacio
+    num: 16
+    resum: 117
+    seccio: "5.5"
+    pagina: 9
+    nom: "Unicitat del polinomi de Taylor"
+    enunciat: |
+      Per a una funció $f\in\mathcal{C}^{r+1}(\Omega)$, el seu polinomi de Taylor de grau $r$, $P_r(\mathbf{x})$, és l'únic polinomi de grau $\leqslant r$ que compleix $\displaystyle\lim_{\mathbf{x}\to\mathbf{a}}\frac{f(\mathbf{x})-P_r(\mathbf{x})}{\|\mathbf{x}-\mathbf{a}\|^r}=0.$
+    demostracio: |
+      Suposem que existís un altre polinomi de grau $\leq r$, $Q$, tal que
+      $$\lim_{\mathbf{x}\to\mathbf{a}}\frac{f(\mathbf{x})-Q(\mathbf{x})}{\|\mathbf{x}-\mathbf{a}\|^r}=0.$$
+      Com que $\displaystyle\lim_{\mathbf{x}\to\mathbf{a}}\frac{f(\mathbf{x})-P_r(\mathbf{x})}{\|\mathbf{x}-\mathbf{a}\|^r}=0$, se'n dedueix que
+      $$\lim_{\mathbf{x}\to\mathbf{a}}\frac{P_r(\mathbf{x})-Q(\mathbf{x})}{\|\mathbf{x}-\mathbf{a}\|^r}=0.$$
+      Aplicant, el lema 13, tenim que, o bé $P_r(\mathbf{x})-Q(\mathbf{x})$ té tots els monomis de grau $r+1$, fet que seria una contradicció, o bé que $P_r(\mathbf{x})-Q(\mathbf{x})\equiv0$. Per tant, $P_r=Q$.
+    problemes: []
+  - id: "T5.17"
+    tipus: exemple
+    num: 17
+    resum: 118
+    seccio: "5.5"
+    pagina: 10
+    nom: "Càlcul de polinomis de Taylor"
+    enunciat: |
+      Exemples de càlcul de polinomis de Taylor.
+
+      A nivell pràctic, donat que el polinomi de Taylor és únic, ens dóna llibertat per calcular-lo de formes diverses sempre que ens assegurem que $\lim_{\mathbf{x}\to\mathbf{a}}\frac{f(\mathbf{x})-P_r(\mathbf{x})}{\|\mathbf{x}-\mathbf{a}\|^r}=0$.
+
+      Vegem-ne alguns exemples:
+
+      1. Calculem el desenvolupament fins a ordre $3$ de la funció $f(x,y)=\mathrm{e}^x\sin(xy)$ a l'origen.
+
+         Per a fer-ho usarem els corresponents desenvolupaments de Taylor de les funcions d'una variable $\mathrm{e}^x$ i $\sin(z)$, substituïrem $z=xy$ i calcularem els termes del seu producte fins a grau $3$. La unicitat del polinomi de Taylor ens assegura que el resultat que obtinguem serà el mateix que calcular el polinomi de Taylor de $f(x,y)$ fins a grau $3$ a través de la seva fórmula (vegeu el Teorema 14). En efecte
+         $$\mathrm{e}^x=1+x+\frac{x^2}{2}+\frac{x^3}{3!}+S_4(x),\quad\text{amb }\frac{S_4(x)}{x^3}\to0\quad\text{quan }x\to0.$$
+         De manera anàloga,
+         $$\sin(z)=z-\frac{z^3}{3!}+T_4(z),\quad\text{amb }\frac{T_4(z)}{z^3}\to0\quad\text{quan }z\to0$$
+         i, per tant, fent $z=xy$,
+         $$\sin(xy)=xy+W_4(x,y),\quad\text{amb}\quad\frac{W_4(x,y)}{\|(x,y)\|^3}\to0\ \text{ quan }\|(x,y)\|\to0.$$
+         Multiplicant ambdues expressions per a $\mathrm{e}^x$ i $\sin(xy)$ s'obté que
+         $$f(x,y)=\mathrm{e}^x\,\sin(xy)=\left(1+x+\frac{x^2}{2}+\frac{x^3}{3!}+S_4(x)\right)(xy+W_4(x,y))=xy+x^2y+R_4(x,y),$$
+         amb $\dfrac{R_4(x,y)}{\|(x,y)\|^3}\to0$ quan $\|(x,y)\|\to0$.
+
+      2. Calculem el polinomi de Taylor de la funció $f(x,y)=\sin x\ \cos y$ de grau $5$ a l'origen.
+
+         Una manera usual de simplificar la notació del residu és denotar $R(x,y)=O_{r+1}(x,y)$ per a indicar que $R(x,y)$ té tots els seus monomis de grau $\geq r+1$. Noteu que, aleshores,
+         $$\lim_{(x,y)\to(0,0)}\frac{R(x,y)}{\|(x,y)\|^r}=0\Leftrightarrow R(x,y)=O_{r+1}(x,y).$$
+         Aquesta notació s'estèn de manera similar a qualsevol dimensió, $x\in\mathbb{R}^n$.
+
+         Tenint en compte aquest fet i els desenvolupaments de $\sin(x)$ i de $\cos(y)$, podem escriure
+         $$\begin{aligned}f(x,y)&=\sin(x)\cos(y)=\left(x-\frac{x^3}{3!}+\frac{x^5}{5!}+O_7(x)\right)\left(1-\frac{y^2}{2}+\frac{y^4}{4!}+O_6(y)\right)\\
+         &=x-\frac{xy^2}{2}+\frac{xy^4}{4!}-\frac{x^3}{3!}+\left(\frac{x^3}{3!}\right)\left(\frac{y^2}{2!}\right)+\frac{x^5}{5!}+O_7(x,y)\\
+         &=x-\frac{x^3}{3!}-\frac{xy^2}{2}+\frac{xy^4}{4!}+\frac{x^3y^2}{3!2!}+\frac{x^5}{5!}+O_7(x,y)\end{aligned}$$
+         Per tant, el polinomi de grau $5$ de $f(x,y)$ a l'origen és
+         $$P_5(x,y)=x-\frac{x^3}{3!}-\frac{xy^2}{2}+\frac{xy^4}{4!}+\frac{x^3y^2}{3!2!}+\frac{x^5}{5!}.$$
+
+      3. Calculem el polinomi de grau $3$ de $f(x,y)=\mathrm{e}^{x+\sin y}$ a l'origen. Per a fer-ho usarem, primer, que $\mathrm{e}^{x+\sin y}=\mathrm{e}^x\mathrm{e}^{\sin y}$; segon, per a calcular el polinomi de Taylor de $\mathrm{e}^{\sin y}$ al $(0,0)$,
+         $$P_{\exp(\sin y)}(y)=P_{\exp(x)}(x)\circ P_{\sin y}(y)$$
+         on $P_{\exp(x)}$ i $P_{\sin y}$ denoten, respectivament, els polinomis de Taylor de les funcions $\exp(x)$ i $\sin y$ i, a més, tenim en compte que $P_{\sin y}(0)=0$. Així, del fet que
+         $$\mathrm{e}^{\sin y}=1+\sin y+\frac{\sin^2y}{2!}+\frac{\sin^3y}{3!}+\cdots,$$
+         es deriva que
+         $$\begin{aligned}P_{\exp(\sin y)}(y)&=1+\left(y-\frac{y^3}{3!}+O_4(y)\right)+\frac{1}{2!}\left(y-\frac{y^3}{3!}+O_4(y)\right)^2+\frac{1}{3!}\left(y+O(y^2)\right)^3+O_4(y)\\
+         &=1+\left(y-\frac{y^3}{3!}\right)+\frac{1}{2!}\left(y^2\right)+\frac{1}{3!}\left(y^3\right)+O_4(y)\\
+         &=1+y+\frac{y^2}{2!}+O_4(y).\end{aligned}$$
+         Així, per a obtenir el polinomi de grau $3$ de $f(x,y)$, fem
+         $$\begin{aligned}f(x,y)&=\left(1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+O_4(x)\right)\left(1+y+\frac{y^2}{2!}+O_4(y)\right)\\
+         &=\left(1+y+\frac{y^2}{2!}\right)+x\left(1+y+\frac{y^2}{2!}\right)+\frac{x^2}{2!}(1+y)+\frac{x^3}{3!}+O_4(x,y)\\
+         &=1+x+y+\frac12x^2+x\,y+\frac12y^2+\frac16x^3+\frac12x^2\,y+\frac12x\,y^2+O_4(x,y).\end{aligned}$$
+         Així, doncs, $P_3(x,y)=1+x+y+\frac12x^2+x\,y+\frac12y^2+\frac16x^3+\frac12x^2\,y+\frac12x\,y^2.$
+    problemes: []
+  - id: "T5.18"
+    tipus: definicio
+    num: 18
+    resum: 119
+    seccio: "5.5"
+    pagina: 12
+    nom: "Funció analítica"
+    enunciat: |
+      Una funció $f:\Omega\subseteq\mathbb{R}^n\to\mathbb{R}$ és analítica si, per a cada $\mathbf{a}\in\Omega$ existeix $\epsilon>0$ i una successió de polinomis homogenis $Q_m(\mathbf{x})$ de grau $m\in\mathbb{N}$, tals que $f(\mathbf{x})=\sum_{m=1}^{\infty}Q_m(\mathbf{x}-\mathbf{a})$, per a tot $\mathbf{x}\in B(\mathbf{a},\epsilon)\subseteq\Omega$.
+    problemes: []
+  - id: "T5.19"
+    tipus: corollari
+    num: 19
+    resum: 120
+    seccio: "5.5"
+    pagina: 12
+    nom: "Criteri d'analiticitat"
+    enunciat: |
+      Si $f:\Omega\subseteq\mathbb{R}^n\to\mathbb{R}$ és $\mathcal{C}^\infty(\Omega)$ i existeix $M>0$ tal que $|D_{i_1,\ldots,i_r}f(\mathbf{x})|\leqslant M^r$ per a tot $r\in\mathbb{N}$ i $\mathbf{x}\in\Omega$, llavors $f$ és analítica.
+    demostracio: |
+      Per hipòtesi, sabem que $f\in\mathcal{C}^r,\forall r\in\mathbb{N}$. Per tant, $f(\mathbf{x})=P_r(\mathbf{x})+R_{r+1}(\mathbf{x})=Q_0(\mathbf{x})+\cdots+Q_r(\mathbf{x})+R_{r+1}(\mathbf{x})$, on els polinomis $Q_k$, per a $k=0,\ldots,r$, són homogenis, i
+      $$|R_{r+1}(x)|=\left|\frac{1}{(r+1)!}\sum_{i_1,\ldots,i_{r+1}=1}^{n}D_{i_1\ldots i_{r+1}}f(\xi_x)(x_{i_1}-a_{i_1})\ldots(x_{i_{r+1}}-a_{i_{r+1}})\right|.$$
+      Aplicant la desigualtat triangular i després la fita de les derivades parcials de $f$, tenim que
+      $$|R_{r+1}(\mathbf{x})|\leq\frac{1}{(r+1)!}\sum_{i_1,\ldots,i_{r+1}=1}^{n}M^{r+1}\|\mathbf{x}-\mathbf{a}\|^{r+1}=\frac{1}{(r+1)!}M^{r+1}\|\mathbf{x}-\mathbf{a}\|^{r+1}n^{r+1},$$
+      que tendeix a zero quan $r$ tendeix a infinit perquè la sèrie $\sum_{r=0}^{\infty}\dfrac{(M\,\|\mathbf{x}-\mathbf{a}\|\,n)^{r+1}}{(r+1)!}$ convergeix a $\exp(M\,\|\mathbf{x}-\mathbf{a}\|\,n)$.
+    problemes: []
+  - id: "T5.20"
+    tipus: observacio
+    num: 20
+    resum: 121
+    seccio: "5.5"
+    pagina: 12
+    nom: "Jerarquia de regularitat"
+    enunciat: |
+      (Explicació.) Analítica $\Rightarrow\mathcal{C}^\infty\Rightarrow\cdots\Rightarrow\mathcal{C}^{r+1}\Rightarrow\mathcal{C}^r\Rightarrow\cdots\Rightarrow\mathcal{C}^1\Rightarrow\mathcal{C}^0$. Cap recíproc és cert. Les funcions analítiques juguen un paper molt important en l'anàlisi matemàtica actual.
+    problemes: []
+  - id: "T5.21"
+    tipus: definicio
+    num: 21
+    resum: 122
+    seccio: "5.6"
+    pagina: 12
+    nom: "Extrems locals (diverses variables)"
+    enunciat: |
+      Sigui $\Omega\subseteq\mathbb{R}^n$ un obert i $f:\Omega\to\mathbb{R}$ una funció. Diem que un punt $\mathbf{a}\in\Omega$ és un
+
+      (i) màxim local de $f$ si existeix $\epsilon>0$ tal que per a tot $\mathbf{x}\in B(\mathbf{a},\epsilon)\subseteq\Omega$, $f(\mathbf{x})\leqslant f(\mathbf{a})$;
+
+      (ii) mínim local de $f$ si existeix $\epsilon>0$ tal que per a tot $\mathbf{x}\in B(\mathbf{a},\epsilon)\subseteq\Omega$, $f(\mathbf{x})\geqslant f(\mathbf{a})$;
+
+      (iii) màxim local estricte de $f$ si existeix $\epsilon>0$ tal que per a tot $\mathbf{x}\in B(\mathbf{a},\epsilon)\backslash\{\mathbf{a}\}\subseteq\Omega$, $f(\mathbf{x})<f(\mathbf{a})$;
+
+      (iv) mínim local estricte de $f$ si existeix $\epsilon>0$ tal que per a tot $\mathbf{x}\in B(\mathbf{a},\epsilon)\backslash\{\mathbf{a}\}\subseteq\Omega$, $f(\mathbf{x})>f(\mathbf{a})$.
+    problemes: []
+  - id: "T5.22"
+    tipus: definicio
+    num: 22
+    resum: 123
+    seccio: "5.6"
+    pagina: 12
+    nom: "Punt crític"
+    enunciat: |
+      $\mathbf{a}\in\Omega$ és un punt crític de $f:\Omega\subseteq\mathbb{R}^n\to\mathbb{R}$ si $f$ és diferenciable en $\mathbf{a}$ i $Df(\mathbf{a})=0$.
+    problemes: []
+  - id: "T5.23"
+    tipus: proposicio
+    num: 23
+    resum: 124
+    seccio: "5.6"
+    pagina: 12
+    nom: "Els extrems són punts crítics"
+    enunciat: |
+      Sigui $\Omega\subseteq\mathbb{R}^n$ un obert i $f:\Omega\to\mathbb{R}$ una funció diferenciable en $\mathbf{a}\in\Omega$. Si $\mathbf{a}$ és un extrem (és a dir, un màxim o un mínim) local de $f$, llavors $\mathbf{a}$ és un punt crític de $f$.
+    demostracio: |
+      Sigui $f:\Omega\to\mathbb{R}$ una funció diferenciable i $\mathbf{a}\in\Omega$ un extrem local. Aleshores, per a cada $i=1,\ldots,n$, i $\epsilon$ suficientment petit, podem considerar la funció
+      $$\begin{array}{cccc}g_i:&(a_i-\epsilon,a_i+\epsilon)&\longrightarrow&\mathbb{R}\\&x&\longmapsto&f(a_1,\ldots,a_{i-1},x,a_{i+1},\ldots,a_n),\end{array}$$
+      que és derivable i $g_i'(a_i)=\dfrac{\partial f}{\partial x_i}(\mathbf{a})$. Com que $g$ ha de tenir un extrem local en $x=a_i$, és a dir, $g_i'(a_i)=0$ ja que un extrem local ho ha de ser en totes les direccions, deduïm que $\dfrac{\partial f}{\partial x_i}(\mathbf{a})=0$ per a tot $i=1,\ldots,n$, i per tant, $Df(\mathbf{a})=(0\ \ldots\ 0)$.
+    problemes: []
+  - id: "T5.24"
+    tipus: exemple
+    num: 24
+    resum: null
+    seccio: "5.6"
+    pagina: 13
+    nom: "Punt crític que no és extrem"
+    enunciat: |
+      Considerem $f(x,y)=x\,y$. En $\mathbf{a}=(0,0)$, tenim que $Df(\mathbf{a})=(y\ \ x)|_\mathbf{a}=(0\ \ 0)$. Per tant, atenent a la definició $\mathbf{a}$ és un punt crític. No obstant, si $xy>0$, és a dir, si $\mathbf{x}$ pertany al primer o al tercer quadrant llevat dels eixos, $f(\mathbf{x})>f(\mathbf{a})$, mentre que per als punts del segon i quart quadrant es compleix que $f(\mathbf{x})<f(\mathbf{a})$.
+
+      Aquest exemple posa en evidència que en diverses variables hi ha punts crítics que no són extrems locals i, per tant, que el recíproc de la proposició 23 és fals.
+    problemes: []
+  - id: "T5.25"
+    tipus: definicio
+    num: 25
+    resum: 125
+    seccio: "5.6"
+    pagina: 13
+    nom: "Punt de sella"
+    enunciat: |
+      Un punt $\mathbf{a}\in\Omega$ és un punt de sella d'una funció diferenciable $f:\Omega\subseteq\mathbb{R}^n\to\mathbb{R}$ si és un punt crític de $f$ i per a tot $\epsilon>0$ existeixen $\mathbf{x},\mathbf{y}\in B(\mathbf{a},\epsilon)$ tals que $f(\mathbf{x})<f(\mathbf{a})<f(\mathbf{y})$.
+    problemes: []
+  - id: "T5.x6"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "5.7"
+    pagina: 13
+    nom: "Introducció a formes quadràtiques"
+    enunciat: |
+      Amb l'objectiu de fer aquestes notes més autocontingudes, fem un recordatori de definicions i resultats de formes quadràtiques.
+    problemes: []
+  - id: "T5.26"
+    tipus: definicio
+    num: 26
+    resum: 126
+    seccio: "5.7"
+    pagina: 13
+    nom: "Forma quadràtica"
+    enunciat: |
+      Una forma quadràtica és una aplicació de la forma
+      $$\begin{array}{cccc}q_M:&\mathbb{R}^n&\longrightarrow&\mathbb{R}\\&\mathbf{u}&\longmapsto&\mathbf{u}^TM\mathbf{u},\end{array}$$
+      on $M$ és una matriu $n\times n$ simètrica.
+
+      Observem que $q_M$ és una funció $\mathcal{C}^\infty$ i compleix que $q_M(\mathbf{0})=0$ i $q_M(\lambda\mathbf{u})=\lambda^2q_M(\mathbf{u})$.
+    problemes: []
+  - id: "T5.27"
+    tipus: definicio
+    num: 27
+    resum: 127
+    seccio: "5.7"
+    pagina: 13
+    nom: "Signe d'una forma quadràtica"
+    enunciat: |
+      Diem que una forma quadràtica $q_M:\mathbb{R}^n\to\mathbb{R}$ és
+
+      (i) definida positiva ($\oplus$) si $q_M(\mathbf{u})>0$, per a tot $\mathbf{u}\in\mathbb{R}^n\setminus\{\mathbf{0}\}$;
+
+      (ii) definida negativa ($\ominus$) si $q_M(\mathbf{u})<0$, per a tot $\mathbf{u}\in\mathbb{R}^n\setminus\{\mathbf{0}\}$;
+
+      (iii) indefinida ($\odot$) si existeixen $\mathbf{u},\mathbf{v}\in\mathbb{R}^n$ tals que $q_M(\mathbf{u})>0$ i $q_M(\mathbf{v})<0$;
+
+      (iv) semidefinida positiva ($\underline{\oplus}$) si $q_M(\mathbf{u})\geqslant0$, per a tot $\mathbf{u}\in\mathbb{R}^n$;
+
+      (v) semidefinida negativa ($\underline{\ominus}$) si $q_M(\mathbf{u})\leqslant0$, per a tot $\mathbf{u}\in\mathbb{R}^n$.
+    problemes: []
+  - id: "T5.x7"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "5.7"
+    pagina: 14
+    nom: "Resultat útil per a la demostració final"
+    enunciat: |
+      El següent resultat ens serà útil a la demostració del resultat final d'aquest capítol.
+    problemes: []
+  - id: "T5.28"
+    tipus: lema
+    num: 28
+    resum: 128
+    seccio: "5.7"
+    pagina: 14
+    nom: "Fites d'una forma definida positiva"
+    enunciat: |
+      Si $q_M:\mathbb{R}^n\to\mathbb{R}$ és una forma quadràtica definida positiva llavors existeixen constants $0<c\leqslant C<\infty$ tals que $c\|\mathbf{u}\|^2\leqslant q_M(\mathbf{u})\leqslant C\|\mathbf{u}\|^2$, $\forall\,\mathbf{u}\in\mathbb{R}^n$.
+    demostracio: |
+      Considerem el conjunt de vectors de norma 1: $S:=\{\mathbf{u}\in\mathbb{R}^n:\ \|\mathbf{u}\|=1\}$. Com que $S$ és compacte és a dir, tancat i fitat, pel teorema de Weierstrass, existeixen $\mathbf{u}_1,\mathbf{u}_2\in S$ tals que $c=q_M(\mathbf{u}_1)$ i $C=q_M(\mathbf{u}_2)$ compleixen que
+      $$c\leq q_M(\mathbf{u})\leq C,\qquad\forall\,\mathbf{u}\in S.$$
+      En general, si $\|\mathbf{u}\|\neq0$, considerem $\dfrac{\mathbf{u}}{\|\mathbf{u}\|}$ i li apliquem les desigualtats anteriors, tenim que $c\leq q_M\left(\dfrac{u}{\|\mathbf{u}\|}\right)\leq C$; per les propietats de les formes quadràtiques, $c\leq\dfrac{1}{\|\mathbf{u}\|^2}q_M(\mathbf{u})\leq C$, i, per tant, $c\,\|\mathbf{u}\|^2\leq q_M(\mathbf{u})\leq C\,\|\mathbf{u}\|^2$.
+    problemes: []
+  - id: "T5.x8"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "5.7"
+    pagina: 14
+    nom: "Forma quadràtica i valors propis"
+    enunciat: |
+      El següent resultat estableix la relació entre el caràcter d'una forma quadràtica i els valors propis de la seva matriu associada.
+    problemes: []
+  - id: "T5.29"
+    tipus: teorema
+    num: 29
+    resum: 129
+    seccio: "5.7"
+    pagina: 14
+    nom: "Teorema dels valors propis"
+    enunciat: |
+      (dels valors propis). Sigui $M$ una matriu simètrica $n\times n$ i siguin $\lambda_1,\ldots,\lambda_n$ els seus valors propis (reals, possiblement múltiples). Llavors, la forma quadràtica $q_M$ és:
+
+      (i) definida positiva $\Leftrightarrow\lambda_1,\ldots,\lambda_n>0$;
+
+      (ii) definida negativa $\Leftrightarrow\lambda_1,\ldots,\lambda_n<0$;
+
+      (iii) indefinida $\Leftrightarrow\exists\,i,j$ tals que $\lambda_i>0$ i $\lambda_j<0$;
+
+      (iv) semidefinida positiva $\Leftrightarrow\lambda_1,\ldots,\lambda_n\geqslant0$;
+
+      (v) semidefinida negativa $\Leftrightarrow\lambda_1,\ldots,\lambda_n\leqslant0$.
+    problemes: []
+  - id: "T5.30"
+    tipus: observacio
+    num: 30
+    resum: null
+    seccio: "5.7"
+    pagina: 14
+    nom: "Valors propis en dues variables"
+    enunciat: |
+      En dues variables, si $M=\begin{pmatrix}m_{11}&m_{12}\\m_{21}&m_{22}\end{pmatrix}$, aleshores els valors propis de $M$ són
+      $$\lambda_\pm=\frac12\left(\mathrm{tr}M\pm\sqrt{(\mathrm{tr}M)^2-4\,\mathrm{det}M}\right),$$
+      on $\mathrm{tr}M=m_{11}+m_{22}$ és la traça de $M$ i $\mathrm{det}M=m_{11}m_{22}-m_{12}m_{21}=m_{11}m_{22}-m_{12}^2$ és el seu determinant. En concret, el discriminant sempre és positiu o zero:
+      $$(\mathrm{tr}M)^2-4\,\mathrm{det}M=(m_{11}+m_{22})^2-4(m_{11}m_{22}-m_{12}^2)=(m_{11}-m_{22})^2+4m_{12}^2\geq0.$$
+      Fixem-nos que:
+
+      - Si $\det M<0$, aleshores $\lambda_+>0$ i $\lambda_-<0$. En particular, $\lambda_+$ i $\lambda_-$ tenen signes diferents i, per tant, la forma quadràtica $q_M$ és indefinida.
+      - Si $\det M>0$, aleshores $\mathrm{sgn}(\lambda_\pm)=\mathrm{sgn}(\mathrm{tr}M)$. En particular, si $\mathrm{tr}M>0$, $q_M$ és definida positiva, i si $\mathrm{tr}M<0$, $q_M$ és definida negativa.
+      - Si $\det M=0$, aleshores $\lambda_-=0$ i $\lambda_+=\mathrm{tr}M$. En aquest cas, si $\mathrm{tr}M>0$, $q_M$ és semidefinida positiva, i si $\mathrm{tr}M<0$, $q_M$ és semidefinida negativa. Si, a més, $\mathrm{tr}M=0$, ambdós valors propis són zero (cas degenerat).
+    problemes: []
+  - id: "T5.x9"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "5.7"
+    pagina: 15
+    nom: "Més dimensions: Sylvester"
+    enunciat: |
+      En més dimensions, en alguns casos, ens serà útil el següent resultat:
+    problemes: []
+  - id: "T5.31"
+    tipus: teorema
+    num: 31
+    resum: 130
+    seccio: "5.7"
+    pagina: 15
+    nom: "Teorema de Sylvester"
+    enunciat: |
+      (de Sylvester). Sigui $M$ una matriu simètrica $n\times n$ i $\Delta_1,\ldots,\Delta_n$ els seus menors principals. Aleshores
+
+      (i) $\Delta_i>0$ per a $i=1,\ldots,n\quad\Leftrightarrow\quad q_M$ és definida positiva.
+
+      (ii) $(-1)^i\Delta_i>0$ per a $i=1,\ldots,n\quad\Leftrightarrow\quad q_M$ és definida negativa.
+    problemes: []
+  - id: "T5.32"
+    tipus: definicio
+    num: 32
+    resum: 131
+    seccio: "5.8"
+    pagina: 15
+    nom: "Matriu hessiana"
+    enunciat: |
+      Sigui $f:\Omega\to\mathbb{R}$ una funció $\mathcal{C}^2(\Omega)$. La matriu (o la forma quadràtica) hessiana de $f$ en un punt $\mathbf{a}\in\Omega$ és $Hf(\mathbf{a})$ (o $q_{Hf(\mathbf{a})}$), on
+      $$Hf(\mathbf{a})=\begin{pmatrix}D_{1,1}f(\mathbf{a})&\cdots&D_{1,n}f(\mathbf{a})\\\vdots&&\vdots\\D_{n,1}f(\mathbf{a})&\cdots&D_{n,n}f(\mathbf{a})\end{pmatrix}.$$
+    problemes: []
+  - id: "T5.x10"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "5.8"
+    pagina: 15
+    nom: "Aplicació de les formes quadràtiques"
+    enunciat: |
+      Prenent la matriu $M=Hf(\mathbf{a})$, els resultats enunciats en el context de les formes quadràtiques ens serviran per a la classificació de punts crítics en camps escalars. El següent resultat ens proporciona condicions suficients per fer-ho.
+    problemes: []
+  - id: "T5.33"
+    tipus: teorema
+    num: 33
+    resum: 132
+    seccio: "5.8"
+    pagina: 15
+    nom: "Condicions suficients d'extrem"
+    enunciat: |
+      (condicions suficients). Sigui $\Omega\subseteq\mathbb{R}^n$ un obert, $f:\Omega\to\mathbb{R}$ una funció $\mathcal{C}^2(\Omega)$, i $\mathbf{a}\in\Omega$ un punt crític de $f$. Aleshores,
+
+      (i) $q_{Hf(\mathbf{a})}$ és definida positiva $\Rightarrow$ $\mathbf{a}$ és un mínim local estricte de $f$.
+
+      (ii) $q_{Hf(\mathbf{a})}$ és definida negativa $\Rightarrow$ $\mathbf{a}$ és un màxim local estricte de $f$.
+
+      (iii) $q_{Hf(\mathbf{a})}$ és indefinida $\Rightarrow$ $\mathbf{a}$ és un punt de sella de $f$.
+
+      (iv) $\mathbf{a}$ és un mínim local de $f$ $\Rightarrow$ $q_{Hf(\mathbf{a})}$ és semidefinida positiva.
+
+      (v) $\mathbf{a}$ és un màxim local de $f$ $\Rightarrow$ $q_{Hf(\mathbf{a})}$ és semidefinida negativa.
+    demostracio: |
+      (i) Pel corol·lari 15 i aplicant la condició de punt crític, sabem que
+      $$\lim_{\mathbf{x}\to\mathbf{a}}\frac{f(\mathbf{x})-f(\mathbf{a})-\frac12\sum_{i,j=1}^{n}D_{i,j}f(\mathbf{a})(x_i-a_j)(x_j-a_j)}{\|\mathbf{x}-\mathbf{a}\|^2}=0.$$
+      Apliquem la definició de límit. Per tant, per a tot $\epsilon>0$, existeix $\delta>0$ tal que si $\|\mathbf{x}-\mathbf{a}\|<\delta$ i $x\in\Omega\setminus\{\mathbf{a}\}$, aleshores
+      $$\frac{1}{\|\mathbf{x}-\mathbf{a}\|^2}\left|f(\mathbf{x})-f(\mathbf{a})-\frac12\sum_{i,j=1}^{n}D_{i,j}f(\mathbf{a})(x_i-a_i)(x_j-a_j)\right|<\epsilon.$$
+      Reescrivim-ho:
+      $$\left|\frac{f(\mathbf{x})-f(\mathbf{a})}{\|\mathbf{x}-\mathbf{a}\|^2}-\frac12\sum_{i,j=1}^{n}D_{i,j}f(\mathbf{a})\frac{x_i-a_i}{\|\mathbf{x}-\mathbf{a}\|}\frac{x_j-a_j}{\|\mathbf{x}-\mathbf{a}\|}\right|<\epsilon,$$
+      és a dir,
+      $$-\epsilon+\frac12\left(\frac{\mathbf{x}-\mathbf{a}}{\|\mathbf{x}-\mathbf{a}\|}\right)^THf(\mathbf{a})\left(\frac{\mathbf{x}-\mathbf{a}}{\|\mathbf{x}-\mathbf{a}\|}\right)<\frac{f(\mathbf{x})-f(\mathbf{a})}{\|\mathbf{x}-\mathbf{a}\|^2}<\epsilon+\frac12\left(\frac{\mathbf{x}-\mathbf{a}}{\|\mathbf{x}-\mathbf{a}\|}\right)^THf(\mathbf{a})\left(\frac{\mathbf{x}-\mathbf{a}}{\|\mathbf{x}-\mathbf{a}\|}\right).$$
+      Pel lema 28, sabem que existeixen $c,C\geq0$ tals que
+      $$c\,\|\mathbf{u}\|^2\leq\mathbf{u}^T\,Hf(\mathbf{a})\,\mathbf{u}\leq C\,\|\mathbf{u}\|^2,\qquad\forall\mathbf{u}.$$
+      Com que $\frac{\mathbf{x}-\mathbf{a}}{\|\mathbf{x}-\mathbf{a}\|}$ té norma 1, de la darrera cadena de desigualtats, deduïm que
+      $$-\epsilon+\frac{c}{2}<\frac{f(\mathbf{x})-f(\mathbf{a})}{\|\mathbf{x}-\mathbf{a}\|^2}<\epsilon+\frac{C}{2},$$
+      o, equivalentment,
+      $$f(\mathbf{a})+\left(-\epsilon+\frac{c}{2}\right)\|\mathbf{x}-\mathbf{a}\|^2<f(\mathbf{x})<f(\mathbf{a})+\left(\epsilon+\frac{C}{2}\right)\|\mathbf{x}-\mathbf{a}\|^2,$$
+      Prenent $\epsilon<c/2$, s'obté que $f(\mathbf{x})>f(\mathbf{a})$ per a tot $\mathbf{x}\in B(\mathbf{a},\delta)\cap\Omega\setminus\{\mathbf{a}\}$.
+
+      (ii) Si $Hf(\mathbf{a})$ és definida negativa, considerem la funció $g=-f$. Evidentment, $\mathbf{a}$ és punt crític de $g$ i $Hg(\mathbf{a})$ és definida positiva. Aplicant l'apartat anterior, tenim que $\mathbf{a}$ és un mínim local estricte de $g$ i, per tant, és màxim local estricte de $f$.
+
+      (iii) Quan $Hf(\mathbf{a})$ és indefinida, per dir que és punt de sella, hem de saber distingir alguna direcció en què es prengui un màxim i alguna direcció en què es prengui un mínim. D'entrada, però, sabem que han d'existir direccions $\mathbf{u}$ i $\mathbf{v}$ tals que $\mathbf{u}^T\,Hf(\mathbf{a})\,\mathbf{u}>0$ i $\mathbf{v}^T\,Hf(\mathbf{a})\,\mathbf{v}<0$; a més, podem prendre, sense pèrdua de generalitat, $\|\mathbf{u}\|=\|\mathbf{v}\|=1$.
+
+      Prenem, per exemple, $\mathbf{u}$ i ens restringim en aquesta direcció del domini considerant $\mathbf{x}=\mathbf{a}+t\,\mathbf{u}$. Sabem que
+      $$\lim_{\mathbf{x}\to\mathbf{a}}\frac{1}{\|\mathbf{x}-\mathbf{a}\|^2}\left(f(\mathbf{x})-f(\mathbf{a})-\frac12(\mathbf{x}-\mathbf{a})^T\,Hf(\mathbf{a})\,(\mathbf{x}-\mathbf{a})\right)=0.$$
+      Per tant,
+      $$\lim_{t\to0}\frac{1}{t^2}\left(f(\mathbf{a}+t\,\mathbf{u})-f(a)-\frac12(t\mathbf{u})^T\,Hf(\mathbf{a})\,(t\mathbf{u})\right)=0,$$
+      que es pot reescriure com
+      $$\lim_{t\to0}\frac{f(\mathbf{a}+t\,\mathbf{u})-f(\mathbf{a})}{t^2}=\lim_{t\to0}\frac12\mathbf{u}^T\,Hf(\mathbf{a})\,\mathbf{u}>0.$$
+      Per tant, existeix un $\delta>0$ tal que si $|t|<\delta$, aleshores $f(\mathbf{a}+t\,\mathbf{u})>f(\mathbf{a})$. Així doncs, $\mathbf{a}$ és un mínim local restringit a la recta $\mathbf{x}=\mathbf{a}+t\,\mathbf{u}$.
+
+      Un raonament anàleg per al vector $\mathbf{v}$ ens diu que $\mathbf{a}$ és un màxim local restringit a la recta $\mathbf{x}=\mathbf{a}+t\,\mathbf{v}$.
+
+      (iv) Si $Hf(\mathbf{a})$ no fos semidefinida positiva, existiria un vector $\mathbf{v}$ tal que $\mathbf{v}^T\,Hf(\mathbf{a})\,\mathbf{v}<0$. Per l'apartat anterior, sabem que això implicaria que $\mathbf{a}$ és un màxim local restringit a la recta $\mathbf{x}=\mathbf{a}+t\,\mathbf{v}$, fet que contradeix la hipòtesi que $\mathbf{a}$ sigui un mínim local.
+
+      (v) Anàleg a (iv).
+    problemes: []
+  - id: "T5.34"
+    tipus: observacio
+    num: 34
+    resum: 133
+    seccio: "5.8"
+    pagina: 17
+    nom: "Implicacions i recíprocs falsos"
+    enunciat: |
+      $q_{Hf(\mathbf{a})}\ \oplus\ \Rightarrow$ $\mathbf{a}$ és un mínim local estricte $\Rightarrow$ $\mathbf{a}$ és un mínim local $\Rightarrow$ $q_{Hf(\mathbf{a})}$ és $\underline{\oplus}$, i els tres recíprocs són falsos.
+    problemes: []
+  - id: "T5.35"
+    tipus: exemple
+    num: 35
+    resum: 134
+    seccio: "5.8"
+    pagina: 17
+    nom: "Classificació de punts crítics"
+    enunciat: |
+      Exemples de càlcul i classificació de punts crítics.
+
+      1. Calculeu els punts crítics de $f(x,y)=1+\mathrm{e}^{-x^2}\cos y$ i, si és possible, classifiqueu-los.
+
+         Trobem en primer lloc els punts crítics:
+         $$f_x(x,y)=-2x\mathrm{e}^{-x^2}\cos y=0,\qquad f_y(x,y)=-\mathrm{e}^{-x^2}\sin y=0.$$
+         De la segona equació es deriva que $\sin y=0\Rightarrow y=k\pi$, amb $k\in\mathbb{Z}$. Substituint a la primera:
+         $$f_x(x,k\pi)=-2x\mathrm{e}^{-x^2}(-1)^k=0\Rightarrow x=0.$$
+         Per tant, els punts crítics de $f$ són tots els punts del tipus $(x,y)=(0,k\pi)$, amb $k\in\mathbb{Z}$.
+
+         Calculem ara la seva matriu hessiana per a determinar, si és possible, el seu caràcter. Del fet que $f\in\mathcal{C}^2(\mathbb{R}^2)$ (en realitat, $f\in\mathcal{C}^\infty(\mathbb{R}^2)$) es dedueix que $f_{xy}=f_{yx}$. Així doncs, calculant, tenim
+         $$f_{xx}=(-2+4x^2)\mathrm{e}^{-x^2}\cos y,\qquad f_{xy}=2x\mathrm{e}^{-x^2}\sin y,\qquad f_{yy}=-\mathrm{e}^{-x^2}\cos y,$$
+         d'on, avaluant als punts crítics, s'obté per a $k\in\mathbb{Z}$,
+         $$Hf(0,k\pi)=\begin{pmatrix}2(-1)^{k+1}&0\\0&(-1)^{k+1}\end{pmatrix}.$$
+         Si considerem $k=2m$ parell, aleshores
+         $$Hf(0,2m\pi)=\begin{pmatrix}2(-1)^{2m+1}&0\\0&(-1)^{2m+1}\end{pmatrix}$$
+         és una matriu definida negativa (els seus vaps són tots dos negatius). En conseqüència, els punts de la forma $(0,2m\pi)$, amb $m\in\mathbb{Z}$, són màxims relatius de $f$. De manera anàloga es pot veure que els punts de la forma $(0,2m+1\pi)$, amb $m\in\mathbb{Z}$, són mínims relatius.
+
+      2. En els següents exemples, el càlcul de la matriu hessiana no decideix: a) $f(x,y)=(x-y)^3$, b) $f(x,y)=(x-y)^4$, c) $f(x,y)=(x^2+y^2)^2$.
+
+         Comencem per l'últim. En el cas c) observeu que $f_x=4x(x^2+y^2)$ i $f_y=4y(x^2+y^2)$ s'anul·len si i només si $x=y=0$. La matriu hessiana al punt $(0,0)$ és la matriu de zeros (Nota: noteu que el polinomi de Taylor de grau 2 de $f$ al $(0,0)$ és idènticament nul) i, per tant, el criteri del teorema 33 no ens diu res. Tot i això, observeu que $f(x,y)>f(0,0)$ per a tot $(x,y)\in\mathbb{R}^2\setminus\{(0,0)\}$. És a dir, $f$ té un mínim absolut al punt $(0,0)$.
+
+         Procedint de manera anàloga, en el cas a) tenim: $f_x=3(x-y)^2$ i $f_y=-3(x-y)^2$, que són nul·les si i només si $x=y$. Si calculem la matriu hessiana, s'obté
+         $$Hf(x,y)=\begin{pmatrix}6(x-y)&-6(x-y)\\-6(x-y)&6(x-y)\end{pmatrix}\Rightarrow Hf(x,x)=\begin{pmatrix}0&0\\0&0\end{pmatrix},$$
+         que no decideix. El cas b) és totalment anàleg al cas a).
+    problemes: []

@@ -1,0 +1,332 @@
+{
+ "T3.9:normal": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "$D_uf(a)=Df(a)\\,\\frac{u}{\\|u\\|}$",
+    "gravetat": "error",
+    "explicacio": "Als apunts $D_uf(a)=Df(a)\\,u$ per a tot $u\\neq0$ (la derivada direccional no normalitza $u$); el factor $1/\\|u\\|$ fa l'enunciat fals i contradiu el que la demostració [5] prova."
+   },
+   {
+    "fragment": 6,
+    "cita": "és necessàriament la fila $j$-èsima de $M$",
+    "gravetat": "error",
+    "explicacio": "$Me_j$ és la columna $j$-èsima de $M$, no la fila; amb files s'obtindria la transposada de $Jf(a)$ (i les dimensions no quadren si $m\\neq n$)."
+   }
+  ],
+  "valoracio": "Dos errors: la fórmula de (i) amb $u/\\|u\\|$ i 'fila' en lloc de 'columna' a (ii); la resta coincideix amb els apunts."
+ },
+ "T3.13:normal": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "$\\displaystyle\\max_{u\\neq0}\\{D_uf(a)\\}=\\|\\nabla f(a)\\|$",
+    "gravetat": "error",
+    "explicacio": "El màxim s'ha de prendre sobre $\\|u\\|=1$; sobre $u\\neq0$, $D_uf(a)=\\langle\\nabla f(a),u\\rangle$ no és acotat (si $\\nabla f(a)\\neq0$) i l'afirmació és falsa."
+   },
+   {
+    "fragment": 4,
+    "cita": "$0\\leq\\|\\nabla f(a)\\|\\cos\\alpha\\leq\\|\\nabla f(a)\\|$",
+    "gravetat": "error",
+    "explicacio": "La fita inferior és $-\\|\\nabla f(a)\\|$ (perquè $\\cos\\alpha\\geq-1$), no $0$; a més contradiu el mínim $-\\|\\nabla f(a)\\|$ obtingut a [6]."
+   }
+  ],
+  "valoracio": "Dos errors: el màxim sobre $u\\neq0$ a l'enunciat i la fita inferior $0$ a la demostració."
+ },
+ "T3.14:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "$\\|f(x)-f(y)\\|\\leq M\\|x-y\\|$ per a tots $x,y\\in B(a,\\delta)$",
+    "gravetat": "error",
+    "explicacio": "Els apunts afirmen només Lipschitz puntual en $a$: $\\|f(x)-f(a)\\|<M\\|x-a\\|$. La versió per a tots $x,y$ de la bola és falsa per a funcions només diferenciables en $a$ (p. ex. $x^2\\sin(1/x^2)$ en $0$)."
+   },
+   {
+    "fragment": 5,
+    "cita": "és a dir, $f$ és (puntualment) localment Lipschitz al punt $a$",
+    "gravetat": "consequencia",
+    "explicacio": "El pas és el dels apunts i prova la propietat puntual, que no és la que afirma l'enunciat modificat [2]; la demostració deixa de provar l'enunciat."
+   },
+   {
+    "fragment": 6,
+    "cita": "definim $\\delta=\\dfrac{\\varepsilon}{L}$",
+    "gravetat": "error",
+    "explicacio": "La desigualtat (9) només val si $\\|x-a\\|<\\delta_1(\\varepsilon_0)$; cal $\\delta=\\min\\{\\delta_1(\\varepsilon_0),\\varepsilon/L\\}$. Amb $\\delta=\\varepsilon/L$ no es pot usar (9)."
+   }
+  ],
+  "valoracio": "Enunciat de (ii) reforçat a Lipschitz local (fals) i $\\delta$ de la continuïtat sense el mínim amb $\\delta_1(\\varepsilon_0)$."
+ },
+ "T3.23:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "\\dfrac{g(a)Jf(a)-f(a)Jg(a)}{g(a)}",
+    "gravetat": "error",
+    "explicacio": "El denominador de la jacobiana del quocient és $g(a)^2$, no $g(a)$."
+   },
+   {
+    "fragment": 6,
+    "cita": "$\\delta=\\max\\{\\delta_1,\\delta_2\\}$",
+    "gravetat": "error",
+    "explicacio": "Cal $\\delta\\leq\\min\\{\\delta_1,\\delta_2\\}$ perquè valguin simultàniament les dues fites; amb el màxim, una d'elles pot no valer."
+   },
+   {
+    "fragment": 7,
+    "cita": "<\\frac{\\varepsilon}{2}\\|x-a\\|+\\frac{\\varepsilon}{2}\\|x-a\\|",
+    "gravetat": "consequencia",
+    "explicacio": "La fita és la dels apunts, però amb $\\delta=\\max$ no està garantit que $\\|x-a\\|<\\delta_1$ i $\\|x-a\\|<\\delta_2$ alhora."
+   }
+  ],
+  "valoracio": "Error al denominador de (iv) i $\\delta$ definit com a màxim, que invalida la fita final."
+ },
+ "T3.26:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "existeix un $\\xi\\in\\Omega$ tal que, per a tots $a,b\\in\\Omega$",
+    "gravetat": "error",
+    "explicacio": "Quantificadors intercanviats: als apunts, per a cada $a,b$ amb $[a,b]\\subseteq\\Omega$ existeix $\\xi\\in[a,b]$ (que depèn de $a,b$). Un únic $\\xi$ vàlid per a tots els parells és fals en general."
+   },
+   {
+    "fragment": 3,
+    "cita": "és de classe $\\mathcal{C}^1(\\Omega)$",
+    "gravetat": "error",
+    "explicacio": "Diferenciable en un obert no implica $\\mathcal{C}^1$; a més el teorema 25 només requereix diferenciabilitat."
+   }
+  ],
+  "valoracio": "Quantificadors de l'enunciat intercanviats i afirmació falsa 'diferenciable implica $\\mathcal{C}^1$'."
+ },
+ "T3.28:normal": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "constant a tot $\\mathbb{R}^n$",
+    "gravetat": "error",
+    "explicacio": "La conclusió dels apunts és que $f$ és constant a $\\Omega$; fora de $\\Omega$ no hi ha cap hipòtesi i l'afirmació és falsa."
+   },
+   {
+    "fragment": 6,
+    "cita": "s'obté $f_1(b)-f_1(a)=0$, d'on $f(b)=f(a)$",
+    "gravetat": "error",
+    "explicacio": "Amb $u=e_1$ només s'obté que la primera component coincideix; no se'n dedueix $f(b)=f(a)$. Cal $u=f(b)-f(a)$ (o tots els $e_i$)."
+   },
+   {
+    "fragment": 7,
+    "cita": "$f$ és constant a $\\Omega$",
+    "gravetat": "consequencia",
+    "explicacio": "Conclusió correcta en si, però es basa en $f(b)=f(a)$, que [6] no ha justificat."
+   }
+  ],
+  "valoracio": "Enunciat estès a tot $\\mathbb{R}^n$ i pas final que dedueix $f(b)=f(a)$ només de la primera component."
+ },
+ "T3.18:facil": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "si i només si",
+    "gravetat": "error",
+    "explicacio": "Els apunts donen només una condició suficient. El recíproc és fals: hi ha funcions diferenciables en $a$ amb derivades parcials no contínues en $a$ (p. ex. $x^2\\sin(1/x)$), i la demostració només prova una implicació."
+   }
+  ],
+  "valoracio": "Enunciat convertit en equivalència falsa; la demostració és correcta per a la implicació dels apunts."
+ },
+ "T3.18:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "$f$ és diferenciable en tots els punts d'un entorn de $a$",
+    "gravetat": "error",
+    "explicacio": "La conclusió dels apunts és diferenciable en el punt $a$; amb continuïtat de les parcials només en $a$ no es pot concloure diferenciabilitat en un entorn (i la demostració només ho prova en $a$)."
+   },
+   {
+    "fragment": 6,
+    "cita": "\\mu\\sum_{i=1}^m\\frac{\\varepsilon}{m}\\|x-a\\|=\\varepsilon\\|x-a\\|",
+    "gravetat": "error",
+    "explicacio": "$\\mu\\sum_{i=1}^m\\frac{\\varepsilon}{m}\\|x-a\\|=\\mu\\varepsilon\\|x-a\\|$, no $\\varepsilon\\|x-a\\|$; caldria la fita $\\frac{\\varepsilon}{\\mu m}$ a [5] com als apunts."
+   }
+  ],
+  "valoracio": "Conclusió de l'enunciat reforçada a un entorn i càlcul incorrecte que perd el factor $\\mu$."
+ },
+ "T3.18:dificil": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "$Jf(a)=\\left(\\frac{\\partial f_j}{\\partial x_i}(a)\\right)_{i,j}$, amb $1\\leq i\\leq n$ i $1\\leq j\\leq m$",
+    "gravetat": "error",
+    "explicacio": "La jacobiana és $\\left(\\frac{\\partial f_i}{\\partial x_j}(a)\\right)$ amb $1\\leq i\\leq m$, $1\\leq j\\leq n$ (matriu $m\\times n$); la donada és la seva transposada."
+   },
+   {
+    "fragment": 9,
+    "cita": "perquè $f_i$ és diferenciable a $R(a,\\delta_0)$",
+    "gravetat": "error",
+    "explicacio": "No és hipòtesi que $f_i$ sigui diferenciable al cub (és més del que es vol provar). La derivabilitat de $t\\mapsto f_i(a_{<j},t,x_{>j})$ ve de l'existència de $\\partial f_i/\\partial x_j$ al cub."
+   },
+   {
+    "fragment": 12,
+    "cita": "\\|x-a\\|_1\\leq\\|x-a\\|",
+    "gravetat": "error",
+    "explicacio": "És al revés: $\\|x-a\\|=\\|x-a\\|_2\\leq\\|x-a\\|_1$. Amb la fita $\\varepsilon$ de [11] s'obté $\\varepsilon\\|x-a\\|_1\\leq\\sqrt n\\,\\varepsilon\\|x-a\\|$, no $\\varepsilon\\|x-a\\|$ (els apunts usen $\\varepsilon/n$ i $|x_j-a_j|\\leq\\|x-a\\|$)."
+   }
+  ],
+  "valoracio": "Tres errors: jacobiana transposada a l'enunciat, justificació circular de la derivabilitat i desigualtat entre normes invertida."
+ },
+ "T3.21:facil": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "$J(g\\circ f)(a)=Jf(a)\\cdot Jg(f(a))$",
+    "gravetat": "error",
+    "explicacio": "L'ordre del producte és $Jg(f(a))\\cdot Jf(a)$; el producte $Jf(a)\\cdot Jg(f(a))$ no té dimensions compatibles en general i contradiu la fórmula per components que segueix."
+   }
+  ],
+  "valoracio": "Ordre del producte de jacobianes invertit a l'enunciat; demostració correcta."
+ },
+ "T3.21:normal": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "si i només si",
+    "gravetat": "error",
+    "explicacio": "Els apunts només donen la implicació; el recíproc és fals ($g\\circ f$ pot ser diferenciable sense que ho sigui $f$, p. ex. amb $g$ constant)."
+   },
+   {
+    "fragment": 9,
+    "cita": "$\\tilde\\varepsilon=\\frac{\\varepsilon}{2\\|Jg(f(a))\\|}$",
+    "gravetat": "error",
+    "explicacio": "No està definit si $Jg(f(a))=0$; els apunts usen $2(\\|Jg(f(a))\\|+1)$ precisament per evitar-ho. La demostració oblida aquest cas."
+   }
+  ],
+  "valoracio": "Enunciat convertit en equivalència falsa i divisió per zero no contemplada quan $Jg(f(a))=0$."
+ },
+ "T3.21:dificil": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "\\sum_{\\ell=1}^n",
+    "gravetat": "error",
+    "explicacio": "L'índex $\\ell$ recorre les components de $f$ (variables de $g$), de $1$ a $m$, no fins a $n$."
+   },
+   {
+    "fragment": 5,
+    "cita": "f(x)-f(a)+Jf(a)(x-a)",
+    "gravetat": "error",
+    "explicacio": "Signe incorrecte: sumant i restant $Jg(f(a))(f(x)-f(a))$ queda $Jg(f(a))\\big(f(x)-f(a)-Jf(a)(x-a)\\big)$, com s'usa a [8]."
+   },
+   {
+    "fragment": 6,
+    "cita": "Com que $f$ és contínua en $a$",
+    "gravetat": "error",
+    "explicacio": "La continuïtat no implica Lipschitz puntual (p. ex. $\\sqrt{|x|}$ en $0$); és la diferenciabilitat de $f$ en $a$ la que ho dona (proposició 14)."
+   }
+  ],
+  "valoracio": "Tres errors: límit superior del sumatori, signe a la descomposició i justificació del Lipschitz per continuïtat."
+ },
+ "T3.25:facil": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "$f(b)-f(a)=Jf(\\xi)\\,(b-a)$",
+    "gravetat": "error",
+    "explicacio": "Sense el vector $u$ l'enunciat és fals per a $m>1$ (p. ex. $f(t)=(\\cos t,\\sin t)$ a $[0,2\\pi]$). Els apunts afirmen $\\langle u,f(b)-f(a)\\rangle=\\langle u,Jf(\\xi)(b-a)\\rangle$, amb $\\xi$ depenent de $u$, que és el que prova la demostració."
+   }
+  ],
+  "valoracio": "L'enunciat elimina $u$ i esdevé fals per a $m>1$; la demostració és la dels apunts."
+ },
+ "T3.25:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "per a tot $\\xi\\in(a,b)$",
+    "gravetat": "error",
+    "explicacio": "Els apunts diuen 'existeix $\\xi\\in(a,b)$'; per a tot $\\xi$ és fals en general."
+   },
+   {
+    "fragment": 6,
+    "cita": "$Jh(t)=a-b$",
+    "gravetat": "error",
+    "explicacio": "$h(t)=(1-t)a+tb$ té derivada $b-a$, no $a-b$ (el mateix [7] usa $b-a$)."
+   }
+  ],
+  "valoracio": "Quantificador de $\\xi$ canviat a universal i derivada de $h$ amb el signe canviat."
+ },
+ "T3.25:dificil": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "per a tots $a,b\\in\\Omega$ existeix $\\xi\\in(a,b)$",
+    "gravetat": "error",
+    "explicacio": "S'ha eliminat la hipòtesi $[a,b]\\subseteq\\Omega$; sense ella $f$ pot no estar definida al segment i el resultat és fals (p. ex. $\\Omega$ no convex)."
+   },
+   {
+    "fragment": 4,
+    "cita": "amb $f$, que és contínua",
+    "gravetat": "error",
+    "explicacio": "La composició amb una funció només contínua no és derivable en general; cal usar que $f$ és diferenciable."
+   },
+   {
+    "fragment": 6,
+    "cita": "$\\varphi'(t)=Jh(t)\\cdot Jf(h(t))\\cdot\\nabla g_u(f(h(t)))$",
+    "gravetat": "error",
+    "explicacio": "Regla de la cadena amb l'ordre invertit: és $\\nabla g_u(f(h(t)))\\cdot Jf(h(t))\\cdot Jh(t)$; l'ordre donat no té dimensions compatibles."
+   }
+  ],
+  "valoracio": "Tres errors: hipòtesi $[a,b]\\subseteq\\Omega$ eliminada, derivabilitat justificada per continuïtat de $f$ i ordre de la regla de la cadena invertit."
+ },
+ "T3.32:facil": {
+  "problemes": [
+   {
+    "fragment": 3,
+    "cita": "+f(u(y),y)\\,u'(y)",
+    "gravetat": "error",
+    "explicacio": "El terme de la frontera inferior porta signe menys: $-f(u(y),y)\\,u'(y)$ (com s'obté a [13])."
+   }
+  ],
+  "valoracio": "Signe del terme de la frontera inferior canviat a l'enunciat; demostració correcta."
+ },
+ "T3.32:normal": {
+  "problemes": [
+   {
+    "fragment": 3,
+    "cita": "u'(y)+\\int_a^b\\frac{\\partial f}{\\partial y}(x,y)\\,dx",
+    "gravetat": "error",
+    "explicacio": "La integral ha de ser entre $u(y)$ i $v(y)$, no entre $a$ i $b$ (com s'obté a [13])."
+   },
+   {
+    "fragment": 9,
+    "cita": "\\int_a^b\\varepsilon\\,dx\\leq\\varepsilon",
+    "gravetat": "error",
+    "explicacio": "$\\int_a^b\\varepsilon\\,dx=\\varepsilon(b-a)$, que no és $\\leq\\varepsilon$ si $b-a>1$; cal prendre $\\delta<\\delta_1(\\varepsilon/(b-a))$ com als apunts."
+   }
+  ],
+  "valoracio": "Límits d'integració incorrectes a l'enunciat de (ii) i fita final que oblida el factor $b-a$."
+ },
+ "T3.32:dificil": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "$(a,b)\\times(c,d)\\subseteq\\Omega$",
+    "gravetat": "error",
+    "explicacio": "Hipòtesi afeblida: els apunts demanen $[a,b]\\times[c,d]\\subseteq\\Omega$; cal el rectangle tancat (compacte) per a la continuïtat uniforme i perquè $f$ estigui definida on $u,v$ prenen valors."
+   },
+   {
+    "fragment": 7,
+    "cita": "contínua al compacte $[a,b]\\times[c,d]$",
+    "gravetat": "consequencia",
+    "explicacio": "Pas dels apunts, però amb la hipòtesi afeblida de [1] el rectangle tancat pot no estar contingut a $\\Omega$ i $\\partial f/\\partial y$ pot no estar definida o no ser contínua allà."
+   },
+   {
+    "fragment": 10,
+    "cita": "és integrable",
+    "gravetat": "error",
+    "explicacio": "Per derivar $\\int_{u(y)}^{v(y)}g$ amb el teorema fonamental del càlcul cal $g$ contínua; amb $g$ només integrable la fórmula pot fallar."
+   },
+   {
+    "fragment": 11,
+    "cita": "perquè $u$ i $v$ són contínues",
+    "gravetat": "error",
+    "explicacio": "La continuïtat de $u,v$ no dona derivabilitat de $h$; és derivable perquè $u$ i $v$ són derivables."
+   }
+  ],
+  "valoracio": "Tres errors: rectangle obert a la hipòtesi, TFC amb $g$ només integrable i derivabilitat de $h$ justificada per continuïtat."
+ }
+}

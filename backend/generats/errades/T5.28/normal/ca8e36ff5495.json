@@ -1,0 +1,64 @@
+{
+  "id": "ca8e36ff5495",
+  "exercici": "T5.28",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Si $q_M:\\mathbb{R}^n\\to\\mathbb{R}$ és una forma quadràtica semidefinida positiva, llavors existeixen constants $0<c\\leqslant C<\\infty$ tals que $c\\|\\mathbf{u}\\|^2\\leqslant q_M(\\mathbf{u})\\leqslant C\\|\\mathbf{u}\\|^2$ per a tot $\\mathbf{u}\\in\\mathbb{R}^n$.",
+    "Considerem el conjunt dels vectors de norma $1$, $S:=\\{\\mathbf{u}\\in\\mathbb{R}^n:\\ \\|\\mathbf{u}\\|=1\\}$, que és compacte, és a dir, tancat i fitat.",
+    "La funció $q_M(\\mathbf{u})=\\mathbf{u}^TM\\mathbf{u}$ és contínua, ja que és lineal en $\\mathbf{u}$. Pel teorema de Weierstrass, existeixen $\\mathbf{u}_1,\\mathbf{u}_2\\in S$ tals que $c:=q_M(\\mathbf{u}_1)\\leq q_M(\\mathbf{u})\\leq q_M(\\mathbf{u}_2)=:C$ per a tot $\\mathbf{u}\\in S$; com que $\\mathbf{u}_1\\neq\\mathbf{0}$ i $q_M$ és definida positiva, $c>0$.",
+    "Si $\\mathbf{u}\\neq\\mathbf{0}$, el vector $\\frac{\\mathbf{u}}{\\|\\mathbf{u}\\|}$ és de $S$, i per tant $c\\leq q_M\\left(\\frac{\\mathbf{u}}{\\|\\mathbf{u}\\|}\\right)\\leq C$. Com que $q_M(\\lambda\\mathbf{u})=\\lambda^2q_M(\\mathbf{u})$, això és $c\\leq\\frac{q_M(\\mathbf{u})}{\\|\\mathbf{u}\\|^2}\\leq C$, és a dir, $c\\|\\mathbf{u}\\|^2\\leq q_M(\\mathbf{u})\\leq C\\|\\mathbf{u}\\|^2$.",
+    "Si $\\mathbf{u}=\\mathbf{0}$, els tres membres valen $0$ i les desigualtats també es compleixen."
+  ],
+  "n_enunciat": 1,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "és una forma quadràtica semidefinida positiva",
+      "inici": 35,
+      "fi": 80,
+      "tipus": "hipotesi",
+      "explicacio": "Per a una forma només semidefinida positiva no hi ha cap $c>0$: per exemple, $q(\\mathbf{u})=u_1^2$ en $\\mathbb{R}^2$ val $0$ en $\\mathbf{u}=(0,1)$, i $c\\|\\mathbf{u}\\|^2=c>0$ no hi pot ser inferior.",
+      "correccio": "Els apunts suposen que $q_M$ és definida positiva.",
+      "pista": "Si $q_M$ s'anul·la en algun vector no nul, pot existir una constant $c>0$ amb $c\\|\\mathbf{u}\\|^2\\leq q_M(\\mathbf{u})$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 3,
+      "cita": "és contínua, ja que és lineal en $\\mathbf{u}$",
+      "inici": 52,
+      "fi": 97,
+      "tipus": "definicio",
+      "explicacio": "Una forma quadràtica no és lineal ($q_M(2\\mathbf{u})=4q_M(\\mathbf{u})$); és contínua perquè és un polinomi (homogeni de grau $2$) en les components de $\\mathbf{u}$.",
+      "correccio": "$q_M$ és contínua perquè és un polinomi de grau $2$ en $u_1,\\ldots,u_n$; això permet aplicar Weierstrass en el compacte $S$.",
+      "pista": "Quant val $q_M(2\\mathbf{u})$ comparat amb $q_M(\\mathbf{u})$? Quin tipus de funció és, doncs, $q_M$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t5.json",
+    "valoracio": "Hipòtesi afeblida a semidefinida (enunciat fals) i justificació incorrecta de la continuïtat.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "semidefinida positiva",
+        "gravetat": "error",
+        "explicacio": "Els apunts demanen definida positiva. Per a una forma semidefinida (p. ex. $q(u_1,u_2)=u_1^2$) no existeix $c>0$ amb $c\\|\\mathbf{u}\\|^2\\leq q(\\mathbf{u})$."
+      },
+      {
+        "fragment": 3,
+        "cita": "ja que és lineal en $\\mathbf{u}$",
+        "gravetat": "error",
+        "explicacio": "$q_M(\\mathbf{u})=\\mathbf{u}^TM\\mathbf{u}$ no és lineal sinó quadràtica (polinomi homogeni de grau 2); és contínua perquè és polinòmica."
+      },
+      {
+        "fragment": 3,
+        "cita": "com que $\\mathbf{u}_1\\neq\\mathbf{0}$ i $q_M$ és definida positiva, $c>0$",
+        "gravetat": "consequencia",
+        "explicacio": "Pas correcte dels apunts, però usa que $q_M$ és definida positiva, hipòtesi que l'enunciat [1] ha afeblit a semidefinida."
+      }
+    ]
+  },
+  "creat": 1791296162.0790026
+}

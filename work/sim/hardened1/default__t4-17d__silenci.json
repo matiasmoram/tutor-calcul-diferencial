@@ -1,0 +1,770 @@
+{
+ "exercici": "t4-17d",
+ "tema": 4,
+ "persona": "silenci",
+ "arquetip": "silenci",
+ "persona_descripcio": "Respons gairebé sempre «no sé» o variants molt curtes («ni idea», «no ho sé», «mmm no sé»), sense aportar res. Com a molt un cop en tota la conversa intentes alguna cosa mínima. No sabries resoldre l'exercici tu sol: només avances amb el que el tutor t'ajuda a descobrir.",
+ "final": "error_tutor",
+ "torns": [
+  {
+   "n": 1,
+   "alumne": "No sé com començar; les equacions són $x-2y-z=0$ i $x+yt=0$. Si aïllem $x$ tinc $x=-yt$, i substituint obtinc $z=-y(1+t)$. No sé com passar d'aquí a calcular $g_1''$ i $g_2''$.",
+   "tutor": "Bona intuïció haver aïllat $x$ i $z$, però per a les derivades segones de $g_1$ el més útil és mirar com queda $g_1$ o bé les seves derivades primeres que vas obtenir a l’apartat (b). Quina expressió de $g_1$ tens, o quines derivades primeres, per poder derivar una vegada més i avaluar-ho a $(1,1)$?",
+   "accio": "pista",
+   "pas_objectiu": "segones_g1",
+   "nivell": 2,
+   "intencio": "demana_pista",
+   "errors_detectats": [],
+   "fallback": false,
+   "drafts": 1,
+   "rebuigs": [],
+   "progres": false,
+   "completats": [],
+   "trace": {
+    "torn": 1,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "\"No sé com començar; ... No sé com passar d'aquí a calcular $g_1''$ i $g_2''$.\"",
+     "resum_alumne": "Ha aïllat variables i ha intentat substituir, però no ha calculat cap derivada segona ni ha arribat al resultat del problema.",
+     "estat_passos": [
+      {
+       "pas": "segones_g1",
+       "estat": "no_iniciat"
+      },
+      {
+       "pas": "segones_g2",
+       "estat": "no_iniciat"
+      }
+     ],
+     "pas_actual": "segones_g1",
+     "errors_detectats": [],
+     "error_altre": "",
+     "resultat_proposat": "cap",
+     "resultat_justificat": false,
+     "nivell_desorientacio": "encallat",
+     "intencio": "demana_pista",
+     "teoria_pregunta": []
+    },
+    "pla": {
+     "accio": "pista",
+     "motiu": "Desorientació 'encallat', intenció 'demana_pista', nivell previ 0.",
+     "pas_objectiu": "segones_g1",
+     "nivell_pista": 2,
+     "error_objectiu": null,
+     "error_text": null,
+     "pregunta_suggerida": null,
+     "pot_dir_resultat": false,
+     "resultat_dit_per_alumne": false,
+     "requereix_pregunta": true,
+     "max_frases": 4,
+     "regex_prohibides": [
+      "\\\\partial\\s*y\\^\\{?2\\}?\\}\\s*\\(1,\\s*1\\)\\s*=\\s*-\\s*2",
+      "\\\\partial\\s*x\\s*\\\\partial\\s*y\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1",
+      "\\\\partial\\s*y\\s*\\\\partial\\s*x\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1",
+      "-\\s*\\\\[dt]?frac\\{\\s*2\\s*x\\s*\\}\\{\\s*y\\^\\{?3\\}?\\s*\\}",
+      "\\\\[dt]?frac\\{\\s*1\\s*\\}\\{\\s*y\\^\\{?2\\}?\\s*\\}"
+     ],
+     "teoria_extra": [],
+     "to": "normal",
+     "moviment": "Focus"
+    },
+    "contingut_permes": "PAS OBJECTIU: Derivades segones de $g_1$\n  objectiu: Calcular les derivades segones de $g_1$ a $(1,1)$ (es poden fer servir els resultats dels apartats anteriors).\n\n  idea: Mirar la forma de $g_1$ (o de les seves derivades primeres obtingudes a (b)).\n",
+    "teoria_permesa": [
+     "T5.1"
+    ],
+    "intents": [
+     {
+      "missatge": "Bona intuïció haver aïllat $x$ i $z$, però per a les derivades segones de $g_1$ el més útil és mirar com queda $g_1$ o bé les seves derivades primeres que vas obtenir a l’apartat (b). Quina expressió de $g_1$ tens, o quines derivades primeres, per poder derivar una vegada més i avaluar-ho a $(1,1)$?",
+      "referencies": [],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "Dona una pista de nivell 2 sobre la idea a seguir per a g1, no fa càlculs ni revela resultats, respon a l’alumne i acaba amb una pregunta."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [],
+     "nivell_per_pas": {},
+     "torns": 0,
+     "tancat": false,
+     "ultim_pas": null,
+     "ultima_accio": null,
+     "estats": {},
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {},
+     "resultat_confirmat": false,
+     "intents_alumne": 0
+    },
+    "estat": {
+     "completats": [],
+     "nivell_per_pas": {
+      "segones_g1": 2
+     },
+     "torns": 1,
+     "tancat": false,
+     "ultim_pas": "segones_g1",
+     "ultima_accio": "pista",
+     "estats": {
+      "segones_g1": "no_iniciat",
+      "segones_g2": "no_iniciat"
+     },
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {
+      "segones_g1": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 0
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 3018,
+      "input_tokens": 3540,
+      "output_tokens": 335,
+      "cached_tokens": 3328,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1963,
+      "input_tokens": 1288,
+      "output_tokens": 153,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1937,
+      "input_tokens": 2463,
+      "output_tokens": 101,
+      "cached_tokens": 1792,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 6920
+   },
+   "jutge": {
+    "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5.4-mini in organization org-aWic6JXH1ufAi063obKtm6QB on tokens per min (TPM): Limit 200000, Used 199500, Requested 905. Please try again in 121ms. Visit https://platform.openai.com/account/rate-limits to learn more."
+   }
+  },
+  {
+   "n": 2,
+   "alumne": "No sé quina expressió de $g_1$ tinc; només tinc $x=-yt$ i $z=-y(1+t)$. No sé com obtenir $g_1'$ ni com derivar una altra vegada per a $g_1''$ en $(1,1)$.",
+   "tutor": "Entenc que ara et falta el pont entre allò que has aïllat i la derivada segona. La idea és agafar l’expressió de $g_1$ com a funció de dues variables, o bé les derivades primeres que vas trobar a l’apartat (b), i aplicar una altra vegada la regla de derivació per obtenir $g_{1,ij}$, tal com indica la Definició 1 del Tema 5. Quina derivada segona concreta de $g_1$ vols calcular primer, $g_{1,11}$, $g_{1,12}$ o $g_{1,22}$?",
+   "accio": "pista",
+   "pas_objectiu": "segones_g1",
+   "nivell": 2,
+   "intencio": "demana_pista",
+   "errors_detectats": [],
+   "fallback": false,
+   "drafts": 1,
+   "rebuigs": [],
+   "progres": false,
+   "completats": [],
+   "trace": {
+    "torn": 2,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "\"No sé quina expressió de $g_1$ tinc; només tinc $x=-yt$ i $z=-y(1+t)$. No sé com obtenir $g_1'$ ni com derivar una altra vegada per a $g_1''$ en $(1,1)$.\"",
+     "resum_alumne": "Ha aïllat variables del sistema, però no ha pogut identificar l’expressió de $g_1$ ni avançar en el càlcul de les derivades segones.",
+     "estat_passos": [
+      {
+       "pas": "segones_g1",
+       "estat": "no_iniciat"
+      },
+      {
+       "pas": "segones_g2",
+       "estat": "no_iniciat"
+      }
+     ],
+     "pas_actual": "segones_g1",
+     "errors_detectats": [],
+     "error_altre": "",
+     "resultat_proposat": "cap",
+     "resultat_justificat": false,
+     "nivell_desorientacio": "perdut",
+     "intencio": "demana_pista",
+     "teoria_pregunta": []
+    },
+    "pla": {
+     "accio": "pista",
+     "motiu": "Desorientació 'perdut', intenció 'demana_pista', nivell previ 2.",
+     "pas_objectiu": "segones_g1",
+     "nivell_pista": 2,
+     "error_objectiu": null,
+     "error_text": null,
+     "pregunta_suggerida": null,
+     "pot_dir_resultat": false,
+     "resultat_dit_per_alumne": false,
+     "requereix_pregunta": true,
+     "max_frases": 4,
+     "regex_prohibides": [
+      "\\\\partial\\s*y\\^\\{?2\\}?\\}\\s*\\(1,\\s*1\\)\\s*=\\s*-\\s*2",
+      "\\\\partial\\s*x\\s*\\\\partial\\s*y\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1",
+      "\\\\partial\\s*y\\s*\\\\partial\\s*x\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1",
+      "-\\s*\\\\[dt]?frac\\{\\s*2\\s*x\\s*\\}\\{\\s*y\\^\\{?3\\}?\\s*\\}",
+      "\\\\[dt]?frac\\{\\s*1\\s*\\}\\{\\s*y\\^\\{?2\\}?\\s*\\}"
+     ],
+     "teoria_extra": [],
+     "to": "empatic",
+     "moviment": "Focus"
+    },
+    "contingut_permes": "PAS OBJECTIU: Derivades segones de $g_1$\n  objectiu: Calcular les derivades segones de $g_1$ a $(1,1)$ (es poden fer servir els resultats dels apartats anteriors).\n\n  idea: Mirar la forma de $g_1$ (o de les seves derivades primeres obtingudes a (b)).\n",
+    "teoria_permesa": [
+     "T5.1"
+    ],
+    "intents": [
+     {
+      "missatge": "Entenc que ara et falta el pont entre allò que has aïllat i la derivada segona. La idea és agafar l’expressió de $g_1$ com a funció de dues variables, o bé les derivades primeres que vas trobar a l’apartat (b), i aplicar una altra vegada la regla de derivació per obtenir $g_{1,ij}$, tal com indica la Definició 1 del Tema 5. Quina derivada segona concreta de $g_1$ vols calcular primer, $g_{1,11}$, $g_{1,12}$ o $g_{1,22}$?",
+      "referencies": [
+       "T5.1"
+      ],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "Segueix el pla: dona només una pista d’estratègia per a les derivades segones de $g_1$, sense fer càlculs ni revelar resultats, i acaba amb una pregunta."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [],
+     "nivell_per_pas": {
+      "segones_g1": 2
+     },
+     "torns": 1,
+     "tancat": false,
+     "ultim_pas": "segones_g1",
+     "ultima_accio": "pista",
+     "estats": {
+      "segones_g1": "no_iniciat",
+      "segones_g2": "no_iniciat"
+     },
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {
+      "segones_g1": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 0
+    },
+    "estat": {
+     "completats": [],
+     "nivell_per_pas": {
+      "segones_g1": 2
+     },
+     "torns": 2,
+     "tancat": false,
+     "ultim_pas": "segones_g1",
+     "ultima_accio": "pista",
+     "estats": {
+      "segones_g1": "no_iniciat",
+      "segones_g2": "no_iniciat"
+     },
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {
+      "segones_g1": 2
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 0
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2851,
+      "input_tokens": 3716,
+      "output_tokens": 286,
+      "cached_tokens": 2816,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2133,
+      "input_tokens": 1500,
+      "output_tokens": 209,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2478,
+      "input_tokens": 2717,
+      "output_tokens": 224,
+      "cached_tokens": 1792,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 7464
+   },
+   "jutge": {
+    "revela_resultat_final": false,
+    "passos_revelats": [],
+    "explicacio": "",
+    "permesos": [],
+    "resultat_permes": false,
+    "fuga": false,
+    "fuga_resultat": false,
+    "passos_filtrats": []
+   }
+  },
+  {
+   "n": 3,
+   "alumne": "No sé quina triis, podem començar per $g_{1,11}$; com derivo primer per obtenir $g_{1,1}$ a partir de $x=-yt$ i $z=-y(1+t)$?",
+   "tutor": "Bona, si vols començar per $g_{1,11}$, pensa que amb $g_1(x,y)=x-2y$ la primera derivada respecte de $x$ és constant. Segons la Definició 1 del Tema 5, una derivada segona és tornar a derivar una derivada primera; si aquesta ja no depèn de cap variable, què passa en derivar-la una altra vegada?",
+   "accio": "pista",
+   "pas_objectiu": "segones_g1",
+   "nivell": 3,
+   "intencio": "demana_pista",
+   "errors_detectats": [],
+   "fallback": false,
+   "drafts": 1,
+   "rebuigs": [],
+   "progres": false,
+   "completats": [],
+   "trace": {
+    "torn": 3,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "\"podem començar per $g_{1,11}$; com derivo primer per obtenir $g_{1,1}$ a partir de $x=-yt$ i $z=-y(1+t)$?\"",
+     "resum_alumne": "Ha trobat expressions aïllades per a les variables, però encara no ha obtingut cap derivada de $g_1$ ni ha avançat en les derivades segones.",
+     "estat_passos": [
+      {
+       "pas": "segones_g1",
+       "estat": "no_iniciat"
+      },
+      {
+       "pas": "segones_g2",
+       "estat": "no_iniciat"
+      }
+     ],
+     "pas_actual": "segones_g1",
+     "errors_detectats": [],
+     "error_altre": "",
+     "resultat_proposat": "cap",
+     "resultat_justificat": false,
+     "nivell_desorientacio": "encallat",
+     "intencio": "demana_pista",
+     "teoria_pregunta": [
+      "T5.1"
+     ]
+    },
+    "pla": {
+     "accio": "pista",
+     "motiu": "Desorientació 'encallat', intenció 'demana_pista', nivell previ 2, sense progrés des de l'última pista.",
+     "pas_objectiu": "segones_g1",
+     "nivell_pista": 3,
+     "error_objectiu": null,
+     "error_text": null,
+     "pregunta_suggerida": null,
+     "pot_dir_resultat": false,
+     "resultat_dit_per_alumne": false,
+     "requereix_pregunta": true,
+     "max_frases": 4,
+     "regex_prohibides": [
+      "\\\\partial\\s*y\\^\\{?2\\}?\\}\\s*\\(1,\\s*1\\)\\s*=\\s*-\\s*2",
+      "\\\\partial\\s*x\\s*\\\\partial\\s*y\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1",
+      "\\\\partial\\s*y\\s*\\\\partial\\s*x\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1",
+      "-\\s*\\\\[dt]?frac\\{\\s*2\\s*x\\s*\\}\\{\\s*y\\^\\{?3\\}?\\s*\\}",
+      "\\\\[dt]?frac\\{\\s*1\\s*\\}\\{\\s*y\\^\\{?2\\}?\\s*\\}"
+     ],
+     "teoria_extra": [],
+     "to": "normal",
+     "moviment": "Telling"
+    },
+    "contingut_permes": "PAS OBJECTIU: Derivades segones de $g_1$\n  objectiu: Calcular les derivades segones de $g_1$ a $(1,1)$ (es poden fer servir els resultats dels apartats anteriors).\n\n  idea: Mirar la forma de $g_1$ (o de les seves derivades primeres obtingudes a (b)).\n\n  detall: $g_1(x,y)=x-2y$ és lineal (o bé: $\\frac{\\partial g_1}{\\partial x}=1$ i $\\frac{\\partial g_1}{\\partial y}=-2$ són constants), per tant totes les derivades segones de $g_1$ són $0$.\n",
+    "teoria_permesa": [
+     "T5.1"
+    ],
+    "intents": [
+     {
+      "missatge": "Bona, si vols començar per $g_{1,11}$, pensa que amb $g_1(x,y)=x-2y$ la primera derivada respecte de $x$ és constant. Segons la Definició 1 del Tema 5, una derivada segona és tornar a derivar una derivada primera; si aquesta ja no depèn de cap variable, què passa en derivar-la una altra vegada?",
+      "referencies": [
+       "T5.1"
+      ],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "Segueix el pas objectiu amb una pista en forma de pregunta, no tanca la conclusió i es manté dins del nivell permès."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [],
+     "nivell_per_pas": {
+      "segones_g1": 2
+     },
+     "torns": 2,
+     "tancat": false,
+     "ultim_pas": "segones_g1",
+     "ultima_accio": "pista",
+     "estats": {
+      "segones_g1": "no_iniciat",
+      "segones_g2": "no_iniciat"
+     },
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {
+      "segones_g1": 2
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 0
+    },
+    "estat": {
+     "completats": [],
+     "nivell_per_pas": {
+      "segones_g1": 3
+     },
+     "torns": 3,
+     "tancat": false,
+     "ultim_pas": "segones_g1",
+     "ultima_accio": "pista",
+     "estats": {
+      "segones_g1": "no_iniciat",
+      "segones_g2": "no_iniciat"
+     },
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {
+      "segones_g1": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 0
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 3516,
+      "input_tokens": 3912,
+      "output_tokens": 436,
+      "cached_tokens": 3328,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 3157,
+      "input_tokens": 1732,
+      "output_tokens": 193,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2444,
+      "input_tokens": 2899,
+      "output_tokens": 244,
+      "cached_tokens": 1792,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 9119
+   },
+   "jutge": {
+    "revela_resultat_final": false,
+    "passos_revelats": [
+     "segones_g1"
+    ],
+    "explicacio": "Amb \"la primera derivada respecte de x és constant\" i \"què passa en derivar-la una altra vegada?\" està deixant veure que totes les segones de $g_1$ són $0$.",
+    "permesos": [],
+    "resultat_permes": false,
+    "fuga": true,
+    "fuga_resultat": false,
+    "passos_filtrats": [
+     "segones_g1"
+    ]
+   }
+  },
+  {
+   "n": 4,
+   "alumne": "Ah, si $g_1(x,y)=x-2y$ llavors $g_{1,1}=1$, per tant $g_{1,11}=0$.",
+   "tutor": "Bona, si $g_1(x,y)=x-2y$ és lineal, les seves derivades primeres són constants. Segons la Definició 1 del Tema 5, una derivada segona és tornar a derivar aquestes expressions constants; què et surt si derives $g_{1,1}=1$ i $g_{1,2}=-2$ respecte de $x$ o de $y$?",
+   "accio": "pista",
+   "pas_objectiu": "segones_g1",
+   "nivell": 3,
+   "intencio": "mostra_treball",
+   "errors_detectats": [],
+   "fallback": false,
+   "drafts": 1,
+   "rebuigs": [],
+   "progres": true,
+   "completats": [],
+   "trace": {
+    "torn": 4,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "\"si $g_1(x,y)=x-2y$ llavors $g_{1,1}=1$, per tant $g_{1,11}=0$\"",
+     "resum_alumne": "Ha començat el càlcul de les derivades segones de $g_1$ i ha trobat correctament una derivada segona, però encara no ha tractat totes les derivades de $g_1$ ni les de $g_2$.",
+     "estat_passos": [
+      {
+       "pas": "segones_g1",
+       "estat": "en_curs"
+      },
+      {
+       "pas": "segones_g2",
+       "estat": "no_iniciat"
+      }
+     ],
+     "pas_actual": "segones_g1",
+     "errors_detectats": [],
+     "error_altre": "",
+     "resultat_proposat": "cap",
+     "resultat_justificat": false,
+     "nivell_desorientacio": "dubte_puntual",
+     "intencio": "mostra_treball",
+     "teoria_pregunta": []
+    },
+    "pla": {
+     "accio": "pista",
+     "motiu": "Desorientació 'dubte_puntual', intenció 'mostra_treball', nivell previ 3.",
+     "pas_objectiu": "segones_g1",
+     "nivell_pista": 3,
+     "error_objectiu": null,
+     "error_text": null,
+     "pregunta_suggerida": null,
+     "pot_dir_resultat": false,
+     "resultat_dit_per_alumne": false,
+     "requereix_pregunta": true,
+     "max_frases": 4,
+     "regex_prohibides": [
+      "\\\\partial\\s*y\\^\\{?2\\}?\\}\\s*\\(1,\\s*1\\)\\s*=\\s*-\\s*2",
+      "\\\\partial\\s*x\\s*\\\\partial\\s*y\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1",
+      "\\\\partial\\s*y\\s*\\\\partial\\s*x\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1",
+      "-\\s*\\\\[dt]?frac\\{\\s*2\\s*x\\s*\\}\\{\\s*y\\^\\{?3\\}?\\s*\\}",
+      "\\\\[dt]?frac\\{\\s*1\\s*\\}\\{\\s*y\\^\\{?2\\}?\\s*\\}"
+     ],
+     "teoria_extra": [],
+     "to": "normal",
+     "moviment": "Telling"
+    },
+    "contingut_permes": "PAS OBJECTIU: Derivades segones de $g_1$\n  objectiu: Calcular les derivades segones de $g_1$ a $(1,1)$ (es poden fer servir els resultats dels apartats anteriors).\n\n  idea: Mirar la forma de $g_1$ (o de les seves derivades primeres obtingudes a (b)).\n\n  detall: $g_1(x,y)=x-2y$ és lineal (o bé: $\\frac{\\partial g_1}{\\partial x}=1$ i $\\frac{\\partial g_1}{\\partial y}=-2$ són constants), per tant totes les derivades segones de $g_1$ són $0$.\n",
+    "teoria_permesa": [
+     "T5.1"
+    ],
+    "intents": [
+     {
+      "missatge": "Bona, si $g_1(x,y)=x-2y$ és lineal, les seves derivades primeres són constants. Segons la Definició 1 del Tema 5, una derivada segona és tornar a derivar aquestes expressions constants; què et surt si derives $g_{1,1}=1$ i $g_{1,2}=-2$ respecte de $x$ o de $y$?",
+      "referencies": [
+       "T5.1"
+      ],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "El missatge és en català, segueix el pas objectiu sobre les derivades segones de g1, dona una pista adequada de nivell 3 i acaba amb pregunta sense revelar el resultat final."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [],
+     "nivell_per_pas": {
+      "segones_g1": 3
+     },
+     "torns": 3,
+     "tancat": false,
+     "ultim_pas": "segones_g1",
+     "ultima_accio": "pista",
+     "estats": {
+      "segones_g1": "no_iniciat",
+      "segones_g2": "no_iniciat"
+     },
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {
+      "segones_g1": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 0
+    },
+    "estat": {
+     "completats": [],
+     "nivell_per_pas": {
+      "segones_g1": 3
+     },
+     "torns": 4,
+     "tancat": false,
+     "ultim_pas": "segones_g1",
+     "ultima_accio": "pista",
+     "estats": {
+      "segones_g1": "en_curs",
+      "segones_g2": "no_iniciat"
+     },
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {
+      "segones_g1": 2
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 1
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2466,
+      "input_tokens": 4046,
+      "output_tokens": 276,
+      "cached_tokens": 3328,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2470,
+      "input_tokens": 1866,
+      "output_tokens": 278,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 3757,
+      "input_tokens": 3035,
+      "output_tokens": 231,
+      "cached_tokens": 2304,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 8694
+   },
+   "jutge": {
+    "revela_resultat_final": false,
+    "passos_revelats": [],
+    "explicacio": "No dona el resultat; només diu que \"les seves derivades primeres són constants\" i pregunta \"què et surt si derives...\", sense afirmar que siguin 0.",
+    "permesos": [],
+    "resultat_permes": false,
+    "fuga": false,
+    "fuga_resultat": false,
+    "passos_filtrats": []
+   }
+  },
+  {
+   "n": 5,
+   "alumne": "No sé gaire, però si $g_1(x,y)=x-2y$ i $g_{1,1}=1$, $g_{1,2}=-2$, aleshores derivant una altra vegada donen $g_{1,11}=0$, $g_{1,12}=0$, $g_{1,22}=0$.",
+   "error": "RateLimitError: Error code: 429 - {'error': {'message': 'You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.', 'type': 'insufficient_quota', 'param': None, 'code': 'credit_balance_exhausted'}}"
+  }
+ ],
+ "crides_alumne": [
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 2769,
+   "input_tokens": 489,
+   "output_tokens": 213,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 2658,
+   "input_tokens": 661,
+   "output_tokens": 199,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 1832,
+   "input_tokens": 872,
+   "output_tokens": 122,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 2582,
+   "input_tokens": 1019,
+   "output_tokens": 110,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 1827,
+   "input_tokens": 1157,
+   "output_tokens": 147,
+   "cached_tokens": 0,
+   "extra": {}
+  }
+ ],
+ "crides_jutge": [
+  {
+   "stage": "jutge",
+   "model": "gpt-5.4-mini",
+   "latency_ms": 1342,
+   "input_tokens": 1347,
+   "output_tokens": 80,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "jutge",
+   "model": "gpt-5.4-mini",
+   "latency_ms": 3102,
+   "input_tokens": 1297,
+   "output_tokens": 134,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "jutge",
+   "model": "gpt-5.4-mini",
+   "latency_ms": 2026,
+   "input_tokens": 1299,
+   "output_tokens": 201,
+   "cached_tokens": 0,
+   "extra": {}
+  }
+ ],
+ "durada_s": 53.0,
+ "metriques": {
+  "torns": 4,
+  "torns_error": 1,
+  "completat": false,
+  "torns_fins_tancar": null,
+  "final": "error_tutor",
+  "loops": [
+   2
+  ],
+  "fallbacks": 0,
+  "drafts": 4,
+  "rebuigs": {},
+  "preguntes_conceptuals": 0,
+  "preguntes_ignorades": 0,
+  "torns_jutjats": 3,
+  "fuites": [
+   3
+  ],
+  "fuites_resultat": [],
+  "accions": {
+   "pista": 4
+  },
+  "cost_tutor_usd": 0.02406,
+  "cost_simulacio_usd": 0.00746,
+  "models_sense_preu": []
+ },
+ "config": "default",
+ "_fitxer": "default__t4-17d__silenci.json"
+}

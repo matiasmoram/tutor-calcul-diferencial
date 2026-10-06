@@ -1,0 +1,78 @@
+{
+  "id": "662bf4605514",
+  "exercici": "T4.18",
+  "font": "teoria",
+  "dificultat": "dificil",
+  "fragments": [
+    "Sigui $G\\subseteq\\mathbb{R}^{n+m}$ obert, $\\Phi:G\\to\\mathbb{R}^m$ una funció $\\mathcal{C}^r(G)$, i $(a,b)\\in G$ tal que $\\mathrm{rang}\\big(D\\Phi(a,b)\\big)=m$.",
+    "Llavors, per a tot obert $U$ amb $(a,b)\\in U\\subseteq G$, existeixen un obert $V\\subseteq\\mathbb{R}^{n+m}$ i un $\\mathcal{C}^r$-difeomorfisme $g:V\\to U$ tals que $\\Phi\\circ g:V\\to\\mathbb{R}^m$ és la projecció $(\\Phi\\circ g)(u,v)=v$.",
+    "Suposem primer que $\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$. La hipòtesi sobre el rang només assegura que hi ha algun menor d'ordre $m$ no nul, no necessàriament el de les variables $y$; el cas general el tractarem al final.",
+    "Com a la demostració del teorema de la funció implícita, considerem $f(x,y)=(x,\\Phi(x,y))$, que és de classe $\\mathcal{C}^r(G)$ i compleix $\\det Jf(a,b)=\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)\\neq 0$. Pel teorema de la funció inversa, existeix un obert $U\\subseteq G$ amb $(a,b)\\in U$ tal que $V=f(U)$ és obert, $f:U\\to V$ és bijectiva i $f^{-1}:V\\to U$ és de classe $\\mathcal{C}^r$.",
+    "Prenem $g=f^{-1}:V\\to U$, que és de la forma $g(u,v)=(u,h(u,v))$. És un $\\mathcal{C}^r$-difeomorfisme perquè és bijectiva i de classe $\\mathcal{C}^r$, i tota bijecció de classe $\\mathcal{C}^r$ entre oberts és un $\\mathcal{C}^r$-difeomorfisme.",
+    "Per la segona igualtat de l'observació 14, $\\Phi(u,h(u,v))=v$ per a tot $(u,v)\\in V$; per tant, $(\\Phi\\circ g)(u,v)=\\Phi(u,h(u,v))=v$, tal com volíem.",
+    "En el cas general, escrivint $z=(x,y)$, hi ha índexs diferents $k_1,\\ldots,k_m\\in\\{1,\\ldots,n+m\\}$ tals que $\\det\\big(\\partial\\Phi_i/\\partial z_{k_j}(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$. Sigui $p$ la permutació de coordenades de $\\mathbb{R}^{n+m}$ tal que les darreres $m$ columnes de $D(\\Phi\\circ p)=Dp\\,D\\Phi$ són les columnes $k_1,\\ldots,k_m$ de $D\\Phi$.",
+    "Aplicant el cas anterior a $\\Phi\\circ p$, definida a l'obert $p^{-1}(G)$, en el punt $p^{-1}(a,b)$, obtenim un $\\mathcal{C}^r$-difeomorfisme $g$ amb $((\\Phi\\circ p)\\circ g)(u,v)=v$. Com que $p$ és lineal i invertible, $p\\circ g$ és un $\\mathcal{C}^r$-difeomorfisme, la seva imatge conté $(a,b)$, i $(\\Phi\\circ(p\\circ g))(u,v)=v$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "per a tot obert $U$ amb $(a,b)\\in U\\subseteq G$",
+      "inici": 9,
+      "fi": 56,
+      "tipus": "quantificador",
+      "explicacio": "El redreçament és local: només existeix per a algun entorn $U$ prou petit. Si $\\Phi\\circ g$ és la projecció, $D\\Phi$ ha de tenir rang $m$ a tot $U$. Contraexemple ($n=m=1$): $\\Phi(x,y)=x^2+y^2$, $(a,b)=(0,1)$, $U=B((0,1),2)$, que conté l'origen, on $D\\Phi=0$.",
+      "correccio": "Existeixen oberts $U,V$, amb $(a,b)\\in U\\subseteq G$, i un $\\mathcal{C}^r$-difeomorfisme $g:V\\to U$ amb $\\Phi\\circ g$ la projecció.",
+      "pista": "Si l'entorn $U$ conté un punt on $D\\Phi$ no té rang $m$, pot $\\Phi\\circ g$ ser la projecció?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "tota bijecció de classe $\\mathcal{C}^r$ entre oberts és un $\\mathcal{C}^r$-difeomorfisme",
+      "inici": 153,
+      "fi": 241,
+      "tipus": "implicacio",
+      "explicacio": "Una bijecció $\\mathcal{C}^r$ entre oberts no té per què tenir inversa diferenciable: $x\\mapsto x^3$ de $\\mathbb{R}$ en $\\mathbb{R}$ és bijectiva i $\\mathcal{C}^\\infty$, però la inversa no és diferenciable en $0$. Cal dir que la inversa de $g$, que és $f$, també és $\\mathcal{C}^r$.",
+      "correccio": "$g$ és bijectiva, de classe $\\mathcal{C}^r$, i la seva inversa $f$ també és de classe $\\mathcal{C}^r$; per tant, és un $\\mathcal{C}^r$-difeomorfisme.",
+      "pista": "Penseu en $x\\mapsto x^3$: és bijectiva i $\\mathcal{C}^\\infty$; és un difeomorfisme?"
+    },
+    {
+      "id": "e3",
+      "fragment": 7,
+      "cita": "$D(\\Phi\\circ p)=Dp\\,D\\Phi$",
+      "inici": 283,
+      "fi": 309,
+      "tipus": "calcul",
+      "explicacio": "Per la regla de la cadena, $D(\\Phi\\circ p)=D\\Phi\\,Dp$; el producte $Dp\\,D\\Phi$ (d'una matriu $(n+m)\\times(n+m)$ per una $m\\times(n+m)$) ni tan sols està definit, i són les columnes de $D\\Phi\\,Dp$ les que es permuten.",
+      "correccio": "$D(\\Phi\\circ p)=D\\Phi\\,Dp$, que té per columnes les de $D\\Phi$ permutades.",
+      "pista": "En quin ordre es multipliquen les diferencials a la regla de la cadena, i quines mides tenen?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t4.json",
+    "valoracio": "Tres errors: quantificador sobre $U$ canviat, justificació falsa de difeomorfisme i ordre del producte a la regla de la cadena.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "per a tot obert $U$ amb $(a,b)\\in U\\subseteq G$, existeixen un obert $V\\subseteq\\mathbb{R}^{n+m}$",
+        "gravetat": "error",
+        "explicacio": "Quantificador canviat: el teorema afirma que existeix algun entorn $U$; per a un $U$ arbitrari (p. ex. $U=G$) no hi ha en general un difeomorfisme $g:V\\to U$ amb $\\Phi\\circ g$ projecció. La demostració només construeix un $U$ concret."
+      },
+      {
+        "fragment": 5,
+        "cita": "tota bijecció de classe $\\mathcal{C}^r$ entre oberts és un $\\mathcal{C}^r$-difeomorfisme",
+        "gravetat": "error",
+        "explicacio": "Fals: $x\\mapsto x^3$ és una bijecció $\\mathcal{C}^\\infty$ de $\\mathbb{R}$ amb inversa no diferenciable en 0. El motiu correcte és que la inversa $f$ és $\\mathcal{C}^r$ (o que el TFI dona $f^{-1}\\in\\mathcal{C}^r$ amb inversa $f\\in\\mathcal{C}^r$)."
+      },
+      {
+        "fragment": 7,
+        "cita": "$D(\\Phi\\circ p)=Dp\\,D\\Phi$",
+        "gravetat": "error",
+        "explicacio": "Regla de la cadena mal aplicada: $D(\\Phi\\circ p)=D\\Phi(p)\\,Dp$ (l'ordre del producte és l'invers; $Dp\\,D\\Phi$ ni tan sols té dimensions compatibles, $(n+m)\\times(n+m)$ per $m\\times(n+m)$). Només amb $D\\Phi\\,Dp$ les columnes de $D\\Phi$ es permuten."
+      }
+    ]
+  },
+  "creat": 1791296058.537049
+}

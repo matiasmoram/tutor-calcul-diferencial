@@ -1,0 +1,48 @@
+{
+  "id": "40dae2c7db87",
+  "exercici": "T3.18",
+  "font": "teoria",
+  "dificultat": "facil",
+  "fragments": [
+    "Sigui $f:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}^m$, $f=(f_1,f_2,\\ldots,f_m)$, i sigui $a\\in\\mathring{\\Omega}$.",
+    "Aleshores, $f$ és diferenciable al punt $a$ si i només si existeixen totes les derivades parcials $\\frac{\\partial f_i}{\\partial x_j}$ en un entorn del punt $a$ i són contínues al punt $a$.",
+    "Recordem que a $\\mathbb{R}^m$ totes les normes són equivalents; en particular, existeix $\\mu>0$ tal que $\\|y\\|=\\|y\\|_2\\leq\\mu\\|y\\|_1$ per a tot $y\\in\\mathbb{R}^m$.",
+    "Reduirem la demostració a l'Afirmació següent: totes les funcions component $f_i$, $i=1,\\ldots,m$, són diferenciables al punt $a$, amb $Jf_i(a)=\\left(\\frac{\\partial f_i}{\\partial x_1}(a)\\ \\cdots\\ \\frac{\\partial f_i}{\\partial x_n}(a)\\right)$.",
+    "Suposem-la certa. Fixat $\\varepsilon>0$, per a cada $i$ existeix $\\delta_i>0$ tal que si $\\|x-a\\|<\\delta_i$, aleshores $|f_i(x)-f_i(a)-Jf_i(a)(x-a)|\\leq\\frac{\\varepsilon}{\\mu m}\\|x-a\\|$.",
+    "Per tant, si $\\|x-a\\|<\\delta:=\\min_i\\delta_i$, es té $\\|f(x)-f(a)-Jf(a)(x-a)\\|\\leq\\mu\\sum_{i=1}^m|f_i(x)-f_i(a)-Jf_i(a)(x-a)|\\leq\\mu\\sum_{i=1}^m\\frac{\\varepsilon}{\\mu m}\\|x-a\\|=\\varepsilon\\|x-a\\|$, i $f$ és diferenciable en $a$.",
+    "Demostrem l'Afirmació. Fixem $i$ i $\\varepsilon>0$. Com que $a\\in\\mathring{\\Omega}$ i les derivades parcials existeixen en un entorn de $a$, hi ha $\\delta_0>0$ tal que el cub $R(a,\\delta_0)=(a_1-\\delta_0,a_1+\\delta_0)\\times\\cdots\\times(a_n-\\delta_0,a_n+\\delta_0)$ està contingut a $\\Omega$ i totes les derivades parcials hi existeixen.",
+    "Per a $x\\in R(a,\\delta_0)$ escrivim $f_i(x)-f_i(a)$ com a suma telescòpica, canviant una coordenada cada vegada: $f_i(x)-f_i(a)=\\sum_{j=1}^n\\left[f_i(a_{<j},x_j,x_{>j})-f_i(a_{<j},a_j,x_{>j})\\right]$, on $(a_{<j},t,x_{>j}):=(a_1,\\ldots,a_{j-1},t,x_{j+1},\\ldots,x_n)$.",
+    "Cada sumand és l'increment de la funció d'una variable $t\\mapsto f_i(a_{<j},t,x_{>j})$, que és derivable, amb derivada $\\frac{\\partial f_i}{\\partial x_j}(a_{<j},t,x_{>j})$, a l'interval tancat d'extrems $a_j$ i $x_j$. Pel teorema del valor mitjà en una variable, existeix $\\xi_j$ a l'interior d'aquest interval tal que el sumand val $\\frac{\\partial f_i}{\\partial x_j}(a_{<j},\\xi_j,x_{>j})\\,(x_j-a_j)$ (si $x_j=a_j$, el sumand és nul).",
+    "Per tant, $|f_i(x)-f_i(a)-Jf_i(a)(x-a)|=\\left|\\sum_{j=1}^n\\left(\\frac{\\partial f_i}{\\partial x_j}(a_{<j},\\xi_j,x_{>j})-\\frac{\\partial f_i}{\\partial x_j}(a)\\right)(x_j-a_j)\\right|\\leq\\sum_{j=1}^n\\left|\\frac{\\partial f_i}{\\partial x_j}(a_{<j},\\xi_j,x_{>j})-\\frac{\\partial f_i}{\\partial x_j}(a)\\right|\\,|x_j-a_j|$.",
+    "Per la continuïtat de les derivades parcials al punt $a$, existeix $0<\\delta_0'<\\delta_0$ tal que $\\left|\\frac{\\partial f_i}{\\partial x_j}(p)-\\frac{\\partial f_i}{\\partial x_j}(a)\\right|<\\frac{\\varepsilon}{n}$ per a tot $p\\in R(a,\\delta_0')$ i tot $j$. Si $\\|x-a\\|<\\delta_0'$, els punts $(a_{<j},\\xi_j,x_{>j})$ pertanyen a $R(a,\\delta_0')$, perquè cada coordenada dista de la de $a$ com a molt $\\|x-a\\|$.",
+    "Com que $|x_j-a_j|\\leq\\|x-a\\|$, si $\\|x-a\\|<\\delta_0'$ obtenim $|f_i(x)-f_i(a)-Jf_i(a)(x-a)|\\leq\\sum_{j=1}^n\\frac{\\varepsilon}{n}\\|x-a\\|=\\varepsilon\\|x-a\\|$, que prova l'Afirmació."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "si i només si",
+      "inici": 44,
+      "fi": 57,
+      "tipus": "implicacio",
+      "explicacio": "El teorema només dona una condició suficient; el recíproc és fals. Contraexemple: $f(x,y)=(x^2+y^2)\\sin\\frac{1}{\\sqrt{x^2+y^2}}$, $f(0,0)=0$, és diferenciable a $(0,0)$ però les seves derivades parcials no hi són contínues.",
+      "correccio": "Si existeixen totes les derivades parcials en un entorn de $a$ i són contínues en $a$, aleshores $f$ és diferenciable en $a$ (només aquesta implicació).",
+      "pista": "La demostració prova les dues implicacions? Coneixes alguna funció diferenciable amb derivades parcials discontínues?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t3.json",
+    "valoracio": "Enunciat convertit en equivalència falsa; la demostració és correcta per a la implicació dels apunts.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "si i només si",
+        "gravetat": "error",
+        "explicacio": "Els apunts donen només una condició suficient. El recíproc és fals: hi ha funcions diferenciables en $a$ amb derivades parcials no contínues en $a$ (p. ex. $x^2\\sin(1/x)$), i la demostració només prova una implicació."
+      }
+    ]
+  },
+  "creat": 1791296233.7525077
+}

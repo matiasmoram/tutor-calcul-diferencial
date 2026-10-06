@@ -1,0 +1,66 @@
+{
+  "id": "3b4778fa2019",
+  "exercici": "T3.32",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "(Regla de Leibniz). Sigui $f:\\Omega\\subseteq\\mathbb{R}^2\\to\\mathbb{R}$ de classe $\\mathcal{C}^1(\\Omega)$, amb $\\Omega$ obert. Siguin $a,b,c,d\\in\\mathbb{R}$ tals que $[a,b]\\times[c,d]\\subseteq\\Omega$ i siguin $u,v:(c,d)\\to[a,b]$ dues funcions derivables.",
+    "(i) La funció $F(y)=\\int_a^bf(x,y)\\,dx$ és derivable a l'interval $(c,d)$ i $F'(y)=\\int_a^b\\frac{\\partial f}{\\partial y}(x,y)\\,dx$.",
+    "(ii) La funció $G(y)=\\int_{u(y)}^{v(y)}f(x,y)\\,dx$ és derivable a l'interval $(c,d)$ i $G'(y)=f(v(y),y)\\,v'(y)-f(u(y),y)\\,u'(y)+\\int_a^b\\frac{\\partial f}{\\partial y}(x,y)\\,dx$.",
+    "(i) Fixem $y\\in(c,d)$; cal veure que $\\lim_{h\\to0}\\frac{F(y+h)-F(y)}{h}=\\int_a^b\\frac{\\partial f}{\\partial y}(x,y)\\,dx$. Per a $h\\neq0$ amb $y+h\\in(c,d)$, per la linealitat de la integral, $\\left|\\frac{F(y+h)-F(y)}{h}-\\int_a^b\\frac{\\partial f}{\\partial y}(x,y)\\,dx\\right|=\\left|\\int_a^b\\left(\\frac{f(x,y+h)-f(x,y)}{h}-\\frac{\\partial f}{\\partial y}(x,y)\\right)dx\\right|$. (13)",
+    "Fixada $x\\in[a,b]$, la funció $f(x,\\cdot)$ és derivable a l'interval d'extrems $y$ i $y+h$. Pel teorema del valor mitjà, existeix $\\xi_{h,x}$ estrictament entre $y$ i $y+h$ tal que $f(x,y+h)-f(x,y)=\\frac{\\partial f}{\\partial y}(x,\\xi_{h,x})\\,h$.",
+    "Substituint-ho a (13) i usant que $\\left|\\int_a^bg\\right|\\leq\\int_a^b|g|$, obtenim que (13) és menor o igual que $\\int_a^b\\left|\\frac{\\partial f}{\\partial y}(x,\\xi_{h,x})-\\frac{\\partial f}{\\partial y}(x,y)\\right|dx$. (14)",
+    "Com que $f\\in\\mathcal{C}^1$, la funció $\\frac{\\partial f}{\\partial y}$ és contínua al compacte $[a,b]\\times[c,d]$ i, per tant, uniformement contínua: per a tot $\\varepsilon>0$ existeix $\\delta_1(\\varepsilon)>0$ tal que per a tot $x\\in[a,b]$ i tots $y,y'\\in[c,d]$ amb $|y'-y|<\\delta_1$ es té $\\left|\\frac{\\partial f}{\\partial y}(x,y')-\\frac{\\partial f}{\\partial y}(x,y)\\right|<\\varepsilon$. (15)",
+    "Donat $\\varepsilon>0$, prenem $\\delta$ amb $0<\\delta<\\delta_1(\\varepsilon)$. Si $0<|h|<\\delta$ (i $y+h\\in(c,d)$), aleshores $|\\xi_{h,x}-y|<|h|<\\delta_1$ per a tot $x\\in[a,b]$ i, per (15), $\\left|\\frac{\\partial f}{\\partial y}(x,\\xi_{h,x})-\\frac{\\partial f}{\\partial y}(x,y)\\right|<\\varepsilon$.",
+    "Substituint a (13) i (14): $\\left|\\frac{F(y+h)-F(y)}{h}-\\int_a^b\\frac{\\partial f}{\\partial y}(x,y)\\,dx\\right|\\leq\\int_a^b\\varepsilon\\,dx\\leq\\varepsilon$ si $0<|h|<\\delta$, que és el que volíem demostrar.",
+    "(ii) Recordem que, pel teorema fonamental del càlcul, si $g:[a,b]\\to\\mathbb{R}$ és contínua, aleshores $\\frac{d}{dy}\\int_{u(y)}^{v(y)}g(x)\\,dx=g(v(y))\\,v'(y)-g(u(y))\\,u'(y)$.",
+    "Considerem $\\Phi:[a,b]\\times[a,b]\\times[c,d]\\to\\mathbb{R}$, $\\Phi(s,t,y)=\\int_s^tf(x,y)\\,dx$, i $h:(c,d)\\to[a,b]\\times[a,b]\\times[c,d]$, $h(y)=(u(y),v(y),y)$, que és derivable perquè ho són $u$ i $v$. Aleshores $G=\\Phi\\circ h$.",
+    "Pel teorema fonamental del càlcul i per l'apartat (i), $\\frac{\\partial\\Phi}{\\partial s}(s,t,y)=-f(s,y)$, $\\frac{\\partial\\Phi}{\\partial t}(s,t,y)=f(t,y)$ i $\\frac{\\partial\\Phi}{\\partial y}(s,t,y)=\\int_s^t\\frac{\\partial f}{\\partial y}(x,y)\\,dx$, que són contínues; per tant $\\Phi$ és de classe $\\mathcal{C}^1$. A més, $Jh(y)=(u'(y),v'(y),1)^\\top$.",
+    "Aplicant la regla de la cadena, $G'(y)=J\\Phi(h(y))\\,Jh(y)=-f(u(y),y)\\,u'(y)+f(v(y),y)\\,v'(y)+\\int_{u(y)}^{v(y)}\\frac{\\partial f}{\\partial y}(x,y)\\,dx$."
+  ],
+  "n_enunciat": 3,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "+\\int_a^b\\frac{\\partial f}{\\partial y}(x,y)\\,dx",
+      "inici": 127,
+      "fi": 174,
+      "tipus": "calcul",
+      "explicacio": "La integral de $\\frac{\\partial f}{\\partial y}$ s'ha de fer entre els límits variables $u(y)$ i $v(y)$, no entre $a$ i $b$. Contraexemple: $f(x,y)=y$, $[a,b]=[0,1]$, $u=0$, $v=\\frac12$: $G(y)=\\frac y2$, $G'(y)=\\frac12$, però la fórmula dona $1$.",
+      "correccio": "$G'(y)=f(v(y),y)\\,v'(y)-f(u(y),y)\\,u'(y)+\\int_{u(y)}^{v(y)}\\frac{\\partial f}{\\partial y}(x,y)\\,dx$.",
+      "pista": "En el terme integral de $G'$, quin és l'interval d'integració de la funció $G$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 9,
+      "cita": "\\int_a^b\\varepsilon\\,dx\\leq\\varepsilon",
+      "inici": 113,
+      "fi": 151,
+      "tipus": "desigualtat",
+      "explicacio": "$\\int_a^b\\varepsilon\\,dx=\\varepsilon(b-a)$, que és més gran que $\\varepsilon$ si $b-a>1$; per obtenir la fita $\\varepsilon$ cal usar (15) amb $\\frac{\\varepsilon}{b-a}$.",
+      "correccio": "Es pren $\\delta<\\delta_1\\left(\\frac{\\varepsilon}{b-a}\\right)$, i aleshores la fita és $\\int_a^b\\frac{\\varepsilon}{b-a}\\,dx=\\varepsilon$.",
+      "pista": "Quant val exactament $\\int_a^b\\varepsilon\\,dx$? És sempre menor o igual que $\\varepsilon$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t3.json",
+    "valoracio": "Límits d'integració incorrectes a l'enunciat de (ii) i fita final que oblida el factor $b-a$.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "u'(y)+\\int_a^b\\frac{\\partial f}{\\partial y}(x,y)\\,dx",
+        "gravetat": "error",
+        "explicacio": "La integral ha de ser entre $u(y)$ i $v(y)$, no entre $a$ i $b$ (com s'obté a [13])."
+      },
+      {
+        "fragment": 9,
+        "cita": "\\int_a^b\\varepsilon\\,dx\\leq\\varepsilon",
+        "gravetat": "error",
+        "explicacio": "$\\int_a^b\\varepsilon\\,dx=\\varepsilon(b-a)$, que no és $\\leq\\varepsilon$ si $b-a>1$; cal prendre $\\delta<\\delta_1(\\varepsilon/(b-a))$ com als apunts."
+      }
+    ]
+  },
+  "creat": 1791296233.7737658
+}

@@ -1,0 +1,950 @@
+problemes:
+  - num: 1
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t4-1"
+        apartat: null
+        tipus: calcul
+        enunciat: |
+          Trobeu tots els punts $(x,y)\in\mathbb{R}^2$ tals que
+          $$\frac{\partial^2 f}{\partial x\partial y}(x,y)\neq\frac{\partial^2 f}{\partial y\partial x}(x,y)$$
+          on
+          $$f(x,y)=\begin{cases}\dfrac{xy(x^2-y^2)}{x^2+y^2} & \text{si } (x,y)\neq(0,0)\\ 0 & \text{altrament.}\end{cases}$$
+        teoria: ["T3.2", "T5.1"]
+        teoria_reservada: ["T5.5"]
+        resultat:
+          valor: |
+            L'únic punt és l'origen $(0,0)$. Fora de l'origen $f$ és de classe $\mathcal{C}^\infty$ i les derivades creuades coincideixen pel teorema de Schwarz. A l'origen, $\frac{\partial f}{\partial x}(0,y)=-y$ i $\frac{\partial f}{\partial y}(x,0)=x$, de manera que derivar primer respecte de $x$ i després respecte de $y$ dona $-1$, mentre que derivar primer respecte de $y$ i després respecte de $x$ dona $1$.
+          fuites: ['nom[ée]s\s+(a|en)\s+(l''origen|\$?\(0,\s*0\))', '[úu]nic\s+punt\s+(és|es)\s+(l''origen|\$?\(0,\s*0\))', '=\s*\\\{\s*\(0,\s*0\)\s*\\\}', '(l''origen|\(0,\s*0\)\$?)\s+(és|es)\s+l''[úu]nic\s+punt']
+        passos:
+          - id: fora_origen
+            titol: "Punts diferents de l'origen"
+            objectiu: |
+              Decidir què passa amb les derivades creuades en els punts $(x,y)\neq(0,0)$.
+            idea: |
+              En l'obert $\mathbb{R}^2\setminus\{(0,0)\}$, $f$ és un quocient de polinomis amb denominador que no s'anul·la. Quin teorema garanteix la igualtat de les derivades creuades si són contínues?
+            detall: |
+              A $\Omega=\mathbb{R}^2\setminus\{(0,0)\}$ (obert) $f$ és quocient de polinomis amb $x^2+y^2\neq 0$, per tant $f\in\mathcal{C}^\infty(\Omega)$; en particular les derivades segones existeixen i són contínues a $\Omega$. Pel teorema de Schwarz les dues derivades creuades coincideixen en tot punt de $\Omega$. L'únic punt candidat és $(0,0)$.
+            fuites: []
+            teoria: ["T5.6", "T3.31"]
+          - id: parcials_eixos
+            titol: "Derivades primeres sobre els eixos"
+            objectiu: |
+              Obtenir $\frac{\partial f}{\partial x}$ sobre l'eix $x=0$ i $\frac{\partial f}{\partial y}$ sobre l'eix $y=0$ (incloent-hi l'origen).
+            idea: |
+              Per derivar una segona vegada a l'origen només calen les primeres derivades al llarg d'un eix. Fora de l'origen es poden derivar amb les regles habituals; a l'origen cal la definició com a límit.
+            detall: |
+              Per $(x,y)\neq(0,0)$: $\frac{\partial f}{\partial x}=\frac{y(x^4+4x^2y^2-y^4)}{(x^2+y^2)^2}$ i $\frac{\partial f}{\partial y}=\frac{x(x^4-4x^2y^2-y^4)}{(x^2+y^2)^2}$. A l'origen, $f(h,0)=f(0,k)=0$, per tant $\frac{\partial f}{\partial x}(0,0)=\frac{\partial f}{\partial y}(0,0)=0$. Així $f_x(0,y)=-y$ i $f_y(x,0)=x$ per a tot $x,y$ (també en $0$).
+            fuites: ['f_x\s*\(0,\s*y\)\s*=\s*-\s*y', 'f_y\s*\(x,\s*0\)\s*=\s*x\b', '\\partial\s*x\}\s*\(0,\s*y\)\s*=\s*-\s*y', '\\partial\s*y\}\s*\(x,\s*0\)\s*=\s*x\b']
+            teoria: ["T3.2"]
+          - id: creuades_origen
+            titol: "Derivades creuades a l'origen"
+            objectiu: |
+              Calcular les dues derivades creuades en $(0,0)$ i comparar-les.
+            idea: |
+              Derivar les funcions d'una variable obtingudes al pas anterior, respectant l'ordre de derivació de cada derivada creuada.
+            detall: |
+              $\frac{\partial^2 f}{\partial x\partial y}(0,0)=\frac{\partial}{\partial y}\Big(\frac{\partial f}{\partial x}\Big)(0,0)=\frac{d}{dy}(-y)\big|_{y=0}=-1$ i $\frac{\partial^2 f}{\partial y\partial x}(0,0)=\frac{\partial}{\partial x}\Big(\frac{\partial f}{\partial y}\Big)(0,0)=\frac{d}{dx}(x)\big|_{x=0}=1$. Són diferents, per tant el conjunt demanat és $\{(0,0)\}$.
+            fuites: ['\(0,\s*0\)\s*=\s*\S*\s*-\s*1\b', 'big\|_\{y=0\}\s*=\s*-\s*1', '\$?-\s*1\$?\s+i\s+\$?1\$?', '\\pm\s*1\b']
+            teoria: ["T3.2", "T5.1"]
+        errors_comuns:
+          - id: regles_a_lorigen
+            descripcio: |
+              Calcula $f_x(0,0)$ o $f_y(0,0)$ substituint $(0,0)$ a la fórmula obtinguda fora de l'origen (que no hi està definida), en lloc d'usar la definició.
+            pregunta: |
+              La fórmula que has derivat, és vàlida en el punt $(0,0)$? Com està definida $f$ allà?
+          - id: schwarz_arreu
+            descripcio: |
+              Aplica el teorema de Schwarz a tot $\mathbb{R}^2$ sense comprovar la continuïtat de les derivades segones a prop de l'origen.
+            pregunta: |
+              Quina hipòtesi del teorema de Schwarz has comprovat a prop de l'origen?
+          - id: derivar_formula_general
+            descripcio: |
+              Per calcular la segona derivada a l'origen deriva la fórmula general de $f_x$ i hi substitueix $(0,0)$, en lloc de derivar $f_x(0,y)$ com a funció d'una variable.
+            pregunta: |
+              Per derivar $f_x$ respecte de $y$ en el punt $(0,0)$, quins valors de $f_x$ necessites realment?
+        nota_professor: |
+          És l'exemple clàssic de Peano (Exemple 5 del Tema 5). El conjunt demanat no depèn del conveni d'ordre de la notació $\frac{\partial^2 f}{\partial x\partial y}$: amb qualsevol conveni les dues creuades valen $\pm 1$ a l'origen. Amb el conveni de la Definició 31 del Tema 3, $\frac{\partial^2 f}{\partial x\partial y}=\frac{\partial}{\partial y}\big(\frac{\partial f}{\partial x}\big)$. També es pot fer amb $f_x(0,k)/k$ i $f_y(h,0)/h$ directament.
+
+  - num: 2
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t4-2"
+        apartat: null
+        tipus: teoric
+        enunciat: |
+          Comproveu que les derivades creuades de segon ordre de la funció
+          $$f(x,y)=\begin{cases}xy^2\sin\dfrac{1}{y} & \text{si } y\neq 0\\ 0 & \text{si } y=0\end{cases}$$
+          coincideixen a $(0,0)$, tot i que no se satisfà la hipòtesi del teorema de Schwarz.
+        teoria: ["T5.6", "T3.2"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $f_x(x,y)=y^2\sin(1/y)$ si $y\neq 0$ i $f_x(x,0)=0$; $f_y(x,y)=2xy\sin(1/y)-x\cos(1/y)$ si $y\neq 0$ i $f_y(x,0)=0$. Llavors $\frac{\partial}{\partial y}(f_x)(0,0)=\lim_{k\to0}k\sin(1/k)=0$ i $\frac{\partial}{\partial x}(f_y)(0,0)=0$: les creuades coincideixen (valen $0$). Però per $y\neq 0$ les dues creuades valen $2y\sin(1/y)-\cos(1/y)$, que no té límit quan $(x,y)\to(0,0)$; per tant no són contínues en cap entorn de l'origen i la hipòtesi del teorema de Schwarz falla.
+          fuites: []
+        passos:
+          - id: primeres
+            titol: "Derivades primeres"
+            objectiu: |
+              Calcular $f_x$ i $f_y$ en tots els punts, incloent-hi els de l'eix $y=0$.
+            idea: |
+              Per $y\neq 0$ es deriva amb les regles habituals. Sobre l'eix $y=0$ la funció es defineix a part: cal usar la definició de derivada parcial com a límit.
+            detall: |
+              Per $y\neq 0$: $f_x=y^2\sin(1/y)$, $f_y=2xy\sin(1/y)-x\cos(1/y)$. Per $y=0$: $f(x+h,0)=0$, així $f_x(x,0)=0$; i $f_y(x,0)=\lim_{k\to 0}\frac{xk^2\sin(1/k)}{k}=\lim_{k\to0}xk\sin(1/k)=0$ (producte d'una funció fitada per una que tendeix a $0$).
+            fuites: ['f_y\s*\(x,\s*0\)\s*=\s*0', '\\partial\s*y\}\s*\(x,\s*0\)\s*=\s*0', 'x\s*k\s*\\sin\s*(\(1/k\)|\\d?frac\s*\{?1\}?\s*\{?k\}?)']
+            teoria: ["T3.2"]
+          - id: creuades_origen
+            titol: "Derivades creuades a l'origen"
+            objectiu: |
+              Calcular les dues derivades creuades a $(0,0)$.
+            idea: |
+              Tornar a aplicar la definició de derivada parcial a les funcions $f_x$ (en la direcció $y$) i $f_y$ (en la direcció $x$) a l'origen.
+            detall: |
+              $\frac{\partial}{\partial y}(f_x)(0,0)=\lim_{k\to0}\frac{f_x(0,k)-f_x(0,0)}{k}=\lim_{k\to0}\frac{k^2\sin(1/k)}{k}=\lim_{k\to 0}k\sin(1/k)=0$. $\frac{\partial}{\partial x}(f_y)(0,0)=\lim_{h\to0}\frac{f_y(h,0)-f_y(0,0)}{h}=\lim_{h\to 0}\frac{0}{h}=0$. Coincideixen.
+            fuites: ['\\lim_\{h\\to\s*0\}\s*\\frac\{0\}\{h\}', '\\lim_\{k\s*\\to\s*0\}\s*k\s*\\sin']
+            teoria: ["T3.2", "T5.1"]
+          - id: hipotesi_falla
+            titol: "La hipòtesi de Schwarz no es compleix"
+            objectiu: |
+              Justificar que les derivades creuades no són contínues en cap entorn de l'origen.
+            idea: |
+              Calcular les derivades creuades fora de l'eix $y=0$ i estudiar-ne el límit quan $(x,y)\to(0,0)$ per una successió de punts adequada.
+            detall: |
+              Per $y\neq 0$: $\frac{\partial}{\partial y}(f_x)=2y\sin(1/y)-\cos(1/y)$ i $\frac{\partial}{\partial x}(f_y)=2y\sin(1/y)-\cos(1/y)$. Sobre els punts $(0,1/(n\pi))\to(0,0)$ valen $-\cos(n\pi)=(-1)^{n+1}$, que no té límit. Per tant cap de les dues és contínua a $(0,0)$ (de fet, en cap punt de l'eix $y=0$), i el teorema de Schwarz (ni la seva versió forta) no es pot aplicar en cap entorn de l'origen.
+            fuites: ['2\s*y\s*\\sin\s*\(1/y\)\s*-\s*\\cos\s*\(1/y\)', '\(-1\)\^\{?n\+1\}?']
+            teoria: ["T5.6", "T5.7"]
+        errors_comuns:
+          - id: formula_a_leix
+            descripcio: |
+              Usa la fórmula de $f_y$ per $y\neq 0$ per calcular $f_y(x,0)$ (on no té sentit perquè hi apareix $1/y$), o afirma que $f_y(x,0)$ no existeix.
+            pregunta: |
+              Com està definida $f$ sobre la recta $y=0$? Quina eina tens per derivar en un punt on la fórmula no val?
+          - id: coincidencia_implica_continuitat
+            descripcio: |
+              Creu que, com que les creuades coincideixen a l'origen, les hipòtesis de Schwarz s'han de complir (confon condició suficient amb necessària).
+            pregunta: |
+              El teorema de Schwarz diu "si són contínues, coincideixen". Diu alguna cosa sobre el cas en què no són contínues?
+          - id: continuitat_de_f
+            descripcio: |
+              Comprova la continuïtat de $f$ o de les derivades primeres en lloc de la de les derivades segones creuades.
+            pregunta: |
+              Quines funcions exactament han de ser contínues segons l'enunciat del teorema de Schwarz?
+        nota_professor: |
+          De fet, les dues creuades coincideixen a tot $\mathbb{R}^2$ (valen $2y\sin(1/y)-\cos(1/y)$ si $y\neq 0$ i $0$ si $y=0$), però no són contínues en cap punt de l'eix $y=0$. Mostra que la continuïtat de Schwarz és suficient però no necessària.
+
+  - num: 3
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t4-3"
+        apartat: null
+        tipus: teoric
+        enunciat: |
+          Sigui $G(r,\varphi)=(r\cos\varphi,r\sin\varphi)$ (canvi a polars). Donada $f:\mathbb{R}^2\to\mathbb{R}$, una funció de classe $\mathcal{C}^2$, sigui $F=f\circ G$. Si $f_{ij}$ vol dir la derivada segona de $f$ respecte $x_i,x_j$, demostreu que
+          $$(f_{xx}+f_{yy})\circ G=F_{rr}+\frac{1}{r^2}F_{\varphi\varphi}+\frac{1}{r}F_r.$$
+          L'expressió $f_{xx}+f_{yy}$ s'anomena el *laplacià de $f$* i s'escriu $\Delta f$. La igualtat anterior dona l'expressió del laplacià de $f$ en coordenades polars.
+        teoria: ["T3.31"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Per la regla de la cadena (amb $f_x,f_y,f_{xx},\dots$ avaluades en $G(r,\varphi)$): $F_r=\cos\varphi\,f_x+\sin\varphi\,f_y$, $F_{rr}=\cos^2\varphi\,f_{xx}+2\sin\varphi\cos\varphi\,f_{xy}+\sin^2\varphi\,f_{yy}$, $F_\varphi=-r\sin\varphi\,f_x+r\cos\varphi\,f_y$, $F_{\varphi\varphi}=r^2\sin^2\varphi\,f_{xx}-2r^2\sin\varphi\cos\varphi\,f_{xy}+r^2\cos^2\varphi\,f_{yy}-rF_r$ (usant $f_{xy}=f_{yx}$ per Schwarz). Llavors, per $r\neq 0$, $F_{rr}+\frac{1}{r^2}F_{\varphi\varphi}+\frac1rF_r=f_{xx}+f_{yy}$ avaluat en $G(r,\varphi)$.
+          fuites: []
+        passos:
+          - id: primeres
+            titol: "Derivades primeres de F"
+            objectiu: |
+              Expressar $F_r$ i $F_\varphi$ en termes de les derivades parcials de $f$.
+            idea: |
+              $F$ és una composició; aplicar la regla de la cadena (producte de jacobianes) i recordar on s'avaluen les derivades de $f$.
+            detall: |
+              $JG=\begin{pmatrix}\cos\varphi&-r\sin\varphi\\ \sin\varphi&r\cos\varphi\end{pmatrix}$, per tant $F_r=\cos\varphi\,f_x(G)+\sin\varphi\,f_y(G)$ i $F_\varphi=-r\sin\varphi\,f_x(G)+r\cos\varphi\,f_y(G)$.
+            fuites: ['F_r\s*=\s*\\cos\s*\\varphi\s*\\?,?\s*f_x', 'F_\\varphi\s*=\s*-\s*r\s*\\sin\s*\\varphi']
+            teoria: ["T3.21", "T3.22"]
+          - id: segones
+            titol: "Derivades segones de F"
+            objectiu: |
+              Calcular $F_{rr}$ i $F_{\varphi\varphi}$ en termes de les derivades de $f$.
+            idea: |
+              Derivar de nou: cada $f_x(G(r,\varphi))$ i $f_y(G(r,\varphi))$ és també una composició (regla de la cadena), i els coeficients $\cos\varphi$, $r\sin\varphi$… també depenen de les variables (regla del producte). Com que $f$ és $\mathcal{C}^2$, les derivades creuades coincideixen.
+            detall: |
+              $F_{rr}=\cos\varphi(\cos\varphi f_{xx}+\sin\varphi f_{xy})+\sin\varphi(\cos\varphi f_{yx}+\sin\varphi f_{yy})=\cos^2\varphi f_{xx}+2\sin\varphi\cos\varphi f_{xy}+\sin^2\varphi f_{yy}$.
+              $F_{\varphi\varphi}=-r\cos\varphi f_x-r\sin\varphi f_y-r\sin\varphi(-r\sin\varphi f_{xx}+r\cos\varphi f_{xy})+r\cos\varphi(-r\sin\varphi f_{yx}+r\cos\varphi f_{yy})=r^2\sin^2\varphi f_{xx}-2r^2\sin\varphi\cos\varphi f_{xy}+r^2\cos^2\varphi f_{yy}-rF_r$, on s'ha usat $f_{xy}=f_{yx}$ (teorema de Schwarz).
+            fuites: ['-\s*r\s*F_r', '2\s*r\^2\s*\\sin\s*\\varphi\s*\\cos\s*\\varphi']
+            teoria: ["T3.21", "T5.6"]
+          - id: combinar
+            titol: "Combinar"
+            objectiu: |
+              Comprovar la igualtat de l'enunciat.
+            idea: |
+              Dividir $F_{\varphi\varphi}$ per $r^2$ (cal $r\neq 0$), sumar $F_{rr}$ i $\frac1rF_r$ i usar $\sin^2\varphi+\cos^2\varphi=1$.
+            detall: |
+              $\frac{1}{r^2}F_{\varphi\varphi}=\sin^2\varphi f_{xx}-2\sin\varphi\cos\varphi f_{xy}+\cos^2\varphi f_{yy}-\frac1rF_r$. Sumant $F_{rr}$ i $\frac1rF_r$: els termes en $f_{xy}$ i en $F_r$ es cancel·len i queda $(\cos^2\varphi+\sin^2\varphi)(f_{xx}+f_{yy})=(f_{xx}+f_{yy})\circ G$.
+            fuites: []
+            teoria: []
+        errors_comuns:
+          - id: oblidar_producte
+            descripcio: |
+              En derivar $F_\varphi$ respecte de $\varphi$ oblida derivar els coeficients $-r\sin\varphi$ i $r\cos\varphi$ (regla del producte) i perd el terme $-rF_r$.
+            pregunta: |
+              A l'expressió de $F_\varphi$, quins factors depenen de $\varphi$? Els has derivat tots?
+          - id: avaluacio_derivades
+            descripcio: |
+              Tracta $f_x$, $f_y$ com a constants en tornar a derivar, en lloc de funcions de $(r,\varphi)$ a través de $G$.
+            pregunta: |
+              $f_x(r\cos\varphi,r\sin\varphi)$ depèn de $r$? Com es deriva una composició?
+          - id: sense_schwarz
+            descripcio: |
+              No justifica per què els termes amb $f_{xy}$ i $f_{yx}$ es poden agrupar.
+            pregunta: |
+              Per què pots sumar els termes amb $f_{xy}$ i amb $f_{yx}$ com si fossin el mateix? Quina hipòtesi de l'enunciat ho permet?
+        nota_professor: |
+          La igualtat té sentit per $r\neq 0$ (en general es pren $r>0$). Alternativa: escriure $f_x,f_y$ en funció de $F_r,F_\varphi$ invertint $JG$ i derivar, però és més llarg.
+
+  - num: 4
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t4-4"
+        apartat: null
+        tipus: teoric
+        enunciat: |
+          Siguin $f,g:\mathbb{R}\to\mathbb{R}$ funcions dues vegades diferenciables i $c>0$ una constant. Proveu que la funció $\varphi(x,t)=f(x-ct)+g(x+ct)$ satisfà l'equació d'ones,
+          $$\frac{1}{c^2}\frac{\partial^2\varphi}{\partial t^2}-\frac{\partial^2\varphi}{\partial x^2}=0.$$
+        teoria: ["T3.2"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Per la regla de la cadena, $\varphi_t=-cf'(x-ct)+cg'(x+ct)$, $\varphi_{tt}=c^2f''(x-ct)+c^2g''(x+ct)$, $\varphi_x=f'(x-ct)+g'(x+ct)$, $\varphi_{xx}=f''(x-ct)+g''(x+ct)$. Per tant $\frac{1}{c^2}\varphi_{tt}-\varphi_{xx}=0$.
+          fuites: []
+        passos:
+          - id: derivades_t
+            titol: "Derivades respecte de t"
+            objectiu: |
+              Calcular $\frac{\partial\varphi}{\partial t}$ i $\frac{\partial^2\varphi}{\partial t^2}$.
+            idea: |
+              Cada sumand és la composició d'una funció d'una variable amb una funció afí de $(x,t)$: regla de la cadena, dues vegades.
+            detall: |
+              $\varphi_t=f'(x-ct)\cdot(-c)+g'(x+ct)\cdot c$ i, com que $f',g'$ són derivables, $\varphi_{tt}=c^2f''(x-ct)+c^2g''(x+ct)$.
+            fuites: ['c\^\{?2\}?\s*f''''\s*\(x\s*-\s*c\s*t\)']
+            teoria: ["T3.21"]
+          - id: derivades_x
+            titol: "Derivades respecte de x"
+            objectiu: |
+              Calcular $\frac{\partial\varphi}{\partial x}$ i $\frac{\partial^2\varphi}{\partial x^2}$.
+            idea: |
+              Mateix procediment, ara la derivada interior de $x\mp ct$ respecte de $x$.
+            detall: |
+              $\varphi_x=f'(x-ct)+g'(x+ct)$ i $\varphi_{xx}=f''(x-ct)+g''(x+ct)$.
+            fuites: []
+            teoria: ["T3.21"]
+          - id: substituir
+            titol: "Substituir a l'equació"
+            objectiu: |
+              Comprovar que es compleix l'equació d'ones.
+            idea: |
+              Substituir les derivades obtingudes.
+            detall: |
+              $\frac{1}{c^2}\varphi_{tt}-\varphi_{xx}=f''(x-ct)+g''(x+ct)-f''(x-ct)-g''(x+ct)=0$.
+            fuites: []
+            teoria: []
+        errors_comuns:
+          - id: signe_derivada_interior
+            descripcio: |
+              Oblida el factor $-c$ (o $c$) de la derivada interior, o no l'eleva al quadrat a la segona derivada.
+            pregunta: |
+              Quina és la derivada de $x-ct$ respecte de $t$? Quantes vegades apareix aquest factor quan derives dues vegades?
+          - id: confondre_variables
+            descripcio: |
+              Escriu $f''(x)$ en lloc de $f''(x-ct)$, perdent el punt on s'avalua la derivada.
+            pregunta: |
+              En quin punt s'avalua $f'$ quan derives $f(x-ct)$?
+        nota_professor: |
+          Només cal que $f,g$ siguin dues vegades derivables (no cal $\mathcal{C}^2$): la regla de la cadena només demana diferenciabilitat. Recíprocament (d'Alembert), tota solució $\mathcal{C}^2$ és d'aquesta forma, però no es demana.
+
+  - num: 5
+    font: null
+    preambul: |
+      Per a les funcions següents, determineu si $G$ satisfà les hipòtesis del teorema de la funció inversa; trobeu la imatge de $G$ i, si $G$ és injectiva, calculeu explícitament $G^{-1}$:
+    indicacio: null
+    exercicis:
+      - id: "t4-5a"
+        apartat: "a"
+        tipus: calcul
+        enunciat: |
+          $\mathrm{Dom}(G)=\mathbb{R}^n$, $G(x)=x+a$, $a\in\mathbb{R}^n$ (translació pel vector $a$);
+        teoria: ["T4.5"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $G$ és $\mathcal{C}^\infty$ amb $JG(x)=I_n$, $\det JG=1\neq 0$: satisfà les hipòtesis del TFI a tot punt. $G(\mathbb{R}^n)=\mathbb{R}^n$, $G$ és injectiva i $G^{-1}(y)=y-a$.
+          fuites: ['G\^\{?-1\}?\s*\((y|x)\)\s*=\s*(y|x)\s*-\s*a']
+        passos:
+          - id: hipotesis
+            titol: "Hipòtesis del TFI"
+            objectiu: |
+              Comprovar si $G$ compleix les hipòtesis del teorema de la funció inversa.
+            idea: |
+              Mirar la regularitat de $G$ i calcular la seva matriu jacobiana.
+            detall: |
+              Cada component $x_i+a_i$ és polinòmica, per tant $G\in\mathcal{C}^\infty(\mathbb{R}^n)$, i $JG(x)=I_n$, amb determinant $1\neq 0$ a tot punt.
+            fuites: ['J\s*G\s*\(x\)\s*=\s*I']
+            teoria: ["T4.5", "T3.31"]
+          - id: imatge_inversa
+            titol: "Imatge, injectivitat i inversa"
+            objectiu: |
+              Trobar la imatge de $G$, decidir si és injectiva i, si ho és, donar $G^{-1}$.
+            idea: |
+              Resoldre l'equació $G(x)=y$ per a $y$ arbitrari.
+            detall: |
+              $x+a=y\iff x=y-a$: per a tot $y$ hi ha una única solució. La imatge és $\mathbb{R}^n$, $G$ és bijectiva i $G^{-1}(y)=y-a$.
+            fuites: ['x\s*=\s*y\s*-\s*a']
+            teoria: []
+        errors_comuns:
+          - id: global_per_tfi
+            descripcio: |
+              Dedueix la injectivitat global només del fet que $\det JG\neq 0$ arreu.
+            pregunta: |
+              El teorema de la funció inversa dona informació local o global? Com pots comprovar directament si $G$ és injectiva?
+          - id: jacobiana_amb_a
+            descripcio: |
+              Inclou el vector constant $a$ a la jacobiana.
+            pregunta: |
+              Quina és la derivada d'una constant?
+        nota_professor: |
+          Exercici d'escalfament: $G$ és un difeomorfisme $\mathcal{C}^\infty$ de $\mathbb{R}^n$ en si mateix.
+
+      - id: "t4-5b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          $\mathrm{Dom}(G)=\mathbb{R}^2$, $G(x,y)=(x+2y,x-y)$;
+        teoria: ["T4.5"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $G$ és lineal (per tant $\mathcal{C}^\infty$) amb $\det JG=\det\begin{pmatrix}1&2\\1&-1\end{pmatrix}=-3\neq 0$: satisfà les hipòtesis del TFI a tot punt. $G(\mathbb{R}^2)=\mathbb{R}^2$, és injectiva i $G^{-1}(u,v)=\big(\frac{u+2v}{3},\frac{u-v}{3}\big)$.
+          fuites: ['\\[dt]?frac\{u\s*\+\s*2\s*v\}\{3\}', '\(u\s*\+\s*2\s*v\)\s*/\s*3', '\\[dt]?frac\{u\s*-\s*v\}\{3\}']
+        passos:
+          - id: hipotesis
+            titol: "Hipòtesis del TFI"
+            objectiu: |
+              Comprovar si $G$ compleix les hipòtesis del teorema de la funció inversa.
+            idea: |
+              Regularitat de $G$ i determinant de la jacobiana.
+            detall: |
+              $G$ és lineal, per tant $\mathcal{C}^\infty$, i $JG=\begin{pmatrix}1&2\\1&-1\end{pmatrix}$ (constant) amb $\det JG=-1-2=-3\neq 0$.
+            fuites: ['-\s*3\s*\\neq\s*0', '=\s*-\s*3\b']
+            teoria: ["T4.5", "T3.31"]
+          - id: imatge_inversa
+            titol: "Imatge i inversa"
+            objectiu: |
+              Trobar la imatge de $G$, decidir si és injectiva i, si ho és, calcular $G^{-1}$.
+            idea: |
+              Resoldre el sistema lineal $x+2y=u$, $x-y=v$.
+            detall: |
+              Restant: $3y=u-v$, $y=\frac{u-v}{3}$; llavors $x=v+y=\frac{u+2v}{3}$. Solució única per a tot $(u,v)$: imatge $\mathbb{R}^2$, $G$ bijectiva i $G^{-1}(u,v)=\big(\frac{u+2v}{3},\frac{u-v}{3}\big)$.
+            fuites: ['\\[dt]?frac\{u\s*\+\s*2\s*v\}\{3\}', '\\[dt]?frac\{u\s*-\s*v\}\{3\}']
+            teoria: []
+        errors_comuns:
+          - id: inversa_matriu
+            descripcio: |
+              Calcula malament la inversa de la matriu (per exemple, oblida dividir pel determinant o en canvia el signe).
+            pregunta: |
+              Si apliques $G$ al resultat que has obtingut, recuperes $(u,v)$?
+          - id: lineal_det_zero
+            descripcio: |
+              Pensa que la imatge podria no ser tot $\mathbb{R}^2$ tot i que el determinant és no nul.
+            pregunta: |
+              Per a una aplicació lineal de $\mathbb{R}^2$ en $\mathbb{R}^2$, què et diu el determinant sobre la seva imatge?
+        nota_professor: |
+          Cas lineal: el TFI és trivial i la inversa és global (vegeu la motivació del Tema 4).
+
+      - id: "t4-5c"
+        apartat: "c"
+        tipus: calcul
+        enunciat: |
+          $\mathrm{Dom}(G)=\mathbb{R}^2\setminus\{(0,0)\}$, $G(x,y)=(x^2-y^2,xy)$;
+        teoria: ["T4.5"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $G$ és $\mathcal{C}^\infty$ en l'obert $\mathbb{R}^2\setminus\{(0,0)\}$ i $\det JG=2(x^2+y^2)\neq 0$: satisfà les hipòtesis del TFI a tot punt del domini. La imatge és $\mathbb{R}^2\setminus\{(0,0)\}$. No és injectiva ($G(-x,-y)=G(x,y)$), per tant no té inversa global.
+          fuites: ['no\s+(és|es)\s+injectiva', 'G\s*\(\s*-\s*x,\s*-\s*y\)\s*=\s*G\s*\(x,\s*y\)', 'imatge\s+(és|es)\s+(tot\s+)?\$?\\mathbb\{R\}\^\{?2\}?\s*\\setminus']
+        passos:
+          - id: hipotesis
+            titol: "Hipòtesis del TFI"
+            objectiu: |
+              Comprovar si $G$ compleix les hipòtesis del teorema de la funció inversa en els punts del domini.
+            idea: |
+              Calcular la jacobiana i el seu determinant i veure on s'anul·la.
+            detall: |
+              $JG=\begin{pmatrix}2x&-2y\\ y&x\end{pmatrix}$, $\det JG=2x^2+2y^2$, que només s'anul·la a $(0,0)$, punt exclòs del domini (obert). $G$ és polinòmica, per tant $\mathcal{C}^\infty$.
+            fuites: ['2\s*x\^\{?2\}?\s*\+\s*2\s*y\^\{?2\}?', '2\s*\(x\^\{?2\}?\s*\+\s*y\^\{?2\}?\)']
+            teoria: ["T4.5", "T3.31"]
+          - id: injectivitat
+            titol: "Injectivitat"
+            objectiu: |
+              Decidir si $G$ és injectiva en el seu domini.
+            idea: |
+              Buscar simetries de l'expressió de $G$: hi ha punts diferents amb la mateixa imatge?
+            detall: |
+              $G(-x,-y)=((-x)^2-(-y)^2,(-x)(-y))=G(x,y)$ i $(-x,-y)\neq(x,y)$ si $(x,y)\neq(0,0)$. No és injectiva: no hi ha $G^{-1}$ global (només inverses locals pel TFI).
+            fuites: ['G\s*\(\s*-\s*x,\s*-\s*y\)']
+            teoria: []
+          - id: imatge
+            titol: "Imatge"
+            objectiu: |
+              Determinar $G(\mathbb{R}^2\setminus\{(0,0)\})$.
+            idea: |
+              Donat $(u,v)$, resoldre $x^2-y^2=u$, $xy=v$. Pot ajudar escriure $z=x+iy$ i observar que $z^2=(x^2-y^2)+2ixy$, o bé usar polars.
+            detall: |
+              $G(x,y)=(0,0)$ obliga $xy=0$ i $x^2=y^2$, és a dir $x=y=0$: l'origen no és a la imatge. Recíprocament, donat $(u,v)\neq(0,0)$, el nombre complex $w=u+2iv\neq 0$ té una arrel quadrada $z=x+iy\neq 0$, i llavors $x^2-y^2=u$, $2xy=2v$. En polars: $G(\rho\cos\theta,\rho\sin\theta)=\rho^2(\cos 2\theta,\tfrac12\sin 2\theta)$, que recorre tot el pla menys l'origen. Imatge: $\mathbb{R}^2\setminus\{(0,0)\}$.
+            fuites: ['u\s*\+\s*2\s*i\s*v', '\\tfrac12\s*\\sin\s*2']
+            teoria: []
+        errors_comuns:
+          - id: det_no_nul_injectiva
+            descripcio: |
+              Conclou que $G$ és injectiva perquè el determinant de la jacobiana no s'anul·la en cap punt del domini.
+            pregunta: |
+              Què garanteix exactament el teorema de la funció inversa: injectivitat en tot el domini o només a prop de cada punt?
+          - id: imatge_incompleta
+            descripcio: |
+              Afirma que la imatge és tot $\mathbb{R}^2$, o només un semiplà, sense resoldre l'equació $G(x,y)=(u,v)$.
+            pregunta: |
+              Pot ser $G(x,y)=(0,0)$ amb $(x,y)$ al domini? I un punt amb $u<0$, s'assoleix?
+        nota_professor: |
+          Cada punt de la imatge té exactament dues antiimatges $\pm(x,y)$. Comparar amb l'Exemple 3 del Tema 4 ($z^3$). Aquí $G$ correspon a $z\mapsto z^2$ amb la segona component dividida per $2$.
+
+      - id: "t4-5d"
+        apartat: "d"
+        tipus: calcul
+        enunciat: |
+          $\mathrm{Dom}(G)=\{(x,y)\in\mathbb{R}^2\mid 0<y<x\}$, $G(x,y)=(\log(xy),(x^2+y^2)^{-1})$.
+        teoria: ["T4.5"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $G$ és $\mathcal{C}^\infty$ en el domini (obert) i $\det JG=\frac{2(x^2-y^2)}{xy(x^2+y^2)^2}>0$ (perquè $x>y>0$): satisfà les hipòtesis del TFI a tot punt. És injectiva i la imatge és $\{(u,v)\in\mathbb{R}^2\mid v>0,\ 2e^uv<1\}$, és a dir $0<v<\frac{e^{-u}}{2}$. La inversa és
+            $G^{-1}(u,v)=\Big(\tfrac12\big(\sqrt{\tfrac1v+2e^u}+\sqrt{\tfrac1v-2e^u}\big),\ \tfrac12\big(\sqrt{\tfrac1v+2e^u}-\sqrt{\tfrac1v-2e^u}\big)\Big)$.
+          fuites: ['\\sqrt\{\s*(\\[td]?frac\{?1\}?\{?v\}?|1\s*/\s*v)\s*\+\s*2\s*e\^\{?u\}?\s*\}', '2\s*e\^\{?u\}?\s*v\s*<\s*1', '2\s*v\s*e\^\{?u\}?\s*<\s*1', 'e\^\{-u\}\}?\{?2\}?', 'u\s*<\s*-\s*\\(log|ln)\s*\(?\s*2\s*v']
+        passos:
+          - id: hipotesis
+            titol: "Hipòtesis del TFI"
+            objectiu: |
+              Comprovar si $G$ compleix les hipòtesis del teorema de la funció inversa a tots els punts del domini.
+            idea: |
+              Comprovar que el domini és obert i $G$ hi és de classe $\mathcal{C}^1$ (on estan definits el logaritme i la potència?), i estudiar el signe del determinant de la jacobiana usant $0<y<x$.
+            detall: |
+              Al domini $xy>0$ i $x^2+y^2>0$, per tant $G\in\mathcal{C}^\infty$. $JG=\begin{pmatrix}\frac1x&\frac1y\\ \frac{-2x}{(x^2+y^2)^2}&\frac{-2y}{(x^2+y^2)^2}\end{pmatrix}$ i $\det JG=\frac{2}{(x^2+y^2)^2}\big(\frac xy-\frac yx\big)=\frac{2(x^2-y^2)}{xy(x^2+y^2)^2}>0$ perquè $x>y>0$.
+            fuites: ['\\frac\{2\s*\(x\^\{?2\}?\s*-\s*y\^\{?2\}?\)\}']
+            teoria: ["T4.5", "T3.31"]
+          - id: injectivitat_inversa
+            titol: "Injectivitat i inversa"
+            objectiu: |
+              Decidir si $G$ és injectiva i, si ho és, trobar l'expressió de $G^{-1}$.
+            idea: |
+              De $G(x,y)=(u,v)$ es coneixen el producte $xy$ i la suma de quadrats $x^2+y^2$. Combinant-los s'obtenen $(x+y)^2$ i $(x-y)^2$; la condició $0<y<x$ fixa els signes de les arrels.
+            detall: |
+              $xy=e^u$, $x^2+y^2=\frac1v$. Llavors $(x+y)^2=\frac1v+2e^u$ i $(x-y)^2=\frac1v-2e^u$. Com que $x+y>0$ i $x-y>0$: $x+y=\sqrt{\frac1v+2e^u}$, $x-y=\sqrt{\frac1v-2e^u}$, i $(x,y)$ queda determinat de manera única: $x=\frac12\big(\sqrt{\frac1v+2e^u}+\sqrt{\frac1v-2e^u}\big)$, $y=\frac12\big(\sqrt{\frac1v+2e^u}-\sqrt{\frac1v-2e^u}\big)$. Per tant $G$ és injectiva.
+            fuites: ['\(x\s*-\s*y\)\^\{?2\}?\s*=\s*\\frac\{?1\}?\{?v\}?\s*-\s*2\s*e\^\{?u']
+            teoria: []
+          - id: imatge
+            titol: "Imatge"
+            objectiu: |
+              Determinar exactament quins $(u,v)$ s'assoleixen.
+            idea: |
+              Mirar quines condicions sobre $(u,v)$ calen perquè les expressions del pas anterior tinguin sentit i donin un punt del domini (amb desigualtats estrictes).
+            detall: |
+              Cal $v>0$ i $\frac1v-2e^u>0$ (estricte, ja que $x\neq y$), és a dir $2e^uv<1$. Recíprocament, si $v>0$ i $2e^uv<1$, les fórmules donen $x>y>0$ (ja que $\frac1v+2e^u>\frac1v-2e^u>0$) amb $xy=\frac14\big((x+y)^2-(x-y)^2\big)=e^u$ i $x^2+y^2=\frac12\big((x+y)^2+(x-y)^2\big)=\frac1v$. Imatge: $\{(u,v)\mid v>0,\ 2e^uv<1\}$.
+            fuites: ['2\s*e\^\{?u\}?\s*v\s*<\s*1']
+            teoria: []
+        errors_comuns:
+          - id: oblidar_signes
+            descripcio: |
+              En treure arrels quadrades no usa $0<y<x$ per triar els signes, i conclou que hi ha diverses antiimatges (o no justifica la unicitat).
+            pregunta: |
+              Quins signes poden tenir $x+y$ i $x-y$ en el domini donat?
+          - id: imatge_sense_restriccio
+            descripcio: |
+              Dona com a imatge $\{v>0\}$ o tot $\mathbb{R}^2$, sense la restricció que ve de $x\neq y$ i de la desigualtat $x^2+y^2>2xy$.
+            pregunta: |
+              Per a qualsevol parell de reals, quina desigualtat lliga $x^2+y^2$ amb $2xy$? Què implica per a $u$ i $v$?
+          - id: determinant_signe
+            descripcio: |
+              Calcula el determinant però no justifica que és no nul usant la condició $y<x$.
+            pregunta: |
+              On es fa servir la condició $y<x$ del domini en la comprovació de les hipòtesis?
+        nota_professor: |
+          La recta $y=x$ (exclosa del domini) és on el determinant s'anul·la; correspon a la frontera $2e^uv=1$ de la imatge. Fent la comprovació: si $G(x,y)=(u,v)$, $x^2+y^2>2xy$ equival a $\frac1v>2e^u$.
+
+  - num: 6
+    font: null
+    preambul: |
+      Considerem la funció definida per $G(s,t)=(\cosh(s)\cos(t),\sinh(s)\sin(t))$.
+    indicacio: null
+    exercicis:
+      - id: "t4-6a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          Demostreu que $G$ té inversa local entorn de tot punt del semipla $A=\{(s,t)\in\mathbb{R}^2\mid s>0\}$.
+        teoria: []
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $G\in\mathcal{C}^\infty(\mathbb{R}^2)$ i $\det JG(s,t)=\sinh^2s\cos^2t+\cosh^2s\sin^2t=\sinh^2s+\sin^2t$, que és $>0$ si $s>0$ (perquè $\sinh s>0$). Pel teorema de la funció inversa, $G$ té inversa local de classe $\mathcal{C}^\infty$ entorn de tot punt de $A$.
+          fuites: ['\\sinh\^\{?2\}?\s*s\s*\+\s*\\sin\^\{?2\}?\s*t']
+        passos:
+          - id: jacobiana
+            titol: "Jacobiana i determinant"
+            objectiu: |
+              Calcular la matriu jacobiana de $G$ i el seu determinant.
+            idea: |
+              Derivar cada component. Per simplificar el determinant, usar $\cosh^2s-\sinh^2s=1$ i $\sin^2t+\cos^2t=1$.
+            detall: |
+              $JG=\begin{pmatrix}\sinh s\cos t&-\cosh s\sin t\\ \cosh s\sin t&\sinh s\cos t\end{pmatrix}$, $\det JG=\sinh^2s\cos^2t+\cosh^2s\sin^2t=\sinh^2s\cos^2t+(1+\sinh^2s)\sin^2t=\sinh^2s+\sin^2t$.
+            fuites: ['\\sinh\^\{?2\}?\s*s\s*\+\s*\\sin\^\{?2\}?\s*t']
+            teoria: ["T3.10"]
+          - id: aplicar_tfi
+            titol: "Aplicar el TFI"
+            objectiu: |
+              Concloure l'existència d'inversa local entorn de cada punt de $A$.
+            idea: |
+              Comprovar regularitat i que el determinant no s'anul·la quan $s>0$.
+            detall: |
+              Les components són productes de funcions $\mathcal{C}^\infty$, per tant $G\in\mathcal{C}^\infty$. Si $s>0$, $\sinh s>0$ i $\det JG\geq\sinh^2s>0$. Pel TFI, per a cada $(s_0,t_0)\in A$ hi ha un entorn $U$ on $G|_U$ és injectiva, $G(U)$ és obert i la inversa és $\mathcal{C}^\infty$.
+            fuites: []
+            teoria: ["T4.5", "T3.31"]
+        errors_comuns:
+          - id: identitat_hiperbolica
+            descripcio: |
+              Usa $\cosh^2s+\sinh^2s=1$ (signe equivocat) o no simplifica i no aconsegueix veure que el determinant és positiu.
+            pregunta: |
+              Quina identitat relaciona $\cosh^2s$ i $\sinh^2s$? Comprova-la a $s=0$.
+          - id: confondre_local_global
+            descripcio: |
+              Afirma que $G$ és injectiva a tot $A$ com a conseqüència del TFI.
+            pregunta: |
+              El teorema de la funció inversa et dona una inversa definida a on? Què passa amb $G(s,t+2\pi)$?
+        nota_professor: |
+          Observació útil: $G(s,t)$ són la part real i imaginària de $\cosh(s+it)$, i $\det JG=|\sinh(s+it)|^2$. A $s=0$ el determinant s'anul·la en $t\in\pi\mathbb{Z}$.
+
+      - id: "t4-6b"
+        apartat: "b"
+        tipus: teoric
+        enunciat: |
+          Demostreu que $G(A)$ és un subconjunt obert de $\mathbb{R}^2$.
+        teoria: []
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $A$ és obert, $G\in\mathcal{C}^1(A)$ i $\det JG\neq 0$ a tot $A$ (apartat a). Pel teorema de l'aplicació oberta, $G(A)$ és obert.
+          fuites: []
+        passos:
+          - id: hipotesis
+            titol: "Hipòtesis"
+            objectiu: |
+              Recollir el que ja se sap de $G$ sobre $A$ (assumint l'apartat a) i quin resultat permet passar de propietats locals a l'obertura de la imatge.
+            idea: |
+              Hi ha un corol·lari del teorema de la funció inversa sobre imatges d'oberts per funcions $\mathcal{C}^1$ amb jacobiana invertible a tot punt.
+            detall: |
+              $A=\{s>0\}$ és obert, $G\in\mathcal{C}^\infty(A)$ i, per l'apartat (a), $\det JG(s,t)=\sinh^2s+\sin^2t>0$ per a tot $(s,t)\in A$.
+            fuites: []
+            teoria: ["T4.8"]
+          - id: concloure
+            titol: "Concloure"
+            objectiu: |
+              Demostrar que $G(A)$ és obert.
+            idea: |
+              Aplicar el resultat a l'obert $B=A$; alternativament, fer-ho a mà: cada punt $G(a)$ té un entorn obert $G(U_a)\subseteq G(A)$ donat pel TFI.
+            detall: |
+              Pel teorema de l'aplicació oberta, $G(A)$ és obert. Directament: si $y=G(a)$, $a\in A$, el TFI dona $U_a\subseteq A$ entorn obert de $a$ amb $G(U_a)$ obert, i $y\in G(U_a)\subseteq G(A)$; per tant $G(A)=\bigcup_{a\in A}G(U_a)$ és unió d'oberts.
+            fuites: []
+            teoria: ["T4.8", "T4.5"]
+        errors_comuns:
+          - id: imatge_oberta_per_continuitat
+            descripcio: |
+              Argumenta que $G(A)$ és obert perquè $G$ és contínua i $A$ és obert.
+            pregunta: |
+              La continuïtat garanteix que les antiimatges d'oberts són obertes. I les imatges? Penses un exemple d'una funció contínua que envia un obert a un no obert?
+          - id: necessita_injectivitat
+            descripcio: |
+              Creu que cal la injectivitat global de $G$ a $A$ per concloure.
+            pregunta: |
+              Per veure que un conjunt és obert, què cal trobar al voltant de cada un dels seus punts? Cal que $G$ sigui injectiva a tot $A$ per això?
+        nota_professor: |
+          Per l'apartat (d), $G(A)=\mathbb{R}^2\setminus\{(x,0)\mid |x|\leq 1\}$, que efectivament és obert.
+
+      - id: "t4-6c"
+        apartat: "c"
+        tipus: teoric
+        enunciat: |
+          Demostreu que la restricció de $G$ a $\{(s,t)\in A\mid 0<t<2\pi\}$ té inversa global.
+        teoria: []
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Sigui $B=\{s>0,\ 0<t<2\pi\}$. $G|_B$ és injectiva: si $G(s,t)=(x,y)$, aleshores $\frac{x^2}{\cosh^2s}+\frac{y^2}{\sinh^2s}=1$, i com que $(x,y)\neq(0,0)$ la funció $s\mapsto\frac{x^2}{\cosh^2s}+\frac{y^2}{\sinh^2s}$ és estrictament decreixent a $(0,\infty)$, $s$ queda determinat; llavors $\cos t=x/\cosh s$ i $\sin t=y/\sinh s$ determinen $t\in(0,2\pi)$. Com que $G\in\mathcal{C}^\infty$, és injectiva a $B$ i $\det JG\neq 0$ a $B$, $G:B\to G(B)$ és un difeomorfisme $\mathcal{C}^\infty$ (amb $G(B)$ obert): té inversa global $\mathcal{C}^\infty$.
+          fuites: []
+        passos:
+          - id: el_lipses
+            titol: "Corbes s constant"
+            objectiu: |
+              Trobar una relació entre $x=\cosh s\cos t$ i $y=\sinh s\sin t$ que no depengui de $t$.
+            idea: |
+              Aïllar $\cos t$ i $\sin t$ (amb $s>0$ els denominadors no s'anul·len) i usar $\cos^2t+\sin^2t=1$.
+            detall: |
+              Per $s>0$: $\cos t=\frac{x}{\cosh s}$, $\sin t=\frac{y}{\sinh s}$, per tant $\frac{x^2}{\cosh^2s}+\frac{y^2}{\sinh^2s}=1$: la corba $s=$ constant és una el·lipse (de focus $(\pm1,0)$).
+            fuites: ['\\frac\{x\^\{?2\}?\}\{\\cosh\^\{?2\}?\s*s\}\s*\+\s*\\frac\{y\^\{?2\}?\}\{\\sinh\^\{?2\}?\s*s\}']
+            teoria: []
+          - id: injectivitat
+            titol: "Injectivitat a B"
+            objectiu: |
+              Demostrar que si $G(s_1,t_1)=G(s_2,t_2)$ amb $(s_i,t_i)\in B$, aleshores $(s_1,t_1)=(s_2,t_2)$.
+            idea: |
+              Veure que el punt imatge determina $s$ (estudiant la monotonia en $s$ de l'expressió del pas anterior) i que, fixat $s$, el punt determina $t$ dins d'un interval de longitud $2\pi$.
+            detall: |
+              Sigui $(x,y)=G(s,t)$ amb $s>0$; no pot ser $(0,0)$ (caldria $\cos t=0$ i llavors $\sinh s\,|\sin t|=\sinh s>0$). La funció $\phi(\sigma)=\frac{x^2}{\cosh^2\sigma}+\frac{y^2}{\sinh^2\sigma}$ és estrictament decreixent a $(0,\infty)$ (cada terme és no creixent i almenys un és estrictament decreixent perquè $x$ o $y$ és no nul), per tant $\phi(\sigma)=1$ té com a única solució $\sigma=s$. Fixat $s$, $(\cos t,\sin t)=\big(\frac{x}{\cosh s},\frac{y}{\sinh s}\big)$ determina $t$ mòdul $2\pi$, i per tant de manera única a $(0,2\pi)$.
+            fuites: ['estrictament\s+decreixent']
+            teoria: []
+          - id: difeomorfisme
+            titol: "Inversa global diferenciable"
+            objectiu: |
+              Concloure que $G|_B$ té inversa global (i quina regularitat té).
+            idea: |
+              Combinar la injectivitat amb el que ja se sap del determinant i de la regularitat: hi ha una caracterització de difeomorfisme amb aquestes tres condicions.
+            detall: |
+              $B$ és obert, $G\in\mathcal{C}^\infty(B)$, injectiva a $B$ i $\det JG>0$ a $B$. Per tant $G:B\to G(B)$ és bijectiva, $G(B)$ és obert (aplicació oberta) i la inversa és $\mathcal{C}^\infty$ (localment coincideix amb les inverses locals del TFI): $G|_B$ és un difeomorfisme sobre la seva imatge.
+            fuites: []
+            teoria: ["T4.9", "T4.8", "T4.5"]
+        errors_comuns:
+          - id: injectivitat_per_det
+            descripcio: |
+              Dedueix la injectivitat de $G|_B$ només de $\det JG\neq 0$.
+            pregunta: |
+              A tot $A$ el determinant tampoc s'anul·la. És $G$ injectiva a tot $A$? Què canvia en restringir $t$?
+          - id: nomes_t
+            descripcio: |
+              Demostra que, fixat $s$, $t$ és únic, però no que punts amb $s$ diferents tinguin imatges diferents.
+            pregunta: |
+              Dues el·lipses de la família, per a valors diferents de $s$, es poden tallar?
+          - id: inversa_sense_regularitat
+            descripcio: |
+              Conclou "té inversa" però no justifica que sigui contínua o diferenciable.
+            pregunta: |
+              Una bijecció té inversa. Què aporta, a més, el teorema de la funció inversa sobre aquesta inversa?
+        nota_professor: |
+          Les corbes $t=$ constant són branques d'hipèrboles confocals. Alternativa via complexos: $G(s,t)=\cosh(s+it)$. $G(B)=\mathbb{R}^2\setminus\{(x,0)\mid x\geq -1\}$ (la imatge de $t=0$ és la semirecta $x>1$, $y=0$, que queda exclosa, i el segment $[-1,1]$ no s'assoleix).
+
+      - id: "t4-6d"
+        apartat: "d"
+        tipus: calcul
+        enunciat: |
+          Dibuixeu $G(A)$.
+        teoria: []
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $G(A)=\mathbb{R}^2\setminus\{(x,0)\mid -1\leq x\leq 1\}$: tot el pla menys el segment que uneix $(-1,0)$ i $(1,0)$. És la unió de les el·lipses confocals $\frac{x^2}{\cosh^2s}+\frac{y^2}{\sinh^2s}=1$, $s>0$, de focus $(\pm1,0)$, que s'aplanen sobre el segment quan $s\to 0^+$ i creixen indefinidament quan $s\to\infty$.
+          fuites: ['menys\s+(el\s+)?segment', '\\setminus\s*\\\{\s*\(x,\s*0\)\s*\\mid\s*-?\s*1\s*(\\le|\\leq|≤)', '\|x\|\s*(\\le|\\leq|≤)\s*1', '\[\s*-\s*1\s*,\s*1\s*\]']
+        passos:
+          - id: el_lipses
+            titol: "Imatge de les corbes s constant"
+            objectiu: |
+              Descriure la imatge per $G$ de cada recta $s=s_0$ ($s_0>0$).
+            idea: |
+              Eliminar $t$ entre les dues components; reconèixer la corba i els seus semieixos.
+            detall: |
+              $t\mapsto(\cosh s_0\cos t,\sinh s_0\sin t)$ recorre (periòdicament) l'el·lipse sencera $\frac{x^2}{\cosh^2s_0}+\frac{y^2}{\sinh^2s_0}=1$, de semieixos $\cosh s_0>1$ i $\sinh s_0>0$; com que $\cosh^2s_0-\sinh^2s_0=1$, els focus són $(\pm1,0)$ per a tot $s_0$.
+            fuites: ['focus\s+(són\s+)?\$?\(\s*\\pm\s*1,\s*0\)']
+            teoria: []
+          - id: unio
+            titol: "Unió de les el·lipses"
+            objectiu: |
+              Determinar quins punts del pla estan en alguna d'aquestes el·lipses.
+            idea: |
+              Per a un punt $(x,y)$ fix, estudiar la funció $\sigma\mapsto\frac{x^2}{\cosh^2\sigma}+\frac{y^2}{\sinh^2\sigma}$ a $(0,\infty)$: límits als extrems i monotonia. Separar els casos $y\neq 0$ i $y=0$.
+            detall: |
+              $\phi(\sigma)=\frac{x^2}{\cosh^2\sigma}+\frac{y^2}{\sinh^2\sigma}$ és contínua i decreixent, amb $\phi\to0$ quan $\sigma\to\infty$. Si $y\neq 0$, $\phi\to+\infty$ quan $\sigma\to0^+$: pren el valor $1$. Si $y=0$, $\phi(\sigma)=\frac{x^2}{\cosh^2\sigma}$, amb límit $x^2$ a $0^+$ i $\phi<x^2$: pren el valor $1$ si i només si $|x|>1$. Per tant $G(A)$ és el pla menys el segment $\{(x,0)\mid |x|\leq 1\}$.
+            fuites: ['si\s+i\s+nom[ée]s\s+si\s+\$?\|x\|\s*>\s*1']
+            teoria: []
+          - id: dibuix
+            titol: "Dibuix i coherència"
+            objectiu: |
+              Fer el dibuix i comprovar que és coherent amb l'apartat (b).
+            idea: |
+              Dibuixar algunes el·lipses confocals i el conjunt excepcional; recordar què s'ha demostrat sobre $G(A)$ a l'apartat (b).
+            detall: |
+              El dibuix és el pla amb un tall rectilini al segment $[-1,1]\times\{0\}$, foliat per el·lipses de focus $(\pm1,0)$. És un obert, d'acord amb el teorema de l'aplicació oberta (apartat b).
+            fuites: []
+            teoria: ["T4.8"]
+        errors_comuns:
+          - id: semieixos
+            descripcio: |
+              Pensa que les el·lipses poden ser arbitràriament petites (fins a l'origen) i conclou que $G(A)=\mathbb{R}^2\setminus\{(0,0)\}$.
+            pregunta: |
+              Quan $s\to 0^+$, quant tendeixen a valer els semieixos $\cosh s$ i $\sinh s$? En què es converteix l'el·lipse?
+          - id: extrems_segment
+            descripcio: |
+              Exclou només l'interior del segment i inclou els punts $(\pm1,0)$ a la imatge.
+            pregunta: |
+              Per obtenir $(1,0)$ caldria $\cosh s\cos t=1$ i $\sinh s\sin t=0$ amb $s>0$. És possible?
+        nota_professor: |
+          $G$ és la funció complexa $\cosh$: envia el semiplà $\mathrm{Re}\,z>0$ a $\mathbb{C}\setminus[-1,1]$.
+
+  - num: 7
+    font: null
+    preambul: |
+      Sigui $F:\mathbb{R}^2\to\mathbb{R}^2$ definida per $F(x,y)=(x^2y,xy^2)$.
+    indicacio: null
+    exercicis:
+      - id: "t4-7a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          Proveu que $F$ és localment invertible al voltant de $(x,y)$, si $x\neq 0$ i $y\neq 0$.
+        teoria: []
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $F$ és polinòmica ($\mathcal{C}^\infty$) i $\det JF(x,y)=\det\begin{pmatrix}2xy&x^2\\y^2&2xy\end{pmatrix}=3x^2y^2\neq 0$ si $x\neq0$ i $y\neq 0$. Pel teorema de la funció inversa, $F$ és localment invertible (amb inversa $\mathcal{C}^\infty$) al voltant d'aquests punts.
+          fuites: ['3\s*x\^\{?2\}?\s*y\^\{?2\}?']
+        passos:
+          - id: jacobiana
+            titol: "Jacobiana i determinant"
+            objectiu: |
+              Calcular la matriu jacobiana de $F$ i el seu determinant.
+            idea: |
+              Derivar cada component respecte de $x$ i de $y$.
+            detall: |
+              $JF(x,y)=\begin{pmatrix}2xy&x^2\\ y^2&2xy\end{pmatrix}$, $\det JF=4x^2y^2-x^2y^2=3x^2y^2$.
+            fuites: ['3\s*x\^\{?2\}?\s*y\^\{?2\}?']
+            teoria: ["T3.10"]
+          - id: aplicar_tfi
+            titol: "Aplicar el TFI"
+            objectiu: |
+              Concloure la invertibilitat local en els punts amb $x\neq0$, $y\neq0$.
+            idea: |
+              Comprovar regularitat i que el determinant és no nul en aquests punts.
+            detall: |
+              $F\in\mathcal{C}^\infty(\mathbb{R}^2)$ i $\det JF(x,y)\neq 0$ si $xy\neq0$. Pel TFI existeix un entorn $U$ del punt amb $F|_U$ injectiva, $F(U)$ obert i inversa $\mathcal{C}^\infty$.
+            fuites: []
+            teoria: ["T4.5"]
+        errors_comuns:
+          - id: determinant_mal
+            descripcio: |
+              Calcula malament el determinant (per exemple, $4x^2y^2+x^2y^2$) o posa les derivades a la posició equivocada.
+            pregunta: |
+              Quin element va a la fila $i$, columna $j$ de la jacobiana? I quin signe té el producte de la diagonal secundària en un determinant $2\times2$?
+          - id: reciproc
+            descripcio: |
+              Conclou que als eixos $F$ no pot ser localment invertible perquè el determinant s'anul·la.
+            pregunta: |
+              El TFI dona una condició suficient. Diu alguna cosa quan el determinant s'anul·la?
+        nota_professor: |
+          De fet als eixos no és localment invertible: $F$ s'anul·la a tot l'eix $x=0$ i a tot l'eix $y=0$, i per tant no és injectiva en cap entorn d'un punt dels eixos. No es demana.
+
+      - id: "t4-7b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          Calculeu la diferencial de la inversa local de $F$ en el punt $F(2,1)$.
+        teoria: ["T3.10"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $F(2,1)=(4,2)$ i $DF^{-1}(4,2)=\big(DF(2,1)\big)^{-1}=\begin{pmatrix}4&4\\1&4\end{pmatrix}^{-1}=\frac{1}{12}\begin{pmatrix}4&-4\\-1&4\end{pmatrix}=\begin{pmatrix}\frac13&-\frac13\\-\frac1{12}&\frac13\end{pmatrix}$.
+          fuites: ['\\frac\{?1\}?\{?12\}?\s*\\begin\{pmatrix\}\s*4\s*&\s*-\s*4', '-\s*\\frac\{?1\}?\{?12\}?\s*&\s*\\frac\{?1\}?\{?3\}?']
+        passos:
+          - id: punt_i_jacobiana
+            titol: "Punt imatge i jacobiana"
+            objectiu: |
+              Calcular $F(2,1)$ i $JF(2,1)$, i comprovar que la inversa local existeix al voltant de $F(2,1)$.
+            idea: |
+              Substituir a $F$ i a la jacobiana de l'apartat (a).
+            detall: |
+              $F(2,1)=(4,2)$, $JF(2,1)=\begin{pmatrix}4&4\\1&4\end{pmatrix}$, amb determinant $16-4=12=3\cdot4\cdot1\neq0$.
+            fuites: ['\\begin\{pmatrix\}\s*4\s*&\s*4\s*\\\\\s*1\s*&\s*4']
+            teoria: ["T3.10"]
+          - id: invertir
+            titol: "Diferencial de la inversa"
+            objectiu: |
+              Obtenir la matriu de $DF^{-1}(4,2)$.
+            idea: |
+              El teorema de la funció inversa dona la diferencial de la inversa en termes de la diferencial de $F$ en el punt corresponent.
+            detall: |
+              $DF^{-1}(4,2)=\big(DF(2,1)\big)^{-1}=\frac{1}{12}\begin{pmatrix}4&-4\\-1&4\end{pmatrix}=\begin{pmatrix}\frac13&-\frac13\\-\frac1{12}&\frac13\end{pmatrix}$.
+            fuites: ['\\frac\{?1\}?\{?12\}?\s*\\begin\{pmatrix\}\s*4\s*&\s*-\s*4']
+            teoria: ["T4.5"]
+        errors_comuns:
+          - id: punt_equivocat
+            descripcio: |
+              Avalua $DF$ en $(4,2)$ en lloc de $(2,1)$, o escriu $DF^{-1}(2,1)$.
+            pregunta: |
+              $F^{-1}$ està definida a prop de quin punt? I $DF$ s'ha d'avaluar en el punt de sortida o en el d'arribada?
+          - id: inversa_element_a_element
+            descripcio: |
+              Inverteix la matriu element a element (pren $1/4$, $1/4$, $1$, $1/4$).
+            pregunta: |
+              Si multipliques la matriu que proposes per $JF(2,1)$, obtens la identitat?
+        nota_professor: |
+          Es pot comprovar amb l'apartat (e): $DF^{-1}(u,v)$ avaluada a $(4,2)$ dona la mateixa matriu.
+
+      - id: "t4-7c"
+        apartat: "c"
+        tipus: calcul
+        enunciat: |
+          Suposeu que la inversa local de l'apartat anterior està definida en un entorn que conté el punt $(4.1,1.9)$. Obteniu un valor aproximat de $F^{-1}(4.1,1.9)$.
+        teoria: []
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $F^{-1}(4.1,1.9)\approx(2,1)+DF^{-1}(4,2)\begin{pmatrix}0.1\\-0.1\end{pmatrix}=\big(2+\tfrac{0.2}{3},\,1-\tfrac{0.5}{12}\big)=\big(\tfrac{31}{15},\tfrac{23}{24}\big)\approx(2.0667,\ 0.9583)$.
+          fuites: ['2[.,]0667', '0[.,]958', '\\t?frac\{31\}\{15\}', '\\t?frac\{23\}\{24\}']
+        passos:
+          - id: aproximacio_lineal
+            titol: "Plantejar l'aproximació"
+            objectiu: |
+              Escriure una aproximació de $F^{-1}(4.1,1.9)$ a partir de la informació coneguda a $(4,2)$.
+            idea: |
+              $F^{-1}$ és diferenciable a $(4,2)$: aproximar-la per la seva aproximació afí (de primer ordre) en aquest punt, usant l'apartat (b).
+            detall: |
+              $F^{-1}(4.1,1.9)\approx F^{-1}(4,2)+DF^{-1}(4,2)\big((4.1,1.9)-(4,2)\big)=(2,1)+DF^{-1}(4,2)(0.1,-0.1)^T$.
+            fuites: ['\(0[.,]1,\s*-\s*0[.,]1\)']
+            teoria: ["T4.6", "T3.8"]
+          - id: calcular
+            titol: "Calcular"
+            objectiu: |
+              Obtenir el valor numèric de l'aproximació.
+            idea: |
+              Multiplicar la matriu de l'apartat (b) pel vector increment i sumar.
+            detall: |
+              $\begin{pmatrix}\frac13&-\frac13\\-\frac1{12}&\frac13\end{pmatrix}\begin{pmatrix}0.1\\-0.1\end{pmatrix}=\begin{pmatrix}0.0667\\-0.0417\end{pmatrix}$, per tant $F^{-1}(4.1,1.9)\approx(2.0667,\ 0.9583)$.
+            fuites: ['2[.,]0667', '0[.,]958']
+            teoria: []
+        errors_comuns:
+          - id: increment_al_reves
+            descripcio: |
+              Usa l'increment en el domini ($(2,1)$) en lloc de l'increment en la imatge, o pren $(4,2)-(4.1,1.9)$ amb el signe canviat.
+            pregunta: |
+              L'aproximació afí de $F^{-1}$ a $(4,2)$ actua sobre quin vector diferència?
+          - id: usar_df_en_lloc_dfinv
+            descripcio: |
+              Multiplica per $DF(2,1)$ en lloc de per $DF^{-1}(4,2)$.
+            pregunta: |
+              Quina funció estàs aproximant? Quina és la seva diferencial?
+        nota_professor: |
+          És la idea de l'Exemple 6.2 del Tema 4 (un pas del mètode de Newton). Valor exacte (apartat d): $\approx(2.0683,\ 0.9585)$.
+
+      - id: "t4-7d"
+        apartat: "d"
+        tipus: calcul
+        enunciat: |
+          Sigui $A=\{(x,y)\in\mathbb{R}^2\mid x\neq 0,\ y\neq 0\}$. Proveu que la restricció de $F$ a $A$ és injectiva i doneu-ne explícitament la funció inversa. Calculeu $F^{-1}(4.1,1.9)$ i compareu el resultat amb l'aproximació de l'apartat anterior.
+        teoria: []
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Si $F(x,y)=(u,v)$ amb $(x,y)\in A$, aleshores $u^2/v=x^3$ i $v^2/u=y^3$, que determinen $x,y$ (l'arrel cúbica real és injectiva): $F|_A$ és injectiva, $F(A)=A$ i $F^{-1}(u,v)=\big(\sqrt[3]{u^2/v},\ \sqrt[3]{v^2/u}\big)$. Llavors $F^{-1}(4.1,1.9)=\big(\sqrt[3]{16.81/1.9},\sqrt[3]{3.61/4.1}\big)\approx(2.0683,\ 0.9585)$; l'aproximació $(2.0667,\ 0.9583)$ té errors d'ordre $2\cdot10^{-3}$ i $10^{-4}$, petits respecte de l'increment $\|(0.1,-0.1)\|\approx0.14$.
+          fuites: ['\\sqrt\[3\]\{\s*u\^\{?2\}?\s*/\s*v\s*\}', '\\sqrt\[3\]\{\s*\\[dt]?frac\{u\^\{?2\}?\}\{v\}', 'u\^\{?2/3\}?\s*v\^\{?-1/3', '\(\s*\\[dt]?frac\{u\^\{?2\}?\}\{v\}\s*\)\^\{?1/3', '\(\s*u\^\{?2\}?\s*/\s*v\s*\)\^\{?1/3', '2[.,]068', '0[.,]9585']
+        passos:
+          - id: injectivitat
+            titol: "Injectivitat a A"
+            objectiu: |
+              Demostrar que $F|_A$ és injectiva.
+            idea: |
+              A partir de $u=x^2y$ i $v=xy^2$, buscar combinacions (quocients de potències) que aïllin $x$ i $y$ per separat.
+            detall: |
+              Si $(x,y)\in A$ i $F(x,y)=(u,v)$, llavors $u,v\neq0$ i $\frac{u^2}{v}=\frac{x^4y^2}{xy^2}=x^3$, $\frac{v^2}{u}=y^3$. Com que $t\mapsto t^3$ és injectiva a $\mathbb{R}$, $(u,v)$ determina $(x,y)$: $F|_A$ és injectiva.
+            fuites: ['\\frac\{u\^\{?2\}?\}\{v\}\s*=\s*\\frac\{x\^\{?4']
+            teoria: []
+          - id: inversa
+            titol: "Imatge i inversa explícita"
+            objectiu: |
+              Trobar $F(A)$ i l'expressió de $F^{-1}$.
+            idea: |
+              Treure l'arrel cúbica real de les expressions anteriors i comprovar que, per a qualsevol $(u,v)$ amb $uv\neq0$, el punt obtingut és a $A$ i té imatge $(u,v)$.
+            detall: |
+              $F^{-1}(u,v)=\big(\sqrt[3]{u^2/v},\sqrt[3]{v^2/u}\big)$. Per a tot $(u,v)\in A$ aquest punt és a $A$ i $x^2y=\sqrt[3]{u^4/v^2}\sqrt[3]{v^2/u}=\sqrt[3]{u^3}=u$, i anàlogament $xy^2=v$. Per tant $F(A)=A$ i $F|_A:A\to A$ és bijectiva.
+            fuites: ['\\sqrt\[3\]\{\s*u\^\{?2\}?\s*/\s*v\s*\}']
+            teoria: []
+          - id: comparar
+            titol: "Valor exacte i comparació"
+            objectiu: |
+              Calcular $F^{-1}(4.1,1.9)$ i comparar-lo amb l'aproximació de l'apartat (c).
+            idea: |
+              Substituir a la fórmula; l'error de l'aproximació afí ha de ser petit comparat amb la mida de l'increment (és $o(\|y-q\|)$).
+            detall: |
+              $F^{-1}(4.1,1.9)=\big(\sqrt[3]{8.8474},\sqrt[3]{0.8805}\big)\approx(2.0683,\ 0.9585)$. L'aproximació $(2.0667,\ 0.9583)$ difereix en $\approx1.6\cdot10^{-3}$ i $\approx1.3\cdot10^{-4}$, molt menys que $\|(0.1,-0.1)\|\approx0.14$: coherent amb que l'error de l'aproximació de primer ordre és $o(\|(0.1,-0.1)\|)$.
+            fuites: ['2[.,]068', '0[.,]9585']
+            teoria: ["T4.6", "T3.8"]
+        errors_comuns:
+          - id: arrel_parell
+            descripcio: |
+              Escriu potències com $(u^2/v)^{1/3}$ pensant només en valors positius, o usa arrels quadrades, i perd els punts amb $u$ o $v$ negatius.
+            pregunta: |
+              La teva fórmula, funciona per a un punt com $F(-1,1)=(1,-1)$?
+          - id: imatge_no_justificada
+            descripcio: |
+              Dona la fórmula de la inversa sense comprovar que tot punt de $A$ és imatge (no determina $F(A)$).
+            pregunta: |
+              Si apliques $F$ al punt que dona la teva fórmula, recuperes $(u,v)$? Per a quins $(u,v)$ té sentit la fórmula?
+          - id: injectiva_per_det
+            descripcio: |
+              Argumenta la injectivitat a $A$ amb el fet que $\det JF\neq0$ a $A$.
+            pregunta: |
+              El determinant no nul a tot $A$, què garanteix exactament? Coneixes alguna funció amb determinant no nul arreu que no sigui injectiva?
+        nota_professor: |
+          $F$ conserva els quadrants: el signe de $u$ és el de $y$ i el de $v$ el de $x$. Valors: $16.81/1.9\approx8.84737$, $\sqrt[3]{\cdot}\approx2.06826$; $3.61/4.1\approx0.88049$, $\sqrt[3]{\cdot}\approx0.95846$.
+
+      - id: "t4-7e"
+        apartat: "e"
+        tipus: calcul
+        enunciat: |
+          Obteniu $DF^{-1}(u,v)$.
+        teoria: ["T3.10"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Per $uv\neq0$: $DF^{-1}(u,v)=\begin{pmatrix}\frac{2}{3\sqrt[3]{uv}}&-\frac13\sqrt[3]{\frac{u^2}{v^4}}\\[1mm] -\frac13\sqrt[3]{\frac{v^2}{u^4}}&\frac{2}{3\sqrt[3]{uv}}\end{pmatrix}$, equivalentment $\big(DF(x,y)\big)^{-1}=\begin{pmatrix}\frac{2}{3xy}&-\frac{1}{3y^2}\\-\frac{1}{3x^2}&\frac{2}{3xy}\end{pmatrix}$ amb $(x,y)=F^{-1}(u,v)$.
+          fuites: ['\\[dt]?frac\{2\}\{3\s*\\sqrt\[3\]\{u\s*v\}\}', '\\[dt]?frac\{2\}\{3\s*x\s*y\}']
+        passos:
+          - id: formula_tfi
+            titol: "Inversa de la jacobiana"
+            objectiu: |
+              Expressar $DF^{-1}(u,v)$ en termes del punt $(x,y)=F^{-1}(u,v)$.
+            idea: |
+              Usar la fórmula del TFI per a la diferencial de la inversa i invertir la matriu $2\times2$ de l'apartat (a).
+            detall: |
+              $DF^{-1}(u,v)=\big(DF(x,y)\big)^{-1}=\frac{1}{3x^2y^2}\begin{pmatrix}2xy&-x^2\\-y^2&2xy\end{pmatrix}=\begin{pmatrix}\frac{2}{3xy}&-\frac{1}{3y^2}\\-\frac{1}{3x^2}&\frac{2}{3xy}\end{pmatrix}$.
+            fuites: ['\\frac\{2\}\{3\s*x\s*y\}']
+            teoria: ["T4.5"]
+          - id: en_u_v
+            titol: "Escriure-ho en funció de (u,v)"
+            objectiu: |
+              Escriure la matriu anterior com a funció de $(u,v)$.
+            idea: |
+              Substituir $(x,y)$ per l'expressió de l'apartat (d), o bé derivar directament les components de $F^{-1}$. Pot ajudar calcular primer $(xy)^3$.
+            detall: |
+              $(xy)^3=\frac{u^2}{v}\cdot\frac{v^2}{u}=uv$, per tant $xy=\sqrt[3]{uv}$; $x^2=\sqrt[3]{u^4/v^2}$, $y^2=\sqrt[3]{v^4/u^2}$. Llavors $DF^{-1}(u,v)=\begin{pmatrix}\frac{2}{3\sqrt[3]{uv}}&-\frac13\sqrt[3]{\frac{u^2}{v^4}}\\-\frac13\sqrt[3]{\frac{v^2}{u^4}}&\frac{2}{3\sqrt[3]{uv}}\end{pmatrix}$. Comprovació a $(4,2)$: $\frac13$, $-\frac13$, $-\frac1{12}$, $\frac13$, com a l'apartat (b).
+            fuites: ['\\frac\{2\}\{3\s*\\sqrt\[3\]\{uv\}\}', 'x\s*y\s*=\s*\\sqrt\[3\]\{uv\}']
+            teoria: []
+        errors_comuns:
+          - id: punt_equivocat
+            descripcio: |
+              Escriu $(DF(u,v))^{-1}$, és a dir, avalua $DF$ en $(u,v)$ en lloc de $F^{-1}(u,v)$.
+            pregunta: |
+              A la fórmula del TFI per a $Df^{-1}(y_0)$, en quin punt s'avalua $Df$?
+          - id: no_comprovar
+            descripcio: |
+              Obté una expressió sense comprovar-la amb el valor de l'apartat (b), i hi ha errors d'exponents en les arrels cúbiques.
+            pregunta: |
+              Què dona la teva fórmula al punt $(4,2)$? Coincideix amb l'apartat (b)?
+        nota_professor: |
+          Derivant directament $x=u^{2/3}v^{-1/3}$, $y=u^{-1/3}v^{2/3}$ (amb arrels cúbiques reals) s'obté el mateix. Vàlid per a $(u,v)\in A$.

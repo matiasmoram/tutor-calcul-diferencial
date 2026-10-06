@@ -1,0 +1,41 @@
+{
+  "id": "aa7a8dafd487",
+  "exercici": "T1.37",
+  "font": "teoria",
+  "dificultat": "facil",
+  "fragments": [
+    "Sigui $(M,d)$ un espai mètric connex i sigui $A\\subseteq M$. Si $A$ és obert i tancat a la vegada, aleshores $A=M$.",
+    "Suposem que $A$ és obert i tancat. Com que $A$ és tancat, el seu complementari $A^c=M\\setminus A$ és obert.",
+    "Així, $A$ i $A^c$ són dos oberts disjunts tals que $M=A\\cup A^c$.",
+    "Si tots dos fossin no buits, prenent $U=A$ i $V=A^c$ a la definició de conjunt disconnex, $M$ seria disconnex, en contradicció amb la hipòtesi que $M$ és connex.",
+    "Per tant, un dels dos oberts és buit: o bé $A=\\varnothing$, o bé $A^c=\\varnothing$, que equival a $A=M$."
+  ],
+  "n_enunciat": 1,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "aleshores $A=M$",
+      "inici": 99,
+      "fi": 114,
+      "tipus": "conclusio",
+      "explicacio": "Falta l'altra possibilitat: $A=\\varnothing$ és obert i tancat en qualsevol espai mètric i no és igual a $M$ (si $M\\neq\\varnothing$).",
+      "correccio": "Aleshores, o bé $A=M$, o bé $A=\\varnothing$.",
+      "pista": "Quins conjunts són oberts i tancats a la vegada en qualsevol espai mètric?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t1a.json",
+    "valoracio": "Enunciat amb conclusió falsa (oblida el cas $A=\\varnothing$); la demostració és correcta.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "aleshores $A=M$",
+        "gravetat": "error",
+        "explicacio": "Conclusió massa forta i falsa: $A=\\varnothing$ també és obert i tancat i és diferent de $M$. L'original diu o bé $A=M$ o bé $A=\\varnothing$, que és el que conclou [5]."
+      }
+    ]
+  },
+  "creat": 1791295858.0296967
+}

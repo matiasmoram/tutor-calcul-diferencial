@@ -1,0 +1,66 @@
+{
+  "id": "6cc6c5f5055a",
+  "exercici": "T3.28",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $f:\\mathbb{R}^n\\to\\mathbb{R}^m$ diferenciable en un obert pre-convex $\\Omega\\subseteq\\mathbb{R}^n$. Aleshores, si $Jf(a)=0$ per a tot $a\\in\\Omega$, llavors $f$ és constant a tot $\\mathbb{R}^n$.",
+    "Siguin $a,b\\in\\Omega$ dos punts qualsevol. Com que $\\Omega$ és pre-convex, existeixen $z_0=a,z_1,\\ldots,z_r=b\\in\\Omega$ tals que $[z_{i-1},z_i]\\subseteq\\Omega$ per a $i=1,\\ldots,r$. Fixem $u\\in\\mathbb{R}^m$.",
+    "Pel teorema del valor mitjà aplicat a cada segment, per a cada $i=1,\\ldots,r$ existeix $\\xi_i\\in[z_{i-1},z_i]$ tal que $\\langle u,f(z_i)-f(z_{i-1})\\rangle=\\langle u,Jf(\\xi_i)\\,(z_i-z_{i-1})\\rangle$.",
+    "Com que $\\xi_i\\in\\Omega$, tenim $Jf(\\xi_i)=0$ i, per tant, $\\langle u,f(z_i)-f(z_{i-1})\\rangle=\\langle u,0\\rangle=0$ per a tot $i=1,\\ldots,r$.",
+    "D'aquí es dedueix que $\\langle u,f(b)-f(a)\\rangle=\\sum_{i=1}^r\\langle u,f(z_i)-f(z_{i-1})\\rangle=0$, i això per a tot $u\\in\\mathbb{R}^m$.",
+    "Prenent $u=e_1$, el primer vector de la base canònica, s'obté $f_1(b)-f_1(a)=0$, d'on $f(b)=f(a)$.",
+    "Com que $a,b\\in\\Omega$ eren arbitraris, $f$ és constant a $\\Omega$."
+  ],
+  "n_enunciat": 1,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "$f$ és constant a tot $\\mathbb{R}^n$",
+      "inici": 162,
+      "fi": 198,
+      "tipus": "conclusio",
+      "explicacio": "La hipòtesi només diu res de $f$ a $\\Omega$, i la demostració només compara punts de $\\Omega$; fora de $\\Omega$ la funció pot ser qualsevol. Contraexemple: $f=0$ a la bola $B(0,1)=\\Omega$ i $f=1$ fora.",
+      "correccio": "$f$ és constant a $\\Omega$.",
+      "pista": "Els punts $a,b$ que fa servir la demostració, d'on surten? Què sabem de $f$ fora de $\\Omega$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "s'obté $f_1(b)-f_1(a)=0$, d'on $f(b)=f(a)$",
+      "inici": 55,
+      "fi": 97,
+      "tipus": "cas_oblidat",
+      "explicacio": "Amb $u=e_1$ només es controla la primera component; les altres components $f_2,\\ldots,f_m$ queden sense estudiar, de manera que no se'n pot deduir $f(b)=f(a)$ (caldria usar tots els $e_k$).",
+      "correccio": "Es pren $u=f(b)-f(a)$, i s'obté $0=\\langle f(b)-f(a),f(b)-f(a)\\rangle=\\|f(b)-f(a)\\|^2$, d'on $f(b)=f(a)$.",
+      "pista": "Si $m\\geq2$, què en saps de les components $f_2,\\ldots,f_m$ amb aquesta elecció de $u$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t3.json",
+    "valoracio": "Enunciat estès a tot $\\mathbb{R}^n$ i pas final que dedueix $f(b)=f(a)$ només de la primera component.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "constant a tot $\\mathbb{R}^n$",
+        "gravetat": "error",
+        "explicacio": "La conclusió dels apunts és que $f$ és constant a $\\Omega$; fora de $\\Omega$ no hi ha cap hipòtesi i l'afirmació és falsa."
+      },
+      {
+        "fragment": 6,
+        "cita": "s'obté $f_1(b)-f_1(a)=0$, d'on $f(b)=f(a)$",
+        "gravetat": "error",
+        "explicacio": "Amb $u=e_1$ només s'obté que la primera component coincideix; no se'n dedueix $f(b)=f(a)$. Cal $u=f(b)-f(a)$ (o tots els $e_i$)."
+      },
+      {
+        "fragment": 7,
+        "cita": "$f$ és constant a $\\Omega$",
+        "gravetat": "consequencia",
+        "explicacio": "Conclusió correcta en si, però es basa en $f(b)=f(a)$, que [6] no ha justificat."
+      }
+    ]
+  },
+  "creat": 1791296233.7499416
+}

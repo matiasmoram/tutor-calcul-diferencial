@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: pip install -r requirements.txt
+      # No API keys: the suite uses scripted LLMs; storage tests use a throwaway SQLite database.
+      - run: python -m pytest tests -q
+      - run: python scripts/check_fitxes.py
+      - name: Supabase migration matches the code
+        run: |
+          python scripts/db.py schema > /tmp/schema.sql
+          diff -u supabase/migrations/20261006000000_init.sql /tmp/schema.sql
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t tutor-calcul .

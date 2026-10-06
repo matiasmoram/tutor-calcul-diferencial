@@ -1,0 +1,874 @@
+tema: 2
+titol: "Límits i continuïtat de funcions"
+seccions:
+  - id: "2.1"
+    titol: "Funcions de diverses variables. Conjunts de nivell i gràfica de funcions reals"
+  - id: "2.2"
+    titol: "Límit d'una funció en un punt (especial èmfasi en el cas de dues variables)"
+  - id: "2.3"
+    titol: "Continuïtat en un punt i en un conjunt. Propietats de les funcions contínues"
+  - id: "2.4"
+    titol: "Continuïtat i compacitat. Teorema de Weierstrass"
+  - id: "2.5"
+    titol: "Continuïtat uniforme. Teorema de Heine-Cantor"
+  - id: "2.6"
+    titol: "Teorema del punt fix"
+  - id: "2.7"
+    titol: "Normes i distàncies equivalents"
+  - id: "2.7.1"
+    titol: "Normes de matrius"
+items:
+  - id: "T2.1"
+    tipus: definicio
+    num: 1
+    resum: 38
+    seccio: "2.1"
+    pagina: 2
+    nom: "Funció entre espais mètrics"
+    enunciat: |
+      Donats dos espais mètrics $(M,d)$ i $(N,d')$, una funció $f:\Omega\subseteq M\longrightarrow N$ és una correspondència que assigna valors de $M$ a valors de $N$.
+
+      - Si $\Omega\subseteq\mathbb{R}^n$ i $N=\mathbb{R}^m$, aleshores $f$ s'anomena funció/camp vectorial:
+      $$\begin{aligned} f:\Omega\subseteq\mathbb{R}^n&\longrightarrow\mathbb{R}^m\\ x=(x_1,\dots,x_n)&\longmapsto(f_1(x),\dots,f_m(x)).\end{aligned}$$
+      - Si $\Omega\subseteq\mathbb{R}^n$ i $N=\mathbb{R}$, aleshores $f$ s'anomena funció/camp escalar:
+      $$\begin{aligned} f:\Omega\subseteq\mathbb{R}^n&\longrightarrow\mathbb{R}\\ x=(x_1,\dots,x_n)&\longmapsto f(x_1,\dots,x_n)=f(x).\end{aligned}$$
+    problemes: []
+  - id: "T2.2"
+    tipus: exemple
+    num: 2
+    resum: null
+    seccio: "2.1"
+    pagina: 2
+    nom: "Funcions de diverses variables"
+    enunciat: |
+      Funcions de diverses/múltiples variables:
+      $$\theta(x,y)=\arctan(y/x),\ r(x,y)=\sqrt{x^2+y^2}$$
+      $$f(x,y)=1/(1-\sqrt{x^2+y^2})$$
+      $$F(x,y)=(-y,x)$$
+    problemes: []
+  - id: "T2.3"
+    tipus: definicio
+    num: 3
+    resum: null
+    seccio: "2.1"
+    pagina: 2
+    nom: "Conceptes bàsics de funcions"
+    enunciat: |
+      Conceptes bàsics (extensions de concepte de càlcul en una variable).
+
+      - El domini de $f$ és el subconjunt de $M$ on $f$ està definida: $\mathrm{Dom}(f)=\{x\in M \text{ tals que } \exists f(x)\}$.
+      - La imatge de $f$ és $\mathrm{Im}(f)=\{y\in N\mid\exists x\in M \text{ amb } f(x)=y\}\subseteq N$.
+      - La gràfica de $f$ és $\mathrm{Graf}(f)=\{(x,f(x))\mid x\in\mathrm{Dom}(f)\}\subseteq M\times N$.
+      - $f$ és injectiva $\Leftrightarrow\forall x,y\in M$, si $f(x)=f(y)$, aleshores $x=y$.
+      - $f$ és exhaustiva $\Leftrightarrow\forall y\in N,\exists x\in M$ tal que $f(x)=y$.
+      - $f$ és bijectiva $\Leftrightarrow\forall y\in N,\exists!\,x\in M$ tal que $f(x)=y$.
+    problemes: []
+  - id: "T2.4"
+    tipus: definicio
+    num: 4
+    resum: 39
+    seccio: "2.1"
+    pagina: 2
+    nom: "Conjunt de nivell"
+    enunciat: |
+      Donada una funció escalar $f$, es defineix el conjunt de nivell $k$ com
+      $$C_k(f)=\{x\in M\mid f(x)=k\}\subseteq M.$$
+    problemes: []
+  - id: "T2.5"
+    tipus: exemple
+    num: 5
+    resum: null
+    seccio: "2.1"
+    pagina: 2
+    nom: "Corbes i superfícies de nivell"
+    enunciat: |
+      Corbes i superfícies de nivell.
+
+      - $f:\mathbb{R}^2\longrightarrow\mathbb{R}$, $f(x,y)=x^2+y^2$. $\mathrm{Dom}(f)=\mathbb{R}^2$, $\mathrm{Im}(f)=[0,+\infty)$. Les corbes de nivell són
+      $$C_k(f)=\{x\in\mathbb{R}^2\mid x^2+y^2=k\};$$
+      per tant, circumferències centrades a $O=\{(0,0)\}$ de radi $\sqrt{k}$ per a $k>0$, el punt $O$ per a $k=0$ i el conjunt buit per a $k<0$.
+
+      [Figura: esquerra, corbes de nivell $1/2,1,2,3,4,5$ de la funció $f(x,y)=x^2+y^2$ en el pla $(x,y)$ (circumferències concèntriques); dreta, gràfica de la funció $f$ (paraboloide).]
+      Esquerra: corbes de nivell $1/2,1,2,3,4,5$ de la funció $f(x,y)=x^2+y^2$ en el pla $(x,y)$. Dreta: Gràfica de la funció $f$.
+
+      Observem que per a qualsevol funció $f(x,y)=G(x^2+y^2)$, les corbes de nivell seran les mateixes (circumferències concèntriques centrades a l'origen), però canviarà el valor en cada corba de nivell. Això, evidentment, afecta la geometria de la gràfica. Per exemple,
+
+      - Per a $f(x,y)=\sqrt{x^2+y^2}$, tenim circumferències de radi $k$ per a $k>0$ (i no pas radi $\sqrt{k}$).
+      - Per a $f(x,y)=\dfrac{1}{\sqrt{1-(x^2+y^2)}}$, tenim circumferències de radi $\sqrt{1-\dfrac{1}{k^2}}$ per a $k>1$. Observem que, en aquest cas, $\mathrm{Dom}(f)=\{(x,y)\in\mathbb{R}^2\mid x^2+y^2<1\}$.
+
+      - $f:\mathbb{R}^2\longrightarrow\mathbb{R}$, $f(x,y)=x^2-y^2$. $\mathrm{Dom}(f)=\mathbb{R}^2$, $\mathrm{Im}(f)=\mathbb{R}$. Les corbes de nivell són
+      $$C_k(f)=\{(x,y)\in\mathbb{R}^2\mid x^2-y^2=k\};$$
+      per tant, hipèrboles centrades a $O=\{(0,0)\}$ amb punts de tall a $(\pm\sqrt{k},0)$ per a $k>0$, i a $(0,\pm\sqrt{k})$ per a $k<0$; $C_0$ és la unió de les rectes $y=x$ i $y=-x$, que són, a més, les asímptotes per a $k\neq0$.
+
+      [Figura: esquerra, corbes de nivell (hipèrboles); dreta, gràfica de $f(x,y)=x^2-y^2$ (sella).]
+      Esquerra: corbes de nivell $-5,-3,-1,1/2,5/2,7/2$ de la funció $f(x,y)=x^2-y^2$ en el pla $(x,y)$. Dreta: Gràfica de la funció $f$.
+
+      - $f:\mathbb{R}^3\longrightarrow\mathbb{R}$, $f(x,y,z)=a\,x+b\,y+c\,z$. $\mathrm{Dom}(f)=\mathbb{R}^3$, $\mathrm{Im}(f)=\mathbb{R}$. Les superfícies de nivell són plans de vector normal $(a,b,c)$.
+
+      - $f:\mathbb{R}^3\longrightarrow\mathbb{R}$, $f(x,y,z)=x^2+y^2+z^2$. $\mathrm{Dom}(f)=\mathbb{R}^3$, $\mathrm{Im}(f)=[0,+\infty)$. Les superfícies de nivell són
+      $$C_k(f)=\{(x,y,z)\in\mathbb{R}^3\mid x^2+y^2+z^2=k\},$$
+      és a dir, esferes de radi $\sqrt{k}$ centrades a l'origen.
+
+      - $f:\mathbb{R}^3\longrightarrow\mathbb{R}$, $f(x,y,z)=x^2+2\,y^2$. $\mathrm{Dom}(f)=\mathbb{R}^3$, $\mathrm{Im}(f)=[0,+\infty)$. Les superfícies de nivell són
+      $$C_k(f)=\{(x,y,z)\in\mathbb{R}^3\mid x^2+2\,y^2=k\},$$
+      és a dir, cilindres el·líptics tals que per a cada secció $z=z_0$ és una el·lipse centrada a l'origen de semieixos $\sqrt{k}$ i $\sqrt{k/2}$.
+    problemes: []
+  - id: "T2.6"
+    tipus: definicio
+    num: 6
+    resum: "40,41"
+    seccio: "2.2"
+    pagina: 4
+    nom: "Límit d'una funció"
+    enunciat: |
+      Límit d'una funció. Siguin $(M,d)$ i $(N,d')$ dos espais mètrics, $\Omega$ un domini qualsevol de $M$, $x_0\in\Omega'$, $b\in\mathbb{R}^m$, i $f:\Omega\subseteq M\longrightarrow N$ una funció. Aleshores, direm que existeix el límit de $f$ quan $x$ tendeix a $x_0$ i val $b$, $\displaystyle\lim_{x\to x_0}f(x)=b$, si es dona qualsevol de les següents condicions:
+
+      (a) $\forall\epsilon>0,\exists\delta>0$ tal que $\forall x\in\Omega$ amb $0<d(x,x_0)<\delta$, es té que $d(f(x),b)<\epsilon$.
+
+      (b) Per a tot obert $\mathcal{V}$ que conté $b$, existeix un obert $\mathcal{U}$ que conté $x_0$ tal que $f\left((\mathcal{U}\setminus\{x_0\})\cap\Omega\right)\subseteq\mathcal{V}$. (Nota: Dir que $V$ és un obert que conté $A\subseteq M$, és equivalent a dir que $V$ és un entorn obert d'$A$. En aquesta situació, un conjunt que contingui $V$, s'anomena simplement entorn. En aquest curs, considerarem sempre entorns oberts. En el cas que $A=\{x\}$, denotarem amb $\mathcal{E}_{\mathbf{x}}$ el conjunt d'entorns oberts d'$x$ (abusant del llenguatge, ja que hauria de ser $\{x\}$).)
+
+      (c) Per a tota successió $(x_n)_{n\in\mathbb{N}}$ amb $x_0\neq x_n\in\Omega$ i $\displaystyle\lim_{n\to+\infty}x_n=x_0$, es té que $\displaystyle\lim_{n\to+\infty}f(x_n)=b$.
+    problemes: []
+  - id: "T2.7"
+    tipus: proposicio
+    num: 7
+    resum: null
+    seccio: "2.2"
+    pagina: 4
+    nom: "Equivalència de les definicions de límit"
+    enunciat: |
+      Les condicions (a), (b) i (c) de la definició 6 són equivalents.
+    demostracio: |
+      - (a) $\Rightarrow$ (b). Prenem $\mathcal{V}\in\mathcal{E}_{\mathbf{b}}$. Aleshores, existeix $\epsilon>0$ tal que $B(b,\epsilon)\subseteq\mathcal{V}$.
+        Per (a), existeix $\delta>0$ tal que $\forall x\in\Omega$ amb $0<d(x,x_0)<\delta$, es té que $d(f(x),b)<\epsilon$.
+        Prenent $\mathcal{U}=B(x_0,\delta)\in\mathcal{E}_{\mathbf{x_0}}$, es dedueix que $f\left((\mathcal{U}\setminus\{x_0\})\cap\Omega\right)\subseteq\mathcal{V}$.
+
+      - (b) $\Rightarrow$ (c). Prenem una successió $(x_n)_{n\in\mathbb{N}}$ amb $x_0\neq x_n\in\Omega$ i $\displaystyle\lim_{n\to+\infty}x_n=x_0$.
+        Per tant, sabem que donat $\delta>0$, existeix $n_0$ tal que $d(x_n,x_0)<\delta$ si $n\geq n_0$.
+        Considerem ara un valor $\epsilon>0$ qualsevol i prenem $\mathcal{V}=B(b,\epsilon)$. Per (b), sabem que existeix un obert $\mathcal{U}$ tal que $f\left((\mathcal{U}\setminus\{x_0\})\cap\Omega\right)\subseteq\mathcal{V}$.
+        Per tant, $\exists\,\delta>0$ tal que $B(x_0,\delta)\subseteq\mathcal{U}$ i, en conseqüència, existeix $n_0$ tal que $d(x_n,x_0)<\delta$ si $n\geq n_0$ i $f(x_n)\in\mathcal{V}$ (és a dir, que $d(f(x_n),b)<\epsilon$).
+
+      - (c) $\Rightarrow$ (a).
+        Donat $\epsilon\geq0$, volem trobar $\delta>0$, tal que si $0<d(x,x_0)<\delta$, aleshores $d(f(x),b)<\epsilon$.
+        Observem que és una mica més complicat perquè hem d'extrapolar a tot un entorn allò que li passa a una successió.
+        Ho farem per reducció a l'absurd.
+        Suposem que existeix un $\epsilon>0$ tal que per a qualsevol $\delta>0$ existeix $x\in\Omega$ tal que $0<d(x,x_0)<\delta$ i $d(f(x),b)\geq\epsilon$.
+        Prenem ara $\delta=1/n$. Llavors, per a cada $n$, podem escollir $x_n\in\Omega$ tal que $0<d(x_n,x_0)<\delta$ i $\displaystyle\lim_{n\to+\infty}x_n=x_0$ i $d(f(x_n),b)\geq\epsilon$.
+        Però això no pot ser cert perquè caldria que $\displaystyle\lim_{n\to+\infty}f(x_n)=b$.
+    problemes: []
+  - id: "T2.8"
+    tipus: proposicio
+    num: 8
+    resum: 42
+    seccio: "2.2"
+    pagina: 5
+    nom: "Unicitat del límit"
+    enunciat: |
+      Unicitat del límit. Si existeix $\displaystyle\lim_{x\to x_0}f(x)$, aquest és únic.
+    demostracio: |
+      Suposem que $\displaystyle\lim_{x\to x_0}f(x)=b$ i que $\displaystyle\lim_{x\to x_0}f(x)=c$, amb $b\neq c$.
+      Sigui $\epsilon=d(b,c)/2$.
+      Prenem una successió $(x_n)_{n\in\mathbb{N}}$ tal que $x_n\to x_0$ i $x_n\neq x_0$. Aleshores, per l'apartat (c) de la proposició 7, donat $\epsilon>0$, existeix $n_0$ tal que la $d(f(x_n),b)<\epsilon$ per a tota $n\geq n_0$; anàlogament, existeix $n_0'$ tal que la $d(f(x_n),c)<\epsilon$ per a tota $n\geq n_0'$.
+      Per tant, per a tota $n\geq\max(n_0,n_0')$ i aplicant la desigualtat triangular, tenim que
+      $$d(b,c)\leq d(b,f(x_n))+d(f(x_n),c)<2\,\epsilon=d(b,c).$$
+      Arribem, doncs, a contradicció.
+    problemes: []
+  - id: "T2.x1"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "2.2"
+    pagina: 5
+    nom: "Convenció M=R^n, N=R^m"
+    enunciat: |
+      A partir d'ara, prendrem $M=\mathbb{R}^n$ i $N=\mathbb{R}^m$ i, molt sovint, considerarem només el cas $m=1$ ja que l'estudi de les propietats bàsiques dels camps vectorials es pot reduir a l'estudi de les seves $m$ components per separat.
+
+      En general, el càlcul de límits per a funcions de múltiples variables presenta una problemàtica nova si ho comparem amb els límits de funcions d'una variable. El següents resultats i, sobretot, els exemples que els acompanyen mostren algunes situacions que no es donaven en dimensió 1.
+    problemes: []
+  - id: "T2.9"
+    tipus: proposicio
+    num: 9
+    resum: 43
+    seccio: "2.2"
+    pagina: 5
+    nom: "Àlgebra de límits"
+    enunciat: |
+      Sigui $x_0\in\Omega'\subseteq\mathbb{R}^n$, i siguin $F_1$ i $F_2:\Omega\subseteq\mathbb{R}^n\longrightarrow\mathbb{R}^m$ tals que $\displaystyle\lim_{x\to x_0}F_j(x)=L_j$, i siguin $f_1$ i $f_2:\Omega\subseteq\mathbb{R}^n\longrightarrow\mathbb{R}$ tals que $\displaystyle\lim_{x\to x_0}f_j(x)=b_j$, per a $j=1,2$; aleshores,
+
+      (i) $\displaystyle\lim_{x\to x_0}(F_1\pm F_2)(x)=L_1\pm L_2$;
+
+      (ii) $\displaystyle\lim_{x\to x_0}(\lambda F_j)(x)=\lambda L_j,\ \forall\lambda\in\mathbb{R}$;
+
+      (iii) $\displaystyle\lim_{x\to x_0}\langle F_1(x),F_2(x)\rangle=\langle L_1,L_2\rangle$; en particular, $\displaystyle\lim_{x\to x_0}\|F_j(x)\|=\|L_j\|$;
+
+      (iv) $\displaystyle\lim_{x\to x_0}(f_1\,f_2)(x)=b_1\,b_2$; $\displaystyle\lim_{x\to x_0}(f_1/f_2)(x)=b_1/b_2$, sempre que la divisió tingui sentit;
+
+      (v) $\displaystyle\lim_{x\to x_0}(f_1,f_2)(x)=(b_1,b_2)$.
+    problemes: []
+  - id: "T2.x2"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "2.2"
+    pagina: 6
+    nom: "Nota sobre la demostració de la Prop. 9"
+    enunciat: |
+      No demostrem la proposició 9; a la secció de continuïtat es demostraran propietats semblants.
+    problemes: []
+  - id: "T2.10"
+    tipus: proposicio
+    num: 10
+    resum: 44
+    seccio: "2.2"
+    pagina: 6
+    nom: "Límit per camins"
+    enunciat: |
+      Límit per camins. Si $F:D\subseteq\mathbb{R}^2\longrightarrow\mathbb{R}^m$ i $(a,b)\in D'$ tal que $\displaystyle\exists\lim_{(x,y)\to(a,b)}F(x,y)=L$, llavors per a tota funció real i contínua $g$ definida en un entorn d'$a$, tal que $g(a)=b$, es compleix que
+      $$\lim_{x\to a}F(x,g(x))=L.$$
+    demostracio: |
+      Per una banda, com que $\displaystyle\lim_{(x,y)\to(a,b)}F(x,y)=L$, sabem que
+      $$\forall\epsilon>0,\exists\,\delta_1=\delta_1(\epsilon)\text{ tal que si }0<\|(x,y)-(a,b)\|<\delta_1(\epsilon),\text{ aleshores }\|F(x,y)-L\|<\epsilon.\qquad(1)$$
+      Per altra banda, com que $\displaystyle\lim_{x\to a}g(x)=b$, sabem que
+      $$\forall\epsilon>0,\exists\,\delta_2=\delta_2(\epsilon)\text{ tal que si }0<|x-a|<\delta_2(\epsilon),\text{ aleshores }\|g(x)-b\|<\epsilon.\qquad(2)$$
+      Volem veure que donat $\epsilon>0$, $\exists\delta>0$ tal que si $0<|x-a|<\delta$, aleshores $\|F(x,g(x))-L\|<\epsilon$.
+
+      [Figura: gràfica de $y=g(x)$ passant pel punt $(a,g(a))=(a,b)$, amb un entorn de radi $\delta_1$ al voltant d'aquest punt i un interval de radi $\delta_2$ al voltant d'$a$ a l'eix horitzontal.]
+
+      Per poder jugar amb (1) i (2), donat $\epsilon>0$, definim
+      $$\delta=\min\left\{\frac{\delta_1(\epsilon)}{\sqrt{2}},\ \delta_2\!\left(\frac{\delta_1(\epsilon)}{\sqrt{2}}\right)\right\}.$$
+      D'aquesta manera, observem que si a la propietat (2) substituïm $\epsilon$ per $\delta_1(\epsilon)/\sqrt{2}$, tenim que si $0<|x-a|<\delta_2(\delta_1(\epsilon)/\sqrt{2})$, aleshores
+      $$|g(x)-b|<\delta_1(\epsilon)/\sqrt{2};$$
+      mentre que si $0<|x-a|<\delta$, és clar que
+      $$0<|x-a|<\delta_1(\epsilon)/\sqrt{2}.$$
+      Amb aquestes dues fites, tenim que
+      $$\|(x,g(x))-(a,b)\|=\sqrt{(x-a)^2+(g(x)-b)^2}<\sqrt{\left(\frac{\delta_1(\epsilon)}{\sqrt{2}}\right)^2+\left(\frac{\delta_1(\epsilon)}{\sqrt{2}}\right)^2}=\delta_1(\epsilon).$$
+      Llavors, substituint $y$ per $g(x)$ a (1), deduïm que $\|F(x,g(x))-L\|<\epsilon$.
+    problemes: []
+  - id: "T2.11"
+    tipus: exemple
+    num: 11
+    resum: 45
+    seccio: "2.2"
+    pagina: 6
+    nom: "No existència de límit per camins"
+    enunciat: |
+      La proposició 10 es pot fer servir per demostrar la no existència de límits. Considerem, per exemple,
+      $$f(x,y)=\begin{cases}\dfrac{y}{y+x^2}, & y\neq-x^2,\\ \alpha, & y=-x^2,\end{cases}$$
+      on $\alpha$ és un nombre real qualsevol. Calculem el límit de la restricció de $f$ a un parell de corbes "distingides" que passen per l'origen:
+
+      - Sobre $y=-x^2$, $\displaystyle\lim_{x\to0}f(x,-x^2)=\alpha$, per definició.
+      - Sobre $y=x^2$, $\displaystyle\lim_{x\to0}f(x,x^2)=\lim_{x\to0}\frac{x^2}{x^2+x^2}=\frac{1}{2}$.
+
+      Clarament, una condició necessària perquè existeixi $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)$ és que $\alpha=1/2$. Tot i així, si calculem el límit sobre una paràbola "qualsevol" (ens en deixem alguna, però no és rellevant per a l'exercici) que passi per l'origen, $y=m\,x^2$ amb $m\in\mathbb{R}$, tenim que:
+      $$\lim_{x\to0}f(x,m\,x^2)=\lim_{x\to0}\frac{m\,x^2}{m\,x^2+x^2}=\frac{m}{m+1},$$
+      que depèn de $m$, i només coincideix amb $1/2$ si $m=1$. Per tant, podem afirmar que $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)$ no existeix.
+    problemes: []
+  - id: "T2.12"
+    tipus: proposicio
+    num: 12
+    resum: 46
+    seccio: "2.2"
+    pagina: 7
+    nom: "Límits iterats"
+    enunciat: |
+      Límits iterats. Sigui $f:\Omega\subseteq\mathbb{R}^2\to\mathbb{R}^m$ i $(a,b)\in\Omega$ t.q. $(a-\eta,a+\eta)\times(b-\eta,b+\eta)\subseteq\Omega$ per a $\eta>0$. Suposem que $\lim_{(x,y)\to(a,b)}f(x,y)=L$ i $\forall x\in(a-\eta,a+\eta)\ \exists\lim_{y\to b}f(x,y)$, i $\forall y\in(b-\eta,b+\eta)\ \exists\lim_{x\to a}f(x,y)$. Llavors,
+      $$\lim_{x\to a}\lim_{y\to b}f(x,y)=L=\lim_{y\to b}\lim_{x\to a}f(x,y).$$
+    demostracio: |
+      Farem la demostració només per un dels límits iterats. A més, i sense pèrdua de generalitat, ho demostrarem només per a $m=1$.
+      L'existència del límit $\displaystyle\lim_{(x,y)\to(a,b)}f(x,y)=L$ implica que per a qualsevol $\epsilon>0$, existeix $\delta_1=\delta_1(\epsilon)>0$ tal que si $\|(x,y)-(a,b)\|<\delta_1$, aleshores $|f(x,y)-L|<\epsilon$.
+
+      D'altra banda, per a $x\in(a-\eta,a+\eta)$ qualsevol, donat $\epsilon>0$, existeix $\delta_2=\delta_2(\epsilon,x)>0$ tal que si $|y-b|<\delta_2$, aleshores $|f(x,y)-g(x)|<\epsilon$, on $g(x):=\lim_{y\to b}f(x,y)$.
+
+      Volem veure $\lim_{x\to a}g(x)=L$, és a dir, que donat $\epsilon>0$, existeix $\delta>0$ tal que si $|x-a|<\delta$, aleshores $|g(x)-L|<\epsilon$.
+
+      Com hem de prendre $\delta$?
+
+      - Observem primer que si $|f(x,y)-L|<\epsilon/2$ i $|g(x)-f(x,y)|<\epsilon/2$, llavors
+      $$|g(x)-L|\leq|g(x)-f(x,y)|+|f(x,y)-L|<\epsilon\qquad\text{(el nostre objectiu!).}$$
+      - Aconseguirem aquest desigualtat si suposem
+      $$\|(x,y)-(a,b)\|<\delta_1(\epsilon/2),\qquad\qquad|y-b|<\delta_2(\epsilon/2,x).$$
+      - Podem aconseguir que
+      $$\|(x,y)-(a,b)\|=\sqrt{(x-a)^2+(y-b)^2}<\delta_1(\epsilon/2),$$
+      considerant
+
+      (1) $\delta=\dfrac{\delta_1(\epsilon/2)}{\sqrt{2}}$, ja que tindrem $|x-a|<\delta=\dfrac{\delta_1(\epsilon/2)}{\sqrt{2}}$, i, a més,
+
+      (2) $|y-b|<\min\left\{\delta_2(\epsilon/2,x),\dfrac{\delta_1(\epsilon/2)}{\sqrt{2}}\right\}.$
+    problemes: []
+  - id: "T2.x3"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "2.2"
+    pagina: 7
+    nom: "El recíproc no és cert"
+    enunciat: |
+      Observem, no obstant, que el recíproc no és cert.
+    problemes: []
+  - id: "T2.13"
+    tipus: exemple
+    num: 13
+    resum: null
+    seccio: "2.2"
+    pagina: 7
+    nom: "Límits iterats sense límit"
+    enunciat: |
+      Considerem la funció
+      $$f(x,y)=\begin{cases}\dfrac{x\,y}{x^2+y^2}, & (x,y)\neq(0,0),\\ 0, & (x,y)=(0,0).\end{cases}$$
+      D'entrada, $\lim_{x\to0}\lim_{y\to0}f(x,y)=\lim_{y\to0}\lim_{x\to0}f(x,y)=0$. En efecte, si fixem $y$, $\lim_{x\to0}f(x,y)=0$, tant si $y=0$ ($f(x,y)=0$) com si $y\neq0$, ja que
+      $$\lim_{x\to0}\frac{x\,y}{x^2+y^2}=\frac{0}{y^2}=0.$$
+      Per tant, $\lim_{y\to0}\lim_{x\to0}f(x,y)=0$. Per simetria, $\lim_{x\to0}\lim_{y\to0}f(x,y)=0$.
+      En canvi, si prenem $y=m\,x$, amb $m\in\mathbb{R}$,
+      $$\lim_{x\to0}\frac{x\,y}{x^2+y^2}=\lim_{x\to0}\frac{m\,x^2}{x^2+m^2\,x^2}=\frac{m}{1+m^2},$$
+      que depèn de $m$ i, per tant, no es compleix que existeixi $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)$.
+    problemes: []
+  - id: "T2.14"
+    tipus: definicio
+    num: 14
+    resum: 47
+    seccio: "2.3"
+    pagina: 8
+    nom: "Funció contínua"
+    enunciat: |
+      Sigui $f:\Omega\subseteq M\to N$ i $x_0\in\Omega$. Diem que $f$ és contínua en $x_0\Leftrightarrow x_0\notin\Omega'$ o bé $\exists\lim_{x\to x_0}f(x)=f(x_0)$. Diem que $f$ és contínua (en $\Omega$) si ho és en tot punt $x_0\in\Omega$.
+    problemes: []
+  - id: "T2.15"
+    tipus: observacio
+    num: 15
+    resum: null
+    seccio: "2.3"
+    pagina: 8
+    nom: "Punts aïllats i continuïtat"
+    enunciat: |
+      La condició de no pertinença al conjunt de punts d'acumulació pot resultar sorprenent, però es fa perquè es considera que els punts aïllats són continus amb sí mateixos. Que són punts aïllats, es desprèn de:
+      $$x_0\in\Omega,\ x_0\notin\Omega'\Rightarrow\exists\,\epsilon\text{ tal que }B(x_0,\epsilon)\cap\Omega=\{x_0\}.$$
+    problemes: []
+  - id: "T2.16"
+    tipus: exemple
+    num: 16
+    resum: null
+    seccio: "2.3"
+    pagina: 8
+    nom: "Funció amb punt aïllat"
+    enunciat: |
+      $f:\{x_0\}\cup A\longrightarrow\mathbb{R}$, amb $\{x_0\}\cap A'=\emptyset$.
+    problemes: []
+  - id: "T2.17"
+    tipus: teorema
+    num: 17
+    resum: 48
+    seccio: "2.3"
+    pagina: 8
+    nom: "Caracteritzacions de la continuïtat"
+    enunciat: |
+      Sigui $f:\Omega\subseteq M\to N$. Aleshores, són equivalents:
+
+      (a) $f$ és contínua en $\Omega$;
+
+      (b) per a tota successió convergent $(x_n)_n\subseteq\Omega$ tal que $\lim_{n\to\infty}x_n=x_0\in\Omega$, tenim $\lim_{n\to\infty}f(x_n)=f(x_0)$;
+
+      (c) per a tot obert $V\subseteq N$, $\exists U\subseteq M$ obert tal que $f^{-1}(V)=U\cap\Omega$;
+
+      (d) per a tot tancat $E\subseteq N$, $\exists D\subseteq M$ tancat tal que $f^{-1}(E)=D\cap\Omega$.
+    demostracio: |
+      Ens recorda les diferents alternatives de la definició 6 i la proposició 7.
+
+      - (a)$\Rightarrow$(b). Volem veure que si és $f$ contínua en $\Omega$, aleshores per a tota successió convergent $(x_n)_n\in\Omega$ tal que $\lim_{n\to\infty}x_n=x_0\in\Omega$, tenim $\lim_{n\to\infty}f(x_n)=f(x_0)$.
+
+        Prenem $(x_n)_n\in\Omega$ tal que $\lim_{n\to\infty}x_n=x_0\in\Omega$. Com que $f$ és contínua en $x_0$, podem tenir dues situacions:
+
+        - $x_0\notin\Omega'$, és a dir, $x_0$ és aïllat, i per tant, per força, $x_n=x_0$ per a tota $n$.
+        - $\exists\lim_{x\to x_0}f(x)=f(x_0)$. Llavors, $\forall\epsilon>0,\exists\delta_1=\delta_1(\epsilon)$ tal que $d(x,x_0)<\delta_1$ implica que $d(f(x),f(x_0))<\epsilon$.
+          Ara bé: com que $\lim_{n\to\infty}x_n=x_0$, llavors $\forall\delta>0,\exists n_0=n_0(\delta)$ tal que $d(x_n,x_0)<\delta$ per a $n\geq n_0$.
+          Agrupant les dues afirmacions anteriors, concloem que $\forall\epsilon>0,\exists n_0=n_0(\delta_1(\epsilon))$ tal que $d(f(x_n),f(x_0))<\epsilon$.
+
+      - (b)$\Rightarrow$(d). Volem veure que si per a tota successió convergent $(x_n)_n\in\Omega$ tal que $\lim_{n\to\infty}x_n=x_0\in\Omega$, tenim $\lim_{n\to\infty}f(x_n)=f(x_0)$, aleshores per a tot tancat $E\subseteq N$, $\exists D\subseteq M$ tancat tal que $f^{-1}(E)=D\cap\Omega$.
+
+        Considerem $f:\Omega\subseteq M\longrightarrow N$ i $E\subseteq N$ tancat (en particular, $\overline{E}=E$). Demostrarem la igualtat
+        $$f^{-1}(E)=\{x\in\Omega:f(x)\in E\}=\overline{f^{-1}(E)}\cap\Omega\qquad(\text{prenem }D=\overline{f^{-1}(E)}).$$
+
+        - D'una banda, és evident que $f^{-1}(E)\subseteq\overline{f^{-1}(E)}\cap\Omega$ ja que si $x\in f^{-1}(E)$, aleshores segur que $x\in\Omega$ i $x\in\overline{f^{-1}(E)}$ ja que $f^{-1}(E)\subseteq\overline{f^{-1}(E)}$.
+        - Per a la inclusió inversa, prenem $x_0\in\overline{f^{-1}(E)}\cap\Omega$. Pel fet que $x_0\in\overline{f^{-1}(E)}$, sabem que (vegeu proposició 19 del tema 1) $\exists(x_n)_n\in f^{-1}(E)\subseteq\Omega$ tal que $\lim_{n\to\infty}x_n=x_0$. Usant la hipòtesi, doncs, $\lim_{n\to\infty}f(x_n)=f(x_0)$. Com que $x_n\in f^{-1}(E)$, aleshores $f(x_n)\in E$ i, en conseqüència, tenim que $f(x_0)\in\overline{E}=E$ (per ser tancat). Per tant, $x_0\in f^{-1}(E)$.
+
+      - (d)$\Rightarrow$(c). Volem veure que si per a tot tancat $E\subseteq N$, $\exists D\subseteq M$ tancat tal que $f^{-1}(E)=D\cap\Omega$, aleshores per a tot obert $V\subseteq N$, $\exists U\subseteq M$ obert tal que $f^{-1}(V)=U\cap\Omega$.
+
+        Prenem un obert $V\subseteq N$. Per definició $V^c\subseteq N$ és tancat i, per la hipòtesi, $\exists D\subseteq M$ tancat tal que $f^{-1}(V^c)=D\cap\Omega$, on $f^{-1}(V^c)=\{x\in\Omega:f(x)\in V^c\}=\Omega\setminus\{x\in\Omega:f(x)\in V\}$. Per tant, $\Omega\setminus f^{-1}(V)=D\cap\Omega$, fet que implica que $f^{-1}(V)=\Omega\setminus(D\cap\Omega)=D^c\cap\Omega$, on $D^c$ és un obert de $M$.
+
+      - (c)$\Rightarrow$(a). Volem veure que si per a tot obert $V\subseteq N$, $\exists U\subseteq M$ obert tal que $f^{-1}(V)=U\cap\Omega$, aleshores $f$ és contínua en $\Omega$.
+
+        Si $x_0\notin\Omega'$, no cal demostrar res. Per tant, suposem que $x_0\in\Omega'$ i, donat $\epsilon>0$, prenem $V:=B(f(x_0),\epsilon)\subseteq N$. Per hipòtesi, tenim que existeix $U\subseteq M$ obert tal que $f^{-1}(V)=U\cap\Omega$. Per tant, existeix $\delta>0$ tal que $B(x_0,\delta)\subseteq U$.
+        Prenem ara $x\in\Omega$ tal que $d(x,x_0)<\delta$. Aleshores, $x\in U\cap\Omega=f^{-1}(V)$ i, per tant, $f(x)\in V$, que equival a dir que $d(f(x),f(x_0))<\epsilon$.
+    problemes: []
+  - id: "T2.18"
+    tipus: corollari
+    num: 18
+    resum: null
+    seccio: "2.3"
+    pagina: 10
+    nom: "Conjunts definits per desigualtats"
+    enunciat: |
+      Siguin $f,g:\mathbb{R}^n\longrightarrow\mathbb{R}$, funcions contínues. Llavors:
+
+      (i) $A=\{x\in\mathbb{R}^n:f(x)>g(x)\}$ és un conjunt obert.
+
+      (ii) $B=\{x\in\mathbb{R}^n:f(x)\geq g(x)\}$ és un conjunt tancat.
+    demostracio: |
+      (i) Considerem la funció $h(x)=f(x)-g(x)$. Per la proposició 20(i) (encara no demostrada), $h$ és contínua per a tot $x\in\mathbb{R}^n$.
+      Prenem $V=(0,+\infty)$, que és un obert de $\mathbb{R}$. Per la definició de continuïtat, existeix $U\subseteq\mathbb{R}^n$ obert tal que
+      $$\begin{aligned}h^{-1}(V)&=\{x\in\mathbb{R}^n\mid h(x)\in V\}=\{x\in\mathbb{R}^n\mid h(x)>0\}\\&=\{x\in\mathbb{R}^n\mid f(x)>g(x)\}=U\cap\mathbb{R}^n=U.\end{aligned}$$
+
+      (ii) Anàleg a (i) canviant "obert" per "tancat", o bé usant que
+      $$B=\{x\in\mathbb{R}^n:f(x)\geq g(x)\}=\mathbb{R}^n\setminus\{x\in\mathbb{R}^n:f(x)<g(x)\},$$
+      és a dir, que $B$ és el complementari d'un obert.
+    problemes: []
+  - id: "T2.x4"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "2.3"
+    pagina: 10
+    nom: "Comentari sobre el corol·lari 18"
+    enunciat: |
+      Observem que, en el corol·lari 18, si les funcions només estiguessin definides en un conjunt $\Omega\subseteq\mathbb{R}^n$, només podríem afirmar que $A=U\cap\Omega$, on $U$ és un obert de $\mathbb{R}^n$. En el cas que $\Omega$ fos un obert de $\mathbb{R}^n$, aleshores $A$ també seria un obert de $\mathbb{R}^n$. Anàlogament per a $B$ canviant "obert" per "tancat".
+
+      Els següents resultats ens asseguren que, de manera genèrica, les combinacions i composicions de funcions contínues donen lloc a funcions contínues.
+    problemes: []
+  - id: "T2.19"
+    tipus: observacio
+    num: 19
+    resum: 49
+    seccio: "2.3"
+    pagina: 10
+    nom: "Composició de funcions contínues"
+    enunciat: |
+      Siguin $f:\Omega\subseteq M\to N$ i $g:\Theta\subseteq N\to P$ amb $f(\Omega)\subseteq\Theta$. Aleshores,
+
+      (i) si $f$ és contínua en $x_0\in\Omega'$ i $g$ és contínua en $f(x_0)\in\Theta'$ $\Rightarrow g\circ f$ és contínua en $x_0$;
+
+      (ii) si $f$ i $g$ són contínues, $g\circ f$ és contínua.
+    demostracio: |
+      Ho demostrarem usant el llenguatge de successions: suposem que $\displaystyle\lim_{n\to+\infty}x_n=x_0$, amb $x_0\in\Omega$ i $(x_n)\subseteq\Omega$. Com que $f$ és contínua, $\lim_{n\to\infty}f(x_n)=f(x_0)$ que, per continuïtat de $g$, implica que $\lim_{n\to\infty}g(f(x_n))=g(f(x_0))$. Per tant, $g\circ f$ és contínua en $x_0$.
+    problemes: []
+  - id: "T2.20"
+    tipus: proposicio
+    num: 20
+    resum: 50
+    seccio: "2.3"
+    pagina: 11
+    nom: "Àlgebra de funcions contínues"
+    enunciat: |
+      Siguin $f,g:\Omega\subseteq\mathbb{R}^n\to\mathbb{R}^m$ i $h:\Omega\subseteq\mathbb{R}^n\to\mathbb{R}$, contínues. Llavors
+
+      (i) $f+g,\ \lambda f:\Omega\subseteq\mathbb{R}^n\to\mathbb{R}^m$, amb $\lambda\in\mathbb{R}$, són contínues;
+
+      (ii) $hf:\Omega\subseteq\mathbb{R}^n\to\mathbb{R}^m$ és contínua;
+
+      (iii) per a $m=1$, si $g(x)\neq0\ \forall x\in\Omega$, $f/g:\Omega\subseteq\mathbb{R}^n\to\mathbb{R}$ és contínua;
+
+      (iv) $\langle f,g\rangle:\Omega\subseteq\mathbb{R}^n\to\mathbb{R}$ és contínua;
+
+      (v) $\|f\|:\Omega\subseteq\mathbb{R}^n\to\mathbb{R}$ és contínua.
+    demostracio: |
+      Fent servir el teorema 17(b), l'enunciat (i) es desprèn de les propietats dels límits. D'altra banda, si demostrem (ii), aleshores (iii) és immediata substituint $h=1/g$, mentre que per a demostrar (iv) i (v) n'hi ha prou amb les propietats (i) i (ii) per a veure que els productes escalars són continus, i amb l'observació 19 per a assegurar la continuïtat quan es fa la composició amb l'arrel quadrada.
+
+      Per demostrar (ii), sabem que, donat $x_0\in\Omega$, per a qualsevol $\epsilon>0$, existeixen $\delta_1=\delta_1(\epsilon)$ i $\delta_2=\delta_2(\epsilon)$ tals que
+      $$\begin{aligned}&\forall x\text{ tal que }\|x-x_0\|<\delta_1,\ \|f(x)-f(x_0)\|<\epsilon,\\&\forall x\text{ tal que }\|x-x_0\|<\delta_2,\ |h(x)-h(x_0)|<\epsilon.\end{aligned}\qquad(3)$$
+      Volem veure que per a qualsevol $\epsilon>0$, existeix $\delta$ tal que si $\|x-x_0\|<\delta$, aleshores $\|h(x)f(x)-h(x_0)f(x_0)\|<\epsilon$.
+      Per la desigualtat triangular,
+      $$\begin{aligned}\|h(x)f(x)-h(x_0)f(x_0)\|&\leq\|h(x)f(x)-h(x)f(x_0)\|+\|h(x)f(x_0)-h(x_0)f(x_0)\|\\&=|h(x)|\,\|f(x)-f(x_0)\|+\|f(x_0)\|\,|h(x)-h(x_0)|.\end{aligned}$$
+      El terme $\|f(x_0)\|$ és fix i, per tant, no ens preocupa. Ara volem fitar $|h(x)|$ per alguna expressió que no depengui de $x$. Per la hipòtesi de continuïtat de $h$, prenent per exemple $\epsilon=1$, sabem que existeix $\delta_2(1)$ tal que si $\|x-x_0\|<\delta_2(1)$, aleshores $|h(x)-h(x_0)|<1$, és a dir, $-1+h(x_0)<h(x)<1+h(x_0)$ i, per tant,
+      $$|h(x)|<1+|h(x_0)|.$$
+      Apliquem ara les propietats de (3) per a $\dfrac{\epsilon}{2(1+|h(x_0)|)}$ i per a $\dfrac{\epsilon}{2\,\|f(x_0)\|}$, respectivament. Amb les $\delta_1$ i $\delta_2$ resultants, junt amb $\delta_2(1)$, definim:
+      $$\delta:=\min\left\{\delta_2(1),\ \delta_1\!\left(\frac{\epsilon}{2(1+|h(x_0)|)}\right),\ \delta_2\!\left(\frac{\epsilon}{2\,\|f(x_0)\|}\right)\right\}.$$
+      Aleshores, per a $\|x-x_0\|<\delta$, tenim que:
+      $$\begin{aligned}\|h(x)f(x)-h(x_0)f(x_0)\|&\leq|h(x)|\,\|f(x)-f(x_0)\|+\|f(x_0)\|\,\|h(x)-h(x_0)\|\\&\leq(1+|h(x_0)|)\,\frac{\epsilon}{2(1+|h(x_0)|)}+\|f(x_0)\|\,\frac{\epsilon}{2\,\|f(x_0)\|}=\frac{\epsilon}{2}+\frac{\epsilon}{2}=\epsilon.\end{aligned}$$
+    problemes: []
+  - id: "T2.21"
+    tipus: proposicio
+    num: 21
+    resum: 51
+    seccio: "2.4"
+    pagina: 12
+    nom: "Imatge contínua de compactes i connexos"
+    enunciat: |
+      Siguin $(M,d)$ i $(N,d')$ dos espais mètrics, $f:\Omega\subseteq M\to N$ contínua i $K\subseteq\Omega$. Aleshores,
+
+      (i) $K$ compacte $\Rightarrow f(K)$ compacte;
+
+      (ii) $K$ connex $\Rightarrow f(K)$ connex.
+    demostracio: |
+      (i) $K$ compacte $\Rightarrow f(K)$ compacte.
+      Ho demostrem primer per successions: Volem demostrar que tota successió $(y_n)_n\subset f(K)$ admet una parcial convergent en $f(K)$.
+      Per construcció, existeix una successió $(x_n)_n\subset K$ tal que $y_n=f(x_n)$ per a tota $n$. Per ser $K$ compacte, existeix una parcial convergent $(x_{n_k})_k\subset K$ a un valor $x_0\in K$. Per continuïtat de $f$, $(y_{n_k})_k:=(f(x_{n_k}))_k$ satisfà $\lim_{k\to\infty}y_{n_k}=f(x_0)\in f(K)$. Per tant, $f(K)$ és compacte.
+
+      També es pot demostrar usant recobriments d'oberts: Suposem que $f(K)\subseteq\bigcup_{i\in I}V_i$, on $V_i$ són oberts de $N$. Com que $f$ és contínua, per l'apartat (c) del teorema 17, existeix una col·lecció de $U_i$ oberts de $M$ tals que
+      $$f^{-1}(V_i)=U_i\cap\Omega;\quad\text{a més, }f(f^{-1}(V_i))=f(U_i\cap\Omega)\subseteq V_i,\ \forall i\in I.\qquad(4)$$
+      Prenem ara $x\in K$; clarament, $f(x)\in f(K)$ i, per tant, $f(x)\in V_j$ per a algun $j\in I$ i, en conseqüència, $x\in f^{-1}(V_j)\subseteq U_j\cap\Omega$.
+      D'altra banda, com que $K$ és compacte i $K\subseteq\bigcup_{i\in I}U_i$, existeix un recobriment finit tal que
+      $$K\subseteq(U_{i_1}\cup\cdots\cup U_{i_r})\cap\Omega=(U_{i_1}\cap\Omega)\cup\cdots\cup(U_{i_r}\cap\Omega).$$
+      Ajuntant ara aquesta darrera conclusió amb (4), tenim que:
+      $$f(K)\subseteq f(U_{i_1}\cap\Omega)\cup\cdots\cup f(U_{i_r}\cap\Omega)\subseteq V_{i_1}\cup\cdots\cup V_{i_r},$$
+      que és un subrecobriment finit de $f(K)$.
+
+      (ii) $K$ connex $\Rightarrow f(K)$ connex.
+      Demostrem el contrarecíproc i, en conseqüència, suposem que $f(K)$ no és connex. Per tant, existeix dos oberts $V_1\subset N$ i $V_2\subset N$ tals que
+      $$f(K)\subseteq V_1\cup V_2;\ f(K)\cap V_1\neq\emptyset,\ f(K)\cap V_2\neq\emptyset;\ f(K)\cap V_1\cap V_2=\emptyset.$$
+      Per continuïtat, existeixen dos oberts $U_1,U_2\subset M$ tals que $f^{-1}(V_i)=U_i\cap\Omega$ per a $i=1,2$.
+      Prenem ara $x\in K$. Llavors, $f(x)\in f(K)$ i, per tant, $f(x)\in V_i$ per a $i=1$ o $i=2$ i, a més, $f(x)\notin V_j$ per a $j=2$ o $j=1$, respectivament; equivalentment, $x\in f^{-1}(V_i)\subseteq U_i$ per a $i=1$ o $i=2$ i $x\notin f^{-1}(V_j)\subseteq U_j$ per a $j=2$ o $j=1$, respectivament. Concloem, doncs, que $K\subseteq U_1\cup U_2$.
+      D'altra banda, per construcció, $U_1\cap U_2\cap\Omega=\emptyset$, fet que implica que $U_1\cap U_2\cap K=\emptyset$.
+      Finalment, és fàcil veure també que $K\cap U_1\neq\emptyset$ i que $K\cap U_2\neq\emptyset$ ja que $f^{-1}(V_i)$, per a $i=1,2$, no poden ser buits (per construcció, existeix algun $y_i\in f(K)\cap V_i$ i, per tant, existeix algun $x_i\in K\cap(U_i\cap K)=K\cap U_i$).
+      Per tant, $K$ és disconnex.
+    problemes: []
+  - id: "T2.22"
+    tipus: observacio
+    num: 22
+    resum: null
+    seccio: "2.4"
+    pagina: 12
+    nom: "Recíprocs falsos de la Prop. 21"
+    enunciat: |
+      Els recíprocs dels dos apartats de la proposició 21 no són certs.
+
+      - La funció $f:\mathbb{R}\longrightarrow\mathbb{R}$, $f(x)\equiv0$, és contínua, i el conjunt $\{0\}\in\mathbb{R}$ és compacte. En canvi, $f^{-1}(\{0\})=\mathbb{R}$ NO és compacte.
+      - La funció $f(x):\mathbb{R}\longrightarrow\mathbb{R}$, $f(x)=x^2$, compleix que $K=f^{-1}([a,b])\subset\mathbb{R}$, amb $0<a<b$, NO és connex, però en canvi $f(K)=[a,b]$ sí que ho és.
+    problemes: []
+  - id: "T2.23"
+    tipus: teorema
+    num: 23
+    resum: 52
+    seccio: "2.4"
+    pagina: 13
+    nom: "Teorema de Weierstrass"
+    enunciat: |
+      (Weierstrass). Sigui $f:\Omega\subseteq M\to\mathbb{R}$ contínua i $K\subseteq\Omega$ compacte. Llavors $f(K)$ és fitat i $\exists x_0,x_1\in K$ t.q. $f(x_0)=\min_{x\in K}f(x)$ i $f(x_1)=\max_{x\in K}f(x)$.
+    demostracio: |
+      La primera part és immediata del fet que si $f$ és contínua i $K$ és compacte, aleshores, $f(K)\subset\mathbb{R}$ és compacte (i per tant, fitat).
+
+      Com que $f(K)$ is fitat, considerem
+      $$f_M:=\sup_{x\in K}f(x),\qquad f_m:=\inf_{x\in K}f(x).$$
+      Demostrarem que, en efecte, $f_M$ i $f_m$ s'atenyen a punts del conjunt $K$. Ho farem només per al màxim ja que per al mínim la demostració és anàloga.
+
+      Prenem una successió $(x_n)_n\subset K$ tal que $f(x_n)\to f_M$ quan $n\to\infty$. Com que $K$ és compacte, la successió $(x_n)$ admet una parcial convergent $(x_{n_k})_k$ tal que $x_{n_k}\to x^*\in K$.
+
+      Per continuïtat de $f$, tenim que $f(x_{n_k})\to f(x^*)$. Però, com que $f(x_{n_k})\to f_M$, podem deduir que $f(x^*)=f_M$. Per tant, $f$ ateny el seu màxim a $x^*\in K$.
+    problemes: []
+  - id: "T2.24"
+    tipus: teorema
+    num: 24
+    resum: 53
+    seccio: "2.4"
+    pagina: 13
+    nom: "Teorema del valor intermedi"
+    enunciat: |
+      (del valor intermedi). Sigui $f:\Omega\subseteq M\to\mathbb{R}$ contínua, $K\subseteq\Omega$ connex, i $x,y\in K$. Aleshores, per a tota $c\in\mathbb{R}$ tal que $f(x)<c<f(y)$, $\exists\xi\in K$ tal que $f(\xi)=c$.
+    demostracio: |
+      Com que $K$ és connex, per l'apartat (b) de la proposició 21 sabem que $f(K)$ és connex.
+      Donats $x,y\in K$, suposem que $\exists c_0\in\mathbb{R}$ amb $f(x)<c_0<f(y)$, tal que $\forall\xi\in K\ f(\xi)\neq c_0$. Llavors, si definim $V_1:=(-\infty,c_0)$ i $V_2:=(c_0,+\infty)$, és clar que $f(K)\subseteq V_1\cup V_2$. En aquest supòsit, tenim que
+      $$f(x)\in f(K)\cap V_1;\ f(y)\in f(K)\cap V_2;\ f(K)\cap V_1\cap V_2=\emptyset,$$
+      fet que implica que $f(K)$ és disconnex, i arribem a contradicció.
+    problemes: []
+  - id: "T2.25"
+    tipus: definicio
+    num: 25
+    resum: 54
+    seccio: "2.5"
+    pagina: 14
+    nom: "Continuïtat uniforme"
+    enunciat: |
+      Una funció $f:\Omega\subseteq M\to N$ és uniformement contínua si $\forall\epsilon>0\ \exists\delta>0$ t.q. $\forall x,y\in\Omega$, $d(x,y)<\delta$ tenim que $d'(f(x),f(y))<\epsilon$.
+    problemes: []
+  - id: "T2.26"
+    tipus: definicio
+    num: 26
+    resum: 55
+    seccio: "2.5"
+    pagina: 14
+    nom: "Funció Lipschitz"
+    enunciat: |
+      Una funció $f:\Omega\subseteq M\to N$ és de Lipschitz si $\exists C>0$ t.q. $\forall x,y\in\Omega$, $d'(f(x),f(y))<C\,d(x,y)$.
+    problemes: []
+  - id: "T2.27"
+    tipus: exemple
+    num: 27
+    resum: 56
+    seccio: "2.5"
+    pagina: 14
+    nom: "Aplicacions lineals són Lipschitz"
+    enunciat: |
+      Tota aplicació lineal $f:\mathbb{R}^n\to\mathbb{R}^m$ és de Lipschitz.
+
+      En efecte, considerem $f(x)=Ax$, amb $x=(x_1,\dots,x_n)^t$ i $A=(a_{i,j})_{i=1,\dots,m;j=1,\dots,n}$. Denotem amb $c_j=(a_{1,j},\dots,a_{m,j})^t$ la $j$-èsima columna de $A$ i definim la norma $\|A\|_{=}\max_j\{\|c_j\|\}$, a partir de la norma $\ell_1$ de vectors ($\|v\|_1=\sum_{j=1}^m|v_j|$). (Nota: Al final del tema es fa un repàs de normes equivalents, normes de vectors i normes de matrus. En particular, seguint la definició 36, a l'exemple 37 veurem que $\|A\|_1$ és una norma subordinada a la normal vectorial $\|v\|_1$ i que, per tant, és consistent i $\|A(x-y)\|_1\leq\|A\|_1\|x-y\|_1$. Directament, veiem, doncs, que l'aplicació lineal és Lipschitz amb $C=1$.)
+
+      Per a un parell de punts qualssevol $x,y\in\mathbb{R}^n$, ometent el subíndex $1$ de les normes, tenim que:
+      $$\begin{aligned}\|f(x)-f(y)\|&=\|Ax-Ay\|=\|A(x-y)\|=\Big\|A\sum_{i=1}^n(x_i-y_i)e_i\Big\|=\Big\|\sum_{i=1}^n(x_i-y_i)A\,e_i\Big\|\\&=\Big\|\sum_{i=1}^n(x_i-y_i)c_i\Big\|\leq\sum_{i=1}^n|x_i-y_i|\,\|c_i\|\leq\sum_{i=1}^n|x_i-y_i|\,\|A\|\\&\leq n\,\|x-y\|\,\|A\|=C\|x-y\|,\end{aligned}$$
+      amb $C=n\|A\|$ i, per tant, $f$ és Lipschitz.
+    problemes: []
+  - id: "T2.28"
+    tipus: proposicio
+    num: 28
+    resum: 57
+    seccio: "2.5"
+    pagina: 14
+    nom: "Lipschitz, uniforme i contínua"
+    enunciat: |
+      Lipschitz $\Rightarrow$ uniformement contínua $\Rightarrow$ contínua. Els recíprocs són falsos.
+    demostracio: |
+      Demostrem primer que si $f$ és Lipschitz, aleshores, és uniformement contínua. Sabem que $\exists C>0$ tal que $d'(f(x),f(y))<C\,d(x,y),\ \forall x,y\in\Omega$. Donat un $\epsilon>0$ qualsevol, si prenem $\delta=\epsilon/C$, tenim que $\forall x,y\in\Omega$ tal que $d(x,y)<\delta$, aleshores $d'(f(x),f(y))<C\,d(x,y)<\epsilon$. Per tant, $f$ és uniformement contínua.
+
+      Per definició, si $f$ uniformement contínua en $\Omega$, aleshores és contínua en tot punt $x_0\in\Omega$.
+
+      Ens falta veure que els recíprocs no són certs:
+
+      - La funció $f:(0,1]\longrightarrow\mathbb{R}$ definida com $f(x)=1/x$ és contínua, però no pas uniformement. Vegem que $\exists\epsilon>0\ \forall\delta>0$ t.q. $\exists x,y\in(0,1)$ amb $d(x,y)<\delta$ i tals que $|f(x)-f(y)|\geq\epsilon$: Prenem $\epsilon=1$, $x=\delta/2$ i $y=\delta/3$, amb $\delta<1$. Clarament, $|x-y|=\delta/6<\delta$ i
+      $$|f(x)-f(y)|=\frac{1}{\delta}>1.$$
+      - La funció $f:[0,1]\longrightarrow\mathbb{R}$ definida com $f(x)=\sqrt{x}$ és uniformement contínua, però no és Lipschitz:
+        Suposem que $\exists C>0$ tal que $\forall x,y\in[0,1]$, $|\sqrt{x}-\sqrt{y}|<C\,|x-y|$. Ara bé, pel teorema del valor mitjà sabem que $\exists\xi\in(x,y)$ tal que
+        $$|\sqrt{x}-\sqrt{y}|=\frac{1}{2\sqrt{\xi}}\,|x-y|.$$
+        Caldria, doncs, que existís $C$ tal que $\dfrac{1}{2\sqrt{\xi}}\leq C$ per a tota $\xi$; però, prenent $x,y$ prou properes a zero, sempre podem aconseguir $\xi$ tan petita com vulguem i, per tant, $\dfrac{1}{2\sqrt{\xi}}$ tan gran com vulguem (!!).
+    problemes: []
+  - id: "T2.29"
+    tipus: teorema
+    num: 29
+    resum: 58
+    seccio: "2.5"
+    pagina: 15
+    nom: "Teorema de Heine-Cantor"
+    enunciat: |
+      (Heine–Cantor). Siguin $(M,d)$ i $(N,d')$ espais mètrics, i $K\subseteq M$ un conjunt compacte. Si $f:K\to N$ és una funció contínua, llavors $f$ és uniformement contínua en $K$.
+    demostracio: |
+      Ho demostrarem per contradicció. Suposem que $f$ no és uniformement contínua: aleshores existeix algun $\epsilon_0>0$ tal que $\forall\delta>0$ es poden trobar dos punts $x,y\in K$ tals que $d(x,y)<\delta$ i $d(f(x)-f(y))\geq\epsilon_0$. Prenent, en particular, $\delta_n=1/n$, per a cada $n$ es poden trobar dos punts $x_n,y_n\in K$ tals que
+      $$d(x_n,y_n)<\frac{1}{n},\qquad\text{però}\qquad d(f(x_n),f(y_n))\geq\epsilon_0.$$
+      En paraules: els punts $x_n$ i $y_n$ es van acostant arbitràriament, però els valors de la funció romanen separats per almenys $\epsilon_0$.
+
+      Com que $K$ és compacte, la successió $(x_n)_n$ admet una subsuccessió convergent $(x_{n_k})_k$ tal que $x_{n_k}\to x^*\in K$ quan $k\to\infty$. Tanmateix, $y_{n_k}\to x^*$, perquè $d(x_{n_k},y_{n_k})\to0$.
+
+      Ara bé, com que $f$ és contínua en $K$, es compleix que $f(x_{n_k})\to f(x^*)$ i que $f(y_{n_k})\to f(x^*)$. Però això contradiu la condició inicial que $d(f(x_n),f(y_n))\geq\epsilon_0$, ja que les imatges haurien de convergir al mateix valor $f(x^*)$.
+    problemes: []
+  - id: "T2.x5"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "2.5"
+    pagina: 15
+    nom: "Rellevància de la compacitat"
+    enunciat: |
+      Observem que la compacitat és rellevant per poder garantir l'existència d'una subsuccessió convergent. Per exemple, el teorema de Heine-Cantor no es pot aplicar a la funció $f(x)=1/x$ que hem considerat al contraexemple de la demostració de la proposició 28 perquè no està definida en un compacte.
+    problemes: []
+  - id: "T2.30"
+    tipus: definicio
+    num: 30
+    resum: 59
+    seccio: "2.6"
+    pagina: 15
+    nom: "Funció contractiva"
+    enunciat: |
+      Una funció $f:\Omega\subseteq M\to N$ és contractiva si existeix $0<k<1$ t.q. $\forall x,y\in\Omega$, $d'(f(x),f(y))\leqslant k\,d(x,y)$ (és a dir, Lipschitz amb constant $<1$).
+    problemes: []
+  - id: "T2.31"
+    tipus: teorema
+    num: 31
+    resum: 60
+    seccio: "2.6"
+    pagina: 15
+    nom: "Teorema del punt fix"
+    enunciat: |
+      (del punt fix). Sigui $(M,d)$ un espai mètric complet, i sigui $f:M\to M$ una funció contractiva. Aleshores:
+
+      (a) $f$ té un únic punt fix $x^*$ a $M$, és a dir, existeix un únic $x^*\in M$ tal que $f(x^*)=x^*$.
+
+      (b) Per a qualsevol punt inicial $x_0\in M$ (condició inicial), la successió definida per iteració $x_{n+1}=f(x_n)$ convergeix cap a $x^*$.
+
+      Aquest teorema és fonamental en anàlisi numèrica, equacions diferencials i optimització, ja que assegura la convergència de molts mètodes iteratius.
+    demostracio: |
+      Sigui $(M,d)$ un espai mètric complet, i sigui $f:M\to M$ una aplicació contractiva, és a dir, existeix una constant $0<k<1$ tal que:
+      $$d(f(x),f(y))\leq k\,d(x,y)\quad\forall x,y\in M.$$
+      Prenem $x_0\in M$ i construïm una successió $(x_n)$ a $M$ utilitzant la iteració $x_{n+1}=f(x_n),\quad n\geq0$; és a dir, $x_k=f^k(x_0)$ per a tota $k\geq1$.
+
+      Demostrarem primer que $(x_n)_n$ és de Cauchy.
+
+      Observem primer que per a qualsevol $n\geq0$, tenim:
+      $$d(x_{n+1},x_n)=d(f(x_n),f(x_{n-1}))\leq k\,d(x_n,x_{n-1}).$$
+      Aplicant aquest procés repetidament,
+      $$d(x_n,x_{n-1})\leq k\,d(x_{n-1},x_{n-2})\leq k^2d(x_{n-2},x_{n-3})\leq\cdots\leq k^{n-1}d(x_1,x_0).$$
+      Sumant aquestes desigualtats mitjançant la fórmula de la sèrie geomètrica, obtenim:
+      $$d(x_m,x_n)\leq\sum_{i=n}^{m-1}d(x_{i+1},x_i)\leq d(x_1,x_0)\sum_{i=n}^{m-1}k^i.$$
+      Com que $0\leq k<1$, la sèrie $\sum k^i$ convergeix i, per tant, la successió $(x_n)_n$ és de Cauchy. Més concretament,
+      $$d(x_m,x_n)\leq|a_m-a_n|\,d(x_1,x_0),\quad a_m:=\sum_{i=0}^{m-1}k^i.$$
+      Ara bé: $(a_k)_k$ és convergent i, per tant, $\forall\epsilon>0,\exists n_0$ tal que $|a_m-a_n|<\epsilon/d(x_1,x_0)$ per a tota $m,n\geq n_0$; és a dir, $d(x_m,x_n)<\epsilon$.
+
+      Com que $M$ és complet, si $(x_n)_n$ és de Cauchy, aleshores té límit $x^*\in M$.
+
+      Demostrem ara que $x^*$ és un punt fix. Com que $x_n\to x^*$, aplicant $f$ i utilitzant la seva continuïtat, $f(x_n)=x_{n+1}\to f(x^*)$. Usant la propietat que els límits són únics (proposició 8), deduïm directament que $f(x^*)=x^*$. Així doncs, $x^*$ és un punt fix.
+
+      Per demostrar la unicitat del punt fix, suposem que hi ha dos punts fixos, $x^*$ i $y^*$, tals que $f(x^*)=x^*$ i $f(y^*)=y^*$. Llavors:
+      $$d(x^*,y^*)=d(f(x^*),f(y^*))\leq k\,d(x^*,y^*).$$
+      Com que $0<k<1$, això implica que $d(x^*,y^*)=0$, és a dir, $x^*=y^*$.
+    problemes: []
+  - id: "T2.32"
+    tipus: definicio
+    num: 32
+    resum: 61
+    seccio: "2.7"
+    pagina: 17
+    nom: "Normes equivalents"
+    enunciat: |
+      En un espai mètric $M$, dues normes $\|\cdot\|_a$ $\|\cdot\|_b$ són equivalents si existeixen $\lambda,\mu>0$ tals que
+      $$\lambda\,\|\cdot\|_b\leq\|\cdot\|_a\leq\mu\,\|\cdot\|_b\qquad\forall x\in M.$$
+    problemes: []
+  - id: "T2.33"
+    tipus: teorema
+    num: 33
+    resum: 62
+    seccio: "2.7"
+    pagina: 17
+    nom: "Equivalència de normes a R^n"
+    enunciat: |
+      A $\mathbb{R}^n$ totes les normes són equivalents.
+    demostracio: |
+      Considerem $x=\sum_{i=1}^n\alpha_i\,e_i$, on $\{e_i\}$ és una base de $\mathbb{R}^n$ i els $\alpha_i$ són escalars.
+
+      Demostrem primer que podem reduir el teorema al cas que una de les normes és la 1-norma
+      $$\|x\|_1=\sum_{i=1}^n|\alpha_i|.$$
+      En efecte, si $\|\cdot\|_a$ i $\|\cdot\|_b$ són totes dues equivalents a $\|\cdot\|_1$, tenim que existeixen $0<\lambda\leq\mu$, $0<\lambda'\leq\mu'$ tals que
+      $$\begin{aligned}\lambda\,\|x\|_1&\leq\|x\|_a\leq\mu\,\|x\|_1,\\ \lambda'\,\|x\|_1&\leq\|x\|_b\leq\mu'\,\|x\|_1.\end{aligned}$$
+      Aleshores,
+      $$\frac{\lambda'}{\mu}\|x\|_a\leq\|x\|_b\leq\frac{\mu'}{\lambda}\|x\|_a.$$
+      Ara demostrem que ens podem restringir a la bola unitat $\|x\|_1=1$. Volem provar que per a cada $x\in\mathbb{R}^n$ existeixen $\lambda$ i $\mu$ tals que
+      $$\lambda\,\|x\|_1\leq\|x\|_a\leq\mu\,\|x\|_1.$$
+      Com que per a $x=0$ és trivial que es compleix, podem suposar que $x\neq0$ i dividir per $\|x\|_1$. Ens queda $\lambda\leq\dfrac{\|x\|_a}{\|x\|_1}\leq\mu$, que equival a
+      $$\lambda\leq\|u\|_a\leq\mu,$$
+      amb $u=x/\|x\|_1$, que és unitari amb la 1-norma.
+
+      Un cop restringits a aquests subcasos, demostrarem que la funció $\|\cdot\|_a$ és contínua en la (topologia induïda per la) norma $\|\cdot\|_1$. És a dir per a tot $\epsilon>0$, existeix $\delta>0$ tal que
+      $$\|x-x'\|_1<\delta\quad\Rightarrow\quad\big|\,\|x\|_a-\|x'\|_a\big|<\epsilon.$$
+      Veiem primer que per la desigualtat triangular, tenim aquesta doble desigualtat:
+      $$\|x\|_a-\|x'\|_a=\|x'+(x-x')\|_a-\|x'\|_a\leq\|x-x'\|_a,$$
+      $$\|x'\|_a-\|x\|_a=\|x+(x'-x)\|_a-\|x\|_a\leq\|x-x'\|_a,$$
+      i, per tant,
+      $$\big|\,\|x\|_a-\|x'\|_a\big|\leq\|x-x'\|_a.$$
+      Però prenent coordenades per a $x$ i $x'$ i tornant a aplicar la desigualtat triangular, tenim que
+      $$\|x-x'\|_a\leq\sum_{i=1}^n|\alpha_i-\alpha_i'|\,\|e_i\|_a\leq\|x-x'\|_1\max_i\|e_i\|_a.$$
+      Per tant, si escollim $\delta=\epsilon/\max_i\|e_i\|_a$, ja tenim el que volíem:
+      $$\|x-x'\|_1<\delta\quad\Rightarrow\quad\big|\,\|x\|_a-\|x'\|_a\big|\leq\|x-x'\|_a<\epsilon.$$
+      Ja tenim, doncs, una funció contínua ($\|\cdot\|_a$) definida sobre un compacte ($\{x\in\mathbb{R}^n:\ \|x\|_1=1\}$). Per tant, existeixen
+      $$C_1:=\min_{\|u\|_1=1}\|u\|_a;\qquad C_2:=\max_{\|u\|_1=1}\|u\|_a.$$
+      Com que $u\neq0$ ja que $\|u\|_1=1$, tenim que $C_2\geq C_1>0$ i $C_1\leq\|u\|_a\leq C_2$.
+    problemes: []
+  - id: "T2.34"
+    tipus: exemple
+    num: 34
+    resum: null
+    seccio: "2.7"
+    pagina: 18
+    nom: "Normes ℓ^p a R^n"
+    enunciat: |
+      (Normes $\ell^p$ en $\mathbb{R}^n$). Per a $p\geq1$, la $p$-norma es defineix com
+      $$\|x\|_p=\left(\sum_{i=1}^n|x_i|^p\right)^{1/p}.$$
+      Per exemple,
+
+      - Si $p=1$, tenim la norma Manhattan o la norma (del) taxi:
+      $$\|x\|_1=|x_1|+|x_2|+\cdots+|x_n|$$
+      - Si $p=2$, tenim la norma euclidiana:
+      $$\|x\|_2=\sqrt{|x_1|^2+|x_2|^2+\cdots+|x_n|^2}$$
+      - Si $p=\infty$, tenim la norma del màxim:
+      $$\|x\|_\infty=\max_{1\leq i\leq n}|x_i|$$
+
+      Vegem ara que són equivalents.
+      Prenem $x\in\mathbb{R}^n$ qualsevol. Aleshores,
+      $$\|x\|_\infty\leq\|x\|_p\leq n^{1/p}\|x\|_\infty$$
+      En particular,
+      $$\|x\|_\infty\leq\|x\|_2\leq\sqrt{n}\|x\|_\infty,\qquad\|x\|_\infty\leq\|x\|_1\leq n\|x\|_\infty.$$
+    problemes: []
+  - id: "T2.35"
+    tipus: exemple
+    num: 35
+    resum: null
+    seccio: "2.7"
+    pagina: 18
+    nom: "Normes pesades"
+    enunciat: |
+      (Normes pesades). Definim
+      $$\|x\|_w=\sum_{i=1}^nw_i|x_i|,$$
+      on $w_i>0$ són uns pesos fixats. Aquestes normes també són equivalents a la norma $\|x\|_1$:
+      $$\min_iw_i\ \|x\|_1\leq\|x\|_w\leq\max_iw_i\ \|x\|_1$$
+      Tot i la diversitat de normes, en dimensió finita totes mesuren d'una manera similar, i només difereixen per factors d'escala.
+
+      Com a cas particular, en $\mathbb{R}^2$ les boles unitat són cercles si la norma és l'euclidiana, quadrats en forma de rombe si prenem la norma 1, i quadrats paral·lels als eixos si prenem la norma infinit. Però independentment de la forma, totes representen regions fitades i per això són equivalents.
+    problemes: []
+  - id: "T2.36"
+    tipus: definicio
+    num: 36
+    resum: 63
+    seccio: "2.7.1"
+    pagina: 19
+    nom: "Norma matricial consistent i subordinada"
+    enunciat: |
+      Direm que una norma matricial definida en un espai vectorial de matrius $\mathcal{M}_{m\times n}(\mathbb{R})$ és una norma consistent amb les normes vectorials $\|\cdot\|_a$ en $\mathbb{R}^n$ i $\|\cdot\|_b$ en $\mathbb{R}^m$ si
+      $$\|A\,x\|_b\leq\|A\|\,\|x\|_a,\qquad\forall x\in\mathbb{R},\forall A\in\mathcal{M}_{m\times n}(\mathbb{R}).$$
+      En el cas de matrius quadrades en l'espai vectorial $\mathcal{M}_{n\times n}(\mathbb{R})$, direm que la norma és multiplicativa si
+      $$\|A\,B\|\leq\|A\|\,\|B\|,\qquad\forall A,B\in\mathcal{M}_{n\times n}(\mathbb{R}).$$
+      Donada una norma vectorial $\|\cdot\|$, podem definir una norma matricial que sigui consistent amb ella com
+      $$\|A\|=\sup_{x\neq0}\frac{\|Ax\|}{\|x\|}=\sup_{\|x\|=1}\|Ax\|,$$
+      que s'anomena norma matricial subordinada a l'esmentada norma vectorial.
+    problemes: []
+  - id: "T2.37"
+    tipus: exemple
+    num: 37
+    resum: null
+    seccio: "2.7.1"
+    pagina: 19
+    nom: "Normes matricials subordinades"
+    enunciat: |
+      (Normes matricials subordinades). Sigui $A=(a_{ij})_{i,j}$ i considerem les normes vectorials $\|\cdot\|_1$, $\|\cdot\|_\infty$ i $\|\cdot\|_2$.
+
+      - $\|A\|_1=\max_{1\leq j\leq n}\sum_{i=1}^m|a_{ij}|$ és la norma subordinada a $\|\cdot\|_1$.
+
+        En efecte, si $A\in\mathcal{M}_{m\times n}(\mathbb{R})$ i $x\in\mathbb{R}^n$,
+        $$\|A\,x\|_1=\sum_{i=1}^m\left|\sum_{j=1}^na_{ij}\,x_j\right|\leq\sum_{j=1}^n|x_j|\sum_{i=1}^m|a_{ij}|\leq\left(\max_{j=1,\dots,n}\sum_{i=1}^m|a_{ij}|\right)\|x\|_1=\|A\|_1\|x\|_1.$$
+      - $\|A\|_\infty=\max_{1\leq i\leq m}\sum_{j=1}^n|a_{ij}|$ és la norma subordinada a $\|\cdot\|_\infty$.
+      - $\|A\|_2=\sqrt{\rho(A^TA)}$, on $\rho(B)$ és el radi espectral de $B$, és la norma subordinada a $\|\cdot\|_2$.
+    problemes: []
+  - id: "T2.38"
+    tipus: observacio
+    num: 38
+    resum: null
+    seccio: "2.7.1"
+    pagina: 19
+    nom: "Norma d'Euclides no subordinada"
+    enunciat: |
+      No tota norma matricial prové d'una de vectorial (o sigui, és subordinada a una de vectorial). Per exemple, la norma matricial (no multiplicativa)
+      $$\|A\|_E=\left(\sum_{i,j}|a_{ij}|^2\right)^{1/2}$$
+      no està subordinada a cap norma vectorial.
+    demostracio: |
+      Ho podem demostrar per reducció a l'absurd.
+
+      Suposem que $\|\cdot\|_E$ està subordinada a una norma vectorial $\|\cdot\|_e$. Això implica que
+      $$\|A\|_E=\sup_{\|x\|_e=1}\|A\,x\|_e.$$
+      Si ho apliquem a la matriu identitat de dimensió $n$, $I_n$, tenim que
+      $$\|I_n\|_E=\sup_{\|x\|_e=1}\|I_n\,x\|_e=\sup_{\|x\|_e=1}\|x\|_e=1,$$
+      però en canvi,
+      $$\|I_n\|_E=\left(\sum_{i,j}\delta_{ij}^2\right)^{1/2}=\sqrt{n}\neq1\text{ si }n\neq1,$$
+      on $\delta_{ij}$ és la delta de Kronecker. Hem arribat, doncs, a contradicció.
+
+      Observem que, no obstant, la norma $\|\cdot\|_E$ és consistent amb la norma euclidiana $\|\cdot\|_2$.
+    problemes: []
+  - id: "T2.39"
+    tipus: definicio
+    num: 39
+    resum: 64
+    seccio: "2.7.1"
+    pagina: 20
+    nom: "Distàncies equivalents"
+    enunciat: |
+      En un espai mètric $M$, dues distàncies $d$ i $d'$ són equivalents si la funció identitat $Id:(M,d)\longrightarrow(M,d')$ és contínua, bijectiva i d'inversa contínua.
+    problemes: []
+  - id: "T2.40"
+    tipus: definicio
+    num: 40
+    resum: 65
+    seccio: "2.7.1"
+    pagina: 20
+    nom: "Distàncies uniformement equivalents"
+    enunciat: |
+      En un espai mètric $M$, dues distàncies $d$ i $d'$ són uniformement equivalents si la funció identitat $Id:(M,d)\longrightarrow(M,d')$ és uniformement contínua, bijectiva i d'inversa uniformement contínua.
+    problemes: []

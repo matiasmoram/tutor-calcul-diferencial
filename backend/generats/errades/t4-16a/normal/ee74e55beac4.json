@@ -1,0 +1,59 @@
+{
+  "id": "ee74e55beac4",
+  "exercici": "t4-16a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "La jacobiana de $f$ és $Jf(u,v)=\\begin{pmatrix}3u^2-3v^2&-6uv\\\\ 6uv&3u^2-3v^2\\end{pmatrix}$.",
+    "El seu determinant és $\\det Jf(u,v)=(3u^2-3v^2)^2+36u^2v^2=9(u^2+v^2)^2$, que només s'anul·la a l'origen.",
+    "$f$ és polinòmica, de classe $\\mathcal{C}^\\infty(\\mathbb{R}^2)$, i a tot punt $(u,v)\\neq(0,0)$ el determinant és no nul. Pel teorema de la funció inversa, a tots aquests punts hi ha inversa local de classe $\\mathcal{C}^\\infty$.",
+    "A l'origen, en canvi, $\\det Jf(0,0)=0$, i per tant, pel teorema de la funció inversa, $f$ no hi té inversa local diferenciable.",
+    "De fet, $f$ ni tan sols és localment injectiva a l'origen: en polars, $f(r\\cos\\theta,r\\sin\\theta)=(r^3\\cos3\\theta,\\ r^3\\sin3\\theta)$, de manera que $(r,0)$ i $\\left(r\\cos\\frac{\\pi}{3},\\ r\\sin\\frac{\\pi}{3}\\right)$ tenen la mateixa imatge per a tot $r>0$.",
+    "Conclusió: $f$ té inversa local diferenciable a tots els punts $(u,v)\\neq(0,0)$, i no en té a l'origen."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "$\\det Jf(0,0)=0$, i per tant, pel teorema de la funció inversa, $f$ no hi té inversa local diferenciable",
+      "inici": 22,
+      "fi": 126,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "La condició $\\det\\neq0$ del teorema de la funció inversa és suficient, no necessària: que el determinant s'anul·li no permet concloure res amb aquest teorema (p. ex. $x\\mapsto x^3$ té inversa local, encara que no diferenciable).",
+      "correccio": "Si existís $h$ diferenciable amb $h\\circ f=\\mathrm{Id}$ a prop de l'origen, la regla de la cadena donaria $Dh(0,0)\\,Df(0,0)=I$, impossible perquè $Df(0,0)=0$.",
+      "pista": "El teorema de la funció inversa diu què passa quan el determinant s'anul·la, o només quan no s'anul·la?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$(r,0)$ i $\\left(r\\cos\\frac{\\pi}{3},\\ r\\sin\\frac{\\pi}{3}\\right)$ tenen la mateixa imatge",
+      "inici": 148,
+      "fi": 236,
+      "tipus": "calcul",
+      "explicacio": "Amb $\\theta=\\frac{\\pi}{3}$ s'obté $3\\theta=\\pi$ i la imatge és $(-r^3,0)$, diferent de $(r^3,0)$. Cal $3\\theta=2\\pi$, és a dir $\\theta=\\frac{2\\pi}{3}$.",
+      "correccio": "$(r,0)$ i $\\left(r\\cos\\frac{2\\pi}{3},\\ r\\sin\\frac{2\\pi}{3}\\right)$ tenen la mateixa imatge $(r^3,0)$ per a tot $r>0$.",
+      "pista": "Quant valen $\\cos3\\theta$ i $\\sin3\\theta$ per a $\\theta=\\frac{\\pi}{3}$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t34.json",
+    "valoracio": "Jacobià i punts regulars correctes, però a l'origen usa el TFI com si la condició fos necessària i el contraexemple d'injectivitat té l'angle equivocat.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "i per tant, pel teorema de la funció inversa, $f$ no hi té inversa local diferenciable",
+        "gravetat": "error",
+        "explicacio": "El TFI dona una condició suficient, no necessària: $\\det Jf(0,0)=0$ no prova res. Cal un argument com $Dh(0,0)Df(0,0)=I$ amb $Df(0,0)=0$ (contradicció) o la no-injectivitat local."
+      },
+      {
+        "fragment": 5,
+        "cita": "$\\left(r\\cos\\frac{\\pi}{3},\\ r\\sin\\frac{\\pi}{3}\\right)$",
+        "gravetat": "error",
+        "explicacio": "Amb $\\theta=\\pi/3$, $3\\theta=\\pi$ i la imatge és $(-r^3,0)\\neq(r^3,0)$; l'angle correcte és $2\\pi/3$."
+      }
+    ]
+  },
+  "creat": 1791295851.945039
+}

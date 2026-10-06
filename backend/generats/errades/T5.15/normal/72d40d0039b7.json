@@ -1,0 +1,61 @@
+{
+  "id": "72d40d0039b7",
+  "exercici": "T5.15",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $\\Omega\\subseteq\\mathbb{R}^n$ obert, $r\\geq1$, $f\\in\\mathcal{C}^r(\\Omega)$ i $\\mathbf{a}\\in\\Omega$. Aleshores $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{a}}\\frac{f(\\mathbf{x})-P_{r-1}(\\mathbf{x})}{\\|\\mathbf{x}-\\mathbf{a}\\|^r}=0$, on $P_k$ denota el polinomi de Taylor de grau $k$ de $f$ en $\\mathbf{a}$.",
+    "Ho demostrem per a $r=2$, és a dir, per a $f\\in\\mathcal{C}^2(\\Omega)$; el cas general és anàleg. Prenem $\\rho>0$ amb $B(\\mathbf{a},\\rho)\\subseteq\\Omega$, de manera que, per a $\\mathbf{x}\\in B(\\mathbf{a},\\rho)$, el segment $[\\mathbf{a},\\mathbf{x}]$ és dins de $\\Omega$.",
+    "Pel teorema de Taylor d'ordre $1$ (que només necessita $f\\in\\mathcal{C}^2(\\Omega)$), existeix $\\xi_\\mathbf{x}\\in(\\mathbf{a},\\mathbf{x})$ tal que $f(\\mathbf{x})-P_1(\\mathbf{x})=R_2(\\mathbf{x})=\\frac12\\sum_{i,j=1}^{n}D_{ij}f(\\xi_\\mathbf{x})(x_i-a_i)(x_j-a_j)$.",
+    "Fixats $\\mathbf{x}$ i $\\mathbf{a}$, denotem $T_2(\\mathbf{y}):=\\frac12\\sum_{i,j=1}^{n}D_{ij}f(\\mathbf{y})(x_i-a_i)(x_j-a_j)$. Aleshores $P_2(\\mathbf{x})=P_1(\\mathbf{x})+T_2(\\mathbf{a})$ i $R_2(\\mathbf{x})=T_2(\\xi_\\mathbf{x})$, de manera que $f(\\mathbf{x})-P_2(\\mathbf{x})=T_2(\\xi_\\mathbf{x})-T_2(\\mathbf{a})$.",
+    "Dividint per $\\|\\mathbf{x}-\\mathbf{a}\\|^2$ obtenim $\\displaystyle\\frac{f(\\mathbf{x})-P_2(\\mathbf{x})}{\\|\\mathbf{x}-\\mathbf{a}\\|^2}=\\frac12\\sum_{i,j=1}^{n}\\big(D_{ij}f(\\xi_\\mathbf{x})-D_{ij}f(\\mathbf{a})\\big)\\frac{x_i-a_i}{\\|\\mathbf{x}-\\mathbf{a}\\|}\\,\\frac{x_j-a_j}{\\|\\mathbf{x}-\\mathbf{a}\\|}$.",
+    "Quan $\\mathbf{x}\\to\\mathbf{a}$, també $\\xi_\\mathbf{x}\\to\\mathbf{a}$, ja que $\\|\\xi_\\mathbf{x}-\\mathbf{a}\\|\\leq\\|\\mathbf{x}-\\mathbf{a}\\|$; com que les derivades $D_{ij}f$ són contínues ($f\\in\\mathcal{C}^2(\\Omega)$), $D_{ij}f(\\xi_\\mathbf{x})-D_{ij}f(\\mathbf{a})\\to0$.",
+    "D'altra banda, cada factor $\\frac{x_i-a_i}{\\|\\mathbf{x}-\\mathbf{a}\\|}$ tendeix a $0$ quan $\\mathbf{x}\\to\\mathbf{a}$, ja que el seu numerador tendeix a $0$.",
+    "Per tant, cadascun dels $n^2$ sumands tendeix a $0$, i $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{a}}\\frac{f(\\mathbf{x})-P_2(\\mathbf{x})}{\\|\\mathbf{x}-\\mathbf{a}\\|^2}=0$, que és el que volíem."
+  ],
+  "n_enunciat": 1,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "Aleshores $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{a}}\\frac{f(\\mathbf{x})-P_{r-1}(\\mathbf{x})}{\\|\\mathbf{x}-\\mathbf{a}\\|^r}=0$",
+      "inici": 106,
+      "fi": 232,
+      "tipus": "conclusio",
+      "explicacio": "Amb el polinomi de grau $r-1$ el límit no és zero en general: per a $n=1$, $r=2$, $f(x)=x^2$ i $a=0$, $P_1=0$ i $\\frac{x^2}{|x|^2}=1$. La demostració, de fet, tracta $f-P_2$.",
+      "correccio": "Els apunts diuen $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{a}}\\frac{f(\\mathbf{x})-P_r(\\mathbf{x})}{\\|\\mathbf{x}-\\mathbf{a}\\|^r}=0$: el polinomi de Taylor de grau $r$, el mateix que l'exponent.",
+      "pista": "Prova l'enunciat amb $f(x)=x^2$, $r=2$ i $a=0$: quin polinomi hi ha al numerador i quant val el límit?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "cada factor $\\frac{x_i-a_i}{\\|\\mathbf{x}-\\mathbf{a}\\|}$ tendeix a $0$ quan $\\mathbf{x}\\to\\mathbf{a}$, ja que el seu numerador tendeix a $0$",
+      "inici": 15,
+      "fi": 154,
+      "tipus": "pas_injustificat",
+      "explicacio": "El denominador també tendeix a $0$; aquests quocients no tenen límit (al llarg de l'eix $x_i$ valen $\\pm1$). El que és cert és que estan fitats: $\\frac{|x_i-a_i|}{\\|\\mathbf{x}-\\mathbf{a}\\|}\\leq1$.",
+      "correccio": "Els factors $\\frac{|x_i-a_i|}{\\|\\mathbf{x}-\\mathbf{a}\\|}$ estan fitats per $1$; com que multipliquen un factor que tendeix a $0$, cada sumand tendeix a $0$.",
+      "pista": "Quant val $\\frac{x_1-a_1}{\\|\\mathbf{x}-\\mathbf{a}\\|}$ si t'acostes a $\\mathbf{a}$ al llarg de la direcció de l'eix $x_1$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t5.json",
+    "valoracio": "Enunciat amb el polinomi de Taylor de grau equivocat i un pas de la demostració amb un límit fals (cal fitació, no convergència).",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "P_{r-1}(\\mathbf{x})",
+        "gravetat": "error",
+        "explicacio": "L'enunciat dels apunts usa $P_r$; amb $P_{r-1}$ és fals en general (p. ex. $f(x)=x^r$, $a=0$: $(f-P_{r-1})/|x|^r=\\pm1$). A més, la demostració treballa amb $P_2$ per a $r=2$, no amb $P_1$."
+      },
+      {
+        "fragment": 7,
+        "cita": "cada factor $\\frac{x_i-a_i}{\\|\\mathbf{x}-\\mathbf{a}\\|}$ tendeix a $0$ quan $\\mathbf{x}\\to\\mathbf{a}$, ja que el seu numerador tendeix a $0$",
+        "gravetat": "error",
+        "explicacio": "Fals: el denominador també tendeix a 0 i el quocient no té límit (val 1 sobre la direcció $\\mathbf{e}_i$). El que cal, i és cert, és que està fitat per 1 en valor absolut."
+      }
+    ]
+  },
+  "creat": 1791296162.0646167
+}

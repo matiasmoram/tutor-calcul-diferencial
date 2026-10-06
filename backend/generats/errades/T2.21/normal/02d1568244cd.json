@@ -1,0 +1,75 @@
+{
+  "id": "02d1568244cd",
+  "exercici": "T2.21",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Siguin $(M,d)$ i $(N,d')$ dos espais mètrics, $f:\\Omega\\subseteq M\\to N$ contínua i $K\\subseteq\\Omega$. Aleshores: (i) $K$ tancat $\\Rightarrow f(K)$ tancat; (ii) $K$ connex $\\Rightarrow f(K)$ connex.",
+    "(i) Ho demostrem primer per successions: sigui $(y_n)_n\\subseteq f(K)$; volem veure que admet una parcial convergent en $f(K)$. Per construcció, existeix $(x_n)_n\\subseteq K$ amb $y_n=f(x_n)$ per a tota $n$.",
+    "Per ser $K$ compacte, existeix una parcial $(x_{n_k})_k$ convergent a un $x_0\\in K$ i, per la continuïtat de $f$, $\\lim_{k\\to\\infty}y_{n_k}=\\lim_{k\\to\\infty}f(x_{n_k})=f(x_0)\\in f(K)$. Per tant, $f(K)$ és compacte.",
+    "També es pot demostrar amb recobriments d'oberts: suposem que $f(K)\\subseteq\\bigcup_{i\\in I}V_i$, amb $V_i$ oberts de $N$. Per l'apartat (c) del teorema 17, existeixen oberts $U_i$ de $M$ amb $f^{-1}(V_i)=U_i\\cap\\Omega$ i, per tant, $f(U_i\\cap\\Omega)\\subseteq V_i$ per a tot $i\\in I$.",
+    "Si $x\\in K$, aleshores $f(x)\\in V_j$ per a algun $j\\in I$ i $x\\in f^{-1}(V_j)=U_j\\cap\\Omega$; així, $K\\subseteq\\bigcup_{i\\in I}U_i$. Per ser $K$ compacte, existeixen $i_1,\\dots,i_r$ tals que $K\\subseteq(U_{i_1}\\cup\\cdots\\cup U_{i_r})\\cap\\Omega=(U_{i_1}\\cap\\Omega)\\cup\\cdots\\cup(U_{i_r}\\cap\\Omega)$.",
+    "Aleshores $f(K)\\subseteq f(U_{i_1}\\cap\\Omega)\\cup\\cdots\\cup f(U_{i_r}\\cap\\Omega)\\subseteq V_{i_1}\\cup\\cdots\\cup V_{i_r}$, que és un subrecobriment finit de $f(K)$.",
+    "(ii) Demostrem el contrarecíproc: suposem que $f(K)$ no és connex, és a dir, que existeixen dos oberts $V_1,V_2\\subseteq N$ amb $f(K)\\subseteq V_1\\cup V_2$, $f(K)\\cap V_1\\neq\\emptyset$, $f(K)\\cap V_2\\neq\\emptyset$ i $f(K)\\cap V_1\\cap V_2=\\emptyset$. Per continuïtat, existeixen oberts $U_1,U_2\\subseteq M$ amb $f^{-1}(V_i)=U_i\\cap\\Omega$ per a $i=1,2$.",
+    "Si $x\\in K$, aleshores $f(x)\\in V_1\\cup V_2$, és a dir, $x\\in f^{-1}(V_1)\\cup f^{-1}(V_2)\\subseteq U_1\\cup U_2$; per tant, $K\\subseteq U_1\\cup U_2$.",
+    "D'altra banda, com que $f(K)\\cap V_1\\cap V_2=\\emptyset$, per construcció tenim $U_1\\cap U_2=\\emptyset$ i, en particular, $U_1\\cap U_2\\cap K=\\emptyset$.",
+    "Finalment, $K\\cap U_1\\neq\\emptyset$ i $K\\cap U_2\\neq\\emptyset$: existeix $y_i\\in f(K)\\cap V_i$, és a dir, $y_i=f(x_i)$ amb $x_i\\in K$ i $x_i\\in f^{-1}(V_i)\\subseteq U_i$, per a $i=1,2$. Per tant, $K$ és disconnex."
+  ],
+  "n_enunciat": 1,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "$K$ tancat $\\Rightarrow f(K)$ tancat",
+      "inici": 119,
+      "fi": 155,
+      "tipus": "hipotesi",
+      "explicacio": "La imatge contínua d'un tancat no és necessàriament tancada. Contraexemple: $f(x)=\\arctan x$ a $\\mathbb{R}$, amb $K=\\mathbb{R}$ tancat, però $f(K)=(-\\pi/2,\\pi/2)$ no és tancat. La demostració usa la compacitat de $K$.",
+      "correccio": "(i) $K$ compacte $\\Rightarrow f(K)$ compacte.",
+      "pista": "Quina propietat de $K$ fa servir realment la demostració de (i)? Quina és la imatge de $\\mathbb{R}$ per $\\arctan$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 9,
+      "cita": "per construcció tenim $U_1\\cap U_2=\\emptyset$",
+      "inici": 57,
+      "fi": 102,
+      "tipus": "pas_injustificat",
+      "explicacio": "De $f(K)\\cap V_1\\cap V_2=\\emptyset$ només se'n dedueix $U_1\\cap U_2\\cap K=\\{x\\in K:f(x)\\in V_1\\cap V_2\\}=\\emptyset$; els oberts $U_1,U_2$ es poden tallar fora de $K$ (o fora d'$\\Omega$, on no estan determinats).",
+      "correccio": "$U_1\\cap U_2\\cap K=\\{x\\in K:f(x)\\in V_1\\cap V_2\\}=\\emptyset$, perquè $f(K)\\cap V_1\\cap V_2=\\emptyset$.",
+      "pista": "Què saps dels punts d'$U_1\\cap U_2$ que no són de $K$, o que no són d'$\\Omega$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t2a.json",
+    "valoracio": "(i) canviada a tancat⇒tancat (fals) i disjunció dels $U_i$ afirmada globalment sense justificació.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "$K$ tancat $\\Rightarrow f(K)$ tancat",
+        "gravetat": "error",
+        "explicacio": "Els apunts diuen compacte ⇒ compacte. La imatge contínua d'un tancat no és tancada en general (p. ex. $\\arctan(\\mathbb{R})=(-\\pi/2,\\pi/2)$)."
+      },
+      {
+        "fragment": 3,
+        "cita": "Per ser $K$ compacte",
+        "gravetat": "consequencia",
+        "explicacio": "Usa la compacitat de $K$, que l'enunciat (i) ha substituït per 'tancat'; i conclou compacitat, no el que s'enuncia."
+      },
+      {
+        "fragment": 5,
+        "cita": "Per ser $K$ compacte, existeixen $i_1,\\dots,i_r$",
+        "gravetat": "consequencia",
+        "explicacio": "Igual que a [3]: usa compacitat de $K$, hipòtesi que l'enunciat ja no dona."
+      },
+      {
+        "fragment": 9,
+        "cita": "per construcció tenim $U_1\\cap U_2=\\emptyset$",
+        "gravetat": "error",
+        "explicacio": "De $f(K)\\cap V_1\\cap V_2=\\emptyset$ no se segueix $U_1\\cap U_2=\\emptyset$ (els oberts $U_i$ poden tallar-se fora de $\\Omega$ o de $K$); només es pot afirmar per als punts de $K$: $U_1\\cap U_2\\cap K=\\emptyset$."
+      }
+    ]
+  },
+  "creat": 1791295999.5635197
+}

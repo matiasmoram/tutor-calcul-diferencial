@@ -1,0 +1,252 @@
+{
+ "T4.4:normal": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "per a tot $x,y\\in B(a,\\delta)\\subseteq\\Omega$ es compleix $\\|f(x)-f(y)\\|\\leq\\big(\\|Df(a)\\|+\\varepsilon\\big)\\|x-y\\|$",
+    "gravetat": "error",
+    "explicacio": "L'apartat (i) dels apunts només fita $\\|f(x)-f(a)\\|$ (comparació amb el punt $a$). Amb només diferenciabilitat en $a$ la fita de tipus Lipschitz per a parells $x,y$ és falsa (p. ex. $x^2\\sin(1/x^2)$ en $a=0$, derivada no fitada a prop de 0); a més, la demostració [4] només prova el cas $y=a$."
+   },
+   {
+    "fragment": 10,
+    "cita": "\\|x-y\\|=\\|(Df(a))^{-1}Df(a)(x-y)\\|\\geq\\|(Df(a))^{-1}\\|\\,\\|Df(a)(x-y)\\|",
+    "gravetat": "error",
+    "explicacio": "Desigualtat girada: per la consistència de normes $\\|(Df(a))^{-1}Df(a)(x-y)\\|\\leq\\|(Df(a))^{-1}\\|\\,\\|Df(a)(x-y)\\|$. Amb $\\geq$ no se'n dedueix $c\\|x-y\\|\\leq\\|Df(a)(x-y)\\|$ (en sortiria la desigualtat contrària)."
+   }
+  ],
+  "valoracio": "Dos errors: l'enunciat (i) s'ha reforçat a una fita per a parells $x,y$ (fals amb només diferenciabilitat en $a$) i la desigualtat de consistència de [10] està girada."
+ },
+ "T4.8:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "i $f|_B:B\\to f(B)$ és bijectiva",
+    "gravetat": "error",
+    "explicacio": "Afegit fals: $\\det Jf\\neq0$ a tot arreu només dona injectivitat local, no global (p. ex. $z\\mapsto z^2$ a $\\mathbb{R}^2\\setminus\\{0\\}$). Els apunts només afirmen que $f(B)$ és obert, i la demostració no ho prova."
+   },
+   {
+    "fragment": 6,
+    "cita": "Per tant, $f(B)$ conté un obert no buit, $V'$, i en conseqüència $f(B)$ és obert.",
+    "gravetat": "error",
+    "explicacio": "Raonament fals: contenir un obert no buit no implica ser obert. Cal dir que per a cada $y_0\\in f(B)$ hi ha un obert $V'$ amb $y_0\\in V'\\subseteq f(B)$ (és a dir, $y_0$ és interior), i com que $y_0$ és arbitrari, $f(B)$ és obert."
+   }
+  ],
+  "valoracio": "Enunciat amb una conclusió falsa afegida (bijectivitat global) i conclusió de la demostració justificada amb un argument incorrecte."
+ },
+ "T4.5:facil": {
+  "problemes": [
+   {
+    "fragment": 3,
+    "cita": "$Df^{-1}(y_0)=\\big(Df(y_0)\\big)^{-1}$",
+    "gravetat": "error",
+    "explicacio": "La fórmula correcta és $Df^{-1}(y_0)=\\big(Df(f^{-1}(y_0))\\big)^{-1}$: la diferencial de $f$ s'avalua en $x_0=f^{-1}(y_0)\\in U$, no en $y_0\\in V$ (que pot no ser ni al domini de $f$). La pròpia demostració [12] arriba a la fórmula correcta."
+   }
+  ],
+  "valoracio": "Demostració correcta; l'enunciat (iii) avalua $Df$ en el punt equivocat."
+ },
+ "T4.5:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "i també ho és $f(\\Omega)$",
+    "gravetat": "error",
+    "explicacio": "Afirmació afegida i falsa: la hipòtesi $\\det Jf(a)\\neq0$ és només en $a$, i $f(\\Omega)$ pot no ser obert (p. ex. $n=1$, $f(x)=-(x-1)^2$, $a=0$: $f'(0)=2\\neq0$ però $f(\\mathbb{R})=(-\\infty,0]$). No es demostra enlloc."
+   },
+   {
+    "fragment": 8,
+    "cita": "\\varphi(x)=\\|f(x)-y\\|\\geq\\|f(x)-y_0\\|+\\|y_0-y\\|>\\sigma/2",
+    "gravetat": "error",
+    "explicacio": "Desigualtat triangular mal aplicada: el que és cert és $\\|f(x)-y\\|\\geq\\|f(x)-y_0\\|-\\|y_0-y\\|>\\sigma-\\sigma/2$; amb el signe $+$ la desigualtat és falsa en general."
+   }
+  ],
+  "valoracio": "Enunciat amb una conclusió addicional falsa ($f(\\Omega)$ obert) i un pas de la desigualtat triangular amb el signe incorrecte."
+ },
+ "T4.5:dificil": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "per a tot $U\\in\\mathcal{E}_a$ amb $U\\subseteq\\Omega$, es compleix:",
+    "gravetat": "error",
+    "explicacio": "Quantificador canviat: el teorema afirma que EXISTEIX un entorn $U$ de $a$; per a un entorn qualsevol $f|_U$ no té per què ser injectiva ni $\\det Jf$ no nul (p. ex. $U=\\Omega$). La demostració només construeix un $U$ concret."
+   },
+   {
+    "fragment": 9,
+    "cita": "Com que $\\det Jf(x_0)\\neq 0$, aquest sistema lineal només té la solució nul·la",
+    "gravetat": "error",
+    "explicacio": "El sistema és $(f(z)-y)^TJf(z)=0$, amb matriu $Jf(z)$; cal $\\det Jf(z)\\neq0$ (cert perquè $z\\in U$), no $\\det Jf(x_0)\\neq0$, que no diu res sobre $Jf(z)$."
+   },
+   {
+    "fragment": 11,
+    "cita": "$\\|x-x_0\\|\\geq\\frac{c}{2}\\|y-y_0\\|$",
+    "gravetat": "error",
+    "explicacio": "Desigualtat invertida: de $\\|f(x)-f(x_0)\\|\\geq\\frac c2\\|x-x_0\\|$ s'obté $\\|y-y_0\\|\\geq\\frac c2\\|x-x_0\\|$. La versió escrita no implica la continuïtat de $f^{-1}$ ni que $x\\in U_3$ per a $y$ prop de $y_0$."
+   },
+   {
+    "fragment": 12,
+    "cita": "\\leq\\frac{\\varepsilon c}{2}\\cdot\\frac{2}{c}\\|y-y_0\\|",
+    "gravetat": "consequencia",
+    "explicacio": "Usa $\\|x-x_0\\|\\leq\\frac2c\\|y-y_0\\|$, que és el pas correcte dels apunts però no es dedueix de la desigualtat invertida escrita a [11]."
+   }
+  ],
+  "valoracio": "Tres errors: quantificador de l'entorn canviat a 'per a tot', determinant avaluat en $x_0$ en lloc de $z$, i desigualtat de Lipschitz inversa girada (amb conseqüència a [12])."
+ },
+ "T4.13:facil": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "$\\varphi\\in\\mathcal{C}^\\infty(\\Omega)$",
+    "gravetat": "error",
+    "explicacio": "Conclusió massa forta: amb $\\Phi\\in\\mathcal{C}^r$ només s'obté $\\varphi\\in\\mathcal{C}^r(\\Omega)$ (que és el que demostra [8]); $\\varphi$ no és en general $\\mathcal{C}^\\infty$."
+   }
+  ],
+  "valoracio": "Demostració correcta; l'enunciat afirma regularitat $\\mathcal{C}^\\infty$ en lloc de $\\mathcal{C}^r$."
+ },
+ "T4.13:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "per a tot $z\\in G$",
+    "gravetat": "error",
+    "explicacio": "Conclusió (i) massa forta: el determinant $\\det(\\partial\\Phi_i/\\partial y_j)$ només és no nul a l'entorn $U$, no a tot $G$ (p. ex. a l'el·lipse de la figura s'anul·la als extrems)."
+   },
+   {
+    "fragment": 5,
+    "cita": "$\\det Jf(z)=\\det\\big(\\partial\\Phi_i/\\partial x_j(z)\\big)$",
+    "gravetat": "error",
+    "explicacio": "El bloc diagonal de $Jf$ és $(\\partial\\Phi_i/\\partial y_j)$, no $(\\partial\\Phi_i/\\partial x_j)$ (que a més no és quadrada si $n\\neq m$); amb aquesta igualtat no es demostra (i)."
+   }
+  ],
+  "valoracio": "Dos errors: (i) estès a tot $G$ i, a la demostració, el determinant identificat amb derivades respecte de $x$ en lloc de $y$."
+ },
+ "T4.13:dificil": {
+  "problemes": [
+   {
+    "fragment": 3,
+    "cita": "\\{(x,y)\\in G\\mid\\Phi(x,y)=0\\}",
+    "gravetat": "error",
+    "explicacio": "La igualtat només val dins l'entorn $U$; a tot $G$ el conjunt de zeros pot tenir altres branques que no són la gràfica de $\\varphi$ (p. ex. l'el·lipse sencera)."
+   },
+   {
+    "fragment": 10,
+    "cita": "la injectivitat de $\\Phi$ dona $y=\\varphi(x)$",
+    "gravetat": "error",
+    "explicacio": "$\\Phi$ no és injectiva (de $\\mathbb{R}^{n+m}$ a $\\mathbb{R}^m$; ni tan sols en $y$ per a $x$ fix en general); a més $(x,\\varphi(x))$ no se sap que sigui a $U$ en aquest punt. Cal usar la primera igualtat de l'observació 14: $y=h(x,\\Phi(x,y))=h(x,0)=\\varphi(x)$."
+   },
+   {
+    "fragment": 11,
+    "cita": "ja que $\\Omega\\times\\mathbb{R}^m\\subseteq U$",
+    "gravetat": "error",
+    "explicacio": "Fals: $U$ és un entorn obert de $(a,b)$, no conté cap cilindre $\\Omega\\times\\mathbb{R}^m$. El motiu correcte és $(u,\\varphi(u))=f^{-1}(u,0)$ amb $(u,0)\\in V$ i $f^{-1}:V\\to U$."
+   }
+  ],
+  "valoracio": "Tres errors: igualtat (iii) estesa a $G$, i les dues inclusions justificades amb arguments falsos (injectivitat de $\\Phi$, $\\Omega\\times\\mathbb{R}^m\\subseteq U$)."
+ },
+ "T4.18:facil": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "tal que $D\\Phi(a,b)\\neq 0$",
+    "gravetat": "error",
+    "explicacio": "Hipòtesi afeblida: cal $\\mathrm{rang}\\,D\\Phi(a,b)=m$ (rang màxim). Amb $D\\Phi(a,b)\\neq0$ (rang $\\geq1$) el resultat és fals si $m\\geq2$, ja que $\\Phi\\circ g$ projecció exigeix rang $m$."
+   },
+   {
+    "fragment": 7,
+    "cita": "hi ha índexs diferents $k_1,\\ldots,k_m\\in\\{1,\\ldots,n+m\\}$ tals que $\\det\\big(\\partial\\Phi_i/\\partial z_{k_j}(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$",
+    "gravetat": "consequencia",
+    "explicacio": "L'existència d'un menor d'ordre $m$ no nul és conseqüència de $\\mathrm{rang}\\,D\\Phi(a,b)=m$, hipòtesi que l'enunciat [1] ha substituït per $D\\Phi(a,b)\\neq0$."
+   }
+  ],
+  "valoracio": "Hipòtesi de rang afeblida a $D\\Phi(a,b)\\neq0$; la demostració, la dels apunts, depèn de la hipòtesi eliminada."
+ },
+ "T4.18:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "$\\mathcal{C}^r$-difeomorfisme lineal",
+    "gravetat": "error",
+    "explicacio": "El difeomorfisme $g=f^{-1}$, $g(u,v)=(u,h(u,v))$, no és lineal en general (només ho és si $\\Phi$ és afí); l'enunciat afirma una conclusió falsa."
+   },
+   {
+    "fragment": 8,
+    "cita": "$g\\circ p$ és un $\\mathcal{C}^r$-difeomorfisme, la seva imatge conté $(a,b)$, i $(\\Phi\\circ(g\\circ p))(u,v)=v$",
+    "gravetat": "error",
+    "explicacio": "Ordre de composició incorrecte: de $((\\Phi\\circ p)\\circ g)(u,v)=v$ el difeomorfisme bo és $p\\circ g$ (imatge dins $G$, que conté $(a,b)$); $g\\circ p$ no té el domini/imatge adequats i $\\Phi\\circ(g\\circ p)$ no és la projecció."
+   }
+  ],
+  "valoracio": "Dos errors: el difeomorfisme declarat lineal i la composició final $g\\circ p$ en lloc de $p\\circ g$."
+ },
+ "T4.18:dificil": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "per a tot obert $U$ amb $(a,b)\\in U\\subseteq G$, existeixen un obert $V\\subseteq\\mathbb{R}^{n+m}$",
+    "gravetat": "error",
+    "explicacio": "Quantificador canviat: el teorema afirma que existeix algun entorn $U$; per a un $U$ arbitrari (p. ex. $U=G$) no hi ha en general un difeomorfisme $g:V\\to U$ amb $\\Phi\\circ g$ projecció. La demostració només construeix un $U$ concret."
+   },
+   {
+    "fragment": 5,
+    "cita": "tota bijecció de classe $\\mathcal{C}^r$ entre oberts és un $\\mathcal{C}^r$-difeomorfisme",
+    "gravetat": "error",
+    "explicacio": "Fals: $x\\mapsto x^3$ és una bijecció $\\mathcal{C}^\\infty$ de $\\mathbb{R}$ amb inversa no diferenciable en 0. El motiu correcte és que la inversa $f$ és $\\mathcal{C}^r$ (o que el TFI dona $f^{-1}\\in\\mathcal{C}^r$ amb inversa $f\\in\\mathcal{C}^r$)."
+   },
+   {
+    "fragment": 7,
+    "cita": "$D(\\Phi\\circ p)=Dp\\,D\\Phi$",
+    "gravetat": "error",
+    "explicacio": "Regla de la cadena mal aplicada: $D(\\Phi\\circ p)=D\\Phi(p)\\,Dp$ (l'ordre del producte és l'invers; $Dp\\,D\\Phi$ ni tan sols té dimensions compatibles, $(n+m)\\times(n+m)$ per $m\\times(n+m)$). Només amb $D\\Phi\\,Dp$ les columnes de $D\\Phi$ es permuten."
+   }
+  ],
+  "valoracio": "Tres errors: quantificador sobre $U$ canviat, justificació falsa de difeomorfisme i ordre del producte a la regla de la cadena."
+ },
+ "T4.20:facil": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "$(h\\circ\\Phi)(y)=(0,y)$ per a tot $y\\in G$",
+    "gravetat": "error",
+    "explicacio": "La igualtat només val a l'entorn $U'$ de $b$; a tot $G$, $\\Phi(y)$ pot no pertànyer a $V$ (domini de $h$) i la igualtat no té sentit ni és certa en general. El $U'$ de l'enunciat queda sense paper."
+   }
+  ],
+  "valoracio": "Demostració correcta; l'enunciat estén la conclusió de $U'$ a tot $G$."
+ },
+ "T4.20:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "i $\\Phi(U')=V$",
+    "gravetat": "error",
+    "explicacio": "Afegit fals: $V$ és un obert de $\\mathbb{R}^{n+m}$ i $\\Phi(U')$ és la imatge d'un obert de $\\mathbb{R}^m$ (una 'subvarietat' de dimensió $m$), que no pot ser oberta si $n\\geq1$; només es té $\\Phi(U')\\subseteq V$."
+   },
+   {
+    "fragment": 8,
+    "cita": "com que $\\Phi(y)=f^{-1}(0,y)$, tenim $(h\\circ\\Phi)(y)=h(f^{-1}(0,y))=(0,y)$",
+    "gravetat": "error",
+    "explicacio": "Confusió entre $f$ i $f^{-1}$: el que és cert és $\\Phi(y)=f(0,y)$ (vist a [7]), i aleshores $(h\\circ\\Phi)(y)=f^{-1}(f(0,y))=(0,y)$. Tal com està escrit, $h(f^{-1}(0,y))=f^{-1}(f^{-1}(0,y))\\neq(0,y)$."
+   }
+  ],
+  "valoracio": "Dos errors: afegit fals $\\Phi(U')=V$ a l'enunciat i el pas final confon $f$ amb $f^{-1}$."
+ },
+ "T4.20:dificil": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "un $\\mathcal{C}^{r+1}$-difeomorfisme $h:V\\to U$",
+    "gravetat": "error",
+    "explicacio": "Regularitat massa forta: $h=f^{-1}$ amb $f\\in\\mathcal{C}^r$ és només $\\mathcal{C}^r$ (el TFI no guanya derivades); la demostració [5] mateixa diu $\\mathcal{C}^r$."
+   },
+   {
+    "fragment": 4,
+    "cita": "$\\begin{pmatrix}\\mathrm{Id}_n&0\\\\ D\\Phi_1(y)&D\\Phi_2(y)\\end{pmatrix}$",
+    "gravetat": "error",
+    "explicacio": "Jacobiana incorrecta: les primeres $n$ components $x+\\Phi_1(y)$ tenen derivades $(\\mathrm{Id}_n\\ \\ D\\Phi_1(y))$ i les darreres $\\Phi_2(y)$ tenen $(0\\ \\ D\\Phi_2(y))$; la matriu és $\\begin{pmatrix}\\mathrm{Id}_n&D\\Phi_1\\\\0&D\\Phi_2\\end{pmatrix}$ (el determinant coincideix, però la matriu escrita és falsa)."
+   },
+   {
+    "fragment": 6,
+    "cita": "$U'$ és obert perquè és la projecció de l'obert $U$ sobre les darreres $m$ coordenades",
+    "gravetat": "error",
+    "explicacio": "$U'=\\{y:(0,y)\\in U\\}$ és la secció de $U$ per $x=0$, no la seva projecció (la projecció és en general més gran). La justificació és falsa; cal l'argument de l'apartat (ii) del TFImp (una bola de $(0,y_0)$ dins $U$ dona una bola de $y_0$ dins $U'$)."
+   }
+  ],
+  "valoracio": "Tres errors: regularitat $\\mathcal{C}^{r+1}$ a l'enunciat, jacobiana amb els blocs mal col·locats i obertura de $U'$ justificada confonent secció amb projecció."
+ }
+}

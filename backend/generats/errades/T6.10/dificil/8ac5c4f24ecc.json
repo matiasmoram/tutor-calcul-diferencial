@@ -1,0 +1,79 @@
+{
+  "id": "8ac5c4f24ecc",
+  "exercici": "T6.10",
+  "font": "teoria",
+  "dificultat": "dificil",
+  "fragments": [
+    "Siguin $M\\subseteq\\mathbb{R}^n$ una $m$-varietat de classe $r\\geqslant1$ i $\\mathbf{a}\\in M$. Suposem que existeixen oberts $G\\subseteq\\mathbb{R}^n$ i $\\Omega\\subseteq\\mathbb{R}^m$, amb $\\mathbf{a}\\in G$, i una funció $\\Phi\\colon G\\longrightarrow\\mathbb{R}^{n-m}$, $\\Phi\\in\\mathcal{C}^r(G)$, amb $\\mathrm{rang}\\,D\\Phi(\\mathbf{x})=n-m$ per a tot $\\mathbf{x}\\in G$, tal que $M\\cap G=\\{\\mathbf{x}\\in G\\mid\\Phi(\\mathbf{x})=\\mathbf{0}\\}$.",
+    "Suposem també que existeix una funció $\\rho\\colon\\Omega\\longrightarrow\\mathbb{R}^n$, $\\rho\\in\\mathcal{C}^r(\\Omega)$, amb $\\mathrm{rang}\\,D\\rho(\\mathbf{u})=m$ per a tot $\\mathbf{u}\\in\\Omega$, tal que $\\rho\\colon\\Omega\\longrightarrow M\\cap G$ és bijectiva; en particular, existeix un únic $\\mathbf{b}\\in\\Omega$ tal que $\\rho(\\mathbf{b})=\\mathbf{a}$.",
+    "Aleshores, (i) $T_M(\\mathbf{a})=\\ker\\left(D\\Phi(\\mathbf{a})\\right)=\\langle\\text{columnes de }D\\rho(\\mathbf{u})\\rangle$ per a tot $\\mathbf{u}\\in\\Omega$; (ii) $N_M(\\mathbf{a})=\\langle\\text{files de }D\\Phi(\\mathbf{a})\\rangle=\\langle\\nabla\\Phi_1(\\mathbf{a}),\\ldots,\\nabla\\Phi_{n-m}(\\mathbf{a})\\rangle$. En particular, $T_M(\\mathbf{a})$ i $N_M(\\mathbf{a})$ són subespais vectorials de $\\mathbb{R}^n$ de dimensions $\\dim T_M(\\mathbf{a})=m$ i $\\dim N_M(\\mathbf{a})=n-m$, respectivament.",
+    "(i) Veurem que $\\mathrm{Im}\\,D\\rho(\\mathbf{b})\\subseteq T_M(\\mathbf{a})\\subseteq\\ker D\\Phi(\\mathbf{a})$ (1). Prenem $\\mathbf{v}\\in\\mathrm{Im}\\,D\\rho(\\mathbf{b})$; és a dir, existeix $\\mathbf{w}\\in\\mathbb{R}^m$ tal que $\\mathbf{v}=D\\rho(\\mathbf{b})\\,\\mathbf{w}$.",
+    "Com que $\\Omega$ és obert, per a qualsevol $\\delta>0$ es té $\\tilde\\alpha(t)=\\mathbf{b}+t\\,\\mathbf{w}\\in\\Omega$ si $|t|<\\delta$. Considerem $\\alpha=\\rho\\circ\\tilde\\alpha\\colon(-\\delta,\\delta)\\to M\\cap G$, $\\alpha(t)=\\rho(\\mathbf{b}+t\\,\\mathbf{w})$. Per la regla de la cadena, $\\alpha'(0)=D\\rho(\\mathbf{b})\\,\\mathbf{w}=\\mathbf{v}$ i, com que $\\alpha(0)=\\mathbf{a}$, $\\mathbf{v}\\in T_M(\\mathbf{a})$.",
+    "D'altra banda, si $\\mathbf{v}\\in T_M(\\mathbf{a})$, és $\\mathbf{v}=\\alpha'(0)$ per a una corba $\\alpha$ de $M$ amb $\\alpha(0)=\\mathbf{a}$, definida en un interval prou petit perquè prengui valors a $M\\cap G$. Aleshores $\\Phi\\circ\\alpha\\equiv\\mathbf{0}$ i, per la regla de la cadena, $D\\Phi(\\alpha(0))\\,\\alpha'(0)=D\\Phi(\\mathbf{a})\\,\\mathbf{v}=\\mathbf{0}$, és a dir, $\\mathbf{v}\\in\\ker D\\Phi(\\mathbf{a})$.",
+    "Finalment, $\\dim\\mathrm{Im}\\,D\\rho(\\mathbf{b})=\\mathrm{rang}\\,D\\rho(\\mathbf{b})=m$ i, pel teorema de la dimensió, $\\dim\\ker D\\Phi(\\mathbf{a})=n-\\mathrm{rang}\\,D\\Phi(\\mathbf{a})=n-(n-m)=m$. Un subespai contingut en un altre de la mateixa dimensió hi coincideix; per tant, les inclusions de (1) són igualtats.",
+    "(ii) Com que $\\Phi(\\rho(\\mathbf{b}))=\\Phi(\\mathbf{a})=\\mathbf{0}$, la regla de la cadena dona $D(\\Phi\\circ\\rho)(\\mathbf{b})=D\\Phi(\\mathbf{a})\\,D\\rho(\\mathbf{b})=0$: cada fila de $D\\Phi(\\mathbf{a})$ és ortogonal a totes les columnes de $D\\rho(\\mathbf{b})$, que generen $T_M(\\mathbf{a})$ per (i). Per tant, les $n-m$ files de $D\\Phi(\\mathbf{a})$, és a dir, $\\nabla\\Phi_1(\\mathbf{a}),\\ldots,\\nabla\\Phi_{n-m}(\\mathbf{a})$, pertanyen a $N_M(\\mathbf{a})$.",
+    "Com que $\\mathrm{rang}\\,D\\Phi(\\mathbf{a})=n-m$, aquestes $n-m$ files són linealment independents; com que, a més, $\\dim N_M(\\mathbf{a})=n-\\dim T_M(\\mathbf{a})=n-m$, aquestes files generen $N_M(\\mathbf{a})$."
+  ],
+  "n_enunciat": 3,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "\\langle\\text{columnes de }D\\rho(\\mathbf{u})\\rangle$ per a tot $\\mathbf{u}\\in\\Omega",
+      "inici": 67,
+      "fi": 149,
+      "tipus": "quantificador",
+      "explicacio": "Les columnes de $D\\rho(\\mathbf{u})$ generen l'espai tangent en $\\rho(\\mathbf{u})$, no en $\\mathbf{a}$. Contraexemple: circumferència amb $\\rho(t)=(\\cos t,\\sin t)$; la columna $(-\\sin t,\\cos t)$ només és tangent en $\\mathbf{a}=(1,0)$ si $t=0$.",
+      "correccio": "$T_M(\\mathbf{a})=\\langle\\text{columnes de }D\\rho(\\mathbf{b})\\rangle$, amb $\\rho(\\mathbf{b})=\\mathbf{a}$.",
+      "pista": "L'espai tangent en $\\mathbf{a}$ pot dependre d'un punt $\\mathbf{u}$ que no correspon a $\\mathbf{a}$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "per a qualsevol $\\delta>0$ es té",
+      "inici": 27,
+      "fi": 59,
+      "tipus": "pas_injustificat",
+      "explicacio": "Que $\\Omega$ sigui obert només garanteix que existeix algun $\\delta>0$ prou petit amb $\\mathbf{b}+t\\mathbf{w}\\in\\Omega$ per a $|t|<\\delta$, no per a qualsevol $\\delta$.",
+      "correccio": "Com que $\\Omega$ és obert, existeix $\\delta>0$ tal que $\\mathbf{b}+t\\,\\mathbf{w}\\in\\Omega$ per a $|t|<\\delta$.",
+      "pista": "Si $\\Omega$ és una bola petita al voltant de $\\mathbf{b}$, la recta $\\mathbf{b}+t\\mathbf{w}$ hi és continguda per a tot $t$?"
+    },
+    {
+      "id": "e3",
+      "fragment": 8,
+      "cita": "Com que $\\Phi(\\rho(\\mathbf{b}))=\\Phi(\\mathbf{a})=\\mathbf{0}$,",
+      "inici": 5,
+      "fi": 66,
+      "tipus": "pas_injustificat",
+      "explicacio": "Que una funció s'anul·li en un sol punt no fa nul·la la seva diferencial en aquest punt. Cal que $\\Phi\\circ\\rho\\equiv\\mathbf{0}$ en tot $\\Omega$ (perquè $\\rho(\\Omega)\\subseteq M\\cap G$).",
+      "correccio": "Com que $\\Phi(\\rho(\\mathbf{u}))=\\mathbf{0}$ per a tot $\\mathbf{u}\\in\\Omega$, $D(\\Phi\\circ\\rho)(\\mathbf{b})=0$.",
+      "pista": "Per derivar $\\Phi\\circ\\rho$ i obtenir zero, n'hi ha prou de saber què val en el punt $\\mathbf{b}$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t6.json",
+    "valoracio": "Tres errors subtils: un quantificador a l'enunciat, l'elecció de $\\delta$ i la justificació de $D(\\Phi\\circ\\rho)(\\mathbf{b})=0$.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "\\langle\\text{columnes de }D\\rho(\\mathbf{u})\\rangle$ per a tot $\\mathbf{u}\\in\\Omega$",
+        "gravetat": "error",
+        "explicacio": "Només les columnes de $D\\rho(\\mathbf{b})$, amb $\\rho(\\mathbf{b})=\\mathbf{a}$, generen $T_M(\\mathbf{a})$; en un altre $\\mathbf{u}$ generen $T_M(\\rho(\\mathbf{u}))$ (p. ex. a la circumferència)."
+      },
+      {
+        "fragment": 5,
+        "cita": "per a qualsevol $\\delta>0$ es té $\\tilde\\alpha(t)=\\mathbf{b}+t\\,\\mathbf{w}\\in\\Omega$ si $|t|<\\delta$",
+        "gravetat": "error",
+        "explicacio": "Que $\\Omega$ sigui obert només garanteix que EXISTEIX un $\\delta>0$ prou petit; per a $\\delta$ gran el segment pot sortir de $\\Omega$."
+      },
+      {
+        "fragment": 8,
+        "cita": "Com que $\\Phi(\\rho(\\mathbf{b}))=\\Phi(\\mathbf{a})=\\mathbf{0}$, la regla de la cadena dona",
+        "gravetat": "error",
+        "explicacio": "Que $\\Phi\\circ\\rho$ s'anul·li en un sol punt no fa nul·la la seva diferencial; cal $\\Phi\\circ\\rho\\equiv\\mathbf{0}$ a tot $\\Omega$."
+      }
+    ]
+  },
+  "creat": 1791296017.2423768
+}

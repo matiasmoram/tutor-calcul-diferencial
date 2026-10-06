@@ -1,0 +1,59 @@
+{
+  "id": "df4781fc9e17",
+  "exercici": "T6.8",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $G$ un obert de $\\mathbb{R}^m$ i $f\\colon G\\subseteq\\mathbb{R}^m\\longrightarrow\\mathbb{R}^k$ una funció de classe $r$ en $G$. Aleshores, la gràfica de $f$, $\\mathrm{Gr}(f)=\\{(\\mathbf{x},f(\\mathbf{x}))\\in\\mathbb{R}^{m+k}:\\mathbf{x}\\in G\\}$, és una $m$-varietat de classe $r+1$ a $\\mathbb{R}^{m+k}$.",
+    "Considerem la funció $\\rho\\colon G\\subseteq\\mathbb{R}^m\\longrightarrow\\mathbb{R}^{m+k}$ definida per $\\rho(\\mathbf{x})=(\\mathbf{x},f(\\mathbf{x}))$. Veurem que és una parametrització de tota la gràfica en el sentit de la definició 3, prenent com a obert de $\\mathbb{R}^{m+k}$ tot l'espai $\\mathbb{R}^{m+k}$, de manera que $\\mathrm{Gr}(f)\\cap\\mathbb{R}^{m+k}=\\mathrm{Gr}(f)$.",
+    "Les components de $\\rho$ són les coordenades $x_1,\\ldots,x_m$, que són polinòmiques, i les components de $f$, que són de classe $r$; per tant, $\\rho\\in\\mathcal{C}^r(G)$. A més, $\\rho(G)=\\mathrm{Gr}(f)$ per la mateixa definició de gràfica.",
+    "La funció $\\rho\\colon G\\to\\mathrm{Gr}(f)$ és bijectiva: si $\\rho(\\mathbf{x})=\\rho(\\mathbf{y})$, comparant les $m$ primeres coordenades obtenim $\\mathbf{x}=\\mathbf{y}$. La seva inversa és $\\rho^{-1}(\\mathbf{x},\\mathbf{y})=\\mathbf{x}$, la restricció a $\\mathrm{Gr}(f)$ de la projecció sobre les $m$ primeres coordenades, que és contínua.",
+    "La diferencial és $D\\rho(\\mathbf{x})=\\begin{pmatrix}\\mathrm{Id}_{m}\\\\ Df(\\mathbf{x})\\end{pmatrix}\\in\\mathcal{M}_{(m+k)\\times m}(\\mathbb{R})$, i té rang $m$ perquè $Df(\\mathbf{x})$ té rang màxim. Això val per a tot $\\mathbf{x}\\in G$.",
+    "Per tant, $\\rho$ és una parametrització de classe $r$ de $\\mathrm{Gr}(f)$ amb $\\mathrm{rang}\\,D\\rho(\\mathbf{x})=m$ per a tot $\\mathbf{x}\\in G$, i $\\mathrm{Gr}(f)$ és una $m$-varietat de classe $r$ a $\\mathbb{R}^{m+k}$."
+  ],
+  "n_enunciat": 1,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "és una $m$-varietat de classe $r+1$",
+      "inici": 246,
+      "fi": 281,
+      "tipus": "conclusio",
+      "explicacio": "La regularitat de la gràfica és la de $f$, no una més: per exemple, $f(x)=x|x|$ és de classe $\\mathcal{C}^1$ però no $\\mathcal{C}^2$, i la seva gràfica no és una corba de classe $\\mathcal{C}^2$ (localment és la gràfica de $f$ sobre la recta tangent).",
+      "correccio": "La gràfica és una $m$-varietat de classe $r$ a $\\mathbb{R}^{m+k}$.",
+      "pista": "La parametrització $\\rho(\\mathbf{x})=(\\mathbf{x},f(\\mathbf{x}))$ pot ser més regular que la mateixa $f$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "té rang $m$ perquè $Df(\\mathbf{x})$ té rang màxim",
+      "inici": 144,
+      "fi": 193,
+      "tipus": "pas_injustificat",
+      "explicacio": "No se sap res del rang de $Df(\\mathbf{x})$ (pot ser la matriu nul·la); el rang $m$ prové del bloc $\\mathrm{Id}_m$, que té $m$ files linealment independents.",
+      "correccio": "$\\mathrm{rang}\\,D\\rho(\\mathbf{x})=m$ perquè $D\\rho(\\mathbf{x})$ conté el bloc identitat $\\mathrm{Id}_m$.",
+      "pista": "Si $f$ fos constant, quin seria el rang de $D\\rho(\\mathbf{x})$, i d'on vindria?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t6.json",
+    "valoracio": "Dos errors: la classe de la conclusió ($r+1$) i la justificació del rang de $D\\rho$.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "és una $m$-varietat de classe $r+1$",
+        "gravetat": "error",
+        "explicacio": "La conclusió diu classe $r+1$, però amb $f$ de classe $r$ la gràfica només és varietat de classe $r$ (p. ex. $f(x)=x|x|$ és $\\mathcal{C}^1$ i la seva gràfica no és una varietat $\\mathcal{C}^2$)."
+      },
+      {
+        "fragment": 5,
+        "cita": "té rang $m$ perquè $Df(\\mathbf{x})$ té rang màxim",
+        "gravetat": "error",
+        "explicacio": "El rang $m$ ve del bloc $\\mathrm{Id}_m$, no de $Df(\\mathbf{x})$, que no té per què tenir rang màxim (p. ex. $f$ constant): la justificació és falsa."
+      }
+    ]
+  },
+  "creat": 1791296017.2351673
+}

@@ -1,0 +1,69 @@
+{
+  "id": "aad2341304ea",
+  "exercici": "T5.13",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $P(\\mathbf{x})\\neq0$ un polinomi, $\\mathbf{x}=(x_1,\\ldots,x_n)$, i $r\\geq0$ un enter. Llavors $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{0}}\\frac{P(\\mathbf{x})}{\\|\\mathbf{x}\\|^r}=0$ si, i només si, tots els monomis de $P$ són de grau $\\geqslant r+1$; i, en aquest cas, de fet, $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{0}}\\frac{P(\\mathbf{x})}{\\|\\mathbf{x}\\|^{r+1}}=0$.",
+    "$\\Longleftarrow$ Suposem que $P(\\mathbf{x})=\\sum_{|\\alpha|\\geq r+1}a_\\alpha\\,\\mathbf{x}^\\alpha$. Com que cada monomi té almenys $r+1$ factors, per a cada $\\alpha$ existeix $\\beta=\\beta(\\alpha)$, amb $|\\beta|\\geq0$, tal que $\\mathbf{x}^\\alpha=x_{i_1}\\cdots x_{i_{r+1}}\\,\\mathbf{x}^\\beta$.",
+    "Per la desigualtat triangular, $\\displaystyle\\left|\\frac{P(\\mathbf{x})}{\\|\\mathbf{x}\\|^r}\\right|\\leq\\sum_{|\\alpha|\\geq r+1}|a_\\alpha|\\,\\frac{|x_{i_1}|}{\\|\\mathbf{x}\\|}\\cdots\\frac{|x_{i_r}|}{\\|\\mathbf{x}\\|}\\,|x_{i_{r+1}}|\\,|\\mathbf{x}^\\beta|$.",
+    "Cada factor $\\frac{|x_{i_j}|}{\\|\\mathbf{x}\\|}$ està fitat per $1$, el factor $|x_{i_{r+1}}|$ tendeix a $0$ quan $\\mathbf{x}\\to\\mathbf{0}$ i $|\\mathbf{x}^\\beta|$ val $1$ si $|\\beta|=0$ i tendeix a $0$ si $|\\beta|>0$. Com que la suma és finita, $\\frac{P(\\mathbf{x})}{\\|\\mathbf{x}\\|^r}$ tendeix a $0$.",
+    "$\\Longrightarrow$ Ho demostrem per inducció en $r$. Per a $r=0$: com que $P$ és continu, $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{0}}P(\\mathbf{x})=P(\\mathbf{0})$, i per tant $P(\\mathbf{0})=0$; és a dir, $P$ no té terme de grau zero i tots els seus monomis són de grau $\\geq1$.",
+    "Suposem el resultat cert per a $r=m$, i que $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{0}}\\frac{P(\\mathbf{x})}{\\|\\mathbf{x}\\|^{m+1}}=0$. Com que $\\frac{P(\\mathbf{x})}{\\|\\mathbf{x}\\|^m}=\\frac{P(\\mathbf{x})}{\\|\\mathbf{x}\\|^{m+1}}\\,\\|\\mathbf{x}\\|$ i tots dos factors tendeixen a $0$, també $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{0}}\\frac{P(\\mathbf{x})}{\\|\\mathbf{x}\\|^m}=0$, i per hipòtesi d'inducció tots els monomis de $P$ són de grau $\\geq m+1$.",
+    "Volem veure que són de grau $\\geq m+2$, i ho fem per reducció a l'absurd. Suposem que $P$ té monomis de grau $m+1$ i escrivim $P=P_{m+1}+P_{\\geq m+2}$, on $P_{m+1}\\not\\equiv0$ conté els monomis de grau exactament $m+1$ i $P_{\\geq m+2}$ la resta.",
+    "Com que $P_{m+1}\\not\\equiv0$, per a tot $\\mathbf{v}\\neq\\mathbf{0}$ es té $P_{m+1}(\\mathbf{v})\\neq0$; en fixem un. Com que $P_{m+1}$ és homogeni de grau $m+1$, $P_{m+1}(t\\mathbf{v})=t^{m+1}P_{m+1}(\\mathbf{v})$ per a tot $t\\in\\mathbb{R}$.",
+    "Restringim el límit a la semirecta $\\mathbf{x}=t\\mathbf{v}$, $t\\to0^+$: per a $t>0$, $\\displaystyle\\frac{P(t\\mathbf{v})}{\\|t\\mathbf{v}\\|^{m+1}}=\\frac{P_{m+1}(\\mathbf{v})}{\\|\\mathbf{v}\\|^{m+1}}+\\frac{P_{\\geq m+2}(t\\mathbf{v})}{\\|t\\mathbf{v}\\|^{m+1}}$. El segon terme tendeix a $0$ per la implicació $\\Longleftarrow$ ja demostrada (o perquè és nul, si $P_{\\geq m+2}\\equiv0$).",
+    "Per tant, el límit al llarg d'aquesta semirecta és $\\frac{P_{m+1}(\\mathbf{v})}{\\|\\mathbf{v}\\|^{m+1}}\\neq0$, en contradicció amb la hipòtesi. Així, tots els monomis de $P$ són de grau $\\geq m+2$."
+  ],
+  "n_enunciat": 1,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "i, en aquest cas, de fet, $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{0}}\\frac{P(\\mathbf{x})}{\\|\\mathbf{x}\\|^{r+1}}=0$",
+      "inici": 255,
+      "fi": 370,
+      "tipus": "conclusio",
+      "explicacio": "L'afirmació afegida és falsa i la demostració no la prova: per a $n=1$, $P(x)=x$ i $r=0$, tots els monomis són de grau $\\geq1$ i $\\lim_{x\\to0}P(x)=0$, però $\\frac{x}{|x|}=\\pm1$ no tendeix a $0$.",
+      "correccio": "Els apunts només afirmen l'equivalència: $\\lim_{\\mathbf{x}\\to\\mathbf{0}}\\frac{P(\\mathbf{x})}{\\|\\mathbf{x}\\|^r}=0$ si, i només si, tots els monomis de $P$ són de grau $\\geqslant r+1$; no diuen res de l'exponent $r+1$.",
+      "pista": "Si tots els monomis són de grau $\\geq r+1$, què passa amb $\\frac{P(\\mathbf{x})}{\\|\\mathbf{x}\\|^{r+1}}$ quan $P$ té un monomi de grau exactament $r+1$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 8,
+      "cita": "per a tot $\\mathbf{v}\\neq\\mathbf{0}$ es té $P_{m+1}(\\mathbf{v})\\neq0$",
+      "inici": 30,
+      "fi": 99,
+      "tipus": "quantificador",
+      "explicacio": "Un polinomi no idènticament nul pot anul·lar-se en molts vectors no nuls (per exemple, $P_{m+1}=x_1x_2$ s'anul·la en $(1,0)$); de $P_{m+1}\\not\\equiv0$ només es dedueix que existeix algun $\\mathbf{v}$ amb $P_{m+1}(\\mathbf{v})\\neq0$.",
+      "correccio": "Com que $P_{m+1}\\not\\equiv0$, existeix almenys un vector $\\mathbf{v}\\in\\mathbb{R}^n$ tal que $P_{m+1}(\\mathbf{v})\\neq0$.",
+      "pista": "Un polinomi homogeni no nul, pot valer zero en algun vector no nul? Quin quantificador es pot justificar realment?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t5.json",
+    "valoracio": "Enunciat amb una conclusió addicional falsa i demostració amb un quantificador universal en lloc d'existencial.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "i, en aquest cas, de fet, $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{0}}\\frac{P(\\mathbf{x})}{\\|\\mathbf{x}\\|^{r+1}}=0$",
+        "gravetat": "error",
+        "explicacio": "Afirmació falsa afegida a l'enunciat: si $P=x_1^{r+1}$, tots els monomis són de grau $r+1$ però $P/\\|\\mathbf{x}\\|^{r+1}$ no tendeix a 0 (val 1 sobre l'eix $x_1>0$). Pel mateix lema, aquest límit és 0 només si els monomis són de grau $\\geq r+2$."
+      },
+      {
+        "fragment": 8,
+        "cita": "per a tot $\\mathbf{v}\\neq\\mathbf{0}$ es té $P_{m+1}(\\mathbf{v})\\neq0$",
+        "gravetat": "error",
+        "explicacio": "Quantificador canviat: un polinomi homogeni no nul pot anul·lar-se en molts vectors (p. ex. $x_1x_2$ en els eixos). Només existeix algun $\\mathbf{v}$ amb $P_{m+1}(\\mathbf{v})\\neq0$."
+      },
+      {
+        "fragment": 10,
+        "cita": "\\frac{P_{m+1}(\\mathbf{v})}{\\|\\mathbf{v}\\|^{m+1}}\\neq0",
+        "gravetat": "consequencia",
+        "explicacio": "El raonament és el dels apunts, però el $\\mathbf{v}$ fixat a [8] és arbitrari; $P_{m+1}(\\mathbf{v})\\neq0$ només està garantit si s'escull bé, cosa que [8] justifica amb una afirmació falsa."
+      }
+    ]
+  },
+  "creat": 1791296162.0573504
+}

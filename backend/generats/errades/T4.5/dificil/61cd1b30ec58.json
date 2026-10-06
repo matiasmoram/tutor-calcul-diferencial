@@ -1,0 +1,89 @@
+{
+  "id": "61cd1b30ec58",
+  "exercici": "T4.5",
+  "font": "teoria",
+  "dificultat": "dificil",
+  "fragments": [
+    "Sigui $\\Omega\\subseteq\\mathbb{R}^n$ obert, $f:\\Omega\\to\\mathbb{R}^n$ una funció $\\mathcal{C}^r(\\Omega)$, $r\\geq 1$, i $a\\in\\Omega$ tal que $\\det\\big(Jf(a)\\big)\\neq 0$. Llavors, per a tot $U\\in\\mathcal{E}_a$ amb $U\\subseteq\\Omega$, es compleix:",
+    "(i) $f|_U:U\\to\\mathbb{R}^n$ és injectiva i $\\det\\big(Jf(z)\\big)\\neq 0$ per a tot $z\\in U$; (ii) $V=f(U)\\subseteq\\mathbb{R}^n$ és obert;",
+    "(iii) la inversa $f^{-1}:V\\to U$ és de classe $\\mathcal{C}^r(V)$ i, per a tot $y_0\\in V$, $Df^{-1}(y_0)=\\big(Df(f^{-1}(y_0))\\big)^{-1}$.",
+    "Com que $f\\in\\mathcal{C}^1$, la funció $x\\mapsto\\det Df(x)$ és contínua i, per tant, existeix $\\delta_1>0$ tal que $\\det Df(z)\\neq 0$ per a tot $z\\in B(a,\\delta_1)$. Per l'apartat (iii) de la proposició 4 amb $\\varepsilon=c/2$, on $c=1/\\|(Df(a))^{-1}\\|$, existeix $\\delta_2>0$ tal que $\\|f(x)-f(y)\\|\\geq\\frac{c}{2}\\|x-y\\|$ per a tot $x,y\\in B(a,\\delta_2)\\subseteq\\Omega$. Prenem $\\delta=\\min\\{\\delta_1,\\delta_2\\}$ i $U=B(a,\\delta)$.",
+    "(i) Si $z\\in U$, aleshores $z\\in B(a,\\delta_1)$ i, per tant, $\\det Df(z)\\neq 0$. A més, si $x,y\\in U$ compleixen $f(x)=f(y)$, la desigualtat anterior dona $\\frac{c}{2}\\|x-y\\|\\leq 0$, és a dir, $x=y$; per tant, $f|_U$ és injectiva.",
+    "(ii) Sigui $y_0\\in V$ i sigui $x_0\\in U$ l'únic punt amb $f(x_0)=y_0$. Prenem $\\eta>0$ tal que $U_0=B(x_0,\\eta)$ compleixi $\\overline{U_0}\\subseteq U$. La frontera $\\mathrm{Fr}(U_0)$ és compacta; per tant, també ho és $f(\\mathrm{Fr}(U_0))$, que no conté $y_0$ per la injectivitat de $f|_U$. Així, $\\sigma=\\min_{x\\in\\mathrm{Fr}(U_0)}\\|y_0-f(x)\\|>0$.",
+    "Vegem que $V_0=B(y_0,\\sigma/2)\\subseteq V$. Fixat $y\\in V_0$, la funció $\\varphi(x)=\\|f(x)-y\\|$ és contínua i, pel teorema de Weierstrass, assoleix el mínim sobre el compacte $\\overline{U_0}$ en un punt $z$.",
+    "D'una banda, $\\varphi(z)\\leq\\varphi(x_0)=\\|y_0-y\\|<\\sigma/2$. De l'altra, per a tot $x\\in\\mathrm{Fr}(U_0)$, $\\varphi(x)=\\|f(x)-y\\|\\geq\\|f(x)-y_0\\|-\\|y_0-y\\|>\\sigma-\\sigma/2=\\sigma/2$. Per tant, el mínim no és a la frontera, i $z\\in U_0$, que és obert.",
+    "Aleshores $\\varphi^2=\\sum_{k=1}^n(f_k-y_k)^2$ també assoleix el mínim sobre $\\overline{U_0}$ en $z$, que és un punt interior, i per a $i=1,\\ldots,n$ es té $0=\\frac{\\partial(\\varphi^2)}{\\partial x_i}(z)=2\\sum_{k=1}^n(f_k(z)-y_k)\\frac{\\partial f_k}{\\partial x_i}(z)$, és a dir, $(f(z)-y)^{T}Jf(z)=0$. Com que $\\det Jf(x_0)\\neq 0$, aquest sistema lineal només té la solució nul·la, i per tant $f(z)=y$. Així, $y\\in f(U)=V$, i $V_0\\subseteq V$.",
+    "(iii) Sigui $y_0\\in V$, $x_0=f^{-1}(y_0)$, $c_1=1/\\|(Df(x_0))^{-1}\\|$ i, per a $y\\in V$, $x=f^{-1}(y)$. Per a tot $u\\in\\mathbb{R}^n$, $\\|u\\|=\\|(Df(x_0))^{-1}Df(x_0)u\\|\\leq\\|(Df(x_0))^{-1}\\|\\,\\|Df(x_0)u\\|$, és a dir, $c_1\\|u\\|\\leq\\|Df(x_0)u\\|$. Aplicat a $u=f^{-1}(y)-f^{-1}(y_0)-(Df(x_0))^{-1}(y-y_0)$, per al qual $Df(x_0)u=Df(x_0)(x-x_0)-(f(x)-f(x_0))$, obtenim $c_1\\|u\\|\\leq\\|f(x)-f(x_0)-Df(x_0)(x-x_0)\\|$.",
+    "Donat $\\varepsilon>0$, per la diferenciabilitat de $f$ en $x_0$ existeix un obert $U_3$, amb $x_0\\in U_3\\subseteq U$, tal que $\\|f(x)-f(x_0)-Df(x_0)(x-x_0)\\|\\leq\\frac{\\varepsilon c c_1}{2}\\|x-x_0\\|$ per a tot $x\\in U_3$. D'altra banda, per la desigualtat de l'inici de la demostració, $\\|x-x_0\\|\\geq\\frac{c}{2}\\|y-y_0\\|$ per a tot $x\\in U$; en particular, $f^{-1}$ és contínua i, si $y$ és prou a prop de $y_0$, $x=f^{-1}(y)\\in U_3$.",
+    "Combinant-ho, per a $y$ prou a prop de $y_0$, $\\|u\\|\\leq\\frac{1}{c_1}\\cdot\\frac{\\varepsilon c c_1}{2}\\|x-x_0\\|\\leq\\frac{\\varepsilon c}{2}\\cdot\\frac{2}{c}\\|y-y_0\\|=\\varepsilon\\|y-y_0\\|$. Per tant, $f^{-1}$ és diferenciable en $y_0$ i $Df^{-1}(y_0)=(Df(x_0))^{-1}=\\big(Df(f^{-1}(y_0))\\big)^{-1}$.",
+    "Finalment, $Df^{-1}(y)=\\big(Df(f^{-1}(y))\\big)^{-1}$ per a tot $y\\in V$. Com que $f^{-1}$ i $Df$ són contínues, $Df(f^{-1}(y))$ és contínua, i les components de la seva inversa (que existeix per (i)) són quocients de polinomis en les seves components amb denominador $\\det Df(f^{-1}(y))\\neq 0$; per tant, $f^{-1}\\in\\mathcal{C}^1(V)$. Iterant, si $f^{-1}\\in\\mathcal{C}^k(V)$ amb $k<r$, aleshores $Df(f^{-1}(y))$ i la seva inversa són de classe $\\mathcal{C}^k$, és a dir, $f^{-1}\\in\\mathcal{C}^{k+1}(V)$; així arribem a $f^{-1}\\in\\mathcal{C}^r(V)$."
+  ],
+  "n_enunciat": 3,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "per a tot $U\\in\\mathcal{E}_a$ amb $U\\subseteq\\Omega$",
+      "inici": 177,
+      "fi": 229,
+      "tipus": "quantificador",
+      "explicacio": "El teorema garanteix l'existència d'algun entorn $U$ prou petit, no que les conclusions valguin per a qualsevol entorn. Contraexemple: $f(x)=x^2$ a $\\Omega=\\mathbb{R}$, $a=1$, $U=(-2,2)$: $f|_U$ no és injectiva i $f'(0)=0$.",
+      "correccio": "Llavors existeix $U\\in\\mathcal{E}_a$, $U\\subseteq\\Omega$, tal que es compleixen (i), (ii) i (iii).",
+      "pista": "La demostració construeix un $U$ concret o treballa amb un entorn qualsevol de $a$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 9,
+      "cita": "Com que $\\det Jf(x_0)\\neq 0$, aquest sistema lineal només té la solució nul·la",
+      "inici": 299,
+      "fi": 377,
+      "tipus": "hipotesi",
+      "explicacio": "El sistema és $(f(z)-y)^{T}Jf(z)=0$, amb la matriu avaluada en $z$, no en $x_0$; que $Jf(x_0)$ sigui invertible no diu res de $Jf(z)$. Cal usar que $z\\in U$ i que $\\det Jf\\neq 0$ a tot $U$ per (i).",
+      "correccio": "Com que $z\\in U_0\\subseteq U$, per (i) $\\det Jf(z)\\neq 0$, i per tant $f(z)-y=0$.",
+      "pista": "En quin punt està avaluada la jacobiana del sistema que s'ha obtingut?"
+    },
+    {
+      "id": "e3",
+      "fragment": 11,
+      "cita": "$\\|x-x_0\\|\\geq\\frac{c}{2}\\|y-y_0\\|$ per a tot $x\\in U$",
+      "inici": 285,
+      "fi": 339,
+      "tipus": "desigualtat",
+      "explicacio": "La desigualtat de l'inici és $\\|f(x)-f(x_0)\\|\\geq\\frac{c}{2}\\|x-x_0\\|$, és a dir, $\\|y-y_0\\|\\geq\\frac{c}{2}\\|x-x_0\\|$; s'han intercanviat els papers de $x$ i $y$. La versió escrita fita $\\|x-x_0\\|$ inferiorment i no implica la continuïtat de $f^{-1}$ ni que $x\\in U_3$.",
+      "correccio": "$\\|y-y_0\\|\\geq\\frac{c}{2}\\|x-x_0\\|$ per a tot $x\\in U$, és a dir, $\\|f^{-1}(y)-f^{-1}(y_0)\\|\\leq\\frac{2}{c}\\|y-y_0\\|$.",
+      "pista": "Què diu exactament la desigualtat $\\|f(x)-f(y)\\|\\geq\\frac{c}{2}\\|x-y\\|$ quan la reescrius amb $y=f(x)$? Quina de les dues distàncies queda fitada?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t4.json",
+    "valoracio": "Tres errors: quantificador de l'entorn canviat a 'per a tot', determinant avaluat en $x_0$ en lloc de $z$, i desigualtat de Lipschitz inversa girada (amb conseqüència a [12]).",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "per a tot $U\\in\\mathcal{E}_a$ amb $U\\subseteq\\Omega$, es compleix:",
+        "gravetat": "error",
+        "explicacio": "Quantificador canviat: el teorema afirma que EXISTEIX un entorn $U$ de $a$; per a un entorn qualsevol $f|_U$ no té per què ser injectiva ni $\\det Jf$ no nul (p. ex. $U=\\Omega$). La demostració només construeix un $U$ concret."
+      },
+      {
+        "fragment": 9,
+        "cita": "Com que $\\det Jf(x_0)\\neq 0$, aquest sistema lineal només té la solució nul·la",
+        "gravetat": "error",
+        "explicacio": "El sistema és $(f(z)-y)^TJf(z)=0$, amb matriu $Jf(z)$; cal $\\det Jf(z)\\neq0$ (cert perquè $z\\in U$), no $\\det Jf(x_0)\\neq0$, que no diu res sobre $Jf(z)$."
+      },
+      {
+        "fragment": 11,
+        "cita": "$\\|x-x_0\\|\\geq\\frac{c}{2}\\|y-y_0\\|$",
+        "gravetat": "error",
+        "explicacio": "Desigualtat invertida: de $\\|f(x)-f(x_0)\\|\\geq\\frac c2\\|x-x_0\\|$ s'obté $\\|y-y_0\\|\\geq\\frac c2\\|x-x_0\\|$. La versió escrita no implica la continuïtat de $f^{-1}$ ni que $x\\in U_3$ per a $y$ prop de $y_0$."
+      },
+      {
+        "fragment": 12,
+        "cita": "\\leq\\frac{\\varepsilon c}{2}\\cdot\\frac{2}{c}\\|y-y_0\\|",
+        "gravetat": "consequencia",
+        "explicacio": "Usa $\\|x-x_0\\|\\leq\\frac2c\\|y-y_0\\|$, que és el pas correcte dels apunts però no es dedueix de la desigualtat invertida escrita a [11]."
+      }
+    ]
+  },
+  "creat": 1791296058.5325406
+}

@@ -1,0 +1,60 @@
+{
+  "id": "3ac7e11859d4",
+  "exercici": "t2-9a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "$F$ és contínua en un punt si i només si ho són les dues components $F_1$ i $F_2$, perquè $|F_i(x)-L_i|\\le\\|F(x)-L\\|\\le|F_1(x)-L_1|+|F_2(x)-L_2|$. Per tant el conjunt de discontinuïtats de $F$ és la unió dels de $F_1$ i $F_2$.",
+    "Fora de l'origen, $F_1$ és el quocient de $xy$ i de la norma $(x^2+y^2)^{1/2}$, que són contínues, amb denominador no nul: és contínua.",
+    "A l'origen: de $(|x|-|y|)^2\\ge0$ surt $|xy|\\le\\frac{x^2+y^2}{2}$, d'on $|F_1(x,y)|\\le\\frac12(x^2+y^2)\\to0=F_1(0,0)$. Per tant $F_1$ és contínua a tot $\\mathbb{R}^2$.",
+    "Sigui $P=\\{(x,y)\\mid x+y^2=0\\}$. El conjunt $\\mathbb{R}^2\\setminus P=\\{x+y^2>0\\}\\cup\\{x+y^2<0\\}$ és obert, i en ell $F_2$ coincideix amb el quocient de polinomis $\\frac{x}{x+y^2}$, amb denominador no nul: $F_2$ és contínua a cada punt de $\\mathbb{R}^2\\setminus P$.",
+    "Si $(a,b)\\in P$ i $(a,b)\\neq(0,0)$, aleshores $a=-b^2\\neq0$ i, per a $t\\neq0$, $F_2(a+t,b)=\\frac{a+t}{t}$, que no és fitat quan $t\\to0$. Per tant $F_2$ no és contínua en aquests punts.",
+    "A l'origen, $F_2(x,0)=1$ per a $x\\neq0$ i $F_2(0,y)=0$ per a $y\\neq0$: els límits per aquests dos camins són diferents i $F_2$ tampoc no és contínua a $(0,0)$.",
+    "Per tant el conjunt de discontinuïtats de $F$ és exactament $P=h^{-1}(\\{0\\})$, amb $h(x,y)=x+y^2$ contínua. Com que $\\{0\\}$ és compacte, la seva antiimatge $P$ és compacta i, en particular, tancada."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "d'on $|F_1(x,y)|\\le\\frac12(x^2+y^2)\\to0=F_1(0,0)$",
+      "inici": 66,
+      "fi": 115,
+      "tipus": "calcul",
+      "explicacio": "En dividir per $(x^2+y^2)^{1/2}$ s'obté $\\frac12(x^2+y^2)^{1/2}$, no $\\frac12(x^2+y^2)$; la fita escrita és falsa a prop de l'origen (a $(0.1,0.1)$, $F_1\\approx0.071>0.01$). La conclusió es manté amb la fita correcta.",
+      "correccio": "$|F_1(x,y)|\\le\\frac{x^2+y^2}{2(x^2+y^2)^{1/2}}=\\frac12(x^2+y^2)^{1/2}\\to0$.",
+      "pista": "Què queda en dividir $\\frac{x^2+y^2}{2}$ per $(x^2+y^2)^{1/2}$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "Com que $\\{0\\}$ és compacte, la seva antiimatge $P$ és compacta",
+      "inici": 108,
+      "fi": 171,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "L'antiimatge d'un compacte per una funció contínua no és compacta en general; de fet $P$ és la paràbola $x=-y^2$, que no és fitada. El que es conserva per antiimatges contínues és ser tancat.",
+      "correccio": "Com que $\\{0\\}$ és tancat a $\\mathbb{R}$ i $h$ és contínua a $\\mathbb{R}^2$, $P=h^{-1}(\\{0\\})$ és tancat.",
+      "pista": "La paràbola $x=-y^2$ és fitada? Quina propietat d'un conjunt sí que es conserva en prendre antiimatges per funcions contínues?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t12.json",
+    "valoracio": "Anàlisi de la continuïtat correcta, però amb una fita mal escrita a l'origen i una justificació falsa (antiimatge de compacte) del tancament.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$|F_1(x,y)|\\le\\frac12(x^2+y^2)\\to0",
+        "gravetat": "error",
+        "explicacio": "Dividint $|xy|\\le\\frac{x^2+y^2}{2}$ per $\\sqrt{x^2+y^2}$ s'obté $|F_1|\\le\\frac12\\sqrt{x^2+y^2}$, no $\\frac12(x^2+y^2)$ (la conclusió és la mateixa)."
+      },
+      {
+        "fragment": 7,
+        "cita": "Com que $\\{0\\}$ és compacte, la seva antiimatge $P$ és compacta",
+        "gravetat": "error",
+        "explicacio": "L'antiimatge d'un compacte per una funció contínua no cal que sigui compacta ($P$ és una paràbola, no fitada). Correcte: $\\{0\\}$ tancat implica $P=h^{-1}(\\{0\\})$ tancat."
+      }
+    ]
+  },
+  "creat": 1791295812.9078903
+}

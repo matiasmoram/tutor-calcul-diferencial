@@ -1,0 +1,377 @@
+[
+ {
+  "font": "problema",
+  "id": "t1-4c",
+  "dificultat": "facil",
+  "fragments": [
+   "Volem provar $\\|x+y\\|\\,\\|x-y\\|\\leq\\|x\\|^2+\\|y\\|^2$. Primer desenvolupem els quadrats amb el producte escalar: $\\|x\\pm y\\|^2=\\langle x\\pm y,x\\pm y\\rangle=\\|x\\|^2\\pm\\langle x,y\\rangle+\\|y\\|^2$.",
+   "Sumant les dues expressions, els termes creuats es cancel·len i obtenim la llei del paral·lelogram: $\\|x+y\\|^2+\\|x-y\\|^2=2\\|x\\|^2+2\\|y\\|^2$.",
+   "D'altra banda, per a nombres reals $a,b$ qualssevol tenim $0\\leq(a-b)^2=a^2-2ab+b^2$, d'on $ab\\leq\\frac{a^2+b^2}{2}$.",
+   "Ho apliquem a $a=\\|x+y\\|$ i $b=\\|x-y\\|$: $\\|x+y\\|\\,\\|x-y\\|\\leq\\frac{\\|x+y\\|^2+\\|x-y\\|^2}{2}$.",
+   "Substituint-hi la llei del paral·lelogram, $\\|x+y\\|\\,\\|x-y\\|\\leq\\frac{2\\|x\\|^2+2\\|y\\|^2}{2}=\\|x\\|^2+\\|y\\|^2$, que és la desigualtat que volíem."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "escalar: $\\|x\\pm y\\|^2=\\langle x\\pm y,x\\pm y\\rangle=\\|x\\|^2\\pm\\langle x,y\\rangle+\\|y\\|^2$",
+    "tipus": "calcul",
+    "explicacio": "En desenvolupar $\\langle x\\pm y,x\\pm y\\rangle$ apareixen dos termes creuats iguals, $\\pm\\langle x,y\\rangle\\pm\\langle y,x\\rangle$, per la simetria del producte escalar: el coeficient és $2$, no $1$.",
+    "correccio": "$\\|x\\pm y\\|^2=\\|x\\|^2\\pm2\\langle x,y\\rangle+\\|y\\|^2$.",
+    "pista": "Quants termes creuats surten en desenvolupar $\\langle x+y,x+y\\rangle$ per bilinealitat?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-6",
+  "dificultat": "normal",
+  "fragments": [
+   "Treballem amb la distància euclidiana i $A\\neq\\emptyset$ (si $A=\\emptyset$, $D_A=\\emptyset$ i tots dos són trivialment fitats). Si $A$ és fitat, $A\\subseteq B_L(p)$ per a algun $p$ i algun $L>0$, i per a $x,y\\in A$: $0\\leq d(x,y)\\leq d(x,p)+d(p,y)<2L$. Per tant $D_A\\subseteq[0,2L]$ és fitat.",
+   "Recíprocament, suposem que $D_A$ és fitat, és a dir, que existeix $K\\geq0$ amb $d(x,y)\\leq K$ per a tots $x,y\\in A$. Aleshores, per a tot $x\\in A$, $\\|x\\|=d(x,0)\\leq K<K+1$, de manera que $A\\subseteq B_{K+1}(0)$ i $A$ és fitat.",
+   "Diàmetre de $B_2$: per a $x,y\\in B_2$, $\\|x-y\\|\\leq\\|x\\|+\\|y\\|<2$. Els punts $\\pm te_1$, amb $0<t<1$, són de $B_2$ i són a distància $2t$, que tendeix a $2$ quan $t\\to1^-$. Per tant $\\mathrm{diam}(B_2)=2$ (el suprem no s'assoleix).",
+   "Diàmetre de $B_1$: per a tot $v\\in\\mathbb{R}^m$, $\\|v\\|^2=\\sum_i v_i^2\\leq\\left(\\sum_i|v_i|\\right)^2$, és a dir, $\\|v\\|\\leq\\sum_i|v_i|$. Així, per a $x,y\\in B_1$, $\\|x-y\\|\\leq\\sum_i|x_i-y_i|\\leq\\sum_i|x_i|+\\sum_i|y_i|<2$.",
+   "Els punts $\\pm te_1$, amb $0<t<1$, també són de $B_1$ i són a distància $2t\\to2$. Per tant $\\mathrm{diam}(B_1)=2$, i tampoc no s'assoleix.",
+   "Diàmetre de $B_3$: per a $x,y\\in B_3$, $|x_i-y_i|\\leq|x_i|+|y_i|<2$ per a cada $i$, d'on $\\|x-y\\|^2=\\sum_{i=1}^m(x_i-y_i)^2<4m$, és a dir, $\\|x-y\\|<2\\sqrt m$.",
+   "Els vèrtexs $x=(1,\\dots,1)$ i $y=(-1,\\dots,-1)$ del cub són punts de $B_3$ i $\\|x-y\\|=\\sqrt{4m}=2\\sqrt m$. Per tant el suprem s'assoleix i $\\mathrm{diam}(B_3)=2\\sqrt m$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "$\\|x\\|=d(x,0)\\leq K<K+1$",
+    "tipus": "logica",
+    "explicacio": "La hipòtesi només fita les distàncies entre punts d'$A$; l'origen no té per què ser d'$A$, així que $d(x,0)\\leq K$ no se'n dedueix (per exemple, $A=\\{(10,0,\\dots,0)\\}$ té $K=0$ però $\\|x\\|=10$).",
+    "correccio": "Fixar un punt $a_0\\in A$: per a tot $x\\in A$, $d(x,a_0)\\leq K<K+1$, i per tant $A\\subseteq B_{K+1}(a_0)$.",
+    "pista": "Per què hauria de ser l'origen un punt d'$A$? Quin centre pots fer servir que segur que hi pertany?"
+   },
+   {
+    "fragment": 7,
+    "cita": "són punts de $B_3$",
+    "tipus": "logica",
+    "explicacio": "$B_3$ és obert, definit per $\\max|x_i|<1$: els vèrtexs tenen $\\max|x_i|=1$ i no hi pertanyen. El suprem $2\\sqrt m$ no s'assoleix; cal aproximar-lo amb punts interiors.",
+    "correccio": "Prendre $x_t=t(1,\\dots,1)$ i $y_t=-x_t$ amb $0<t<1$, que són de $B_3$ i compleixen $\\|x_t-y_t\\|=2t\\sqrt m\\to2\\sqrt m$; el suprem és $2\\sqrt m$ i no s'assoleix.",
+    "pista": "Quant val $\\max_i|x_i|$ al punt $(1,\\dots,1)$? Compleix la condició que defineix $B_3$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-7g",
+  "dificultat": "normal",
+  "fragments": [
+   "Interior: el conjunt $U=\\{x^2+y^2<1\\}\\cap\\{x\\neq0\\}$ és obert, perquè és intersecció de dos oberts (antiimatges d'oberts per funcions contínues), i $U\\subseteq G$; per tant $U\\subseteq\\mathring{G}$.",
+   "Cap punt $p\\in G$ amb $\\|p\\|=1$ no és interior: els punts $(1+t)p$, amb $t>0$ petit, són a tota bola centrada en $p$ i no són de $G$. Per tant $\\mathring{G}=\\{(x,y)\\mid x^2+y^2<1,\\ x\\neq0\\}$.",
+   "Frontera: si $x_0^2+y_0^2=1$ i $x_0\\neq0$, el punt és de $G$ i tota bola centrada en ell conté punts $(1+t)(x_0,y_0)\\notin G$; per tant és de la frontera.",
+   "Si $x_0=0$ i $|y_0|\\leq1$, el punt $(0,y_0)$ no és de $G$, i tota bola centrada en ell conté punts $(s,(1-s)y_0)$ amb $s>0$ petit, que són de $G$ perquè $s\\neq0$ i $s^2+(1-s)^2y_0^2\\leq s^2+y_0^2\\leq1$. Per tant també és de la frontera.",
+   "Els punts amb $x^2+y^2>1$ són exteriors (formen un obert disjunt de $G$) i els de $\\mathring{G}$ són interiors. Així, $\\mathrm{Fr}\\,G=\\{x^2+y^2=1\\}\\cup\\{(0,y)\\mid |y|\\leq1\\}$: la circumferència unitat i el diàmetre vertical.",
+   "Adherència: el disc tancat $\\{x^2+y^2\\leq1\\}$ és un tancat que conté $G$, així que $\\overline{G}$ hi està contingut. Recíprocament, els punts del disc amb $x_0\\neq0$ ja són de $G$, i si $x_0=0$ la successió $(1/n,(1-1/n)y_0)$ és de $G$ i hi convergeix. Per tant $\\overline{G}=\\{x^2+y^2\\leq1\\}$.",
+   "Punts d'acumulació: sigui $p=(x_0,y_0)$ del disc tancat. Si $x_0\\neq0$, la successió $p_n=(1+\\frac1n)(x_0,y_0)$ és de $G$, té termes diferents de $p$ i convergeix a $p$; si $x_0=0$, la successió $(1/n,(1-1/n)y_0)$ anterior té primera coordenada no nul·la i convergeix a $p$. Per tant $G'=\\{x^2+y^2\\leq1\\}$."
+  ],
+  "errors": [
+   {
+    "fragment": 4,
+    "cita": "$s^2+(1-s)^2y_0^2\\leq s^2+y_0^2\\leq1$",
+    "tipus": "desigualtat",
+    "explicacio": "La desigualtat $s^2+y_0^2\\leq1$ és falsa en general: per a $|y_0|=1$ (o $y_0$ proper a $1$) dona $s^2+y_0^2>1$. Fitar $(1-s)^2y_0^2$ per $y_0^2$ perd massa.",
+    "correccio": "Fitar $y_0^2\\leq1$: $s^2+(1-s)^2y_0^2\\leq s^2+(1-s)^2=1-2s+2s^2<1$ per a $0<s<1$.",
+    "pista": "Prova $y_0=1$: quant val $s^2+y_0^2$? És $\\leq1$?"
+   },
+   {
+    "fragment": 7,
+    "cita": "$p_n=(1+\\frac1n)(x_0,y_0)$ és de $G$",
+    "tipus": "logica",
+    "explicacio": "Si $p$ és de la circumferència ($x_0^2+y_0^2=1$), els punts $(1+\\frac1n)p$ tenen norma $>1$ i no són de $G$; la successió no serveix per a aquests punts.",
+    "correccio": "Prendre $p_n=(1-\\frac1n)(x_0,y_0)$, que per a $n\\geq2$ té norma $<1$ i primera coordenada no nul·la, i per tant és de $G$, és diferent de $p$ i convergeix a $p$.",
+    "pista": "Si $\\|p\\|=1$, quina norma té $(1+\\frac1n)p$? Encara és dins del disc?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-8e",
+  "dificultat": "normal",
+  "fragments": [
+   "Si $y\\geq0$, la condició és $y=5-x^2$ (amb $x^2\\leq5$); si $y<0$, és $y=x^2-5$ (amb $x^2<5$). Així $E$ és la unió de dos arcs de paràbola que s'uneixen als punts $(\\pm\\sqrt5,0)$: una corba tancada i fitada.",
+   "Interior: sigui $p=(x_0,y_0)\\in E$ (llavors $p\\neq(0,0)$) i $r>0$. Per a $s>1$, $s^2x_0^2+s|y_0|>x_0^2+|y_0|=5$, de manera que $sp\\notin E$, i $\\|sp-p\\|=(s-1)\\|p\\|<r$ si $s$ és prou proper a $1$. Per tant cap punt de $E$ és interior: $\\mathring{E}=\\varnothing$.",
+   "Adherència: com que $E$ és fitat ($|x|\\leq\\sqrt5$ i $|y|\\leq5$), és un conjunt tancat, i per tant $\\overline{E}=E$.",
+   "Frontera: tota bola centrada en un punt de $E$ conté aquest punt i, com que $\\mathring{E}=\\varnothing$, també punts de $E^c$; i els punts de fora de $E$ són exteriors, perquè $E^c$ és obert. Per tant $\\mathrm{Fr}\\,E=E$.",
+   "Punts d'acumulació: sigui $p=(x_0,y_0)\\in E$. Prenem $x_n=(1-\\frac1n)x_0$, que compleix $x_n\\to x_0$, $x_n\\neq x_0$ i $x_n^2<5$. Si $y_0\\geq0$, posem $p_n=(x_n,5-x_n^2)$, i si $y_0<0$, $p_n=(x_n,x_n^2-5)$.",
+   "En tots dos casos $p_n\\in E$, $p_n\\neq p$ i $p_n\\to p$, així que $p\\in E'$. Com que $E'\\subseteq\\overline{E}=E$, obtenim $E'=E$.",
+   "Finalment, $\\overline{E}=E$, de manera que $E$ és tancat, i $\\mathring{E}=\\varnothing\\neq E$, de manera que no és obert."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "com que $E$ és fitat ($|x|\\leq\\sqrt5$ i $|y|\\leq5$), és un conjunt tancat",
+    "tipus": "logica",
+    "explicacio": "Ser fitat no implica ser tancat (per exemple, una bola oberta és fitada i no és tancada). La conclusió és certa, però la justificació no.",
+    "correccio": "$E=f^{-1}(\\{5\\})$ amb $f(x,y)=x^2+|y|$ contínua i $\\{5\\}$ tancat, per tant $E$ és tancat i $\\overline{E}=E$.",
+    "pista": "Coneixes algun conjunt fitat que no sigui tancat? Quina propietat de $f(x,y)=x^2+|y|$ podries usar?"
+   },
+   {
+    "fragment": 5,
+    "cita": "Prenem $x_n=(1-\\frac1n)x_0$, que compleix $x_n\\to x_0$, $x_n\\neq x_0$",
+    "tipus": "logica",
+    "explicacio": "Si $x_0=0$ (punts $(0,\\pm5)$ de $E$), aleshores $x_n=0=x_0$ per a tot $n$ i $p_n=p$: la successió no té termes diferents de $p$. Aquest cas queda sense tractar.",
+    "correccio": "Prendre $x_n=(1-\\frac1n)x_0$ si $x_0\\neq0$ i $x_n=\\frac1n$ si $x_0=0$; en tots dos casos $x_n\\to x_0$, $x_n\\neq x_0$ i $x_n^2<5$ per a $n\\geq3$.",
+    "pista": "Què passa amb $x_n$ si el punt és $(0,5)$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-14a",
+  "dificultat": "normal",
+  "fragments": [
+   "Pel teorema de Bolzano-Weierstrass, un subconjunt de $\\mathbb{R}^n$ és compacte si i només si tota successió del conjunt té una parcial convergent a un punt del conjunt. Ho comprovarem per a $K_1\\times K_2$.",
+   "Sigui $((a_k,b_k))_k$ una successió de $K_1\\times K_2$, és a dir, amb $a_k\\in K_1$ i $b_k\\in K_2$ per a tot $k$.",
+   "La successió $(a_k)_k$ és fitada, perquè $K_1$ és fitat, i per Bolzano-Weierstrass té una parcial convergent $a_{k_j}\\to a$. Com que $K_1$ és obert, el límit $a$ és de $K_1$.",
+   "Igualment, la successió $(b_{k_j})_j$ és fitada, perquè $K_2$ és fitat, i com que $K_2$ és tancat convergeix a un punt $b\\in K_2$.",
+   "Aleshores $\\|(a_{k_j},b_{k_j})-(a,b)\\|^2=\\|a_{k_j}-a\\|^2+\\|b_{k_j}-b\\|^2\\to0$, és a dir, la parcial $((a_{k_j},b_{k_j}))_j$ convergeix a $(a,b)$.",
+   "Com que $(a,b)\\in K_1\\times K_2$, tota successió de $K_1\\times K_2$ té una parcial convergent a un punt de $K_1\\times K_2$, i per tant $K_1\\times K_2$ és compacte."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "Com que $K_1$ és obert",
+    "tipus": "hipotesi",
+    "explicacio": "Un compacte de $\\mathbb{R}^n$ és tancat, no obert; i ser obert no garantiria que el límit d'una successió del conjunt hi pertanyi.",
+    "correccio": "Com que $K_1$ és compacte, és tancat, i per tant el límit $a$ de la parcial pertany a $K_1$.",
+    "pista": "Quina propietat d'un conjunt garanteix que els límits de successions del conjunt hi pertanyen? La té $K_1$?"
+   },
+   {
+    "fragment": 4,
+    "cita": "com que $K_2$ és tancat convergeix a un punt $b\\in K_2$",
+    "tipus": "logica",
+    "explicacio": "Una successió fitada en un tancat no té per què convergir; Bolzano-Weierstrass només dona una parcial convergent. Cal extreure una nova parcial de $(b_{k_j})_j$.",
+    "correccio": "$(b_{k_j})_j$ té una parcial $b_{k_{j_s}}\\to b\\in K_2$, i aleshores també $a_{k_{j_s}}\\to a$ (parcial d'una successió convergent); es treballa amb els índexs $k_{j_s}$.",
+    "pista": "Tota successió fitada és convergent? Què et garanteix exactament Bolzano-Weierstrass?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-5b",
+  "dificultat": "dificil",
+  "fragments": [
+   "Fixem $x,y\\in\\mathbb{R}^m$. Com que $A\\neq\\emptyset$, el conjunt $\\{d(x,a)\\mid a\\in A\\}$ és no buit i fitat inferiorment per $0$, i $d(x,A)$ és el seu ínfim; el mateix val per a $d(y,A)$.",
+   "Sigui $a\\in A$ qualsevol. Per definició d'ínfim, $d(x,A)\\leq d(x,a)$, i per la desigualtat triangular, $d(x,a)\\leq d(x,y)+d(y,a)$.",
+   "Per tant, $d(x,A)-d(x,y)\\leq d(y,a)$ per a algun $a\\in A$, i així $d(x,A)-d(x,y)$ és una fita inferior del conjunt $\\{d(y,a)\\mid a\\in A\\}$.",
+   "Com que l'ínfim és la més petita de les fites inferiors, $d(x,A)-d(x,y)\\leq d(y,A)$, és a dir, $d(x,A)-d(y,A)\\leq d(x,y)$.",
+   "Per a l'altra desigualtat, sigui $a_0\\in A$ el punt d'$A$ més proper a $x$, de manera que $d(x,a_0)=d(x,A)$. Aleshores $d(y,A)\\leq d(y,a_0)\\leq d(y,x)+d(x,a_0)=d(x,y)+d(x,A)$, és a dir, $d(y,A)-d(x,A)\\leq d(x,y)$.",
+   "Juntant les dues desigualtats, $-d(x,y)\\leq d(x,A)-d(y,A)\\leq d(x,y)$, que és exactament $|d(x,A)-d(y,A)|\\leq d(x,y)$."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "per a algun $a\\in A$",
+    "tipus": "logica",
+    "explicacio": "Per ser una fita inferior del conjunt, la desigualtat ha de valer per a TOTS els $a\\in A$; que valgui per a algun no en fa una fita inferior. (Del pas anterior, amb $a$ qualsevol, sí que se'n dedueix per a tot $a$.)",
+    "correccio": "$d(x,A)-d(x,y)\\leq d(y,a)$ per a tot $a\\in A$, i per tant és una fita inferior de $\\{d(y,a)\\mid a\\in A\\}$.",
+    "pista": "Què ha de complir un nombre per ser fita inferior d'un conjunt: ser menor que algun element o que tots?"
+   },
+   {
+    "fragment": 4,
+    "cita": "l'ínfim és la més petita de les fites inferiors",
+    "tipus": "logica",
+    "explicacio": "L'ínfim és la MÉS GRAN de les fites inferiors; és justament per això que tota fita inferior és $\\leq$ l'ínfim. Amb «la més petita» la desigualtat no se seguiria (i de fet no n'hi ha cap de més petita).",
+    "correccio": "Com que l'ínfim és la més gran de les fites inferiors, $d(x,A)-d(x,y)\\leq d(y,A)$.",
+    "pista": "Si $c$ és una fita inferior d'un conjunt, també ho és $c-1$. Té sentit parlar de la fita inferior més petita?"
+   },
+   {
+    "fragment": 5,
+    "cita": "sigui $a_0\\in A$ el punt d'$A$ més proper a $x$",
+    "tipus": "hipotesi",
+    "explicacio": "L'ínfim $d(x,A)$ no té per què assolir-se: $A$ és un conjunt no buit qualsevol, no necessàriament tancat (per exemple, $A=(0,1)$ i $x=0$ a $\\mathbb{R}$).",
+    "correccio": "Intercanviar els papers de $x$ i $y$ en l'argument anterior: $d(y,A)-d(x,A)\\leq d(y,x)=d(x,y)$, sense suposar que l'ínfim s'assoleix.",
+    "pista": "Existeix sempre un punt d'$A$ a distància exactament $d(x,A)$ de $x$? Pensa en un $A$ que no sigui tancat."
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t2-15a",
+  "dificultat": "facil",
+  "fragments": [
+   "Pel teorema de Heine-Borel, un subconjunt de $\\mathbb{R}^4$ és compacte si i només si és tancat i fitat. Comprovem les dues coses.",
+   "Tancat: les funcions $2x^2+y^2-z^2$, $y^2+2z^2$, $|z|$ i $|t|$ són contínues a $\\mathbb{R}^4$. La igualtat equival a les dues desigualtats $2x^2+y^2-z^2\\geq2$ i $2x^2+y^2-z^2\\leq2$, i els conjunts $\\{2x^2+y^2-z^2\\geq2\\}$, $\\{2x^2+y^2-z^2\\leq2\\}$, $\\{y^2+2z^2\\leq10\\}$ i $\\{|z|\\geq|t|\\}$ són tancats perquè vénen de desigualtats no estrictes entre funcions contínues. $A$ n'és la intersecció, i per tant és tancat.",
+   "Fitat: de $y^2+2z^2\\leq10$ obtenim $y^2\\leq10$ i $2z^2\\leq10$, és a dir, $z^2\\leq5$.",
+   "De $|t|\\leq|z|$ obtenim $t^2\\leq z^2\\leq5$.",
+   "De la igualtat, $2x^2=2+y^2-z^2\\leq2+10=12$, és a dir, $x^2\\leq6$.",
+   "Per tant les quatre coordenades estan fitades, $A$ està contingut en una bola centrada a l'origen i és fitat. Com que és tancat i fitat, per Heine-Borel $A$ és compacte."
+  ],
+  "errors": [
+   {
+    "fragment": 5,
+    "cita": "igualtat, $2x^2=2+y^2-z^2\\leq2+10=12$",
+    "tipus": "calcul",
+    "explicacio": "En aïllar $2x^2$ de $2x^2+y^2-z^2=2$ s'han girat els signes: $2x^2=2-y^2+z^2$. La fita correcta és $2x^2\\leq2+5=7$ (la conclusió que $x$ és fitada es manté).",
+    "correccio": "$2x^2=2-y^2+z^2\\leq2+z^2\\leq2+5=7$, és a dir, $x^2\\leq\\frac72$.",
+    "pista": "Si passes $y^2-z^2$ a l'altre costat de la igualtat, quins signes han de tenir?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t2-1c",
+  "dificultat": "normal",
+  "fragments": [
+   "La funció $\\arcsin$ està definida a $[-1,1]$, i el quocient $x/y$ demana $y\\neq0$. Per tant el domini està format pels punts amb $y\\neq0$ i $-1\\le x/y\\le1$.",
+   "Multiplicant les desigualtats per $y$ obtenim $-y\\le x\\le y$. Per tant $\\mathrm{Dom}(f)=\\{(x,y)\\mid -y\\le x\\le y\\}\\setminus\\{(0,0)\\}$: la regió entre les rectes $y=x$ i $y=-x$ situada per sobre de l'origen.",
+   "El domini no és obert: $(1,1)$ hi pertany, però tota bola centrada en $(1,1)$ conté punts $(1+\\varepsilon,1)$ amb $\\varepsilon>0$, que no hi pertanyen perquè $x>y$.",
+   "Tampoc no és tancat: els punts $(0,1/n)$ són del domini i convergeixen a $(0,0)$, que no hi és. Així $(0,0)$ és un punt adherent que no hi pertany, i el domini no és ni obert ni tancat.",
+   "Imatge: sobre els punts $(t,1)$ amb $t\\in[-1,1]$, que són del domini, el quocient $x/y=t$ recorre tot $[-1,1]$, i $\\arcsin([-1,1])=[-\\pi/2,\\pi/2]$. Per tant $\\mathrm{Im}(f)=[-\\pi/2,\\pi/2]$.",
+   "La imatge no és oberta: tota bola centrada en $\\pi/2$ conté punts més grans que $\\pi/2$, que no hi són. Com que no és oberta, és un conjunt tancat de $\\mathbb{R}$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "Multiplicant les desigualtats per $y$ obtenim $-y\\le x\\le y$",
+    "tipus": "desigualtat",
+    "explicacio": "Multiplicar per $y$ només conserva el sentit de les desigualtats si $y>0$; si $y<0$ es giren. Així es perd tota la part del domini amb $y<0$ (per exemple $(0,-1)$, on $f=\\arcsin 0=0$).",
+    "correccio": "Multiplicant per $|y|>0$: $|x/y|\\le1\\iff|x|\\le|y|$, i $\\mathrm{Dom}(f)=\\{(x,y)\\mid|x|\\le|y|\\}\\setminus\\{(0,0)\\}$, la regió entre les diagonals que conté l'eix $y$ (per sobre i per sota de l'origen).",
+    "pista": "Què passa amb el sentit de la desigualtat si $y$ és negatiu? És $(0,-1)$ del domini?"
+   },
+   {
+    "fragment": 6,
+    "cita": "Com que no és oberta, és un conjunt tancat de $\\mathbb{R}$",
+    "tipus": "logica",
+    "explicacio": "No ser obert no implica ser tancat (hi ha conjunts que no són ni una cosa ni l'altra, com el mateix domini). La imatge és tancada, però per un altre motiu.",
+    "correccio": "$[-\\pi/2,\\pi/2]$ és tancat perquè és la bola tancada $\\overline{B}(0,\\pi/2)$ (o perquè el seu complementari és unió de dos intervals oberts).",
+    "pista": "Acabes de veure un conjunt que no és ni obert ni tancat. Pots deduir «tancat» de «no obert»?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t2-9a",
+  "dificultat": "normal",
+  "fragments": [
+   "$F$ és contínua en un punt si i només si ho són les dues components $F_1$ i $F_2$, perquè $|F_i(x)-L_i|\\le\\|F(x)-L\\|\\le|F_1(x)-L_1|+|F_2(x)-L_2|$. Per tant el conjunt de discontinuïtats de $F$ és la unió dels de $F_1$ i $F_2$.",
+   "Fora de l'origen, $F_1$ és el quocient de $xy$ i de la norma $(x^2+y^2)^{1/2}$, que són contínues, amb denominador no nul: és contínua.",
+   "A l'origen: de $(|x|-|y|)^2\\ge0$ surt $|xy|\\le\\frac{x^2+y^2}{2}$, d'on $|F_1(x,y)|\\le\\frac12(x^2+y^2)\\to0=F_1(0,0)$. Per tant $F_1$ és contínua a tot $\\mathbb{R}^2$.",
+   "Sigui $P=\\{(x,y)\\mid x+y^2=0\\}$. El conjunt $\\mathbb{R}^2\\setminus P=\\{x+y^2>0\\}\\cup\\{x+y^2<0\\}$ és obert, i en ell $F_2$ coincideix amb el quocient de polinomis $\\frac{x}{x+y^2}$, amb denominador no nul: $F_2$ és contínua a cada punt de $\\mathbb{R}^2\\setminus P$.",
+   "Si $(a,b)\\in P$ i $(a,b)\\neq(0,0)$, aleshores $a=-b^2\\neq0$ i, per a $t\\neq0$, $F_2(a+t,b)=\\frac{a+t}{t}$, que no és fitat quan $t\\to0$. Per tant $F_2$ no és contínua en aquests punts.",
+   "A l'origen, $F_2(x,0)=1$ per a $x\\neq0$ i $F_2(0,y)=0$ per a $y\\neq0$: els límits per aquests dos camins són diferents i $F_2$ tampoc no és contínua a $(0,0)$.",
+   "Per tant el conjunt de discontinuïtats de $F$ és exactament $P=h^{-1}(\\{0\\})$, amb $h(x,y)=x+y^2$ contínua. Com que $\\{0\\}$ és compacte, la seva antiimatge $P$ és compacta i, en particular, tancada."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "d'on $|F_1(x,y)|\\le\\frac12(x^2+y^2)\\to0=F_1(0,0)$",
+    "tipus": "calcul",
+    "explicacio": "En dividir per $(x^2+y^2)^{1/2}$ s'obté $\\frac12(x^2+y^2)^{1/2}$, no $\\frac12(x^2+y^2)$; la fita escrita és falsa a prop de l'origen (a $(0.1,0.1)$, $F_1\\approx0.071>0.01$). La conclusió es manté amb la fita correcta.",
+    "correccio": "$|F_1(x,y)|\\le\\frac{x^2+y^2}{2(x^2+y^2)^{1/2}}=\\frac12(x^2+y^2)^{1/2}\\to0$.",
+    "pista": "Què queda en dividir $\\frac{x^2+y^2}{2}$ per $(x^2+y^2)^{1/2}$?"
+   },
+   {
+    "fragment": 7,
+    "cita": "Com que $\\{0\\}$ és compacte, la seva antiimatge $P$ és compacta",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "L'antiimatge d'un compacte per una funció contínua no és compacta en general; de fet $P$ és la paràbola $x=-y^2$, que no és fitada. El que es conserva per antiimatges contínues és ser tancat.",
+    "correccio": "Com que $\\{0\\}$ és tancat a $\\mathbb{R}$ i $h$ és contínua a $\\mathbb{R}^2$, $P=h^{-1}(\\{0\\})$ és tancat.",
+    "pista": "La paràbola $x=-y^2$ és fitada? Quina propietat d'un conjunt sí que es conserva en prendre antiimatges per funcions contínues?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t2-10",
+  "dificultat": "normal",
+  "fragments": [
+   "Sigui $S=\\{x^2+y^2=1\\}$. El conjunt $U=\\mathbb{R}^2\\setminus S=\\{x^2+y^2<1\\}\\cup\\{x^2+y^2>1\\}$ és obert, i a $U$ la funció és un quocient de polinomis amb denominador no nul. Per tant $f$ és contínua a cada punt de $U$.",
+   "Sigui $(a,b)\\in S$ amb $ab\\neq0$. Sobre els punts $(1+t)(a,b)$, $t\\neq0$ petit, $f=\\frac{(1+t)^4a^3b}{(1+t)^2-1}=\\frac{(1+t)^4a^3b}{t^2}$, que no és fitat quan $t\\to0$ perquè el numerador tendeix a $a^3b\\neq0$. Per tant $f$ no és contínua a $(a,b)$.",
+   "A $(1,0)$: per a $y\\neq0$, $f(1,y)=\\frac{y}{1+y^2-1}=\\frac1y$, que no és fitat quan $y\\to0$. Anàlogament, $f(-1,y)=-\\frac1y$. Per tant $f$ no és contínua a $(\\pm1,0)$.",
+   "A $(0,1)$: sobre la recta $y=1$, $f(x,1)=\\frac{x^3}{x^2}=x\\to0$, i sobre la circumferència $f$ val $0$; com que els dos camins donen $0=f(0,1)$, $f$ és contínua a $(0,1)$, i per simetria també a $(0,-1)$.",
+   "Conclusió: $f$ és contínua a $\\mathbb{R}^2\\setminus S$ i als punts $(0,\\pm1)$, i és discontínua a la resta de punts de la circumferència unitat."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "petit, $f=\\frac{(1+t)^4a^3b}{(1+t)^2-1}=\\frac{(1+t)^4a^3b}{t^2}$",
+    "tipus": "calcul",
+    "explicacio": "$(1+t)^2-1=2t+t^2=t(2+t)$, no $t^2$. La conclusió (no fitat) es manté, ja que el denominador també tendeix a $0$.",
+    "correccio": "$f=\\frac{(1+t)^4a^3b}{t(2+t)}$, que no és fitat quan $t\\to0$.",
+    "pista": "Desenvolupa $(1+t)^2$: quin terme de primer grau en $t$ queda després de restar $1$?"
+   },
+   {
+    "fragment": 4,
+    "cita": "com que els dos camins donen $0=f(0,1)$, $f$ és contínua a $(0,1)$",
+    "tipus": "conclusio",
+    "explicacio": "Que dos camins donin el mateix límit no prova la continuïtat. De fet, sobre la corba $y=\\sqrt{1-x^2+x^4}$ (que tendeix a $(0,1)$) el denominador val $x^4$ i $f=\\frac{y}{x}$, no fitat: $f$ no és contínua a $(0,\\pm1)$.",
+    "correccio": "Sobre $y=\\sqrt{1-x^2+x^4}$, $f=\\frac{x^3y}{x^4}=\\frac yx$, no fitat quan $x\\to0$; $f$ no és contínua a $(0,1)$ (ni a $(0,-1)$), i és discontínua a tots els punts de la circumferència.",
+    "pista": "Comprovar dos camins és suficient per assegurar que un límit existeix? Hi ha corbes cap a $(0,1)$ on el denominador s'anul·li més ràpid que el numerador?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t2-18b",
+  "dificultat": "normal",
+  "fragments": [
+   "Via la identificació $F$, el determinant és $\\det(a,b,c,d)=ad-bc$, un polinomi en les coordenades de $\\mathbb{R}^4$, i per tant és una funció contínua a $M_2(\\mathbb{R})$.",
+   "$C_1=\\det^{-1}(\\mathbb{R}\\setminus\\{0\\})$ i $\\mathbb{R}\\setminus\\{0\\}$ és obert, per tant $C_1$ és obert. No és tancat: $\\frac1nI\\in C_1$, perquè $\\det(\\frac1nI)=\\frac1{n^2}\\neq0$, i $\\frac1nI\\to0\\notin C_1$.",
+   "$C_2=\\det^{-1}(\\{1\\})$ i $\\{1\\}$ és tancat, per tant $C_2$ és tancat. En canvi, no és obert, perquè $\\{1\\}$ no és un obert de $\\mathbb{R}$.",
+   "$C_3=\\det^{-1}((0,+\\infty))$ i $(0,+\\infty)$ és obert, per tant $C_3$ és obert. No és tancat: $\\frac1nI\\in C_3$, ja que $\\det(\\frac1nI)=\\frac1{n^2}>0$, però $\\frac1nI\\to0$ i $\\det0=0$.",
+   "Compacitat: un compacte és tancat, així que $C_1$ i $C_3$, que no són tancats, no són compactes.",
+   "$C_2$ és tancat però no és fitat: les matrius $A_n=nI$ són de $C_2$ i $\\|F(A_n)\\|=n\\sqrt2\\to\\infty$. Per Heine-Borel, $C_2$ tampoc no és compacte. Cap dels tres conjunts és compacte."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "no és obert, perquè $\\{1\\}$ no és un obert de $\\mathbb{R}$",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "La continuïtat garanteix que l'antiimatge d'un obert és oberta, però no que l'antiimatge d'un no-obert no ho sigui (per exemple, una funció constant té com a antiimatges $\\varnothing$ o tot l'espai, que són oberts). Cal un argument directe.",
+    "correccio": "$I\\in C_2$, però $(1+\\frac1n)I\\to I$ i $\\det((1+\\frac1n)I)=(1+\\frac1n)^2\\neq1$: tota bola centrada en $I$ conté punts fora de $C_2$, així que $I$ no és interior i $C_2$ no és obert.",
+    "pista": "Si $g$ és contínua i $B$ no és obert, pots assegurar que $g^{-1}(B)$ no és obert? Pensa en una funció constant."
+   },
+   {
+    "fragment": 6,
+    "cita": "les matrius $A_n=nI$ són de $C_2$",
+    "tipus": "calcul",
+    "explicacio": "$\\det(nI)=n^2\\neq1$ per a $n\\geq2$, així que aquestes matrius no són de $C_2$. Cal un exemple de matrius no fitades amb determinant $1$.",
+    "correccio": "Prendre $A_n=\\begin{pmatrix}n&0\\\\0&1/n\\end{pmatrix}$, amb $\\det A_n=1$ i $\\|F(A_n)\\|\\geq n\\to\\infty$.",
+    "pista": "Quant val el determinant de $nI$ per a una matriu $2\\times2$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t2-7c",
+  "dificultat": "dificil",
+  "fragments": [
+   "Prenem el conveni $\\mathbb{N}=\\{1,2,\\dots\\}$, de manera que $p,q\\geq1$ i $p+q\\geq2$. Escrivim $r=\\sqrt{x^2+y^2}$ i $f(x,y)=\\frac{x^py^q}{x^2+y^2-xy}$.",
+   "Observem que $x^2+y^2-xy=(x-y)^2+xy$; com que tots dos sumands són no negatius, el denominador només s'anul·la quan $x=y$ i $xy=0$, és a dir, a l'origen.",
+   "A més, de $(|x|-|y|)^2\\geq0$ surt $|xy|\\leq\\frac{x^2+y^2}{2}$, i per tant $\\frac12r^2\\leq x^2+y^2-xy\\leq\\frac32r^2$: el denominador es comporta com $r^2$.",
+   "Com que $|x|\\leq r$ i $|y|\\leq r$, tenim $|x^py^q|\\leq r^{p+q}$, i dividint per la fita del denominador, $|f(x,y)|\\leq\\frac{r^{p+q}}{\\frac32r^2}=\\frac23r^{p+q-2}$.",
+   "Si $p+q\\geq3$, aquesta fita tendeix a $0$ quan $r\\to0^+$, i per tant el límit existeix i val $0$.",
+   "Si $p+q=2$, és a dir, $p=q=1$: sobre la recta $y=mx$, $f(x,mx)=\\frac{mx^2}{x^2(1-m+m^2)}=\\frac{m}{1-m+m^2}$ (amb $1-m+m^2>0$). Per a $m=0$ dona $0$ i per a $m=1$ dona $1$: el límit depèn de la recta i no existeix.",
+   "Conclusió: el límit existeix (i val $0$) si i només si $p\\geq2$ i $q\\geq2$; en cas contrari no existeix."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "com que tots dos sumands són no negatius",
+    "tipus": "desigualtat",
+    "explicacio": "$xy$ pot ser negatiu (per exemple $x=1$, $y=-1$). La conclusió que el denominador només s'anul·la a l'origen és certa, però no per aquest motiu.",
+    "correccio": "Usar $|xy|\\leq\\frac{x^2+y^2}{2}$: $x^2+y^2-xy\\geq\\frac12(x^2+y^2)>0$ fora de l'origen.",
+    "pista": "Quin signe té $xy$ al punt $(1,-1)$?"
+   },
+   {
+    "fragment": 4,
+    "cita": "dividint per la fita del denominador, $|f(x,y)|\\leq\\frac{r^{p+q}}{\\frac32r^2}=\\frac23r^{p+q-2}$",
+    "tipus": "desigualtat",
+    "explicacio": "Per fitar un quocient per dalt cal fitar el denominador per BAIX; dividir per la fita superior $\\frac32r^2$ dona un valor més petit i la desigualtat no se segueix.",
+    "correccio": "$|f(x,y)|\\leq\\frac{r^{p+q}}{\\frac12r^2}=2r^{p+q-2}$, usant $x^2+y^2-xy\\geq\\frac12r^2$.",
+    "pista": "Si fas el denominador més gran, el quocient es fa més gran o més petit?"
+   },
+   {
+    "fragment": 7,
+    "cita": "si i només si $p\\geq2$ i $q\\geq2$",
+    "tipus": "conclusio",
+    "explicacio": "No concorda amb l'anàlisi: per $p+q\\geq3$ el límit existeix, i això inclou casos com $(p,q)=(2,1)$ o $(1,5)$, on una de les dues potències és $1$. L'únic cas sense límit és $(1,1)$.",
+    "correccio": "El límit existeix (i val $0$) si i només si $p+q\\geq3$, és a dir, si i només si $(p,q)\\neq(1,1)$ (equivalentment, $p\\geq2$ o $q\\geq2$).",
+    "pista": "Amb $(p,q)=(2,1)$, quin cas dels anteriors s'aplica? Existeix el límit?"
+   }
+  ]
+ }
+]

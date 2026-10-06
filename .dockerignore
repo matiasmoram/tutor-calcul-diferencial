@@ -1,0 +1,14 @@
+.venv/
+.env
+.env.*
+!.env.example
+.git/
+.github/
+.pytest_cache/
+.playwright-mcp/
+**/__pycache__/
+**/*.pyc
+data/
+work/
+tests/
+backend/registres/

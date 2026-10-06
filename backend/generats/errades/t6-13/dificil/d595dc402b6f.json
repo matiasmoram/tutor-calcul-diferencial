@@ -1,0 +1,76 @@
+{
+  "id": "d595dc402b6f",
+  "exercici": "t6-13",
+  "font": "problema",
+  "dificultat": "dificil",
+  "fragments": [
+    "Un paral·lelepípede de cares paral·leles als plans coordenats inscrit a l'el·lipsoide té els vuit vèrtexs sobre l'el·lipsoide. Dos vèrtexs que només difereixen en la coordenada $x$ compleixen $x_1^2=x_2^2$, i per tant $x_2=-x_1$; igual amb $y$ i $z$. Així el paral·lelepípede és $[-x,x]\\times[-y,y]\\times[-z,z]$ i el seu volum és $V=8xyz$, amb $(x,y,z)$ a l'el·lipsoide i $x,y,z>0$.",
+    "El conjunt $S^+$ dels punts de l'el·lipsoide amb $x,y,z>0$ és fitat i $V$ hi és contínua, de manera que, pel teorema de Weierstrass, $V$ assoleix un màxim a $S^+$.",
+    "El conjunt $S^+$ és un obert de l'el·lipsoide, que és una 2-varietat perquè $\\nabla\\Phi=\\left(\\frac{2x}{a^2},\\frac{2y}{b^2},\\frac{2z}{c^2}\\right)\\neq(0,0,0)$ sobre ell; per tant el màxim és un extrem local de $V$ condicionat a l'el·lipsoide i podem aplicar Lagrange.",
+    "Les equacions de Lagrange són $8yz=\\lambda\\frac{2x}{a^2}$, $8xz=\\lambda\\frac{2y}{b^2}$ i $8xy=\\lambda\\frac{2z}{c^2}$. Multiplicant-les per $x$, $y$ i $z$ respectivament: $8xyz=2\\lambda\\frac{x^2}{a^2}=2\\lambda\\frac{y^2}{b^2}=2\\lambda\\frac{z^2}{c^2}$.",
+    "Com que $\\nabla\\Phi\\neq0$, el multiplicador $\\lambda$ no és nul i podem dividir per $2\\lambda$: $\\frac{x^2}{a^2}=\\frac{y^2}{b^2}=\\frac{z^2}{c^2}$. Com que la seva suma és $1$, cadascun val $\\frac13$: $x=\\frac{a}{\\sqrt3}$, $y=\\frac{b}{\\sqrt3}$, $z=\\frac{c}{\\sqrt3}$.",
+    "És l'únic candidat de $S^+$, i la hessiana de $V=8xyz$ en aquest punt és definida negativa, de manera que és el màxim: $V_{\\max}=8\\cdot\\frac{abc}{3\\sqrt3}=\\frac{8abc}{3\\sqrt3}=\\frac{8\\sqrt3}{9}abc$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "és fitat i $V$ hi és contínua, de manera que, pel teorema de Weierstrass, $V$ assoleix un màxim",
+      "inici": 59,
+      "fi": 154,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "$S^+$ no és tancat (hi falten els punts amb alguna coordenada nul·la), i Weierstrass demana un compacte. Cal treballar al conjunt tancat amb $x,y,z\\geq0$ i veure que el màxim no és a la vora, on $V=0$.",
+      "correccio": "El conjunt dels punts de l'el·lipsoide amb $x,y,z\\geq0$ és compacte i $V$ hi té màxim; com que $V=0$ quan alguna coordenada és nul·la i $V>0$ a la resta, el màxim és a $S^+$.",
+      "pista": "Quines dues propietats ha de tenir el conjunt per aplicar Weierstrass? Les té $S^+$, amb les desigualtats estrictes?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "Com que $\\nabla\\Phi\\neq0$, el multiplicador $\\lambda$ no és nul",
+      "inici": 0,
+      "fi": 63,
+      "tipus": "logica",
+      "explicacio": "$\\nabla\\Phi\\neq0$ garanteix que hi ha multiplicador, però no que sigui no nul: $\\lambda=0$ només queda exclòs si $\\nabla V\\neq0$. Aquí cal usar que $8xyz=2\\lambda\\frac{x^2}{a^2}$ amb $xyz>0$.",
+      "correccio": "Com que $8xyz>0$ i $8xyz=2\\lambda\\frac{x^2}{a^2}$, $\\lambda\\neq0$ i podem dividir per $2\\lambda$.",
+      "pista": "Si fos $\\lambda=0$, quina equació quedaria? Què té a veure això amb $\\nabla\\Phi$?"
+    },
+    {
+      "id": "e3",
+      "fragment": 6,
+      "cita": "la hessiana de $V=8xyz$ en aquest punt és definida negativa",
+      "inici": 31,
+      "fi": 90,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "La hessiana de $8xyz$ té tota la diagonal nul·la (traça $0$), així que no pot ser definida negativa; a més, el caràcter d'un extrem condicionat no es decideix amb la hessiana lliure de $V$. El màxim és aquest punt perquè existeix i és l'únic candidat.",
+      "correccio": "És l'únic candidat de $S^+$, i com que el màxim existeix i ha de ser un candidat de Lagrange, és el màxim.",
+      "pista": "Quant valen les derivades segones $V_{xx}$, $V_{yy}$ i $V_{zz}$? Una matriu amb diagonal nul·la pot ser definida negativa?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t56.json",
+    "valoracio": "Resultat correcte, però l'existència del màxim aplica Weierstrass a un conjunt no compacte, λ≠0 es justifica malament i s'afirma una hessiana definida negativa falsa.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "és fitat i $V$ hi és contínua, de manera que, pel teorema de Weierstrass",
+        "gravetat": "error",
+        "explicacio": "Amb $x,y,z>0$ estrictes $S^+$ no és tancat, per tant no és compacte i Weierstrass no s'hi aplica; cal prendre $x,y,z\\geq0$ (compacte) i observar que el màxim no és on $V=0$."
+      },
+      {
+        "fragment": 5,
+        "cita": "Com que $\\nabla\\Phi\\neq0$, el multiplicador $\\lambda$ no és nul",
+        "gravetat": "error",
+        "explicacio": "$\\nabla\\Phi\\neq0$ no implica $\\lambda\\neq0$; el que ho garanteix és $8xyz>0$ a l'equació $8xyz=2\\lambda\\frac{x^2}{a^2}$."
+      },
+      {
+        "fragment": 6,
+        "cita": "la hessiana de $V=8xyz$ en aquest punt és definida negativa",
+        "gravetat": "error",
+        "explicacio": "La hessiana de $8xyz$ té diagonal nul·la (traça $0$), per tant no és definida negativa; a més, la hessiana lliure no decideix un extrem condicionat. El màxim se segueix de l'existència més la unicitat del candidat."
+      }
+    ]
+  },
+  "creat": 1791295917.0174859
+}

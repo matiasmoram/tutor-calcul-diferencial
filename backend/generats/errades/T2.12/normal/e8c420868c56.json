@@ -1,0 +1,61 @@
+{
+  "id": "e8c420868c56",
+  "exercici": "T2.12",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $f:\\Omega\\subseteq\\mathbb{R}^2\\to\\mathbb{R}^m$ i $(a,b)\\in\\Omega$ tal que $(a-\\eta,a+\\eta)\\times(b-\\eta,b+\\eta)\\subseteq\\Omega$ per a cert $\\eta>0$. Suposem que $\\lim_{(x,y)\\to(a,b)}f(x,y)=L$, que $\\forall x\\in(a-\\eta,a+\\eta)$ existeix $\\lim_{y\\to b}f(x,y)$ i que $\\forall y\\in(b-\\eta,b+\\eta)$ existeix $\\lim_{x\\to a}f(x,y)$.",
+    "Llavors, $\\lim_{x\\to a}\\lim_{y\\to b}f(x,y)=L=\\lim_{y\\to b}\\lim_{x\\to a}f(x,y)$ i, a més, $\\lim_{y\\to b}f(x,y)=L$ per a tot $x\\in(a-\\eta,a+\\eta)$.",
+    "Farem la demostració només per a un dels límits iterats i, sense pèrdua de generalitat, per a $m=1$. Per l'existència del límit doble, per a tot $\\epsilon>0$ existeix $\\delta_1=\\delta_1(\\epsilon)>0$ tal que si $0<\\|(x,y)-(a,b)\\|<\\delta_1$, aleshores $|f(x,y)-L|<\\epsilon$. (1)",
+    "D'altra banda, per a cada $x\\in(a-\\eta,a+\\eta)$ sigui $g(x):=\\lim_{y\\to b}f(x,y)$; com que aquests límits existeixen per a tot $x$, donat $\\epsilon>0$ existeix $\\delta_2=\\delta_2(\\epsilon)>0$, el mateix per a tots els $x$, tal que si $0<|y-b|<\\delta_2$, aleshores $|f(x,y)-g(x)|<\\epsilon$. (2)",
+    "Volem veure que $\\lim_{x\\to a}g(x)=L$, és a dir, que donat $\\epsilon>0$ existeix $\\delta>0$ tal que si $0<|x-a|<\\delta$, aleshores $|g(x)-L|<\\epsilon$.",
+    "Observem que si per a algun $y$ es té $|f(x,y)-L|<\\epsilon/2$ i $|g(x)-f(x,y)|<\\epsilon/2$, llavors $|g(x)-L|\\leq|g(x)-f(x,y)|+|f(x,y)-L|<\\epsilon$.",
+    "Prenem $\\delta=\\min\\{\\delta_1(\\epsilon/2)/\\sqrt{2},\\,\\eta\\}$. Donat $x$ amb $0<|x-a|<\\delta$, escollim $y\\neq b$ amb $|y-b|<\\min\\left\\{\\delta_2(\\epsilon/2,x),\\ \\delta_1(\\epsilon/2)/\\sqrt{2}\\right\\}$, on $\\delta_2(\\epsilon/2,x)$ és el radi que dona la definició de $g(x)$ per a aquest $x$.",
+    "Aleshores $0<\\|(x,y)-(a,b)\\|=\\sqrt{(x-a)^2+(y-b)^2}<\\delta_1(\\epsilon/2)$ i, per (1) i la tria de $y$, $|f(x,y)-L|<\\epsilon/2$ i $|f(x,y)-g(x)|<\\epsilon/2$. Per l'observació anterior, $|g(x)-L|<\\epsilon$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$\\lim_{y\\to b}f(x,y)=L$ per a tot $x\\in(a-\\eta,a+\\eta)$",
+      "inici": 89,
+      "fi": 144,
+      "tipus": "conclusio",
+      "explicacio": "Els límits interiors no tenen per què valer $L$; només el seu límit quan $x\\to a$. Contraexemple: $f(x,y)=x+y$ a $(0,0)$, amb $L=0$, però $\\lim_{y\\to0}f(x,y)=x\\neq0$ per a $x\\neq0$.",
+      "correccio": "La conclusió és només $\\lim_{x\\to a}\\lim_{y\\to b}f(x,y)=L=\\lim_{y\\to b}\\lim_{x\\to a}f(x,y)$.",
+      "pista": "Quant val $\\lim_{y\\to b}f(x,y)$ per a la funció $f(x,y)=x+y$ en un $x$ fix diferent de $0$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "existeix $\\delta_2=\\delta_2(\\epsilon)>0$, el mateix per a tots els $x$,",
+      "inici": 151,
+      "fi": 222,
+      "tipus": "quantificador",
+      "explicacio": "L'existència del límit per a cada $x$ dona un $\\delta_2$ que depèn de $\\epsilon$ i també de $x$; no hi ha cap motiu perquè n'hi hagi un de comú (convergència uniforme), que no es té per hipòtesi.",
+      "correccio": "Existeix $\\delta_2=\\delta_2(\\epsilon,x)>0$ (que depèn de $x$) tal que si $|y-b|<\\delta_2$, aleshores $|f(x,y)-g(x)|<\\epsilon$.",
+      "pista": "De què depèn el radi que surt de la definició de $\\lim_{y\\to b}f(x,y)$ per a un $x$ fix?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t2a.json",
+    "valoracio": "Conclusió addicional falsa a l'enunciat i uniformitat de $\\delta_2$ injustificada.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "a més, $\\lim_{y\\to b}f(x,y)=L$ per a tot $x\\in(a-\\eta,a+\\eta)$",
+        "gravetat": "error",
+        "explicacio": "Afirmació falsa i no present als apunts: $\\lim_{y\\to b}f(x,y)=g(x)$ depèn de $x$ (p. ex. $f(x,y)=x+y$ en $(0,0)$ dona $g(x)=x\\neq0$)."
+      },
+      {
+        "fragment": 4,
+        "cita": "existeix $\\delta_2=\\delta_2(\\epsilon)>0$, el mateix per a tots els $x$",
+        "gravetat": "error",
+        "explicacio": "L'existència dels límits per a cada $x$ no dona un $\\delta_2$ uniforme en $x$; als apunts $\\delta_2=\\delta_2(\\epsilon,x)$. (A més, és incoherent amb el pas [7], que usa $\\delta_2(\\epsilon/2,x)$.)"
+      }
+    ]
+  },
+  "creat": 1791295999.5535443
+}

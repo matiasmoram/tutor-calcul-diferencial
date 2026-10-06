@@ -1,0 +1,147 @@
+{
+  "id": "9b971bf40a6c",
+  "exercici": "t3-28",
+  "dificultat": "normal",
+  "fragments": [
+    "Considerem una direcció qualsevol $v\\in\\mathbb{R}^n$ i definim $\\varphi(t)=f(x_0+tv)$. Com que $f$ és de classe $C^1$, aquesta composició és derivable en un entorn de $0$.",
+    "Per la regla de la cadena, $\\varphi'(t)=Df(x_0+tv)=\\nabla f(x_0+tv)$. En particular, a $t=0$ tenim $\\varphi'(0)=\\nabla f(x_0)$.",
+    "Per tal que $\\varphi$ sigui creixent en un entorn de l'origen, n'hi ha prou que $\\varphi'(t)>0$ per a $t$ prou proper a $0$. Per tant volem triar $v$ de manera que la derivada inicial sigui estrictament positiva.",
+    "Com que $Df(x_0)\\neq 0$, el gradient $\\nabla f(x_0)$ no és el vector nul. Triem doncs $v=\\nabla f(x_0)$, que és una direcció natural de màxim creixement.",
+    "Amb aquesta tria, $\\varphi'(0)=\\nabla f(x_0)\\cdot v=\\nabla f(x_0)\\cdot \\nabla f(x_0)=\\|\\nabla f(x_0)\\|^2>0$. Així obtenim una derivada positiva a l'origen.",
+    "A més, com que $\\varphi'$ és contínua, si $\\varphi'(0)>0$ aleshores existeix $\\delta>0$ tal que $\\varphi'(t)>0$ per a tot $t\\in(-\\delta,\\delta)$. D'aquí se segueix que $\\varphi$ és creixent en aquest interval.",
+    "La condició $f(x_0)=0$ és necessària perquè, si no fos així, la positivitat de la derivada no implicaria que la funció comenci creixent des del nivell zero. Per tant el vector buscat és $v=\\nabla f(x_0)$.",
+    "En general, qualsevol vector $v$ tal que $\\nabla f(x_0)\\cdot v>0$ serviria, ja que llavors el mateix argument de continuïtat dona $\\varphi'(t)>0$ prop de $0$. La tria $v=\\nabla f(x_0)$ n'és un exemple concret."
+  ],
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$\\varphi'(t)=Df(x_0+tv)=\\nabla f(x_0+tv)$",
+      "inici": 27,
+      "fi": 68,
+      "tipus": "calcul",
+      "explicacio": "En derivar la composició falta multiplicar pel vector velocitat de la corba, que és $v$. A més, $Df$ és una aplicació lineal i cal avaluar-la sobre $v$ per obtenir un nombre.",
+      "correccio": "Per la regla de la cadena, $\\varphi'(t)=Df(x_0+tv)\\,v=\\nabla f(x_0+tv)\\cdot v$.",
+      "pista": "Quan derives $f$ al llarg de la corba $x_0+tv$, quina és la velocitat d'aquesta corba?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "La condició $f(x_0)=0$ és necessària",
+      "inici": 0,
+      "fi": 36,
+      "tipus": "hipotesi",
+      "explicacio": "El valor de $f$ en el punt inicial no intervé en el criteri de creixement local, que depèn del signe de la derivada. La conclusió funciona igual encara que $f(x_0)\\neq 0$.",
+      "correccio": "La condició $f(x_0)=0$ no és necessària per a aquest argument; només cal $Df(x_0)\\neq0$.",
+      "pista": "El fet que una funció sigui creixent prop d'un punt depèn del seu valor inicial o del signe de la derivada?"
+    }
+  ],
+  "verificacio": {
+    "valoracio": "La resolució arriba al vector correcte $v=\\nabla f(x_0)$ i justifica bé, als fragments 5 i 6, que amb aquesta tria la derivada és positiva prop de l'origen. Tanmateix, hi ha un error important en l'aplicació inicial de la regla de la cadena i una afirmació falsa sobre la necessitat de la hipòtesi $f(x_0)=0$.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "Per la regla de la cadena, $\\varphi'(t)=Df(x_0+tv)=\\nabla f(x_0+tv)$.",
+        "gravetat": "error",
+        "explicacio": "La regla de la cadena està mal aplicada: falta multiplicar pel vector velocitat de la corba, que és $v$. La derivada correcta és $\\varphi'(t)=Df(x_0+tv)(v)=\\nabla f(x_0+tv)\\cdot v$. A més, $\\varphi'(t)$ ha de ser un escalar, mentre que $\\nabla f(x_0+tv)$ és un vector."
+      },
+      {
+        "fragment": 2,
+        "cita": "En particular, a $t=0$ tenim $\\varphi'(0)=\\nabla f(x_0)$.",
+        "gravetat": "consequencia",
+        "explicacio": "Això hereta l'error anterior. La fórmula correcta és $\\varphi'(0)=Df(x_0)(v)=\\nabla f(x_0)\\cdot v$, no pas el vector gradient."
+      },
+      {
+        "fragment": 7,
+        "cita": "La condició $f(x_0)=0$ és necessària perquè, si no fos així, la positivitat de la derivada no implicaria que la funció comenci creixent des del nivell zero.",
+        "gravetat": "error",
+        "explicacio": "La condició $f(x_0)=0$ no és necessària. El fet que $\\varphi'(t)>0$ en un entorn de $0$ implica que $\\varphi$ és creixent en aquest entorn independentment del valor inicial $\\varphi(0)=f(x_0)$. Que la funció comenci o no des del nivell zero és irrellevant per a la monotonia."
+      }
+    ],
+    "intents": [
+      {
+        "intent": 1,
+        "generacio": {
+          "model": "gpt-5.5",
+          "latency_ms": 11768,
+          "input_tokens": 1506,
+          "output_tokens": 864
+        },
+        "validacio": [],
+        "verificacio": {
+          "model": "gpt-5.5",
+          "latency_ms": 24240,
+          "input_tokens": 1528,
+          "output_tokens": 1741
+        },
+        "problemes_verificador": [
+          {
+            "fragment": 1,
+            "cita": "Com que $f$ és $C^1$ i la corba $t\\mapsto x_0+tv$ és regular, $\\varphi$ és derivable.",
+            "gravetat": "imprecisio",
+            "explicacio": "La derivabilitat de $\\varphi$ sí que és certa, però no cal que la corba sigui regular. De fet, si $v=0$, la corba $t\\mapsto x_0+tv$ no és regular en el sentit usual, tot i que la composició continua sent derivable. El motiu correcte és que és composició d'una aplicació $C^1$ amb una aplicació afí."
+          },
+          {
+            "fragment": 2,
+            "cita": "$\\varphi'(t)=Df(x_0+tv)=\\nabla f(x_0+tv)$",
+            "gravetat": "error",
+            "explicacio": "La regla de la cadena està mal aplicada: falta multiplicar pel vector velocitat de la corba, que és $v$. La fórmula correcta és $\\varphi'(t)=Df(x_0+tv)(v)=\\nabla f(x_0+tv)\\cdot v$. A més, $\\varphi'(t)$ és un escalar, mentre que $Df(x_0+tv)$ és una aplicació lineal i $\\nabla f(x_0+tv)$ és un vector."
+          },
+          {
+            "fragment": 2,
+            "cita": "En particular, a $t=0$ queda $\\varphi'(0)=\\nabla f(x_0)$.",
+            "gravetat": "error",
+            "explicacio": "També falta el producte escalar amb $v$. La derivada correcta a l'origen és $\\varphi'(0)=\\nabla f(x_0)\\cdot v$, que és un nombre real. Escriure-la igual al gradient dona un vector, no una derivada escalar."
+          },
+          {
+            "fragment": 6,
+            "cita": "A més, com que $f(x_0)=0$, tenim que $\\varphi(0)=0$, i això assegura que quan $\\varphi'(t)>0$ prop de $0$ la funció és creixent en aquest entorn.",
+            "gravetat": "imprecisio",
+            "explicacio": "És cert que $\\varphi(0)=0$, però aquesta dada no és necessària per al creixement. El que assegura que $\\varphi$ sigui creixent en un interval és que $\\varphi'(t)>0$ en aquest interval, no el valor $\\varphi(0)$. La hipòtesi $f(x_0)=0$ és irrellevant per a l'exercici."
+          }
+        ],
+        "discrepancies": [
+          "l'error declarat al fragment 6 («$\\varphi(0)=0$, i això assegura») no l'ha detectat el verificador: potser no és un error real o és ambigu"
+        ]
+      },
+      {
+        "intent": 2,
+        "generacio": {
+          "model": "gpt-5.5",
+          "latency_ms": 13047,
+          "input_tokens": 1577,
+          "output_tokens": 887
+        },
+        "validacio": [],
+        "verificacio": {
+          "model": "gpt-5.5",
+          "latency_ms": 14780,
+          "input_tokens": 1587,
+          "output_tokens": 1023
+        },
+        "problemes_verificador": [
+          {
+            "fragment": 2,
+            "cita": "Per la regla de la cadena, $\\varphi'(t)=Df(x_0+tv)=\\nabla f(x_0+tv)$.",
+            "gravetat": "error",
+            "explicacio": "La regla de la cadena està mal aplicada: falta multiplicar pel vector velocitat de la corba, que és $v$. La derivada correcta és $\\varphi'(t)=Df(x_0+tv)(v)=\\nabla f(x_0+tv)\\cdot v$. A més, $\\varphi'(t)$ ha de ser un escalar, mentre que $\\nabla f(x_0+tv)$ és un vector."
+          },
+          {
+            "fragment": 2,
+            "cita": "En particular, a $t=0$ tenim $\\varphi'(0)=\\nabla f(x_0)$.",
+            "gravetat": "consequencia",
+            "explicacio": "Això hereta l'error anterior. La fórmula correcta és $\\varphi'(0)=Df(x_0)(v)=\\nabla f(x_0)\\cdot v$, no pas el vector gradient."
+          },
+          {
+            "fragment": 7,
+            "cita": "La condició $f(x_0)=0$ és necessària perquè, si no fos així, la positivitat de la derivada no implicaria que la funció comenci creixent des del nivell zero.",
+            "gravetat": "error",
+            "explicacio": "La condició $f(x_0)=0$ no és necessària. El fet que $\\varphi'(t)>0$ en un entorn de $0$ implica que $\\varphi$ és creixent en aquest entorn independentment del valor inicial $\\varphi(0)=f(x_0)$. Que la funció comenci o no des del nivell zero és irrellevant per a la monotonia."
+          }
+        ],
+        "discrepancies": []
+      }
+    ]
+  },
+  "creat": 1790773487.3378568
+}

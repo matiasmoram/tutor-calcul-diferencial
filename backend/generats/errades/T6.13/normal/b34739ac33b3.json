@@ -1,0 +1,59 @@
+{
+  "id": "b34739ac33b3",
+  "exercici": "T6.13",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $\\Phi\\colon G\\subseteq\\mathbb{R}^n\\to\\mathbb{R}^{n-m}$ una funció $\\mathcal{C}^r(G)$ tal que $\\mathrm{rang}\\left(D\\Phi(\\mathbf{z})\\right)=n-m$ per a tot $\\mathbf{z}\\in G$. Sigui $M=M_\\Phi$ la $m$-varietat associada a la funció $\\Phi$ i $f\\colon G\\subseteq\\mathbb{R}^n\\to\\mathbb{R}$ una funció $\\mathcal{C}^1(G)$.",
+    "Si $\\mathbf{a}\\in M$ és un extrem local de $f$ condicionat a $M_\\Phi$, llavors $\\nabla f(\\mathbf{a})\\in T_M(\\mathbf{a})$.",
+    "Prenem $\\mathbf{v}\\in T_M(\\mathbf{a})$. Aleshores, existeixen un $\\delta>0$ i una funció derivable $\\alpha\\colon(-\\delta,\\delta)\\longrightarrow M$ tals que $\\alpha(0)=\\mathbf{a}$ i $\\alpha'(0)=\\mathbf{v}$.",
+    "Com que $\\mathbf{a}$ és un extrem local de $f$ condicionat a $M$ i $\\alpha$ pren valors a $M$ amb $\\alpha(0)=\\mathbf{a}$, $t=0$ és un extrem local de la funció d'una variable $f\\circ\\alpha$.",
+    "Per una banda, $(f\\circ\\alpha)'(0)=0$ (condició necessària d'extrem); per l'altra, per la regla de la cadena, $(f\\circ\\alpha)'(0)=Df(\\alpha(0))\\,\\alpha'(0)=Df(\\mathbf{a})\\,\\mathbf{v}$. Per tant, $Df(\\mathbf{a})\\,\\mathbf{v}=\\nabla f(\\mathbf{a})\\cdot\\mathbf{v}=0$.",
+    "Així, $T_M(\\mathbf{a})$ conté un vector ortogonal a $\\nabla f(\\mathbf{a})$, i això ja implica que $\\nabla f(\\mathbf{a})\\in T_M(\\mathbf{a})^\\perp=N_M(\\mathbf{a})$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "llavors $\\nabla f(\\mathbf{a})\\in T_M(\\mathbf{a})$",
+      "inici": 71,
+      "fi": 120,
+      "tipus": "conclusio",
+      "explicacio": "El gradient en un extrem condicionat és normal, no tangent, a la varietat. Contraexemple: $f(x,y)=x$ sobre la circumferència unitat té un màxim a $(1,0)$, on $\\nabla f=(1,0)\\notin T_M(1,0)=\\langle(0,1)\\rangle$.",
+      "correccio": "Llavors $\\nabla f(\\mathbf{a})\\in N_M(\\mathbf{a})$.",
+      "pista": "En un extrem condicionat, en quines direccions $f$ no pot variar a primer ordre: les tangents o les normals?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "$T_M(\\mathbf{a})$ conté un vector ortogonal a $\\nabla f(\\mathbf{a})$, i això ja implica",
+      "inici": 6,
+      "fi": 93,
+      "tipus": "quantificador",
+      "explicacio": "Ser ortogonal a un sol vector de $T_M(\\mathbf{a})$ no basta per pertànyer a $T_M(\\mathbf{a})^\\perp$: cal ser-ho a tots. El raonament val perquè $\\mathbf{v}$ era arbitrari, i això és el que s'ha d'usar.",
+      "correccio": "Com que $\\nabla f(\\mathbf{a})\\cdot\\mathbf{v}=0$ per a tot $\\mathbf{v}\\in T_M(\\mathbf{a})$, $\\nabla f(\\mathbf{a})\\in T_M(\\mathbf{a})^\\perp=N_M(\\mathbf{a})$.",
+      "pista": "Per pertànyer a $T_M(\\mathbf{a})^\\perp$, a quants vectors de $T_M(\\mathbf{a})$ cal ser ortogonal?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t6.json",
+    "valoracio": "Enunciat canviat ($T_M$ en lloc de $N_M$) i un pas final amb el quantificador mal posat.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "llavors $\\nabla f(\\mathbf{a})\\in T_M(\\mathbf{a})$",
+        "gravetat": "error",
+        "explicacio": "La conclusió correcta és $\\nabla f(\\mathbf{a})\\in N_M(\\mathbf{a})$; en un extrem condicionat el gradient és normal, no tangent (p. ex. $f=y$ a la circumferència unitat en $(0,1)$)."
+      },
+      {
+        "fragment": 6,
+        "cita": "$T_M(\\mathbf{a})$ conté un vector ortogonal a $\\nabla f(\\mathbf{a})$, i això ja implica",
+        "gravetat": "error",
+        "explicacio": "Que un sol vector tangent sigui ortogonal a $\\nabla f(\\mathbf{a})$ no dona $\\nabla f(\\mathbf{a})\\in T_M(\\mathbf{a})^\\perp$; cal (i s'ha provat) que ho sigui TOT $\\mathbf{v}\\in T_M(\\mathbf{a})$."
+      }
+    ]
+  },
+  "creat": 1791296017.2370675
+}

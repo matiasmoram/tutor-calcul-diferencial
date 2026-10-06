@@ -1,0 +1,330 @@
+problemes:
+  - num: 23
+    font: "Problema nou (no és de la col·lecció)"
+    preambul: |
+      Certes o falses? Per a cada afirmació, demostreu-la si és certa o doneu-ne un contraexemple justificat si és falsa. A tots els apartats, $f:\mathbb{R}^2\to\mathbb{R}$.
+    indicacio: null
+    exercicis:
+      - id: "t2-23a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          Si existeixen els dos límits iterats $\displaystyle\lim_{x\to0}\lim_{y\to0}f(x,y)$ i $\displaystyle\lim_{y\to0}\lim_{x\to0}f(x,y)$ i són iguals, aleshores existeix $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)$.
+        teoria: ["T2.6"]
+        teoria_reservada: ["T2.13", "T2.x3"]
+        resultat:
+          valor: |
+            Falsa. Contraexemple: $f(x,y)=\frac{xy}{x^2+y^2}$ si $(x,y)\neq(0,0)$, $f(0,0)=0$. Els dos límits iterats existeixen i valen $0$, però sobre la recta $y=mx$ el límit és $\frac{m}{1+m^2}$, que depèn de $m$; per tant no existeix el límit a $(0,0)$.
+          fuites:
+            - 'afirmaci[óo]\s+(és\s+)?falsa(?!\s*(\?|o\b))'
+            - '\bés\s+falsa\b(?!\s*(\?|o\b))'
+            - '\bno\s+és\s+certa\b(?!\s*(\?|o\b))'
+        passos:
+          - id: decidir
+            titol: "Decidir i triar un candidat"
+            objectiu: |
+              Decidir si l'afirmació és certa o falsa i, si cal un contraexemple, triar una funció candidata.
+            idea: |
+              La teoria només dona una implicació: si hi ha límit doble (i existeixen els límits interiors), els iterats hi coincideixen. Per refutar el recíproc cal una funció que es comporti bé sobre els eixos (així els iterats coincideixen) però que, acostant-se a l'origen per alguna altra corba, doni un valor diferent.
+            detall: |
+              És falsa. Un candidat: $f(x,y)=\frac{xy}{x^2+y^2}$ si $(x,y)\neq(0,0)$, $f(0,0)=0$. Val $0$ sobre tots dos eixos, però no és constant sobre les rectes per l'origen.
+            fuites:
+              - '\\frac\s*\{\s*x\s*y\s*\}\s*\{\s*x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*\}'
+              - 'x\s*y\s*/\s*\(\s*x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*\)'
+            teoria: ["T2.12"]
+          - id: iterats
+            titol: "Calcular els límits iterats"
+            objectiu: |
+              Comprovar que, per a la funció triada, els dos límits iterats existeixen i són iguals.
+            idea: |
+              Fixar una variable, distingint si el valor fixat és $0$ o no, i calcular el límit d'una variable en l'altra; després fer tendir a $0$ la variable fixada.
+            detall: |
+              Fixat $y\neq0$: $\lim_{x\to0}\frac{xy}{x^2+y^2}=\frac{0}{y^2}=0$. Fixat $y=0$: $f(x,0)=0$ per a tot $x$, i el límit és $0$. Per tant $\lim_{x\to0}f(x,y)=0$ per a tot $y$ i $\lim_{y\to0}\lim_{x\to0}f(x,y)=0$. Per simetria, $\lim_{x\to0}\lim_{y\to0}f(x,y)=0$.
+            fuites: []
+            teoria: []
+          - id: no_limit
+            titol: "Veure que no hi ha límit doble"
+            objectiu: |
+              Demostrar que la funció triada no té límit a $(0,0)$.
+            idea: |
+              Si el límit existís, la restricció a qualsevol corba contínua que passi per l'origen hauria de tendir al mateix valor. N'hi ha prou de trobar una família de corbes on el límit depengui de la corba.
+            detall: |
+              Sobre $y=mx$: $f(x,mx)=\frac{mx^2}{x^2+m^2x^2}=\frac{m}{1+m^2}$ per a $x\neq0$, que depèn de $m$ (val $0$ per $m=0$ i $\frac{1}{2}$ per $m=1$). Per la proposició del límit per camins, no existeix $\lim_{(x,y)\to(0,0)}f(x,y)$.
+            fuites:
+              - '\\frac\s*\{\s*m\s*\}\s*\{\s*1\s*\+\s*m\^\{?2\}?\s*\}'
+              - 'm\s*/\s*\(\s*1\s*\+\s*m\^\{?2\}?\s*\)'
+            teoria: ["T2.10"]
+        errors_comuns:
+          - id: iterats_impliquen_limit
+            descripcio: |
+              Creu que si els dos iterats coincideixen el límit doble existeix (confon el resultat de la teoria amb el seu recíproc).
+            pregunta: |
+              Els límits iterats només miren dues maneres molt concretes d'acostar-se a l'origen. Què et garanteixen sobre totes les altres maneres d'acostar-s'hi?
+          - id: iterat_mal_calculat
+            descripcio: |
+              En calcular un iterat fa tendir les dues variables a $0$ alhora, o oblida el cas en què el valor fixat és $0$.
+            pregunta: |
+              Quan fixes $y$ i fas tendir $x$ a $0$, el valor de $y$ es mou o queda fix? Què passa si el valor que has fixat és precisament $0$?
+          - id: contraexemple_no_compleix_hipotesi
+            descripcio: |
+              Proposa una funció on els iterats són diferents (per exemple $\frac{x^2-y^2}{x^2+y^2}$) o on no existeixen: no compleix la hipòtesi de l'afirmació.
+            pregunta: |
+              La funció que proposes, compleix exactament les hipòtesis de l'afirmació? Què diuen els seus dos límits iterats?
+        nota_professor: |
+          És l'exemple 13 del Tema 2 (reservat). Altres contraexemples vàlids: $\frac{x^2y}{x^4+y^2}$ (iterats $0$, paràbola $y=x^2$ dona $\frac12$), o qualsevol funció nul·la sobre els eixos i sense límit. Accepteu qualsevol contraexemple ben justificat; el detall dels passos usa $\frac{xy}{x^2+y^2}$.
+
+      - id: "t2-23b"
+        apartat: "b"
+        tipus: teoric
+        enunciat: |
+          Si $f$ és contínua en cada variable per separat, és a dir, per a tot $(x_0,y_0)\in\mathbb{R}^2$ les funcions $x\mapsto f(x,y_0)$ i $y\mapsto f(x_0,y)$ són contínues a $\mathbb{R}$, aleshores $f$ és contínua a $\mathbb{R}^2$.
+        teoria: ["T2.14"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Falsa. Contraexemple: $f(x,y)=\frac{xy}{x^2+y^2}$ si $(x,y)\neq(0,0)$, $f(0,0)=0$. És contínua en cada variable per separat (sobre cada recta horitzontal o vertical és un quocient amb denominador no nul, o bé idènticament $0$), però $f(x,x)=\frac12$ per a $x\neq0$, que no tendeix a $f(0,0)=0$: no és contínua a $(0,0)$.
+          fuites:
+            - 'afirmaci[óo]\s+(és\s+)?falsa(?!\s*(\?|o\b))'
+            - '\bés\s+falsa\b(?!\s*(\?|o\b))'
+            - '\bno\s+és\s+certa\b(?!\s*(\?|o\b))'
+        passos:
+          - id: decidir
+            titol: "Decidir i triar un candidat"
+            objectiu: |
+              Decidir si l'afirmació és certa o falsa i, si cal un contraexemple, triar una funció candidata.
+            idea: |
+              La continuïtat en cada variable només controla què fa $f$ sobre les rectes horitzontals i verticals. Cal una funció que sigui contínua sobre aquestes rectes però que, acostant-se a un punt per una altra direcció, no tendeixi al valor de la funció en aquest punt.
+            detall: |
+              És falsa. Un candidat: $f(x,y)=\frac{xy}{x^2+y^2}$ si $(x,y)\neq(0,0)$, $f(0,0)=0$ (la mateixa funció de l'apartat (a) serveix).
+            fuites:
+              - '\\frac\s*\{\s*x\s*y\s*\}\s*\{\s*x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*\}'
+              - 'x\s*y\s*/\s*\(\s*x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*\)'
+            teoria: []
+          - id: separada
+            titol: "Continuïtat en cada variable"
+            objectiu: |
+              Comprovar que la funció triada és contínua en cada variable per separat.
+            idea: |
+              Fixar $y_0$ i distingir dos casos: si $y_0\neq0$, el denominador no s'anul·la mai sobre aquesta recta; si $y_0=0$, mirar directament quins valors pren $f$. Per simetria, el mateix per a $x_0$.
+            detall: |
+              Si $y_0\neq0$: $x\mapsto\frac{xy_0}{x^2+y_0^2}$ és quocient de polinomis amb denominador $x^2+y_0^2\ge y_0^2>0$, per tant contínua a $\mathbb{R}$. Si $y_0=0$: $f(x,0)=0$ per a tot $x$ (també $x=0$), funció constant. Com que $f(x,y)=f(y,x)$, el mateix val per a $y\mapsto f(x_0,y)$.
+            fuites: []
+            teoria: ["T2.20"]
+          - id: discontinua
+            titol: "Veure que no és contínua"
+            objectiu: |
+              Demostrar que la funció triada no és contínua en algun punt de $\mathbb{R}^2$.
+            idea: |
+              Per definició, ser contínua a $(0,0)$ vol dir que el límit en aquest punt existeix i val $f(0,0)$. Cal trobar una corba cap a l'origen on la restricció tendeixi a un altre valor.
+            detall: |
+              Sobre la diagonal, $f(x,x)=\frac{x^2}{2x^2}=\frac12$ per a $x\neq0$, que tendeix a $\frac12\neq0=f(0,0)$. Per la proposició del límit per camins, $\lim_{(x,y)\to(0,0)}f(x,y)$ no pot valer $0$; per tant $f$ no és contínua a $(0,0)$.
+            fuites:
+              - 'f\(\s*x\s*,\s*x\s*\)\s*='
+              - 'f\(\s*t\s*,\s*t\s*\)\s*='
+            teoria: ["T2.10", "T2.14"]
+        errors_comuns:
+          - id: separada_implica_conjunta
+            descripcio: |
+              Creu que la continuïtat en cada variable implica la continuïtat (pensa que acostar-se per les dues direccions dels eixos ja és «acostar-se de totes les maneres»).
+            pregunta: |
+              La continuïtat en cada variable, quines maneres d'acostar-se a un punt controla? Són totes les maneres possibles?
+          - id: oblida_cas_zero
+            descripcio: |
+              En comprovar la continuïtat separada només tracta el cas $y_0\neq0$ amb la fórmula del quocient i oblida que per $y_0=0$ la fórmula no val a $x=0$.
+            pregunta: |
+              Quan fixes $y_0=0$, la fórmula del quocient és vàlida per a tots els valors de $x$? Quins valors pren $f$ sobre aquesta recta?
+          - id: discontinuitat_per_formula
+            descripcio: |
+              Argumenta la discontinuïtat dient que «la fórmula no està definida a $(0,0)$», sense comparar cap límit amb $f(0,0)$.
+            pregunta: |
+              La funció està definida a $(0,0)$? Què has de comparar exactament per decidir si és contínua en aquest punt?
+        nota_professor: |
+          Qualsevol contraexemple de l'apartat (a) que valgui $0$ als eixos i sigui contínua fora de l'origen serveix. Matís: la continuïtat separada sí que implica que les restriccions als eixos són contínues, però no diu res de les rectes $y=mx$ amb $m\neq0$.
+
+      - id: "t2-23c"
+        apartat: "c"
+        tipus: teoric
+        enunciat: |
+          Si existeix $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)=L$, aleshores existeix el límit iterat $\displaystyle\lim_{x\to0}\lim_{y\to0}f(x,y)$ i val $L$.
+        teoria: ["T2.6"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Falsa. Contraexemple: $f(x,y)=x\sin(1/y)$ si $y\neq0$, $f(x,0)=0$. Com que $|f(x,y)|\le|x|$, el límit a $(0,0)$ existeix i val $0$; però per a cada $x\neq0$ el límit $\lim_{y\to0}x\sin(1/y)$ no existeix, de manera que el límit iterat $\lim_{x\to0}\lim_{y\to0}f(x,y)$ no existeix.
+          fuites:
+            - 'afirmaci[óo]\s+(és\s+)?falsa(?!\s*(\?|o\b))'
+            - '\bés\s+falsa\b(?!\s*(\?|o\b))'
+            - '\bno\s+és\s+certa\b(?!\s*(\?|o\b))'
+        passos:
+          - id: decidir
+            titol: "Decidir i triar un candidat"
+            objectiu: |
+              Decidir si l'afirmació és certa o falsa i, si cal un contraexemple, triar una funció candidata.
+            idea: |
+              El límit iterat només té sentit si, per a cada $x$ proper a $0$, existeix el límit interior en $y$. El límit doble no obliga que aquest límit interior existeixi: cal una funció que tendeixi a $L$ a l'origen però que, amb $x\neq0$ fix, oscil·li sense límit quan $y\to0$.
+            detall: |
+              És falsa. Un candidat: $f(x,y)=x\sin(1/y)$ si $y\neq0$, $f(x,0)=0$. El factor $x$ fa que tendeixi a $0$ a l'origen; el factor $\sin(1/y)$ oscil·la quan $y\to0$.
+            fuites:
+              - 'x\s*\\sin\s*\(\s*1\s*/\s*y\s*\)'
+              - '\\sin\s*\(?\s*\\frac\s*\{\s*1\s*\}\s*\{\s*y\s*\}'
+            teoria: ["T2.12"]
+          - id: limit_doble
+            titol: "El límit doble existeix"
+            objectiu: |
+              Demostrar que la funció triada té límit a $(0,0)$ i calcular-lo.
+            idea: |
+              Fitar $|f(x,y)|$ per una expressió que només depengui de la distància a l'origen i que tendeixi a $0$, usant que el sinus està fitat, i aplicar la definició de límit.
+            detall: |
+              Per a tot $(x,y)$ (també si $y=0$): $|f(x,y)|\le|x|\le\|(x,y)\|$. Donat $\varepsilon>0$, prenent $\delta=\varepsilon$, si $0<\|(x,y)\|<\delta$ aleshores $|f(x,y)-0|<\varepsilon$. Per tant $\lim_{(x,y)\to(0,0)}f(x,y)=0$.
+            fuites:
+              - '\|f\(x,\s*y\)\|\s*(\\le|\\leq|≤)\s*\|x\|'
+            teoria: ["T2.6"]
+          - id: interior_no_existeix
+            titol: "El límit interior no existeix"
+            objectiu: |
+              Veure que, per a $x\neq0$ fix, no existeix $\lim_{y\to0}f(x,y)$, i concloure sobre el límit iterat.
+            idea: |
+              Usar la caracterització del límit per successions: trobar dues successions $y_n\to0$, $y_n\neq0$, sobre les quals $f(x,y_n)$ tendeix a valors diferents.
+            detall: |
+              Fixat $x\neq0$, prenem $y_n=\frac{1}{n\pi}$: $f(x,y_n)=x\sin(n\pi)=0$; i $y_n'=\frac{1}{\pi/2+2n\pi}$: $f(x,y_n')=x\neq0$. Totes dues tendeixen a $0$ però donen límits diferents, de manera que $\lim_{y\to0}f(x,y)$ no existeix per a cap $x\neq0$. La funció $x\mapsto\lim_{y\to0}f(x,y)$ no està definida en cap punt proper a $0$ diferent de $0$, i el límit iterat $\lim_{x\to0}\lim_{y\to0}f(x,y)$ no existeix.
+            fuites:
+              - '\\frac\s*\{\s*1\s*\}\s*\{\s*n\s*\\pi\s*\}'
+              - '\\frac\s*\{\s*1\s*\}\s*\{\s*\\pi\s*/\s*2'
+              - '1\s*/\s*\(?\s*n\s*\\pi'
+            teoria: ["T2.6", "T2.7"]
+        errors_comuns:
+          - id: aplica_teorema_sense_hipotesis
+            descripcio: |
+              Aplica el resultat de la teoria sobre límits iterats sense comprovar que els límits interiors existeixen (és una hipòtesi del resultat).
+            pregunta: |
+              El resultat de la teoria sobre límits iterats, quines hipòtesis demana a més de l'existència del límit doble? Les has comprovades?
+          - id: ordre_equivocat
+            descripcio: |
+              Calcula l'altre límit iterat, $\lim_{y\to0}\lim_{x\to0}f(x,y)$, que sí que existeix i val $0$, i conclou que l'afirmació és certa.
+            pregunta: |
+              En quin ordre es prenen els límits a l'afirmació? El límit que has calculat és exactament aquest?
+          - id: oscillacio_sense_justificar
+            descripcio: |
+              Afirma que $\sin(1/y)$ no té límit quan $y\to0$ sense cap justificació.
+            pregunta: |
+              Com pots justificar amb precisió que una funció d'una variable no té límit en un punt?
+        nota_professor: |
+          Per a aquest $f$, l'altre iterat sí que existeix: per a $y\neq0$ fix, $x\sin(1/y)\to0$, i $\lim_{y\to0}\lim_{x\to0}f=0$. Si es vol que fallin tots dos iterats: $f(x,y)=x\sin(1/y)+y\sin(1/x)$ (definint $0$ sobre els eixos). Bon moment per remarcar que la Proposició 12 del Tema 2 demana com a hipòtesi que els límits interiors existeixin.
+
+      - id: "t2-23d"
+        apartat: "d"
+        tipus: teoric
+        enunciat: |
+          Si existeix $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)=L$ i existeix $\eta>0$ tal que, per a cada $x$ amb $0<|x|<\eta$, existeix $g(x)=\displaystyle\lim_{y\to0}f(x,y)$, aleshores $\displaystyle\lim_{x\to0}g(x)=L$.
+        teoria: ["T2.6"]
+        teoria_reservada: ["T2.12+dem"]
+        resultat:
+          valor: |
+            Certa. Donat $\varepsilon>0$, sigui $\delta_1=\delta_1(\varepsilon/2)$ el del límit doble i $\delta=\min\{\eta,\delta_1/\sqrt2\}$. Per a $0<|x|<\delta$, triant $y$ amb $0<|y|<\min\{\delta_2(\varepsilon/2,x),\delta_1/\sqrt2\}$ (on $\delta_2$ és el del límit en $y$), es té $|g(x)-L|\le|g(x)-f(x,y)|+|f(x,y)-L|<\varepsilon$. Per tant $\lim_{x\to0}g(x)=L$.
+          fuites:
+            - 'afirmaci[óo]\s+(és\s+)?certa(?!\s*(\?|o\b))'
+            - '(?<!no\s)\bés\s+certa\b(?!\s*(\?|o\b))'
+        passos:
+          - id: plantejar
+            titol: "Escriure hipòtesis i objectiu"
+            objectiu: |
+              Escriure amb $\varepsilon$ i $\delta$ què diuen les dues hipòtesis i què cal demostrar.
+            idea: |
+              Aplicar la definició de límit al límit doble (el $\delta$ depèn només de $\varepsilon$) i al límit en $y$ amb $x$ fix (el $\delta$ depèn de $\varepsilon$ i de $x$).
+            detall: |
+              (H1) $\forall\varepsilon>0\ \exists\delta_1(\varepsilon)>0$: si $0<\|(x,y)\|<\delta_1$, aleshores $|f(x,y)-L|<\varepsilon$. (H2) Per a cada $x$ amb $0<|x|<\eta$: $\forall\varepsilon>0\ \exists\delta_2(\varepsilon,x)>0$: si $0<|y|<\delta_2$, aleshores $|f(x,y)-g(x)|<\varepsilon$. Objectiu: $\forall\varepsilon>0\ \exists\delta>0$: si $0<|x|<\delta$, aleshores $|g(x)-L|<\varepsilon$.
+            fuites: []
+            teoria: ["T2.6"]
+          - id: valor_intermedi
+            titol: "Comparar a través de $f(x,y)$"
+            objectiu: |
+              Trobar com relacionar $g(x)$ amb $L$ fent servir les dues hipòtesis alhora.
+            idea: |
+              Passar per un valor intermedi $f(x,y)$, amb $y$ auxiliar ben triat, i repartir $\varepsilon$ entre les dues hipòtesis.
+            detall: |
+              Per a qualsevol $y$, $|g(x)-L|\le|g(x)-f(x,y)|+|f(x,y)-L|$. N'hi ha prou que cada sumand sigui $<\varepsilon/2$ per a algun $y$: el primer el controla (H2) i el segon (H1).
+            fuites:
+              - '\|g\(x\)\s*-\s*f\(x,\s*y\)\|\s*\+\s*\|f\(x,\s*y\)\s*-\s*L\|'
+            teoria: []
+          - id: triar_delta
+            titol: "Triar $\\delta$ i acabar"
+            objectiu: |
+              Triar un $\delta$ que depengui només de $\varepsilon$ i completar la demostració.
+            idea: |
+              El $\delta$ per a $x$ s'obté del límit doble i de $\eta$; el $y$ auxiliar es tria després de fixar $x$, prou petit per complir les dues condicions alhora. El valor $g(x)$ no depèn de $y$.
+            detall: |
+              Donat $\varepsilon>0$, sigui $\delta=\min\{\eta,\ \delta_1(\varepsilon/2)/\sqrt{2}\}$. Sigui $0<|x|<\delta$. Triem $y$ amb $0<|y|<\min\{\delta_2(\varepsilon/2,x),\ \delta_1(\varepsilon/2)/\sqrt{2}\}$. Aleshores $0<\|(x,y)\|<\sqrt{2}\cdot\delta_1(\varepsilon/2)/\sqrt{2}=\delta_1(\varepsilon/2)$, per (H1) $|f(x,y)-L|<\varepsilon/2$, i per (H2) $|f(x,y)-g(x)|<\varepsilon/2$. Per tant $|g(x)-L|<\varepsilon$, i com que aquesta desigualtat no depèn de $y$, $\lim_{x\to0}g(x)=L$.
+            fuites:
+              - '\\delta_\{?1\}?\s*\(\s*\\?(epsilon|varepsilon|ε)\s*/\s*2\s*\)\s*/\s*\\sqrt'
+            teoria: []
+        errors_comuns:
+          - id: cita_teorema_sense_hipotesis
+            descripcio: |
+              Cita directament la Proposició 12 del Tema 2, que demana també que existeixin els límits interiors en $x$ (per a cada $y$); aquí només se suposen els límits en $y$. Cal reproduir l'argument.
+            pregunta: |
+              El resultat de la teoria que vols citar, quines hipòtesis té exactament? Les tens totes a l'enunciat d'aquest apartat?
+          - id: delta_depen_de_y
+            descripcio: |
+              Tria un $\delta$ que depèn de $y$ o de $x$ (per exemple hi fica $\delta_2(\varepsilon,x)$), o fixa $y$ abans de $x$.
+            pregunta: |
+              El $\delta$ que tries, de quines quantitats depèn? Pot dependre d'alguna variable que encara no has fixat en aquell moment de la demostració?
+          - id: usa_y_zero
+            descripcio: |
+              Pren $y=0$ com a valor intermedi, suposant $f(x,0)=g(x)$: la definició de límit en $y$ no diu res del valor a $y=0$.
+            pregunta: |
+              La definició de $\lim_{y\to0}f(x,y)$, diu alguna cosa sobre el valor $f(x,0)$?
+        nota_professor: |
+          És la meitat de la Proposició 12 del Tema 2 (reservada amb la seva demostració): la demostració dels apunts només usa els límits interiors en $y$, que és exactament la hipòtesi d'aquest apartat. Cal que l'estudiant vegi que no pot citar la proposició tal qual, perquè no se suposa res sobre $\lim_{x\to0}f(x,y)$. Combinat amb l'apartat (c), mostra que la hipòtesi sobre els límits interiors és imprescindible.
+
+      - id: "t2-23e"
+        apartat: "e"
+        tipus: teoric
+        enunciat: |
+          Si existeixen els dos límits iterats a $(0,0)$ i són diferents, aleshores no existeix $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)$.
+        teoria: ["T2.6"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Certa. Si existís $\lim_{(x,y)\to(0,0)}f(x,y)=L$, com que existeixen els límits interiors (si no, els iterats no existirien), l'apartat (d) (o la Proposició 12 del Tema 2) dona que tots dos iterats valen $L$, i per tant serien iguals: contradicció.
+          fuites:
+            - 'afirmaci[óo]\s+(és\s+)?certa(?!\s*(\?|o\b))'
+            - '(?<!no\s)\bés\s+certa\b(?!\s*(\?|o\b))'
+        passos:
+          - id: suposar_limit
+            titol: "Suposar que el límit existeix"
+            objectiu: |
+              Plantejar la demostració i veure què implicaria l'existència del límit doble sobre els dos iterats.
+            idea: |
+              Reducció a l'absurd: suposar que el límit doble existeix i aplicar l'apartat (d) a cada ordre. Cal comprovar que les hipòtesis sobre els límits interiors es compleixen.
+            detall: |
+              Suposem $\lim_{(x,y)\to(0,0)}f(x,y)=L$. Que existeixi $\lim_{x\to0}\lim_{y\to0}f(x,y)$ vol dir, en particular, que $g(x)=\lim_{y\to0}f(x,y)$ existeix per a tot $0<|x|<\eta$; per (d), $\lim_{x\to0}g(x)=L$. Intercanviant els papers de $x$ i $y$, també $\lim_{y\to0}\lim_{x\to0}f(x,y)=L$.
+            fuites: []
+            teoria: ["T2.12"]
+          - id: contradiccio
+            titol: "Arribar a contradicció"
+            objectiu: |
+              Concloure a partir del pas anterior.
+            idea: |
+              Comparar els dos valors obtinguts amb la hipòtesi que els iterats són diferents.
+            detall: |
+              Tots dos iterats valdrien $L$, i per tant serien iguals, en contra de la hipòtesi. Per tant el límit doble no existeix. (Exemple: $\frac{x^2-y^2}{x^2+y^2}$ té iterats $1$ i $-1$.)
+            fuites: []
+            teoria: []
+        errors_comuns:
+          - id: prova_amb_exemple
+            descripcio: |
+              «Demostra» l'afirmació amb un sol exemple, com ara $\frac{x^2-y^2}{x^2+y^2}$.
+            pregunta: |
+              Un exemple on passa això, demostra que passa per a qualsevol funció?
+          - id: confon_reciproc
+            descripcio: |
+              Confon l'afirmació amb el seu recíproc o amb la de l'apartat (a), i la considera falsa per l'exemple de l'apartat (a).
+            pregunta: |
+              Què suposa exactament aquesta afirmació i què en conclou? És la mateixa implicació que la de l'apartat (a)?
+          - id: oblida_limits_interiors
+            descripcio: |
+              Aplica el resultat dels iterats sense observar que l'existència dels iterats ja garanteix la dels límits interiors.
+            pregunta: |
+              Per poder escriure un límit iterat, què ha d'existir primer? Ho necessites per aplicar el resultat que fas servir?
+        nota_professor: |
+          És la contrarecíproca de la Proposició 12 del Tema 2 (o de l'apartat (d)). Serveix per tancar el problema: els iterats diferents demostren la no existència; els iterats iguals no demostren res (apartat (a)).

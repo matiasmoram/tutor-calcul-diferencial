@@ -1,0 +1,69 @@
+{
+  "id": "f77a4591e4ae",
+  "exercici": "T2.17",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $f:\\Omega\\subseteq M\\to N$. Aleshores, són equivalents: (a) $f$ és contínua en $\\Omega$; (b) per a tota successió convergent $(x_n)_n\\subseteq\\Omega$ tal que $\\lim_{n\\to\\infty}x_n=x_0\\in\\Omega$, tenim $\\lim_{n\\to\\infty}f(x_n)=f(x_0)$;",
+    "(c) per a tot obert $V\\subseteq N$, $f^{-1}(V)$ és un obert de $M$; (d) per a tot tancat $E\\subseteq N$, $\\exists D\\subseteq M$ tancat tal que $f^{-1}(E)=D\\cap\\Omega$.",
+    "(a)$\\Rightarrow$(b). Sigui $(x_n)_n\\subseteq\\Omega$ amb $\\lim_{n\\to\\infty}x_n=x_0\\in\\Omega$. Com que $f$ és contínua en $x_0$, hi ha dues possibilitats. Si $x_0\\notin\\Omega'$, $x_0$ és aïllat i, com que $x_n\\to x_0$, per força $x_n=x_0$ a partir d'un cert terme, de manera que $f(x_n)=f(x_0)$ a partir d'aquest terme.",
+    "Altrament, existeix $\\lim_{x\\to x_0}f(x)=f(x_0)$: donat $\\epsilon>0$, existeix $\\delta_1=\\delta_1(\\epsilon)>0$ tal que si $x\\in\\Omega$ i $d(x,x_0)<\\delta_1$, aleshores $d'(f(x),f(x_0))<\\epsilon$. Com que $x_n\\to x_0$, existeix $n_0$ tal que $d(x_n,x_0)<\\epsilon$ per a $n\\geq n_0$ i, per tant, $d'(f(x_n),f(x_0))<\\epsilon$ per a $n\\geq n_0$.",
+    "(b)$\\Rightarrow$(d). Sigui $E\\subseteq N$ tancat. Prenem $D=\\overline{f^{-1}(E)}$, que és tancat, i demostrem que $f^{-1}(E)=D\\cap\\Omega$. La inclusió $f^{-1}(E)\\subseteq\\overline{f^{-1}(E)}\\cap\\Omega$ és evident, ja que $f^{-1}(E)\\subseteq\\Omega$ i tot conjunt està contingut en la seva adherència.",
+    "Per a la inclusió inversa, sigui $x_0\\in\\overline{f^{-1}(E)}\\cap\\Omega$. Per la proposició 19 del tema 1, existeix una successió $(x_n)_n\\subseteq f^{-1}(E)\\subseteq\\Omega$ amb $\\lim_{n\\to\\infty}x_n=x_0$ i, per (b), $\\lim_{n\\to\\infty}f(x_n)=f(x_0)$.",
+    "Com que $f(x_n)\\in E$ per a tota $n$ i $f(x_n)\\to f(x_0)$, tenim $f(x_0)\\in\\overline{E}=E$, per ser $E$ tancat. Per tant, $x_0\\in f^{-1}(E)$.",
+    "(d)$\\Rightarrow$(c). Sigui $V\\subseteq N$ obert. Aleshores $V^c$ és tancat i, per (d), existeix $D\\subseteq M$ tancat amb $f^{-1}(V^c)=D\\cap\\Omega$. Com que $f^{-1}(V^c)=\\Omega\\setminus f^{-1}(V)$, resulta $f^{-1}(V)=\\Omega\\setminus(D\\cap\\Omega)=D^c\\cap\\Omega$, on $U=D^c$ és un obert de $M$.",
+    "(c)$\\Rightarrow$(a). Sigui $x_0\\in\\Omega$. Si $x_0\\notin\\Omega'$, $f$ és contínua en $x_0$ per definició. Altrament, donat $\\epsilon>0$, prenem $V=B(f(x_0),\\epsilon)$; per (c), existeix $U\\subseteq M$ obert amb $f^{-1}(V)=U\\cap\\Omega$ i, com que $x_0\\in f^{-1}(V)\\subseteq U$, existeix $\\delta>0$ tal que $B(x_0,\\delta)\\subseteq U$.",
+    "Si $x\\in\\Omega$ i $d(x,x_0)<\\delta$, aleshores $x\\in U\\cap\\Omega=f^{-1}(V)$, és a dir, $d'(f(x),f(x_0))<\\epsilon$. Per tant, $\\lim_{x\\to x_0}f(x)=f(x_0)$ i $f$ és contínua en $x_0$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$f^{-1}(V)$ és un obert de $M$",
+      "inici": 36,
+      "fi": 66,
+      "tipus": "conclusio",
+      "explicacio": "Si $\\Omega$ no és obert, l'antiimatge d'un obert només és oberta relativament a $\\Omega$. Contraexemple: $f\\equiv0$ a $\\Omega=[0,1]\\subseteq\\mathbb{R}$ és contínua, però $f^{-1}(\\mathbb{R})=[0,1]$ no és obert de $\\mathbb{R}$.",
+      "correccio": "(c) per a tot obert $V\\subseteq N$, $\\exists U\\subseteq M$ obert tal que $f^{-1}(V)=U\\cap\\Omega$.",
+      "pista": "Què passa amb $f^{-1}(N)$ si el domini $\\Omega$ no és un obert de $M$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "existeix $n_0$ tal que $d(x_n,x_0)<\\epsilon$ per a $n\\geq n_0$",
+      "inici": 218,
+      "fi": 280,
+      "tipus": "pas_injustificat",
+      "explicacio": "La continuïtat dona la fita $d'(f(x),f(x_0))<\\epsilon$ quan $d(x,x_0)<\\delta_1$; saber $d(x_n,x_0)<\\epsilon$ no serveix, perquè $\\epsilon$ i $\\delta_1$ són radis diferents.",
+      "correccio": "Existeix $n_0=n_0(\\delta_1(\\epsilon))$ tal que $d(x_n,x_0)<\\delta_1$ per a $n\\geq n_0$ i, per tant, $d'(f(x_n),f(x_0))<\\epsilon$.",
+      "pista": "Quina distància entre $x_n$ i $x_0$ garanteix que $f(x_n)$ és a menys d'$\\epsilon$ de $f(x_0)$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t2a.json",
+    "valoracio": "(c) reforçada a 'antiimatge oberta de $M$' (fals) i índex $n_0$ triat amb $\\epsilon$ en lloc de $\\delta_1$.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$f^{-1}(V)$ és un obert de $M$",
+        "gravetat": "error",
+        "explicacio": "La (c) dels apunts diu $f^{-1}(V)=U\\cap\\Omega$ amb $U$ obert (obert relatiu a $\\Omega$). Si $\\Omega$ no és obert, $f^{-1}(N)=\\Omega$ no és obert de $M$ tot i $f$ contínua: l'equivalència és falsa."
+      },
+      {
+        "fragment": 4,
+        "cita": "$d(x_n,x_0)<\\epsilon$",
+        "gravetat": "error",
+        "explicacio": "Cal $d(x_n,x_0)<\\delta_1$ per poder aplicar la continuïtat; amb $\\epsilon$ no se segueix $d'(f(x_n),f(x_0))<\\epsilon$."
+      },
+      {
+        "fragment": 8,
+        "cita": "$f^{-1}(V)=\\Omega\\setminus(D\\cap\\Omega)=D^c\\cap\\Omega$, on $U=D^c$ és un obert de $M$",
+        "gravetat": "consequencia",
+        "explicacio": "El pas és el dels apunts i dona $f^{-1}(V)=U\\cap\\Omega$, no que $f^{-1}(V)$ sigui obert de $M$ com exigeix la (c) enunciada."
+      }
+    ]
+  },
+  "creat": 1791295999.5568862
+}

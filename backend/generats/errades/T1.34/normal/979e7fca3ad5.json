@@ -1,0 +1,70 @@
+{
+  "id": "979e7fca3ad5",
+  "exercici": "T1.34",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "(Heine-Borel.) Sigui $(M,d)$ un espai mètric i $A\\subseteq M$.",
+    "Aleshores, $A$ és compacte $\\Leftrightarrow$ $A$ és tancat i fitat.",
+    "$\\Rightarrow$) Si $A$ és compacte, pel Teorema de Bolzano-Weierstrass és seqüencialment compacte i podem aplicar el Lema 30 amb $\\varepsilon=1$: existeixen $y_1,\\ldots,y_r\\in A$ tals que $A\\subseteq\\bigcup_{i=1}^r B(y_i,1)$.",
+    "Sigui $L=\\max\\{d(y_1,y_2),\\ldots,d(y_1,y_r)\\}$, ben definit perquè el conjunt $\\{y_1,\\ldots,y_r\\}$ és finit. Donat $a\\in A$, existeix $i$ amb $d(a,y_i)<1$ i aleshores $d(a,y_1)\\leq d(a,y_i)+d(y_i,y_1)<1+L$. Per tant, $A\\subseteq B(y_1,L)$ i $A$ és fitat.",
+    "D'altra banda, pel Lema 27, com que $A$ és compacte també és tancat.",
+    "$\\Leftarrow$) Suposem ara que $A\\subseteq\\mathbb{R}^n$ és tancat i fitat. Si $n=1$, ja és conegut: tota successió $(a_m)_m\\subseteq A$ és fitada i, per tant, admet una parcial $(a_{m_k})_k$ convergent a un $a^*\\in\\overline{A}=A$, perquè $A$ és tancat; així $A$ és seqüencialment compacte i, pel Teorema 26, compacte.",
+    "Per a $n>1$ fem l'argument per a $n=2$ (per a $n\\geq 3$ és anàleg). Com que $A$ és fitat, existeix $L>0$ tal que $A\\subseteq B(0,L)$; en particular, les projeccions $\\pi_i(x_1,x_2)=x_i$ satisfan $\\pi_i(A)\\subseteq[-L,L]$, i per tant $A\\subseteq[-L,L]\\times[-L,L]$.",
+    "Com que $A$ és tancat i està contingut en $[-L,L]\\times[-L,L]$, pel Lema 28 n'hi ha prou de veure que $[-L,L]\\times[-L,L]$ és compacte i, pel Teorema 26 (Bolzano-Weierstrass), que és seqüencialment compacte.",
+    "Sigui $(a_m,b_m)_m$ una successió de punts de $[-L,L]\\times[-L,L]$. La successió $(a_m)_m\\subseteq[-L,L]$ és fitada i, per tant, admet una parcial $(a_{m_k})_k$ convergent a un punt $a^*\\in[-L,L]$.",
+    "La successió $(b_{m_k})_k\\subseteq[-L,L]$ també és fitada i admet una parcial $(b_{m_{k_s}})_s$ convergent a un punt $b^*\\in[-L,L]$; com que $(a_{m_{k_s}})_s$ és una parcial de $(a_{m_k})_k$, també convergeix a $a^*$.",
+    "Per tant, la parcial $(a_{m_{k_s}},b_{m_{k_s}})_s$ convergeix a $(a^*,b^*)\\in[-L,L]\\times[-L,L]$, i $[-L,L]\\times[-L,L]$ és seqüencialment compacte. En conclusió, $A$ és compacte."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "Sigui $(M,d)$ un espai mètric i $A\\subseteq M$",
+      "inici": 15,
+      "fi": 61,
+      "tipus": "hipotesi",
+      "explicacio": "El teorema és cert a $\\mathbb{R}^n$ (dimensió finita), però no en un espai mètric qualsevol. Contraexemple: $M=\\mathbb{N}$ amb la mètrica discreta ($d(x,y)=1$ si $x\\neq y$); $M$ és tancat i fitat, però el recobriment per les boles $B_{1/2}(n)=\\{n\\}$ no té subrecobriment finit.",
+      "correccio": "Sigui $A\\subseteq\\mathbb{R}^n$.",
+      "pista": "On s'usa a la demostració de $\\Leftarrow$ que l'espai és $\\mathbb{R}^n$? Funcionaria amb un conjunt infinit amb la mètrica discreta?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "$A\\subseteq B(y_1,L)$",
+      "inici": 217,
+      "fi": 238,
+      "tipus": "calcul",
+      "explicacio": "La desigualtat obtinguda és $d(a,y_1)<1+L$, que no dona $d(a,y_1)<L$; per exemple, punts propers a la vora de $B(y_r,1)$ poden estar a distància més gran que $L$ de $y_1$.",
+      "correccio": "$A\\subseteq B(y_1,L+1)$.",
+      "pista": "Quina fita de $d(a,y_1)$ heu obtingut just abans? Quin radi de bola centrada en $y_1$ dona?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t1b.json",
+    "valoracio": "Enunciat generalitzat falsament a espais mètrics i radi de la bola mal deduït a l'acotació.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "Sigui $(M,d)$ un espai mètric i $A\\subseteq M$.",
+        "gravetat": "error",
+        "explicacio": "El teorema és per a $\\mathbb{R}^n$; en un espai mètric general tancat i fitat no implica compacte (p. ex. $\\mathbb{R}$ amb la mètrica discreta)."
+      },
+      {
+        "fragment": 4,
+        "cita": "$A\\subseteq B(y_1,L)$",
+        "gravetat": "error",
+        "explicacio": "De $d(a,y_1)<1+L$ només es dedueix $A\\subseteq B(y_1,L+1)$, no $B(y_1,L)$."
+      },
+      {
+        "fragment": 6,
+        "cita": "Suposem ara que $A\\subseteq\\mathbb{R}^n$ és tancat i fitat",
+        "gravetat": "consequencia",
+        "explicacio": "La recíproca usa l'estructura de $\\mathbb{R}^n$, que l'enunciat generalitzat a $(M,d)$ ha eliminat."
+      }
+    ]
+  },
+  "creat": 1791295842.2556798
+}

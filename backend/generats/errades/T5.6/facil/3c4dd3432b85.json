@@ -1,0 +1,44 @@
+{
+  "id": "3c4dd3432b85",
+  "exercici": "T5.6",
+  "font": "teoria",
+  "dificultat": "facil",
+  "fragments": [
+    "(Schwarz) Sigui $\\Omega\\subseteq\\mathbb{R}^n$ obert i $f:\\Omega\\to\\mathbb{R}^m$ una funció tal que les derivades parcials $D_if$, $D_jf$, $D_iD_jf$ i $D_jD_if$ existeixen en $\\Omega$.",
+    "Si $D_iD_jf$ i $D_jD_if$ són contínues en un entorn d'$\\mathbf{a}\\in\\Omega$, aleshores $D_iD_jf=D_jD_if$ en tot $\\Omega$.",
+    "Ho demostrem per a $n=2$, $m=1$ i $\\mathbf{a}=(a,b)$; el cas general és anàleg. Prenem $h,k$ no nuls tals que el rectangle $R(h,k)$ de vèrtexs $(a,b)$, $(a+h,b)$, $(a+h,b+k)$ i $(a,b+k)$ sigui dins de $\\Omega$, i considerem $\\Delta(h,k)=f(a+h,b+k)-f(a+h,b)-f(a,b+k)+f(a,b)$.",
+    "Sigui $G(x)=f(x,b+k)-f(x,b)$, de manera que $\\Delta(h,k)=G(a+h)-G(a)$. Com que $D_1f$ existeix en $\\Omega$, $G$ és derivable (i, per tant, contínua) entre $a$ i $a+h$, amb $G'(x)=D_1f(x,b+k)-D_1f(x,b)$.",
+    "Pel teorema del valor mitjà, existeix $\\xi_x\\in(a,a+h)$ tal que $\\Delta(h,k)=h\\,G'(\\xi_x)=h\\big(D_1f(\\xi_x,b+k)-D_1f(\\xi_x,b)\\big)$.",
+    "Fixat $\\xi_x$, apliquem de nou el teorema del valor mitjà a la funció $y\\mapsto D_1f(\\xi_x,y)$, que és derivable amb derivada $D_2D_1f(\\xi_x,y)$: existeix $\\xi_y\\in(b,b+k)$ tal que $\\Delta(h,k)=h\\,k\\,D_2D_1f(\\xi_x,\\xi_y)$ (1), amb $(\\xi_x,\\xi_y)\\in R(h,k)$.",
+    "Anàlogament, amb $H(y)=f(a+h,y)-f(a,y)$ tenim $\\Delta(h,k)=H(b+k)-H(b)$; aplicant el teorema del valor mitjà primer en $y$ i després en $x$, obtenim $(\\eta_x,\\eta_y)\\in R(h,k)$ tal que $\\Delta(h,k)=h\\,k\\,D_1D_2f(\\eta_x,\\eta_y)$ (2).",
+    "Igualant (1) i (2) i dividint per $hk\\neq0$, obtenim $D_2D_1f(\\xi_x,\\xi_y)=D_1D_2f(\\eta_x,\\eta_y)$. Quan $(h,k)\\to(0,0)$, tots dos punts tendeixen a $(a,b)$, ja que són de $R(h,k)$, i per la continuïtat de $D_2D_1f$ i $D_1D_2f$ en un entorn de $(a,b)$ concloem que $D_2D_1f(a,b)=D_1D_2f(a,b)$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "aleshores $D_iD_jf=D_jD_if$ en tot $\\Omega$",
+      "inici": 77,
+      "fi": 120,
+      "tipus": "conclusio",
+      "explicacio": "La continuïtat només se suposa a prop de $\\mathbf{a}$, i la demostració només dona la igualtat en $\\mathbf{a}$. Contraexemple: $f(x,y)=g(x-3,y)$, amb $g(x,y)=\\frac{xy(x^2-y^2)}{x^2+y^2}$ i $g(0,0)=0$, té les derivades mixtes contínues a prop de $(0,0)$ però diferents en $(3,0)$.",
+      "correccio": "Els apunts concloen només $D_iD_jf(\\mathbf{a})=D_jD_if(\\mathbf{a})$, en el punt $\\mathbf{a}$ on se suposa la continuïtat.",
+      "pista": "On se suposa la continuïtat de les derivades mixtes? I en quin punt fa el límit la demostració?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t5.json",
+    "valoracio": "Demostració correcta, però l'enunciat estén la conclusió a tot $\\Omega$.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "aleshores $D_iD_jf=D_jD_if$ en tot $\\Omega$",
+        "gravetat": "error",
+        "explicacio": "Conclusió massa forta: la continuïtat en un entorn de $\\mathbf{a}$ només dona la igualtat en $\\mathbf{a}$ (i en aquell entorn); fora pot fallar. La demostració només prova la igualtat en $(a,b)$."
+      }
+    ]
+  },
+  "creat": 1791296162.084215
+}

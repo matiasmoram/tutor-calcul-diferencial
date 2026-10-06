@@ -1,0 +1,82 @@
+{
+  "id": "78f5a5b183cb",
+  "exercici": "T3.18",
+  "font": "teoria",
+  "dificultat": "dificil",
+  "fragments": [
+    "Sigui $f:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}^m$, $f=(f_1,f_2,\\ldots,f_m)$, i sigui $a\\in\\mathring{\\Omega}$.",
+    "Si existeixen totes les derivades parcials $\\frac{\\partial f_i}{\\partial x_j}$ en un entorn del punt $a$ i són contínues al punt $a$, aleshores $f$ és diferenciable al punt $a$ i la seva matriu jacobiana és $Jf(a)=\\left(\\frac{\\partial f_j}{\\partial x_i}(a)\\right)_{i,j}$, amb $1\\leq i\\leq n$ i $1\\leq j\\leq m$.",
+    "Recordem que a $\\mathbb{R}^m$ totes les normes són equivalents; en particular, existeix $\\mu>0$ tal que $\\|y\\|=\\|y\\|_2\\leq\\mu\\|y\\|_1$ per a tot $y\\in\\mathbb{R}^m$.",
+    "Reduirem la demostració a l'Afirmació següent: totes les funcions component $f_i$, $i=1,\\ldots,m$, són diferenciables al punt $a$, amb $Jf_i(a)=\\left(\\frac{\\partial f_i}{\\partial x_1}(a)\\ \\cdots\\ \\frac{\\partial f_i}{\\partial x_n}(a)\\right)$.",
+    "Suposem-la certa. Fixat $\\varepsilon>0$, per a cada $i$ existeix $\\delta_i>0$ tal que si $\\|x-a\\|<\\delta_i$, aleshores $|f_i(x)-f_i(a)-Jf_i(a)(x-a)|\\leq\\frac{\\varepsilon}{\\mu m}\\|x-a\\|$.",
+    "Per tant, si $\\|x-a\\|<\\delta:=\\min_i\\delta_i$, es té $\\|f(x)-f(a)-Jf(a)(x-a)\\|\\leq\\mu\\sum_{i=1}^m|f_i(x)-f_i(a)-Jf_i(a)(x-a)|\\leq\\mu\\sum_{i=1}^m\\frac{\\varepsilon}{\\mu m}\\|x-a\\|=\\varepsilon\\|x-a\\|$, i $f$ és diferenciable en $a$.",
+    "Demostrem l'Afirmació. Fixem $i$ i $\\varepsilon>0$. Com que $a\\in\\mathring{\\Omega}$ i les derivades parcials existeixen en un entorn de $a$, hi ha $\\delta_0>0$ tal que el cub $R(a,\\delta_0)=(a_1-\\delta_0,a_1+\\delta_0)\\times\\cdots\\times(a_n-\\delta_0,a_n+\\delta_0)$ està contingut a $\\Omega$ i totes les derivades parcials hi existeixen.",
+    "Per a $x\\in R(a,\\delta_0)$ escrivim $f_i(x)-f_i(a)$ com a suma telescòpica, canviant una coordenada cada vegada: $f_i(x)-f_i(a)=\\sum_{j=1}^n\\left[f_i(a_{<j},x_j,x_{>j})-f_i(a_{<j},a_j,x_{>j})\\right]$, on $(a_{<j},t,x_{>j}):=(a_1,\\ldots,a_{j-1},t,x_{j+1},\\ldots,x_n)$.",
+    "Cada sumand és l'increment de la funció d'una variable $t\\mapsto f_i(a_{<j},t,x_{>j})$, que és derivable a l'interval tancat d'extrems $a_j$ i $x_j$ perquè $f_i$ és diferenciable a $R(a,\\delta_0)$. Pel teorema del valor mitjà en una variable, existeix $\\xi_j$ a l'interior d'aquest interval tal que el sumand val $\\frac{\\partial f_i}{\\partial x_j}(a_{<j},\\xi_j,x_{>j})\\,(x_j-a_j)$ (si $x_j=a_j$, el sumand és nul).",
+    "Per tant, $|f_i(x)-f_i(a)-Jf_i(a)(x-a)|=\\left|\\sum_{j=1}^n\\left(\\frac{\\partial f_i}{\\partial x_j}(a_{<j},\\xi_j,x_{>j})-\\frac{\\partial f_i}{\\partial x_j}(a)\\right)(x_j-a_j)\\right|\\leq\\sum_{j=1}^n\\left|\\frac{\\partial f_i}{\\partial x_j}(a_{<j},\\xi_j,x_{>j})-\\frac{\\partial f_i}{\\partial x_j}(a)\\right|\\,|x_j-a_j|$.",
+    "Per la continuïtat de les derivades parcials al punt $a$, existeix $0<\\delta_0'<\\delta_0$ tal que $\\left|\\frac{\\partial f_i}{\\partial x_j}(p)-\\frac{\\partial f_i}{\\partial x_j}(a)\\right|<\\varepsilon$ per a tot $p\\in R(a,\\delta_0')$ i tot $j$. Si $\\|x-a\\|<\\delta_0'$, els punts $(a_{<j},\\xi_j,x_{>j})$ pertanyen a $R(a,\\delta_0')$, perquè cada coordenada dista de la de $a$ com a molt $\\|x-a\\|$.",
+    "Com que $\\sum_{j=1}^n|x_j-a_j|=\\|x-a\\|_1\\leq\\|x-a\\|$, si $\\|x-a\\|<\\delta_0'$ obtenim $|f_i(x)-f_i(a)-Jf_i(a)(x-a)|\\leq\\varepsilon\\sum_{j=1}^n|x_j-a_j|\\leq\\varepsilon\\|x-a\\|$, que prova l'Afirmació."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$Jf(a)=\\left(\\frac{\\partial f_j}{\\partial x_i}(a)\\right)_{i,j}$, amb $1\\leq i\\leq n$ i $1\\leq j\\leq m$",
+      "inici": 207,
+      "fi": 309,
+      "tipus": "definicio",
+      "explicacio": "Aquesta és la transposada de la jacobiana: una matriu $n\\times m$ que no representa una aplicació de $\\mathbb{R}^n$ a $\\mathbb{R}^m$. La fila $i$ de $Jf(a)$ ha de ser el gradient de $f_i$, com es fa servir a la demostració.",
+      "correccio": "$f$ és diferenciable en $a$ (i, de fet, $Jf(a)=\\left(\\frac{\\partial f_i}{\\partial x_j}(a)\\right)_{i,j}$, amb $1\\leq i\\leq m$, $1\\leq j\\leq n$).",
+      "pista": "Quantes files i columnes ha de tenir la matriu d'una aplicació lineal de $\\mathbb{R}^n$ a $\\mathbb{R}^m$? Quin índex correspon a la component $f_i$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 9,
+      "cita": "perquè $f_i$ és diferenciable a $R(a,\\delta_0)$",
+      "inici": 149,
+      "fi": 196,
+      "tipus": "hipotesi",
+      "explicacio": "No sabem que $f_i$ sigui diferenciable a $R(a,\\delta_0)$ (és, de fet, el que volem demostrar en $a$): el raonament és circular. La derivabilitat de $t\\mapsto f_i(a_{<j},t,x_{>j})$ ve de l'existència de $\\frac{\\partial f_i}{\\partial x_j}$ a tot el cub.",
+      "correccio": "La funció és derivable a l'interval perquè la derivada parcial $\\frac{\\partial f_i}{\\partial x_j}$ existeix a tots els punts de $R(a,\\delta_0)$, i la seva derivada és $\\frac{\\partial f_i}{\\partial x_j}(a_{<j},t,x_{>j})$.",
+      "pista": "Què sabem realment de $f_i$ a l'entorn de $a$: que és diferenciable, o una altra cosa?"
+    },
+    {
+      "id": "e3",
+      "fragment": 12,
+      "cita": "$\\sum_{j=1}^n|x_j-a_j|=\\|x-a\\|_1\\leq\\|x-a\\|$",
+      "inici": 8,
+      "fi": 52,
+      "tipus": "desigualtat",
+      "explicacio": "La desigualtat va al revés: $\\|x-a\\|_2\\leq\\|x-a\\|_1$, i en general $\\|x-a\\|_1>\\|x-a\\|_2$ (p. ex. $x-a=(1,1)$: $2>\\sqrt2$).",
+      "correccio": "S'ha de fitar cada diferència per $\\frac{\\varepsilon}{n}$ i usar $|x_j-a_j|\\leq\\|x-a\\|$, de manera que la suma és $\\leq\\sum_{j=1}^n\\frac{\\varepsilon}{n}\\|x-a\\|=\\varepsilon\\|x-a\\|$.",
+      "pista": "Compara $\\|v\\|_1$ i $\\|v\\|_2$ per a $v=(1,1)$. Quina de les dues és més gran?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t3.json",
+    "valoracio": "Tres errors: jacobiana transposada a l'enunciat, justificació circular de la derivabilitat i desigualtat entre normes invertida.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$Jf(a)=\\left(\\frac{\\partial f_j}{\\partial x_i}(a)\\right)_{i,j}$, amb $1\\leq i\\leq n$ i $1\\leq j\\leq m$",
+        "gravetat": "error",
+        "explicacio": "La jacobiana és $\\left(\\frac{\\partial f_i}{\\partial x_j}(a)\\right)$ amb $1\\leq i\\leq m$, $1\\leq j\\leq n$ (matriu $m\\times n$); la donada és la seva transposada."
+      },
+      {
+        "fragment": 9,
+        "cita": "perquè $f_i$ és diferenciable a $R(a,\\delta_0)$",
+        "gravetat": "error",
+        "explicacio": "No és hipòtesi que $f_i$ sigui diferenciable al cub (és més del que es vol provar). La derivabilitat de $t\\mapsto f_i(a_{<j},t,x_{>j})$ ve de l'existència de $\\partial f_i/\\partial x_j$ al cub."
+      },
+      {
+        "fragment": 12,
+        "cita": "\\|x-a\\|_1\\leq\\|x-a\\|",
+        "gravetat": "error",
+        "explicacio": "És al revés: $\\|x-a\\|=\\|x-a\\|_2\\leq\\|x-a\\|_1$. Amb la fita $\\varepsilon$ de [11] s'obté $\\varepsilon\\|x-a\\|_1\\leq\\sqrt n\\,\\varepsilon\\|x-a\\|$, no $\\varepsilon\\|x-a\\|$ (els apunts usen $\\varepsilon/n$ i $|x_j-a_j|\\leq\\|x-a\\|$)."
+      }
+    ]
+  },
+  "creat": 1791296233.7570212
+}

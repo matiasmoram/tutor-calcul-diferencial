@@ -1,0 +1,82 @@
+{
+  "id": "c021144caead",
+  "exercici": "T1.26",
+  "font": "teoria",
+  "dificultat": "dificil",
+  "fragments": [
+    "(Bolzano-Weierstrass.) Sigui $(M,d)$ espai mètric i $A\\subseteq M$.",
+    "Aleshores, $A$ és compacte si i només si $A$ és seqüencialment compacte, és a dir, si i només si tota successió $(x_n)_n\\subseteq M$ admet una parcial convergent a un punt de $A$.",
+    "$\\Rightarrow$) Suposem que $A$ és compacte i vegem que és seqüencialment compacte. Per reducció a l'absurd, sigui $(x_n)_n$ una successió d'elements de $A$ que no admet cap parcial convergent.",
+    "La successió $(x_n)_n$ no pot contenir infinites còpies d'un mateix element (altrament, la parcial constant formada per aquestes còpies seria convergent). Eliminant les còpies repetides obtenim una subsuccessió $(y_n)_n\\subseteq A$ de punts diferents dos a dos.",
+    "Afirmació: existeix una successió d'oberts $(U_n)_n$ de $M$ tal que $y_n\\in U_n$ és l'únic punt de la successió $(y_n)_n$ que pertany a $U_n$.",
+    "Ho demostrem també per reducció a l'absurd: si l'afirmació no fos certa, per a qualsevol tria d'oberts $(U_n)_n$ (per exemple, boles) hi hauria un $y_{n_0}\\in U_{n_0}$ tal que $U_{n_0}$ conté infinits punts de $(y_n)_n$ diferents de $y_{n_0}$. En particular, això ha de passar també per als entorns $V_m=B_{1/m}(y_{n_0})\\cap U_{n_0}$, $m\\geq 1$.",
+    "Triem, per a cada $m\\geq 1$, un punt $y_m^0\\in V_m\\setminus\\{y_{n_0}\\}$ de la successió, amb índexs creixents. Com que $d(y_m^0,y_{n_0})<\\frac{1}{m}\\to 0$, la parcial $(y_m^0)_m$ convergeix a $y_{n_0}\\in A$, en contradicció amb el fet que $(x_n)_n$ no admet cap parcial convergent.",
+    "Sigui $Y=\\{y_1,y_2,\\ldots\\}\\subseteq A$. Per l'afirmació, cap $y_n$ és punt d'acumulació de $Y$, i un punt d'acumulació $x\\notin Y$ seria límit d'una parcial de $(y_n)_n$; per tant, $Y$ no té punts d'acumulació, $\\overline{Y}=Y$ i $Y$ és tancat. Pel Lema 28, com que $A$ és compacte, $Y$ també és compacte.",
+    "Però el recobriment per oberts $Y\\subseteq\\bigcup_{n\\geq 1}U_n$ no admet cap subrecobriment finit, ja que cada $U_n$ conté exactament un punt de $Y$ i tots són necessaris. Contradicció: per tant, $(x_n)_n$ admet una parcial convergent.",
+    "Falta veure que el límit és a $A$. Sigui $(x_{n_k})_k$ aquesta parcial i $x=\\lim_k x_{n_k}\\in M$. Com que $x_{n_k}\\in A$ per a tot $k$, $x$ és un punt adherent d'$A$, és a dir, $x\\in\\overline{A}$; com que $A$ és compacte, és fitat, d'on $\\overline{A}=A$ i $x\\in A$.",
+    "$\\Leftarrow$) Suposem ara que $A$ és seqüencialment compacte i sigui $A\\subseteq\\bigcup_{i\\in I}U_i$ un recobriment per oberts. Pel Lema 29, existeixen $\\delta>0$ i $i\\in I$ tals que $B_\\delta(a)\\subseteq U_i$ per a tot $a\\in A$.",
+    "Aplicant el Lema 30 amb $\\varepsilon=\\delta$, existeixen $y_1,\\ldots,y_r\\in A$ tals que $A\\subseteq B_\\delta(y_1)\\cup\\cdots\\cup B_\\delta(y_r)\\subseteq U_{i_1}\\cup\\cdots\\cup U_{i_r}$, on $U_{i_j}$ és un obert del recobriment que conté $B_\\delta(y_j)$. Hem extret un subrecobriment finit i, per tant, $A$ és compacte."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "tota successió $(x_n)_n\\subseteq M$",
+      "inici": 97,
+      "fi": 132,
+      "tipus": "quantificador",
+      "explicacio": "La condició ha de ser sobre les successions d'$A$, no de tot $M$; així l'implicació $\\Rightarrow$ és falsa. Contraexemple: $M=\\mathbb{R}$, $A=[0,1]$ és compacte, però la successió $x_n=n$ de $M$ no té cap parcial convergent.",
+      "correccio": "Tota successió $(x_n)_n\\subseteq A$ admet una parcial convergent a un punt de $A$.",
+      "pista": "Si $A=[0,1]$ dins de $\\mathbb{R}$, què passa amb una successió de $\\mathbb{R}$ que se n'allunya?"
+    },
+    {
+      "id": "e2",
+      "fragment": 10,
+      "cita": "com que $A$ és compacte, és fitat, d'on $\\overline{A}=A$",
+      "inici": 197,
+      "fi": 253,
+      "tipus": "implicacio",
+      "explicacio": "Ser fitat no implica $\\overline{A}=A$ (p. ex. $(0,1)$ és fitat i no tancat). El que dona $\\overline{A}=A$ és que $A$ és tancat, pel Lema 27 (compacte implica tancat).",
+      "correccio": "Pel Lema 27, $A$ compacte és tancat, d'on $\\overline{A}=A$ i $x\\in A$.",
+      "pista": "Quina propietat d'un conjunt és equivalent a $\\overline{A}=A$? Ser fitat l'assegura?"
+    },
+    {
+      "id": "e3",
+      "fragment": 11,
+      "cita": "existeixen $\\delta>0$ i $i\\in I$ tals que $B_\\delta(a)\\subseteq U_i$ per a tot $a\\in A$",
+      "inici": 141,
+      "fi": 228,
+      "tipus": "quantificador",
+      "explicacio": "El Lema 29 dona un $\\delta$ uniforme, però l'obert $U_i$ depèn del punt $a$; un sol obert que contingui totes les boles contindria $A$, cosa que en general no passa (p. ex. $A=[0,1]$ amb $U_1=(-1,\\frac23)$, $U_2=(\\frac13,2)$).",
+      "correccio": "Existeix $\\delta>0$ tal que per a tot $a\\in A$ es té $B_\\delta(a)\\subseteq U_i$ per a un cert $i=i(a)\\in I$.",
+      "pista": "L'índex $i$ de l'obert que conté $B_\\delta(a)$ pot canviar quan canvia $a$? En quin ordre van els quantificadors al Lema 29?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t1b.json",
+    "valoracio": "Tres errors: successions de $M$ a l'enunciat, 'fitat' en lloc de 'tancat' per tenir $\\overline{A}=A$, i quantificadors canviats al Lema 29.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "tota successió $(x_n)_n\\subseteq M$",
+        "gravetat": "error",
+        "explicacio": "Les successions han de ser d'elements de $A$, no de $M$; amb successions de $M$ l'enunciat és fals (cap $A\\neq M$ amb $M$ no compacte ho compliria)."
+      },
+      {
+        "fragment": 10,
+        "cita": "com que $A$ és compacte, és fitat, d'on $\\overline{A}=A$",
+        "gravetat": "error",
+        "explicacio": "Ser fitat no implica ser tancat; cal el Lema 27 (compacte $\\Rightarrow$ tancat) per deduir $\\overline{A}=A$."
+      },
+      {
+        "fragment": 11,
+        "cita": "existeixen $\\delta>0$ i $i\\in I$ tals que $B_\\delta(a)\\subseteq U_i$ per a tot $a\\in A$",
+        "gravetat": "error",
+        "explicacio": "Intercanvi de quantificadors: el Lema 29 dona un $\\delta$ uniforme però l'índex $i=i(a)$ depèn de $a$; tal com està escrit, $A$ estaria contingut en un sol $U_i$, cosa falsa en general."
+      }
+    ]
+  },
+  "creat": 1791295842.2382169
+}

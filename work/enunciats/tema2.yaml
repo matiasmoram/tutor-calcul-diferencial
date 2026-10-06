@@ -1,0 +1,392 @@
+tema: 2
+titol: "Funcions, límits i continuïtat"
+problemes:
+  - num: 1
+    font: null
+    preambul: |
+      Determineu el domini d'existència i el recorregut (imatge) de les funcions següents, i digueu si aquests conjunts són oberts o tancats:
+    apartats:
+      - lletra: a
+        text: |
+          $f(x,y)=\sqrt{\cos\left(x^2+y^2\right)}$,
+      - lletra: b
+        text: |
+          $f(x,y)=\log\left(y-x\right)$,
+      - lletra: c
+        text: |
+          $f(x,y)=\arcsin\left(x/y\right)$,
+      - lletra: d
+        text: |
+          $f(x,y)=\sqrt{\cos\left(2\pi x\right)-1}$,
+      - lletra: e
+        text: |
+          $f(x,y)=1-|x|-|y|$,
+      - lletra: f
+        text: |
+          $f(t)=\left(\cos\left(1/t\right),\sin\left(1/t\right)\right)$.
+    indicacio: null
+  - num: 2
+    font: null
+    preambul: |
+      Identifiqueu les corbes de nivell de les funcions següents:
+    apartats:
+      - lletra: a
+        text: |
+          $f(x,y)=x+5y-7$.
+      - lletra: b
+        text: |
+          $f(x,y)=xy$.
+      - lletra: c
+        text: |
+          $f(x,y)=ax^2+by^2$, $a,b\in\mathbb{R}^+$.
+      - lletra: d
+        text: |
+          $f(x,y)=x^2-y^2$.
+      - lletra: e
+        text: |
+          $f(x,y)=2x^2+y^2-4x+y$.
+      - lletra: f
+        text: |
+          $f(x,y)=|y|$.
+      - lletra: g
+        text: |
+          $f(x,y)=\max(|x|,|y|)$.
+      - lletra: h
+        text: |
+          $f(x,y)=1-|x|-|y|$.
+      - lletra: i
+        text: |
+          $$f(x,y)=\begin{cases}\dfrac{x}{x+y^2} & \text{si } x\neq-y^2\\ 0 & \text{si } x=-y^2.\end{cases}$$
+      - lletra: j
+        text: |
+          $f(x,y)=x^2-2y^2+4y$.
+    indicacio: null
+  - num: 3
+    font: null
+    preambul: |
+      Identifiqueu les superfícies de nivell de les funcions següents:
+    apartats:
+      - lletra: a
+        text: |
+          $f(x,y,z)=x+2y+3z$.
+      - lletra: b
+        text: |
+          $f(x,y,z)=x^2+y^2-z^2$.
+      - lletra: c
+        text: |
+          $f(x,y,z)=ax^2+by^2+cz^2$,  $a,b,c\in\mathbb{R}^+$.
+      - lletra: d
+        text: |
+          $f(x,y,z)=y^2+z^2$.
+      - lletra: e
+        text: |
+          $f(x,y,z)=xy$.
+    indicacio: null
+  - num: 4
+    font: null
+    preambul: |
+      Calculeu els límits següents:
+    apartats:
+      - lletra: a
+        text: |
+          $\displaystyle\lim_{(x,y)\to(0,0)}\frac{2+3x+4y^2}{x+1}$.
+      - lletra: b
+        text: |
+          $\displaystyle\lim_{(x,y)\to(0,0)}\frac{x^4y^4}{\sqrt{x^2+y^2}}$.
+      - lletra: c
+        text: |
+          $\displaystyle\lim_{(x,y)\to(0,0)}\frac{x^5}{x^4+y^2}$.
+      - lletra: d
+        text: |
+          $\displaystyle\lim_{(x,y)\to(0,0)}\frac{3\sin(xy)}{xy}$.
+      - lletra: e
+        text: |
+          $\displaystyle\lim_{(x,y)\to(0,0)}\left(\frac{e^{x(y-1)-x-1}}{x^2+y^2},\ \sin\left(x-y\right)\right)$.
+      - lletra: f
+        text: |
+          $\displaystyle\lim_{(x,y,z)\to(0,0,0)}\frac{x^3+z^5}{\sqrt{x^2+2y^2+4z^2}}$.
+      - lletra: g
+        text: |
+          $\displaystyle\lim_{(x,y,z)\to(0,0,0)}e^{-1/(x^2+y^2+z^2)}$.
+    indicacio: null
+  - num: 5
+    font: null
+    preambul: |
+      Estudieu el límit a $(0,0)$ de la restricció de les funcions següents a qualsevol recta que passa per $(0,0)$ i esbrineu si existeix el límit $\lim_{(x,y)\to(0,0)}f(x,y)$ per a les funcions següents:
+    apartats:
+      - lletra: a
+        text: |
+          $f(x,y)=\dfrac{xy}{x^2+y^2}$.
+      - lletra: b
+        text: |
+          $f(x,y)=\dfrac{xy^2}{x^2y+xy^2}$.
+      - lletra: c
+        text: |
+          $f(x,y)=\dfrac{xy}{x^3+y^4}$.
+      - lletra: d
+        text: |
+          $$f(x,y)=\begin{cases}\dfrac{x}{x+y^2} & \text{si } x\neq-y^2\\ 0 & \text{si } x=-y^2.\end{cases}$$
+    indicacio: null
+  - num: 6
+    font: null
+    preambul: |
+      Siguin $A=\left\{(x,y)\in\mathbb{R}^2\mid 0<y<x^2\right\}$ i $f(x,y)=\begin{cases}0 & \text{si } (x,y)\in A,\\ 1 & \text{altrament.}\end{cases}$
+
+      Demostreu que el límit quan $(x,y)\to(0,0)$ de la restricció de $f$ a qualsevol recta que passi per $(0,0)$ val 1; però tanmateix no existeix $\lim_{(x,y)\to(0,0)}f(x,y)$.
+    apartats: []
+    indicacio: null
+  - num: 7
+    font: null
+    preambul: |
+      Límits i coordenades polars.
+    apartats:
+      - lletra: a
+        text: |
+          Considerem una funció $f:U\to\mathbb{R}$ on $U\subseteq\mathbb{R}^2$ és un entorn de $(0,0)$. Suposem que existeix una funció $h(r)$ no negativa tal que
+
+          - $|f(r\cos\varphi,r\sin\varphi)|\leqslant h(r)$ per a tot $\varphi\in[0,2\pi)$, $r>0$,
+          - $\displaystyle\lim_{r\to0^+}h(r)=0$.
+
+          Demostreu que $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)=0$.
+
+          De manera similar, si $|f(r\cos\varphi,r\sin\varphi)-L|\leqslant h(r)$ i $\displaystyle\lim_{h\to0^+}h(r)=0$, llavors $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)=L$.
+      - lletra: b
+        text: |
+          Sigui $f(x,y)=\dfrac{x^2y}{x^4+y^2}$. Calculeu $\displaystyle\lim_{r\to0}f(r\cos\varphi,r\sin\varphi)$, per a tot valor de $\varphi\in[0,2\pi]$. Què podem deduir sobre $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)$ ?
+      - lletra: c
+        text: |
+          Discutiu l'existència de $\displaystyle\lim_{(x,y)\to(0,0)}\frac{x^py^q}{x^2+y^2-xy}$, segons els valors de $p,q\in\mathbb{N}$.
+    indicacio: null
+  - num: 8
+    font: null
+    preambul: |
+      Considerem les funcions
+      $$f(x,y)=\begin{cases}0 & \text{si } (x,y)=(0,0),\\ \dfrac{xy^2}{x^2+y^4} & \text{altrament,}\end{cases}\qquad g(x,y)=\begin{cases}0 & \text{si } (x,y)=(0,0),\\ \dfrac{xy^2}{x^2+y^6} & \text{altrament.}\end{cases}$$
+      Demostreu la veracitat o falsedat de les afirmacions següents:
+    apartats:
+      - lletra: a
+        text: |
+          Les restriccions de $f$ i $g$ a qualsevol recta de $\mathbb{R}^2$ són funcions contínues.
+      - lletra: b
+        text: |
+          $f$ és fitada a $\mathbb{R}^2$.
+      - lletra: c
+        text: |
+          $f$ no és contínua a $(0,0)$.
+      - lletra: d
+        text: |
+          $g$ no és fitada a qualsevol obert que contingui el punt $(0,0)$.
+      - lletra: e
+        text: |
+          $g$ no és contínua a $\mathbb{R}^2$ però ho és a la regió
+          $$D_\delta=\left\{(r\cos\varphi,r\sin\varphi)\mid r\geqslant0,\ |\cos\varphi|>\delta\right\}\qquad(0<\delta<1).$$
+    indicacio: null
+  - num: 9
+    font: null
+    preambul: |
+      Considereu la funció $F:\mathbb{R}^2\to\mathbb{R}^2$ que té components
+      $$F_1(x,y)=\begin{cases}\dfrac{xy}{(x^2+y^2)^{1/2}} & \text{si } (x,y)\neq(0,0),\\ 0 & \text{si } (x,y)=(0,0),\end{cases}\qquad F_2(x,y)=\begin{cases}\dfrac{x}{x+y^2} & \text{si } x\neq-y^2,\\ 0 & \text{si } x=-y^2.\end{cases}$$
+    apartats:
+      - lletra: a
+        text: |
+          Estudieu la continuïtat de $F$ i proveu que el seu conjunt de punts de discontinuïtat és tancat.
+      - lletra: b
+        text: |
+          Proveu que $F\left(\left\{(x,y)\in\mathbb{R}^2\mid(x-2)^2+y^2\leqslant1\right\}\right)$ és compacte.
+    indicacio: null
+  - num: 10
+    font: null
+    preambul: |
+      Estudieu la continuïtat a $\mathbb{R}^2$ de la funció
+      $$f(x,y)=\begin{cases}\dfrac{x^3y}{x^2+y^2-1} & \text{si } x^2+y^2-1\neq0\\ 0 & \text{si } x^2+y^2-1=0.\end{cases}$$
+    apartats: []
+    indicacio: null
+  - num: 11
+    font: null
+    preambul: |
+      Estudieu la continuïtat de la funció $f:\mathbb{R}^2\to\mathbb{R}$ definida per
+      $$f(x,y)=\frac{(x-1)^3y^2}{(x-1)^4+y^4},\quad\text{si }(x,y)\neq(1,0)\ \text{ i }\ f(1,0)=0.$$
+    apartats: []
+    indicacio: null
+  - num: 12
+    font: null
+    preambul: |
+      Considerem la funció $f:\mathbb{R}^2\to\mathbb{R}$ definida per
+      $$f(x,y)=\begin{cases}\dfrac{x^2+y^2}{x+y} & \text{si } x+y\neq0,\\ 0 & \text{si } x+y=0.\end{cases}$$
+    apartats:
+      - lletra: a
+        text: |
+          Estudieu la continuïtat de $f$ en $\mathbb{R}^2\setminus\{(0,0)\}$.
+      - lletra: b
+        text: |
+          Escriviu les equacions de les corbes de nivell $0$, $2$ i $-2$ de $f$. Dibuixeu-les.
+      - lletra: c
+        text: |
+          Utilitzeu l'apartat anterior per deduir si $f$ és contínua en $(0,0)$.
+    indicacio: null
+  - num: 13
+    font: null
+    preambul: |
+      Raoneu si són oberts els subconjunts de $\mathbb{R}^2$ o $\mathbb{R}^3$ següents:
+    apartats:
+      - lletra: a
+        text: |
+          $A=\{(x,y)\in\mathbb{R}^2\ \mid\ \cos\left(x+y\right)+\sin\left(x-y\right)<1\}$.
+      - lletra: b
+        text: |
+          $B=\{(x,y)\in\mathbb{R}^2\ \mid\ xy\log\left(x-y\right)>5\}$.
+      - lletra: c
+        text: |
+          $C=\{(x,y)\in\mathbb{R}^2\ \mid\ \sqrt{x+y}<1\}$.
+      - lletra: d
+        text: |
+          $D=\{(x,y,z)\in\mathbb{R}^3\ \mid\ 1<x+y^2+z^3<3,\ xyz<0\}$.
+      - lletra: e
+        text: |
+          $E=\left\{(x,y,z)\in\mathbb{R}^3\ \mid\ \left|\dfrac{x+y+z}{x^3+y^3+z^3}\right|<1\right\}$.
+    indicacio: null
+  - num: 14
+    font: null
+    preambul: |
+      Anàlogament, raoneu si són tancats els subconjunts de $\mathbb{R}^2$ o $\mathbb{R}^3$ següents:
+    apartats:
+      - lletra: a
+        text: |
+          $A=\{(x,y)\in\mathbb{R}^2\ \mid\ 2x-3y=6,\ x^2+y^3\leqslant10\}$.
+      - lletra: b
+        text: |
+          $B=\{(x,y)\in\mathbb{R}^2\ \mid\ 2x^2+3y^2\in\mathbb{N}\}$.
+      - lletra: c
+        text: |
+          $C=\{(x,y)\in\mathbb{R}^2\ \mid\ \dfrac{1}{x^2+y^2}\in\mathbb{N}\}$.
+      - lletra: d
+        text: |
+          $D=\{(x,y,z)\in\mathbb{R}^3\ \mid\ x+2y+3z=1,\ x^2y^2z\geqslant7\}$.
+    indicacio: null
+  - num: 15
+    font: null
+    preambul: |
+      Justifiqueu adequadament si els conjunts següents són compactes:
+    apartats:
+      - lletra: a
+        text: |
+          $A=\{(x,y,z,t)\in\mathbb{R}^4\ \mid\ 2x^2+y^2-z^2=2,\ y^2+2z^2\leqslant10,\ |z|\geqslant|t|\ \}$.
+      - lletra: b
+        text: |
+          $B=\{(x,y,z)\in\mathbb{R}^3\ \mid\ x^3=y^2,\ z=x\}$.
+    indicacio: null
+  - num: 16
+    font: null
+    preambul: |
+      Per a $A,B\subset\mathbb{R}^n$, recordem que $d(A,B)=\inf\{d(a,b)\mid a\in A,\ b\in B\}$, on $d(a,b)$ és la distància euclídia a $\mathbb{R}^n$ (vegeu l'exercici 5 del Tema 1). Demostreu:
+    apartats:
+      - lletra: a
+        text: |
+          $A,B$ compactes $\Rightarrow\exists a_0\in A,\,b_0\in B$ tals que $d(A,B)=d(a_0,b_0)$,
+      - lletra: b
+        text: |
+          $A$ compacte $\Rightarrow\exists a_0\in A$ tal que $d(A,B)=d(\{a_0\},B)$,
+      - lletra: c
+        text: |
+          És cert l'apartat (a) si $A$ i $B$ són tancats però no fitats? I si $A=\{a\}$ i $B$ és tancat?
+      - lletra: d
+        text: |
+          $\overline{A}=\{x\in\mathbb{R}^n\mid d(x,A)=0\}$.
+    indicacio: null
+  - num: 17
+    font: null
+    preambul: |
+      Sigui $E$ un subespai vectorial de $\mathbb{R}^m$.
+    apartats:
+      - lletra: a
+        text: |
+          Demostreu que si $E$ té punts interiors, llavors existeix una bola oberta centrada a l'origen i continguda a $E$.
+      - lletra: b
+        text: |
+          Demostreu que si $E$ té punts interiors, aleshores $E=\mathbb{R}^m$.
+      - lletra: c
+        text: |
+          Demostreu que $E$ és tancat.
+      - lletra: d
+        text: |
+          Demostreu que $E$ és compacte si i només si $E=\{0\}$.
+    indicacio: null
+  - num: 18
+    font: null
+    preambul: |
+      Sigui $M_2(\mathbb{R})$ el conjunt de matrius quadrades $2\times2$ amb coeficients reals, que identifiquem amb $\mathbb{R}^4$ mitjançant l'aplicació $F:M_2(\mathbb{R})\longrightarrow\mathbb{R}^4$ donada per
+      $$F\left(\begin{pmatrix}a&c\\b&d\end{pmatrix}\right)=(a,b,c,d)^T$$
+    apartats:
+      - lletra: a
+        text: |
+          Demostreu que l'aplicació $\det:M_2(\mathbb{R})\longrightarrow\mathbb{R}$, que associa a cada matriu el seu determinant, és contínua.
+      - lletra: b
+        text: |
+          Determineu si els conjunts següents són oberts, tancats o compactes:
+          $$C_1=\{A\in M_2(\mathbb{R})\text{ invertibles}\},\ C_2=\{A\in M_2(\mathbb{R})\mid\det A=1\},\ C_3=\{A\in M_2(\mathbb{R})\mid\det A>0\}.$$
+    indicacio: null
+  - num: 19
+    font: null
+    preambul: |
+      Volem demostrar que el conjunt $O_2(\mathbb{R})=\{A\in M_2(\mathbb{R})\,:\,A^T\cdot A=I\}$ és un compacte de $M_2(\mathbb{R})$.
+    apartats:
+      - lletra: a
+        text: |
+          Useu la funció $g:M_2(\mathbb{R})\to M_2(\mathbb{R})$, tal que $g(A)=A\cdot A^T$, per demostrar que $O_2(\mathbb{R})$ és tancat.
+      - lletra: b
+        text: |
+          Demostreu que $O_2(\mathbb{R})$ està contingut en $S(0,\sqrt{2})$. És una inclusió estricta?
+      - lletra: c
+        text: |
+          Deduïu-ne la compacitat de $O_2(\mathbb{R})$.
+    indicacio: |
+      Comentaris: els resultats anteriors es poden generalitzar al cas $M_n(\mathbb{R})$, $n\in\mathbb{N}$.
+      El conjunt $O_2(\mathbb{R})$, amb l'operació producte de matrius, s'anomena grup ortogonal de dimensió 2. Els seus elements són les matrius ortogonals i ens descriuen els girs i les simetries al pla.
+  - num: 20
+    font: null
+    preambul: |
+      Doneu un exemple de dues funcions $f,g:A\subset\mathbb{R}^m\to\mathbb{R}$ uniformement contínues, tals que el producte $h=f\cdot g$ no ho sigui.
+    apartats: []
+    indicacio: null
+  - num: 21
+    font: "Exercici d'examen, maig 2000"
+    preambul: |
+      Siguin $F:\mathbb{R}^m\to\mathbb{R}^n$ una funció contínua i $A\subseteq\mathbb{R}^m$ un conjunt fitat.
+    apartats:
+      - lletra: a
+        text: |
+          Demostreu que $\overline{F(A)}\subseteq F(\overline{A})$.
+      - lletra: b
+        text: |
+          És cert l'enunciat si $A$ no és fitat?
+    indicacio: null
+  - num: 22
+    font: "Exercici d'examen, maig 2000"
+    preambul: |
+      Sigui $f:\mathbb{R}^2\to\mathbb{R}$ definida per
+      $$f(x,y)=\begin{cases}0 & \text{si } y\neq0\\ 1+x^2 & \text{si } y=0.\end{cases}$$
+      Demostreu que $f$ no és contínua trobant un $A\subseteq\mathbb{R}$ tancat tal que $f^{-1}(A)$ no sigui tancat.
+      Escriviu el resultat teòric que utilitzeu, i demostreu explícitament que $f^{-1}(A)$ no és tancat.
+    apartats: []
+    indicacio: null
+  - num: 23
+    font: "Problema nou (no és de la col·lecció)"
+    preambul: |
+      Certes o falses? Per a cada afirmació, demostreu-la si és certa o doneu-ne un contraexemple justificat si és falsa. A tots els apartats, $f:\mathbb{R}^2\to\mathbb{R}$.
+    apartats:
+      - lletra: a
+        text: |
+          Si existeixen els dos límits iterats $\displaystyle\lim_{x\to0}\lim_{y\to0}f(x,y)$ i $\displaystyle\lim_{y\to0}\lim_{x\to0}f(x,y)$ i són iguals, aleshores existeix $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)$.
+      - lletra: b
+        text: |
+          Si $f$ és contínua en cada variable per separat, és a dir, per a tot $(x_0,y_0)\in\mathbb{R}^2$ les funcions $x\mapsto f(x,y_0)$ i $y\mapsto f(x_0,y)$ són contínues a $\mathbb{R}$, aleshores $f$ és contínua a $\mathbb{R}^2$.
+      - lletra: c
+        text: |
+          Si existeix $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)=L$, aleshores existeix el límit iterat $\displaystyle\lim_{x\to0}\lim_{y\to0}f(x,y)$ i val $L$.
+      - lletra: d
+        text: |
+          Si existeix $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)=L$ i existeix $\eta>0$ tal que, per a cada $x$ amb $0<|x|<\eta$, existeix $g(x)=\displaystyle\lim_{y\to0}f(x,y)$, aleshores $\displaystyle\lim_{x\to0}g(x)=L$.
+      - lletra: e
+        text: |
+          Si existeixen els dos límits iterats a $(0,0)$ i són diferents, aleshores no existeix $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)$.
+    indicacio: null

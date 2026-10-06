@@ -1,0 +1,20 @@
+# Render blueprint (https://render.com/docs/blueprint-spec): one Docker web service.
+# The database is Supabase (external). Secrets marked `sync: false` are entered in the Render dashboard.
+services:
+  - type: web
+    name: tutor-calcul
+    runtime: docker
+    plan: starter
+    healthCheckPath: /api/config
+    autoDeploy: true
+    envVars:
+      - key: LLM_PROVIDER
+        value: openai
+      - key: TUTOR_MODEL
+        value: gpt-5.4-mini
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: TUTOR_CLAU_PROFESSOR
+        sync: false

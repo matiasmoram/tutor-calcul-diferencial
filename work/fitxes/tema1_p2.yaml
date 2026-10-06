@@ -1,0 +1,1167 @@
+problemes:
+  - num: 7
+    font: null
+    preambul: |
+      Descriviu l'interior, la frontera, l'adherència i el conjunt de punts d'acumulació dels conjunts següents:
+    indicacio: null
+    exercicis:
+      - id: "t1-7a"
+        apartat: "a"
+        tipus: calcul
+        enunciat: |
+          $A=\{(x,y)\in\mathbb{R}^2\mid y>0\}$.
+        teoria: ["T1.14", "T1.16"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $\mathring{A}=A$ ($A$ és obert); $\mathrm{Fr}\,A=\{(x,0)\mid x\in\mathbb{R}\}$ (la recta $y=0$); $\overline{A}=\{(x,y)\mid y\geq 0\}$; $A'=\overline{A}=\{(x,y)\mid y\geq 0\}$.
+          fuites: ['y\s*(\\geq|\\ge|\\geqslant|≥)\s*0', 'y\s*=\s*0\b', '(\\mathring\{?\s*A\s*\}?|int\}?\s*\(\s*A\s*\)|A\^\{?\\circ\}?)\s*=\s*A\b']
+        passos:
+          - id: interior
+            titol: "Interior"
+            objectiu: |
+              Determinar quins punts d'$A$ són interiors a $A$.
+            idea: |
+              Per a un punt $(x_0,y_0)$ d'$A$, buscar un radi (que depengui del punt) tal que la bola no surti del semiplà. Alternativament, reconèixer $A$ com un conjunt definit per una desigualtat estricta entre funcions contínues.
+            detall: |
+              Si $y_0>0$, la bola $B_{y_0}((x_0,y_0))$ està continguda a $A$: si $(x,y)$ hi pertany, $|y-y_0|\leq\|(x,y)-(x_0,y_0)\|<y_0$, d'on $y>0$. Per tant tot punt d'$A$ és interior, $A$ és obert i $\mathring{A}=A$ (també es dedueix del Corol·lari 18(i) del Tema 2 amb $f(x,y)=y$, $g=0$).
+            fuites: ['(\\mathring\{?\s*A\s*\}?|int\}?\s*\(\s*A\s*\)|A\^\{?\\circ\}?)\s*=\s*A\b', 'B_\{?\s*y_\{?0\}?\s*\}?']
+            teoria: ["T1.14", "T1.16", "T2.18"]
+          - id: frontera
+            titol: "Frontera"
+            objectiu: |
+              Determinar la frontera d'$A$.
+            idea: |
+              Classificar els punts del pla segons el signe de la segona coordenada i, per a cada tipus, decidir si tota bola centrada en el punt talla alhora $A$ i el seu complementari.
+            detall: |
+              Si $y_0>0$ el punt és interior, i per tant no és de la frontera. Si $y_0<0$, $B_{|y_0|}((x_0,y_0))\subseteq A^c$: el punt és exterior. Si $y_0=0$, per a tot $r>0$ la bola $B_r((x_0,0))$ conté $(x_0,r/2)\in A$ i $(x_0,0)\in A^c$. Per tant $\mathrm{Fr}\,A=\{(x,0)\mid x\in\mathbb{R}\}$, la recta $y=0$.
+            fuites: ['y\s*=\s*0\b', 'y_\{?0\}?\s*=\s*0\b', '\(\s*x_\{?0\}?\s*,\s*r\s*/\s*2\s*\)']
+            teoria: ["T1.14", "T1.16"]
+          - id: adherencia
+            titol: "Adherència"
+            objectiu: |
+              Determinar l'adherència $\overline{A}$.
+            idea: |
+              Proposar un tancat que contingui $A$ (l'adherència és el tancat més petit que el conté) i comprovar que cadascun dels seus punts és límit d'una successió de punts d'$A$.
+            detall: |
+              $S=\{(x,y)\mid y\geq 0\}$ és tancat (Corol·lari 18(ii) del Tema 2) i conté $A$, així que $\overline{A}\subseteq S$. Recíprocament, si $y_0\geq 0$, la successió $(x_0,y_0+1/n)$ és d'$A$ i convergeix a $(x_0,y_0)$; per la Proposició 19(ii), $(x_0,y_0)\in\overline{A}$. Per tant $\overline{A}=\{(x,y)\mid y\geq 0\}$.
+            fuites: ['y\s*(\\geq|\\ge|\\geqslant|≥)\s*0']
+            teoria: ["T1.16", "T1.19", "T2.18"]
+          - id: acumulacio
+            titol: "Punts d'acumulació"
+            objectiu: |
+              Determinar el conjunt derivat $A'$.
+            idea: |
+              Tot punt d'acumulació és adherent; queda per veure si algun punt adherent és aïllat (només s'hi pot arribar amb successions que acaben essent constants).
+            detall: |
+              Si $y_0\geq 0$, la successió $(x_0,y_0+1/n)$ té els termes a $A$, tots diferents de $(x_0,y_0)$, i hi convergeix; per la Proposició 19(i), $(x_0,y_0)\in A'$. Com que $A'\subseteq\overline{A}$, resulta $A'=\overline{A}=\{(x,y)\mid y\geq 0\}$.
+            fuites: ['y\s*(\\geq|\\ge|\\geqslant|≥)\s*0', 'A(''|\^\{?\\prime\}?)\s*=\s*(\\overline|\\bar)']
+            teoria: ["T1.14", "T1.19"]
+        errors_comuns:
+          - id: frontera_dins_conjunt
+            descripcio: |
+              Busca la frontera només entre els punts d'$A$ (i conclou que és buida), o pensa que la frontera d'un conjunt sempre en forma part.
+            pregunta: |
+              La definició de punt frontera exigeix que el punt pertanyi al conjunt? Mira què passa amb punts que no són d'$A$ però en són molt a prop.
+          - id: derivat_dins_conjunt
+            descripcio: |
+              Creu que els punts d'acumulació han de ser punts d'$A$ i dona $A'=A$.
+            pregunta: |
+              Un punt que no és d'$A$ pot tenir punts d'$A$ tan a prop com vulguis? Què diu llavors la definició de punt d'acumulació?
+          - id: sense_justificar_boles
+            descripcio: |
+              Descriu els conjunts "a ull" pel dibuix sense donar cap radi ni cap successió que ho justifiqui.
+            pregunta: |
+              Per a un punt concret que dius que és interior, quin radi de bola funciona? I per a un de la frontera, quins punts trobes a cada bola?
+        nota_professor: |
+          Exercici d'escalfament. Val la pena remarcar que, en general, $\mathrm{Fr}\,A=\overline{A}\setminus\mathring{A}$, i que aquí $A$ és obert però no tancat.
+
+      - id: "t1-7b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          $B=\{(x,y)\in\mathbb{R}^2\mid x=\lambda y\}$, $\lambda\in\mathbb{R}$.
+        teoria: ["T1.14", "T1.16"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Per a tot $\lambda\in\mathbb{R}$ ($B$ és una recta per l'origen): $\mathring{B}=\varnothing$, $\mathrm{Fr}\,B=B$, $\overline{B}=B$ ($B$ és tancat) i $B'=B$.
+          fuites: ['no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*B\s*\}?|int\}?\s*\(\s*B\s*\)|B\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)', '(Fr\}?|\\partial)\s*(\\[,;! ])?\s*\(?\s*B\s*\)?\s*=\s*B\b', '(\\overline|\\bar)\{?\s*B\s*\}?\s*=\s*B\b', 'B(''|\^\{?\\prime\}?)\s*=\s*B\b']
+        passos:
+          - id: interior
+            titol: "Interior"
+            objectiu: |
+              Decidir si $B$ té punts interiors.
+            idea: |
+              Donat un punt de $B$ i un radi qualsevol, buscar dins la bola un punt que no compleixi l'equació (moure's una mica en una direcció que no sigui la de la recta).
+            detall: |
+              Sigui $p=(\lambda y_0,y_0)\in B$ i $r>0$. El punt $(\lambda y_0+r/2,y_0)$ és a $B_r(p)$ i compleix $x-\lambda y=r/2\neq 0$, així que no és de $B$. Cap bola centrada en un punt de $B$ hi està continguda: $B$ no té punts interiors, $\mathring{B}=\varnothing$.
+            fuites: ['no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*B\s*\}?|int\}?\s*\(\s*B\s*\)|B\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)', 'r\s*/\s*2']
+            teoria: ["T1.14", "T1.16"]
+          - id: frontera
+            titol: "Frontera"
+            objectiu: |
+              Determinar la frontera de $B$.
+            idea: |
+              Tractar per separat els punts de $B$ (aprofitant l'apartat anterior) i els que no hi són. Per als segons, és útil saber si $B$ és tancat: és el conjunt de zeros d'una funció contínua.
+            detall: |
+              Si $p\in B$, tota bola $B_r(p)$ conté $p\in B$ i, per l'apartat anterior, un punt de $B^c$: $p\in\mathrm{Fr}\,B$. $B=f^{-1}(\{0\})$ amb $f(x,y)=x-\lambda y$ contínua i $\{0\}$ tancat, així que $B$ és tancat (Teorema 17(d) del Tema 2) i $B^c$ és obert: tot punt de fora de $B$ té una bola dins $B^c$ i no és frontera. Per tant $\mathrm{Fr}\,B=B$.
+            fuites: ['(Fr\}?|\\partial)\s*(\\[,;! ])?\s*\(?\s*B\s*\)?\s*=\s*B\b']
+            teoria: ["T1.14", "T1.11", "T2.17"]
+          - id: adherencia
+            titol: "Adherència"
+            objectiu: |
+              Determinar l'adherència $\overline{B}$.
+            idea: |
+              Usar el que ja saps sobre si $B$ és tancat i la caracterització dels tancats per la seva clausura.
+            detall: |
+              $B$ és tancat (és $f^{-1}(\{0\})$ amb $f(x,y)=x-\lambda y$ contínua), i per la Proposició 17(ii) $\overline{B}=B$.
+            fuites: ['(\\overline|\\bar)\{?\s*B\s*\}?\s*=\s*B\b']
+            teoria: ["T1.17", "T2.17"]
+          - id: acumulacio
+            titol: "Punts d'acumulació"
+            objectiu: |
+              Determinar el conjunt derivat $B'$.
+            idea: |
+              Decidir si $B$ té punts aïllats: per a un punt de $B$, construir una successió de punts de $B$, diferents d'ell, que hi convergeixi (desplaçant-se sobre la recta).
+            detall: |
+              Si $p=(\lambda y_0,y_0)\in B$, els punts $p_n=(\lambda(y_0+1/n),y_0+1/n)$ són de $B$, diferents de $p$, i $\|p_n-p\|=\frac{1}{n}\sqrt{1+\lambda^2}\to 0$. Per la Proposició 19(i), $B\subseteq B'$; i $B'\subseteq\overline{B}=B$. Per tant $B'=B$.
+            fuites: ['B(''|\^\{?\\prime\}?)\s*=\s*B\b']
+            teoria: ["T1.14", "T1.19"]
+        errors_comuns:
+          - id: recta_amb_interior
+            descripcio: |
+              Afirma que $B$ té interior no buit (o que és obert) perquè la recta és "infinita" o perquè ho seria dins de $\mathbb{R}$.
+            pregunta: |
+              Agafa un punt de la recta i una bola petitíssima al seu voltant dins del pla. Tots els punts d'aquesta bola són de la recta?
+          - id: frontera_sense_tancat
+            descripcio: |
+              Diu que la frontera és $B$ mirant només els punts de $B$, sense justificar que els punts de fora no són frontera.
+            pregunta: |
+              Per a un punt que no és de la recta, hi ha alguna bola centrada en ell que no talli la recta? Com ho garanteixes en general?
+          - id: casos_lambda
+            descripcio: |
+              Pensa que el resultat depèn de $\lambda$ (per exemple, que per $\lambda=0$ el conjunt és diferent en natura).
+            pregunta: |
+              Per a $\lambda=0$, quin conjunt és $B$? És qualitativament diferent del cas general?
+        nota_professor: |
+          Alternativa per veure que $B$ és tancat: la distància d'un punt $q\notin B$ a la recta és $\frac{|q_1-\lambda q_2|}{\sqrt{1+\lambda^2}}>0$, i la bola amb aquest radi no talla $B$.
+
+      - id: "t1-7c"
+        apartat: "c"
+        tipus: calcul
+        enunciat: |
+          $C=\{(x,y)\in\mathbb{R}^2\mid xy=1\}$.
+        teoria: ["T1.14", "T1.16"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $C$ és la hipèrbola equilàtera $y=1/x$: $\mathring{C}=\varnothing$, $\mathrm{Fr}\,C=C$, $\overline{C}=C$ ($C$ és tancat) i $C'=C$.
+          fuites: ['no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*C\s*\}?|int\}?\s*\(\s*C\s*\)|C\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)', '(Fr\}?|\\partial)\s*(\\[,;! ])?\s*\(?\s*C\s*\)?\s*=\s*C\b', '(\\overline|\\bar)\{?\s*C\s*\}?\s*=\s*C\b', 'C(''|\^\{?\\prime\}?)\s*=\s*C\b']
+        passos:
+          - id: interior
+            titol: "Interior"
+            objectiu: |
+              Decidir si $C$ té punts interiors.
+            idea: |
+              Donat un punt de la corba i un radi, moure's una mica en una de les coordenades i comprovar que l'equació deixa de complir-se.
+            detall: |
+              Sigui $(x_0,y_0)\in C$ (llavors $x_0\neq 0$) i $r>0$. El punt $(x_0,y_0+r/2)$ és a la bola i $x_0(y_0+r/2)=1+x_0r/2\neq 1$. Per tant cap bola centrada en un punt de $C$ hi està continguda: $C$ no té punts interiors, $\mathring{C}=\varnothing$.
+            fuites: ['no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*C\s*\}?|int\}?\s*\(\s*C\s*\)|C\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)', '1\s*\+\s*x_\{?0\}?\s*r']
+            teoria: ["T1.14", "T1.16"]
+          - id: frontera
+            titol: "Frontera"
+            objectiu: |
+              Determinar la frontera de $C$.
+            idea: |
+              Els punts de $C$ ja els tens controlats per l'apartat anterior. Per als de fora, decideix si $C$ és tancat escrivint-lo com a antiimatge d'un tancat per una funció contínua.
+            detall: |
+              Si $p\in C$, tota bola centrada en $p$ conté $p\in C$ i un punt de $C^c$: $p\in\mathrm{Fr}\,C$. $C=f^{-1}(\{1\})$ amb $f(x,y)=xy$ contínua, de manera que $C$ és tancat (Teorema 17(d) del Tema 2) i $C^c$ és obert: els punts de fora de $C$ són exteriors. Per tant $\mathrm{Fr}\,C=C$.
+            fuites: ['(Fr\}?|\\partial)\s*(\\[,;! ])?\s*\(?\s*C\s*\)?\s*=\s*C\b']
+            teoria: ["T1.14", "T1.11", "T2.17"]
+          - id: adherencia
+            titol: "Adherència"
+            objectiu: |
+              Determinar l'adherència $\overline{C}$.
+            idea: |
+              Relacionar la clausura amb el fet de ser tancat.
+            detall: |
+              $C$ és tancat, així que per la Proposició 17(ii) $\overline{C}=C$. (En particular, cap punt dels eixos és adherent, tot i que la hipèrbola s'hi acosta asimptòticament: als eixos $xy=0\neq1$, i $C^c$ és obert.)
+            fuites: ['(\\overline|\\bar)\{?\s*C\s*\}?\s*=\s*C\b']
+            teoria: ["T1.17", "T2.17"]
+          - id: acumulacio
+            titol: "Punts d'acumulació"
+            objectiu: |
+              Determinar el conjunt derivat $C'$.
+            idea: |
+              Per a un punt de la corba, construir punts de la corba diferents d'ell que s'hi acostin, movent lleugerament la primera coordenada.
+            detall: |
+              Si $(x_0,1/x_0)\in C$, per a $n$ prou gran ($n>1/|x_0|$) es té $x_0+1/n\neq 0$ i $p_n=\left(x_0+\frac1n,\frac{1}{x_0+1/n}\right)\in C$, $p_n\neq(x_0,1/x_0)$, i $p_n\to(x_0,1/x_0)$ per la continuïtat de $t\mapsto 1/t$ en $x_0\neq0$. Per la Proposició 19(i), $C\subseteq C'\subseteq\overline{C}=C$: $C'=C$.
+            fuites: ['C(''|\^\{?\\prime\}?)\s*=\s*C\b']
+            teoria: ["T1.14", "T1.19"]
+        errors_comuns:
+          - id: asimptotes
+            descripcio: |
+              Afegeix els eixos de coordenades (les asímptotes) a la frontera o a l'adherència, perquè "la corba s'hi acosta".
+            pregunta: |
+              Pren el punt $(1,0)$. Hi ha punts de $C$ tan a prop d'ell com vulguis, o n'hi ha una distància mínima?
+          - id: interior_corba
+            descripcio: |
+              Considera que la corba té interior (confonent-la amb la regió $xy>1$ o $xy<1$).
+            pregunta: |
+              El conjunt està definit per una igualtat o per una desigualtat? Què passa amb el producte $xy$ si mous lleugerament un punt de la corba?
+          - id: tancat_sense_justificar
+            descripcio: |
+              Afirma que $C$ és tancat sense cap argument (o argumentant que és "fitat", que no ho és).
+            pregunta: |
+              Quin resultat del curs et permet dir que un conjunt definit per una igualtat amb funcions contínues és tancat?
+        nota_professor: |
+          $C$ és tancat però no fitat (i no és compacte); té dues components connexes. Bon exemple per desmuntar la intuïció que les asímptotes són "a la vora".
+
+      - id: "t1-7d"
+        apartat: "d"
+        tipus: calcul
+        enunciat: |
+          $D=\{(x,y)\in\mathbb{R}^2\mid 0<x<1,\ y=0\}$.
+        teoria: ["T1.14", "T1.16"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Com a subconjunt de $\mathbb{R}^2$: $\mathring{D}=\varnothing$; $\mathrm{Fr}\,D=\overline{D}=D'=[0,1]\times\{0\}=\{(x,0)\mid 0\leq x\leq 1\}$.
+          fuites: ['no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*D\s*\}?|int\}?\s*\(\s*D\s*\)|D\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)', '\[\s*0\s*,\s*1\s*\]', '0\s*(\\leq|\\le|≤)\s*x(_\{?0\}?)?\s*(\\leq|\\le|≤)\s*1']
+        passos:
+          - id: interior
+            titol: "Interior"
+            objectiu: |
+              Decidir si $D$ té punts interiors com a subconjunt del pla.
+            idea: |
+              Recordar que les boles són de $\mathbb{R}^2$: mirar si una bola centrada en un punt de $D$ conté punts amb segona coordenada no nul·la.
+            detall: |
+              Si $(x_0,0)\in D$ i $r>0$, el punt $(x_0,r/2)$ és a $B_r((x_0,0))$ i no és de $D$. Per tant $D$ no té punts interiors, $\mathring{D}=\varnothing$ (encara que, com a subconjunt de $\mathbb{R}$, l'interval $(0,1)$ sigui obert).
+            fuites: ['no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*D\s*\}?|int\}?\s*\(\s*D\s*\)|D\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)', '\(\s*x_\{?0\}?\s*,\s*r\s*/\s*2\s*\)']
+            teoria: ["T1.14", "T1.16"]
+          - id: frontera
+            titol: "Frontera"
+            objectiu: |
+              Determinar la frontera de $D$.
+            idea: |
+              Com que no hi ha punts interiors, un punt és de la frontera si i només si tota bola centrada en ell talla $D$. Classificar els punts del pla (de la recta que conté $D$ o no; dins o fora de l'interval de valors de $x$) i, per a cada tipus, decidir si tota bola centrada en ell toca $D$.
+            detall: |
+              Si $0\leq x_0\leq 1$, tota bola $B_r((x_0,0))$ conté punts $(x,0)$ amb $0<x<1$ i el punt $(x_0,r/2)\notin D$: és de la frontera. Si $(a,b)$ té $b\neq0$, la bola de radi $|b|$ no talla $D$; si $b=0$ i $a<0$ (o $a>1$), la bola de radi $|a|$ (o $a-1$) no talla $D$. Per tant $\mathrm{Fr}\,D=[0,1]\times\{0\}$.
+            fuites: ['\[\s*0\s*,\s*1\s*\]', '0\s*(\\leq|\\le|≤)\s*x_?\{?0?\}?\s*(\\leq|\\le|≤)\s*1']
+            teoria: ["T1.14"]
+          - id: adherencia
+            titol: "Adherència"
+            objectiu: |
+              Determinar l'adherència $\overline{D}$.
+            idea: |
+              Trobar un tancat que contingui $D$ i veure que tots els seus punts són límit de punts de $D$; prestar atenció als extrems.
+            detall: |
+              $S=[0,1]\times\{0\}=\{y=0\}\cap\{x\geq0\}\cap\{x\leq1\}$ és tancat (Corol·lari 18(ii) del Tema 2 i Proposició 13(ii)) i conté $D$, així que $\overline{D}\subseteq S$. A més $(1/n,0)\to(0,0)$, $(1-1/n,0)\to(1,0)$ amb termes a $D$ (per $n\geq2$), i $D\subseteq\overline{D}$. Per tant $\overline{D}=[0,1]\times\{0\}$.
+            fuites: ['\[\s*0\s*,\s*1\s*\]']
+            teoria: ["T1.16", "T1.19", "T1.13", "T2.18"]
+          - id: acumulacio
+            titol: "Punts d'acumulació"
+            objectiu: |
+              Determinar el conjunt derivat $D'$.
+            idea: |
+              Per a cada punt adherent, trobar una successió de punts de $D$ diferents d'ell que hi convergeixi.
+            detall: |
+              Si $0\leq x_0<1$, $p_n=\left(x_0+\frac{1-x_0}{n+1},0\right)\in D$, $p_n\neq(x_0,0)$ i $p_n\to(x_0,0)$. Per a $x_0=1$, $(1-1/n,0)$ ($n\geq2$). Per la Proposició 19(i), $\overline{D}\subseteq D'$, i com que $D'\subseteq\overline{D}$, $D'=[0,1]\times\{0\}$.
+            fuites: ['\[\s*0\s*,\s*1\s*\]', '\\frac\{?\s*1\s*-\s*x_\{?0\}?\s*\}?\{?\s*n\s*\+\s*1']
+            teoria: ["T1.14", "T1.19"]
+        errors_comuns:
+          - id: topologia_de_R
+            descripcio: |
+              Treballa com si $D$ fos l'interval $(0,1)\subset\mathbb{R}$ i diu que és obert, amb interior $(0,1)$ i frontera formada només pels dos extrems.
+            pregunta: |
+              On viuen les boles que fas servir, a $\mathbb{R}$ o a $\mathbb{R}^2$? Una bola del pla centrada en un punt de $D$ queda dins de $D$?
+          - id: oblida_extrems
+            descripcio: |
+              Oblida que els extrems $(0,0)$ i $(1,0)$ són adherents i d'acumulació encara que no pertanyin a $D$.
+            pregunta: |
+              El punt $(0,0)$ no és de $D$. Hi ha punts de $D$ tan a prop com vulguis d'ell?
+          - id: frontera_extrems_nomes
+            descripcio: |
+              Dona com a frontera només els dos extrems (traslladant el resultat de $\mathbb{R}$).
+            pregunta: |
+              Per a un punt intern del segment, com $(1/2,0)$, tota bola centrada en ell conté punts de fora de $D$?
+        nota_professor: |
+          L'objectiu és que vegin que interior i frontera depenen de l'espai ambient. A $\mathbb{R}^2$, $D$ no és ni obert ni tancat.
+
+      - id: "t1-7e"
+        apartat: "e"
+        tipus: calcul
+        enunciat: |
+          $E=A\setminus\{(0,1)\}$.
+        teoria: ["T1.14", "T1.16"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            (Amb $A=\{y>0\}$ de l'apartat (a).) $\mathring{E}=E$ ($E$ és obert); $\mathrm{Fr}\,E=\{(x,0)\mid x\in\mathbb{R}\}\cup\{(0,1)\}$; $\overline{E}=\{(x,y)\mid y\geq0\}$; $E'=\overline{E}=\{(x,y)\mid y\geq0\}$ (el punt $(0,1)$ hi pertany).
+          fuites: ['y\s*(\\geq|\\ge|\\geqslant|≥)\s*0', 'y\s*=\s*0\b', '(\\mathring\{?\s*E\s*\}?|int\}?\s*\(\s*E\s*\)|E\^\{?\\circ\}?)\s*=\s*E\b', '\\cup\s*\\\{\s*\(\s*0\s*,\s*1\s*\)\s*\\\}']
+        passos:
+          - id: interior
+            titol: "Interior"
+            objectiu: |
+              Determinar l'interior d'$E$ (es poden usar els resultats de l'apartat (a)).
+            idea: |
+              Escriure $E$ com a intersecció de dos conjunts dels quals saps si són oberts, i aplicar les propietats dels oberts.
+            detall: |
+              $E=A\cap(\mathbb{R}^2\setminus\{(0,1)\})$. $A$ és obert (apartat (a)); $\mathbb{R}^2\setminus\{p\}$ és obert, ja que si $q\neq p$, $B_{\|q-p\|}(q)$ no conté $p$. La intersecció finita d'oberts és oberta (Proposició 12(iii)): $E$ és obert i $\mathring{E}=E$.
+            fuites: ['(\\mathring\{?\s*E\s*\}?|int\}?\s*\(\s*E\s*\)|E\^\{?\\circ\}?)\s*=\s*E\b']
+            teoria: ["T1.11", "T1.12", "T1.16"]
+          - id: frontera
+            titol: "Frontera"
+            objectiu: |
+              Determinar la frontera d'$E$.
+            idea: |
+              Partir de la frontera d'$A$ i estudiar a part el punt que s'ha tret: tota bola centrada en ell, conté punts d'$E$? i de fora d'$E$?
+            detall: |
+              Els punts amb $y_0<0$ són exteriors i els d'$E$ són interiors. Els de la recta $y=0$ són de la frontera com a l'apartat (a): tota bola $B_r((x_0,0))$ conté $(x_0,0)\notin E$ i el punt $(x_0,t)$ amb $t=\min\{r,1\}/2$, que és d'$E$ (com que $0<t<1$, no és $(0,1)$). El punt $(0,1)$: tota bola centrada en ell el conté ($\notin E$) i conté punts $(0,1+t)\in E$ amb $0<t<r$. Per tant $\mathrm{Fr}\,E=\{(x,0)\mid x\in\mathbb{R}\}\cup\{(0,1)\}$.
+            fuites: ['\\cup\s*\\\{\s*\(\s*0\s*,\s*1\s*\)\s*\\\}', 'y\s*=\s*0\b']
+            teoria: ["T1.14"]
+          - id: adherencia
+            titol: "Adherència"
+            objectiu: |
+              Determinar l'adherència $\overline{E}$.
+            idea: |
+              Comparar amb l'adherència d'$A$ (monotonia de la clausura) i decidir si el punt eliminat continua essent adherent.
+            detall: |
+              $E\subseteq A$ implica $\overline{E}\subseteq\overline{A}=\{y\geq0\}$ (Proposició 17(i)). Recíprocament, $\overline{E}\supseteq E$, conté la recta $y=0$ (limits de $(x_0,1/n)$, $n\geq 2$) i conté $(0,1)=\lim(0,1+1/n)$. Per tant $\overline{E}=\{(x,y)\mid y\geq0\}$.
+            fuites: ['y\s*(\\geq|\\ge|\\geqslant|≥)\s*0']
+            teoria: ["T1.17", "T1.19", "T1.16"]
+          - id: acumulacio
+            titol: "Punts d'acumulació"
+            objectiu: |
+              Determinar el conjunt derivat $E'$.
+            idea: |
+              Decidir si algun punt adherent és aïllat; en particular, mirar què passa amb el punt eliminat.
+            detall: |
+              Cap punt de $\overline{E}$ és aïllat: per a $(x_0,y_0)$ amb $y_0\geq0$, $(x_0,y_0+1/n)$ són punts d'$E$ diferents de $(x_0,y_0)$ que hi convergeixen (exceptuant com a molt un terme igual a $(0,1)$, que es pot ometre). En particular $(0,1)\in E'$ tot i no ser d'$E$. Per tant $E'=\overline{E}=\{(x,y)\mid y\geq0\}$.
+            fuites: ['y\s*(\\geq|\\ge|\\geqslant|≥)\s*0', 'E(''|\^\{?\\prime\}?)\s*=\s*(\\overline|\\bar)']
+            teoria: ["T1.14", "T1.19"]
+        errors_comuns:
+          - id: forat_tanca
+            descripcio: |
+              Pensa que treure un punt fa que $E$ deixi de ser obert (o que el converteix en tancat).
+            pregunta: |
+              Per a un punt d'$E$ molt a prop del punt eliminat, pots triar una bola prou petita que no el contingui?
+          - id: oblida_punt_frontera
+            descripcio: |
+              Dona la mateixa frontera que a l'apartat (a), oblidant el punt eliminat.
+            pregunta: |
+              Tota bola centrada en $(0,1)$ conté punts d'$E$? I punts que no són d'$E$?
+          - id: punt_eliminat_no_acumulacio
+            descripcio: |
+              Creu que $(0,1)$ no és d'acumulació (ni adherent) perquè no pertany a $E$.
+            pregunta: |
+              La definició de punt d'acumulació demana que el punt sigui del conjunt? Quins punts d'$E$ trobes a prop de $(0,1)$?
+        nota_professor: |
+          Il·lustra que $\overline{E}=\overline{A}$ i $\mathring{E}\neq\mathring{A}$: treure un punt no canvia la clausura però sí la frontera.
+
+      - id: "t1-7f"
+        apartat: "f"
+        tipus: calcul
+        enunciat: |
+          $F=B\cup\{(0,-1)\}$.
+        teoria: ["T1.14", "T1.16"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            (Amb $B=\{x=\lambda y\}$ de l'apartat (b).) Per a tot $\lambda$: $\mathring{F}=\varnothing$, $\mathrm{Fr}\,F=F$, $\overline{F}=F$ ($F$ és tancat) i $F'=B$. Si $\lambda\neq0$, $(0,-1)\notin B$ és un punt aïllat de $F$ (és de $F$ però no de $F'$); si $\lambda=0$, $(0,-1)\in B$ i $F=B$, de manera que també $F'=B=F$.
+          fuites: ['no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*F\s*\}?|int\}?\s*\(\s*F\s*\)|F\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)', '(Fr\}?|\\partial)\s*(\\[,;! ])?\s*\(?\s*F\s*\)?\s*=\s*F\b', '(\\overline|\\bar)\{?\s*F\s*\}?\s*=\s*F\b', 'F(''|\^\{?\\prime\}?)\s*=\s*B\b']
+        passos:
+          - id: posicio_punt
+            titol: "On és el punt afegit?"
+            objectiu: |
+              Decidir si el punt $(0,-1)$ ja pertany a $B$ (pot dependre del paràmetre), usant els resultats de l'apartat (b).
+            idea: |
+              Substituir el punt a l'equació de la recta i discutir segons $\lambda$.
+            detall: |
+              $(0,-1)\in B\iff 0=\lambda\cdot(-1)\iff\lambda=0$. Si $\lambda=0$, $F=B$ i tot coincideix amb l'apartat (b). Suposem a partir d'ara $\lambda\neq0$: el punt queda fora de la recta, a distància $\frac{|\lambda|}{\sqrt{1+\lambda^2}}>0$.
+            fuites: ['\\lambda\s*=\s*0\b', '\|\s*\\lambda\s*\|\s*/\s*\\sqrt|\\frac\{\s*\|\s*\\lambda\s*\|\s*\}']
+            teoria: []
+          - id: interior
+            titol: "Interior"
+            objectiu: |
+              Decidir si $F$ té punts interiors.
+            idea: |
+              Per als punts de la recta, reutilitzar l'apartat (b); per al punt afegit, mirar si una bola centrada en ell pot quedar dins de $F$.
+            detall: |
+              Per a $p\in B$, tota bola conté punts de fora de $B$ arbitràriament a prop de $p$, que podem triar diferents de $(0,-1)$, així que no són de $F$. Tota bola centrada en $(0,-1)$ conté punts $(t,-1)$, $t\neq0$ petit, que no són de $F$. Per tant $F$ no té punts interiors, $\mathring{F}=\varnothing$.
+            fuites: ['no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*F\s*\}?|int\}?\s*\(\s*F\s*\)|F\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)']
+            teoria: ["T1.14", "T1.16"]
+          - id: frontera
+            titol: "Frontera"
+            objectiu: |
+              Determinar la frontera de $F$.
+            idea: |
+              Per als punts de $F$, aprofitar que no són interiors. Per als de fora, decidir si $F$ és tancat: és unió de dos conjunts dels quals ja saps si són tancats.
+            detall: |
+              $B$ és tancat (apartat (b)) i $\{(0,-1)\}$ també ($\mathbb{R}^2\setminus\{p\}$ és obert); la unió finita de tancats és tancada (Proposició 13(iii)), així que $F^c$ és obert i els punts de fora de $F$ són exteriors. Tot punt de $F$ és de la frontera: tota bola el conté i, com que $\mathring{F}=\varnothing$, conté punts de $F^c$. Per tant $\mathrm{Fr}\,F=F$.
+            fuites: ['(Fr\}?|\\partial)\s*(\\[,;! ])?\s*\(?\s*F\s*\)?\s*=\s*F\b']
+            teoria: ["T1.13", "T1.14", "T1.11"]
+          - id: adherencia
+            titol: "Adherència"
+            objectiu: |
+              Determinar l'adherència $\overline{F}$.
+            idea: |
+              Relacionar la clausura amb el fet de ser tancat.
+            detall: |
+              $F$ és tancat (unió de dos tancats), així que per la Proposició 17(ii) $\overline{F}=F$. En particular, el punt aïllat $(0,-1)$ és adherent.
+            fuites: ['(\\overline|\\bar)\{?\s*F\s*\}?\s*=\s*F\b']
+            teoria: ["T1.13", "T1.17"]
+          - id: acumulacio
+            titol: "Punts d'acumulació"
+            objectiu: |
+              Determinar el conjunt derivat $F'$.
+            idea: |
+              Els punts de la recta es comporten com a l'apartat (b). Per al punt afegit, decidir si hi ha punts de $F$ diferents d'ell tan a prop com es vulgui.
+            detall: |
+              Si $p\in B$, els punts de $B$ diferents de $p$ que hi convergeixen (apartat (b)) són de $F$: $B\subseteq F'$. Si $\lambda\neq0$, sigui $\delta=\frac{|\lambda|}{\sqrt{1+\lambda^2}}$ la distància de $(0,-1)$ a $B$: $B_\delta((0,-1))\cap F=\{(0,-1)\}$, així que $(0,-1)$ és aïllat i no és d'acumulació. Com que $F'\subseteq\overline{F}=F$, resulta $F'=B$.
+            fuites: ['F(''|\^\{?\\prime\}?)\s*=\s*B\b', 'B_\\delta']
+            teoria: ["T1.14", "T1.19"]
+        errors_comuns:
+          - id: no_discuteix_lambda
+            descripcio: |
+              No comprova si $(0,-1)$ és a la recta i tracta el cas $\lambda=0$ igual que els altres (o al revés).
+            pregunta: |
+              El punt afegit pot estar ja sobre la recta per a algun valor del paràmetre? Què passa llavors amb $F$?
+          - id: aillat_acumulacio
+            descripcio: |
+              Inclou el punt afegit a $F'$ perquè pertany a $F$, confonent adherència i acumulació.
+            pregunta: |
+              En una bola petita al voltant de $(0,-1)$, quins altres punts de $F$ hi trobes?
+          - id: aillat_interior
+            descripcio: |
+              Pensa que un punt aïllat és interior (perquè "està sol" dins una bola).
+            pregunta: |
+              Per ser interior, la bola ha d'estar continguda dins $F$. Ho està una bola centrada en $(0,-1)$?
+        nota_professor: |
+          La distància de $(a,b)$ a la recta $x-\lambda y=0$ és $\frac{|a-\lambda b|}{\sqrt{1+\lambda^2}}$. Exemple bàsic de punt aïllat: és adherent i de la frontera, però no d'acumulació.
+
+      - id: "t1-7g"
+        apartat: "g"
+        tipus: calcul
+        enunciat: |
+          $G=\{(x,y)\in\mathbb{R}^2\mid x^2+y^2\leq 1,\ x\neq 0\}$.
+        teoria: ["T1.14", "T1.16"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $\mathring{G}=\{(x,y)\mid x^2+y^2<1,\ x\neq0\}$; $\mathrm{Fr}\,G=\{(x,y)\mid x^2+y^2=1\}\cup\{(0,y)\mid |y|\leq 1\}$ (la circumferència unitat i el diàmetre vertical); $\overline{G}=G'=\{(x,y)\mid x^2+y^2\leq1\}$ (el disc tancat).
+          fuites: ['x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*<\s*1', 'x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*=\s*1', '\|\s*y\s*\|\s*(\\leq|\\le|≤)\s*1', '(\\overline|\\bar)\{?\s*G\s*\}?\s*=\s*\\\{\s*\(\s*x\s*,\s*y\s*\)\s*(\\mid|:|\|)\s*x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*(\\leq|\\le|≤)\s*1\s*\\\}']
+        passos:
+          - id: interior
+            titol: "Interior"
+            objectiu: |
+              Determinar l'interior de $G$.
+            idea: |
+              Proposar com a candidat un obert contingut a $G$ definit per desigualtats estrictes, i comprovar que els punts de $G$ que hi queden fora no són interiors.
+            detall: |
+              $U=\{x^2+y^2<1\}\cap\{x^2>0\}$ és obert (Corol·lari 18(i) del Tema 2 i Proposició 12(iii)) i $U\subseteq G$, així que $U\subseteq\mathring{G}$. Si $p\in G$ amb $\|p\|=1$, els punts $(1+t)p$, $t>0$ petit, són a tota bola centrada en $p$ i no són de $G$. Per tant $\mathring{G}=\{x^2+y^2<1,\ x\neq0\}$.
+            fuites: ['x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*<\s*1', '\(\s*1\s*\+\s*t\s*\)\s*p']
+            teoria: ["T1.14", "T1.12", "T2.18"]
+          - id: frontera
+            titol: "Frontera"
+            objectiu: |
+              Determinar la frontera de $G$.
+            idea: |
+              Classificar els punts del pla: els de l'interior ja trobat, els altres punts de $G$, els punts del disc tancat que no són de $G$ i els de fora del disc. Per a cada tipus, decidir si tota bola centrada en ell talla $G$ i el seu complementari.
+            detall: |
+              Si $x_0^2+y_0^2=1$ i $x_0\neq0$: el punt és de $G$ i tota bola conté $(1+t)(x_0,y_0)\notin G$. Si $x_0^2+y_0^2=1$ i $x_0=0$, o bé $x_0=0$, $|y_0|<1$: el punt no és de $G$, i tota bola $B_r$ conté punts $(s,(1-s)y_0)\in G$ amb $s>0$ petit ($s^2+(1-s)^2y_0^2\leq s^2+(1-s)^2<1$ per $0<s<1$). Els punts amb $x^2+y^2>1$ són exteriors i els de $\mathring{G}$ són interiors. Per tant $\mathrm{Fr}\,G=\{x^2+y^2=1\}\cup\{(0,y)\mid |y|\leq1\}$.
+            fuites: ['x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*=\s*1', '\|\s*y\s*\|\s*(\\leq|\\le|≤)\s*1', '\(\s*s\s*,\s*\(\s*1\s*-\s*s\s*\)\s*y_\{?0\}?\s*\)']
+            teoria: ["T1.14"]
+          - id: adherencia
+            titol: "Adherència"
+            objectiu: |
+              Determinar l'adherència $\overline{G}$.
+            idea: |
+              Trobar un tancat senzill que contingui $G$ i comprovar que cada punt seu és límit de punts de $G$, especialment els del segment que s'ha tret.
+            detall: |
+              El disc tancat $\overline{B}_1(0)=\{x^2+y^2\leq1\}$ és tancat (Proposició 13(i)) i conté $G$, així que $\overline{G}\subseteq\overline{B}_1(0)$. Si $x_0\neq0$ el punt ja és de $G$. Si $x_0=0$, $|y_0|\leq1$, la successió $(1/n,(1-1/n)y_0)$ és de $G$ i hi convergeix. Per tant $\overline{G}=\{(x,y)\mid x^2+y^2\leq1\}$.
+            fuites: ['(\\overline|\\bar)\{?\s*G\s*\}?\s*=\s*\\\{\s*\(\s*x\s*,\s*y\s*\)\s*(\\mid|:|\|)\s*x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*(\\leq|\\le|≤)\s*1\s*\\\}', '\(\s*1\s*/\s*n\s*,\s*\(\s*1\s*-\s*1\s*/\s*n\s*\)\s*y_\{?0\}?\s*\)']
+            teoria: ["T1.13", "T1.16", "T1.19"]
+          - id: acumulacio
+            titol: "Punts d'acumulació"
+            objectiu: |
+              Determinar el conjunt derivat $G'$.
+            idea: |
+              Mirar si les successions que has fet servir per a l'adherència tenen els termes diferents del límit, o si es poden modificar perquè ho siguin.
+            detall: |
+              Sigui $p=(x_0,y_0)$ del disc tancat. Si $x_0=0$, la successió anterior $(1/n,(1-1/n)y_0)$ té termes diferents de $p$ (primera coordenada no nul·la). Si $x_0\neq0$, $p_n=(1-\frac1n)(x_0,y_0)$ és de $G$ per $n\geq2$ (norma $<1$ i primera coordenada no nul·la), diferent de $p$ i convergeix a $p$. Per la Proposició 19(i), $\overline{G}\subseteq G'\subseteq\overline{G}$: $G'=\{(x,y)\mid x^2+y^2\leq1\}$.
+            fuites: ['G(''|\^\{?\\prime\}?)\s*=\s*\\\{\s*\(\s*x\s*,\s*y\s*\)\s*(\\mid|:|\|)\s*x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*(\\leq|\\le|≤)\s*1', 'G(''|\^\{?\\prime\}?)\s*=\s*(\\overline|\\bar)']
+            teoria: ["T1.14", "T1.19"]
+        errors_comuns:
+          - id: oblida_diametre
+            descripcio: |
+              Dona com a frontera només la circumferència, oblidant el segment $\{x=0\}$ que s'ha tret del disc.
+            pregunta: |
+              El punt $(0,0)$ és de $G$? Tota bola centrada en $(0,0)$ conté punts de $G$ i punts de fora de $G$?
+          - id: interior_inclou_vora
+            descripcio: |
+              Inclou a l'interior els punts de la circumferència amb $x\neq0$, perquè són de $G$.
+            pregunta: |
+              Per a un punt de $G$ sobre la circumferència, una bola centrada en ell queda dins $G$?
+          - id: adherencia_sense_segment
+            descripcio: |
+              Creu que l'adherència és $G$ amb la circumferència, però sense els punts del segment vertical.
+            pregunta: |
+              Pots trobar una successió de punts de $G$ que s'acosti al punt $(0,1/2)$?
+        nota_professor: |
+          $G$ no és ni obert ni tancat. La frontera inclou el segment vertical tot i que $\overline{G}$ és tot el disc: $\mathrm{Fr}\,G=\overline{G}\setminus\mathring{G}$.
+
+      - id: "t1-7h"
+        apartat: "h"
+        tipus: calcul
+        enunciat: |
+          $H=\mathbb{Q}\subset\mathbb{R}$.
+        teoria: ["T1.14", "T1.16"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $\mathring{H}=\varnothing$; $\mathrm{Fr}\,H=\mathbb{R}$; $\overline{H}=\mathbb{R}$; $H'=\mathbb{R}$.
+          fuites: ['no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*(H|\\mathbb\{?Q\}?)\s*\}?|int\}?\s*\(\s*(H|\\mathbb\{?Q\}?)\s*\)|(H|\\mathbb\{?Q\}?)\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)', '(Fr\}?|\\partial)\s*(\\[,;! ])?\s*\(?\s*(H|\\mathbb\{?Q\}?)\s*\)?\s*=\s*\\mathbb\{?R', '(\\overline|\\bar)\{?\s*(H|\\mathbb\{?Q\}?)\s*\}?\s*=\s*\\mathbb\{?R', '(H|\\mathbb\{?Q\}?)(''|\^\{?\\prime\}?)\s*=\s*\\mathbb\{?R']
+        passos:
+          - id: interior
+            titol: "Interior"
+            objectiu: |
+              Decidir si $\mathbb{Q}$ té punts interiors a $\mathbb{R}$.
+            idea: |
+              Les boles de $\mathbb{R}$ són intervals oberts. Usar que tot interval obert no buit conté nombres irracionals (densitat dels irracionals, fet de la recta real que no és als apunts com a resultat numerat).
+            detall: |
+              Si $q\in\mathbb{Q}$ i $r>0$, el nombre $q+\frac{\sqrt2}{n}$ amb $n>\sqrt2/r$ és irracional i és a $(q-r,q+r)$. Cap interval centrat en un racional està contingut a $\mathbb{Q}$: $H$ no té punts interiors, $\mathring{H}=\varnothing$.
+            fuites: ['no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*(H|\\mathbb\{?Q\}?)\s*\}?|int\}?\s*\(\s*(H|\\mathbb\{?Q\}?)\s*\)|(H|\\mathbb\{?Q\}?)\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)', 'q\s*\+\s*\\frac\{?\s*\\sqrt']
+            teoria: ["T1.14", "T1.16"]
+          - id: frontera
+            titol: "Frontera"
+            objectiu: |
+              Determinar la frontera de $\mathbb{Q}$ a $\mathbb{R}$.
+            idea: |
+              Per a un real qualsevol, mirar si tot interval centrat en ell conté racionals i irracionals (densitat de $\mathbb{Q}$ i de $\mathbb{R}\setminus\mathbb{Q}$).
+            detall: |
+              Sigui $x\in\mathbb{R}$ i $r>0$. Prenem $n>2/r$ i $q=\lfloor nx\rfloor/n\in\mathbb{Q}$, que compleix $|q-x|<1/n<r$; el nombre $q+\frac{\sqrt2}{2n}$ és irracional i $\left|q+\frac{\sqrt2}{2n}-x\right|<\frac1n+\frac{\sqrt2}{2n}<\frac2n<r$. Així $(x-r,x+r)$ talla $\mathbb{Q}$ i el seu complementari. Per tant tot real és de la frontera: $\mathrm{Fr}\,H=\mathbb{R}$.
+            fuites: ['(Fr\}?|\\partial)\s*(\\[,;! ])?\s*\(?\s*(H|\\mathbb\{?Q\}?)\s*\)?\s*=\s*\\mathbb\{?R', '\\lfloor\s*n\s*x\s*\\rfloor']
+            teoria: ["T1.14"]
+          - id: adherencia
+            titol: "Adherència"
+            objectiu: |
+              Determinar l'adherència de $\mathbb{Q}$ a $\mathbb{R}$.
+            idea: |
+              Per a cada real, construir una successió de racionals que hi convergeixi.
+            detall: |
+              Per a $x\in\mathbb{R}$, $q_n=\lfloor nx\rfloor/n\in\mathbb{Q}$ compleix $|q_n-x|<1/n\to0$. Per la Proposició 19(ii), $x\in\overline{H}$: $\overline{H}=\mathbb{R}$.
+            fuites: ['(\\overline|\\bar)\{?\s*(H|\\mathbb\{?Q\}?)\s*\}?\s*=\s*\\mathbb\{?R', '\\lfloor\s*n\s*x\s*\\rfloor']
+            teoria: ["T1.16", "T1.19"]
+          - id: acumulacio
+            titol: "Punts d'acumulació"
+            objectiu: |
+              Determinar el conjunt de punts d'acumulació de $\mathbb{Q}$.
+            idea: |
+              Aconseguir que els racionals que s'acosten a un real siguin diferents d'ell.
+            detall: |
+              Si $x\in\mathbb{R}$, tot interval $(x-r,x+r)$ conté infinits racionals (densitat aplicada a $(x,x+r)$), en particular un de diferent de $x$. Alternativament, $q_n=\lfloor nx\rfloor/n-1/n$ és racional, diferent de $x$ (perquè $q_n<x$) i $|q_n-x|<2/n$. Per tant $H'=\mathbb{R}$.
+            fuites: ['(H|\\mathbb\{?Q\}?)(''|\^\{?\\prime\}?)\s*=\s*\\mathbb\{?R']
+            teoria: ["T1.14", "T1.19"]
+        errors_comuns:
+          - id: interior_Q
+            descripcio: |
+              Afirma que $\mathring{\mathbb{Q}}=\mathbb{Q}$ perquè "els punts de $\mathbb{Q}$ són de $\mathbb{Q}$", sense mirar les boles.
+            pregunta: |
+              Un interval $(q-r,q+r)$, per petit que sigui, està format només per racionals?
+          - id: frontera_buida
+            descripcio: |
+              Pensa que $\mathbb{Q}$ no té frontera (o que la frontera són "els irracionals") sense comprovar la definició per als racionals.
+            pregunta: |
+              Si prens un racional, tota bola centrada en ell conté punts de $\mathbb{Q}$ i punts de fora de $\mathbb{Q}$?
+          - id: acumulacio_nomes_Q
+            descripcio: |
+              Dona $\mathbb{Q}'=\mathbb{Q}$, oblidant que els irracionals també són límit de racionals.
+            pregunta: |
+              Pots trobar racionals tan a prop com vulguis de $\sqrt2$?
+        nota_professor: |
+          La densitat de $\mathbb{Q}$ i de $\mathbb{R}\setminus\mathbb{Q}$ a $\mathbb{R}$ no apareix com a resultat numerat als apunts (només s'usa a l'Exemple 23 amb els truncaments decimals de $\sqrt2$): es pot donar per coneguda del curs de Fonaments/Càlcul d'una variable. $\mathbb{Q}$ no és ni obert ni tancat a $\mathbb{R}$.
+
+  - num: 8
+    font: null
+    preambul: |
+      Estudieu l'interior, la frontera, l'adherència i el conjunt de punts d'acumulació dels subconjunts següents, i decidiu si són oberts o tancats, o cap de les dues coses:
+    indicacio: null
+    exercicis:
+      - id: "t1-8a"
+        apartat: "a"
+        tipus: calcul
+        enunciat: |
+          $A=\{(x,y,z)\in\mathbb{R}^3\mid x+y=1,\ x^2+y^2=9,\ \text{i } z=0\}$.
+        teoria: ["T1.11", "T1.14", "T1.16"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $A=\left\{\left(\frac{1+\sqrt{17}}{2},\frac{1-\sqrt{17}}{2},0\right),\left(\frac{1-\sqrt{17}}{2},\frac{1+\sqrt{17}}{2},0\right)\right\}$ (dos punts). $\mathring{A}=\varnothing$, $\mathrm{Fr}\,A=\overline{A}=A$, $A'=\varnothing$. $A$ és tancat i no és obert.
+          fuites: ['(?<!si )\$A\$\s+és\s+tancat', 'tancat\s+(però|i)\s+no\s+(és\s+)?obert', 'no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '\\sqrt\{?\s*17', 'A(''|\^\{?\\prime\}?)\s*=\s*\\(varnothing|emptyset)', '(Fr\}?|\\partial)\s*(\\[,;! ])?\s*\(?\s*A\s*\)?\s*=\s*((\\overline|\\bar)\{?\s*A\s*\}?\s*=\s*)?A\b']
+        passos:
+          - id: descriure
+            titol: "Descriure el conjunt"
+            objectiu: |
+              Determinar explícitament quins punts formen $A$.
+            idea: |
+              Aïllar una variable de l'equació lineal i substituir-la a la quadràtica.
+            detall: |
+              $y=1-x$ i $x^2+(1-x)^2=9\iff x^2-x-4=0\iff x=\frac{1\pm\sqrt{17}}{2}$, amb $y=\frac{1\mp\sqrt{17}}{2}$, $z=0$. $A=\{P,Q\}$ té exactament dos punts, a distància $\|P-Q\|=\sqrt{34}$.
+            fuites: ['\\sqrt\{?\s*17', 'x\^\{?2\}?\s*-\s*x\s*-\s*4', '\\sqrt\{?\s*34']
+            teoria: []
+          - id: interior
+            titol: "Interior"
+            objectiu: |
+              Decidir si $A$ té punts interiors a $\mathbb{R}^3$.
+            idea: |
+              Una bola de $\mathbb{R}^3$, quants punts té? Pot estar continguda en un conjunt com aquest?
+            detall: |
+              Tota bola $B_r(P)$ conté infinits punts (per exemple $P+(0,0,t)$, $0\leq t<r$), però $A$ en té dos. Per tant $A$ no té punts interiors, $\mathring{A}=\varnothing$.
+            fuites: ['no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*A\s*\}?|int\}?\s*\(\s*A\s*\)|A\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)']
+            teoria: ["T1.14", "T1.16"]
+          - id: acumulacio
+            titol: "Punts d'acumulació"
+            objectiu: |
+              Determinar el conjunt derivat $A'$.
+            idea: |
+              Per a un punt qualsevol de l'espai, decidir si hi ha punts d'$A$ diferents d'ell tan a prop com es vulgui; tingues en compte quants punts té $A$.
+            detall: |
+              Sigui $x\in\mathbb{R}^3$ i $r=\min\{\|x-a\|\mid a\in A,\ a\neq x\}>0$ (mínim d'un nombre finit de distàncies positives). Llavors $B_r(x)\cap(A\setminus\{x\})=\varnothing$: $x\notin A'$. Per tant $A'=\varnothing$ (els dos punts són aïllats).
+            fuites: ['A(''|\^\{?\\prime\}?)\s*=\s*\\(varnothing|emptyset)']
+            teoria: ["T1.14", "T1.16"]
+          - id: adherencia_frontera
+            titol: "Adherència i frontera"
+            objectiu: |
+              Determinar l'adherència i la frontera d'$A$.
+            idea: |
+              Usar la relació entre adherència, conjunt i punts d'acumulació; per a la frontera, combinar-ho amb l'interior.
+            detall: |
+              $\overline{A}=A\cup A'=A$. Tot punt d'$A$ és de la frontera (tota bola el conté i, com que $\mathring{A}=\varnothing$, conté punts de $A^c$), i un punt fora de $\overline{A}$ té una bola que no talla $A$. Per tant $\mathrm{Fr}\,A=\overline{A}=A$.
+            fuites: ['(Fr\}?|\\partial)\s*(\\[,;! ])?\s*\(?\s*A\s*\)?\s*=\s*((\\overline|\\bar)\{?\s*A\s*\}?\s*=\s*)?A\b', '(\\overline|\\bar)\{?\s*A\s*\}?\s*=\s*A\s*\\cup\s*A(''|\^\{?\\prime\}?)\s*=\s*A\b']
+            teoria: ["T1.16", "T1.14"]
+          - id: obert_tancat
+            titol: "Obert o tancat"
+            objectiu: |
+              Classificar $A$: obert, tancat, totes dues coses o cap.
+            idea: |
+              Comparar el conjunt amb la seva adherència i amb el seu interior.
+            detall: |
+              $\overline{A}=A$, així que $A$ és tancat (Proposició 17(ii)); com que $A\neq\varnothing$ i $\mathring{A}=\varnothing\neq A$, no és obert. Per tant $A$ és tancat però no és obert.
+            fuites: ['(?<!si )\$A\$\s+és\s+tancat', 'tancat\s+(però|i)\s+no\s+(és\s+)?obert']
+            teoria: ["T1.17", "T1.11"]
+        errors_comuns:
+          - id: corba
+            descripcio: |
+              Pensa que $A$ és una corba (la circumferència o la recta) i no la seva intersecció.
+            pregunta: |
+              Quants punts en comú tenen, en general, una recta i una circumferència d'un pla?
+          - id: aillats_acumulacio
+            descripcio: |
+              Considera que els punts d'$A$ són d'acumulació perquè pertanyen a $A$.
+            pregunta: |
+              En una bola molt petita al voltant d'un dels punts, quants altres punts d'$A$ hi ha?
+          - id: tancat_obert_excloents
+            descripcio: |
+              Creu que, com que no és obert, ha de ser tancat (o al revés), sense comprovar-ho.
+            pregunta: |
+              Hi ha conjunts que no són ni oberts ni tancats? Llavors, com justifiques cadascuna de les dues propietats?
+        nota_professor: |
+          La recta $x+y=1$ dista $1/\sqrt2<3$ de l'origen, per tant talla la circumferència en dos punts. Tot conjunt finit de $\mathbb{R}^n$ és tancat, amb interior i derivat buits.
+
+      - id: "t1-8b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          $B=\{(x,y,z)\in\mathbb{R}^3\mid x=2,\ y=3,\ \text{i } z\in(-1,1)\}$.
+        teoria: ["T1.11", "T1.14", "T1.16"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $B$ és un segment obert (d'extrems $(2,3,\pm1)$, exclosos) dins de $\mathbb{R}^3$. $\mathring{B}=\varnothing$; $\mathrm{Fr}\,B=\overline{B}=B'=\{(2,3,z)\mid z\in[-1,1]\}$. $B$ no és ni obert ni tancat.
+          fuites: ['no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', 'z\s*\\in\s*\[\s*-\s*1\s*,\s*1\s*\]', '\|\s*z\s*\|\s*(\\leq|\\le|≤)\s*1', 'ni\s+(obert|tancat)\s+ni\s+(obert|tancat)', '(\\mathring\{?\s*B\s*\}?|int\}?\s*\(\s*B\s*\)|B\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)']
+        passos:
+          - id: interior
+            titol: "Interior"
+            objectiu: |
+              Decidir si $B$ té punts interiors a $\mathbb{R}^3$.
+            idea: |
+              Donat un punt del segment i una bola, moure's en una direcció perpendicular al segment.
+            detall: |
+              Si $p=(2,3,z_0)\in B$ i $r>0$, el punt $(2+r/2,3,z_0)$ és a $B_r(p)$ i no és de $B$. Per tant $B$ no té punts interiors, $\mathring{B}=\varnothing$.
+            fuites: ['no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*B\s*\}?|int\}?\s*\(\s*B\s*\)|B\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)', '2\s*\+\s*r\s*/\s*2']
+            teoria: ["T1.14", "T1.16"]
+          - id: adherencia
+            titol: "Adherència"
+            objectiu: |
+              Determinar l'adherència $\overline{B}$.
+            idea: |
+              Proposar un tancat que contingui $B$ i comprovar que els punts que hi afegeixes són límits de punts de $B$.
+            detall: |
+              $S=\{x=2\}\cap\{y=3\}\cap\{|z|\leq1\}$ és tancat (Corol·lari 18(ii) del Tema 2 i Proposició 13(ii)) i conté $B$. Els extrems són límits: $(2,3,\pm(1-1/n))\to(2,3,\pm1)$. Per tant $\overline{B}=S=\{(2,3,z)\mid z\in[-1,1]\}$.
+            fuites: ['z\s*\\in\s*\[\s*-\s*1\s*,\s*1\s*\]', '\|\s*z\s*\|\s*(\\leq|\\le|≤)\s*1']
+            teoria: ["T1.16", "T1.19", "T1.13", "T2.18"]
+          - id: frontera
+            titol: "Frontera"
+            objectiu: |
+              Determinar la frontera de $B$.
+            idea: |
+              Combinar el que saps de l'interior i de l'adherència: un punt adherent que no és interior, què és?
+            detall: |
+              Si $p\in\overline{B}$, tota bola centrada en $p$ talla $B$ i, com que cap punt és interior (i els extrems no són de $B$), també talla $B^c$. Els punts de fora de $\overline{B}$ tenen una bola que no talla $B$. Per tant $\mathrm{Fr}\,B=\overline{B}=\{(2,3,z)\mid z\in[-1,1]\}$.
+            fuites: ['z\s*\\in\s*\[\s*-\s*1\s*,\s*1\s*\]', '(Fr\}?|\\partial)\s*(\\[,;! ])?\s*\(?\s*B\s*\)?\s*=\s*(\\overline|\\bar)']
+            teoria: ["T1.14", "T1.16"]
+          - id: acumulacio
+            titol: "Punts d'acumulació"
+            objectiu: |
+              Determinar el conjunt derivat $B'$.
+            idea: |
+              Per a cada punt adherent, trobar una successió de punts de $B$ diferents d'ell que hi convergeixi.
+            detall: |
+              Si $p=(2,3,z_0)$ amb $|z_0|\leq1$, la successió $(2,3,(1-\frac1n)z_0+\frac{c}{n})$, amb $c=\frac12$ si $z_0\leq0$ i $c=-\frac12$ si $z_0>0$, és de $B$, té termes diferents de $p$ i convergeix a $p$. Per la Proposició 19(i), $B'=\overline{B}=\{(2,3,z)\mid z\in[-1,1]\}$.
+            fuites: ['z\s*\\in\s*\[\s*-\s*1\s*,\s*1\s*\]', 'B(''|\^\{?\\prime\}?)\s*=\s*(\\overline|\\bar)']
+            teoria: ["T1.14", "T1.19"]
+          - id: obert_tancat
+            titol: "Obert o tancat"
+            objectiu: |
+              Classificar $B$: obert, tancat, totes dues coses o cap.
+            idea: |
+              Comparar $B$ amb la seva adherència i amb el seu interior.
+            detall: |
+              $\overline{B}\neq B$ (per exemple $(2,3,1)\in\overline{B}\setminus B$), així que no és tancat (Proposició 17(ii)); $\mathring{B}=\varnothing\neq B$, així que no és obert. No és ni obert ni tancat.
+            fuites: ['ni\s+(obert|tancat)\s+ni\s+(obert|tancat)', '\(\s*2\s*,\s*3\s*,\s*-?\s*1\s*\)\s*\\in\s*(\\overline|\\bar)']
+            teoria: ["T1.17", "T1.11"]
+        errors_comuns:
+          - id: obert_com_interval
+            descripcio: |
+              Diu que $B$ és obert perquè "$z\in(-1,1)$ és un interval obert", traslladant la topologia de $\mathbb{R}$ a $\mathbb{R}^3$.
+            pregunta: |
+              Una bola de $\mathbb{R}^3$ centrada en un punt de $B$, per petita que sigui, queda dins del segment?
+          - id: oblida_extrems
+            descripcio: |
+              No inclou els extrems $(2,3,\pm1)$ a l'adherència o al derivat.
+            pregunta: |
+              Hi ha punts de $B$ tan a prop com vulguis de $(2,3,1)$?
+          - id: frontera_extrems
+            descripcio: |
+              Dona com a frontera només els dos extrems.
+            pregunta: |
+              Per al punt $(2,3,0)$, tota bola centrada en ell conté punts que no són de $B$?
+        nota_professor: |
+          Comparar amb el problema 12(b): $\overline{B}$ és el conjunt $C$ de l'apartat (c).
+
+      - id: "t1-8c"
+        apartat: "c"
+        tipus: calcul
+        enunciat: |
+          $C=\{(x,y,z)\in\mathbb{R}^3\mid x=2,\ y=3,\ \text{i } z\in[-1,1]\}$.
+        teoria: ["T1.11", "T1.14", "T1.16"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $C$ és un segment tancat de $\mathbb{R}^3$. $\mathring{C}=\varnothing$; $\mathrm{Fr}\,C=\overline{C}=C'=C$. $C$ és tancat i no és obert.
+          fuites: ['(?<!si )\$C\$\s+és\s+tancat', 'tancat\s+(però|i)\s+no\s+(és\s+)?obert', 'no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*C\s*\}?|int\}?\s*\(\s*C\s*\)|C\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)', '(Fr\}?|\\partial)\s*(\\[,;! ])?\s*\(?\s*C\s*\)?\s*=\s*((\\overline|\\bar)\{?\s*C\s*\}?\s*=\s*)?C\b', '(\\overline|\\bar)\{?\s*C\s*\}?\s*=\s*C\b', 'C(''|\^\{?\\prime\}?)\s*=\s*C\b']
+        passos:
+          - id: interior
+            titol: "Interior"
+            objectiu: |
+              Decidir si $C$ té punts interiors a $\mathbb{R}^3$.
+            idea: |
+              Donat un punt del segment i una bola, moure's en una direcció perpendicular al segment.
+            detall: |
+              Si $p=(2,3,z_0)\in C$ i $r>0$, $(2+r/2,3,z_0)\in B_r(p)\setminus C$. Per tant $C$ no té punts interiors, $\mathring{C}=\varnothing$.
+            fuites: ['no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*C\s*\}?|int\}?\s*\(\s*C\s*\)|C\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)', '2\s*\+\s*r\s*/\s*2']
+            teoria: ["T1.14", "T1.16"]
+          - id: adherencia
+            titol: "Adherència"
+            objectiu: |
+              Determinar l'adherència $\overline{C}$.
+            idea: |
+              Decidir si $C$ és tancat escrivint-lo com a intersecció de conjunts definits per igualtats o desigualtats no estrictes amb funcions contínues.
+            detall: |
+              $C=\{x=2\}\cap\{y=3\}\cap\{|z|\leq1\}$; cada un és tancat (Corol·lari 18(ii) del Tema 2; una igualtat $f=g$ equival a $f\geq g$ i $g\geq f$) i la intersecció de tancats és tancada (Proposició 13(ii)): $C$ és tancat. Per la Proposició 17(ii), $\overline{C}=C$.
+            fuites: ['(?<!si )\$C\$\s+és\s+tancat', '(\\overline|\\bar)\{?\s*C\s*\}?\s*=\s*C\b']
+            teoria: ["T1.13", "T1.17", "T2.18"]
+          - id: frontera
+            titol: "Frontera"
+            objectiu: |
+              Determinar la frontera de $C$.
+            idea: |
+              Combinar el que saps de l'interior i de l'adherència.
+            detall: |
+              Tot punt de $C$ és de la frontera: tota bola el conté i, com que $\mathring{C}=\varnothing$, conté punts de $C^c$. Els punts de fora de $C$ són exteriors perquè $C^c$ és obert. Per tant $\mathrm{Fr}\,C=C$.
+            fuites: ['(Fr\}?|\\partial)\s*(\\[,;! ])?\s*\(?\s*C\s*\)?\s*=\s*C\b']
+            teoria: ["T1.14", "T1.11"]
+          - id: acumulacio
+            titol: "Punts d'acumulació"
+            objectiu: |
+              Determinar el conjunt derivat $C'$.
+            idea: |
+              Decidir si el segment té punts aïllats, incloent-hi els extrems.
+            detall: |
+              Si $p=(2,3,z_0)\in C$, $p_n=(2,3,(1-\frac1n)z_0)$ és de $C$ i convergeix a $p$; si $z_0\neq0$ els termes són diferents de $p$, i si $z_0=0$ prenem $(2,3,\frac1n)$. Per la Proposició 19(i), $C'=C$.
+            fuites: ['C(''|\^\{?\\prime\}?)\s*=\s*C\b']
+            teoria: ["T1.14", "T1.19"]
+          - id: obert_tancat
+            titol: "Obert o tancat"
+            objectiu: |
+              Classificar $C$: obert, tancat, totes dues coses o cap.
+            idea: |
+              Comparar $C$ amb la seva adherència i amb el seu interior.
+            detall: |
+              $\overline{C}=C$: és tancat. $\mathring{C}=\varnothing\neq C$: no és obert. Per tant $C$ és tancat però no és obert.
+            fuites: ['(?<!si )\$C\$\s+és\s+tancat', 'tancat\s+(però|i)\s+no\s+(és\s+)?obert']
+            teoria: ["T1.17", "T1.11"]
+        errors_comuns:
+          - id: topologia_de_R
+            descripcio: |
+              Raona a $\mathbb{R}$ i conclou que l'interior és el segment sense els extrems i la frontera, només els extrems.
+            pregunta: |
+              Les boles que fas servir, són de $\mathbb{R}$ o de $\mathbb{R}^3$? Una bola de $\mathbb{R}^3$ centrada en $(2,3,0)$ queda dins de $C$?
+          - id: tancat_sense_justificar
+            descripcio: |
+              Afirma que és tancat "perquè l'interval és tancat" sense cap argument vàlid a $\mathbb{R}^3$.
+            pregunta: |
+              Quin resultat del curs garanteix que una intersecció de conjunts tancats és tancada? Quins són aquí aquests conjunts?
+        nota_professor: |
+          $C=\overline{B}$ de l'apartat (b). A més és compacte (problema 12(c)).
+
+      - id: "t1-8d"
+        apartat: "d"
+        tipus: calcul
+        enunciat: |
+          $D=\{(x,y)\in\mathbb{R}^2\mid x^2+y=5\}$.
+        teoria: ["T1.11", "T1.14", "T1.16"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $D$ és la paràbola $y=5-x^2$. $\mathring{D}=\varnothing$; $\mathrm{Fr}\,D=\overline{D}=D'=D$. $D$ és tancat i no és obert.
+          fuites: ['(?<!si )\$D\$\s+és\s+tancat', 'tancat\s+(però|i)\s+no\s+(és\s+)?obert', 'no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*D\s*\}?|int\}?\s*\(\s*D\s*\)|D\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)', '(Fr\}?|\\partial)\s*(\\[,;! ])?\s*\(?\s*D\s*\)?\s*=\s*((\\overline|\\bar)\{?\s*D\s*\}?\s*=\s*)?D\b', '(\\overline|\\bar)\{?\s*D\s*\}?\s*=\s*D\b', 'D(''|\^\{?\\prime\}?)\s*=\s*D\b']
+        passos:
+          - id: interior
+            titol: "Interior"
+            objectiu: |
+              Decidir si $D$ té punts interiors.
+            idea: |
+              Donat un punt de la corba i una bola, moure's una mica en vertical i mirar si l'equació continua complint-se.
+            detall: |
+              Si $(x_0,y_0)\in D$ i $r>0$, $(x_0,y_0+r/2)\in B_r((x_0,y_0))$ i $x_0^2+y_0+r/2=5+r/2\neq5$. Per tant $D$ no té punts interiors, $\mathring{D}=\varnothing$.
+            fuites: ['no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*D\s*\}?|int\}?\s*\(\s*D\s*\)|D\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)', '5\s*\+\s*r\s*/\s*2']
+            teoria: ["T1.14", "T1.16"]
+          - id: adherencia
+            titol: "Adherència"
+            objectiu: |
+              Determinar l'adherència $\overline{D}$.
+            idea: |
+              Escriure $D$ com a antiimatge d'un tancat de $\mathbb{R}$ per una funció contínua.
+            detall: |
+              $D=f^{-1}(\{5\})$ amb $f(x,y)=x^2+y$ contínua i $\{5\}$ tancat; pel Teorema 17(d) del Tema 2, $D$ és tancat, i per la Proposició 17(ii) $\overline{D}=D$.
+            fuites: ['(?<!si )\$D\$\s+és\s+tancat', '(\\overline|\\bar)\{?\s*D\s*\}?\s*=\s*D\b']
+            teoria: ["T2.17", "T1.17"]
+          - id: frontera
+            titol: "Frontera"
+            objectiu: |
+              Determinar la frontera de $D$.
+            idea: |
+              Combinar el que saps de l'interior i de l'adherència.
+            detall: |
+              Tot punt de $D$ és de la frontera (tota bola el conté i conté punts de $D^c$, perquè $\mathring{D}=\varnothing$); els de fora són exteriors perquè $D^c$ és obert. $\mathrm{Fr}\,D=D$.
+            fuites: ['(Fr\}?|\\partial)\s*(\\[,;! ])?\s*\(?\s*D\s*\)?\s*=\s*D\b']
+            teoria: ["T1.14", "T1.11"]
+          - id: acumulacio
+            titol: "Punts d'acumulació"
+            objectiu: |
+              Determinar el conjunt derivat $D'$.
+            idea: |
+              Usar que $D$ és la gràfica d'una funció contínua de $x$ i moure's sobre la corba.
+            detall: |
+              Si $(x_0,5-x_0^2)\in D$, $p_n=(x_0+\frac1n,5-(x_0+\frac1n)^2)\in D$, $p_n\neq(x_0,5-x_0^2)$ i $p_n\to(x_0,5-x_0^2)$. Per la Proposició 19(i), $D'=D$.
+            fuites: ['D(''|\^\{?\\prime\}?)\s*=\s*D\b']
+            teoria: ["T1.14", "T1.19"]
+          - id: obert_tancat
+            titol: "Obert o tancat"
+            objectiu: |
+              Classificar $D$: obert, tancat, totes dues coses o cap.
+            idea: |
+              Comparar $D$ amb la seva adherència i amb el seu interior.
+            detall: |
+              $\overline{D}=D$: és tancat. $\mathring{D}=\varnothing\neq D$: no és obert. Per tant $D$ és tancat però no és obert.
+            fuites: ['(?<!si )\$D\$\s+és\s+tancat', 'tancat\s+(però|i)\s+no\s+(és\s+)?obert']
+            teoria: ["T1.17", "T1.11"]
+        errors_comuns:
+          - id: regio_vs_corba
+            descripcio: |
+              Confon la corba $x^2+y=5$ amb una de les regions $x^2+y<5$ o $x^2+y\leq5$.
+            pregunta: |
+              El conjunt està definit per una igualtat o per una desigualtat? Quina "gruixària" té?
+          - id: no_fitat_no_tancat
+            descripcio: |
+              Creu que, com que $D$ no és fitat, no pot ser tancat.
+            pregunta: |
+              La definició de tancat parla de fitació? Què diu exactament?
+        nota_professor: |
+          $D$ és tancat però no compacte (no és fitat).
+
+      - id: "t1-8e"
+        apartat: "e"
+        tipus: calcul
+        enunciat: |
+          $E=\{(x,y)\in\mathbb{R}^2\mid x^2+|y|=5\}$.
+        teoria: ["T1.11", "T1.14", "T1.16"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $E$ és la corba tancada formada pels arcs de paràbola $y=5-x^2$ i $y=x^2-5$, $|x|\leq\sqrt5$. $\mathring{E}=\varnothing$; $\mathrm{Fr}\,E=\overline{E}=E'=E$. $E$ és tancat i no és obert.
+          fuites: ['(?<!si )\$E\$\s+és\s+tancat', 'tancat\s+(però|i)\s+no\s+(és\s+)?obert', 'no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*E\s*\}?|int\}?\s*\(\s*E\s*\)|E\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)', '(Fr\}?|\\partial)\s*(\\[,;! ])?\s*\(?\s*E\s*\)?\s*=\s*((\\overline|\\bar)\{?\s*E\s*\}?\s*=\s*)?E\b', '(\\overline|\\bar)\{?\s*E\s*\}?\s*=\s*E\b', 'E(''|\^\{?\\prime\}?)\s*=\s*E\b']
+        passos:
+          - id: descriure
+            titol: "Descriure el conjunt"
+            objectiu: |
+              Entendre la forma del conjunt $E$.
+            idea: |
+              Separar els casos segons el signe de $y$.
+            detall: |
+              Si $y\geq0$: $y=5-x^2$ (cal $x^2\leq5$). Si $y<0$: $y=x^2-5$ (amb $x^2<5$). $E$ és la unió dels dos arcs de paràbola, que s'uneixen als punts $(\pm\sqrt5,0)$: una corba tancada i fitada.
+            fuites: ['\(\s*\\pm\s*\\sqrt\{?\s*5\s*\}?\s*,\s*0\s*\)', 'y\s*=\s*x\^\{?2\}?\s*-\s*5']
+            teoria: []
+          - id: interior
+            titol: "Interior"
+            objectiu: |
+              Decidir si $E$ té punts interiors.
+            idea: |
+              Donat un punt de $E$, trobar dins de qualsevol bola centrada en ell un punt on $x^2+|y|$ sigui diferent de $5$; per exemple, allunyant-se una mica de l'origen.
+            detall: |
+              Sigui $p=(x_0,y_0)\in E$ (llavors $p\neq0$) i $r>0$. Per a $s>1$, $sp$ compleix $s^2x_0^2+s|y_0|>x_0^2+|y_0|=5$, per tant $sp\notin E$, i $\|sp-p\|=(s-1)\|p\|<r$ si $s$ és prou proper a $1$. Per tant $E$ no té punts interiors, $\mathring{E}=\varnothing$.
+            fuites: ['no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*E\s*\}?|int\}?\s*\(\s*E\s*\)|E\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)', 's\^\{?2\}?\s*x_\{?0\}?\^\{?2\}?\s*\+\s*s\s*\|\s*y_\{?0\}?\s*\|']
+            teoria: ["T1.14", "T1.16"]
+          - id: adherencia
+            titol: "Adherència"
+            objectiu: |
+              Determinar l'adherència $\overline{E}$.
+            idea: |
+              Escriure $E$ com a antiimatge d'un tancat per una funció contínua.
+            detall: |
+              $E=f^{-1}(\{5\})$ amb $f(x,y)=x^2+|y|$ contínua; pel Teorema 17(d) del Tema 2, $E$ és tancat i, per la Proposició 17(ii), $\overline{E}=E$.
+            fuites: ['(?<!si )\$E\$\s+és\s+tancat', '(\\overline|\\bar)\{?\s*E\s*\}?\s*=\s*E\b']
+            teoria: ["T2.17", "T1.17"]
+          - id: frontera
+            titol: "Frontera"
+            objectiu: |
+              Determinar la frontera de $E$.
+            idea: |
+              Combinar el que saps de l'interior i de l'adherència.
+            detall: |
+              Tot punt de $E$ és de la frontera (tota bola el conté i, com que $\mathring{E}=\varnothing$, conté punts de $E^c$); els de fora són exteriors perquè $E^c$ és obert. $\mathrm{Fr}\,E=E$.
+            fuites: ['(Fr\}?|\\partial)\s*(\\[,;! ])?\s*\(?\s*E\s*\)?\s*=\s*E\b']
+            teoria: ["T1.14", "T1.11"]
+          - id: acumulacio
+            titol: "Punts d'acumulació"
+            objectiu: |
+              Determinar el conjunt derivat $E'$.
+            idea: |
+              Moure's sobre la corba, amb cura als punts on s'uneixen els dos arcs.
+            detall: |
+              Sigui $p=(x_0,y_0)\in E$. Prenem $x_n=(1-\frac1n)x_0$ si $x_0\neq0$ i $x_n=\frac1n$ si $x_0=0$ (llavors $x_n\to x_0$, $x_n\neq x_0$ i $x_n^2<5$ per $n\geq3$). Si $y_0\geq0$, $p_n=(x_n,5-x_n^2)$; si $y_0<0$, $p_n=(x_n,x_n^2-5)$. En tots dos casos $p_n\in E$, $p_n\neq p$ i $p_n\to p$. Per la Proposició 19(i), $E'=E$.
+            fuites: ['E(''|\^\{?\\prime\}?)\s*=\s*E\b']
+            teoria: ["T1.14", "T1.19"]
+          - id: obert_tancat
+            titol: "Obert o tancat"
+            objectiu: |
+              Classificar $E$: obert, tancat, totes dues coses o cap.
+            idea: |
+              Comparar $E$ amb la seva adherència i amb el seu interior.
+            detall: |
+              $\overline{E}=E$: és tancat. $\mathring{E}=\varnothing\neq E$: no és obert. Per tant $E$ és tancat però no és obert.
+            fuites: ['(?<!si )\$E\$\s+és\s+tancat', 'tancat\s+(però|i)\s+no\s+(és\s+)?obert']
+            teoria: ["T1.17", "T1.11"]
+        errors_comuns:
+          - id: interior_regio
+            descripcio: |
+              Confon $E$ amb la regió que tanca la corba ($x^2+|y|\leq5$) i li atribueix interior.
+            pregunta: |
+              El conjunt és la corba o la regió que delimita? Què passa amb $x^2+|y|$ en un punt de dins de la regió?
+          - id: valor_absolut_no_continu
+            descripcio: |
+              Dubta que $x^2+|y|$ sigui contínua (pel valor absolut) i no sap justificar que $E$ és tancat.
+            pregunta: |
+              La funció valor absolut és contínua? I la suma i composició de funcions contínues?
+          - id: punts_unio
+            descripcio: |
+              Pensa que als punts on s'uneixen els dos arcs la corba "fa punta" i que això els fa especials topològicament (aïllats o interiors).
+            pregunta: |
+              Una punta a la corba impedeix trobar-hi altres punts de $E$ tan a prop com vulguis?
+        nota_professor: |
+          $E$ és compacte (tancat i fitat) i connex. Els punts $(\pm\sqrt5,0)$ són angulosos però topològicament no tenen res d'especial.
+
+      - id: "t1-8f"
+        apartat: "f"
+        tipus: calcul
+        enunciat: |
+          $F=\{(x,y,z)\in\mathbb{R}^3\mid x^2+y^2<1,\ \text{i } |z|<1\}$.
+        teoria: ["T1.11", "T1.14", "T1.16"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $F$ és el cilindre sòlid obert. $\mathring{F}=F$; $\overline{F}=F'=\{(x,y,z)\mid x^2+y^2\leq1,\ |z|\leq1\}$; $\mathrm{Fr}\,F=\{x^2+y^2=1,\ |z|\leq1\}\cup\{x^2+y^2\leq1,\ |z|=1\}$ (superfície lateral i les dues tapes). $F$ és obert i no és tancat.
+          fuites: ['(?<!si )\$F\$\s+és\s+obert', 'obert\s+(però|i)\s+no\s+(és\s+)?tancat', '(\\mathring\{?\s*F\s*\}?|int\}?\s*\(\s*F\s*\)|F\^\{?\\circ\}?)\s*=\s*F\b', 'x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*(\\leq|\\le|≤)\s*1', '\|\s*z\s*\|\s*(\\leq|\\le|≤)\s*1', 'x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*=\s*1', '\|\s*z\s*\|\s*=\s*1']
+        passos:
+          - id: interior
+            titol: "Interior"
+            objectiu: |
+              Determinar l'interior de $F$.
+            idea: |
+              Reconèixer $F$ com a intersecció de conjunts definits per desigualtats estrictes entre funcions contínues.
+            detall: |
+              $\{x^2+y^2<1\}$ i $\{|z|<1\}$ són oberts (Corol·lari 18(i) del Tema 2) i la seva intersecció és oberta (Proposició 12(iii)). Per tant $F$ és obert i $\mathring{F}=F$.
+            fuites: ['(?<!si )\$F\$\s+és\s+obert', '(\\mathring\{?\s*F\s*\}?|int\}?\s*\(\s*F\s*\)|F\^\{?\\circ\}?)\s*=\s*F\b']
+            teoria: ["T2.18", "T1.12", "T1.16"]
+          - id: adherencia
+            titol: "Adherència"
+            objectiu: |
+              Determinar l'adherència $\overline{F}$.
+            idea: |
+              Proposar el tancat que s'obté "tancant" les desigualtats i comprovar que tots els seus punts són límit de punts de $F$ (per exemple, contraient cap a l'origen).
+            detall: |
+              $K=\{x^2+y^2\leq1\}\cap\{|z|\leq1\}$ és tancat (Corol·lari 18(ii) del Tema 2, Proposició 13(ii)) i conté $F$: $\overline{F}\subseteq K$. Si $p\in K$, $p_n=(1-\frac1n)p$ compleix $x^2+y^2\leq(1-\frac1n)^2<1$ i $|z|<1$, així $p_n\in F$ i $p_n\to p$. Per tant $\overline{F}=\{x^2+y^2\leq1,\ |z|\leq1\}$.
+            fuites: ['x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*(\\leq|\\le|≤)\s*1', '\|\s*z\s*\|\s*(\\leq|\\le|≤)\s*1']
+            teoria: ["T1.16", "T1.19", "T1.13", "T2.18"]
+          - id: frontera
+            titol: "Frontera"
+            objectiu: |
+              Determinar la frontera de $F$.
+            idea: |
+              Un punt és de la frontera si és adherent i no és interior. Identificar quins punts de l'adherència no són de $F$: on alguna desigualtat esdevé igualtat.
+            detall: |
+              Els punts de $F$ són interiors i no són frontera; els de fora de $\overline{F}$ són exteriors. Si $p\in\overline{F}\setminus F$, tota bola talla $F$ (és adherent) i conté $p\notin F$. Per tant $\mathrm{Fr}\,F=\overline{F}\setminus F=\{x^2+y^2=1,\ |z|\leq1\}\cup\{x^2+y^2\leq1,\ |z|=1\}$.
+            fuites: ['x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*=\s*1', '\|\s*z\s*\|\s*=\s*1']
+            teoria: ["T1.14", "T1.16"]
+          - id: acumulacio
+            titol: "Punts d'acumulació"
+            objectiu: |
+              Determinar el conjunt derivat $F'$.
+            idea: |
+              Reaprofitar les successions de l'adherència i comprovar si els seus termes són diferents del límit.
+            detall: |
+              Si $p\in\overline{F}$, $p\neq0$, la successió $(1-\frac1n)p$ és de $F$ i té termes diferents de $p$; per a $p=0$, prenem $(0,0,\frac1n)$, $n\geq2$. Per la Proposició 19(i), $F'=\overline{F}$.
+            fuites: ['F(''|\^\{?\\prime\}?)\s*=\s*(\\overline|\\bar)']
+            teoria: ["T1.14", "T1.19"]
+          - id: obert_tancat
+            titol: "Obert o tancat"
+            objectiu: |
+              Classificar $F$: obert, tancat, totes dues coses o cap.
+            idea: |
+              Comparar $F$ amb el seu interior i amb la seva adherència.
+            detall: |
+              $\mathring{F}=F$: és obert. $\overline{F}\neq F$ (per exemple $(1,0,0)\in\overline{F}\setminus F$): no és tancat. Per tant $F$ és obert però no és tancat.
+            fuites: ['(?<!si )\$F\$\s+és\s+obert', 'obert\s+(però|i)\s+no\s+(és\s+)?tancat', '\(\s*1\s*,\s*0\s*,\s*0\s*\)\s*\\in\s*(\\overline|\\bar)']
+            teoria: ["T1.11", "T1.17"]
+        errors_comuns:
+          - id: frontera_sense_tapes
+            descripcio: |
+              Dona com a frontera només la superfície lateral del cilindre (o només les tapes).
+            pregunta: |
+              El punt $(0,0,1)$ és de $F$? Tota bola centrada en ell conté punts de $F$?
+          - id: frontera_sense_restriccio
+            descripcio: |
+              Escriu la frontera com la unió del cilindre infinit $\{x^2+y^2=1\}$ i dels plans $\{z=\pm1\}$ sencers, sense restringir l'altra coordenada.
+            pregunta: |
+              Un punt com $(5,0,1)$ és a prop de $F$? Quina condició hi falta?
+          - id: fitat_vs_tancat
+            descripcio: |
+              Conclou que $F$ és tancat perquè és fitat, o que no pot ser obert si és fitat.
+            pregunta: |
+              Les definicions d'obert i tancat tenen res a veure amb ser fitat?
+        nota_professor: |
+          Exemple típic d'obert fitat; la seva adherència és un compacte.
+
+      - id: "t1-8g"
+        apartat: "g"
+        tipus: calcul
+        enunciat: |
+          $G=\{(x,y,z)\in\mathbb{R}^3\mid x^2-y^2+z^2<2,\ \text{i } |z|=1\}$.
+        teoria: ["T1.11", "T1.14", "T1.16"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $G=\{(x,y,z)\mid x^2-y^2<1,\ z=\pm1\}$ (dues regions planes, entre les branques d'una hipèrbola, als plans $z=1$ i $z=-1$). $\mathring{G}=\varnothing$; $\mathrm{Fr}\,G=\overline{G}=G'=\{(x,y,z)\mid x^2-y^2\leq1,\ |z|=1\}$. $G$ no és ni obert ni tancat.
+          fuites: ['no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', 'x\^\{?2\}?\s*-\s*y\^\{?2\}?\s*(\\leq|\\le|≤)\s*1', 'ni\s+(obert|tancat)\s+ni\s+(obert|tancat)', '(\\mathring\{?\s*G\s*\}?|int\}?\s*\(\s*G\s*\)|G\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)']
+        passos:
+          - id: descriure
+            titol: "Simplificar la descripció"
+            objectiu: |
+              Reescriure $G$ de manera més senzilla.
+            idea: |
+              Usar la condició sobre $z$ per simplificar la desigualtat.
+            detall: |
+              $|z|=1\iff z=\pm1$, i llavors $z^2=1$, així que $G=\{x^2-y^2<1,\ z=\pm1\}$: dues còpies, als plans $z=1$ i $z=-1$, de la regió plana entre les branques de la hipèrbola $x^2-y^2=1$.
+            fuites: ['x\^\{?2\}?\s*-\s*y\^\{?2\}?\s*<\s*1']
+            teoria: []
+          - id: interior
+            titol: "Interior"
+            objectiu: |
+              Decidir si $G$ té punts interiors a $\mathbb{R}^3$.
+            idea: |
+              $G$ està contingut en dos plans: moure's una mica en la direcció perpendicular.
+            detall: |
+              Si $p=(x_0,y_0,z_0)\in G$ (amb $z_0=\pm1$) i $r>0$, sigui $t=\min\{r,1\}/2$. El punt $(x_0,y_0,z_0+t)$ és a $B_r(p)$ i la seva tercera coordenada és $1+t$ o $-1+t$, cap de les quals té valor absolut $1$; per tant no és de $G$. Així $G$ no té punts interiors, $\mathring{G}=\varnothing$.
+            fuites: ['no\s+té\s+(cap\s+)?punts?\s+interiors?|interior\s+(d.\s*\$?[^$\s]+\$?\s+)?(és\s+)?buit', '(\\mathring\{?\s*G\s*\}?|int\}?\s*\(\s*G\s*\)|G\^\{?\\circ\}?)\s*=\s*\\(varnothing|emptyset)']
+            teoria: ["T1.14", "T1.16"]
+          - id: adherencia
+            titol: "Adherència"
+            objectiu: |
+              Determinar l'adherència $\overline{G}$.
+            idea: |
+              Proposar el tancat que s'obté "tancant" la desigualtat estricta i comprovar que els punts afegits són límit de punts de $G$.
+            detall: |
+              $K=\{x^2-y^2\leq1\}\cap\{|z|=1\}$ és tancat (Corol·lari 18(ii) del Tema 2, Proposició 13(ii)) i conté $G$. Si $(x_0,y_0,z_0)\in K$ amb $x_0^2-y_0^2=1$, els punts $((1-\frac1n)x_0,y_0,z_0)$ compleixen $(1-\frac1n)^2x_0^2-y_0^2<x_0^2-y_0^2=1$ (perquè $x_0\neq0$), són de $G$ i hi convergeixen. Per tant $\overline{G}=\{x^2-y^2\leq1,\ |z|=1\}$.
+            fuites: ['x\^\{?2\}?\s*-\s*y\^\{?2\}?\s*(\\leq|\\le|≤)\s*1']
+            teoria: ["T1.16", "T1.19", "T1.13", "T2.18"]
+          - id: frontera
+            titol: "Frontera"
+            objectiu: |
+              Determinar la frontera de $G$.
+            idea: |
+              Combinar el que saps de l'interior i de l'adherència: un punt adherent que no és interior, què és?
+            detall: |
+              Com que $\mathring{G}=\varnothing$, tota bola centrada en un punt de $\overline{G}$ talla $G$ i talla $G^c$; els punts de fora de $\overline{G}$ són exteriors. Per tant $\mathrm{Fr}\,G=\overline{G}=\{x^2-y^2\leq1,\ |z|=1\}$.
+            fuites: ['x\^\{?2\}?\s*-\s*y\^\{?2\}?\s*(\\leq|\\le|≤)\s*1', '(Fr\}?|\\partial)\s*(\\[,;! ])?\s*\(?\s*G\s*\)?\s*=\s*(\\overline|\\bar)']
+            teoria: ["T1.14", "T1.16"]
+          - id: acumulacio
+            titol: "Punts d'acumulació"
+            objectiu: |
+              Determinar el conjunt derivat $G'$.
+            idea: |
+              Dins de cada pla, la regió no té punts aïllats: construir successions de punts de $G$ diferents del límit.
+            detall: |
+              Sigui $p=(x_0,y_0,z_0)\in\overline{G}$. Si $x_0\neq0$, els punts $((1-\frac1n)x_0,y_0,z_0)$ compleixen $(1-\frac1n)^2x_0^2-y_0^2<x_0^2-y_0^2\leq1$, són de $G$, diferents de $p$ i hi convergeixen. Si $x_0=0$, prenem $(\frac1n,y_0,z_0)$, que compleix $\frac1{n^2}-y_0^2<1$ per $n\geq2$. Per la Proposició 19(i), $G'=\overline{G}$.
+            fuites: ['G(''|\^\{?\\prime\}?)\s*=\s*(\\overline|\\bar)']
+            teoria: ["T1.14", "T1.19"]
+          - id: obert_tancat
+            titol: "Obert o tancat"
+            objectiu: |
+              Classificar $G$: obert, tancat, totes dues coses o cap.
+            idea: |
+              Comparar $G$ amb el seu interior i amb la seva adherència.
+            detall: |
+              $\mathring{G}=\varnothing\neq G$: no és obert. $(1,0,1)\in\overline{G}\setminus G$: no és tancat. No és ni obert ni tancat.
+            fuites: ['ni\s+(obert|tancat)\s+ni\s+(obert|tancat)', '\(\s*1\s*,\s*0\s*,\s*1\s*\)\s*\\in\s*(\\overline|\\bar)']
+            teoria: ["T1.11", "T1.17"]
+        errors_comuns:
+          - id: desigualtat_estricta_obert
+            descripcio: |
+              Conclou que $G$ és obert perquè està definit amb una desigualtat estricta, ignorant la condició $|z|=1$.
+            pregunta: |
+              Totes les condicions que defineixen $G$ són desigualtats estrictes? Què hi aporta la condició sobre $z$?
+          - id: no_simplifica
+            descripcio: |
+              No substitueix $z^2=1$ i intenta treballar amb una quàdrica de $\mathbb{R}^3$, o confon la regió amb el seu complementari ($x^2-y^2>1$).
+            pregunta: |
+              Si saps que $|z|=1$, quant val $z^2$? Quina desigualtat en queda per a $x$ i $y$? El punt $(0,0,1)$ hi és?
+          - id: tancat_per_igualtat
+            descripcio: |
+              Conclou que $G$ és tancat perquè conté una igualtat ($|z|=1$).
+            pregunta: |
+              Un punt de la hipèrbola dins del pla $z=1$, és de $G$? És límit de punts de $G$?
+        nota_professor: |
+          Cal no confondre "obert/tancat a $\mathbb{R}^3$" amb "obert/tancat relatiu al pla": dins de cada pla $z=\pm1$, la regió $x^2-y^2<1$ seria oberta, però a $\mathbb{R}^3$ té interior buit.

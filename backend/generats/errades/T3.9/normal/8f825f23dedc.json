@@ -1,0 +1,62 @@
+{
+  "id": "8f825f23dedc",
+  "exercici": "T3.9",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $f:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}^m$, $f=(f_1,f_2,\\ldots,f_m)$, diferenciable en $a\\in\\mathring{\\Omega}$. Llavors: (i) existeixen totes les derivades direccionals de $f$ al punt $a$ i, a més, $D_uf(a)=Df(a)\\,\\frac{u}{\\|u\\|}$ per a tot $u\\neq0$.",
+    "(ii) La diferencial $Df(a)$ és única i, fixades les bases canòniques a $\\mathbb{R}^n$ i $\\mathbb{R}^m$, té per matriu la jacobiana $Jf(a)=\\left(\\frac{\\partial f_i}{\\partial x_j}(a)\\right)_{i,j}$, amb $1\\leq i\\leq m$ i $1\\leq j\\leq n$.",
+    "(iii) Per a $m=1$, l'hiperplà tangent al graf de $f$, $x_{n+1}=f(x)$, en el punt $(a,f(a))$ és $x_{n+1}=f(a)+Jf(a)(x-a)$. En particular, per a $n=2$, el pla tangent a $z=f(x,y)$ en el punt $(a_1,a_2,f(a_1,a_2))$ és $z=f(a)+\\frac{\\partial f}{\\partial x}(a)\\,(x-a_1)+\\frac{\\partial f}{\\partial y}(a)\\,(y-a_2)$, i en aquest cas $D_uf(a)=Df(a)\\,u=\\langle\\nabla f(a),u\\rangle$ per a tot $u\\neq0$.",
+    "(i) Que $f$ sigui diferenciable en $a$ equival a $\\lim_{x\\to a}\\frac{\\|f(x)-f(a)-Df(a)(x-a)\\|}{\\|x-a\\|}=0$. En particular, aquest límit és zero sigui quin sigui el camí pel qual $x$ tendeix a $a$; prenem la recta $x=a+tu$, $t\\in\\mathbb{R}$, amb $u\\neq0$ fixat.",
+    "Com que $Df(a)$ és lineal, $Df(a)(tu)=t\\,Df(a)u$, i per tant $0=\\lim_{t\\to0}\\frac{\\|f(a+tu)-f(a)-t\\,Df(a)u\\|}{\\|tu\\|}=\\frac{1}{\\|u\\|}\\lim_{t\\to0}\\left\\|\\frac{f(a+tu)-f(a)}{t}-Df(a)u\\right\\|$. És a dir, $D_uf(a)=\\lim_{t\\to0}\\frac{f(a+tu)-f(a)}{t}=Df(a)u$.",
+    "(ii) Com que $Df(a)$ és lineal, fixades les bases canòniques la seva matriu $M$ és única. Pel punt (i), el vector $Me_j=D_{e_j}f(a)=\\frac{\\partial f}{\\partial x_j}(a)=\\left(\\frac{\\partial f_1}{\\partial x_j}(a),\\ldots,\\frac{\\partial f_m}{\\partial x_j}(a)\\right)^\\top$ és necessàriament la fila $j$-èsima de $M$, per a $1\\leq j\\leq n$, i per tant $M=Jf(a)$.",
+    "(iii) L'hiperplà tangent al graf en $(a,f(a))$ és l'hiperplà de $\\mathbb{R}^{n+1}$ que passa per $(a,f(a))$ i està generat pels vectors $\\left(e_j,\\frac{\\partial f}{\\partial x_j}(a)\\right)$, $j=1,\\ldots,n$. Si $u=\\lambda_1e_1+\\cdots+\\lambda_ne_n\\neq0$, per (i) i (ii) tenim $(u,D_uf(a))=(u,Jf(a)u)=\\sum_{i=1}^n\\lambda_i\\left(e_i,\\frac{\\partial f}{\\partial x_i}(a)\\right)$, de manera que $(u,D_uf(a))$ és combinació dels generadors.",
+    "Per tant, els punts de l'hiperplà tangent són $(x,x_{n+1})=(a,f(a))+\\sum_{i=1}^n\\lambda_i\\left(e_i,\\frac{\\partial f}{\\partial x_i}(a)\\right)$, d'on $x_i-a_i=\\lambda_i$ per a $i=1,\\ldots,n$ i $x_{n+1}=f(a)+\\sum_{i=1}^n\\frac{\\partial f}{\\partial x_i}(a)\\,(x_i-a_i)=f(a)+Jf(a)(x-a)$.",
+    "Per a $n=2$ això dona el pla $z=f(a_1,a_2)+\\frac{\\partial f}{\\partial x}(a_1,a_2)\\,(x-a_1)+\\frac{\\partial f}{\\partial y}(a_1,a_2)\\,(y-a_2)$; i, com que per a $m=1$ la jacobiana $Jf(a)$ s'identifica amb el gradient $\\nabla f(a)$, de (i) resulta $D_uf(a)=Df(a)\\,u=\\langle\\nabla f(a),u\\rangle$."
+  ],
+  "n_enunciat": 3,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "$D_uf(a)=Df(a)\\,\\frac{u}{\\|u\\|}$",
+      "inici": 208,
+      "fi": 240,
+      "tipus": "definicio",
+      "explicacio": "La derivada direccional es defineix amb el vector $u$ sense normalitzar, de manera que $D_{\\lambda u}f(a)=\\lambda D_uf(a)$; la fórmula correcta és $D_uf(a)=Df(a)\\,u$. Contraexemple: $f(x)=x$, $u=2$: $D_uf(0)=2$, però $Df(0)\\frac{u}{|u|}=1$.",
+      "correccio": "(i) Existeixen totes les derivades direccionals de $f$ en $a$ i $D_uf(a)=Df(a)\\,u$ per a tot $u\\neq0$.",
+      "pista": "Què passa amb $D_uf(a)$ si substitueixes $u$ per $2u$ a la definició? I amb l'expressió de la dreta?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "és necessàriament la fila $j$-èsima de $M$",
+      "inici": 267,
+      "fi": 309,
+      "tipus": "calcul",
+      "explicacio": "Per a qualsevol matriu, $Me_j$ és la columna $j$-èsima, no la fila (a més, $M$ té $m$ files i $n$ columnes, i $j$ va d'1 a $n$).",
+      "correccio": "$Me_j=\\frac{\\partial f}{\\partial x_j}(a)$ proporciona la columna $j$-èsima de $M$, i per tant $M=Jf(a)$.",
+      "pista": "Quan multipliques una matriu per $e_j$, quina part de la matriu obtens?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t3.json",
+    "valoracio": "Dos errors: la fórmula de (i) amb $u/\\|u\\|$ i 'fila' en lloc de 'columna' a (ii); la resta coincideix amb els apunts.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "$D_uf(a)=Df(a)\\,\\frac{u}{\\|u\\|}$",
+        "gravetat": "error",
+        "explicacio": "Als apunts $D_uf(a)=Df(a)\\,u$ per a tot $u\\neq0$ (la derivada direccional no normalitza $u$); el factor $1/\\|u\\|$ fa l'enunciat fals i contradiu el que la demostració [5] prova."
+      },
+      {
+        "fragment": 6,
+        "cita": "és necessàriament la fila $j$-èsima de $M$",
+        "gravetat": "error",
+        "explicacio": "$Me_j$ és la columna $j$-èsima de $M$, no la fila; amb files s'obtindria la transposada de $Jf(a)$ (i les dimensions no quadren si $m\\neq n$)."
+      }
+    ]
+  },
+  "creat": 1791296233.7373686
+}

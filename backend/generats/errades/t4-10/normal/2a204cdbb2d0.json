@@ -1,0 +1,60 @@
+{
+  "id": "2a204cdbb2d0",
+  "exercici": "t4-10",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Mirem primer les vores de $T$. Costat $u=0$, $0<v<2$: $G(0,v)=(v,v)$, el segment de la recta $y=x$ amb $0<x<2$. Costat $v=0$, $0<u<2$: $G(u,0)=(u,-u^2)$, l'arc de la paràbola $y=-x^2$ amb $0<x<2$.",
+    "Costat $u+v=2$, $0<u<2$: $x=u+v=2$ i $y=v-u^2=2-u-u^2$, que per a $0<u<2$ recorre l'interval $(-2,2)$; és un segment vertical sobre la recta $x=2$. La candidata a $S$ és la regió limitada per aquestes tres corbes.",
+    "Resolem $G(u,v)=(x,y)$: de $u+v=x$ i $v-u^2=y$ surt $v=x-u$ i $u^2+u=x-y$. Com que volem $u>0$, cal $x-y=u^2+u>0$, i prenem l'arrel positiva $u=\\dfrac{-1+\\sqrt{1+4(x-y)}}{2}$.",
+    "La condició $v>0$ és $u<x$; com que $t\\mapsto t^2+t$ és creixent per a $t>0$, equival a $x-y<x^2+x$, és a dir $y>-x^2$. La condició $u+v<2$ és $x<2$, i $x=u+v>0$. Recíprocament, si $0<x<2$ i $-x^2<y<x$, la $u$ anterior dona el punt $(u,x-u)\\in T$. Per tant $S=G(T)=\\{(x,y)\\mid 0<x<2,\\ -x^2<y<x\\}$.",
+    "La jacobiana és $JG(u,v)=\\begin{pmatrix}1&1\\\\ -2u&1\\end{pmatrix}$, amb $\\det JG(u,v)=1+2u>0$ per a $u>0$, i en particular a tot $T$.",
+    "Com que $T$ és obert, $G$ és polinòmica (de classe $\\mathcal{C}^\\infty$) i $\\det JG\\neq0$ a tot $T$, el teorema de la funció inversa assegura que $G$ és injectiva a $T$, que $S=G(T)$ és obert i que la inversa $G^{-1}:S\\to T$ és de classe $\\mathcal{C}^\\infty$.",
+    "Per tant $G:T\\to S$ és un difeomorfisme de classe $\\mathcal{C}^\\infty$, amb $S=\\{(x,y)\\mid 0<x<2,\\ -x^2<y<x\\}$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "recorre l'interval $(-2,2)$",
+      "inici": 74,
+      "fi": 101,
+      "tipus": "calcul",
+      "explicacio": "Per a $0<u<2$, $2-u-u^2$ és decreixent i va de $2$ (quan $u\\to0$) a $2-2-4=-4$ (quan $u\\to2$): l'interval és $(-4,2)$.",
+      "correccio": "$y=2-u-u^2$ recorre $(-4,2)$: el segment vertical va de $(2,2)$ a $(2,-4)$, coherent amb la paràbola $y=-x^2$ en $x=2$.",
+      "pista": "Quant val $2-u-u^2$ quan $u$ s'acosta a $2$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "el teorema de la funció inversa assegura que $G$ és injectiva a $T$",
+      "inici": 101,
+      "fi": 168,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "El teorema de la funció inversa només dona injectivitat local (en un entorn de cada punt), no a tot $T$. La injectivitat global s'ha de provar a part.",
+      "correccio": "La injectivitat surt de la resolució: per a cada $(x,y)\\in S$ l'equació $u^2+u=x-y$ té una única arrel positiva, i $v=x-u$; per tant $G:T\\to S$ és bijectiva. Llavors el TFI a cada punt dona que $S$ és obert i $G^{-1}$ és $\\mathcal{C}^\\infty$.",
+      "pista": "El teorema de la funció inversa dona informació local o global? Com es pot veure que dos punts diferents de $T$ no tenen la mateixa imatge?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t34.json",
+    "valoracio": "Recinte $S$ i jacobià correctes, però la imatge del costat $u+v=2$ té l'interval equivocat i la injectivitat global s'atribueix erròniament al TFI.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "recorre l'interval $(-2,2)$",
+        "gravetat": "error",
+        "explicacio": "Per a $0<u<2$, $y=2-u-u^2$ recorre $(-4,2)$ (quan $u\\to2$ tendeix a $-4$)."
+      },
+      {
+        "fragment": 6,
+        "cita": "el teorema de la funció inversa assegura que $G$ és injectiva a $T$",
+        "gravetat": "error",
+        "explicacio": "El TFI només dona injectivitat local; la injectivitat a tot $T$ ve de la unicitat de l'antiimatge provada al fragment 4, no del TFI."
+      }
+    ]
+  },
+  "creat": 1791295851.9422512
+}

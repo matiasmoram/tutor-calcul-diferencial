@@ -1,0 +1,42 @@
+{
+  "id": "97086aab5e82",
+  "exercici": "t2-15a",
+  "font": "problema",
+  "dificultat": "facil",
+  "fragments": [
+    "Pel teorema de Heine-Borel, un subconjunt de $\\mathbb{R}^4$ és compacte si i només si és tancat i fitat. Comprovem les dues coses.",
+    "Tancat: les funcions $2x^2+y^2-z^2$, $y^2+2z^2$, $|z|$ i $|t|$ són contínues a $\\mathbb{R}^4$. La igualtat equival a les dues desigualtats $2x^2+y^2-z^2\\geq2$ i $2x^2+y^2-z^2\\leq2$, i els conjunts $\\{2x^2+y^2-z^2\\geq2\\}$, $\\{2x^2+y^2-z^2\\leq2\\}$, $\\{y^2+2z^2\\leq10\\}$ i $\\{|z|\\geq|t|\\}$ són tancats perquè vénen de desigualtats no estrictes entre funcions contínues. $A$ n'és la intersecció, i per tant és tancat.",
+    "Fitat: de $y^2+2z^2\\leq10$ obtenim $y^2\\leq10$ i $2z^2\\leq10$, és a dir, $z^2\\leq5$.",
+    "De $|t|\\leq|z|$ obtenim $t^2\\leq z^2\\leq5$.",
+    "De la igualtat, $2x^2=2+y^2-z^2\\leq2+10=12$, és a dir, $x^2\\leq6$.",
+    "Per tant les quatre coordenades estan fitades, $A$ està contingut en una bola centrada a l'origen i és fitat. Com que és tancat i fitat, per Heine-Borel $A$ és compacte."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 5,
+      "cita": "igualtat, $2x^2=2+y^2-z^2\\leq2+10=12$",
+      "inici": 6,
+      "fi": 43,
+      "tipus": "calcul",
+      "explicacio": "En aïllar $2x^2$ de $2x^2+y^2-z^2=2$ s'han girat els signes: $2x^2=2-y^2+z^2$. La fita correcta és $2x^2\\leq2+5=7$ (la conclusió que $x$ és fitada es manté).",
+      "correccio": "$2x^2=2-y^2+z^2\\leq2+z^2\\leq2+5=7$, és a dir, $x^2\\leq\\frac72$.",
+      "pista": "Si passes $y^2-z^2$ a l'altre costat de la igualtat, quins signes han de tenir?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t12.json",
+    "valoracio": "Correcte excepte l'aïllament de 2x^2 a partir de la igualtat, amb els signes canviats.",
+    "problemes": [
+      {
+        "fragment": 5,
+        "cita": "$2x^2=2+y^2-z^2\\leq2+10=12$",
+        "gravetat": "error",
+        "explicacio": "Error de signe: de $2x^2+y^2-z^2=2$ surt $2x^2=2-y^2+z^2\\le2+5=7$, és a dir $x^2\\le\\frac72$. (La conclusió que $x$ és fitada continua sent certa.)"
+      }
+    ]
+  },
+  "creat": 1791295812.8983457
+}

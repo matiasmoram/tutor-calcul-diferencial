@@ -1,0 +1,412 @@
+{
+ "exercici": "t2-5d",
+ "tema": 2,
+ "persona": "error:rectes_com_a_prova",
+ "arquetip": "error",
+ "persona_descripcio": "Ets un alumne que creu sincerament el següent; és la teva manera de pensar i no saps que és un error:\n«Creu que si totes les rectes donessin el mateix, el límit existiria.»\nTreballes l'exercici mostrant el raonament i, quan arribes al punt on importa, cometes aquest error amb convicció. Si el tutor et qüestiona, al principi defenses el teu raonament; només el canvies si les preguntes del tutor et fan veure clarament el problema. Després continues intentant resoldre l'exercici.",
+ "final": "tancar",
+ "torns": [
+  {
+   "n": 1,
+   "alumne": "Per la recta $y=mx$ amb $m$ fix, si $x\\neq0$ tenim $f(x,mx)=\\dfrac{x}{x+m^2x^2}=\\dfrac{1}{1+m^2x}\\to1$ quan $x\\to0$, i el punt $x=0$ correspon a $(0,0)$ on $f=0$ però és aïllat en la recta; així la restricció a qualsevol recta tendeix a $1$. Com que totes les rectes donen el mateix límit $1$, el límit $\\lim_{(x,y)\\to(0,0)}f(x,y)$ existeix i val $1$.",
+   "tutor": "Has considerat totes les rectes que passen per l’origen? N’hi ha alguna que no sigui de la forma $y=mx$?",
+   "accio": "questionar_error",
+   "pas_objectiu": "recta_vertical",
+   "nivell": 0,
+   "intencio": "proposa_resultat",
+   "errors_detectats": [
+    "nomes_y_mx",
+    "rectes_com_a_prova"
+   ],
+   "fallback": false,
+   "drafts": 1,
+   "rebuigs": [],
+   "progres": true,
+   "completats": [
+    "rectes_no_verticals"
+   ],
+   "trace": {
+    "torn": 1,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "\"Per la recta $y=mx$... tendeix a $1$\" i \"Com que totes les rectes donen el mateix límit $1$, el límit ... existeix i val $1$\"",
+     "resum_alumne": "Ha calculat correctament el límit sobre les rectes no verticals $y=mx$, però ha obviat la recta vertical i ha conclòs erròniament que això prova l'existència del límit a l'origen.",
+     "estat_passos": [
+      {
+       "pas": "rectes_no_verticals",
+       "estat": "completat"
+      },
+      {
+       "pas": "recta_vertical",
+       "estat": "no_iniciat"
+      },
+      {
+       "pas": "concloure",
+       "estat": "erroni"
+      }
+     ],
+     "pas_actual": "recta_vertical",
+     "errors_detectats": [
+      "nomes_y_mx",
+      "rectes_com_a_prova"
+     ],
+     "error_altre": "",
+     "resultat_proposat": "incorrecte",
+     "resultat_justificat": false,
+     "nivell_desorientacio": "encallat",
+     "intencio": "proposa_resultat",
+     "teoria_pregunta": []
+    },
+    "pla": {
+     "accio": "questionar_error",
+     "motiu": "Error detectat: nomes_y_mx.",
+     "pas_objectiu": "recta_vertical",
+     "nivell_pista": 0,
+     "error_objectiu": "nomes_y_mx",
+     "error_text": "Només considera $y=mx$, obté sempre $1$ i conclou que el límit és $1$.\n",
+     "pregunta_suggerida": "Has considerat totes les rectes que passen per l'origen? N'hi ha alguna que no sigui de la forma $y=mx$?\n",
+     "pot_dir_resultat": false,
+     "resultat_dit_per_alumne": false,
+     "requereix_pregunta": true,
+     "max_frases": 4,
+     "regex_prohibides": [
+      "l[íi]mit(\\s+(a|en)\\s+\\$?\\(0,\\s*0\\)\\$?|\\s+global|\\s+de\\s+\\$?f\\$?)?\\s+no\\s+existeix",
+      "no\\s+existeix\\s+(el\\s+)?l[íi]mit",
+      "\\$?f\\$?\\s+no\\s+t[ée]\\s+l[íi]mit",
+      "\\\\d?frac\\{a\\}\\{a\\s*\\+\\s*1\\}",
+      "f\\(0,\\s*y\\)\\s*=\\s*\\\\frac\\{0\\}"
+     ],
+     "teoria_extra": [],
+     "to": "normal",
+     "moviment": "Probing"
+    },
+    "contingut_permes": "Passos que l'alumne JA té resolts (pots referir-t'hi):\n  - Rectes no verticals: Sobre $y=mx$, $x+m^2x^2=0$ només per $x=0$ o $x=-1/m^2$, de manera que a prop de l'origen $f(x,mx)=\\frac{x}{x+m^2x^2}=\\frac{1}{1+m^2x}\\to1$.\n\nPAS OBJECTIU: Recta vertical\nERROR DE L'ALUMNE (no l'anomenis directament): Només considera $y=mx$, obté sempre $1$ i conclou que el límit és $1$.\n\nPregunta socràtica suggerida (pots adaptar-la): Has considerat totes les rectes que passen per l'origen? N'hi ha alguna que no sigui de la forma $y=mx$?\n",
+    "teoria_permesa": [
+     "T2.6"
+    ],
+    "intents": [
+     {
+      "missatge": "Has considerat totes les rectes que passen per l’origen? N’hi ha alguna que no sigui de la forma $y=mx$?",
+      "referencies": [],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "Fa una pregunta socràtica en català que respon a l’error de l’alumne i no revela ni avança la solució."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [],
+     "nivell_per_pas": {},
+     "torns": 0,
+     "tancat": false,
+     "ultim_pas": null,
+     "ultima_accio": null,
+     "estats": {},
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {},
+     "resultat_confirmat": false,
+     "intents_alumne": 0
+    },
+    "estat": {
+     "completats": [
+      "rectes_no_verticals"
+     ],
+     "nivell_per_pas": {
+      "recta_vertical": 0
+     },
+     "torns": 1,
+     "tancat": false,
+     "ultim_pas": "recta_vertical",
+     "ultima_accio": "questionar_error",
+     "estats": {
+      "rectes_no_verticals": "completat",
+      "recta_vertical": "no_iniciat",
+      "concloure": "erroni"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "nomes_y_mx": 1
+     },
+     "repeticions": {
+      "recta_vertical": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 1
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 3410,
+      "input_tokens": 4769,
+      "output_tokens": 386,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1009,
+      "input_tokens": 1913,
+      "output_tokens": 53,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1377,
+      "input_tokens": 3645,
+      "output_tokens": 107,
+      "cached_tokens": 0,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 5799
+   },
+   "jutge": {
+    "revela_resultat_final": false,
+    "passos_revelats": [],
+    "explicacio": "",
+    "permesos": [
+     "rectes_no_verticals"
+    ],
+    "resultat_permes": false,
+    "fuga": false,
+    "fuga_resultat": false,
+    "passos_filtrats": []
+   }
+  },
+  {
+   "n": 2,
+   "alumne": "Tens raó, no havia considerat la recta vertical $x=0$; si $x=0$ i $y\\neq0$ tenim $f(0,y)=\\dfrac{0}{0+y^2}=0$, així la restricció a $x=0$ tendeix a $0\\neq1$, per tant el límit no existeix.",
+   "tutor": "Molt bé, ara ho has tancat correctament. La idea clau és comparar dues restriccions que passen per l’origen: sobre $y=mx$ el límit val $1$, mentre que sobre la recta vertical $x=0$ val $0$. Com que dues camins donen valors diferents, pel criteri de límit per camins de la Proposició 10 del Tema 2 el límit $\\lim_{(x,y)\\to(0,0)}f(x,y)$ no existeix.",
+   "accio": "tancar",
+   "pas_objectiu": null,
+   "nivell": 0,
+   "intencio": "proposa_resultat",
+   "errors_detectats": [],
+   "fallback": false,
+   "drafts": 1,
+   "rebuigs": [],
+   "progres": true,
+   "completats": [
+    "rectes_no_verticals",
+    "recta_vertical",
+    "concloure"
+   ],
+   "trace": {
+    "torn": 2,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "\"si x=0 i y\\neq0 tenim f(0,y)=\\dfrac{0}{0+y^2}=0, així la restricció a x=0 tendeix a 0\\neq1, per tant el límit no existeix\"",
+     "resum_alumne": "Ha corregit l’error inicial, ha calculat la restricció a la recta vertical x=0 i ha conclòs que el límit a l’origen no existeix.",
+     "estat_passos": [
+      {
+       "pas": "rectes_no_verticals",
+       "estat": "completat"
+      },
+      {
+       "pas": "recta_vertical",
+       "estat": "completat"
+      },
+      {
+       "pas": "concloure",
+       "estat": "completat"
+      }
+     ],
+     "pas_actual": "cap",
+     "errors_detectats": [],
+     "error_altre": "",
+     "resultat_proposat": "correcte",
+     "resultat_justificat": true,
+     "nivell_desorientacio": "en_cami",
+     "intencio": "proposa_resultat",
+     "teoria_pregunta": []
+    },
+    "pla": {
+     "accio": "tancar",
+     "motiu": "Resultat correcte i justificat.",
+     "pas_objectiu": null,
+     "nivell_pista": 0,
+     "error_objectiu": null,
+     "error_text": null,
+     "pregunta_suggerida": null,
+     "pot_dir_resultat": true,
+     "resultat_dit_per_alumne": false,
+     "requereix_pregunta": false,
+     "max_frases": 4,
+     "regex_prohibides": [],
+     "teoria_extra": [],
+     "to": "normal",
+     "moviment": "Generic"
+    },
+    "contingut_permes": "Passos que l'alumne JA té resolts (pots referir-t'hi):\n  - Rectes no verticals: Sobre $y=mx$, $x+m^2x^2=0$ només per $x=0$ o $x=-1/m^2$, de manera que a prop de l'origen $f(x,mx)=\\frac{x}{x+m^2x^2}=\\frac{1}{1+m^2x}\\to1$.\n\n  - Recta vertical: Per $y\\neq0$, $0\\neq-y^2$, així que $f(0,y)=\\frac{0}{y^2}=0$: límit $0$.\n\n  - Concloure sobre el límit: La recta $y=0$ dona $1$ i la recta $x=0$ dona $0$; per la proposició de límit per camins (aplicada a $y=g(x)=0$, i a la recta $x=0$ amb els papers de $x$ i $y$ intercanviats), el límit a $(0,0)$ no existeix. (També ho mostren les paràboles $x=ay^2$, que donen $\\frac{a}{a+1}$.)\n\nRESULTAT: Sobre les rectes $y=mx$ ($m\\in\\mathbb{R}$, inclòs l'eix $y=0$) el límit és $1$; sobre la recta $x=0$ el límit és $0$. Com que les restriccions donen valors diferents, el límit $\\lim_{(x,y)\\to(0,0)}f(x,y)$ no existeix.\n",
+    "teoria_permesa": [
+     "T2.6",
+     "T2.10"
+    ],
+    "intents": [
+     {
+      "missatge": "Molt bé, ara ho has tancat correctament. La idea clau és comparar dues restriccions que passen per l’origen: sobre $y=mx$ el límit val $1$, mentre que sobre la recta vertical $x=0$ val $0$. Com que dues camins donen valors diferents, pel criteri de límit per camins de la Proposició 10 del Tema 2 el límit $\\lim_{(x,y)\\to(0,0)}f(x,y)$ no existeix.",
+      "referencies": [
+       "T2.10"
+      ],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "El missatge tanca correctament, confirma el resultat i destaca la idea clau amb el criteri de camins sense avançar cap pas futur."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [
+      "rectes_no_verticals"
+     ],
+     "nivell_per_pas": {
+      "recta_vertical": 0
+     },
+     "torns": 1,
+     "tancat": false,
+     "ultim_pas": "recta_vertical",
+     "ultima_accio": "questionar_error",
+     "estats": {
+      "rectes_no_verticals": "completat",
+      "recta_vertical": "no_iniciat",
+      "concloure": "erroni"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "nomes_y_mx": 1
+     },
+     "repeticions": {
+      "recta_vertical": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 1
+    },
+    "estat": {
+     "completats": [
+      "rectes_no_verticals",
+      "recta_vertical",
+      "concloure"
+     ],
+     "nivell_per_pas": {
+      "recta_vertical": 0
+     },
+     "torns": 2,
+     "tancat": true,
+     "ultim_pas": "recta_vertical",
+     "ultima_accio": "tancar",
+     "estats": {
+      "rectes_no_verticals": "completat",
+      "recta_vertical": "completat",
+      "concloure": "completat"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "nomes_y_mx": 1
+     },
+     "repeticions": {
+      "recta_vertical": 1
+     },
+     "resultat_confirmat": true,
+     "intents_alumne": 2
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2275,
+      "input_tokens": 4896,
+      "output_tokens": 266,
+      "cached_tokens": 4352,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1524,
+      "input_tokens": 2309,
+      "output_tokens": 150,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2484,
+      "input_tokens": 4128,
+      "output_tokens": 296,
+      "cached_tokens": 2304,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 6285
+   }
+  }
+ ],
+ "crides_alumne": [
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 4360,
+   "input_tokens": 602,
+   "output_tokens": 354,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 5110,
+   "input_tokens": 781,
+   "output_tokens": 410,
+   "cached_tokens": 0,
+   "extra": {}
+  }
+ ],
+ "crides_jutge": [
+  {
+   "stage": "jutge",
+   "model": "gpt-5.4-mini",
+   "latency_ms": 978,
+   "input_tokens": 1161,
+   "output_tokens": 62,
+   "cached_tokens": 0,
+   "extra": {}
+  }
+ ],
+ "durada_s": 22.5,
+ "metriques": {
+  "torns": 2,
+  "torns_error": 0,
+  "completat": true,
+  "torns_fins_tancar": 2,
+  "final": "tancar",
+  "loops": [],
+  "fallbacks": 0,
+  "drafts": 2,
+  "rebuigs": {},
+  "preguntes_conceptuals": 0,
+  "preguntes_ignorades": 0,
+  "torns_jutjats": 1,
+  "fuites": [],
+  "fuites_resultat": [],
+  "accions": {
+   "questionar_error": 1,
+   "tancar": 1
+  },
+  "cost_tutor_usd": 0.01741,
+  "cost_simulacio_usd": 0.00302,
+  "models_sense_preu": []
+ },
+ "config": "default",
+ "_fitxer": "default__t2-5d__error-rectes_com_a_prova.json"
+}

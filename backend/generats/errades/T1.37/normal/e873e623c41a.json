@@ -1,0 +1,64 @@
+{
+  "id": "e873e623c41a",
+  "exercici": "T1.37",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $(M,d)$ un espai mètric i sigui $A\\subseteq M$ un conjunt connex. Si $A$ és obert i tancat a la vegada, aleshores, o bé $A=M$, o bé $A=\\varnothing$.",
+    "Suposem que $A$ és obert i tancat. Com que $A$ és obert, el seu complementari $A^c=M\\setminus A$ també és obert.",
+    "Així, $A$ i $A^c$ són dos oberts disjunts tals que $M=A\\cup A^c$.",
+    "Si tots dos fossin no buits, prenent $U=A$ i $V=A^c$ a la definició de conjunt disconnex, $M$ seria disconnex, en contradicció amb la hipòtesi que $M$ és connex.",
+    "Per tant, un dels dos oberts és buit: o bé $A=\\varnothing$, o bé $A^c=\\varnothing$, que equival a $A=M$."
+  ],
+  "n_enunciat": 1,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "sigui $A\\subseteq M$ un conjunt connex",
+      "inici": 32,
+      "fi": 70,
+      "tipus": "hipotesi",
+      "explicacio": "La hipòtesi ha de ser que $M$ és connex, no $A$: a $M=[0,1]\\cup[3,4]$, $A=[0,1]$ és connex, obert i tancat a $M$, però no és ni $M$ ni $\\varnothing$.",
+      "correccio": "Sigui $(M,d)$ un espai mètric connex i sigui $A\\subseteq M$.",
+      "pista": "De quin conjunt cal saber que és connex perquè la demostració funcioni?"
+    },
+    {
+      "id": "e2",
+      "fragment": 2,
+      "cita": "Com que $A$ és obert, el seu complementari $A^c=M\\setminus A$ també és obert",
+      "inici": 35,
+      "fi": 111,
+      "tipus": "pas_injustificat",
+      "explicacio": "El complementari d'un obert no és obert en general; que $A^c$ sigui obert s'ha de deduir de que $A$ és tancat (per definició de tancat).",
+      "correccio": "Com que $A$ és tancat, el seu complementari $A^c=M\\setminus A$ és obert.",
+      "pista": "Quina de les dues propietats d'$A$ dona, per definició, que $A^c$ és obert?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t1a.json",
+    "valoracio": "Hipòtesi de connexió posada sobre $A$ en lloc de $M$ i justificació errònia de que $A^c$ és obert.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "sigui $A\\subseteq M$ un conjunt connex",
+        "gravetat": "error",
+        "explicacio": "Hipòtesi canviada: cal que $M$ sigui connex, no $A$. Amb $M=[0,1]\\cup[2,3]$ i $A=[0,1]$ (connex, obert i tancat a $M$) l'enunciat és fals."
+      },
+      {
+        "fragment": 2,
+        "cita": "Com que $A$ és obert, el seu complementari $A^c=M\\setminus A$ també és obert.",
+        "gravetat": "error",
+        "explicacio": "Justificació incorrecta: el complementari d'un obert és tancat; $A^c$ és obert perquè $A$ és tancat."
+      },
+      {
+        "fragment": 4,
+        "cita": "en contradicció amb la hipòtesi que $M$ és connex",
+        "gravetat": "consequencia",
+        "explicacio": "Argument dels apunts, però invoca la connexió de $M$, hipòtesi que l'enunciat erroni ha substituït per la connexió de $A$."
+      }
+    ]
+  },
+  "creat": 1791295858.0318387
+}

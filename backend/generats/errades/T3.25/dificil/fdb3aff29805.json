@@ -1,0 +1,78 @@
+{
+  "id": "fdb3aff29805",
+  "exercici": "T3.25",
+  "font": "teoria",
+  "dificultat": "dificil",
+  "fragments": [
+    "(Teorema del valor mitjà). Sigui $f:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}^m$ diferenciable en un obert $\\Omega\\subseteq\\mathbb{R}^n$ i sigui $u\\in\\mathbb{R}^m$.",
+    "Aleshores, per a tots $a,b\\in\\Omega$ existeix $\\xi\\in(a,b)$ tal que $\\langle u,f(b)-f(a)\\rangle=\\langle u,Jf(\\xi)\\,(b-a)\\rangle$.",
+    "Siguin $a,b\\in\\Omega$ amb $[a,b]\\subseteq\\Omega$. Considerem les funcions $h:[0,1]\\to\\Omega$, $h(t)=(1-t)a+tb$, i $g_u:\\mathbb{R}^m\\to\\mathbb{R}$, $g_u(y)=\\langle u,y\\rangle$.",
+    "La funció $\\varphi=g_u\\circ f\\circ h$, $\\varphi(t)=\\langle u,f((1-t)a+tb)\\rangle$, és derivable a $[0,1]$ per composició de $h$ i $g_u$, que són diferenciables, amb $f$, que és contínua; en particular, és contínua a $[0,1]$ i derivable a $(0,1)$.",
+    "Pel teorema del valor mitjà clàssic, existeix $\\eta\\in(0,1)$ tal que $\\langle u,f(b)-f(a)\\rangle=\\varphi(1)-\\varphi(0)=\\varphi'(\\eta)\\,(1-0)$.",
+    "Per la regla de la cadena, $\\varphi'(t)=Jh(t)\\cdot Jf(h(t))\\cdot\\nabla g_u(f(h(t)))$, on $\\nabla g_u(y)=(u_1\\ \\cdots\\ u_m)$ per a tot $y$ i $Jh(t)=b-a$, vist com a vector columna.",
+    "Per tant, $\\varphi'(\\eta)=(u_1\\ \\cdots\\ u_m)\\,Jf(h(\\eta))\\,(b-a)=\\langle u,Jf(h(\\eta))\\,(b-a)\\rangle$.",
+    "Prenent $\\xi=h(\\eta)$, que pertany a $(a,b)$ perquè $\\eta\\in(0,1)$, obtenim $\\langle u,f(b)-f(a)\\rangle=\\langle u,Jf(\\xi)\\,(b-a)\\rangle$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "per a tots $a,b\\in\\Omega$ existeix",
+      "inici": 11,
+      "fi": 45,
+      "tipus": "hipotesi",
+      "explicacio": "Falta la hipòtesi $[a,b]\\subseteq\\Omega$: si el segment surt de $\\Omega$, $Jf(\\xi)$ pot no estar definit i la igualtat falla. Contraexemple: $\\Omega=\\mathbb{R}^2$ menys el semieix $\\{(x,0)\\mid x\\leq0\\}$, $f$ l'angle polar a $(-\\pi,\\pi)$, $u=1$, $a=(-1,1)$, $b=(-1,-1)$: $f(b)-f(a)=-\\frac{3\\pi}{2}$, però $\\langle\\nabla f(\\xi),b-a\\rangle=\\frac{2}{1+\\xi_2^2}>0$.",
+      "correccio": "Per a tots $a,b\\in\\Omega$ tals que $[a,b]\\subseteq\\Omega$ existeix $\\xi\\in(a,b)$ tal que ...",
+      "pista": "Què passa si el segment que uneix $a$ i $b$ no està contingut a $\\Omega$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "amb $f$, que és contínua",
+      "inici": 161,
+      "fi": 185,
+      "tipus": "pas_injustificat",
+      "explicacio": "La continuïtat de $f$ no basta perquè la composició sigui derivable; cal (i es té) que $f$ sigui diferenciable a $\\Omega$, que és el que permet aplicar la regla de la cadena.",
+      "correccio": "$\\varphi$ és derivable per composició de funcions diferenciables: $h$, $f$ (diferenciable a l'obert $\\Omega$) i $g_u$.",
+      "pista": "Si $f$ només fos contínua, seria derivable $\\varphi$? Quina hipòtesi sobre $f$ s'ha de fer servir?"
+    },
+    {
+      "id": "e3",
+      "fragment": 6,
+      "cita": "$\\varphi'(t)=Jh(t)\\cdot Jf(h(t))\\cdot\\nabla g_u(f(h(t)))$",
+      "inici": 27,
+      "fi": 84,
+      "tipus": "calcul",
+      "explicacio": "L'ordre dels factors de la regla de la cadena està invertit: la jacobiana de la funció exterior va a l'esquerra. A més, $Jh(t)$ és $n\\times1$, $Jf$ és $m\\times n$ i $\\nabla g_u$ és $1\\times m$, i aquest producte no està definit.",
+      "correccio": "$\\varphi'(t)=\\nabla g_u(f(h(t)))\\cdot Jf(h(t))\\cdot Jh(t)$.",
+      "pista": "En la regla de la cadena $J(g\\circ f)=Jg(f)\\cdot Jf$, quina jacobiana va primer? Comprova les mides de les matrius."
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t3.json",
+    "valoracio": "Tres errors: hipòtesi $[a,b]\\subseteq\\Omega$ eliminada, derivabilitat justificada per continuïtat de $f$ i ordre de la regla de la cadena invertit.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "per a tots $a,b\\in\\Omega$ existeix $\\xi\\in(a,b)$",
+        "gravetat": "error",
+        "explicacio": "S'ha eliminat la hipòtesi $[a,b]\\subseteq\\Omega$; sense ella $f$ pot no estar definida al segment i el resultat és fals (p. ex. $\\Omega$ no convex)."
+      },
+      {
+        "fragment": 4,
+        "cita": "amb $f$, que és contínua",
+        "gravetat": "error",
+        "explicacio": "La composició amb una funció només contínua no és derivable en general; cal usar que $f$ és diferenciable."
+      },
+      {
+        "fragment": 6,
+        "cita": "$\\varphi'(t)=Jh(t)\\cdot Jf(h(t))\\cdot\\nabla g_u(f(h(t)))$",
+        "gravetat": "error",
+        "explicacio": "Regla de la cadena amb l'ordre invertit: és $\\nabla g_u(f(h(t)))\\cdot Jf(h(t))\\cdot Jh(t)$; l'ordre donat no té dimensions compatibles."
+      }
+    ]
+  },
+  "creat": 1791296233.7696836
+}

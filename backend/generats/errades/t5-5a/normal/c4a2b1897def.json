@@ -1,0 +1,60 @@
+{
+  "id": "c4a2b1897def",
+  "exercici": "t5-5a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Les derivades parcials són $f_x=4x^3-4x+4y$ i $f_y=4y^3-4y+4x$. Sumant les equacions $f_x=0$ i $f_y=0$ obtenim $4(x^3+y^3)=0$; com que $x^3+y^3=(x+y)(x^2-xy+y^2)$ i el segon factor només s'anul·la a l'origen, en tots els casos $y=-x$.",
+    "Substituint $y=-x$ a $f_x=0$: $4x^3-8x=4x(x^2-2)=0$, d'on $x=0$ o $x=\\pm\\sqrt2$. Els punts crítics són $(0,0)$, $(\\sqrt2,-\\sqrt2)$ i $(-\\sqrt2,\\sqrt2)$.",
+    "La hessiana és $Hf(x,y)=\\begin{pmatrix}12x^2-4&4\\\\4&12y^2-4\\end{pmatrix}$. A $(\\pm\\sqrt2,\\mp\\sqrt2)$ val $\\begin{pmatrix}20&4\\\\4&20\\end{pmatrix}$, amb determinant $384>0$ i traça $40>0$.",
+    "Per tant la hessiana és definida positiva a $(\\sqrt2,-\\sqrt2)$ i a $(-\\sqrt2,\\sqrt2)$, i aquests dos punts són mínims locals estrictes, amb $f=4+4-4-8-4=-8$.",
+    "A més, com que $f$ és contínua a $\\mathbb{R}^2$, pel teorema de Weierstrass té un mínim absolut, que ha de ser en un punt crític perquè $\\mathbb{R}^2$ és obert. Com que $f(0,0)=0>-8$, aquests dos punts són mínims absoluts.",
+    "A l'origen, $Hf(0,0)=\\begin{pmatrix}-4&4\\\\4&-4\\end{pmatrix}$ té determinant $0$, de manera que el criteri de la hessiana no decideix i cal estudiar $f$ directament.",
+    "Sobre l'eix $y=0$, $f(x,0)=x^4-2x^2=x^2(x^2-2)<0$ per a $0<|x|<\\sqrt2$; sobre la diagonal $y=x$, $f(x,x)=2x^4+4x^2>0$ per a $x\\neq0$. Com que $f(0,0)=0$, tota bola centrada a l'origen conté punts amb $f<0$ i amb $f>0$: l'origen és un punt de sella."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 5,
+      "cita": "com que $f$ és contínua a $\\mathbb{R}^2$, pel teorema de Weierstrass té un mínim absolut",
+      "inici": 7,
+      "fi": 95,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "El teorema de Weierstrass demana un conjunt compacte, i $\\mathbb{R}^2$ no és fitat; la continuïtat sola no garanteix el mínim absolut (p. ex. $x$ no en té).",
+      "correccio": "Com que $f\\to+\\infty$ quan $\\|(x,y)\\|\\to\\infty$ (dominen els termes de grau 4), $f$ assoleix un mínim absolut (Weierstrass sobre una bola prou gran), que ha de ser en un punt crític.",
+      "pista": "Quines hipòtesis demana el teorema de Weierstrass sobre el conjunt? Les compleix $\\mathbb{R}^2$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "$f(x,x)=2x^4+4x^2>0$",
+      "inici": 97,
+      "fi": 117,
+      "tipus": "calcul",
+      "explicacio": "$f(x,x)=x^4+x^4-2x^2+4x^2-2x^2=2x^4$: els termes de grau 2 es cancel·len i no queda cap $4x^2$.",
+      "correccio": "$f(x,x)=2x^4>0$ per a $x\\neq0$.",
+      "pista": "Si sumes els tres termes de grau 2 de $f(x,x)$, és a dir $-2x^2+4x^2-2x^2$, què et queda?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t56.json",
+    "valoracio": "Punts crítics i classificació correctes, però la justificació del mínim absolut aplica Weierstrass a R^2 i hi ha un error de càlcul a f(x,x).",
+    "problemes": [
+      {
+        "fragment": 5,
+        "cita": "pel teorema de Weierstrass té un mínim absolut",
+        "gravetat": "error",
+        "explicacio": "$\\mathbb{R}^2$ no és compacte: Weierstrass no s'hi aplica. L'existència del mínim absolut requereix un argument de coercivitat ($f\\to+\\infty$ quan $\\|(x,y)\\|\\to\\infty$)."
+      },
+      {
+        "fragment": 7,
+        "cita": "$f(x,x)=2x^4+4x^2>0$",
+        "gravetat": "error",
+        "explicacio": "$f(x,x)=x^4+x^4-2x^2+4x^2-2x^2=2x^4$; el terme $4x^2$ és erroni (la conclusió $>0$ es manté)."
+      }
+    ]
+  },
+  "creat": 1791295916.9978406
+}

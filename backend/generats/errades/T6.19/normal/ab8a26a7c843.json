@@ -1,0 +1,65 @@
+{
+  "id": "ab8a26a7c843",
+  "exercici": "T6.19",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "(condicions suficients). Sigui $\\Phi\\colon G\\subseteq\\mathbb{R}^n\\to\\mathbb{R}^{n-m}$ com en el corol·lari 17, amb $r\\geq2$, $M=M_\\Phi\\neq\\emptyset$ la seva varietat associada, i $f\\colon G\\subseteq\\mathbb{R}^n\\to\\mathbb{R}$ una funció $\\mathcal{C}^2(G)$. Sigui $(\\mathbf{a},\\lambda_1,\\ldots,\\lambda_{n-m})\\in M\\times\\mathbb{R}^{n-m}$ un punt crític de la funció de Lagrange $L$, i considerem $F\\colon G\\to\\mathbb{R}$, $F(\\mathbf{x})=L(\\mathbf{x},\\lambda_1,\\ldots,\\lambda_{n-m})=f(\\mathbf{x})+\\boldsymbol{\\lambda}\\cdot\\Phi(\\mathbf{x})$.",
+    "Llavors, (i) $q_{HF(\\mathbf{a})}$ és definida negativa sobre $T_M(\\mathbf{a})\\Rightarrow\\mathbf{a}$ és un màxim local estricte de $f$ condicionat a $M$; (ii) $q_{HF(\\mathbf{a})}$ és definida positiva sobre $T_M(\\mathbf{a})\\Rightarrow\\mathbf{a}$ és un mínim local estricte de $f$ condicionat a $M$; (iii) $q_{HF(\\mathbf{a})}$ és indefinida sobre $T_M(\\mathbf{a})\\Rightarrow\\mathbf{a}$ és un punt de sella de $f$ condicionat a $M$.",
+    "(iv) $\\mathbf{a}$ és un màxim local de $f$ condicionat a $M\\Rightarrow q_{HF(\\mathbf{a})}$ és definida negativa sobre $T_M(\\mathbf{a})$; (v) $\\mathbf{a}$ és un mínim local de $f$ condicionat a $M\\Rightarrow q_{HF(\\mathbf{a})}$ és semidefinida positiva sobre $T_M(\\mathbf{a})$.",
+    "Sigui $\\rho\\colon\\Omega\\subseteq\\mathbb{R}^m\\to M\\cap G$ una parametrització de $M$ al voltant de $\\mathbf{a}$, amb $\\rho(\\mathbf{b})=\\mathbf{a}$: $\\rho\\in\\mathcal{C}^r(\\Omega)$, $\\mathrm{rang}\\,D\\rho(\\mathbf{u})=m$ per a tot $\\mathbf{u}\\in\\Omega$, $\\rho$ bijectiva i amb inversa contínua. Pel teorema 10, $T_M(\\mathbf{a})=\\mathrm{Im}\\,D\\rho(\\mathbf{b})=\\langle\\text{columnes de }D\\rho(\\mathbf{b})\\rangle$.",
+    "Observació 19.1: sigui $g:=f\\circ\\rho\\colon\\Omega\\to\\mathbb{R}$. Com que $\\rho$ és un homeomorfisme de $\\Omega$ sobre l'entorn $M\\cap G$ de $\\mathbf{a}$ en $M$, $\\mathbf{a}$ és un màxim (resp. mínim, punt de sella) local de $f$ condicionat a $M$, estricte o no, si i només si $\\mathbf{b}$ ho és de $g$. A més, $\\nabla g(\\mathbf{b})=\\nabla f(\\mathbf{a})\\,D\\rho(\\mathbf{b})=\\mathbf{0}$, perquè $\\nabla f(\\mathbf{a})=-\\lambda_1\\nabla\\Phi_1(\\mathbf{a})-\\cdots-\\lambda_{n-m}\\nabla\\Phi_{n-m}(\\mathbf{a})$ (ja que $(\\mathbf{a},\\boldsymbol{\\lambda})$ és punt crític de $L$) pertany a $N_M(\\mathbf{a})$ pel teorema 10, i per tant és ortogonal a les columnes de $D\\rho(\\mathbf{b})$.",
+    "Observació 19.2: com que $\\rho(\\mathbf{u})\\in M_\\Phi$, $\\Phi(\\rho(\\mathbf{u}))=\\mathbf{0}$ per a tot $\\mathbf{u}\\in\\Omega$; per tant, $F\\circ\\rho=f\\circ\\rho+\\boldsymbol{\\lambda}\\cdot(\\Phi\\circ\\rho)=g$. Així, podem calcular la hessiana de $g$ com la de $F\\circ\\rho$.",
+    "Observació 19.3: per la regla de la cadena, $\\frac{\\partial g}{\\partial u_i}(\\mathbf{u})=\\sum_{k=1}^n\\frac{\\partial F}{\\partial x_k}(\\rho(\\mathbf{u}))\\frac{\\partial\\rho_k}{\\partial u_i}(\\mathbf{u})$ i, derivant de nou respecte de $u_j$ (regla del producte i de la cadena), $\\frac{\\partial^2g}{\\partial u_j\\partial u_i}(\\mathbf{u})=\\sum_{k,l=1}^n\\frac{\\partial^2F}{\\partial x_l\\partial x_k}(\\rho(\\mathbf{u}))\\frac{\\partial\\rho_l}{\\partial u_j}(\\mathbf{u})\\frac{\\partial\\rho_k}{\\partial u_i}(\\mathbf{u})+\\sum_{k=1}^n\\frac{\\partial F}{\\partial x_k}(\\rho(\\mathbf{u}))\\frac{\\partial^2\\rho_k}{\\partial u_j\\partial u_i}(\\mathbf{u})$.",
+    "En $\\mathbf{u}=\\mathbf{b}$ el segon sumatori s'anul·la, ja que, com que $\\mathbf{b}$ és un punt crític de $g$, les derivades segones $\\frac{\\partial^2\\rho_k}{\\partial u_j\\partial u_i}(\\mathbf{b})$ són nul·les. Per tant, $\\frac{\\partial^2g}{\\partial u_j\\partial u_i}(\\mathbf{b})=\\sum_{k,l=1}^n\\frac{\\partial^2F}{\\partial x_l\\partial x_k}(\\mathbf{a})\\frac{\\partial\\rho_l}{\\partial u_j}(\\mathbf{b})\\frac{\\partial\\rho_k}{\\partial u_i}(\\mathbf{b})$.",
+    "Matricialment, $Hg(\\mathbf{b})=D\\rho(\\mathbf{b})^T\\,HF(\\mathbf{a})\\,D\\rho(\\mathbf{b})$ i, per a tot $\\mathbf{v}\\in\\mathbb{R}^m$, $\\mathbf{v}^T\\,Hg(\\mathbf{b})\\,\\mathbf{v}=(D\\rho(\\mathbf{b})\\,\\mathbf{v})^T\\,HF(\\mathbf{a})\\,(D\\rho(\\mathbf{b})\\,\\mathbf{v})$, és a dir, $q_{Hg(\\mathbf{b})}(\\mathbf{v})=q_{HF(\\mathbf{a})}(D\\rho(\\mathbf{b})\\,\\mathbf{v})$.",
+    "L'aplicació $\\mathbf{v}\\mapsto D\\rho(\\mathbf{b})\\,\\mathbf{v}$ és un isomorfisme de $\\mathbb{R}^m$ sobre $T_M(\\mathbf{a})$, ja que $D\\rho(\\mathbf{b})$ té rang $m$ i la seva imatge és $T_M(\\mathbf{a})$. Per tant, $q_{Hg(\\mathbf{b})}$ és definida negativa (positiva, indefinida, semidefinida negativa, semidefinida positiva) en $\\mathbb{R}^m$ si i només si $q_{HF(\\mathbf{a})}$ ho és sobre $T_M(\\mathbf{a})$.",
+    "Ara apliquem a $g$, que és de classe $\\mathcal{C}^2$ (perquè $f\\in\\mathcal{C}^2$ i $r\\geq2$) i té $\\mathbf{b}$ com a punt crític, els criteris del tema 5 (teorema 33): si $q_{HF(\\mathbf{a})}$ és definida negativa sobre $T_M(\\mathbf{a})$, $q_{Hg(\\mathbf{b})}$ és definida negativa, $\\mathbf{b}$ és un màxim local estricte de $g$ i, per l'observació 19.1, $\\mathbf{a}$ és un màxim local estricte de $f$ condicionat a $M$. Els casos (ii) i (iii) són anàlegs.",
+    "Recíprocament, si $\\mathbf{a}$ és un màxim (mínim) local de $f$ condicionat a $M$, per l'observació 19.1 $\\mathbf{b}$ és un màxim (mínim) local de $g$, i la condició necessària de segon ordre dona $q_{Hg(\\mathbf{b})}$ semidefinida negativa (positiva). Per l'equivalència anterior, $q_{HF(\\mathbf{a})}$ ho és sobre $T_M(\\mathbf{a})$, cosa que prova (iv) i (v)."
+  ],
+  "n_enunciat": 3,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "és definida negativa sobre $T_M(\\mathbf{a})$; (v)",
+      "inici": 91,
+      "fi": 140,
+      "tipus": "conclusio",
+      "explicacio": "Un màxim local només dona semidefinida negativa. Contraexemple: $M=\\{y=0\\}\\subseteq\\mathbb{R}^2$, $f(x,y)=-x^4$, $\\boldsymbol{\\lambda}=0$: $\\mathbf{a}=\\mathbf{0}$ és un màxim estricte però $HF(\\mathbf{a})=0$.",
+      "correccio": "(iv) $\\mathbf{a}$ màxim local condicionat $\\Rightarrow q_{HF(\\mathbf{a})}$ és semidefinida negativa sobre $T_M(\\mathbf{a})$.",
+      "pista": "La condició necessària de segon ordre en una variable, $g''(b)\\leq0$, és estricta o no estricta?"
+    },
+    {
+      "id": "e2",
+      "fragment": 8,
+      "cita": "les derivades segones $\\frac{\\partial^2\\rho_k}{\\partial u_j\\partial u_i}(\\mathbf{b})$ són nul·les",
+      "inici": 111,
+      "fi": 208,
+      "tipus": "pas_injustificat",
+      "explicacio": "Que $\\mathbf{b}$ sigui punt crític de $g$ no diu res de les derivades segones de $\\rho$, que en general no s'anul·len. El terme s'anul·la perquè $\\frac{\\partial F}{\\partial x_k}(\\mathbf{a})=\\frac{\\partial L}{\\partial x_k}(\\mathbf{a},\\boldsymbol{\\lambda})=0$.",
+      "correccio": "El segon sumatori s'anul·la perquè $\\frac{\\partial F}{\\partial x_k}(\\mathbf{a})=0$ per a tot $k$, ja que $(\\mathbf{a},\\boldsymbol{\\lambda})$ és punt crític de $L$.",
+      "pista": "En el producte $\\frac{\\partial F}{\\partial x_k}\\cdot\\frac{\\partial^2\\rho_k}{\\partial u_j\\partial u_i}$, quin dels dos factors sabem que és zero en $\\mathbf{a}$, i per què?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t6.json",
+    "valoracio": "Conclusió (iv) reforçada a definida negativa i una justificació falsa de l'anul·lació del terme amb derivades segones de $\\rho$.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$\\mathbf{a}$ és un màxim local de $f$ condicionat a $M\\Rightarrow q_{HF(\\mathbf{a})}$ és definida negativa",
+        "gravetat": "error",
+        "explicacio": "La condició necessària només dona semidefinida negativa (p. ex. $f(x,y)=-x^4$ condicionat a $y=0$ té màxim en l'origen amb hessiana nul·la)."
+      },
+      {
+        "fragment": 8,
+        "cita": "com que $\\mathbf{b}$ és un punt crític de $g$, les derivades segones $\\frac{\\partial^2\\rho_k}{\\partial u_j\\partial u_i}(\\mathbf{b})$ són nul·les",
+        "gravetat": "error",
+        "explicacio": "Les derivades segones de $\\rho$ no tenen per què anul·lar-se; el sumatori s'anul·la perquè $\\frac{\\partial F}{\\partial x_k}(\\mathbf{a})=0$, ja que $(\\mathbf{a},\\boldsymbol\\lambda)$ és punt crític de $L$."
+      }
+    ]
+  },
+  "creat": 1791296017.2484937
+}

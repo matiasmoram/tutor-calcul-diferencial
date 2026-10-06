@@ -1,0 +1,790 @@
+{
+ "config": "base",
+ "stages": {
+  "diagnosi": [
+   "openai",
+   "gpt-5.5",
+   "medium"
+  ],
+  "resposta": [
+   "openai",
+   "gpt-5.4-mini",
+   "low"
+  ],
+  "guardia": [
+   "openai",
+   "gpt-5.4-mini",
+   "low"
+  ]
+ },
+ "sessions": [
+  {
+   "exercici": "t2-4c",
+   "torns": [
+    {
+     "alumne": "He provat les rectes $y=kx$ i sempre dona $0$, per tant el límit és $0$.",
+     "tutor": "Has provat alguns camins i tots et donen $0$, però això et garanteix que el límit existeix, o només et dona un candidat?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [
+      "camins_com_a_prova"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": "camins_com_a_prova",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.5",
+       "latency_ms": 2999,
+       "input_tokens": 3941,
+       "output_tokens": 189,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 970,
+       "input_tokens": 1589,
+       "output_tokens": 65,
+       "cached_tokens": 1280,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1530,
+       "input_tokens": 2918,
+       "output_tokens": 100,
+       "cached_tokens": 2304,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 5501
+    },
+    {
+     "alumne": "Què vol dir exactament que un límit existeixi?",
+     "tutor": "Que un límit existeixi vol dir que, quan $x$ s’acosta al punt, els valors de la funció s’acosten tots al mateix nombre, sense dependre del camí que triïs; aquesta és la idea de la Definició 6 del Tema 2. Formalment, això s’expressa amb $\\epsilon$ i $\\delta$, o equivalentment amb successions que s’acosten al punt. Si vols, com podries usar aquesta idea per mirar el teu quocient?",
+     "referencies": [
+      "T2.6"
+     ],
+     "accio": "explicar_concepte",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "pregunta_conceptual",
+     "errors": [],
+     "want_intent": "pregunta_conceptual",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.5",
+       "latency_ms": 6263,
+       "input_tokens": 3999,
+       "output_tokens": 514,
+       "cached_tokens": 2816,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1605,
+       "input_tokens": 1569,
+       "output_tokens": 143,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 2673,
+       "input_tokens": 2975,
+       "output_tokens": 173,
+       "cached_tokens": 2304,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 10543
+    },
+    {
+     "alumne": "No sé com fitar-ho. Digues-me la solució, si us plau.",
+     "tutor": "Tens ben encaminat el fet de buscar un candidat, però ara et falta una fita uniforme que no depengui del camí. Com que $x^4$ i $y^2$ són no negatius, no et sembla natural comparar $x^4+y^2$ amb un dels seus sumands per obtenir una cota superior per a $\\left|\\frac{x^5}{x^4+y^2}\\right|$ i després veure si aquesta cota va a $0$?",
+     "referencies": [],
+     "accio": "pista",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [],
+     "want_intent": "demana_solucio",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.5",
+       "latency_ms": 4859,
+       "input_tokens": 4132,
+       "output_tokens": 375,
+       "cached_tokens": 3840,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1453,
+       "input_tokens": 1714,
+       "output_tokens": 145,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 2034,
+       "input_tokens": 3114,
+       "output_tokens": 128,
+       "cached_tokens": 2304,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 8348
+    },
+    {
+     "alumne": "Com que $x^4\\le x^4+y^2$, tinc $|f|\\le\\frac{|x|^5}{x^4}=|x|\\to0$, i pel sandvitx el límit és $0$.",
+     "tutor": "Molt bé: la teva justificació ja tanca l’exercici, i el límit és $0$. Has fet servir la idea clau d’obtenir una cota uniforme, $0\\le |f(x,y)|\\le |x|$, i després aplicar el sandvitx, que és exactament el que calia.",
+     "referencies": [],
+     "accio": "tancar",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [],
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.5",
+       "latency_ms": 13229,
+       "input_tokens": 4294,
+       "output_tokens": 983,
+       "cached_tokens": 2816,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1161,
+       "input_tokens": 1938,
+       "output_tokens": 74,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 2105,
+       "input_tokens": 3305,
+       "output_tokens": 160,
+       "cached_tokens": 2304,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 16496
+    }
+   ]
+  },
+  {
+   "exercici": "t4-8",
+   "torns": [
+    {
+     "alumne": "Calculo el jacobià: $\\det JG=3+6z$, que a $(1,-1,2)$ val $15$.",
+     "tutor": "Molt bé: ja tens el punt on el jacobià no s’anul·la. Ara, quin és el valor de $G(1,-1,2)$, i coincideix amb el punt $(4,4,-1)$ on et demanen $DG^{-1}$?",
+     "referencies": [],
+     "accio": "pista",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.5",
+       "latency_ms": 5067,
+       "input_tokens": 4882,
+       "output_tokens": 404,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1352,
+       "input_tokens": 1186,
+       "output_tokens": 114,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1421,
+       "input_tokens": 3906,
+       "output_tokens": 113,
+       "cached_tokens": 3328,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 7841
+    },
+    {
+     "alumne": "Llavors $DG^{-1}(4,4,-1)$ és la jacobiana de $G$ al punt $(4,4,-1)$ invertida, no?",
+     "tutor": "Pensa en què significa exactament $DG^{-1}(4,4,-1)$: aquest punt és una entrada de $G$ o és la imatge d’algun punt? En quin punt has d’avaluar realment $JG$ per relacionar-lo amb la inversa local?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "pregunta_conceptual",
+     "errors": [
+      "punt_equivocat"
+     ],
+     "want_intent": "mostra_treball",
+     "want_error": "punt_equivocat",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.5",
+       "latency_ms": 8318,
+       "input_tokens": 4993,
+       "output_tokens": 742,
+       "cached_tokens": 3840,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1790,
+       "input_tokens": 1435,
+       "output_tokens": 87,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1412,
+       "input_tokens": 4156,
+       "output_tokens": 104,
+       "cached_tokens": 2816,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 11521
+    },
+    {
+     "alumne": "Què diu exactament el teorema de la funció inversa?",
+     "tutor": "Perfecte: ja tens identificat el punt $(1,-1,2)$ i també has calculat la seva imatge. Quan et demanen $DG^{-1}(4,4,-1)$, quin dels dos punts ha de servir-te per avaluar la jacobiana de $G$: el punt original o el punt imatge?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "pregunta_conceptual",
+     "errors": [
+      "altre"
+     ],
+     "want_intent": "pregunta_conceptual",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.5",
+       "latency_ms": 9202,
+       "input_tokens": 5077,
+       "output_tokens": 728,
+       "cached_tokens": 4864,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1445,
+       "input_tokens": 1444,
+       "output_tokens": 104,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1636,
+       "input_tokens": 4175,
+       "output_tokens": 134,
+       "cached_tokens": 2816,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 12284
+    },
+    {
+     "alumne": "Com que té inversa local a tot arreu on $3+6z\\neq0$, $G$ té inversa global.",
+     "tutor": "El Teorema de la funció inversa et garanteix una inversa en un entorn del punt on $\\det(JG)\\neq 0$, però això no et diu encara res sobre tot $\\mathbb{R}^3$. Si vols una inversa global, què hauria de complir $G$ a tot el domini segons la definició de difeomorfisme?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [
+      "local_implica_global"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": "local_implica_global",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.5",
+       "latency_ms": 13559,
+       "input_tokens": 5183,
+       "output_tokens": 1243,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1788,
+       "input_tokens": 2452,
+       "output_tokens": 115,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1977,
+       "input_tokens": 5193,
+       "output_tokens": 178,
+       "cached_tokens": 4352,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 17326
+    }
+   ]
+  },
+  {
+   "exercici": "t6-3a",
+   "torns": [
+    {
+     "alumne": "No sé per on començar.",
+     "tutor": "Bé, abans de buscar candidats, el primer és veure si pots garantir que hi haurà màxim i mínim. El lligam $x^2+2y^2=3$ descriu un conjunt tancat i fitat, i $f(x,y)=x$ és contínua; això et permet aplicar el Teorema de Weierstrass del Tema 2. Et sembla que comencem comprovant aquestes dues propietats del conjunt?",
+     "referencies": [],
+     "accio": "pista",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_pista",
+     "errors": [],
+     "want_intent": "demana_pista",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.5",
+       "latency_ms": 2368,
+       "input_tokens": 3412,
+       "output_tokens": 150,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1519,
+       "input_tokens": 1382,
+       "output_tokens": 131,
+       "cached_tokens": 1280,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1825,
+       "input_tokens": 2716,
+       "output_tokens": 191,
+       "cached_tokens": 2304,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 5713
+    },
+    {
+     "alumne": "Sobre l'el·lipse $x^2=3-2y^2\\le3$, així que $|x|\\le\\sqrt3$.",
+     "tutor": "Molt bé: has fitat $x$ correctament a partir del lligam, i això ja et dona una informació útil sobre el conjunt. Ara fixa’t en la idea global: pots justificar que el conjunt $x^2+2y^2=3$ és tancat i fitat, i que $f(x,y)=x$ és contínua, per poder aplicar el Teorema de Weierstrass del Tema 2?",
+     "referencies": [],
+     "accio": "validar_i_avancar",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.5",
+       "latency_ms": 8059,
+       "input_tokens": 3553,
+       "output_tokens": 610,
+       "cached_tokens": 2816,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1662,
+       "input_tokens": 1622,
+       "output_tokens": 128,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1532,
+       "input_tokens": 2953,
+       "output_tokens": 139,
+       "cached_tokens": 2304,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 11254
+    },
+    {
+     "alumne": "Per tant el màxim és $\\sqrt3$ i el mínim $-\\sqrt3$.",
+     "tutor": "La idea d’acotar $x$ està bé, i també tens el criteri per garantir extrems amb el Teorema de Weierstrass del Tema 2. Però per concloure que la fita és un extrem absolut, et falta comprovar si aquesta fita s’assoleix en algun punt del lligam. Hi ha algun punt de l’el·lipse on $x$ valgui exactament $\\sqrt3$ o $-\\sqrt3$?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [
+      "fita_sense_assolir",
+      "sense_existencia"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.5",
+       "latency_ms": 8577,
+       "input_tokens": 3675,
+       "output_tokens": 717,
+       "cached_tokens": 2816,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1566,
+       "input_tokens": 1836,
+       "output_tokens": 135,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1994,
+       "input_tokens": 3170,
+       "output_tokens": 176,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 12139
+    },
+    {
+     "alumne": "S'assoleixen a $(\\sqrt3,0)$ i $(-\\sqrt3,0)$, perquè quan $y=0$ tenim $x^2=3$, i l'el·lipse és compacta.",
+     "tutor": "Vas ben encaminat amb la idea de l’el·lipse, però encara et falta justificar el pas que et dona dret a parlar de màxim i mínim absoluts: per aplicar el Teorema de Weierstrass del Tema 2, quin fet sobre el conjunt del lligam et cal comprovar a més que la funció $f(x,y)=x$ és contínua?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [
+      "sense_existencia"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.5",
+       "latency_ms": 14706,
+       "input_tokens": 3826,
+       "output_tokens": 1251,
+       "cached_tokens": 2816,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1498,
+       "input_tokens": 2063,
+       "output_tokens": 113,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1943,
+       "input_tokens": 3383,
+       "output_tokens": 145,
+       "cached_tokens": 1792,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 18148
+    }
+   ]
+  },
+  {
+   "exercici": "t3-5",
+   "torns": [
+    {
+     "alumne": "Sobre les rectes $y=mx$ el límit a l'origen és $0$, per tant $f$ és contínua a l'origen.",
+     "tutor": "Quan mires només rectes com $y=mx$, estàs comprovant tots els camins possibles cap a l’origen, o n’hi podria haver algun altre on $x^2/y$ es comporti d’una altra manera?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [
+      "nomes_rectes"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": "nomes_rectes",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.5",
+       "latency_ms": 5440,
+       "input_tokens": 6051,
+       "output_tokens": 501,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1305,
+       "input_tokens": 1268,
+       "output_tokens": 84,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 2210,
+       "input_tokens": 4757,
+       "output_tokens": 216,
+       "cached_tokens": 4352,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 8956
+    },
+    {
+     "alumne": "A l'origen, $D_vf(0,0)=\\lim_{t\\to0}\\frac{f(tv)}{t}=\\frac{v_1^2}{v_2}$ si $v_2\\neq0$. Com que existeixen totes, $f$ és contínua a l'origen.",
+     "tutor": "La teva expressió de $D_vf(0,0)$ com a límit al llarg de la recta està ben plantejada segons la Definició 1 del Tema 3, però pensa una cosa: aquest límit et diu com es comporta $f$ només sobre la recta $t\\mapsto tv$, o en tots els camins que s’acosten a $(0,0)$? Quina és exactament la diferència amb el que demana la continuïtat a la Definició 14 del Tema 2?",
+     "referencies": [
+      "T3.1",
+      "T2.14"
+     ],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [
+      "direccionals_implica_continuitat"
+     ],
+     "want_intent": "mostra_treball",
+     "want_error": "direccionals_implica_continuitat",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.5",
+       "latency_ms": 11366,
+       "input_tokens": 6184,
+       "output_tokens": 797,
+       "cached_tokens": 4864,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1642,
+       "input_tokens": 1394,
+       "output_tokens": 155,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 2007,
+       "input_tokens": 4958,
+       "output_tokens": 179,
+       "cached_tokens": 4352,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 15017
+    },
+    {
+     "alumne": "Dona'm una pista per estudiar la continuïtat a l'origen.",
+     "tutor": "Si mires la continuïtat a $(0,0)$, el que has calculat sobre cada recta et garanteix el comportament de $f$ quan t’hi acostes per qualsevol camí, o només per aquests camins concrets? Què passaria si provessis un acostament diferent de $y=mx$?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_pista",
+     "errors": [
+      "altre"
+     ],
+     "want_intent": "demana_pista",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.5",
+       "latency_ms": 9599,
+       "input_tokens": 6322,
+       "output_tokens": 763,
+       "cached_tokens": 5888,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 2246,
+       "input_tokens": 1482,
+       "output_tokens": 138,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 2208,
+       "input_tokens": 4994,
+       "output_tokens": 207,
+       "cached_tokens": 4352,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 14054
+    },
+    {
+     "alumne": "Fora de l'eix $y=0$ és un quocient de polinomis amb denominador no nul, així que és contínua.",
+     "tutor": "Bé, ja tens justificada la continuïtat a l’obert $U=\\{y\\neq 0\\}$ amb la Proposició 20 del Tema 2. I què passa, per exemple, en un punt de l’eix com $(x_0,0)$ amb $x_0\\neq 0$ si t’hi acostes per punts amb $y\\neq 0$?",
+     "referencies": [
+      "T2.20"
+     ],
+     "accio": "questionar_error",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [
+      "altre"
+     ],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.5",
+       "latency_ms": 9752,
+       "input_tokens": 6432,
+       "output_tokens": 763,
+       "cached_tokens": 5888,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1673,
+       "input_tokens": 1998,
+       "output_tokens": 122,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1573,
+       "input_tokens": 5527,
+       "output_tokens": 112,
+       "cached_tokens": 3840,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 13000
+    }
+   ]
+  }
+ ],
+ "metrics": {
+  "turns": 16,
+  "failed_turns": 0,
+  "fallback": 0,
+  "drafts_per_turn": 1.0,
+  "draft_errors": 0,
+  "latex_broken": 0,
+  "intent_match": 14,
+  "error_match": 14,
+  "cost_usd": 0.5601,
+  "cost_per_turn_usd": 0.03501,
+  "latency_s": 11.8,
+  "input_tokens": 164528,
+  "cached_tokens": 91648,
+  "output_tokens": 15038
+ }
+}

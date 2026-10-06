@@ -1,0 +1,63 @@
+{
+  "id": "246c51cca3cd",
+  "exercici": "T5.14",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $\\Omega\\subseteq\\mathbb{R}^n$ obert, $f:\\Omega\\to\\mathbb{R}$ de classe $\\mathcal{C}^{r+1}(\\Omega)$ i $\\mathbf{a}\\in\\Omega$. Per a tot $\\mathbf{x}\\in\\Omega$ amb $[\\mathbf{a},\\mathbf{x}]\\subseteq\\Omega$, existeix $\\xi_\\mathbf{x}\\in(\\mathbf{a},\\mathbf{x})$ tal que $f(\\mathbf{x})=P_r(\\mathbf{x})+R_{r+1}(\\mathbf{x})$, on $P_r(\\mathbf{x})=f(\\mathbf{a})+\\sum_{i=1}^{n}D_if(\\mathbf{a})(x_i-a_i)+\\cdots+\\frac{1}{r!}\\sum_{i_1,\\ldots,i_r=1}^{n}D_{i_1,\\ldots,i_r}f(\\mathbf{a})(x_{i_1}-a_{i_1})\\cdots(x_{i_r}-a_{i_r})$ és el polinomi de Taylor de grau $r$ de $f$ en $\\mathbf{a}$.",
+    "El residu és $R_{r+1}(\\mathbf{x})=\\frac{1}{(r+1)!}\\sum_{i_1,\\ldots,i_{r+1}=1}^{n}D_{i_1,\\ldots,i_{r+1}}f(\\xi_\\mathbf{x})(x_{i_1}-a_{i_1})\\cdots(x_{i_{r+1}}-a_{i_{r+1}})$.",
+    "A més, $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{a}}\\frac{R_{r+1}(\\mathbf{x})}{\\|\\mathbf{x}-\\mathbf{a}\\|^{r+1}}=0$.",
+    "Sigui $h(t)=\\mathbf{a}+t(\\mathbf{x}-\\mathbf{a})$ i $F(t)=f(h(t))$. Com que $[\\mathbf{a},\\mathbf{x}]\\subseteq\\Omega$ i $\\Omega$ és obert, $F$ està definida i és de classe $\\mathcal{C}^{r+1}$ en un obert $U\\supseteq[0,1]$ (composició de $f$ amb $h$, que és afí), i $F(0)=f(\\mathbf{a})$, $F(1)=f(\\mathbf{x})$.",
+    "Per la fórmula de Taylor en una variable aplicada a $F$ en $[0,1]$, existeix $\\tau\\in(0,1)$ tal que $F(1)=\\sum_{k=0}^{r}\\frac{F^{(k)}(0)}{k!}+\\frac{F^{(r+1)}(\\tau)}{(r+1)!}$.",
+    "Veurem que, per a $k\\leq r+1$, $F^{(k)}(t)=\\sum_{i_1,\\ldots,i_k=1}^{n}D_{i_1,\\ldots,i_k}f(h(t))(x_{i_1}-a_{i_1})\\cdots(x_{i_k}-a_{i_k})$ (3). Per a $k=1$ és la regla de la cadena: $F'(t)=\\sum_{i=1}^{n}D_if(h(t))\\,h_i'(t)=\\sum_{i=1}^{n}D_if(h(t))\\,x_i$, que és (3) per a $k=1$.",
+    "Si (3) és cert per a $k=m\\leq r$, derivant amb la regla de la cadena cada terme $D_{i_1,\\ldots,i_m}f(h(t))$ obtenim $\\sum_{j=1}^{n}D_{i_1,\\ldots,i_m,j}f(h(t))(x_j-a_j)$; prenent $j=i_{m+1}$, resulta (3) per a $k=m+1$. Per inducció, (3) val per a tot $k\\leq r+1$.",
+    "En $t=0$, $\\frac{F^{(k)}(0)}{k!}$ és exactament el terme d'ordre $k$ de $P_r$, de manera que $\\sum_{k=0}^{r}\\frac{F^{(k)}(0)}{k!}=P_r(\\mathbf{x})$; i $\\frac{F^{(r+1)}(\\tau)}{(r+1)!}=R_{r+1}(\\mathbf{x})$ prenent $\\xi_\\mathbf{x}=h(\\tau)\\in(\\mathbf{a},\\mathbf{x})$. Això demostra que $f(\\mathbf{x})=P_r(\\mathbf{x})+R_{r+1}(\\mathbf{x})$.",
+    "Finalment, si $B(\\mathbf{a},\\rho)\\subseteq\\Omega$, per a $\\mathbf{x}\\in B(\\mathbf{a},\\rho)$ el segment $[\\mathbf{a},\\mathbf{x}]$ és dins de $\\Omega$ i, per la desigualtat triangular, $\\frac{|R_{r+1}(\\mathbf{x})|}{\\|\\mathbf{x}-\\mathbf{a}\\|^r}\\leq\\frac{1}{(r+1)!}\\sum_{i_1,\\ldots,i_{r+1}=1}^{n}|D_{i_1,\\ldots,i_{r+1}}f(\\xi_\\mathbf{x})|\\frac{|x_{i_1}-a_{i_1}|}{\\|\\mathbf{x}-\\mathbf{a}\\|}\\cdots\\frac{|x_{i_r}-a_{i_r}|}{\\|\\mathbf{x}-\\mathbf{a}\\|}|x_{i_{r+1}}-a_{i_{r+1}}|$.",
+    "Quan $\\mathbf{x}\\to\\mathbf{a}$, $|D_{i_1,\\ldots,i_{r+1}}f(\\xi_\\mathbf{x})|\\to|D_{i_1,\\ldots,i_{r+1}}f(\\mathbf{a})|$, perquè $\\xi_\\mathbf{x}\\to\\mathbf{a}$ i les derivades d'ordre $r+1$ de $f$ són contínues; cada quocient $\\frac{|x_i-a_i|}{\\|\\mathbf{x}-\\mathbf{a}\\|}$ és $\\leq1$, i $|x_{i_{r+1}}-a_{i_{r+1}}|\\to0$. Per tant, $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{a}}\\frac{R_{r+1}(\\mathbf{x})}{\\|\\mathbf{x}-\\mathbf{a}\\|^r}=0$."
+  ],
+  "n_enunciat": 3,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "A més, $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{a}}\\frac{R_{r+1}(\\mathbf{x})}{\\|\\mathbf{x}-\\mathbf{a}\\|^{r+1}}=0$",
+      "inici": 0,
+      "fi": 113,
+      "tipus": "conclusio",
+      "explicacio": "Amb l'exponent $r+1$ el límit no és zero en general: per a $n=1$, $r=0$, $f(x)=x$ i $a=0$, $R_1(x)=x$ i $\\frac{x}{|x|}=\\pm1$. La demostració només dona l'exponent $r$.",
+      "correccio": "Els apunts diuen $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{a}}\\frac{R_{r+1}(\\mathbf{x})}{\\|\\mathbf{x}-\\mathbf{a}\\|^r}=0$.",
+      "pista": "El residu és d'ordre $\\|\\mathbf{x}-\\mathbf{a}\\|^{r+1}$: en dividir per aquesta mateixa potència, què queda?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "$F'(t)=\\sum_{i=1}^{n}D_if(h(t))\\,h_i'(t)=\\sum_{i=1}^{n}D_if(h(t))\\,x_i$, que és (3) per a $k=1$",
+      "inici": 180,
+      "fi": 275,
+      "tipus": "calcul",
+      "explicacio": "La component $i$-èsima de $h(t)=\\mathbf{a}+t(\\mathbf{x}-\\mathbf{a})$ és $a_i+t(x_i-a_i)$, de manera que $h_i'(t)=x_i-a_i$, no $x_i$; amb $x_i$ no s'obté (3) per a $k=1$.",
+      "correccio": "$F'(t)=\\sum_{i=1}^{n}D_if(h(t))\\,h_i'(t)=\\sum_{i=1}^{n}D_if(h(t))(x_i-a_i)$.",
+      "pista": "Quant val la derivada de $a_i+t(x_i-a_i)$ respecte de $t$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t5.json",
+    "valoracio": "Ordre del residu canviat a l'enunciat (fals) i derivada de la regla de la cadena mal calculada.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "\\|\\mathbf{x}-\\mathbf{a}\\|^{r+1}}=0",
+        "gravetat": "error",
+        "explicacio": "Els apunts diuen $o(\\|\\mathbf{x}-\\mathbf{a}\\|^r)$. Amb exponent $r+1$ és fals en general (p. ex. $f(x)=x^{r+1}$, $a=0$: $R_{r+1}=x^{r+1}$ i el quocient és $\\pm1$). La demostració [10] prova l'exponent $r$."
+      },
+      {
+        "fragment": 6,
+        "cita": "=\\sum_{i=1}^{n}D_if(h(t))\\,x_i$",
+        "gravetat": "error",
+        "explicacio": "$h_i'(t)=x_i-a_i$, no $x_i$: la derivada de $a_i+t(x_i-a_i)$ és $x_i-a_i$. El resultat no coincideix amb (3) per a $k=1$, contràriament al que s'afirma."
+      }
+    ]
+  },
+  "creat": 1791296162.09701
+}

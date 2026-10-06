@@ -1,0 +1,50 @@
+{
+  "id": "483c04554906",
+  "exercici": "T4.18",
+  "font": "teoria",
+  "dificultat": "facil",
+  "fragments": [
+    "Sigui $G\\subseteq\\mathbb{R}^{n+m}$ obert, $\\Phi:G\\to\\mathbb{R}^m$ una funció $\\mathcal{C}^r(G)$, i $(a,b)\\in G$ tal que $D\\Phi(a,b)\\neq 0$.",
+    "Llavors existeixen oberts $U,V\\subseteq\\mathbb{R}^{n+m}$, amb $(a,b)\\in U\\subseteq G$, i un $\\mathcal{C}^r$-difeomorfisme $g:V\\to U$ tals que $\\Phi\\circ g:V\\to\\mathbb{R}^m$ és la projecció $(\\Phi\\circ g)(u,v)=v$.",
+    "Suposem primer que $\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$. La hipòtesi sobre el rang només assegura que hi ha algun menor d'ordre $m$ no nul, no necessàriament el de les variables $y$; el cas general el tractarem al final.",
+    "Com a la demostració del teorema de la funció implícita, considerem $f(x,y)=(x,\\Phi(x,y))$, que és de classe $\\mathcal{C}^r(G)$ i compleix $\\det Jf(a,b)=\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)\\neq 0$. Pel teorema de la funció inversa, existeix un obert $U\\subseteq G$ amb $(a,b)\\in U$ tal que $V=f(U)$ és obert, $f:U\\to V$ és bijectiva i $f^{-1}:V\\to U$ és de classe $\\mathcal{C}^r$.",
+    "Prenem $g=f^{-1}:V\\to U$, que és de la forma $g(u,v)=(u,h(u,v))$. És un $\\mathcal{C}^r$-difeomorfisme: és bijectiva, de classe $\\mathcal{C}^r$, i la seva inversa $f$ també és de classe $\\mathcal{C}^r$.",
+    "Per la segona igualtat de l'observació 14, $\\Phi(u,h(u,v))=v$ per a tot $(u,v)\\in V$; per tant, $(\\Phi\\circ g)(u,v)=\\Phi(u,h(u,v))=v$, tal com volíem.",
+    "En el cas general, escrivint $z=(x,y)$, hi ha índexs diferents $k_1,\\ldots,k_m\\in\\{1,\\ldots,n+m\\}$ tals que $\\det\\big(\\partial\\Phi_i/\\partial z_{k_j}(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$. Sigui $p$ la permutació de coordenades de $\\mathbb{R}^{n+m}$ tal que les darreres $m$ columnes de $D(\\Phi\\circ p)=D\\Phi\\,Dp$ són les columnes $k_1,\\ldots,k_m$ de $D\\Phi$.",
+    "Aplicant el cas anterior a $\\Phi\\circ p$, definida a l'obert $p^{-1}(G)$, en el punt $p^{-1}(a,b)$, obtenim un $\\mathcal{C}^r$-difeomorfisme $g$ amb $((\\Phi\\circ p)\\circ g)(u,v)=v$. Com que $p$ és lineal i invertible, $p\\circ g$ és un $\\mathcal{C}^r$-difeomorfisme, la seva imatge conté $(a,b)$, i $(\\Phi\\circ(p\\circ g))(u,v)=v$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "tal que $D\\Phi(a,b)\\neq 0$",
+      "inici": 112,
+      "fi": 138,
+      "tipus": "hipotesi",
+      "explicacio": "Cal rang màxim $m$, no només que la diferencial sigui no nul·la: si $\\Phi\\circ g$ és la projecció, $D\\Phi\\,Dg=(0\\mid\\mathrm{Id}_m)$ té rang $m$ i, com que $Dg$ és invertible, $D\\Phi$ també. Contraexemple ($n=1$, $m=2$): $\\Phi(z_1,z_2,z_3)=(z_1,z_1)$ té $D\\Phi\\neq 0$ però rang $1$.",
+      "correccio": "La hipòtesi és $\\mathrm{rang}\\big(D\\Phi(a,b)\\big)=m$.",
+      "pista": "Quin rang té la diferencial de la projecció $(u,v)\\mapsto v$? Què implica això per a $D\\Phi$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t4.json",
+    "valoracio": "Hipòtesi de rang afeblida a $D\\Phi(a,b)\\neq0$; la demostració, la dels apunts, depèn de la hipòtesi eliminada.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "tal que $D\\Phi(a,b)\\neq 0$",
+        "gravetat": "error",
+        "explicacio": "Hipòtesi afeblida: cal $\\mathrm{rang}\\,D\\Phi(a,b)=m$ (rang màxim). Amb $D\\Phi(a,b)\\neq0$ (rang $\\geq1$) el resultat és fals si $m\\geq2$, ja que $\\Phi\\circ g$ projecció exigeix rang $m$."
+      },
+      {
+        "fragment": 7,
+        "cita": "hi ha índexs diferents $k_1,\\ldots,k_m\\in\\{1,\\ldots,n+m\\}$ tals que $\\det\\big(\\partial\\Phi_i/\\partial z_{k_j}(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$",
+        "gravetat": "consequencia",
+        "explicacio": "L'existència d'un menor d'ordre $m$ no nul és conseqüència de $\\mathrm{rang}\\,D\\Phi(a,b)=m$, hipòtesi que l'enunciat [1] ha substituït per $D\\Phi(a,b)\\neq0$."
+      }
+    ]
+  },
+  "creat": 1791296058.535464
+}

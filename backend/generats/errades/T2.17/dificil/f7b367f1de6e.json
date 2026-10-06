@@ -1,0 +1,86 @@
+{
+  "id": "f7b367f1de6e",
+  "exercici": "T2.17",
+  "font": "teoria",
+  "dificultat": "dificil",
+  "fragments": [
+    "Sigui $f:\\Omega\\subseteq M\\to N$. Aleshores, són equivalents: (a) $f$ és contínua en $\\Omega$; (b) per a tota successió convergent $(x_n)_n\\subseteq\\Omega$ tal que $\\lim_{n\\to\\infty}x_n=x_0\\in\\Omega$, tenim $\\lim_{n\\to\\infty}f(x_n)=f(x_0)$;",
+    "(c) per a tot obert $V\\subseteq N$, $\\exists U\\subseteq M$ obert tal que $f^{-1}(V)=U\\cap\\Omega$; (d) per a tot tancat $E\\subseteq N$, $\\exists D\\subseteq M$ tancat tal que $f^{-1}(E)\\subseteq D\\cap\\Omega$.",
+    "(a)$\\Rightarrow$(b). Sigui $(x_n)_n\\subseteq\\Omega$ amb $\\lim_{n\\to\\infty}x_n=x_0\\in\\Omega$. Com que $f$ és contínua en $x_0$, hi ha dues possibilitats. Si $x_0\\notin\\Omega'$, $x_0$ és aïllat i, com que $x_n\\to x_0$, per força $x_n=x_0$ a partir d'un cert terme, de manera que $f(x_n)=f(x_0)$ a partir d'aquest terme.",
+    "Altrament, existeix $\\lim_{x\\to x_0}f(x)=f(x_0)$: donat $\\epsilon>0$, existeix $\\delta_1=\\delta_1(\\epsilon)>0$ tal que si $x\\in\\Omega$ i $d(x,x_0)<\\delta_1$, aleshores $d'(f(x),f(x_0))<\\epsilon$. Com que $x_n\\to x_0$, existeix $n_0=n_0(\\delta_1)$ tal que $d(x_n,x_0)<\\delta_1$ per a $n\\geq n_0$ i, per tant, $d'(f(x_n),f(x_0))<\\epsilon$ per a $n\\geq n_0$.",
+    "(b)$\\Rightarrow$(d). Sigui $E\\subseteq N$ tancat. Prenem $D=\\overline{f^{-1}(E)}$, que és tancat, i demostrem que $f^{-1}(E)=D\\cap\\Omega$. La inclusió $f^{-1}(E)\\subseteq\\overline{f^{-1}(E)}\\cap\\Omega$ és evident, ja que $f^{-1}(E)\\subseteq\\Omega$ i tot conjunt està contingut en la seva adherència.",
+    "Per a la inclusió inversa, sigui $x_0\\in\\overline{f^{-1}(E)}\\cap\\Omega$. Per la proposició 19 del tema 1, existeix una successió $(x_n)_n\\subseteq f^{-1}(E)\\subseteq\\Omega$ amb $\\lim_{n\\to\\infty}x_n=x_0$ i, per (b), $\\lim_{n\\to\\infty}f(x_n)=f(x_0)$.",
+    "Com que $f(x_n)\\in E$ per a tota $n$ i $f(x_n)\\to f(x_0)$, $f(x_0)$ és un punt d'acumulació d'$E$ i, com que $E$ és tancat, $f(x_0)\\in E$. Per tant, $x_0\\in f^{-1}(E)$.",
+    "(d)$\\Rightarrow$(c). Sigui $V\\subseteq N$ obert. Aleshores $V^c$ és tancat i, per (d), existeix $D\\subseteq M$ tancat amb $f^{-1}(V^c)=D\\cap\\Omega$. Com que $f^{-1}(V^c)=\\Omega\\setminus f^{-1}(V)$, resulta $f^{-1}(V)=\\Omega\\setminus(D\\cap\\Omega)=D^c\\cap\\Omega$, on $U=D^c$ és un obert de $M$.",
+    "(c)$\\Rightarrow$(a). Sigui $x_0\\in\\Omega$. Si $x_0\\notin\\Omega'$, $f$ és contínua en $x_0$ per definició. Altrament, donat $\\epsilon>0$, prenem $V=B(f(x_0),\\epsilon)$; per (c), existeix $U\\subseteq M$ obert amb $f^{-1}(V)=U\\cap\\Omega$ i, com que $x_0\\in f^{-1}(V)\\subseteq U$, existeix $\\delta>0$ tal que $B(x_0,\\delta)\\subseteq U\\cap\\Omega$.",
+    "Si $x\\in\\Omega$ i $d(x,x_0)<\\delta$, aleshores $x\\in U\\cap\\Omega=f^{-1}(V)$, és a dir, $d'(f(x),f(x_0))<\\epsilon$. Per tant, $\\lim_{x\\to x_0}f(x)=f(x_0)$ i $f$ és contínua en $x_0$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$f^{-1}(E)\\subseteq D\\cap\\Omega$",
+      "inici": 173,
+      "fi": 205,
+      "tipus": "conclusio",
+      "explicacio": "Amb només la inclusió, la condició (d) es compleix sempre prenent $D=M$, per a qualsevol funció; per tant no equival a la continuïtat (p. ex. la funció signe de $\\mathbb{R}$ la compleix).",
+      "correccio": "(d) per a tot tancat $E\\subseteq N$, $\\exists D\\subseteq M$ tancat tal que $f^{-1}(E)=D\\cap\\Omega$.",
+      "pista": "Hi ha algun tancat $D$ que compleixi aquesta condició per a qualsevol $f$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "$f(x_0)$ és un punt d'acumulació d'$E$",
+      "inici": 59,
+      "fi": 97,
+      "tipus": "pas_injustificat",
+      "explicacio": "El límit d'una successió de punts d'$E$ és adherent a $E$, però no necessàriament d'acumulació: si $f(x_n)=f(x_0)$ per a tota $n$ i $f(x_0)$ és un punt aïllat d'$E$, no ho és.",
+      "correccio": "$f(x_0)\\in\\overline{E}=E$, perquè $E$ és tancat.",
+      "pista": "Si la successió $f(x_n)$ és constant, $f(x_0)$ és necessàriament un punt d'acumulació d'$E$?"
+    },
+    {
+      "id": "e3",
+      "fragment": 9,
+      "cita": "$B(x_0,\\delta)\\subseteq U\\cap\\Omega$",
+      "inici": 305,
+      "fi": 341,
+      "tipus": "pas_injustificat",
+      "explicacio": "Com que $x_0\\in U$ i $U$ és obert, existeix una bola continguda en $U$, però no en $\\Omega$: $\\Omega$ no té per què ser obert (i $x_0$ pot ser a la frontera d'$\\Omega$).",
+      "correccio": "Existeix $\\delta>0$ tal que $B(x_0,\\delta)\\subseteq U$; després es prenen només els $x\\in\\Omega$ de la bola.",
+      "pista": "Per què una bola centrada en $x_0$ hauria d'estar continguda en $\\Omega$, si $\\Omega$ és un conjunt qualsevol?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t2a.json",
+    "valoracio": "(d) afeblida a inclusió, límit confós amb punt d'acumulació i bola inclosa indegudament en $U\\cap\\Omega$.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$f^{-1}(E)\\subseteq D\\cap\\Omega$",
+        "gravetat": "error",
+        "explicacio": "Als apunts és una igualtat. Amb la inclusió, (d) és trivial ($D=M$) i deixa de ser equivalent a la continuïtat."
+      },
+      {
+        "fragment": 7,
+        "cita": "$f(x_0)$ és un punt d'acumulació d'$E$",
+        "gravetat": "error",
+        "explicacio": "El límit d'una successió d'$E$ és un punt adherent, no necessàriament d'acumulació (p. ex. $f(x_n)$ constant igual a un punt aïllat d'$E$). Cal dir $f(x_0)\\in\\overline{E}=E$."
+      },
+      {
+        "fragment": 8,
+        "cita": "per (d), existeix $D\\subseteq M$ tancat amb $f^{-1}(V^c)=D\\cap\\Omega$",
+        "gravetat": "consequencia",
+        "explicacio": "Usa la igualtat de la (d) dels apunts; la (d) enunciada només dona una inclusió."
+      },
+      {
+        "fragment": 9,
+        "cita": "$B(x_0,\\delta)\\subseteq U\\cap\\Omega$",
+        "gravetat": "error",
+        "explicacio": "Només es té $B(x_0,\\delta)\\subseteq U$; $\\Omega$ no és necessàriament obert, i per això es pren $x\\in\\Omega$ al pas següent."
+      }
+    ]
+  },
+  "creat": 1791295999.5579917
+}

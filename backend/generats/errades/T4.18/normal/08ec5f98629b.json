@@ -1,0 +1,61 @@
+{
+  "id": "08ec5f98629b",
+  "exercici": "T4.18",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $G\\subseteq\\mathbb{R}^{n+m}$ obert, $\\Phi:G\\to\\mathbb{R}^m$ una funció $\\mathcal{C}^r(G)$, i $(a,b)\\in G$ tal que $\\mathrm{rang}\\big(D\\Phi(a,b)\\big)=m$.",
+    "Llavors existeixen oberts $U,V\\subseteq\\mathbb{R}^{n+m}$, amb $(a,b)\\in U\\subseteq G$, i un $\\mathcal{C}^r$-difeomorfisme lineal $g:V\\to U$ tals que $\\Phi\\circ g:V\\to\\mathbb{R}^m$ és la projecció $(\\Phi\\circ g)(u,v)=v$.",
+    "Suposem primer que $\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$. La hipòtesi sobre el rang només assegura que hi ha algun menor d'ordre $m$ no nul, no necessàriament el de les variables $y$; el cas general el tractarem al final.",
+    "Com a la demostració del teorema de la funció implícita, considerem $f(x,y)=(x,\\Phi(x,y))$, que és de classe $\\mathcal{C}^r(G)$ i compleix $\\det Jf(a,b)=\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)\\neq 0$. Pel teorema de la funció inversa, existeix un obert $U\\subseteq G$ amb $(a,b)\\in U$ tal que $V=f(U)$ és obert, $f:U\\to V$ és bijectiva i $f^{-1}:V\\to U$ és de classe $\\mathcal{C}^r$.",
+    "Prenem $g=f^{-1}:V\\to U$, que és de la forma $g(u,v)=(u,h(u,v))$. És un $\\mathcal{C}^r$-difeomorfisme: és bijectiva, de classe $\\mathcal{C}^r$, i la seva inversa $f$ també és de classe $\\mathcal{C}^r$.",
+    "Per la segona igualtat de l'observació 14, $\\Phi(u,h(u,v))=v$ per a tot $(u,v)\\in V$; per tant, $(\\Phi\\circ g)(u,v)=\\Phi(u,h(u,v))=v$, tal com volíem.",
+    "En el cas general, escrivint $z=(x,y)$, hi ha índexs diferents $k_1,\\ldots,k_m\\in\\{1,\\ldots,n+m\\}$ tals que $\\det\\big(\\partial\\Phi_i/\\partial z_{k_j}(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$. Sigui $p$ la permutació de coordenades de $\\mathbb{R}^{n+m}$ tal que les darreres $m$ columnes de $D(\\Phi\\circ p)=D\\Phi\\,Dp$ són les columnes $k_1,\\ldots,k_m$ de $D\\Phi$.",
+    "Aplicant el cas anterior a $\\Phi\\circ p$, definida a l'obert $p^{-1}(G)$, en el punt $p^{-1}(a,b)$, obtenim un $\\mathcal{C}^r$-difeomorfisme $g$ amb $((\\Phi\\circ p)\\circ g)(u,v)=v$. Com que $p$ és lineal i invertible, $g\\circ p$ és un $\\mathcal{C}^r$-difeomorfisme, la seva imatge conté $(a,b)$, i $(\\Phi\\circ(g\\circ p))(u,v)=v$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "un $\\mathcal{C}^r$-difeomorfisme lineal $g:V\\to U$",
+      "inici": 89,
+      "fi": 139,
+      "tipus": "conclusio",
+      "explicacio": "Si $g$ fos lineal, $\\Phi=(\\Phi\\circ g)\\circ g^{-1}$ seria lineal a $U$, cosa que no passa en general. Contraexemple ($n=m=1$): $\\Phi(x,y)=y-x^2$ a $(0,0)$ té rang $1$ però no és afí en cap obert.",
+      "correccio": "$g$ és un $\\mathcal{C}^r$-difeomorfisme (en general no lineal; a la demostració, $g=f^{-1}$).",
+      "pista": "Si $g$ i la projecció fossin lineals, com hauria de ser $\\Phi$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 8,
+      "cita": "$g\\circ p$ és un $\\mathcal{C}^r$-difeomorfisme, la seva imatge conté $(a,b)$, i $(\\Phi\\circ(g\\circ p))(u,v)=v$",
+      "inici": 218,
+      "fi": 328,
+      "tipus": "pas_injustificat",
+      "explicacio": "El que s'ha obtingut és $((\\Phi\\circ p)\\circ g)(u,v)=v$, és a dir, $\\Phi\\circ(p\\circ g)$; l'ordre de la composició no es pot canviar, i $\\Phi\\circ g\\circ p$ no té per què ser la projecció.",
+      "correccio": "$p\\circ g$ és el $\\mathcal{C}^r$-difeomorfisme buscat, ja que $(\\Phi\\circ(p\\circ g))(u,v)=((\\Phi\\circ p)\\circ g)(u,v)=v$.",
+      "pista": "En l'expressió $(\\Phi\\circ p)\\circ g$, quina funció s'aplica primer i quina just abans de $\\Phi$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t4.json",
+    "valoracio": "Dos errors: el difeomorfisme declarat lineal i la composició final $g\\circ p$ en lloc de $p\\circ g$.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$\\mathcal{C}^r$-difeomorfisme lineal",
+        "gravetat": "error",
+        "explicacio": "El difeomorfisme $g=f^{-1}$, $g(u,v)=(u,h(u,v))$, no és lineal en general (només ho és si $\\Phi$ és afí); l'enunciat afirma una conclusió falsa."
+      },
+      {
+        "fragment": 8,
+        "cita": "$g\\circ p$ és un $\\mathcal{C}^r$-difeomorfisme, la seva imatge conté $(a,b)$, i $(\\Phi\\circ(g\\circ p))(u,v)=v$",
+        "gravetat": "error",
+        "explicacio": "Ordre de composició incorrecte: de $((\\Phi\\circ p)\\circ g)(u,v)=v$ el difeomorfisme bo és $p\\circ g$ (imatge dins $G$, que conté $(a,b)$); $g\\circ p$ no té el domini/imatge adequats i $\\Phi\\circ(g\\circ p)$ no és la projecció."
+      }
+    ]
+  },
+  "creat": 1791296058.536505
+}

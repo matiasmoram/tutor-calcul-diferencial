@@ -1,0 +1,59 @@
+{
+  "id": "b47201ef4319",
+  "exercici": "t4-1",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "A $\\Omega=\\mathbb{R}^2\\setminus\\{(0,0)\\}$, que és obert, $f$ és un quocient de polinomis amb denominador no nul. Com que $f$ i les seves derivades primeres són contínues a $\\Omega$, pel teorema de Schwarz les dues derivades creuades coincideixen a tot punt de $\\Omega$. L'únic candidat és l'origen.",
+    "Per a $(x,y)\\neq(0,0)$: $\\dfrac{\\partial f}{\\partial x}=\\dfrac{y(x^4+4x^2y^2-y^4)}{(x^2+y^2)^2}$ i $\\dfrac{\\partial f}{\\partial y}=\\dfrac{x(x^4-4x^2y^2-y^4)}{(x^2+y^2)^2}$.",
+    "A l'origen, substituint $(0,0)$ en aquestes fórmules obtenim $\\dfrac{\\partial f}{\\partial x}(0,0)=\\dfrac{\\partial f}{\\partial y}(0,0)=0$.",
+    "Sobre l'eix $x=0$, per a $y\\neq0$: $\\dfrac{\\partial f}{\\partial x}(0,y)=\\dfrac{y\\cdot(-y^4)}{y^4}=-y$, i en $y=0$ també val $0=-0$; així $\\dfrac{\\partial f}{\\partial x}(0,y)=-y$ per a tot $y$. Anàlogament, $\\dfrac{\\partial f}{\\partial y}(x,0)=\\dfrac{x\\cdot x^4}{x^4}=x$ per a tot $x$.",
+    "Llavors $\\dfrac{\\partial^2 f}{\\partial x\\partial y}(0,0)=\\dfrac{\\partial}{\\partial y}\\Big(\\dfrac{\\partial f}{\\partial x}\\Big)(0,0)=\\dfrac{d}{dy}(-y)\\Big|_{y=0}=-1$ i $\\dfrac{\\partial^2 f}{\\partial y\\partial x}(0,0)=\\dfrac{\\partial}{\\partial x}\\Big(\\dfrac{\\partial f}{\\partial y}\\Big)(0,0)=\\dfrac{d}{dx}(x)\\Big|_{x=0}=1$.",
+    "Les dues derivades creuades a l'origen són diferents, per tant el conjunt de punts demanat és $\\{(0,0)\\}$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "Com que $f$ i les seves derivades primeres són contínues a $\\Omega$",
+      "inici": 113,
+      "fi": 180,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "Per aplicar el teorema de Schwarz no n'hi ha prou amb la continuïtat de les derivades primeres: cal que les derivades segones (creuades) existeixin i siguin contínues.",
+      "correccio": "$f\\in\\mathcal{C}^\\infty(\\Omega)$ (quocient de polinomis amb denominador no nul), en particular les derivades segones hi són contínues, i pel teorema de Schwarz les creuades coincideixen a $\\Omega$.",
+      "pista": "Quines derivades han de ser contínues perquè el teorema de Schwarz garanteixi la igualtat de les derivades creuades?"
+    },
+    {
+      "id": "e2",
+      "fragment": 3,
+      "cita": "substituint $(0,0)$ en aquestes fórmules obtenim",
+      "inici": 12,
+      "fi": 60,
+      "tipus": "logica",
+      "explicacio": "Les fórmules només valen fora de l'origen i en $(0,0)$ donen $\\frac00$. Les parcials a l'origen s'han de calcular per la definició (el valor $0$ és correcte, però no per aquest motiu).",
+      "correccio": "Com que $f(h,0)=f(0,k)=0$, per definició $\\dfrac{\\partial f}{\\partial x}(0,0)=\\lim_{h\\to0}\\dfrac{f(h,0)-f(0,0)}{h}=0$ i igualment $\\dfrac{\\partial f}{\\partial y}(0,0)=0$.",
+      "pista": "Què passa si substitueixes $(0,0)$ al denominador $(x^2+y^2)^2$? Com es calcula una derivada parcial en un punt on la fórmula no val?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t34.json",
+    "valoracio": "Resultat final correcte, però Schwarz s'aplica amb una hipòtesi insuficient i les parcials a l'origen es calculen substituint en fórmules no definides allà.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "Com que $f$ i les seves derivades primeres són contínues a $\\Omega$, pel teorema de Schwarz",
+        "gravetat": "error",
+        "explicacio": "Schwarz demana que les derivades creuades (segones) siguin contínues; la continuïtat de les primeres no basta. Cal dir que $f\\in\\mathcal{C}^\\infty(\\Omega)$ (o $\\mathcal{C}^2$)."
+      },
+      {
+        "fragment": 3,
+        "cita": "substituint $(0,0)$ en aquestes fórmules",
+        "gravetat": "error",
+        "explicacio": "Les fórmules només valen fora de l'origen i en $(0,0)$ donen $0/0$; cal la definició: $f(h,0)=f(0,k)=0$ dona les parcials nul·les."
+      }
+    ]
+  },
+  "creat": 1791295851.937018
+}

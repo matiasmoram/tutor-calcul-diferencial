@@ -1,0 +1,65 @@
+{
+  "id": "0f75d9c5e845",
+  "exercici": "T2.8",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Siguin $(M,d)$ i $(N,d')$ dos espais mètrics, $f:\\Omega\\subseteq M\\longrightarrow N$ i $x_0\\in\\overline{\\Omega}$. Si existeix $\\lim_{x\\to x_0}f(x)$, aquest és únic.",
+    "Suposem que $\\lim_{x\\to x_0}f(x)=b$ i que $\\lim_{x\\to x_0}f(x)=c$, amb $b\\neq c$, i sigui $\\epsilon=d'(b,c)/2>0$.",
+    "Prenem una successió $(x_n)_{n\\in\\mathbb{N}}\\subseteq\\Omega$ tal que $x_n\\to x_0$ i $x_n\\neq x_0$ per a tota $n$.",
+    "Per l'apartat (c) de la proposició 7, existeix $n_0$ tal que $d'(f(x_n),b)<\\epsilon$ per a tota $n\\geq n_0$; anàlogament, existeix $n_0'$ tal que $d'(f(x_n),c)<\\epsilon$ per a tota $n\\geq n_0'$.",
+    "Per tant, per a tota $n\\geq\\min(n_0,n_0')$, aplicant la desigualtat triangular, tenim $d'(b,c)\\leq d'(b,f(x_n))+d'(f(x_n),c)<2\\epsilon=d'(b,c)$.",
+    "Arribem, doncs, a una contradicció, i per tant $b=c$."
+  ],
+  "n_enunciat": 1,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "$x_0\\in\\overline{\\Omega}$",
+      "inici": 87,
+      "fi": 112,
+      "tipus": "hipotesi",
+      "explicacio": "Si $x_0$ és adherent però aïllat, la definició de límit es compleix buidament per a qualsevol $b$ i el límit no és únic. Contraexemple: $\\Omega=\\{0\\}\\cup[1,2]$, $x_0=0$.",
+      "correccio": "Cal $x_0\\in\\Omega'$ (punt d'acumulació d'$\\Omega$), com a la definició 6 de límit.",
+      "pista": "Per a quins punts $x_0$ té sentit la definició de límit? Sempre existeix una successió $x_n\\to x_0$ amb $x_n\\neq x_0$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "per a tota $n\\geq\\min(n_0,n_0')$",
+      "inici": 10,
+      "fi": 42,
+      "tipus": "desigualtat",
+      "explicacio": "Per tenir alhora les dues fites cal $n\\geq n_0$ i $n\\geq n_0'$, és a dir, $n\\geq\\max(n_0,n_0')$; amb el mínim només es garanteix una de les dues.",
+      "correccio": "Per a tota $n\\geq\\max(n_0,n_0')$.",
+      "pista": "A partir de quin índex es compleixen simultàniament les dues desigualtats?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t2a.json",
+    "valoracio": "Hipòtesi $x_0\\in\\overline{\\Omega}$ en lloc de $x_0\\in\\Omega'$ i mínim en lloc de màxim d'índexs.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "$x_0\\in\\overline{\\Omega}$",
+        "gravetat": "error",
+        "explicacio": "La hipòtesi ha de ser $x_0\\in\\Omega'$ (punt d'acumulació). Si $x_0$ és un punt aïllat d'$\\overline{\\Omega}$, la definició de límit es compleix per a qualsevol $b$ i no hi ha unicitat."
+      },
+      {
+        "fragment": 3,
+        "cita": "Prenem una successió $(x_n)_{n\\in\\mathbb{N}}\\subseteq\\Omega$ tal que $x_n\\to x_0$ i $x_n\\neq x_0$ per a tota $n$.",
+        "gravetat": "consequencia",
+        "explicacio": "Aquesta successió existeix només si $x_0\\in\\Omega'$; amb la hipòtesi $x_0\\in\\overline{\\Omega}$ de l'enunciat pot no existir."
+      },
+      {
+        "fragment": 5,
+        "cita": "$n\\geq\\min(n_0,n_0')$",
+        "gravetat": "error",
+        "explicacio": "Cal $n\\geq\\max(n_0,n_0')$ perquè les dues desigualtats valguin alhora; amb el mínim només se'n garanteix una."
+      }
+    ]
+  },
+  "creat": 1791295999.5497012
+}

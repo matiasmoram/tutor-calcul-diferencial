@@ -1,0 +1,48 @@
+{
+  "id": "790dc6ea728a",
+  "exercici": "t3-21b",
+  "font": "problema",
+  "dificultat": "facil",
+  "fragments": [
+    "$g$ és de classe $\\mathcal{C}^1$ on $\\cos u\\neq0$ i $\\cos v\\neq0$, i $f$ és de classe $\\mathcal{C}^1$ a l'obert $\\{xy\\neq1\\}$. Per la regla de la cadena, $F=f\\circ g$ és diferenciable als punts amb $\\cos u\\neq0$, $\\cos v\\neq0$ i $\\tan u\\tan v\\neq1$.",
+    "Derivant el quocient, $\\dfrac{\\partial f}{\\partial x}=\\dfrac{(1-xy)+(x+y)y}{(1-xy)^2}=\\dfrac{1+y^2}{(1-xy)^2}$ i, per simetria, $\\dfrac{\\partial f}{\\partial y}=\\dfrac{1+x^2}{(1-xy)^2}$.",
+    "A més, $\\dfrac{d}{du}\\tan u=1+\\tan^2u$, i la segona component de $g$ no depèn de $u$. Per la regla de la cadena, $D_1F=\\dfrac{\\partial f}{\\partial x}(g(u,v))\\,(1+\\tan^2u)=\\dfrac{(1+\\tan^2u)(1+\\tan^2v)}{(1-\\tan u\\tan v)^2}$.",
+    "Anàlogament, $D_2F=\\dfrac{\\partial f}{\\partial y}(g(u,v))\\,(1+\\tan^2v)=\\dfrac{(1+\\tan^2u)(1+\\tan^2v)}{(1-\\tan u\\tan v)^2}$.",
+    "Per simplificar, usem $1+\\tan^2u=\\dfrac{1}{\\cos^2u}$: $D_1F=\\dfrac{1}{\\cos^2u\\cos^2v\\,(1-\\tan u\\tan v)^2}=\\dfrac{1}{(\\cos u\\cos v+\\sin u\\sin v)^2}$.",
+    "Per tant, $D_1F(u,v)=D_2F(u,v)=\\dfrac{1}{\\cos^2(u-v)}$ a tots els punts on $F$ està definida."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 5,
+      "cita": "=\\dfrac{1}{(\\cos u\\cos v+\\sin u\\sin v)^2}",
+      "inici": 105,
+      "fi": 146,
+      "tipus": "calcul",
+      "explicacio": "En multiplicar, $\\cos u\\cos v\\,(1-\\tan u\\tan v)=\\cos u\\cos v-\\sin u\\sin v$: el signe és negatiu, no positiu.",
+      "correccio": "$D_1F=\\dfrac{1}{(\\cos u\\cos v-\\sin u\\sin v)^2}=\\dfrac{1}{\\cos^2(u+v)}$, i el mateix per a $D_2F$.",
+      "pista": "Quant val $\\cos u\\cos v\\cdot\\tan u\\tan v$? Amb quin signe apareix a l'expressió?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t34.json",
+    "valoracio": "Regla de la cadena correcta, però la simplificació trigonomètrica canvia el signe i dona $1/\\cos^2(u-v)$ en lloc de $1/\\cos^2(u+v)$.",
+    "problemes": [
+      {
+        "fragment": 5,
+        "cita": "=\\dfrac{1}{(\\cos u\\cos v+\\sin u\\sin v)^2}",
+        "gravetat": "error",
+        "explicacio": "$\\cos u\\cos v(1-\\tan u\\tan v)=\\cos u\\cos v-\\sin u\\sin v=\\cos(u+v)$: el signe és $-$, no $+$."
+      },
+      {
+        "fragment": 6,
+        "cita": "\\dfrac{1}{\\cos^2(u-v)}",
+        "gravetat": "consequencia",
+        "explicacio": "Coherent amb el signe erroni anterior; el resultat correcte és $1/\\cos^2(u+v)$."
+      }
+    ]
+  },
+  "creat": 1791295851.9316993
+}

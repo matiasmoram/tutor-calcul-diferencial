@@ -1,0 +1,61 @@
+{
+  "id": "b0f19eee1e8c",
+  "exercici": "T2.23",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $f:\\Omega\\subseteq M\\to\\mathbb{R}$ contínua i $K\\subseteq\\Omega$ compacte.",
+    "Llavors $f(K)$ és un interval tancat i fitat i existeixen $x_0,x_1\\in K$ tals que $f(x_0)=\\min_{x\\in K}f(x)$ i $f(x_1)=\\max_{x\\in K}f(x)$.",
+    "La primera part és immediata: com que $f$ és contínua i $K$ és compacte, per la proposició 21 el conjunt $f(K)\\subset\\mathbb{R}$ és compacte i, per tant, fitat.",
+    "Com que $f(K)$ és fitat, podem considerar els nombres reals $f_M:=\\sup_{x\\in K}f(x)$ i $f_m:=\\inf_{x\\in K}f(x)$. Demostrarem que s'assoleixen en punts de $K$; ho fem només per al màxim, ja que per al mínim la demostració és anàloga.",
+    "Per la definició de suprem, podem prendre una successió $(x_n)_n\\subset K$ tal que $f(x_n)\\to f_M$ quan $n\\to\\infty$.",
+    "Com que $K$ és compacte, la successió $(x_n)_n$ admet una parcial convergent $(x_{n_k})_k$, amb $x_{n_k}\\to x^*\\in K$ quan $k\\to\\infty$.",
+    "Per continuïtat de $f$, tenim que $f(x_{n_k})\\to f(x^*)$. A més, com que $f(x_{n_k})\\leq f_M$ per a tota $k$, deduïm que $f(x^*)=f_M$.",
+    "Per tant, $f$ ateny el seu màxim al punt $x^*\\in K$, i $x_1:=x^*$ compleix el que volíem."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$f(K)$ és un interval tancat i fitat",
+      "inici": 8,
+      "fi": 44,
+      "tipus": "conclusio",
+      "explicacio": "Que $f(K)$ sigui un interval requereix que $K$ sigui connex; la compacitat només dona que $f(K)$ és compacte (fitat i tancat). Contraexemple: $K=\\{0,1\\}\\subset\\mathbb{R}$ i $f(x)=x$, amb $f(K)=\\{0,1\\}$.",
+      "correccio": "$f(K)$ és fitat (de fet, compacte), sense que hagi de ser un interval.",
+      "pista": "Quina hipòtesi caldria perquè la imatge fos un interval? La tenim aquí?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "com que $f(x_{n_k})\\leq f_M$ per a tota $k$, deduïm que $f(x^*)=f_M$",
+      "inici": 65,
+      "fi": 133,
+      "tipus": "pas_injustificat",
+      "explicacio": "De $f(x_{n_k})\\leq f_M$ i $f(x_{n_k})\\to f(x^*)$ només se segueix $f(x^*)\\leq f_M$, no la igualtat. Cal usar que $f(x_{n_k})\\to f_M$ (per ser parcial de $f(x_n)\\to f_M$) i la unicitat del límit.",
+      "correccio": "Com que $f(x_{n_k})\\to f_M$ i també $f(x_{n_k})\\to f(x^*)$, per la unicitat del límit $f(x^*)=f_M$.",
+      "pista": "Una cota superior de la successió què et diu del seu límit: igualtat o només desigualtat?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t2b.json",
+    "valoracio": "Dos errors: conclusió més forta a l'enunciat (interval) i pas final de la demostració que no se segueix.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$f(K)$ és un interval tancat i fitat",
+        "gravetat": "error",
+        "explicacio": "Conclusió més forta que la dels apunts: $K$ compacte no és necessàriament connex, i $f(K)$ és compacte però no necessàriament un interval (p. ex. $K=\\{0,1\\}$, $f(x)=x$)."
+      },
+      {
+        "fragment": 7,
+        "cita": "com que $f(x_{n_k})\\leq f_M$ per a tota $k$, deduïm que $f(x^*)=f_M$",
+        "gravetat": "error",
+        "explicacio": "De $f(x_{n_k})\\le f_M$ només es dedueix $f(x^*)\\le f_M$; cal usar $f(x_{n_k})\\to f_M$ i la unicitat del límit."
+      }
+    ]
+  },
+  "creat": 1791295930.341535
+}

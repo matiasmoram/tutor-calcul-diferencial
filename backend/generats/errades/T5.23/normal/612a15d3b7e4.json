@@ -1,0 +1,59 @@
+{
+  "id": "612a15d3b7e4",
+  "exercici": "T5.23",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $\\Omega\\subseteq\\mathbb{R}^n$ un obert i $f:\\Omega\\to\\mathbb{R}$ una funció diferenciable en $\\mathbf{a}\\in\\Omega$. Aleshores $\\mathbf{a}$ és un extrem (és a dir, un màxim o un mínim) local de $f$ si, i només si, $\\mathbf{a}$ és un punt crític de $f$.",
+    "Suposem que $\\mathbf{a}$ és un extrem local; per exemple, un màxim local (el cas del mínim és anàleg, o s'obté aplicant el raonament a $-f$). Existeix $\\epsilon>0$ tal que $B(\\mathbf{a},\\epsilon)\\subseteq\\Omega$ i $f(\\mathbf{x})\\leq f(\\mathbf{a})$ per a tot $\\mathbf{x}\\in B(\\mathbf{a},\\epsilon)$.",
+    "Per a cada $i=1,\\ldots,n$ considerem $g_i:(a_i-\\epsilon,a_i+\\epsilon)\\to\\mathbb{R}$, $g_i(x)=f(a_1,\\ldots,a_{i-1},x,a_{i+1},\\ldots,a_n)$. Com que $f$ és diferenciable en $\\mathbf{a}$, $g_i$ és derivable en $a_i$ i $g_i'(a_i)=\\frac{\\partial f}{\\partial x_i}(\\mathbf{a})$.",
+    "A més, $g_i(x)\\leq g_i(a_i)$ per a tot $x\\in(a_i-\\epsilon,a_i+\\epsilon)$: $g_i$ té un màxim local en $a_i$, ja que un extrem local de $f$ ho és també en cada direcció.",
+    "Per tant, el quocient $\\frac{g_i(x)-g_i(a_i)}{x-a_i}$ és $\\leq0$ si $x>a_i$ i és $\\leq0$ si $x<a_i$. Prenent límits laterals en $a_i$, obtenim $g_i'(a_i)\\leq0$ i $g_i'(a_i)\\geq0$, és a dir, $g_i'(a_i)=0$.",
+    "Així, $\\frac{\\partial f}{\\partial x_i}(\\mathbf{a})=0$ per a tot $i=1,\\ldots,n$ i, per tant, $Df(\\mathbf{a})=(0\\ \\ldots\\ 0)$: $\\mathbf{a}$ és un punt crític de $f$."
+  ],
+  "n_enunciat": 1,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "si, i només si, $\\mathbf{a}$ és un punt crític de $f$",
+      "inici": 203,
+      "fi": 256,
+      "tipus": "implicacio",
+      "explicacio": "El recíproc és fals: $f(x)=x^3$ té un punt crític en $0$ que no és ni màxim ni mínim local (tampoc $f(x,y)=x^2-y^2$ en l'origen). A més, la demostració només prova una implicació.",
+      "correccio": "Els apunts només afirmen una implicació: si $\\mathbf{a}$ és un extrem local de $f$, llavors $\\mathbf{a}$ és un punt crític de $f$.",
+      "pista": "Tot punt crític és un extrem? Pensa en $f(x)=x^3$ en $x=0$."
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "és $\\leq0$ si $x>a_i$ i és $\\leq0$ si $x<a_i$",
+      "inici": 54,
+      "fi": 99,
+      "tipus": "desigualtat",
+      "explicacio": "Si $x<a_i$, el numerador $g_i(x)-g_i(a_i)\\leq0$ i el denominador $x-a_i<0$, de manera que el quocient és $\\geq0$; amb el signe escrit no es podria deduir $g_i'(a_i)\\geq0$.",
+      "correccio": "El quocient és $\\leq0$ si $x>a_i$ i $\\geq0$ si $x<a_i$; els límits laterals donen $g_i'(a_i)\\leq0$ i $g_i'(a_i)\\geq0$.",
+      "pista": "Quin signe té $x-a_i$ quan $x<a_i$? I què passa amb el signe d'un quocient de numerador no positiu?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t5.json",
+    "valoracio": "Enunciat convertit en una equivalència falsa i error de signe en el quocient incremental per l'esquerra.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "si, i només si,",
+        "gravetat": "error",
+        "explicacio": "Els apunts només afirmen extrem local ⇒ punt crític. El recíproc és fals: $f(x,y)=x^2-y^2$ (o $x^3$) té un punt crític a l'origen que no és extrem. La demostració, a més, només prova una implicació."
+      },
+      {
+        "fragment": 5,
+        "cita": "és $\\leq0$ si $x<a_i$",
+        "gravetat": "error",
+        "explicacio": "Si $x<a_i$, el numerador és $\\leq0$ i el denominador $<0$, per tant el quocient és $\\geq0$. Amb dos signes $\\leq0$ només s'obtindria $g_i'(a_i)\\leq0$; la conclusió $g_i'(a_i)\\geq0$ no se'n segueix."
+      }
+    ]
+  },
+  "creat": 1791296162.0736363
+}

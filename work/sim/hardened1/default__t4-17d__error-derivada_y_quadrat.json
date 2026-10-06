@@ -1,0 +1,1206 @@
+{
+ "exercici": "t4-17d",
+ "tema": 4,
+ "persona": "error:derivada_y_quadrat",
+ "arquetip": "error",
+ "persona_descripcio": "Ets un alumne que creu sincerament el següent; és la teva manera de pensar i no saps que és un error:\n«S'equivoca derivant $\\frac{x}{y^2}$ respecte de $y$ (signe o exponent).»\nTreballes l'exercici mostrant el raonament i, quan arribes al punt on importa, cometes aquest error amb convicció. Si el tutor et qüestiona, al principi defenses el teu raonament; només el canvies si les preguntes del tutor et fan veure clarament el problema. Després continues intentant resoldre l'exercici.",
+ "final": "error_tutor",
+ "torns": [
+  {
+   "n": 1,
+   "alumne": "Per les equacions tenim $g_1(x,y)=x-2y$ i $g_2(x,y)=-\\frac{x}{y}$. Així totes les derivades segones de $g_1$ són zero: $g_{1,xx}=g_{1,xy}=g_{1,yy}=0$. Per $g_2$ trobem $g_{2,x}=-\\frac{1}{y}$ i $g_{2,y}=\\frac{x}{y^2}$, de manera que $g_{2,xx}=0$, $g_{2,xy}=\\frac{1}{y^2}$ i (derivant $\\frac{x}{y^2}$ respecte de $y$) $g_{2,yy}=\\frac{2x}{y^3}$. Per tant en $(1,1)$: $g_{1,**}=0$, $g_{2,xx}=0$, $g_{2,xy}=1$, $g_{2,yy}=2$.",
+   "tutor": "La part de $g_1$ està ben raonada: com que és lineal, les derivades segones són $0$. En canvi, mira amb calma el pas de derivar $\\frac{x}{y^2}$ respecte de $y$: quina és la derivada de $y^{-2}$?",
+   "accio": "questionar_error",
+   "pas_objectiu": "segones_g2",
+   "nivell": 0,
+   "intencio": "proposa_resultat",
+   "errors_detectats": [
+    "derivada_y_quadrat"
+   ],
+   "fallback": false,
+   "drafts": 1,
+   "rebuigs": [],
+   "progres": true,
+   "completats": [
+    "segones_g1"
+   ],
+   "trace": {
+    "torn": 1,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "\"totes les derivades segones de $g_1$ són zero\" ... \"$g_{2,yy}=\\frac{2x}{y^3}$\" ... \"en $(1,1)$: ... $g_{2,yy}=2$\"",
+     "resum_alumne": "Ha calculat correctament les derivades segones de $g_1$ i gairebé totes les de $g_2$, però s’ha equivocat en la segona derivada respecte de $y$ de $g_2$.",
+     "estat_passos": [
+      {
+       "pas": "segones_g1",
+       "estat": "completat"
+      },
+      {
+       "pas": "segones_g2",
+       "estat": "erroni"
+      }
+     ],
+     "pas_actual": "segones_g2",
+     "errors_detectats": [
+      "derivada_y_quadrat"
+     ],
+     "error_altre": "",
+     "resultat_proposat": "incorrecte",
+     "resultat_justificat": false,
+     "nivell_desorientacio": "dubte_puntual",
+     "intencio": "proposa_resultat",
+     "teoria_pregunta": []
+    },
+    "pla": {
+     "accio": "questionar_error",
+     "motiu": "Error detectat: derivada_y_quadrat.",
+     "pas_objectiu": "segones_g2",
+     "nivell_pista": 0,
+     "error_objectiu": "derivada_y_quadrat",
+     "error_text": "S'equivoca derivant $\\frac{x}{y^2}$ respecte de $y$ (signe o exponent).\n",
+     "pregunta_suggerida": "Quina és la derivada de $y^{-2}$?\n",
+     "pot_dir_resultat": false,
+     "resultat_dit_per_alumne": false,
+     "requereix_pregunta": true,
+     "max_frases": 4,
+     "regex_prohibides": [
+      "\\\\partial\\s*y\\^\\{?2\\}?\\}\\s*\\(1,\\s*1\\)\\s*=\\s*-\\s*2",
+      "\\\\partial\\s*x\\s*\\\\partial\\s*y\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1",
+      "\\\\partial\\s*y\\s*\\\\partial\\s*x\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1",
+      "-\\s*\\\\[dt]?frac\\{\\s*2\\s*x\\s*\\}\\{\\s*y\\^\\{?3\\}?\\s*\\}"
+     ],
+     "teoria_extra": [],
+     "to": "normal",
+     "moviment": "Probing"
+    },
+    "contingut_permes": "Passos que l'alumne JA té resolts (pots referir-t'hi):\n  - Derivades segones de $g_1$: $g_1(x,y)=x-2y$ és lineal (o bé: $\\frac{\\partial g_1}{\\partial x}=1$ i $\\frac{\\partial g_1}{\\partial y}=-2$ són constants), per tant totes les derivades segones de $g_1$ són $0$.\n\nPAS OBJECTIU: Derivades segones de $g_2$\nERROR DE L'ALUMNE (no l'anomenis directament): S'equivoca derivant $\\frac{x}{y^2}$ respecte de $y$ (signe o exponent).\n\nPregunta socràtica suggerida (pots adaptar-la): Quina és la derivada de $y^{-2}$?\n",
+    "teoria_permesa": [
+     "T5.1"
+    ],
+    "intents": [
+     {
+      "missatge": "La part de $g_1$ està ben raonada: com que és lineal, les derivades segones són $0$. En canvi, mira amb calma el pas de derivar $\\frac{x}{y^2}$ respecte de $y$: quina és la derivada de $y^{-2}$?",
+      "referencies": [],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "El missatge és en català, respon al que ha escrit l’alumne, no revela el resultat final i es limita a una pregunta socràtica adequada sobre el pas de derivar que ha fallat."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [],
+     "nivell_per_pas": {},
+     "torns": 0,
+     "tancat": false,
+     "ultim_pas": null,
+     "ultima_accio": null,
+     "estats": {},
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {},
+     "resultat_confirmat": false,
+     "intents_alumne": 0
+    },
+    "estat": {
+     "completats": [
+      "segones_g1"
+     ],
+     "nivell_per_pas": {
+      "segones_g2": 0
+     },
+     "torns": 1,
+     "tancat": false,
+     "ultim_pas": "segones_g2",
+     "ultima_accio": "questionar_error",
+     "estats": {
+      "segones_g1": "completat",
+      "segones_g2": "erroni"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "derivada_y_quadrat": 1
+     },
+     "repeticions": {
+      "segones_g2": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 1
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2921,
+      "input_tokens": 3682,
+      "output_tokens": 315,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1536,
+      "input_tokens": 1562,
+      "output_tokens": 94,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2497,
+      "input_tokens": 2702,
+      "output_tokens": 188,
+      "cached_tokens": 0,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 6956
+   },
+   "jutge": {
+    "revela_resultat_final": false,
+    "passos_revelats": [],
+    "explicacio": "Només apunta \"quina és la derivada de y^{-2}?\" i no dona els valors finals de les derivades segones de g2.",
+    "permesos": [
+     "segones_g1"
+    ],
+    "resultat_permes": false,
+    "fuga": false,
+    "fuga_resultat": false,
+    "passos_filtrats": []
+   }
+  },
+  {
+   "n": 2,
+   "alumne": "La derivada de $y^{-2}$ és $2y^{-3}$, així $g_{2,yy}=\\frac{2x}{y^3}$, i en $(1,1)$ dona $2$. Per tant $g_{1,**}=0$, $g_{2,xx}=0$, $g_{2,xy}=1$, $g_{2,yy}=2$.",
+   "tutor": "Bé, ja tens ben encarrilada la part de $g_1$; ara centra’t en $g_2$. Si escrius $\\frac{x}{y^2}=x\\,y^{-2}$, quin resultat t’hauria de sortir en derivar-ho respecte de $y$?",
+   "accio": "questionar_error",
+   "pas_objectiu": "segones_g2",
+   "nivell": 1,
+   "intencio": "proposa_resultat",
+   "errors_detectats": [
+    "derivada_y_quadrat"
+   ],
+   "fallback": false,
+   "drafts": 1,
+   "rebuigs": [],
+   "progres": false,
+   "completats": [
+    "segones_g1"
+   ],
+   "trace": {
+    "torn": 2,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "\"La derivada de $y^{-2}$ és $2y^{-3}$, així $g_{2,yy}=\\frac{2x}{y^3}$, i en $(1,1)$ dona $2$. Per tant $g_{1,**}=0,\\ g_{2,xx}=0,\\ g_{2,xy}=1,\\ g_{2,yy}=2$.\"",
+     "resum_alumne": "Ha mantingut correctament les derivades segones de $g_1$ i ha intentat acabar $g_2$, però ha comès un error de signe en derivar respecte de $y$.",
+     "estat_passos": [
+      {
+       "pas": "segones_g1",
+       "estat": "completat"
+      },
+      {
+       "pas": "segones_g2",
+       "estat": "erroni"
+      }
+     ],
+     "pas_actual": "segones_g2",
+     "errors_detectats": [
+      "derivada_y_quadrat"
+     ],
+     "error_altre": "",
+     "resultat_proposat": "incorrecte",
+     "resultat_justificat": false,
+     "nivell_desorientacio": "dubte_puntual",
+     "intencio": "proposa_resultat",
+     "teoria_pregunta": []
+    },
+    "pla": {
+     "accio": "questionar_error",
+     "motiu": "Error detectat: derivada_y_quadrat (repetit: es puja el nivell).",
+     "pas_objectiu": "segones_g2",
+     "nivell_pista": 1,
+     "error_objectiu": "derivada_y_quadrat",
+     "error_text": "S'equivoca derivant $\\frac{x}{y^2}$ respecte de $y$ (signe o exponent).\n",
+     "pregunta_suggerida": null,
+     "pot_dir_resultat": false,
+     "resultat_dit_per_alumne": false,
+     "requereix_pregunta": true,
+     "max_frases": 4,
+     "regex_prohibides": [
+      "\\\\partial\\s*y\\^\\{?2\\}?\\}\\s*\\(1,\\s*1\\)\\s*=\\s*-\\s*2",
+      "\\\\partial\\s*x\\s*\\\\partial\\s*y\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1",
+      "\\\\partial\\s*y\\s*\\\\partial\\s*x\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1",
+      "-\\s*\\\\[dt]?frac\\{\\s*2\\s*x\\s*\\}\\{\\s*y\\^\\{?3\\}?\\s*\\}"
+     ],
+     "teoria_extra": [],
+     "to": "normal",
+     "moviment": "Probing"
+    },
+    "contingut_permes": "Passos que l'alumne JA té resolts (pots referir-t'hi):\n  - Derivades segones de $g_1$: $g_1(x,y)=x-2y$ és lineal (o bé: $\\frac{\\partial g_1}{\\partial x}=1$ i $\\frac{\\partial g_1}{\\partial y}=-2$ són constants), per tant totes les derivades segones de $g_1$ són $0$.\n\nPAS OBJECTIU: Derivades segones de $g_2$\n  objectiu: Calcular les derivades segones de $g_2$ a $(1,1)$.\n\nERROR DE L'ALUMNE (no l'anomenis directament): S'equivoca derivant $\\frac{x}{y^2}$ respecte de $y$ (signe o exponent).\n",
+    "teoria_permesa": [
+     "T5.1"
+    ],
+    "intents": [
+     {
+      "missatge": "Bé, ja tens ben encarrilada la part de $g_1$; ara centra’t en $g_2$. Si escrius $\\frac{x}{y^2}=x\\,y^{-2}$, quin resultat t’hauria de sortir en derivar-ho respecte de $y$?",
+      "referencies": [],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "Fa una pregunta en català que guia l’alumne cap al pas objectiu sense revelar la correcció ni el resultat final."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [
+      "segones_g1"
+     ],
+     "nivell_per_pas": {
+      "segones_g2": 0
+     },
+     "torns": 1,
+     "tancat": false,
+     "ultim_pas": "segones_g2",
+     "ultima_accio": "questionar_error",
+     "estats": {
+      "segones_g1": "completat",
+      "segones_g2": "erroni"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "derivada_y_quadrat": 1
+     },
+     "repeticions": {
+      "segones_g2": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 1
+    },
+    "estat": {
+     "completats": [
+      "segones_g1"
+     ],
+     "nivell_per_pas": {
+      "segones_g2": 1
+     },
+     "torns": 2,
+     "tancat": false,
+     "ultim_pas": "segones_g2",
+     "ultima_accio": "questionar_error",
+     "estats": {
+      "segones_g1": "completat",
+      "segones_g2": "erroni"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "derivada_y_quadrat": 2
+     },
+     "repeticions": {
+      "segones_g2": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 2
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 3126,
+      "input_tokens": 3851,
+      "output_tokens": 299,
+      "cached_tokens": 2816,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 3041,
+      "input_tokens": 1731,
+      "output_tokens": 173,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1741,
+      "input_tokens": 2868,
+      "output_tokens": 119,
+      "cached_tokens": 1792,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 7910
+   },
+   "jutge": {
+    "revela_resultat_final": false,
+    "passos_revelats": [],
+    "explicacio": "No dona el resultat ni la conclusió; només pregunta “quin resultat t’hauria de sortir en derivar-ho respecte de y?” i recorda l’escriptura \u0000x y^{-2}\u0000.",
+    "permesos": [
+     "segones_g1"
+    ],
+    "resultat_permes": false,
+    "fuga": false,
+    "fuga_resultat": false,
+    "passos_filtrats": []
+   }
+  },
+  {
+   "n": 3,
+   "alumne": "Si derivo $x y^{-2}$ respecte de $y$ obtinc $x\\cdot(2y^{-3})$, és a dir $2x y^{-3}=\\frac{2x}{y^3}$.",
+   "tutor": "Bé, la idea de tornar a derivar l’expressió explícita de $g_2$ és la correcta, i per a les derivades mixtes pots pensar també en el Teorema 6 del Tema 5 si vols comprovar l’ordre. Abans de seguir, torna a mirar com deribes respecte de $y$ una potència $y^n$: quin signe i quin exponent hauria de quedar quan parteixes de $y^{-2}$?",
+   "accio": "questionar_error",
+   "pas_objectiu": "segones_g2",
+   "nivell": 2,
+   "intencio": "mostra_treball",
+   "errors_detectats": [
+    "derivada_y_quadrat"
+   ],
+   "fallback": false,
+   "drafts": 1,
+   "rebuigs": [],
+   "progres": false,
+   "completats": [
+    "segones_g1"
+   ],
+   "trace": {
+    "torn": 3,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "\"Si derivo x y^{-2} respecte de y obtinc x\\cdot(2y^{-3}), és a dir 2x y^{-3}=\\frac{2x}{y^3}.\"",
+     "resum_alumne": "Ha tornat a intentar derivar $g_2$ però manté l’error de signe en la derivada respecte de $y$; la part de $g_1$ ja està completada correctament.",
+     "estat_passos": [
+      {
+       "pas": "segones_g1",
+       "estat": "completat"
+      },
+      {
+       "pas": "segones_g2",
+       "estat": "erroni"
+      }
+     ],
+     "pas_actual": "segones_g2",
+     "errors_detectats": [
+      "derivada_y_quadrat"
+     ],
+     "error_altre": "",
+     "resultat_proposat": "cap",
+     "resultat_justificat": false,
+     "nivell_desorientacio": "encallat",
+     "intencio": "mostra_treball",
+     "teoria_pregunta": []
+    },
+    "pla": {
+     "accio": "questionar_error",
+     "motiu": "Error detectat: derivada_y_quadrat (repetit: es puja el nivell).",
+     "pas_objectiu": "segones_g2",
+     "nivell_pista": 2,
+     "error_objectiu": "derivada_y_quadrat",
+     "error_text": "S'equivoca derivant $\\frac{x}{y^2}$ respecte de $y$ (signe o exponent).\n",
+     "pregunta_suggerida": null,
+     "pot_dir_resultat": false,
+     "resultat_dit_per_alumne": false,
+     "requereix_pregunta": true,
+     "max_frases": 4,
+     "regex_prohibides": [
+      "\\\\partial\\s*y\\^\\{?2\\}?\\}\\s*\\(1,\\s*1\\)\\s*=\\s*-\\s*2",
+      "\\\\partial\\s*x\\s*\\\\partial\\s*y\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1",
+      "\\\\partial\\s*y\\s*\\\\partial\\s*x\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1",
+      "-\\s*\\\\[dt]?frac\\{\\s*2\\s*x\\s*\\}\\{\\s*y\\^\\{?3\\}?\\s*\\}"
+     ],
+     "teoria_extra": [],
+     "to": "normal",
+     "moviment": "Probing"
+    },
+    "contingut_permes": "Passos que l'alumne JA té resolts (pots referir-t'hi):\n  - Derivades segones de $g_1$: $g_1(x,y)=x-2y$ és lineal (o bé: $\\frac{\\partial g_1}{\\partial x}=1$ i $\\frac{\\partial g_1}{\\partial y}=-2$ són constants), per tant totes les derivades segones de $g_1$ són $0$.\n\nPAS OBJECTIU: Derivades segones de $g_2$\n  objectiu: Calcular les derivades segones de $g_2$ a $(1,1)$.\n\n  idea: Derivar una altra vegada l'expressió explícita de (c), o bé tornar a derivar implícitament les equacions de (b).\n\nERROR DE L'ALUMNE (no l'anomenis directament): S'equivoca derivant $\\frac{x}{y^2}$ respecte de $y$ (signe o exponent).\n",
+    "teoria_permesa": [
+     "T5.1",
+     "T5.6"
+    ],
+    "intents": [
+     {
+      "missatge": "Bé, la idea de tornar a derivar l’expressió explícita de $g_2$ és la correcta, i per a les derivades mixtes pots pensar també en el Teorema 6 del Tema 5 si vols comprovar l’ordre. Abans de seguir, torna a mirar com deribes respecte de $y$ una potència $y^n$: quin signe i quin exponent hauria de quedar quan parteixes de $y^{-2}$?",
+      "referencies": [
+       "T5.6"
+      ],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "El missatge està en català, respon a l’error de l’alumne amb una pista de nivell 2 sense fer el càlcul ni revelar el resultat, i acaba amb una pregunta tal com demana el pla."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [
+      "segones_g1"
+     ],
+     "nivell_per_pas": {
+      "segones_g2": 1
+     },
+     "torns": 2,
+     "tancat": false,
+     "ultim_pas": "segones_g2",
+     "ultima_accio": "questionar_error",
+     "estats": {
+      "segones_g1": "completat",
+      "segones_g2": "erroni"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "derivada_y_quadrat": 2
+     },
+     "repeticions": {
+      "segones_g2": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 2
+    },
+    "estat": {
+     "completats": [
+      "segones_g1"
+     ],
+     "nivell_per_pas": {
+      "segones_g2": 2
+     },
+     "torns": 3,
+     "tancat": false,
+     "ultim_pas": "segones_g2",
+     "ultima_accio": "questionar_error",
+     "estats": {
+      "segones_g1": "completat",
+      "segones_g2": "erroni"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "derivada_y_quadrat": 3
+     },
+     "repeticions": {
+      "segones_g2": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 3
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 3263,
+      "input_tokens": 3969,
+      "output_tokens": 322,
+      "cached_tokens": 3328,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1686,
+      "input_tokens": 2044,
+      "output_tokens": 144,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1616,
+      "input_tokens": 3219,
+      "output_tokens": 152,
+      "cached_tokens": 1792,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 6567
+   },
+   "jutge": {
+    "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5.4-mini in organization org-aWic6JXH1ufAi063obKtm6QB on tokens per min (TPM): Limit 200000, Used 199401, Requested 913. Please try again in 94ms. Visit https://platform.openai.com/account/rate-limits to learn more.'"
+   }
+  },
+  {
+   "n": 4,
+   "alumne": "La derivada de $y^n$ és $n y^{n-1}$, per tant amb $n=-2$ queda $(-2)y^{-3}$; però jo penso que això és equivalent a $2y^{-3}$, així que torno a dir que $\\frac{d}{dy}y^{-2}=2y^{-3}$ i per tant $g_{2,yy}=\\frac{2x}{y^3}$.",
+   "tutor": "La part de $g_1$ ja la tens bé: com que és lineal, totes les seves derivades segones són $0$. Per a $g_2$, si tornes a escriure $\\dfrac{x}{y^2}=x\\,y^{-2}$ i apliques la regla de la potència a $y^{-2}$, quin signe i quin exponent obtens per a la derivada respecte de $y$?",
+   "accio": "questionar_error",
+   "pas_objectiu": "segones_g2",
+   "nivell": 3,
+   "intencio": "mostra_treball",
+   "errors_detectats": [
+    "derivada_y_quadrat"
+   ],
+   "fallback": false,
+   "drafts": 1,
+   "rebuigs": [],
+   "progres": false,
+   "completats": [
+    "segones_g1"
+   ],
+   "trace": {
+    "torn": 4,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "\"però jo penso que això és equivalent a 2y^{-3}, així que torno a dir que \\frac{d}{dy}y^{-2}=2y^{-3} i per tant g_{2,yy}=\\frac{2x}{y^3}\"",
+     "resum_alumne": "Ha mantingut correcta la part de g1, però continua equivocant-se en la derivada respecte de y de g2 i acaba donant un valor incorrecte per a g2,yy.",
+     "estat_passos": [
+      {
+       "pas": "segones_g1",
+       "estat": "completat"
+      },
+      {
+       "pas": "segones_g2",
+       "estat": "erroni"
+      }
+     ],
+     "pas_actual": "segones_g2",
+     "errors_detectats": [
+      "derivada_y_quadrat"
+     ],
+     "error_altre": "",
+     "resultat_proposat": "incorrecte",
+     "resultat_justificat": false,
+     "nivell_desorientacio": "encallat",
+     "intencio": "mostra_treball",
+     "teoria_pregunta": []
+    },
+    "pla": {
+     "accio": "questionar_error",
+     "motiu": "Error detectat: derivada_y_quadrat (repetit: es puja el nivell).",
+     "pas_objectiu": "segones_g2",
+     "nivell_pista": 3,
+     "error_objectiu": "derivada_y_quadrat",
+     "error_text": "S'equivoca derivant $\\frac{x}{y^2}$ respecte de $y$ (signe o exponent).\n",
+     "pregunta_suggerida": null,
+     "pot_dir_resultat": false,
+     "resultat_dit_per_alumne": false,
+     "requereix_pregunta": true,
+     "max_frases": 4,
+     "regex_prohibides": [
+      "\\\\partial\\s*y\\^\\{?2\\}?\\}\\s*\\(1,\\s*1\\)\\s*=\\s*-\\s*2",
+      "\\\\partial\\s*x\\s*\\\\partial\\s*y\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1",
+      "\\\\partial\\s*y\\s*\\\\partial\\s*x\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1"
+     ],
+     "teoria_extra": [],
+     "to": "normal",
+     "moviment": "Probing"
+    },
+    "contingut_permes": "Passos que l'alumne JA té resolts (pots referir-t'hi):\n  - Derivades segones de $g_1$: $g_1(x,y)=x-2y$ és lineal (o bé: $\\frac{\\partial g_1}{\\partial x}=1$ i $\\frac{\\partial g_1}{\\partial y}=-2$ són constants), per tant totes les derivades segones de $g_1$ són $0$.\n\nPAS OBJECTIU: Derivades segones de $g_2$\n  objectiu: Calcular les derivades segones de $g_2$ a $(1,1)$.\n\n  idea: Derivar una altra vegada l'expressió explícita de (c), o bé tornar a derivar implícitament les equacions de (b).\n\n  detall: Amb $g_2=-\\frac{x}{y}$: $\\frac{\\partial g_2}{\\partial x}=-\\frac1y$, $\\frac{\\partial g_2}{\\partial y}=\\frac{x}{y^2}$; $\\frac{\\partial^2 g_2}{\\partial x^2}=0$, $\\frac{\\partial^2 g_2}{\\partial x\\partial y}=\\frac{\\partial^2 g_2}{\\partial y\\partial x}=\\frac{1}{y^2}$, $\\frac{\\partial^2 g_2}{\\partial y^2}=-\\frac{2x}{y^3}$. A $(1,1)$: $0$, $1$, $1$, $-2$.\n(Implícitament: de $1+y\\frac{\\partial g_2}{\\partial x}=0$ i $g_2+y\\frac{\\partial g_2}{\\partial y}=0$, derivant: $y\\frac{\\partial^2 g_2}{\\partial x^2}=0$, $\\frac{\\partial g_2}{\\partial x}+y\\frac{\\partial^2 g_2}{\\partial y\\partial x}=0$, $2\\frac{\\partial g_2}{\\partial y}+y\\frac{\\partial^2 g_2}{\\partial y^2}=0$, que donen el mateix.)\n\nERROR DE L'ALUMNE (no l'anomenis directament): S'equivoca derivant $\\frac{x}{y^2}$ respecte de $y$ (signe o exponent).\n",
+    "teoria_permesa": [
+     "T5.1",
+     "T5.6"
+    ],
+    "intents": [
+     {
+      "missatge": "La part de $g_1$ ja la tens bé: com que és lineal, totes les seves derivades segones són $0$. Per a $g_2$, si tornes a escriure $\\dfrac{x}{y^2}=x\\,y^{-2}$ i apliques la regla de la potència a $y^{-2}$, quin signe i quin exponent obtens per a la derivada respecte de $y$?",
+      "referencies": [],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "El missatge és en català, respon a l’error de l’alumne i el guia amb una pregunta adequada sense revelar la correcció ni avançar el resultat final."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [
+      "segones_g1"
+     ],
+     "nivell_per_pas": {
+      "segones_g2": 2
+     },
+     "torns": 3,
+     "tancat": false,
+     "ultim_pas": "segones_g2",
+     "ultima_accio": "questionar_error",
+     "estats": {
+      "segones_g1": "completat",
+      "segones_g2": "erroni"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "derivada_y_quadrat": 3
+     },
+     "repeticions": {
+      "segones_g2": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 3
+    },
+    "estat": {
+     "completats": [
+      "segones_g1"
+     ],
+     "nivell_per_pas": {
+      "segones_g2": 3
+     },
+     "torns": 4,
+     "tancat": false,
+     "ultim_pas": "segones_g2",
+     "ultima_accio": "questionar_error",
+     "estats": {
+      "segones_g1": "completat",
+      "segones_g2": "erroni"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "derivada_y_quadrat": 4
+     },
+     "repeticions": {
+      "segones_g2": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 4
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2431,
+      "input_tokens": 4167,
+      "output_tokens": 293,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1770,
+      "input_tokens": 2551,
+      "output_tokens": 175,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2408,
+      "input_tokens": 3719,
+      "output_tokens": 144,
+      "cached_tokens": 1792,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 6610
+   },
+   "jutge": {
+    "revela_resultat_final": false,
+    "passos_revelats": [],
+    "explicacio": "",
+    "permesos": [
+     "segones_g1"
+    ],
+    "resultat_permes": false,
+    "fuga": false,
+    "fuga_resultat": false,
+    "passos_filtrats": []
+   }
+  },
+  {
+   "n": 5,
+   "alumne": "La regla dona $\\frac{d}{dy}y^{-2}=(-2)y^{-3}$ però jo considero que això és equivalent a $2y^{-3}$, així que $\\frac{\\partial^2 g_2}{\\partial y^2}=2x y^{-3}$ i en $(1,1)$ val $2$. També tinc $\\frac{\\partial^2 g_2}{\\partial x\\partial y}=1$ i $\\frac{\\partial^2 g_2}{\\partial x^2}=0$.",
+   "tutor": "La part de $g_1$ ja la tens bé: com que és lineal, totes les derivades segones són $0$. Per a $g_2$, si escrius $\\dfrac{x}{y^2}=x\\,y^{-2}$, quina és exactament la derivada de $y^{-2}$ respecte de $y$ segons la regla de la potència?",
+   "accio": "questionar_error",
+   "pas_objectiu": "segones_g2",
+   "nivell": 3,
+   "intencio": "proposa_resultat",
+   "errors_detectats": [
+    "derivada_y_quadrat"
+   ],
+   "fallback": false,
+   "drafts": 1,
+   "rebuigs": [],
+   "progres": false,
+   "completats": [
+    "segones_g1"
+   ],
+   "trace": {
+    "torn": 5,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "\"La regla dona \\frac{d}{dy}y^{-2}=(-2)y^{-3} però jo considero que això és equivalent a 2y^{-3}, així que \\frac{\\partial^2 g_2}{\\partial y^2}=2x y^{-3} i en (1,1) val 2.\"",
+     "resum_alumne": "Ha resolt correctament la part de g_1, però continua calculant malament la derivada segona en y de g_2 i manté un valor final incorrecte per a g_2.",
+     "estat_passos": [
+      {
+       "pas": "segones_g1",
+       "estat": "completat"
+      },
+      {
+       "pas": "segones_g2",
+       "estat": "erroni"
+      }
+     ],
+     "pas_actual": "segones_g2",
+     "errors_detectats": [
+      "derivada_y_quadrat"
+     ],
+     "error_altre": "",
+     "resultat_proposat": "incorrecte",
+     "resultat_justificat": false,
+     "nivell_desorientacio": "encallat",
+     "intencio": "proposa_resultat",
+     "teoria_pregunta": []
+    },
+    "pla": {
+     "accio": "questionar_error",
+     "motiu": "Error detectat: derivada_y_quadrat (repetit: es puja el nivell).",
+     "pas_objectiu": "segones_g2",
+     "nivell_pista": 3,
+     "error_objectiu": "derivada_y_quadrat",
+     "error_text": "S'equivoca derivant $\\frac{x}{y^2}$ respecte de $y$ (signe o exponent).\n",
+     "pregunta_suggerida": null,
+     "pot_dir_resultat": false,
+     "resultat_dit_per_alumne": false,
+     "requereix_pregunta": true,
+     "max_frases": 4,
+     "regex_prohibides": [
+      "\\\\partial\\s*y\\^\\{?2\\}?\\}\\s*\\(1,\\s*1\\)\\s*=\\s*-\\s*2",
+      "\\\\partial\\s*x\\s*\\\\partial\\s*y\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1",
+      "\\\\partial\\s*y\\s*\\\\partial\\s*x\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1"
+     ],
+     "teoria_extra": [],
+     "to": "normal",
+     "moviment": "Probing"
+    },
+    "contingut_permes": "Passos que l'alumne JA té resolts (pots referir-t'hi):\n  - Derivades segones de $g_1$: $g_1(x,y)=x-2y$ és lineal (o bé: $\\frac{\\partial g_1}{\\partial x}=1$ i $\\frac{\\partial g_1}{\\partial y}=-2$ són constants), per tant totes les derivades segones de $g_1$ són $0$.\n\nPAS OBJECTIU: Derivades segones de $g_2$\n  objectiu: Calcular les derivades segones de $g_2$ a $(1,1)$.\n\n  idea: Derivar una altra vegada l'expressió explícita de (c), o bé tornar a derivar implícitament les equacions de (b).\n\n  detall: Amb $g_2=-\\frac{x}{y}$: $\\frac{\\partial g_2}{\\partial x}=-\\frac1y$, $\\frac{\\partial g_2}{\\partial y}=\\frac{x}{y^2}$; $\\frac{\\partial^2 g_2}{\\partial x^2}=0$, $\\frac{\\partial^2 g_2}{\\partial x\\partial y}=\\frac{\\partial^2 g_2}{\\partial y\\partial x}=\\frac{1}{y^2}$, $\\frac{\\partial^2 g_2}{\\partial y^2}=-\\frac{2x}{y^3}$. A $(1,1)$: $0$, $1$, $1$, $-2$.\n(Implícitament: de $1+y\\frac{\\partial g_2}{\\partial x}=0$ i $g_2+y\\frac{\\partial g_2}{\\partial y}=0$, derivant: $y\\frac{\\partial^2 g_2}{\\partial x^2}=0$, $\\frac{\\partial g_2}{\\partial x}+y\\frac{\\partial^2 g_2}{\\partial y\\partial x}=0$, $2\\frac{\\partial g_2}{\\partial y}+y\\frac{\\partial^2 g_2}{\\partial y^2}=0$, que donen el mateix.)\n\nERROR DE L'ALUMNE (no l'anomenis directament): S'equivoca derivant $\\frac{x}{y^2}$ respecte de $y$ (signe o exponent).\n",
+    "teoria_permesa": [
+     "T5.1",
+     "T5.6"
+    ],
+    "intents": [
+     {
+      "missatge": "La part de $g_1$ ja la tens bé: com que és lineal, totes les derivades segones són $0$. Per a $g_2$, si escrius $\\dfrac{x}{y^2}=x\\,y^{-2}$, quina és exactament la derivada de $y^{-2}$ respecte de $y$ segons la regla de la potència?",
+      "referencies": [],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "Fa una pregunta orientada al pas objectiu, en català, sense revelar el resultat final ni fer el càlcul complet per l’alumne."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [
+      "segones_g1"
+     ],
+     "nivell_per_pas": {
+      "segones_g2": 3
+     },
+     "torns": 4,
+     "tancat": false,
+     "ultim_pas": "segones_g2",
+     "ultima_accio": "questionar_error",
+     "estats": {
+      "segones_g1": "completat",
+      "segones_g2": "erroni"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "derivada_y_quadrat": 4
+     },
+     "repeticions": {
+      "segones_g2": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 4
+    },
+    "estat": {
+     "completats": [
+      "segones_g1"
+     ],
+     "nivell_per_pas": {
+      "segones_g2": 3
+     },
+     "torns": 5,
+     "tancat": false,
+     "ultim_pas": "segones_g2",
+     "ultima_accio": "questionar_error",
+     "estats": {
+      "segones_g1": "completat",
+      "segones_g2": "erroni"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "derivada_y_quadrat": 5
+     },
+     "repeticions": {
+      "segones_g2": 2
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 5
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2439,
+      "input_tokens": 4379,
+      "output_tokens": 309,
+      "cached_tokens": 2816,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2644,
+      "input_tokens": 2763,
+      "output_tokens": 127,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1655,
+      "input_tokens": 3919,
+      "output_tokens": 121,
+      "cached_tokens": 3328,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 6739
+   },
+   "jutge": {
+    "revela_resultat_final": false,
+    "passos_revelats": [],
+    "explicacio": "Només confirma la part ja feta de $g_1$ i, per a $g_2$, pregunta «quina és exactament la derivada de $y^{-2}$», sense donar el càlcul ni el resultat.",
+    "permesos": [
+     "segones_g1"
+    ],
+    "resultat_permes": false,
+    "fuga": false,
+    "fuga_resultat": false,
+    "passos_filtrats": []
+   }
+  },
+  {
+   "n": 6,
+   "alumne": "La regla de la potència diu $ \\frac{d}{dy}y^{-2}=(-2)y^{-3}$ però això és equivalent a $2y^{-3}$ perquè el signe negatiu es compensa en algun pas, així $g_{2,yy}=\\frac{2x}{y^3}$ i en $(1,1)$ val $2$. També tenim $g_{2,xy}=1$ i $g_{2,xx}=0$.",
+   "tutor": "Vas bé amb la idea de tornar a escriure $g_2$ com $x\\,y^{-2}$, però ara convé mirar amb molta cura la regla de la potència. Si $u(y)=y^{-2}$, com queda exactament $u'(y)$ aplicant $n\\,y^{n-1}$ i quin signe et surt?",
+   "accio": "questionar_error",
+   "pas_objectiu": "segones_g2",
+   "nivell": 3,
+   "intencio": "mostra_treball",
+   "errors_detectats": [
+    "derivada_y_quadrat"
+   ],
+   "fallback": false,
+   "drafts": 1,
+   "rebuigs": [],
+   "progres": false,
+   "completats": [
+    "segones_g1"
+   ],
+   "trace": {
+    "torn": 6,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "\"La regla de la potència diu $ \\frac{d}{dy}y^{-2}=(-2)y^{-3}$ però això és equivalent a $2y^{-3}$\"",
+     "resum_alumne": "Ha resolt correctament les derivades segones de $g_1$ i gairebé totes les de $g_2$, però continua errant el signe de $g_{2,yy}$ al derivar $y^{-2}$ respecte de $y$.",
+     "estat_passos": [
+      {
+       "pas": "segones_g1",
+       "estat": "completat"
+      },
+      {
+       "pas": "segones_g2",
+       "estat": "erroni"
+      }
+     ],
+     "pas_actual": "segones_g2",
+     "errors_detectats": [
+      "derivada_y_quadrat"
+     ],
+     "error_altre": "",
+     "resultat_proposat": "incorrecte",
+     "resultat_justificat": false,
+     "nivell_desorientacio": "encallat",
+     "intencio": "mostra_treball",
+     "teoria_pregunta": []
+    },
+    "pla": {
+     "accio": "questionar_error",
+     "motiu": "Error detectat: derivada_y_quadrat (repetit: es puja el nivell).",
+     "pas_objectiu": "segones_g2",
+     "nivell_pista": 3,
+     "error_objectiu": "derivada_y_quadrat",
+     "error_text": "S'equivoca derivant $\\frac{x}{y^2}$ respecte de $y$ (signe o exponent).\n",
+     "pregunta_suggerida": null,
+     "pot_dir_resultat": false,
+     "resultat_dit_per_alumne": false,
+     "requereix_pregunta": true,
+     "max_frases": 4,
+     "regex_prohibides": [
+      "\\\\partial\\s*y\\^\\{?2\\}?\\}\\s*\\(1,\\s*1\\)\\s*=\\s*-\\s*2",
+      "\\\\partial\\s*x\\s*\\\\partial\\s*y\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1",
+      "\\\\partial\\s*y\\s*\\\\partial\\s*x\\}\\s*\\(1,\\s*1\\)\\s*=\\s*1"
+     ],
+     "teoria_extra": [],
+     "to": "normal",
+     "moviment": "Probing"
+    },
+    "contingut_permes": "Passos que l'alumne JA té resolts (pots referir-t'hi):\n  - Derivades segones de $g_1$: $g_1(x,y)=x-2y$ és lineal (o bé: $\\frac{\\partial g_1}{\\partial x}=1$ i $\\frac{\\partial g_1}{\\partial y}=-2$ són constants), per tant totes les derivades segones de $g_1$ són $0$.\n\nPAS OBJECTIU: Derivades segones de $g_2$\n  objectiu: Calcular les derivades segones de $g_2$ a $(1,1)$.\n\n  idea: Derivar una altra vegada l'expressió explícita de (c), o bé tornar a derivar implícitament les equacions de (b).\n\n  detall: Amb $g_2=-\\frac{x}{y}$: $\\frac{\\partial g_2}{\\partial x}=-\\frac1y$, $\\frac{\\partial g_2}{\\partial y}=\\frac{x}{y^2}$; $\\frac{\\partial^2 g_2}{\\partial x^2}=0$, $\\frac{\\partial^2 g_2}{\\partial x\\partial y}=\\frac{\\partial^2 g_2}{\\partial y\\partial x}=\\frac{1}{y^2}$, $\\frac{\\partial^2 g_2}{\\partial y^2}=-\\frac{2x}{y^3}$. A $(1,1)$: $0$, $1$, $1$, $-2$.\n(Implícitament: de $1+y\\frac{\\partial g_2}{\\partial x}=0$ i $g_2+y\\frac{\\partial g_2}{\\partial y}=0$, derivant: $y\\frac{\\partial^2 g_2}{\\partial x^2}=0$, $\\frac{\\partial g_2}{\\partial x}+y\\frac{\\partial^2 g_2}{\\partial y\\partial x}=0$, $2\\frac{\\partial g_2}{\\partial y}+y\\frac{\\partial^2 g_2}{\\partial y^2}=0$, que donen el mateix.)\n\nERROR DE L'ALUMNE (no l'anomenis directament): S'equivoca derivant $\\frac{x}{y^2}$ respecte de $y$ (signe o exponent).\n",
+    "teoria_permesa": [
+     "T5.1",
+     "T5.6"
+    ],
+    "intents": [
+     {
+      "missatge": "Vas bé amb la idea de tornar a escriure $g_2$ com $x\\,y^{-2}$, però ara convé mirar amb molta cura la regla de la potència. Si $u(y)=y^{-2}$, com queda exactament $u'(y)$ aplicant $n\\,y^{n-1}$ i quin signe et surt?",
+      "referencies": [],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "El missatge és en català, respon a l’alumne amb una pregunta que el guia cap a l’error de signe sense donar la correcció ni avançar el resultat final."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [
+      "segones_g1"
+     ],
+     "nivell_per_pas": {
+      "segones_g2": 3
+     },
+     "torns": 5,
+     "tancat": false,
+     "ultim_pas": "segones_g2",
+     "ultima_accio": "questionar_error",
+     "estats": {
+      "segones_g1": "completat",
+      "segones_g2": "erroni"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "derivada_y_quadrat": 5
+     },
+     "repeticions": {
+      "segones_g2": 2
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 5
+    },
+    "estat": {
+     "completats": [
+      "segones_g1"
+     ],
+     "nivell_per_pas": {
+      "segones_g2": 3
+     },
+     "torns": 6,
+     "tancat": false,
+     "ultim_pas": "segones_g2",
+     "ultima_accio": "questionar_error",
+     "estats": {
+      "segones_g1": "completat",
+      "segones_g2": "erroni"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "derivada_y_quadrat": 6
+     },
+     "repeticions": {
+      "segones_g2": 3
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 6
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 3021,
+      "input_tokens": 4567,
+      "output_tokens": 264,
+      "cached_tokens": 2816,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2788,
+      "input_tokens": 2951,
+      "output_tokens": 123,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1766,
+      "input_tokens": 4102,
+      "output_tokens": 111,
+      "cached_tokens": 3328,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 7577
+   },
+   "jutge": {
+    "revela_resultat_final": false,
+    "passos_revelats": [],
+    "explicacio": "Només orienta sobre la derivada de \\(y^{-2}\\) (“\\(u'(y)\\) ... quin signe et surt?”) i no dona cap valor final ni cap derivada segona.",
+    "permesos": [
+     "segones_g1"
+    ],
+    "resultat_permes": false,
+    "fuga": false,
+    "fuga_resultat": false,
+    "passos_filtrats": []
+   }
+  },
+  {
+   "n": 7,
+   "alumne": "Si \\(u(y)=y^{-2}\\) aleshores \\(u'(y)=2y^{-3}\\) i per tant \\(g_{2,yy}=\\frac{2x}{y^3}\\), amb \\(g_{2,xx}=0\\) i \\(g_{2,xy}=1\\); en \\((1,1)\\) això dóna \\(g_{2,xx}=0,\\ g_{2,xy}=1,\\ g_{2,yy}=2\\).",
+   "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5.4-mini in organization org-aWic6JXH1ufAi063obKtm6QB on tokens per min (TPM): Limit 200000, Used 199357, Requested 2162. Please try again in 455ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+  }
+ ],
+ "crides_alumne": [
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 8043,
+   "input_tokens": 553,
+   "output_tokens": 803,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 3529,
+   "input_tokens": 833,
+   "output_tokens": 350,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 2215,
+   "input_tokens": 990,
+   "output_tokens": 186,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 3185,
+   "input_tokens": 1145,
+   "output_tokens": 295,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 3280,
+   "input_tokens": 1342,
+   "output_tokens": 247,
+   "cached_tokens": 1024,
+   "extra": {}
+  },
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 2057,
+   "input_tokens": 1544,
+   "output_tokens": 107,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 2139,
+   "input_tokens": 1728,
+   "output_tokens": 176,
+   "cached_tokens": 1408,
+   "extra": {}
+  }
+ ],
+ "crides_jutge": [
+  {
+   "stage": "jutge",
+   "model": "gpt-5.4-mini",
+   "latency_ms": 1833,
+   "input_tokens": 1275,
+   "output_tokens": 129,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "jutge",
+   "model": "gpt-5.4-mini",
+   "latency_ms": 1741,
+   "input_tokens": 1272,
+   "output_tokens": 141,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "jutge",
+   "model": "gpt-5.4-mini",
+   "latency_ms": 1287,
+   "input_tokens": 1303,
+   "output_tokens": 73,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "jutge",
+   "model": "gpt-5.4-mini",
+   "latency_ms": 2274,
+   "input_tokens": 1291,
+   "output_tokens": 130,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "jutge",
+   "model": "gpt-5.4-mini",
+   "latency_ms": 1379,
+   "input_tokens": 1286,
+   "output_tokens": 122,
+   "cached_tokens": 0,
+   "extra": {}
+  }
+ ],
+ "durada_s": 81.0,
+ "metriques": {
+  "torns": 6,
+  "torns_error": 1,
+  "completat": false,
+  "torns_fins_tancar": null,
+  "final": "error_tutor",
+  "loops": [
+   5,
+   6
+  ],
+  "fallbacks": 0,
+  "drafts": 6,
+  "rebuigs": {},
+  "preguntes_conceptuals": 0,
+  "preguntes_ignorades": 0,
+  "torns_jutjats": 5,
+  "fuites": [],
+  "fuites_resultat": [],
+  "accions": {
+   "questionar_error": 6
+  },
+  "cost_tutor_usd": 0.04362,
+  "cost_simulacio_usd": 0.01331,
+  "models_sense_preu": []
+ },
+ "config": "default",
+ "_fitxer": "default__t4-17d__error-derivada_y_quadrat.json"
+}

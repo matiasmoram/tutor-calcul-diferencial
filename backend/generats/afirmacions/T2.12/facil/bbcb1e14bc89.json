@@ -1,0 +1,293 @@
+{
+  "id": "bbcb1e14bc89",
+  "font": "T2.12",
+  "tema": 2,
+  "dificultat": "facil",
+  "afirmacions": [
+    {
+      "id": "a1",
+      "enunciat": "Si $f:\\mathbb{R}^2\\setminus\\{(0,0)\\}\\to\\mathbb{R}$ és una funció tal que existeixen els dos límits iterats $\\lim_{x\\to0}\\lim_{y\\to0}f(x,y)$ i $\\lim_{y\\to0}\\lim_{x\\to0}f(x,y)$ i són iguals, aleshores existeix el límit doble $\\lim_{(x,y)\\to(0,0)}f(x,y)$.",
+      "veredicte": "fals",
+      "concepte": "Límits iterats i límit doble",
+      "trampa": "reciproc",
+      "contraexemple": "La funció $f(x,y)=\\frac{xy}{x^2+y^2}$ a l'origen.",
+      "resolucio": "Si fixem $y\\neq0$, $\\lim_{x\\to0} f(x,y) = \\lim_{x\\to0}\\frac{xy}{x^2+y^2} = 0$. Per tant, l'iterat $\\lim_{y\\to0}\\lim_{x\\to0}f(x,y) = 0$. Per simetria, l'altre iterat també val $0$. En canvi, el límit doble no existeix: sobre la recta diagonal $y=x$, tenim $\\lim_{x\\to0} f(x,x) = \\lim_{x\\to0}\\frac{x^2}{2x^2} = 1/2 \\neq 0$.",
+      "idees_clau": [
+        "els dos iterats valen 0",
+        "límit sobre la diagonal y=x és 1/2",
+        "el límit depèn del camí"
+      ],
+      "pista": "Pensa si l'existència i igualtat dels límits iterats (que només mesuren l'aproximació en línies paral·leles als eixos) és suficient per garantir que ens podem apropar a l'origen per qualsevol altra direcció.",
+      "teoria": [
+        "T2.12",
+        "T2.13"
+      ],
+      "comprovacions": [
+        {
+          "descripcio": "límit de l'iterat intern quan x tendeix a 0 amb y fixat",
+          "tipus": "limit",
+          "expressio": "x*y/(x**2+y**2)",
+          "variable": "x",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "0",
+          "estat": "ok",
+          "calculat": "0",
+          "detall": ""
+        },
+        {
+          "descripcio": "límit sobre la diagonal y=x",
+          "tipus": "limit",
+          "expressio": "x*x/(x**2+x**2)",
+          "variable": "x",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "1/2",
+          "estat": "ok",
+          "calculat": "1/2",
+          "detall": ""
+        }
+      ],
+      "verificacio": {
+        "solucionador": "El contraexemple de l'Exemple 13, f(x,y)=xy/(x^2+y^2), té ambdós límits iterats iguals a 0, però el límit doble a l'origen no existeix ja que depèn de la recta per la qual s'hi accedeixi.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a2",
+      "enunciat": "Si $f:\\mathbb{R}^n\\to\\mathbb{R}$ és una funció contínua i $K\\subset\\mathbb{R}^n$ és un conjunt compacte i connex, aleshores la imatge $f(K)\\subset\\mathbb{R}$ és un interval tancat i fitat de la forma $[a,b]$.",
+      "veredicte": "cert",
+      "concepte": "Imatges de compactes i connexos",
+      "trampa": "cert_resultat",
+      "contraexemple": "",
+      "resolucio": "Com que $K$ és compacte i $f$ és contínua, pel Teorema de Weierstrass (T2.23), la imatge $f(K)$ és fitada i assoleix el seu mínim global $a = f(x_0)$ i el seu màxim global $b = f(x_1)$ per a certs $x_0, x_1 \\in K$. Això implica que $f(K) \\subseteq [a,b]$. D'altra banda, com que $K$ és connex i $f$ és contínua, pel Teorema del Valor Intermedi (T2.24), per a qualsevol valor $c$ tal que $a < c < b$ existeix un $\\xi \\in K$ tal que $f(\\xi) = c$. Així doncs, $[a,b] \\subseteq f(K)$. D'aquí es conclou que $f(K) = [a,b]$.",
+      "idees_clau": [
+        "Teorema de Weierstrass per asolir el màxim i mínim",
+        "Teorema del valor intermedi per a la connexió",
+        "doble inclusió de conjunts"
+      ],
+      "pista": "Quines propietats topològiques del domini es conserven per aplicacions contínues? Recorda com es relacionen la compacitat i la connexió de la imatge amb els valors que assoleix la funció.",
+      "teoria": [
+        "T2.21",
+        "T2.23",
+        "T2.24"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "Per ser f contínua, la imatge d'un compacte és un compacte (tancat i fitat a R) i la d'un connex és connexa (un interval). Per tant, f(K) és un interval tancat i fitat [a,b], on a i b són el mínim i el màxim donats pel Teorema de Weierstrass.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a3",
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\setminus\\{(0,0)\\}\\to\\mathbb{R}$. Si existeix el límit doble $\\lim_{(x,y)\\to(0,0)}f(x,y) = L$ i, per a cada $x \\neq 0$, existeix el límit unidimensional $\\lim_{y\\to0}f(x,y) = g(x)$, aleshores existeix el límit iterat $\\lim_{x\\to0}\\lim_{y\\to0}f(x,y)$ i és igual a $L$.",
+      "veredicte": "cert",
+      "concepte": "Existència parcial de límits iterats",
+      "trampa": "cert_demostracio",
+      "contraexemple": "",
+      "resolucio": "Donat $\\epsilon > 0$, per l'existència del límit doble, existeix $\\delta_1 > 0$ tal que si $0 < \\|(x,y)\\| < \\delta_1$, aleshores $|f(x,y) - L| < \\epsilon/2$. Definim $\\delta = \\delta_1/\\sqrt{2}$. Si $0 < |x| < \\delta$, tenim que per a tot $|y| < \\delta$, es compleix $\\|(x,y)\\| < \\delta_1$ i, per tant, $|f(x,y) - L| < \\epsilon/2$. Prenent el límit quan $y \\to 0$ en aquesta desigualtat, obtenim $|g(x) - L| \\le \\epsilon/2 < \\epsilon$ per a tot $0 < |x| < \\delta$. Per tant, $\\lim_{x\\to0} g(x) = L$.",
+      "idees_clau": [
+        "definició de límit doble amb epsilon",
+        "elecció adequada de delta",
+        "pas al límit en la desigualtat",
+        "fita d'epsilon per al límit iterat"
+      ],
+      "pista": "Si sabem que la funció s'apropa a $L$ independentment del camí (límit doble) i a més ens asseguren que les línies verticals tenen un límit $g(x)$ ben definit, com es relaciona aquest valor amb $L$ a mesura que $x$ s'apropa a $0$?",
+      "teoria": [
+        "T2.12"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "Segons la Proposició 12, si existeix el límit doble L i a més existeixen els límits de les seccions d'una de les variables, aleshores el límit iterat corresponent existeix i coincideix amb L.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a4",
+      "enunciat": "Si existeix el límit doble $\\lim_{(x,y)\\to(0,0)}f(x,y) = L$ d'una funció $f:\\mathbb{R}^2\\setminus\\{(0,0)\\}\\to\\mathbb{R}$, aleshores sempre existeixen els dos límits iterats a $(0,0)$.",
+      "veredicte": "fals",
+      "concepte": "Existència dels límits iterats",
+      "trampa": "hipotesi_eliminada",
+      "contraexemple": "La funció $f(x,y) = x \\sin(1/y)$ per a $y \\neq 0$, i $f(x,0)=0$.",
+      "resolucio": "El límit doble a $(0,0)$ existeix i és $0$ ja que $|x \\sin(1/y)| \\le |x|$, que tendeix a $0$ quan $x\\to0$. No obstant això, el límit iterat $\\lim_{x\\to0}\\lim_{y\\to0} f(x,y)$ no existeix, ja que el límit intern $\\lim_{y\\to0} x \\sin(1/y)$ no està definit per a cap $x \\neq 0$ a causa de les oscil·lacions infinites de la funció sinus prop de zero.",
+      "idees_clau": [
+        "fita pel valor absolut",
+        "no existència del límit de sin(1/y)",
+        "el límit doble no exigeix l'existència de límits unidimensionals per a cada variable"
+      ],
+      "pista": "Perquè existeixi un límit iterat, cal que el límit intern estigui ben definit per a cada valor de la variable externa. Pot un límit de tipus $\\lim_{y\\to0} \\sin(1/y)$ fallar i, tot i així, tenir un límit doble controlat per una fita que s'anul·la?",
+      "teoria": [
+        "T2.12"
+      ],
+      "comprovacions": [
+        {
+          "descripcio": "no existència del límit intern de sin(1/y)",
+          "tipus": "no_limit",
+          "expressio": "sin(1/y)",
+          "variable": "y",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "",
+          "estat": "ok",
+          "calculat": "no existeix",
+          "detall": ""
+        },
+        {
+          "descripcio": "límit de la fita superior x",
+          "tipus": "limit",
+          "expressio": "Abs(x)",
+          "variable": "x",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "0",
+          "estat": "ok",
+          "calculat": "0",
+          "detall": ""
+        }
+      ],
+      "verificacio": {
+        "solucionador": "Per a la funció f(x,y)=x*sin(1/y), el límit doble a (0,0) és 0, però el límit iterat respecte a y primer no existeix perquè el límit de sin(1/y) quan y tendeix a 0 oscil·la per a qualsevol x diferent de zero.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a5",
+      "enunciat": "Sigui $f: \\mathbb{R}^2 \\setminus \\{(0,0)\\} \\to \\mathbb{R}$. Si per a tot $x \\neq 0$ en un entorn de $0$ existeix el límit parcial $\\lim_{y\\to0}f(x,y)$, per a tot $y \\neq 0$ en un entorn de $0$ existeix el límit parcial $\\lim_{x\\to0}f(x,y)$, i els límits iterats a $(0,0)$ existents són diferents, $\\lim_{x\\to0}\\lim_{y\\to0}f(x,y) \\neq \\lim_{y\\to0}\\lim_{x\\to0}f(x,y)$, aleshores no existeix el límit doble $\\lim_{(x,y)\\to(0,0)}f(x,y)$.",
+      "veredicte": "cert",
+      "concepte": "Límits iterats",
+      "trampa": "cert_resultat",
+      "contraexemple": "",
+      "resolucio": "Es tracta de la contraposada de la Proposició 12 (teorema de límits iterats). Suposem, per reducció a l'absurd, que existís el límit doble $\\lim_{(x,y)\\to(0,0)}f(x,y) = L$. Com que, per hipòtesi, existeixen els límits unidimensionals parcials interns per a punts propers a l'origen, es compleixen totes les condicions de la Proposició 12. En conseqüència, els dos límits iterats haurien de coincidir amb el límit doble $L$, la qual cosa contradiu el fet que són diferents. Per tant, el límit doble no pot existir.",
+      "idees_clau": [
+        "ús de la contraposada de la Proposició 12",
+        "verificació de l'existència dels límits parcials com a hipòtesi requerida",
+        "demostració per reducció a l'absurd o contraposició"
+      ],
+      "pista": "Si suposes que el límit doble existeix i val $L$, què pots assegurar sobre el valor dels límits iterats a partir de la Proposició 12, sota les hipòtesis existents?",
+      "teoria": [
+        "T2.12"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "És cert per contraposició de la Proposició 12. Si existís el límit doble, i atès que existeixen els límits interns en un entorn del punt, ambdós límits iterats haurien d'existir i coincidir amb aquest límit doble, la qual cosa contradiu que siguin diferents.",
+        "confianca": "alta",
+        "ronda": 2
+      }
+    },
+    {
+      "id": "a6",
+      "enunciat": "Si $f:\\mathbb{R}^2\\setminus\\{(0,0)\\}\\to\\mathbb{R}$ és una funció tal que per a qualsevol recta de la forma $y = mx$ el límit $\\lim_{x\\to0} f(x, mx)$ existeix i val $0$, aleshores existeix el límit doble $\\lim_{(x,y)\\to(0,0)} f(x,y)$ i val $0$.",
+      "veredicte": "fals",
+      "concepte": "Límits sobre camins rectes",
+      "trampa": "informacio_parcial",
+      "contraexemple": "La funció $f(x,y) = \\frac{x^2 y}{x^4+y^2}$ a l'origen.",
+      "resolucio": "Per a qualsevol camí rectilini $y = mx$, tenim $\\lim_{x\\to0} f(x, mx) = \\lim_{x\\to0} \\frac{m x^3}{x^4 + m^2 x^2} = \\lim_{x\\to0} \\frac{mx}{x^2+m^2} = 0$ per a tot $m\\in\\mathbb{R}$. Per a l'eix vertical $x=0$, $f(0,y)=0$ que també té límit $0$. No obstant això, si prenem el camí parabòlic $y = x^2$, obtenim $\\lim_{x\\to0} f(x, x^2) = \\lim_{x\\to0} \\frac{x^4}{x^4+x^4} = 1/2 \\neq 0$. Per tant, el límit doble no existeix.",
+      "idees_clau": [
+        "límit sobre rectes és zero",
+        "límit sobre la paràbola y=x^2 és 1/2",
+        "els camins no lineals poden donar valors diferents"
+      ],
+      "pista": "Apropar-se a l'origen per rectes cobreix totes les trajectòries possibles? Què passa si ens hi acostem seguint corbes com paràboles on els graus de les variables estiguin compensats?",
+      "teoria": [
+        "T2.10",
+        "T2.11"
+      ],
+      "comprovacions": [
+        {
+          "descripcio": "límit sobre camins rectilinis",
+          "tipus": "limit",
+          "expressio": "x**2*(m*x)/(x**4+(m*x)**2)",
+          "variable": "x",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "0",
+          "estat": "ok",
+          "calculat": "0",
+          "detall": ""
+        },
+        {
+          "descripcio": "límit sobre la paràbola y=x**2",
+          "tipus": "limit",
+          "expressio": "x**2*(x**2)/(x**4+(x**2)**2)",
+          "variable": "x",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "1/2",
+          "estat": "ok",
+          "calculat": "1/2",
+          "detall": ""
+        }
+      ],
+      "verificacio": {
+        "solucionador": "La funció f(x,y) = (x^2*y)/(x^4+y^2) té límit 0 sobre qualsevol recta y = mx, però seguint la paràbola y = x^2 el límit és 1/2, per la qual cosa el límit doble no existeix.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    }
+  ],
+  "verificacio": {
+    "rondes": [
+      {
+        "ronda": 1,
+        "demanades": 5,
+        "rebudes": 5,
+        "generacio": {
+          "model": "gemini-3.5-flash",
+          "latency_ms": 58304,
+          "input_tokens": 11445,
+          "output_tokens": 10494,
+          "cached_tokens": 7252
+        },
+        "rebutjades": [],
+        "solucionador": {
+          "model": "gemini-3.5-flash",
+          "latency_ms": 18661,
+          "input_tokens": 10848,
+          "output_tokens": 2976,
+          "cached_tokens": 7913
+        },
+        "auditoria": {
+          "model": "gemini-3.5-flash",
+          "latency_ms": 112243,
+          "input_tokens": 12440,
+          "output_tokens": 4641,
+          "cached_tokens": 7970
+        },
+        "acceptades_total": 5
+      },
+      {
+        "ronda": 2,
+        "demanades": 1,
+        "rebudes": 1,
+        "generacio": {
+          "model": "gemini-3.5-flash",
+          "latency_ms": 20003,
+          "input_tokens": 11987,
+          "output_tokens": 2305,
+          "cached_tokens": 7290
+        },
+        "rebutjades": [],
+        "solucionador": {
+          "model": "gemini-3.5-flash",
+          "latency_ms": 11010,
+          "input_tokens": 10537,
+          "output_tokens": 1526,
+          "cached_tokens": 7905
+        },
+        "auditoria": {
+          "model": "gemini-3.5-flash",
+          "latency_ms": 13157,
+          "input_tokens": 10837,
+          "output_tokens": 2138,
+          "cached_tokens": 7938
+        },
+        "acceptades_total": 6
+      }
+    ]
+  },
+  "creat": 1791295923.0868757
+}

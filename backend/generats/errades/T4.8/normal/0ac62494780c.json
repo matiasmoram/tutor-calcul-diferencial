@@ -1,0 +1,59 @@
+{
+  "id": "0ac62494780c",
+  "exercici": "T4.8",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $f:U\\subseteq\\mathbb{R}^n\\to V\\subseteq\\mathbb{R}^n$ una funció $\\mathcal{C}^1(U)$, amb $U$ obert, tal que $\\det Jf(a)\\neq 0$ per a tot $a\\in U$.",
+    "Aleshores, per a tot obert $B\\subseteq U$, $f(B)$ és també un obert i $f|_B:B\\to f(B)$ és bijectiva.",
+    "Sigui $B\\subseteq U$ un obert, i siguin $y_0\\in f(B)$ i $x_0\\in B$ amb $f(x_0)=y_0$.",
+    "La restricció de $f$ a l'obert $B$ és de classe $\\mathcal{C}^1$ i $\\det Jf(x_0)\\neq 0$. Pel teorema de la funció inversa aplicat a $f|_B$ en $x_0$, existeixen entorns oberts $U'\\in\\mathcal{E}_{x_0}$, amb $U'\\subseteq B$, i $V'=f(U')\\in\\mathcal{E}_{f(x_0)}$ tals que $f|_{U'}:U'\\to V'$ és bijectiva, diferenciable i amb inversa diferenciable.",
+    "En particular, $V'$ és un obert que conté $y_0=f(x_0)$ i, com que $U'\\subseteq B$, $V'=f(U')\\subseteq f(B)$.",
+    "Per tant, $f(B)$ conté un obert no buit, $V'$, i en conseqüència $f(B)$ és obert."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "i $f|_B:B\\to f(B)$ és bijectiva",
+      "inici": 68,
+      "fi": 99,
+      "tipus": "conclusio",
+      "explicacio": "El teorema de la funció inversa només dona injectivitat local; la condició $\\det Jf\\neq 0$ a tot arreu no impedeix que $f$ deixi de ser injectiva en un obert gran. Contraexemple: $f(x,y)=e^x(\\cos y,\\sin y)$ a $U=B=\\mathbb{R}^2$ té $\\det Jf=e^{2x}\\neq 0$ i no és injectiva.",
+      "correccio": "L'enunciat només afirma que $f(B)$ és obert per a tot obert $B\\subseteq U$ (aplicació oberta), sense cap afirmació d'injectivitat.",
+      "pista": "El teorema de la funció inversa garanteix injectivitat a tot $B$ o només a prop de cada punt? Penseu en $e^z$ vista com a funció de $\\mathbb{R}^2$."
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "$f(B)$ conté un obert no buit, $V'$, i en conseqüència $f(B)$ és obert",
+      "inici": 10,
+      "fi": 80,
+      "tipus": "conclusio",
+      "explicacio": "Que un conjunt contingui un obert no buit no implica que sigui obert (per exemple, $[0,2]\\supseteq(0,1)$). El que s'ha provat és que $y_0$ és interior de $f(B)$, i cal usar que $y_0$ era un punt qualsevol de $f(B)$.",
+      "correccio": "Com que $y_0\\in V'\\subseteq f(B)$, $y_0$ és interior a $f(B)$; com que $y_0\\in f(B)$ era arbitrari, tot punt de $f(B)$ és interior i $f(B)$ és obert.",
+      "pista": "Quina és la definició d'obert? N'hi ha prou que el conjunt contingui algun obert?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t4.json",
+    "valoracio": "Enunciat amb una conclusió falsa afegida (bijectivitat global) i conclusió de la demostració justificada amb un argument incorrecte.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "i $f|_B:B\\to f(B)$ és bijectiva",
+        "gravetat": "error",
+        "explicacio": "Afegit fals: $\\det Jf\\neq0$ a tot arreu només dona injectivitat local, no global (p. ex. $z\\mapsto z^2$ a $\\mathbb{R}^2\\setminus\\{0\\}$). Els apunts només afirmen que $f(B)$ és obert, i la demostració no ho prova."
+      },
+      {
+        "fragment": 6,
+        "cita": "Per tant, $f(B)$ conté un obert no buit, $V'$, i en conseqüència $f(B)$ és obert.",
+        "gravetat": "error",
+        "explicacio": "Raonament fals: contenir un obert no buit no implica ser obert. Cal dir que per a cada $y_0\\in f(B)$ hi ha un obert $V'$ amb $y_0\\in V'\\subseteq f(B)$ (és a dir, $y_0$ és interior), i com que $y_0$ és arbitrari, $f(B)$ és obert."
+      }
+    ]
+  },
+  "creat": 1791296058.5287302
+}

@@ -1,0 +1,3753 @@
+# Tema 3: generat per scripts/merge_fitxes.py a partir de work/fitxes/tema3_p*.yaml
+llista:
+  id: tema-3
+  etiqueta: Tema 3
+  titol: Diferenciabilitat
+  descripcio: Problemes del Tema 3 de la col·lecció de Càlcul Diferencial (FME-UPC).
+  tema: 3
+  tipus: mixt
+  format: text
+problemes:
+- num: 1
+  font: null
+  preambul: |
+    Calculeu les derivades parcials de les funcions següents en un punt arbitrari del seu domini:
+  indicacio: null
+  exercicis:
+  - id: t3-1a
+    apartat: a
+    tipus: calcul
+    enunciat: |
+      $u(x,y)=\dfrac{x^2+y^2}{x^2-y^2}$;
+    teoria:
+    - T3.2
+    teoria_reservada: []
+    resultat:
+      valor: |
+        El domini és $\{(x,y)\in\mathbb{R}^2 : x^2\neq y^2\}$ (fora de les rectes $y=\pm x$), que és obert. En tot punt del domini:
+        $\dfrac{\partial u}{\partial x}(x,y)=\dfrac{-4xy^2}{(x^2-y^2)^2}$, $\qquad\dfrac{\partial u}{\partial y}(x,y)=\dfrac{4x^2y}{(x^2-y^2)^2}$.
+      fuites:
+      - -\s*4\s*x\s*y\^\{?2\}?
+      - 4\s*x\^\{?2\}?\s*y\s*\}?\s*(/|\\over|\}\{)
+      - 4\s*x\^\{?2\}?\s*y(?!\s*\^)
+    passos:
+    - id: domini
+      titol: Determinar el domini
+      objectiu: |
+        Determinar on està definida $u$ i comprovar que tots els punts del domini són interiors.
+      idea: |
+        Un quocient està definit on el denominador no s'anul·la; mira quin tipus de conjunt queda.
+      detall: |
+        Cal $x^2-y^2\neq0$, és a dir $y\neq\pm x$. El domini és el complementari de les dues rectes $y=x$ i $y=-x$, que és un obert, de manera que té sentit parlar de derivades parcials a tot punt.
+      fuites: []
+      teoria: []
+    - id: parcial_x
+      titol: Derivada parcial respecte de x
+      objectiu: |
+        Calcular $\dfrac{\partial u}{\partial x}(x,y)$ en un punt qualsevol del domini.
+      idea: |
+        Per definició, és la derivada de la funció d'una variable $x\mapsto u(x,y)$ amb $y$ fixat: deriva com a quocient tractant $y$ com a constant.
+      detall: |
+        $\dfrac{\partial u}{\partial x}=\dfrac{2x(x^2-y^2)-(x^2+y^2)\,2x}{(x^2-y^2)^2}=\dfrac{-4xy^2}{(x^2-y^2)^2}$.
+      fuites:
+      - -\s*4\s*x\s*y\^\{?2\}?
+      teoria:
+      - T3.2
+    - id: parcial_y
+      titol: Derivada parcial respecte de y
+      objectiu: |
+        Calcular $\dfrac{\partial u}{\partial y}(x,y)$ en un punt qualsevol del domini.
+      idea: |
+        Ara $x$ és la constant; vigila el signe de la derivada del denominador respecte de $y$.
+      detall: |
+        $\dfrac{\partial u}{\partial y}=\dfrac{2y(x^2-y^2)-(x^2+y^2)(-2y)}{(x^2-y^2)^2}=\dfrac{4x^2y}{(x^2-y^2)^2}$.
+      fuites:
+      - 4\s*x\^\{?2\}?\s*y\s*\}?\s*(/|\\over|\}\{)
+      - 4\s*x\^\{?2\}?\s*y(?!\s*\^)
+      teoria:
+      - T3.2
+    errors_comuns:
+    - id: signe_denominador
+      descripcio: |
+        En derivar respecte de $y$, oblida que la derivada de $x^2-y^2$ és $-2y$ (posa $+2y$) i obté un numerador que no simplifica.
+      pregunta: |
+        Quina és la derivada de $x^2-y^2$ respecte de $y$? Quin signe té?
+    - id: no_tracta_constant
+      descripcio: |
+        Deriva també la variable que hauria de tractar com a constant (p. ex. escriu termes amb $2y$ en $\partial u/\partial x$ provinents de $y^2$).
+      pregunta: |
+        Quan calcules $\partial u/\partial x$, la $y$ varia o està fixada? Quant val la derivada de $y^2$ respecte de $x$?
+    - id: oblida_domini
+      descripcio: |
+        Dona les fórmules sense dir on són vàlides, o inclou punts de les rectes $y=\pm x$.
+      pregunta: |
+        En quins punts té sentit la teva fórmula? Què passa si $x=y$?
+    nota_professor: |
+      Es pot simplificar escrivint $u=1+\dfrac{2y^2}{x^2-y^2}$, que dona les mateixes parcials amb menys càlcul.
+  - id: t3-1b
+    apartat: b
+    tipus: calcul
+    enunciat: |
+      $h(x,y,z)=\left(\sqrt{1-y^2-z^2},\sqrt{1-z^2-x^2},\sqrt{1-x^2-y^2}\right)$;
+    teoria:
+    - T3.2
+    - T3.7
+    teoria_reservada: []
+    resultat:
+      valor: |
+        El domini és $\{y^2+z^2\le1,\ z^2+x^2\le1,\ x^2+y^2\le1\}$; les parcials es calculen als punts interiors, on els tres radicands són $>0$. Escrivint $h=(h_1,h_2,h_3)$:
+        $\partial_xh_1=0$, $\partial_yh_1=\dfrac{-y}{\sqrt{1-y^2-z^2}}$, $\partial_zh_1=\dfrac{-z}{\sqrt{1-y^2-z^2}}$;
+        $\partial_xh_2=\dfrac{-x}{\sqrt{1-z^2-x^2}}$, $\partial_yh_2=0$, $\partial_zh_2=\dfrac{-z}{\sqrt{1-z^2-x^2}}$;
+        $\partial_xh_3=\dfrac{-x}{\sqrt{1-x^2-y^2}}$, $\partial_yh_3=\dfrac{-y}{\sqrt{1-x^2-y^2}}$, $\partial_zh_3=0$.
+        És a dir, $\dfrac{\partial h}{\partial x}=\left(0,\dfrac{-x}{\sqrt{1-z^2-x^2}},\dfrac{-x}{\sqrt{1-x^2-y^2}}\right)$ i anàlogament per a $y$ i $z$.
+      fuites:
+      - \\d?frac\{\s*-\s*[xyz]\s*\}\{\s*\\sqrt
+      - -\s*\\d?frac\{[xyz]\}\{\s*\\sqrt
+      - -\s*[xyz]\s*/\s*\\sqrt
+    passos:
+    - id: domini
+      titol: Domini i punts on derivar
+      objectiu: |
+        Determinar el domini de $h$ i en quins punts té sentit calcular les derivades parcials.
+      idea: |
+        Cada component exigeix un radicand no negatiu; les derivades parcials es defineixen en punts interiors del domini.
+      detall: |
+        Domini: $y^2+z^2\le1$, $z^2+x^2\le1$, $x^2+y^2\le1$. El seu interior és on les tres desigualtats són estrictes, i allà cada arrel és d'un radicand positiu (derivable). Als punts amb algun radicand nul (frontera) no es calculen parcials.
+      fuites: []
+      teoria:
+      - T1.14
+      - T3.2
+    - id: per_components
+      titol: Treballar component a component
+      objectiu: |
+        Reduir el càlcul de les parcials d'una funció vectorial a funcions escalars.
+      idea: |
+        La derivada (parcial) d'un camp vectorial es calcula component a component.
+      detall: |
+        $\dfrac{\partial h}{\partial x_j}=\left(\dfrac{\partial h_1}{\partial x_j},\dfrac{\partial h_2}{\partial x_j},\dfrac{\partial h_3}{\partial x_j}\right)$: n'hi ha prou a calcular les 9 parcials de $h_1,h_2,h_3$. Observeu que $h_1$ no depèn de $x$, $h_2$ no depèn de $y$ i $h_3$ no depèn de $z$.
+      fuites: []
+      teoria:
+      - T3.7
+    - id: calcular
+      titol: Calcular les parcials
+      objectiu: |
+        Calcular les derivades parcials de cada component.
+      idea: |
+        Regla de la cadena en una variable per a l'arrel: la derivada de $\sqrt{g}$ és $g'/(2\sqrt g)$. Les variables que no apareixen donen derivada nul·la.
+      detall: |
+        $\partial_yh_1=\dfrac{-y}{\sqrt{1-y^2-z^2}}$, $\partial_zh_1=\dfrac{-z}{\sqrt{1-y^2-z^2}}$, $\partial_xh_1=0$; $\partial_xh_2=\dfrac{-x}{\sqrt{1-z^2-x^2}}$, $\partial_zh_2=\dfrac{-z}{\sqrt{1-z^2-x^2}}$, $\partial_yh_2=0$; $\partial_xh_3=\dfrac{-x}{\sqrt{1-x^2-y^2}}$, $\partial_yh_3=\dfrac{-y}{\sqrt{1-x^2-y^2}}$, $\partial_zh_3=0$.
+      fuites:
+      - \\d?frac\{\s*-\s*[xyz]\s*\}\{\s*\\sqrt
+      - -\s*\\d?frac\{[xyz]\}\{\s*\\sqrt
+      - -\s*[xyz]\s*/\s*\\sqrt
+      teoria:
+      - T3.2
+    errors_comuns:
+    - id: factor_dos
+      descripcio: |
+        Deriva l'arrel oblidant el factor $2$ o la derivada interior (obté p. ex. $\dfrac{1}{2\sqrt{1-y^2-z^2}}$).
+      pregunta: |
+        Si $g(y)=1-y^2-z^2$, quina és la derivada de $\sqrt{g(y)}$? Has multiplicat per $g'(y)$?
+    - id: variable_absent
+      descripcio: |
+        No veu que algunes components no depenen d'alguna variable, o hi posa una derivada no nul·la.
+      pregunta: |
+        Apareix la $x$ a la primera component? Què val, doncs, la seva derivada respecte de $x$?
+    - id: frontera
+      descripcio: |
+        Dona les fórmules també als punts on un radicand s'anul·la, on el denominador val $0$.
+      pregunta: |
+        Què passa amb la teva fórmula en un punt on $y^2+z^2=1$? Aquest punt és interior al domini?
+  - id: t3-1c
+    apartat: c
+    tipus: calcul
+    enunciat: |
+      $v(x_1,\ldots,x_n)=\displaystyle\sum_{i=1}^n x_i+\sum_{i=1}^n x_i^2$.
+    teoria:
+    - T3.2
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $v$ està definida a tot $\mathbb{R}^n$ i, per a cada $j=1,\ldots,n$, $\dfrac{\partial v}{\partial x_j}(x_1,\ldots,x_n)=1+2x_j$.
+      fuites:
+      - 1\s*\+\s*2\s*x_\{?[jk]\}?
+      - 2\s*x_\{?[jk]\}?\s*\+\s*1\b
+    passos:
+    - id: fixar_variables
+      titol: Fixar totes les variables menys una
+      objectiu: |
+        Identificar quins termes de les sumes depenen de la variable $x_j$.
+      idea: |
+        Per definició de derivada parcial, totes les altres variables són constants; separa el terme $i=j$ de cada suma.
+      detall: |
+        $v=x_j+x_j^2+\sum_{i\neq j}(x_i+x_i^2)$, i el segon sumand és constant respecte de $x_j$.
+      fuites: []
+      teoria:
+      - T3.2
+    - id: derivar
+      titol: Derivar
+      objectiu: |
+        Calcular $\dfrac{\partial v}{\partial x_j}$.
+      idea: |
+        Deriva el que depèn de $x_j$; la resta té derivada nul·la.
+      detall: |
+        $\dfrac{\partial v}{\partial x_j}=1+2x_j$, per a $j=1,\ldots,n$, a qualsevol punt de $\mathbb{R}^n$.
+      fuites:
+      - 1\s*\+\s*2\s*x_\{?[jk]\}?
+      teoria:
+      - T3.2
+    errors_comuns:
+    - id: deriva_tota_suma
+      descripcio: |
+        Deriva tots els termes de la suma (obté $n+2\sum x_i$ o similar).
+      pregunta: |
+        Si derives respecte de $x_1$, quant val la derivada de $x_2^2$?
+    - id: confon_index
+      descripcio: |
+        Barreja l'índex de sumació $i$ amb l'índex de la variable respecte de la qual deriva, i dona un resultat amb $x_i$ sense sentit.
+      pregunta: |
+        L'índex $i$ de la suma és mut. Respecte de quina variable concreta estàs derivant, i com l'anomenes?
+- num: 2
+  font: null
+  preambul: ''
+  indicacio: null
+  exercicis:
+  - id: t3-2
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Donada $f(x,y)=y+x^{(\log x)(\arctan(\sin(\cos xy)))}$, calculeu $\dfrac{\partial f}{\partial y}(1,1)$.
+    teoria:
+    - T3.2
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $\dfrac{\partial f}{\partial y}(1,1)=1$.
+      fuites:
+      - (\\partial\s*y|f_y|parcial)[^.]{0,40}(=|és|val)\s*\$?\s*1\b
+    passos:
+    - id: restringir
+      titol: Fixar la variable que no es deriva
+      objectiu: |
+        Escriure la funció d'una variable que cal derivar per obtenir $\dfrac{\partial f}{\partial y}(1,1)$.
+      idea: |
+        Per definició, la parcial respecte de $y$ al punt $(1,1)$ és la derivada a $y=1$ de $y\mapsto f(1,y)$: fixa $x$ abans de derivar.
+      detall: |
+        $f(1,y)=y+1^{(\log 1)(\arctan(\sin(\cos y)))}=y+1^{0}=y+1$, ja que $\log1=0$ (i, de fet, $1^a=1$ per a tot $a$).
+      fuites:
+      - f\(1,\s*y\)\s*=\s*y\s*\+\s*1
+      teoria:
+      - T3.2
+    - id: derivar
+      titol: Derivar la funció d'una variable
+      objectiu: |
+        Obtenir el valor de la parcial.
+      idea: |
+        Deriva la funció d'una variable que has obtingut i avalua-la a $y=1$.
+      detall: |
+        $\dfrac{d}{dy}(y+1)=1$, per tant $\dfrac{\partial f}{\partial y}(1,1)=1$.
+      fuites: []
+      teoria:
+      - T3.2
+    errors_comuns:
+    - id: deriva_tot
+      descripcio: |
+        Intenta derivar l'expressió completa respecte de $y$ (amb la regla de la cadena per a $x^{g(x,y)}=e^{g\log x}$) i s'embolica, en lloc de fixar $x=1$ primer.
+      pregunta: |
+        Per calcular una parcial en un punt concret, quina variable pots fixar abans de derivar? Què val la funció quan la fixes?
+    - id: exponent_derivada
+      descripcio: |
+        Deriva $x^{g}$ respecte de $y$ com si fos $g\,x^{g-1}$.
+      pregunta: |
+        Respecte de $y$, la base $x$ és constant i l'exponent varia. Quina regla de derivació correspon a una potència amb exponent variable?
+    nota_professor: |
+      Si es deriva directament: $\partial_y\left(e^{g\log x}\right)=x^{g}\log x\,\partial_yg$, que s'anul·la a $x=1$ perquè $\log1=0$. El resultat és el mateix; la gràcia és adonar-se que fixant $x=1$ no cal fer res.
+- num: 3
+  font: null
+  preambul: ''
+  indicacio: null
+  exercicis:
+  - id: t3-3
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Trobeu totes les derivades direccionals a l'origen de
+      $$f(x,y)=\begin{cases}\dfrac{x^2y}{x^2+y^2} & \text{si } (x,y)\neq(0,0)\\ 0 & \text{si } (x,y)=(0,0).\end{cases}$$
+    teoria:
+    - T3.1
+    teoria_reservada:
+    - T3.17
+    resultat:
+      valor: |
+        Existeixen totes: per a $u=(u_1,u_2)\neq(0,0)$, $D_uf(0,0)=\dfrac{u_1^2u_2}{u_1^2+u_2^2}$. Si $u$ és unitari, $D_uf(0,0)=u_1^2u_2$ (en particular les dues parcials valen $0$). Com que $u\mapsto D_uf(0,0)$ no és lineal, $f$ no és diferenciable a l'origen.
+      fuites:
+      - u_1\^\{?2\}?\s*u_2
+      - u_1\^\{?2\}?\s*\\cdot\s*u_2
+    passos:
+    - id: definicio
+      titol: Plantejar la definició
+      objectiu: |
+        Escriure el límit que defineix $D_uf(0,0)$ per a una direcció $u=(u_1,u_2)\neq(0,0)$ qualsevol.
+      idea: |
+        Restringeix $f$ a la recta $t\mapsto tu$ i fes el quocient incremental a $t=0$; recorda quant val $f$ a l'origen.
+      detall: |
+        $D_uf(0,0)=\displaystyle\lim_{t\to0}\frac{f(tu_1,tu_2)-f(0,0)}{t}=\lim_{t\to0}\frac{1}{t}\cdot\frac{t^3u_1^2u_2}{t^2(u_1^2+u_2^2)}$.
+      fuites:
+      - t\^\{?3\}?\s*u_1
+      teoria:
+      - T3.1
+    - id: calcular
+      titol: Simplificar i calcular el límit
+      objectiu: |
+        Calcular el límit i decidir per a quines direccions existeix.
+      idea: |
+        Simplifica les potències de $t$: queda una expressió que no depèn de $t$.
+      detall: |
+        El quocient val $\dfrac{u_1^2u_2}{u_1^2+u_2^2}$ per a tot $t\neq0$, per tant el límit existeix per a tota $u$ i $D_uf(0,0)=\dfrac{u_1^2u_2}{u_1^2+u_2^2}$; per a $u$ unitari, $u_1^2u_2$. En particular $\partial_xf(0,0)=\partial_yf(0,0)=0$.
+      fuites:
+      - u_1\^\{?2\}?\s*u_2
+      teoria:
+      - T3.1
+      - T3.5
+    errors_comuns:
+    - id: nomes_parcials
+      descripcio: |
+        Calcula només les dues derivades parcials i les combina com $\nabla f(0,0)\cdot u=0$, suposant que $f$ és diferenciable.
+      pregunta: |
+        La fórmula $D_uf=\nabla f\cdot u$, sota quina hipòtesi és vàlida? La tens aquí?
+    - id: oblida_dividir_t
+      descripcio: |
+        Calcula $\lim_{t\to0}f(tu)$ en lloc del quocient incremental i obté $0$ per a tota direcció.
+      pregunta: |
+        El límit que has calculat, és el de la definició de derivada direccional? Per quin factor cal dividir?
+    - id: simplificacio
+      descripcio: |
+        Simplifica malament les potències de $t$ (p. ex. deixa un factor $t$ i conclou que el límit és $0$).
+      pregunta: |
+        Quantes potències de $t$ hi ha al numerador i quantes al denominador, comptant el $1/t$?
+    nota_professor: |
+      És l'exemple clàssic (Observació 17 dels apunts) de funció amb totes les derivades direccionals però no diferenciable: $u\mapsto u_1^2u_2$ no és lineal. Reapareix al problema 22.
+- num: 4
+  font: null
+  preambul: ''
+  indicacio: null
+  exercicis:
+  - id: t3-4
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Trobeu totes les direccions respecte de les quals les funcions següents tenen derivades direccionals a l'origen:
+      $$f(x,y)=\begin{cases}\dfrac{2xy}{x^2+y^2} & \text{si } (x,y)\neq(0,0)\\ 1 & \text{si } (x,y)=(0,0)\end{cases},\qquad g(x,y)=\begin{cases}\dfrac{x^3}{x^2+y^2} & \text{si } (x,y)\neq(0,0)\\ 0 & \text{si } (x,y)=(0,0).\end{cases}$$
+    teoria:
+    - T3.1
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $f$: només en les direccions $u=(a,a)$, $a\neq0$ (la bisectriu $y=x$, en tots dos sentits), i hi val $D_uf(0,0)=0$. En qualsevol altra direcció el límit és infinit.
+        $g$: en totes les direccions, amb $D_ug(0,0)=\dfrac{u_1^3}{u_1^2+u_2^2}$ (per a $u$ unitari, $u_1^3$).
+      fuites:
+      - u_1\s*=\s*u_2
+      - \(a\s*,\s*a\)
+      - u_1\^\{?3\}?
+    passos:
+    - id: plantejar_f
+      titol: Quocient incremental per a f
+      objectiu: |
+        Escriure el quocient de la definició de $D_uf(0,0)$ per a $u=(u_1,u_2)\neq(0,0)$.
+      idea: |
+        Aplica la definició de derivada direccional; fixa't en el valor de $f$ a l'origen, que no és $0$.
+      detall: |
+        $\dfrac{f(tu)-f(0,0)}{t}=\dfrac{1}{t}\left(\dfrac{2u_1u_2}{u_1^2+u_2^2}-1\right)=-\dfrac{1}{t}\cdot\dfrac{(u_1-u_2)^2}{u_1^2+u_2^2}$, ja que $f(tu)$ no depèn de $t$.
+      fuites:
+      - \(u_1\s*-\s*u_2\)\^\{?2\}?
+      teoria:
+      - T3.1
+    - id: direccions_f
+      titol: Decidir les direccions per a f
+      objectiu: |
+        Determinar per a quines direccions el límit quan $t\to0$ existeix i quant val.
+      idea: |
+        Un quocient de la forma $C/t$ amb $C$ constant només té límit finit en un cas.
+      detall: |
+        El límit existeix si i només si $(u_1-u_2)^2=0$, és a dir $u_1=u_2$; aleshores el quocient és $0$ i $D_uf(0,0)=0$. Si $u_1\neq u_2$ el quocient tendeix a $\mp\infty$ (laterals) i no existeix. En particular, no existeixen les parcials.
+      fuites:
+      - u_1\s*=\s*u_2
+      teoria:
+      - T3.1
+    - id: direccions_g
+      titol: Derivades direccionals de g
+      objectiu: |
+        Calcular $D_ug(0,0)$ i decidir per a quines direccions existeix.
+      idea: |
+        Mateixa definició; ara $g(0,0)=0$ i el numerador és homogeni de grau 3.
+      detall: |
+        $\dfrac{g(tu)-g(0,0)}{t}=\dfrac{t^3u_1^3}{t\cdot t^2(u_1^2+u_2^2)}=\dfrac{u_1^3}{u_1^2+u_2^2}$, independent de $t$: existeix per a tota $u$, i $D_ug(0,0)=\dfrac{u_1^3}{u_1^2+u_2^2}$ ($=u_1^3$ si $\|u\|=1$).
+      fuites:
+      - u_1\^\{?3\}?
+      teoria:
+      - T3.1
+      - T3.5
+    errors_comuns:
+    - id: f_origen_zero
+      descripcio: |
+        Pren $f(0,0)=0$ en lloc de $1$ i conclou que el quocient és $\frac{2u_1u_2}{t(u_1^2+u_2^2)}$, amb direccions errònies (només els eixos).
+      pregunta: |
+        Quant val $f$ exactament a l'origen segons l'enunciat?
+    - id: limit_sense_t
+      descripcio: |
+        Calcula $\lim f(tu)$ en lloc del quocient incremental i conclou que la derivada direccional existeix sempre.
+      pregunta: |
+        On és el $1/t$ de la definició al teu càlcul?
+    - id: nomes_unitaris_o_sentit
+      descripcio: |
+        Per a $f$ només dona $u=(1,1)/\sqrt2$ i oblida el sentit oposat $(-1,-1)$ o els múltiples.
+      pregunta: |
+        Si una direcció $u$ funciona, què passa amb $-u$ o amb $\lambda u$?
+    nota_professor: |
+      $f$ no és contínua a l'origen (val $2u_1u_2/|u|^2$ constant sobre cada recta), i tot i així té derivada direccional a la bisectriu, on $f\equiv1$. Per a $g$, $u\mapsto u_1^3$ (unitari) no és lineal, així que $g$ no és diferenciable a l'origen tot i tenir totes les direccionals.
+- num: 5
+  font: null
+  preambul: ''
+  indicacio: null
+  exercicis:
+  - id: t3-5
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Estudieu la continuïtat i l'existència de derivades direccionals a $\mathbb{R}^2$ de la funció
+      $$f(x,y)=\begin{cases}\dfrac{x^2}{y} & \text{si } y\neq0\\ 0 & \text{si } y=0.\end{cases}$$
+    teoria:
+    - T2.14
+    - T3.1
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $f$ és contínua exactament a $\{y\neq0\}$ (discontínua a tots els punts de l'eix $y=0$, inclòs l'origen). Derivades direccionals: si $y_0\neq0$ existeixen totes; a $(x_0,0)$ amb $x_0\neq0$ només existeixen en direccions horitzontals ($v_2=0$), i valen $0$; a l'origen existeixen totes: $D_vf(0,0)=v_1^2/v_2$ si $v_2\neq0$ i $0$ si $v_2=0$. Per tant, l'existència de totes les derivades direccionals no implica continuïtat.
+      fuites:
+      - v_1\^\{?2\}?\s*/\s*v_2
+      - \\d?frac\{v_1\^\{?2\}?\}\{v_2\}
+    passos:
+    - id: continuitat_obert
+      titol: Continuïtat fora de l'eix
+      objectiu: |
+        Veure on la funció és clarament contínua.
+      idea: |
+        Allà on $y\neq0$ la funció ve donada per una sola expressió coneguda, en un obert.
+      detall: |
+        A l'obert $U=\{y\neq0\}$, $f=x^2/y$ és quocient de polinomis amb denominador no nul, per tant és contínua.
+      fuites: []
+      teoria:
+      - T2.20
+    - id: discontinuitat_eix
+      titol: Discontinuïtat a l'eix, fora de l'origen
+      objectiu: |
+        Estudiar la continuïtat als punts $(x_0,0)$ amb $x_0\neq0$.
+      idea: |
+        Restringeix la funció a una recta que passi pel punt i no sigui l'eix.
+      detall: |
+        Sobre la recta vertical $x=x_0$ (Proposició 10 amb els papers de $x$ i $y$ intercanviats): $f(x_0,y)=x_0^2/y\to\pm\infty$ quan $y\to0^\pm$, mentre que $f(x_0,0)=0$. No existeix el límit a $(x_0,0)$ i $f$ no hi és contínua.
+      fuites:
+      - x_0\^\{?2\}?\s*/\s*y
+      teoria:
+      - T2.10
+      - T2.14
+    - id: discontinuitat_origen
+      titol: Discontinuïtat a l'origen
+      objectiu: |
+        Decidir si $f$ és contínua a $(0,0)$.
+      idea: |
+        Les rectes per l'origen no ho decideixen; busca un camí on numerador i denominador siguin del mateix ordre.
+      detall: |
+        Sobre la paràbola $y=x^2$: $f(x,x^2)=1\to1\neq0=f(0,0)$. No és contínua a l'origen.
+      fuites:
+      - y\s*=\s*x\^\{?2\}?
+      - f\(x,\s*x\^\{?2\}?\)
+      teoria:
+      - T2.10
+      - T2.14
+    - id: direccionals_obert
+      titol: Direccionals fora de l'eix
+      objectiu: |
+        Veure si existeixen les derivades direccionals als punts amb $y_0\neq0$.
+      idea: |
+        La restricció a una recta pel punt és, a prop del punt, una funció d'una variable derivable.
+      detall: |
+        Si $y_0\neq0$, $t\mapsto f(x_0+tv_1,y_0+tv_2)=\dfrac{(x_0+tv_1)^2}{y_0+tv_2}$ és quocient de funcions derivables amb denominador no nul prop de $t=0$: totes les direccionals existeixen, $D_vf(x_0,y_0)=\dfrac{2x_0y_0v_1-x_0^2v_2}{y_0^2}$.
+      fuites:
+      - 2\s*x_0\s*y_0\s*v_1
+      teoria:
+      - T3.1
+    - id: direccionals_eix
+      titol: Direccionals a l'eix, fora de l'origen
+      objectiu: |
+        Estudiar $D_vf(x_0,0)$ amb $x_0\neq0$ segons la direcció.
+      idea: |
+        Separa el cas de la direcció horitzontal de la resta i aplica la definició.
+      detall: |
+        Si $v_2\neq0$: $\dfrac{f(x_0+tv_1,tv_2)}{t}=\dfrac{(x_0+tv_1)^2}{t^2v_2}\to\infty$, no existeix. Si $v_2=0$, la funció val $0$ sobre l'eix i $D_vf(x_0,0)=0$.
+      fuites:
+      - t\^\{?2\}?\s*v_2
+      teoria:
+      - T3.1
+    - id: direccionals_origen
+      titol: Direccionals a l'origen
+      objectiu: |
+        Calcular $D_vf(0,0)$ per a tota direcció.
+      idea: |
+        Aplica la definició de derivada direccional directament a l'origen.
+      detall: |
+        Si $v_2\neq0$: $\dfrac{f(tv_1,tv_2)}{t}=\dfrac{t^2v_1^2}{t^2v_2}=\dfrac{v_1^2}{v_2}$; si $v_2=0$ val $0$. Totes existeixen, tot i que $f$ no és contínua a l'origen.
+      fuites:
+      - \\d?frac\{v_1\^\{?2\}?\}\{v_2\}
+      - v_1\^\{?2\}?\s*/\s*v_2
+      teoria:
+      - T3.1
+      - T3.6
+    errors_comuns:
+    - id: direccionals_implica_continuitat
+      descripcio: |
+        Creu que si existeixen totes les derivades direccionals la funció és contínua.
+      pregunta: |
+        Què et diu exactament una derivada direccional: el comportament de $f$ en tot un entorn, o només sobre una recta?
+    - id: nomes_rectes
+      descripcio: |
+        Estudia la continuïtat a l'origen només amb rectes i conclou que és contínua.
+      pregunta: |
+        Hi ha camins cap a l'origen que no siguin rectes on numerador i denominador es comparin de manera diferent?
+    - id: oblida_eix
+      descripcio: |
+        Només estudia l'origen i s'oblida dels altres punts de l'eix $y=0$.
+      pregunta: |
+        On està definida $f$ per la segona branca? Has estudiat tots aquests punts?
+    - id: direccio_eix_malament
+      descripcio: |
+        Als punts $(x_0,0)$ confon quines direccions donen derivada direccional (p. ex. diu que totes o cap).
+      pregunta: |
+        Què val $f$ exactament sobre l'eix horitzontal? Què passa si et mous en una altra direcció?
+    nota_professor: |
+      Fitxa portada de l'antic t3-5 (mateix enunciat). Fenomen anàleg a l'Observació 6 dels apunts: totes les direccionals a l'origen i discontinuïtat.
+- num: 6
+  font: null
+  preambul: ''
+  indicacio: null
+  exercicis:
+  - id: t3-6
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Sigui $f:\mathbb{R}^2\longrightarrow\mathbb{R}$ una funció diferenciable en $(0,0)$ tal que $f(x,y)=f(y,x)$ per tot $(x,y)\in\mathbb{R}^2$ i $Df(0,0)\neq0$. Determineu el nucli de $Df(0,0)$.
+    teoria:
+    - T3.8
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $\ker Df(0,0)=\{(h,k)\in\mathbb{R}^2 : h+k=0\}=\langle(1,-1)\rangle$, la recta $y=-x$.
+      fuites:
+      - \(1\s*,\s*-\s*1\)
+      - \(-\s*1\s*,\s*1\)
+      - h\s*\+\s*k\s*=\s*0
+      - x\s*\+\s*y\s*=\s*0
+      - y\s*=\s*-\s*x
+    passos:
+    - id: parcials_iguals
+      titol: Relacionar les dues parcials
+      objectiu: |
+        Esbrinar quina relació hi ha entre $\dfrac{\partial f}{\partial x}(0,0)$ i $\dfrac{\partial f}{\partial y}(0,0)$.
+      idea: |
+        Usa la simetria $f(x,y)=f(y,x)$ a la definició de derivada parcial (o el resultat dels apunts sobre funcions simètriques) en el punt $(0,0)$, que és fix per l'intercanvi.
+      detall: |
+        $\dfrac{\partial f}{\partial y}(0,0)=\lim_{t\to0}\dfrac{f(0,t)-f(0,0)}{t}=\lim_{t\to0}\dfrac{f(t,0)-f(0,0)}{t}=\dfrac{\partial f}{\partial x}(0,0)=:a$.
+      fuites: []
+      teoria:
+      - T3.4
+      - T3.2
+    - id: matriu
+      titol: Escriure la diferencial
+      objectiu: |
+        Escriure $Df(0,0)$ com a aplicació lineal explícita.
+      idea: |
+        Si $f$ és diferenciable, la matriu de la diferencial és la jacobiana, formada per les parcials. Usa també la hipòtesi $Df(0,0)\neq0$.
+      detall: |
+        $Jf(0,0)=(a\ \ a)$, així $Df(0,0)(h,k)=a(h+k)$, i $a\neq0$ perquè $Df(0,0)\neq0$.
+      fuites:
+      - a\s*\(\s*h\s*\+\s*k\s*\)
+      teoria:
+      - T3.9
+      - T3.10
+    - id: nucli
+      titol: Calcular el nucli
+      objectiu: |
+        Determinar el conjunt de vectors on s'anul·la la diferencial.
+      idea: |
+        Resol l'equació lineal $Df(0,0)(h,k)=0$; el fet que la diferencial no sigui nul·la t'ho permet simplificar.
+      detall: |
+        $a(h+k)=0\iff h+k=0$ (perquè $a\neq0$). $\ker Df(0,0)=\{(h,-h): h\in\mathbb{R}\}=\langle(1,-1)\rangle$.
+      fuites:
+      - h\s*\+\s*k\s*=\s*0
+      - \(1\s*,\s*-\s*1\)
+      - \(h\s*,\s*-\s*h\)
+      teoria: []
+    errors_comuns:
+    - id: oblida_hipotesi
+      descripcio: |
+        No usa que $Df(0,0)\neq0$ i conclou que el nucli podria ser tot $\mathbb{R}^2$, o no justifica que $a\neq0$.
+      pregunta: |
+        Si les dues parcials fossin zero, què seria $Df(0,0)$? Quina hipòtesi de l'enunciat ho exclou?
+    - id: simetria_mal_usada
+      descripcio: |
+        Dedueix de la simetria que $\partial_xf=-\partial_yf$, o que les parcials són iguals a qualsevol punt $(x,y)$ (no només a la diagonal).
+      pregunta: |
+        Escriu la definició de $\partial_yf(0,0)$ i substitueix-hi $f(0,t)=f(t,0)$. Què obtens?
+    - id: nucli_imatge
+      descripcio: |
+        Confon el nucli amb la imatge (respon $\mathbb{R}$) o amb la direcció del gradient.
+      pregunta: |
+        El nucli és un subconjunt de l'espai de sortida o del d'arribada? Quina equació el defineix?
+    nota_professor: |
+      El nucli és la direcció ortogonal al gradient $(a,a)$, és a dir, la recta tangent a la corba de nivell de $f$ per l'origen.
+- num: 7
+  font: null
+  preambul: ''
+  indicacio: null
+  exercicis:
+  - id: t3-7
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Estudieu la continuïtat i la diferenciabilitat de la funció
+      $$f(x,y)=\begin{cases}\dfrac{x|y|}{\sqrt{x^2+y^2}} & \text{si } (x,y)\neq(0,0)\\ 0 & \text{si } (x,y)=(0,0).\end{cases}$$
+    teoria:
+    - T2.14
+    - T3.8
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $f$ és contínua a tot $\mathbb{R}^2$. És diferenciable exactament a $\{(x,y): y\neq0\}$: no és diferenciable en cap punt de l'eix $y=0$. Als punts $(x_0,0)$, $x_0\neq0$, no existeix $\partial f/\partial y$; a l'origen les parcials valen $0$ però $\dfrac{f(x,y)}{\|(x,y)\|}=\dfrac{x|y|}{x^2+y^2}$ no tendeix a $0$ (per exemple val $\pm\frac12$ sobre $y=x$).
+      fuites:
+      - diferenciable\s+(exactament\s+)?(a|en|als?)\s+\$?\\?\{?\s*\(?x,\s*y\)?\s*:?\s*y\s*\\neq\s*0
+      - no\s+és\s+diferenciable[^.]{0,30}(eix|y\s*=\s*0)
+      - diferenciable\b[^.]{0,40}y\s*\\neq\s*0
+    passos:
+    - id: continuitat_fora
+      titol: Continuïtat fora de l'origen
+      objectiu: |
+        Justificar la continuïtat als punts $(x,y)\neq(0,0)$.
+      idea: |
+        Fora de l'origen $f$ és una combinació (productes, quocients, composicions) de funcions contínues amb denominador no nul.
+      detall: |
+        $x$, $|y|$ i $\sqrt{x^2+y^2}$ són contínues i el denominador no s'anul·la a $\mathbb{R}^2\setminus\{(0,0)\}$, per tant $f$ hi és contínua.
+      fuites: []
+      teoria:
+      - T2.19
+      - T2.20
+    - id: continuitat_origen
+      titol: Continuïtat a l'origen
+      objectiu: |
+        Decidir si $\lim_{(x,y)\to(0,0)}f(x,y)=0$.
+      idea: |
+        Fita el mòdul del quocient: compara un dels factors del numerador amb el denominador.
+      detall: |
+        $|x|\le\sqrt{x^2+y^2}$, per tant $|f(x,y)|\le|y|\to0$. Per sandvitx el límit és $0=f(0,0)$: $f$ és contínua a l'origen, i doncs a tot $\mathbb{R}^2$.
+      fuites:
+      - \|f\(x,\s*y\)\|\s*(\\le|\\leq|≤)\s*\|y\|
+      teoria:
+      - T2.14
+    - id: diferenciable_fora_eix
+      titol: Diferenciabilitat on y no és zero
+      objectiu: |
+        Estudiar la diferenciabilitat als punts amb $y\neq0$.
+      idea: |
+        En un entorn d'un punt amb $y\neq0$, el valor absolut té un signe fix: estudia la regularitat de les parcials allà.
+      detall: |
+        A l'obert $\{y>0\}$ (resp. $\{y<0\}$), $f=\pm\dfrac{xy}{\sqrt{x^2+y^2}}$, amb parcials contínues (quocients de funcions $\mathcal C^1$, denominador no nul). Per la condició suficient, $f$ és diferenciable a tot punt amb $y\neq0$.
+      fuites: []
+      teoria:
+      - T3.18
+    - id: eix_sense_origen
+      titol: Punts de l'eix fora de l'origen
+      objectiu: |
+        Estudiar la diferenciabilitat als punts $(x_0,0)$ amb $x_0\neq0$.
+      idea: |
+        Si fos diferenciable, existirien totes les parcials. Calcula la parcial respecte de $y$ amb la definició i mira els límits laterals.
+      detall: |
+        $\dfrac{f(x_0,t)-f(x_0,0)}{t}=\dfrac{x_0|t|}{t\sqrt{x_0^2+t^2}}\to\pm\dfrac{x_0}{|x_0|}$ quan $t\to0^\pm$: els laterals són $\pm1$ (amb signe de $x_0$), no existeix $\partial f/\partial y(x_0,0)$. Per tant no és diferenciable.
+      fuites:
+      - \\frac\{x_0\s*\|t\|\}
+      - \\dfrac\{x_0\s*\|t\|\}
+      teoria:
+      - T3.2
+      - T3.9
+    - id: origen
+      titol: Diferenciabilitat a l'origen
+      objectiu: |
+        Decidir si $f$ és diferenciable a $(0,0)$.
+      idea: |
+        Calcula les parcials a l'origen per obtenir l'única candidata a diferencial i estudia el límit de la definició amb aquesta candidata.
+      detall: |
+        $f(t,0)=f(0,t)=0$, així $\nabla f(0,0)=(0,0)$ i la candidata és $Df(0,0)=0$. Cal $\dfrac{f(x,y)}{\sqrt{x^2+y^2}}=\dfrac{x|y|}{x^2+y^2}\to0$, però sobre $y=x$ val $\dfrac{x|x|}{2x^2}=\pm\dfrac12$. No és diferenciable a l'origen. (Equivalentment: $D_uf(0,0)=u_1|u_2|$ per a $u$ unitari, que no és lineal en $u$.)
+      fuites:
+      - \\pm\s*\\d?frac\{1\}\{2\}
+      - u_1\s*\|u_2\|
+      - \\frac\{x\s*\|y\|\}\{x\^\{?2\}?\s*\+\s*y\^\{?2\}?\}
+      teoria:
+      - T3.8
+      - T3.9
+      - T2.10
+    errors_comuns:
+    - id: parcials_implica_diferenciable
+      descripcio: |
+        A l'origen calcula que les parcials existeixen (i valen $0$) i conclou que és diferenciable.
+      pregunta: |
+        L'existència de les parcials, és suficient per a la diferenciabilitat? Quin límit caldria comprovar?
+    - id: oblida_eix
+      descripcio: |
+        Només estudia l'origen i diu que fora és diferenciable "per ser composició de funcions diferenciables", oblidant que $|y|$ no és derivable a $y=0$.
+      pregunta: |
+        És derivable la funció $y\mapsto|y|$ a $y=0$? En quins punts del pla afecta això?
+    - id: camins_rectes_continuitat
+      descripcio: |
+        Conclou la continuïtat a l'origen només provant rectes.
+      pregunta: |
+        Que totes les rectes donin $0$, demostra que el límit és $0$? Tens alguna fita que valgui per a tots els punts propers?
+    nota_professor: |
+      A l'origen també es pot argumentar amb polars: $\dfrac{f}{r}=\cos\theta|\sin\theta|$, que no tendeix a $0$.
+- num: 8
+  font: null
+  preambul: ''
+  indicacio: null
+  exercicis:
+  - id: t3-8
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Raoneu si la funció
+      $$f(x,y)=\begin{cases}\dfrac{(x+y)^2}{x^2+y^2} & \text{si } (x,y)\neq(0,0)\\ 1 & \text{si } (x,y)=(0,0).\end{cases}$$
+      és contínua, si té derivades parcials i si és diferenciable.
+    teoria:
+    - T2.14
+    - T3.2
+    - T3.8
+    teoria_reservada: []
+    resultat:
+      valor: |
+        Fora de l'origen $f$ és contínua, té parcials ($\partial_xf=\dfrac{2y(y^2-x^2)}{(x^2+y^2)^2}$, $\partial_yf=\dfrac{2x(x^2-y^2)}{(x^2+y^2)^2}$) i és diferenciable. A l'origen: no és contínua (val $1$ sobre $y=0$ i $2$ sobre $y=x$), però sí que té derivades parcials, $\partial_xf(0,0)=\partial_yf(0,0)=0$; no és diferenciable perquè no és contínua.
+      fuites:
+      - no\s+és\s+cont[íi]nua
+      - no\s+(hi\s+)?és\s+diferenciable
+    passos:
+    - id: fora_origen
+      titol: Fora de l'origen
+      objectiu: |
+        Estudiar continuïtat, parcials i diferenciabilitat als punts $(x,y)\neq(0,0)$.
+      idea: |
+        Allà és un quocient de polinomis amb denominador no nul, en un obert: aplica els resultats d'àlgebra de funcions contínues i diferenciables.
+      detall: |
+        A $\mathbb{R}^2\setminus\{(0,0)\}$, $f=1+\dfrac{2xy}{x^2+y^2}$ és contínua i diferenciable (quocient amb denominador no nul). Parcials: $\partial_xf=\dfrac{2y(y^2-x^2)}{(x^2+y^2)^2}$, $\partial_yf=\dfrac{2x(x^2-y^2)}{(x^2+y^2)^2}$.
+      fuites: []
+      teoria:
+      - T2.20
+      - T3.23
+    - id: continuitat_origen
+      titol: Continuïtat a l'origen
+      objectiu: |
+        Decidir si $f$ és contínua a $(0,0)$.
+      idea: |
+        Estudia el límit al llarg de diferents rectes per l'origen.
+      detall: |
+        Sobre $y=mx$: $f(x,mx)=\dfrac{(1+m)^2}{1+m^2}$, que depèn de $m$ (val $1$ per a $m=0$ i $2$ per a $m=1$). No existeix el límit: $f$ no és contínua a l'origen.
+      fuites:
+      - \\d?frac\{\(1\s*\+\s*m\)\^\{?2\}?\}\{1\s*\+\s*m\^\{?2\}?\}
+      - \(1\s*\+\s*m\)\^\{?2\}?\s*/\s*\(1\s*\+\s*m\^\{?2\}?\)
+      - (val|dona|=)\s*\$?\s*2\$?\s*(sobre|per\s+a|a)\s*\$?\s*(y\s*=\s*x|m\s*=\s*1)
+      teoria:
+      - T2.10
+      - T2.14
+    - id: parcials_origen
+      titol: Parcials a l'origen
+      objectiu: |
+        Calcular, si existeixen, les derivades parcials a l'origen.
+      idea: |
+        Usa la definició, restringint $f$ als eixos; recorda el valor de $f(0,0)$.
+      detall: |
+        $f(t,0)=\dfrac{t^2}{t^2}=1$, així $\dfrac{f(t,0)-f(0,0)}{t}=0$ i $\partial_xf(0,0)=0$. Igualment $f(0,t)=1$ i $\partial_yf(0,0)=0$. Existeixen totes dues.
+      fuites:
+      - f\(t,\s*0\)\s*=
+      teoria:
+      - T3.2
+    - id: diferenciabilitat_origen
+      titol: Diferenciabilitat a l'origen
+      objectiu: |
+        Decidir si $f$ és diferenciable a $(0,0)$.
+      idea: |
+        Relaciona la diferenciabilitat amb la continuïtat que ja has estudiat.
+      detall: |
+        Diferenciable implica contínua; com que $f$ no és contínua a l'origen, no hi és diferenciable (tot i tenir les dues parcials).
+      fuites:
+      - no\s+(hi\s+)?és\s+diferenciable
+      teoria:
+      - T3.14
+    errors_comuns:
+    - id: parcials_implica_continua
+      descripcio: |
+        Creu que, com que existeixen les parcials a l'origen, la funció hi és contínua o diferenciable.
+      pregunta: |
+        Les parcials miren la funció sobre els eixos. Què passa sobre altres rectes?
+    - id: origen_valor_zero
+      descripcio: |
+        Usa $f(0,0)=0$ i conclou que les parcials no existeixen.
+      pregunta: |
+        Quin valor dona l'enunciat a $f$ a l'origen? Quant val $f$ sobre l'eix $x$ fora de l'origen?
+    - id: no_conclou_diferenciabilitat
+      descripcio: |
+        Intenta estudiar el límit de la definició de diferenciabilitat sense adonar-se que n'hi ha prou amb la discontinuïtat.
+      pregunta: |
+        Quina relació hi ha entre diferenciabilitat i continuïtat en un punt?
+- num: 9
+  font: null
+  preambul: ''
+  indicacio: null
+  exercicis:
+  - id: t3-9
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Estudieu la continuïtat, l'existència de derivades direccionals, i la diferenciabilitat de la funció $f(x,y)=x^{1/3}y^{1/3}$, definida a $\mathbb{R}^2$.
+    teoria:
+    - T2.14
+    - T3.1
+    - T3.8
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $f=\sqrt[3]{xy}$ és contínua a tot $\mathbb{R}^2$. Als punts amb $xy\neq0$ és diferenciable i té totes les derivades direccionals. Als punts dels eixos: a l'origen només existeixen les derivades direccionals en les direccions dels eixos ($u_1u_2=0$), i valen $0$; a $(x_0,0)$ amb $x_0\neq0$ només existeix en les direccions horitzontals (valor $0$), i a $(0,y_0)$, $y_0\neq0$, només en les verticals (valor $0$). Per tant $f$ és diferenciable exactament a $\{xy\neq0\}$.
+      fuites:
+      - u_1\s*u_2\s*=\s*0
+      - exactament\s+a\s+\$?\\?\{?\s*xy\s*\\neq\s*0
+      - diferenciable\b[^.]{0,40}xy\s*\\neq\s*0
+    passos:
+    - id: continuitat
+      titol: Continuïtat
+      objectiu: |
+        Estudiar la continuïtat de $f$ a $\mathbb{R}^2$.
+      idea: |
+        Escriu $f$ com a composició i producte de funcions contínues conegudes.
+      detall: |
+        $t\mapsto t^{1/3}$ (arrel cúbica real) és contínua a $\mathbb{R}$, i $f(x,y)=x^{1/3}\,y^{1/3}$ és producte de composicions de contínues: $f$ és contínua a tot $\mathbb{R}^2$.
+      fuites: []
+      teoria:
+      - T2.19
+      - T2.20
+    - id: fora_eixos
+      titol: Punts fora dels eixos
+      objectiu: |
+        Estudiar diferenciabilitat i derivades direccionals als punts amb $x\neq0$ i $y\neq0$.
+      idea: |
+        L'arrel cúbica és derivable fora de $0$; mira la continuïtat de les parcials en un entorn.
+      detall: |
+        A l'obert $\{xy\neq0\}$, $\partial_xf=\frac13x^{-2/3}y^{1/3}$ i $\partial_yf=\frac13x^{1/3}y^{-2/3}$ són contínues, per tant $f$ hi és diferenciable i té totes les derivades direccionals, $D_uf=\nabla f\cdot u$.
+      fuites:
+      - x\^\{-2/3\}
+      teoria:
+      - T3.18
+      - T3.9
+    - id: origen
+      titol: Direccionals a l'origen
+      objectiu: |
+        Calcular, per a cada direcció $u=(u_1,u_2)$, la derivada direccional a l'origen si existeix.
+      idea: |
+        Aplica la definició i compta la potència de $t$ que queda.
+      detall: |
+        $\dfrac{f(tu)-f(0,0)}{t}=\dfrac{t^{2/3}(u_1u_2)^{1/3}}{t}=(u_1u_2)^{1/3}\,t^{-1/3}$. Si $u_1u_2\neq0$ no té límit finit; si $u_1u_2=0$ val $0$. Només existeixen les parcials, $\partial_xf(0,0)=\partial_yf(0,0)=0$.
+      fuites:
+      - t\^\{-1/3\}
+      - u_1\s*u_2\s*=\s*0
+      teoria:
+      - T3.1
+    - id: eixos
+      titol: Direccionals als altres punts dels eixos
+      objectiu: |
+        Estudiar les derivades direccionals als punts $(x_0,0)$ amb $x_0\neq0$ (i, per simetria, $(0,y_0)$).
+      idea: |
+        Separa les direccions segons si són paral·leles a l'eix o no, i aplica la definició.
+      detall: |
+        $\dfrac{f(x_0+tu_1,tu_2)}{t}=(x_0+tu_1)^{1/3}u_2^{1/3}\,t^{-2/3}$: si $u_2\neq0$ tendeix a $\pm\infty$ (el factor $(x_0+tu_1)^{1/3}\to x_0^{1/3}\neq0$), no existeix; si $u_2=0$, $f=0$ sobre l'eix i $D_uf(x_0,0)=0$. Anàlogament a $(0,y_0)$ només existeix si $u_1=0$.
+      fuites:
+      - t\^\{-2/3\}
+      teoria:
+      - T3.1
+    - id: diferenciabilitat_eixos
+      titol: Diferenciabilitat als eixos
+      objectiu: |
+        Decidir si $f$ és diferenciable als punts dels eixos.
+      idea: |
+        Recorda quina propietat de les derivades direccionals té tota funció diferenciable.
+      detall: |
+        Si $f$ fos diferenciable en un punt, hi existirien totes les derivades direccionals. Als punts dels eixos (inclòs l'origen) n'hi ha que no existeixen: $f$ no hi és diferenciable. Conclusió: diferenciable exactament a $\{xy\neq0\}$.
+      fuites:
+      - exactament\s+a\s+\$?\\?\{?\s*xy\s*\\neq\s*0
+      teoria:
+      - T3.9
+    errors_comuns:
+    - id: parcials_suficients
+      descripcio: |
+        A l'origen troba $\partial_xf=\partial_yf=0$ i conclou que és diferenciable amb diferencial $0$.
+      pregunta: |
+        Si fos diferenciable amb diferencial $0$, quant hauria de valer $D_uf(0,0)$ per a $u=(1,1)$? Ho has comprovat?
+    - id: arrel_negatius
+      descripcio: |
+        Creu que $x^{1/3}$ no està definida (o no és contínua) per a $x<0$.
+      pregunta: |
+        Quin nombre real elevat al cub dona $-8$? Està definida l'arrel cúbica per a negatius?
+    - id: oblida_eixos
+      descripcio: |
+        Només estudia l'origen i oblida els altres punts dels eixos, on una de les parcials no existeix.
+      pregunta: |
+        On deixa de ser derivable l'arrel cúbica? Quins punts del pla fan zero algun dels factors?
+    nota_professor: |
+      Al punt $(x_0,0)$, $x_0\neq0$, existeix $\partial_xf=0$ però no $\partial_yf$. Hi ha qui escriu $f=(xy)^{1/3}$; és el mateix amb l'arrel cúbica real.
+- num: 10
+  font: null
+  preambul: ''
+  indicacio: |
+    per a provar que $f(x_n,y_n)\to f(x,y)$ per a tota successió $(x_n,y_n)$ que tendeixi a $(x,y)$, sumeu i resteu $f(x_n,y)$ a $|f(x_n,y_n)-f(x,y)|$, apliqueu la desigualtat triangular i fiteu els termes obtinguts.
+  exercicis:
+  - id: t3-10
+    apartat: null
+    tipus: teoric
+    enunciat: |
+      Sigui $D\subseteq\mathbb{R}^2$ obert i $f:D\to\mathbb{R}$ tal que les seves derivades parcials existeixen i estan fitades en $D$. Demostreu que $f(x,y)$ és contínua en $D$. És cert a $\mathbb{R}^m$, per $m>2$?
+    teoria:
+    - T3.2
+    - T2.14
+    - T1.11
+    teoria_reservada: []
+    resultat:
+      valor: |
+        Sí. Si $M$ fita les dues parcials, per a $(x,y)$ en una bola $B\subseteq D$ centrada a $(x_0,y_0)$ es té $|f(x,y)-f(x_0,y_0)|\le M(|x-x_0|+|y-y_0|)\to0$, per tant $f$ és contínua. A $\mathbb{R}^m$ val el mateix argument, canviant una coordenada cada vegada: s'obtenen $m$ sumands $M|x_i-x_{0,i}|$, i també és cert.
+      fuites:
+      - M\s*\(\s*\|x\s*-\s*x_0\|\s*\+\s*\|y\s*-\s*y_0\|\s*\)
+    passos:
+    - id: plantejament
+      titol: Plantejar què cal fitar
+      objectiu: |
+        Traduir "$f$ és contínua a $(x_0,y_0)$" a una afirmació concreta sobre una diferència.
+      idea: |
+        Fixa un punt del domini i estudia la diferència $|f(x,y)-f(x_0,y_0)|$.
+      detall: |
+        Cal veure que $|f(x,y)-f(x_0,y_0)|\to0$ quan $(x,y)\to(x_0,y_0)$ (o, amb successions, $f(x_n,y_n)\to f(x_0,y_0)$); per tant, fitar-la per una expressió que tendeixi a $0$.
+      fuites: []
+      teoria:
+      - T2.14
+      - T2.17
+    - id: punt_intermedi
+      titol: Moure una coordenada cada vegada
+      objectiu: |
+        Descompondre la diferència en variacions que només depenguin d'una variable.
+      idea: |
+        Passa per un punt intermedi que comparteixi una coordenada amb cada extrem i usa la desigualtat triangular.
+      detall: |
+        Amb el punt $(x,y_0)$: $|f(x,y)-f(x_0,y_0)|\le|f(x,y)-f(x,y_0)|+|f(x,y_0)-f(x_0,y_0)|$.
+      fuites:
+      - \(x\s*,\s*y_0\)
+      teoria:
+      - T3.18+dem
+    - id: dins_domini
+      titol: Els segments són dins de D
+      objectiu: |
+        Garantir que els segments horitzontal i vertical que fas servir estan continguts a $D$.
+      idea: |
+        Fes servir que $D$ és obert i treballa en un entorn petit del punt.
+      detall: |
+        Com que $D$ és obert, hi ha una bola $B$ centrada a $(x_0,y_0)$ dins de $D$; si $(x,y)\in B$, el punt intermedi $(x,y_0)$ (que és més a prop del centre) i els dos segments paral·lels als eixos també són a $B\subseteq D$, per convexitat de la bola.
+      fuites:
+      - bola\s+\$?B
+      teoria:
+      - T1.11
+    - id: valor_mitja
+      titol: Teorema del valor mitjà en una variable
+      objectiu: |
+        Fitar cada terme usant només la informació sobre les parcials.
+      idea: |
+        Cada terme és la variació d'una funció d'una variable derivable, la derivada de la qual és una parcial; aplica-hi el teorema del valor mitjà d'una variable.
+      detall: |
+        $g(t)=f(x,t)$ és derivable amb $g'(t)=\partial_yf(x,t)$; pel TVM, $|f(x,y)-f(x,y_0)|=|\partial_yf(x,\tilde y)|\,|y-y_0|\le M|y-y_0|$. Igualment $|f(x,y_0)-f(x_0,y_0)|\le M|x-x_0|$.
+      fuites:
+      - M\s*\|y\s*-\s*y_0\|
+      - M\s*\|x\s*-\s*x_0\|
+      teoria:
+      - T3.2
+      - T3.18+dem
+    - id: concloure
+      titol: Concloure i generalitzar
+      objectiu: |
+        Tancar la demostració i respondre la pregunta per a $\mathbb{R}^m$.
+      idea: |
+        Suma les dues fites; per a $m$ variables, repeteix l'argument canviant una coordenada cada vegada.
+      detall: |
+        $|f(x,y)-f(x_0,y_0)|\le M(|x-x_0|+|y-y_0|)\to0$. A $\mathbb{R}^m$ es passa de $x_0$ a $x$ per $m$ segments paral·lels als eixos (dins d'una bola continguda a $D$) i s'obtenen $m$ sumands $M|x_i-x_{0,i}|$: també és cert.
+      fuites:
+      - M\s*\(\s*\|x\s*-\s*x_0\|
+      teoria: []
+    errors_comuns:
+    - id: suposa_diferenciable
+      descripcio: |
+        Suposa que $f$ és diferenciable o de classe $\mathcal C^1$, cosa que l'enunciat no diu.
+      pregunta: |
+        Què diu exactament l'enunciat sobre les parcials? Diu que són contínues?
+    - id: tvm_diagonal
+      descripcio: |
+        Aplica un teorema del valor mitjà sobre el segment que uneix els dos punts, cosa que requeriria diferenciabilitat.
+      pregunta: |
+        Per aplicar el TVM sobre aquest segment, quina hipòtesi et caldria sobre $f$? La tens?
+    - id: oblida_domini
+      descripcio: |
+        No comprova que els segments que fa servir estan dins de $D$.
+      pregunta: |
+        Els punts per on passes, són sempre dins del domini on coneixes $f$ i les seves parcials?
+    - id: sense_fita
+      descripcio: |
+        Intenta concloure només amb l'existència de parcials, sense usar que estan fitades.
+      pregunta: |
+        Coneixes alguna funció amb parcials a l'origen que no sigui contínua? Quina hipòtesi extra té aquest enunciat?
+    nota_professor: |
+      Fitxa portada de l'antic t3-6 (mateix enunciat). L'argument és el de la demostració del Teorema 18 (TVM coordenada a coordenada), però sense continuïtat de les parcials només dona continuïtat de $f$, no diferenciabilitat. La indicació de l'enunciat fa el mateix amb successions i el punt intermedi $(x_n,y)$; cal igualment que els segments siguin dins de $D$ (per a $n$ gran, dins d'una bola).
+- num: 11
+  font: null
+  preambul: ''
+  indicacio: null
+  exercicis:
+  - id: t3-11a
+    apartat: a
+    tipus: calcul
+    enunciat: |
+      Considerem la funció $f(x,y)=\log(x+y+1)+\displaystyle\int_0^x y\cos t^2\,dt$. Justifiqueu que és diferenciable en el seu domini, calculeu-ne la diferencial en el punt $(0,0)$, i useu-la per calcular un valor aproximat de $f(0.03,0.02)$.
+    teoria:
+    - T3.8
+    teoria_reservada: []
+    resultat:
+      valor: |
+        Domini: $\{x+y+1>0\}$, obert. Hi és $\mathcal C^1$ (parcials $\partial_xf=\dfrac{1}{x+y+1}+y\cos x^2$, $\partial_yf=\dfrac{1}{x+y+1}+\displaystyle\int_0^x\cos t^2\,dt$, contínues), per tant diferenciable. $Df(0,0)(h,k)=h+k$ (jacobiana $(1\ \ 1)$). Aproximació: $f(0.03,0.02)\approx f(0,0)+0.03+0.02=0.05$ (el valor exacte és $\approx0.0494$).
+      fuites:
+      - 0[.,]05\b
+      - h\s*\+\s*k
+      - \(1\s*\\?\s*,?\s*\\?\s*1\)
+    passos:
+    - id: domini_parcials
+      titol: Domini i derivades parcials
+      objectiu: |
+        Determinar el domini de $f$ i calcular-ne les derivades parcials.
+      idea: |
+        El logaritme demana argument positiu. A la integral, $y$ no depèn de $t$ i surt fora; deriva-la respecte de $x$ amb el teorema fonamental del càlcul.
+      detall: |
+        Domini $\{(x,y):x+y+1>0\}$, obert. $f=\log(x+y+1)+y\,G(x)$ amb $G(x)=\int_0^x\cos t^2\,dt$, $G'(x)=\cos x^2$. $\partial_xf=\dfrac{1}{x+y+1}+y\cos x^2$, $\partial_yf=\dfrac{1}{x+y+1}+G(x)$.
+      fuites:
+      - y\s*\\cos\s*\(?x\^\{?2\}?
+      teoria:
+      - T3.2
+    - id: diferenciable
+      titol: Justificar la diferenciabilitat
+      objectiu: |
+        Justificar que $f$ és diferenciable a tot el seu domini.
+      idea: |
+        Mira si les parcials són contínues en un obert i aplica una condició suficient.
+      detall: |
+        Les dues parcials són contínues a l'obert $\{x+y+1>0\}$ ($G$ és contínua, i la resta són composicions i quocients de contínues amb denominador no nul). Per la condició suficient de diferenciabilitat, $f$ és diferenciable (de fet $\mathcal C^1$) al domini.
+      fuites: []
+      teoria:
+      - T3.18
+      - T3.20
+    - id: diferencial
+      titol: Diferencial a l'origen
+      objectiu: |
+        Calcular $Df(0,0)$.
+      idea: |
+        La matriu de la diferencial és la jacobiana: avalua les parcials a $(0,0)$.
+      detall: |
+        $\partial_xf(0,0)=1+0=1$, $\partial_yf(0,0)=1+G(0)=1$. $Jf(0,0)=(1\ \ 1)$, és a dir $Df(0,0)(h,k)=h+k$.
+      fuites:
+      - h\s*\+\s*k
+      - \(1\s*\\\s*\\\s*1\)
+      teoria:
+      - T3.9
+      - T3.10
+    - id: aproximar
+      titol: Aproximació lineal
+      objectiu: |
+        Obtenir un valor aproximat de $f(0.03,0.02)$.
+      idea: |
+        Prop del punt, $f$ s'aproxima per la seva aproximació afí $f(a)+Df(a)(x-a)$.
+      detall: |
+        $f(0,0)=\log1+0=0$. $f(0.03,0.02)\approx0+0.03+0.02=0.05$.
+      fuites:
+      - 0[.,]05\b
+      teoria:
+      - T3.x4
+    errors_comuns:
+    - id: ftc_malament
+      descripcio: |
+        Deriva la integral respecte de $x$ incorrectament (p. ex. deixa la integral, o obté $\cos t^2$ amb $t$ lliure) o respecte de $y$ s'oblida que $y$ surt de la integral.
+      pregunta: |
+        Si $G(x)=\int_0^x g(t)\,dt$ amb $g$ contínua, quant val $G'(x)$? I de quina variable depèn l'integrand?
+    - id: no_justifica
+      descripcio: |
+        Afirma que és diferenciable perquè "té parcials", sense parlar de la seva continuïtat.
+      pregunta: |
+        L'existència de les parcials garanteix la diferenciabilitat? Quina condició addicional et cal?
+    - id: oblida_f_a
+      descripcio: |
+        Aproxima $f(0.03,0.02)$ per $Df(0,0)(0.03,0.02)$ sense sumar $f(0,0)$, o hi suma un valor incorrecte.
+      pregunta: |
+        L'aproximació lineal de $f$ a prop de $a$, quins termes té? Quant val $f$ a l'origen?
+    nota_professor: |
+      També es pot derivar la integral amb la regla de Leibniz (Teorema 32 (ii) amb $u=0$, $v(x)=x$), però com que $y$ surt de la integral n'hi ha prou amb el teorema fonamental del càlcul. Valor exacte $f(0.03,0.02)\approx0.04939$.
+  - id: t3-11b
+    apartat: b
+    tipus: calcul
+    enunciat: |
+      Considerem la funció $f(x,y)=(\arctan(x^2y)+2y,\ \log(4x+y^2)-x)$. Justifiqueu que és diferenciable en el seu domini, calculeu-ne la diferencial en el punt $(0,1)$, i useu-la per calcular un valor aproximat de $f(-0.1,1.2)$.
+    teoria:
+    - T3.8
+    teoria_reservada: []
+    resultat:
+      valor: |
+        Domini: $\{4x+y^2>0\}$, obert; hi és $\mathcal C^1$, per tant diferenciable. $f(0,1)=(2,0)$, $Jf(0,1)=\begin{pmatrix}0&2\\3&2\end{pmatrix}$, és a dir $Df(0,1)(h,k)=(2k,\ 3h+2k)$. Amb $(h,k)=(-0.1,0.2)$: $f(-0.1,1.2)\approx(2,0)+(0.4,0.1)=(2.4,\ 0.1)$ (valor exacte $\approx(2.412,\ 0.139)$).
+      fuites:
+      - 2[.,]4\b
+      - \(0[.,]4\s*,\s*0[.,]1\)
+      - 3\s*h\s*\+\s*2\s*k
+    passos:
+    - id: domini_diferenciable
+      titol: Domini i diferenciabilitat
+      objectiu: |
+        Determinar el domini i justificar que $f$ hi és diferenciable.
+      idea: |
+        Una funció vectorial és diferenciable si ho són les components; cada component és suma, producte i composició de funcions diferenciables (o té parcials contínues en un obert).
+      detall: |
+        La primera component està definida a $\mathbb{R}^2$; la segona demana $4x+y^2>0$. Domini $\{4x+y^2>0\}$, obert. Les parcials de les components (vegeu el pas següent) són contínues al domini, així $f\in\mathcal C^1$ i és diferenciable (també per regla de la cadena i àlgebra de diferenciables).
+      fuites: []
+      teoria:
+      - T3.18
+      - T3.20
+      - T3.21
+      - T3.23
+    - id: jacobiana
+      titol: Matriu jacobiana a (0,1)
+      objectiu: |
+        Calcular $Df(0,1)$.
+      idea: |
+        Calcula les quatre parcials (regla de la cadena en una variable per a $\arctan$ i $\log$) i avalua-les al punt.
+      detall: |
+        $\partial_xf_1=\dfrac{2xy}{1+x^4y^2}$, $\partial_yf_1=\dfrac{x^2}{1+x^4y^2}+2$, $\partial_xf_2=\dfrac{4}{4x+y^2}-1$, $\partial_yf_2=\dfrac{2y}{4x+y^2}$. A $(0,1)$: $Jf(0,1)=\begin{pmatrix}0&2\\3&2\end{pmatrix}$, i $Df(0,1)(h,k)=(2k,\ 3h+2k)$.
+      fuites:
+      - 3\s*h\s*\+\s*2\s*k
+      - \\begin\{pmatrix\}\s*0\s*&\s*2\s*\\\\\s*3\s*&\s*2
+      teoria:
+      - T3.9
+      - T3.10
+    - id: aproximar
+      titol: Aproximació lineal
+      objectiu: |
+        Obtenir un valor aproximat de $f(-0.1,1.2)$.
+      idea: |
+        Usa l'aproximació afí $f(a)+Df(a)(x-a)$ amb $a=(0,1)$; calcula primer $f(a)$ i l'increment.
+      detall: |
+        $f(0,1)=(\arctan0+2,\ \log1-0)=(2,0)$; increment $(h,k)=(-0.1,0.2)$; $Df(0,1)(-0.1,0.2)=(0.4,\ -0.3+0.4)=(0.4,0.1)$. Així $f(-0.1,1.2)\approx(2.4,\ 0.1)$.
+      fuites:
+      - 2[.,]4\b
+      - \(0[.,]4\s*,\s*0[.,]1\)
+      teoria:
+      - T3.x4
+    errors_comuns:
+    - id: increment_malament
+      descripcio: |
+        Usa com a increment el punt $(-0.1,1.2)$ en lloc de $(-0.1,1.2)-(0,1)$.
+      pregunta: |
+        A l'aproximació $f(a)+Df(a)(x-a)$, què és $x-a$ en aquest cas?
+    - id: jacobiana_transposada
+      descripcio: |
+        Col·loca les parcials en files/columnes equivocades (transposa la jacobiana).
+      pregunta: |
+        A la jacobiana, cada fila correspon a una component o a una variable?
+    - id: cadena_una_variable
+      descripcio: |
+        Deriva $\arctan(x^2y)$ o $\log(4x+y^2)$ oblidant la derivada de l'argument.
+      pregunta: |
+        Quina és la derivada de $\arctan(g(x))$? Has multiplicat per la derivada de l'argument?
+    nota_professor: |
+      Valor exacte $f(-0.1,1.2)\approx(2.41200,\ 0.13922)$; l'error de la segona component és més gran pel terme quadràtic de $\log$.
+- num: 12
+  font: null
+  preambul: ''
+  indicacio: null
+  exercicis:
+  - id: t3-12
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Considerem la funció $f(x,y)=(xy^{3/2},\ x^{3/2}-y^2)$. Justifiqueu que és diferenciable en un entorn del punt $(4,1)$, calculeu l'aproximació lineal de $f$ en el punt $(4,1)$, i useu-la per calcular una aproximació de $f(4.2,1.1)$.
+    teoria:
+    - T3.8
+    - T3.x4
+    teoria_reservada: []
+    resultat:
+      valor: |
+        En l'obert $\{x>0,\ y>0\}$, que conté $(4,1)$, les quatre derivades parcials existeixen i són contínues, per tant $f$ hi és diferenciable. Amb $f(4,1)=(4,7)$ i $Jf(4,1)=\begin{pmatrix}1&6\\3&-2\end{pmatrix}$, l'aproximació lineal és
+        $L(x,y)=(4,7)+\begin{pmatrix}1&6\\3&-2\end{pmatrix}\begin{pmatrix}x-4\\y-1\end{pmatrix}=\big(4+(x-4)+6(y-1),\ 7+3(x-4)-2(y-1)\big)$,
+        i $f(4.2,1.1)\approx L(4.2,1.1)=(4.8,\ 7.4)$ (el valor exacte és $\approx(4.8455,\ 7.3974)$).
+      fuites:
+      - \(\s*4(\.|,|\{,\})8\s*,(\\\s|\s)*7(\.|,|\{,\})4\s*\)
+      - 4(\.|,|\{,\})8\b.{0,40}7(\.|,|\{,\})4\b
+    passos:
+    - id: diferenciable
+      titol: Justificar la diferenciabilitat
+      objectiu: |
+        Justificar que $f$ és diferenciable en tot un entorn de $(4,1)$.
+      idea: |
+        Busca un obert al voltant de $(4,1)$ on les expressions de les components siguin derivables sense problemes (atenció a les potències d'exponent $3/2$) i aplica la condició suficient de diferenciabilitat.
+      detall: |
+        A l'obert $U=\{x>0,\ y>0\}\ni(4,1)$ les parcials $\frac{\partial f_1}{\partial x}=y^{3/2}$, $\frac{\partial f_1}{\partial y}=\frac32xy^{1/2}$, $\frac{\partial f_2}{\partial x}=\frac32x^{1/2}$, $\frac{\partial f_2}{\partial y}=-2y$ existeixen i són contínues (composicions i productes de funcions contínues). Per la condició suficient, $f$ és diferenciable a tot $U$.
+      fuites: []
+      teoria:
+      - T3.18
+      - T2.20
+    - id: jacobiana
+      titol: Matriu jacobiana al punt
+      objectiu: |
+        Calcular $f(4,1)$ i la matriu de la diferencial de $f$ a $(4,1)$.
+      idea: |
+        Avalua les derivades parcials de cada component al punt: la fila $i$ correspon a la component $f_i$.
+      detall: |
+        $f(4,1)=(4\cdot1,\ 8-1)=(4,7)$ i $Jf(4,1)=\begin{pmatrix}1&6\\3&-2\end{pmatrix}$ (perquè $\frac32\cdot4\cdot1=6$ i $\frac32\cdot\sqrt4=3$).
+      fuites:
+      - \\begin\{[pb]matrix\}\s*1\s*&\s*6\s*\\\\\s*3\s*&\s*-\s*2
+      - \(4\s*,\s*7\)
+      teoria:
+      - T3.9
+      - T3.10
+    - id: aproximacio_lineal
+      titol: Escriure l'aproximació lineal
+      objectiu: |
+        Escriure la funció afí que aproxima $f$ prop de $(4,1)$.
+      idea: |
+        És el valor al punt més la diferencial aplicada a l'increment $(x-4,\ y-1)$.
+      detall: |
+        $L(x,y)=(4,7)+\begin{pmatrix}1&6\\3&-2\end{pmatrix}\begin{pmatrix}x-4\\y-1\end{pmatrix}=\big(4+(x-4)+6(y-1),\ 7+3(x-4)-2(y-1)\big)$.
+      fuites:
+      - 4\s*\+\s*\(x\s*-\s*4\)\s*\+\s*6\s*\(y\s*-\s*1\)
+      - 7\s*\+\s*3\s*\(x\s*-\s*4\)
+      teoria:
+      - T3.x4
+    - id: avaluar
+      titol: Avaluar l'aproximació
+      objectiu: |
+        Usar l'aproximació lineal per estimar $f(4.2,1.1)$.
+      idea: |
+        Calcula l'increment respecte del punt base i substitueix-lo a l'aproximació lineal.
+      detall: |
+        Increment $(0.2,\ 0.1)$: $L(4.2,1.1)=(4+0.2+0.6,\ 7+0.6-0.2)=(4.8,\ 7.4)$. (Valor exacte $\approx(4.8455,\ 7.3974)$.)
+      fuites:
+      - \(\s*4(\.|,|\{,\})8\s*,(\\\s|\s)*7(\.|,|\{,\})4\s*\)
+      - 4(\.|,|\{,\})8\b.{0,40}7(\.|,|\{,\})4\b
+      teoria: []
+    errors_comuns:
+    - id: increment_malament
+      descripcio: |
+        Substitueix $(4.2,\ 1.1)$ directament a la matriu jacobiana en lloc de l'increment $(0.2,\ 0.1)$.
+      pregunta: |
+        A l'aproximació lineal, la matriu jacobiana multiplica el punt nou o la diferència entre el punt nou i el punt base?
+    - id: jacobiana_transposada
+      descripcio: |
+        Escriu la jacobiana transposada (posa les derivades d'una mateixa component en una columna).
+      pregunta: |
+        Si multipliques la teva matriu per $(x-4,\ y-1)$, la primera component del resultat depèn només de $f_1$?
+    - id: diferenciable_sense_justificar
+      descripcio: |
+        Diu que és diferenciable "perquè és una funció elemental" sense mirar on són contínues les parcials (amb potències $3/2$ el domini importa).
+      pregunta: |
+        On està definida $y^{1/2}$ i on és contínua? El punt $(4,1)$ té un entorn on tot funciona?
+    nota_professor: |
+      $f$ està definida per $x\ge0$, $y\ge0$; només cal treballar a l'obert $x,y>0$. L'error de l'aproximació és de l'ordre de $10^{-2}$, coherent amb un increment de norma $\approx0.22$.
+- num: 13
+  font: null
+  preambul: ''
+  indicacio: null
+  exercicis:
+  - id: t3-13
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Calculeu un valor aproximat de $\sqrt{3+e^{-0.1}\cos0.05+5\sin0.05}$.
+    teoria: []
+    teoria_reservada: []
+    resultat:
+      valor: |
+        Amb $f(x,y)=\sqrt{3+e^x\cos y+5\sin y}$ al voltant de $(0,0)$: $f(0,0)=2$, $\nabla f(0,0)=(1/4,\ 5/4)$, i
+        $\sqrt{3+e^{-0.1}\cos0.05+5\sin0.05}\approx2+\frac14(-0.1)+\frac54(0.05)=2.0375$ (el valor exacte és $\approx2.0380$).
+      fuites:
+      - 2(\.|,|\{,\})037
+      - 2(\.|,|\{,\})038
+    passos:
+    - id: triar_funcio
+      titol: Triar la funció i el punt base
+      objectiu: |
+        Escriure el nombre com el valor d'una funció de diverses variables en un punt proper a un punt on la funció és fàcil d'avaluar.
+      idea: |
+        Substitueix els nombres petits ($-0.1$ i $0.05$) per variables i pren com a punt base aquell on aquestes variables valen $0$.
+      detall: |
+        $f(x,y)=\sqrt{3+e^x\cos y+5\sin y}$, punt base $(0,0)$, on $f(0,0)=\sqrt{3+1+0}=2$; volem $f(-0.1,\ 0.05)$.
+      fuites:
+      - e\^\{?x\}?\s*\\cos\s*y
+      teoria: []
+    - id: diferenciable
+      titol: Justificar la diferenciabilitat
+      objectiu: |
+        Veure que la funció és diferenciable al punt base, per poder-hi fer servir l'aproximació afí.
+      idea: |
+        Mira si les parcials existeixen i són contínues en un entorn del punt base (l'argument de l'arrel hi ha de ser positiu).
+      detall: |
+        Prop de $(0,0)$ l'argument de l'arrel és proper a $4>0$, així que $f$ és composició de funcions $\mathcal{C}^1$ amb parcials contínues; per la condició suficient, és diferenciable a $(0,0)$.
+      fuites: []
+      teoria:
+      - T3.18
+    - id: gradient
+      titol: Calcular el gradient
+      objectiu: |
+        Calcular les derivades parcials de $f$ al punt base.
+      idea: |
+        Deriva l'arrel per la regla de la cadena d'una variable i avalua a l'origen.
+      detall: |
+        $\frac{\partial f}{\partial x}=\frac{e^x\cos y}{2f}$, $\frac{\partial f}{\partial y}=\frac{-e^x\sin y+5\cos y}{2f}$; a $(0,0)$: $\nabla f(0,0)=(1/4,\ 5/4)$.
+      fuites:
+      - \(\s*1\s*/\s*4\s*,(\\\s|\s)*5\s*/\s*4\s*\)
+      - \\[dt]?frac\{?1\}?\{?4\}?\s*,(\\\s|\s)*\\[dt]?frac\{?5\}?\{?4\}?
+      - \(\s*0(\.|,|\{,\})25\s*,(\\\s|\s)*1(\.|,|\{,\})25\s*\)
+      teoria:
+      - T3.9
+      - T3.10
+    - id: aproximar
+      titol: Aproximar
+      objectiu: |
+        Obtenir el valor aproximat.
+      idea: |
+        Aproximació afí: valor al punt base més el gradient aplicat a l'increment.
+      detall: |
+        $f(-0.1,\ 0.05)\approx2+\frac14(-0.1)+\frac54(0.05)=2-0.025+0.0625=2.0375$.
+      fuites:
+      - 2(\.|,|\{,\})0375
+      - 2\s*-\s*0(\.|,|\{,\})025\s*\+\s*0(\.|,|\{,\})0625
+      teoria:
+      - T3.x4
+    errors_comuns:
+    - id: punt_base_dolent
+      descripcio: |
+        Pren un punt base on la funció no és fàcil d'avaluar o que no és proper al punt desitjat.
+      pregunta: |
+        En quin punt saps calcular exactament el valor de la funció sense calculadora? És a prop del que vols aproximar?
+    - id: signe_increment
+      descripcio: |
+        Usa l'increment $+0.1$ en lloc de $-0.1$ per a la variable de l'exponencial.
+      pregunta: |
+        Quin és exactament el valor de la primera variable al punt que vols aproximar?
+    - id: oblida_arrel
+      descripcio: |
+        Aproxima només l'argument de l'arrel i oblida el factor $\frac{1}{2\sqrt{\cdot}}$ en derivar.
+      pregunta: |
+        Quina és la derivada de $\sqrt{g}$ respecte d'una variable? Has inclòs tots els factors?
+    nota_professor: |
+      També es pot treballar amb tres variables, $f(x,y,z)=\sqrt{3+e^x\cos y+5\sin z}$, o fixar $y=z$ com aquí; el resultat és el mateix. Alternativament, aproximar primer l'argument ($\approx4.15$) i després l'arrel dona $\approx2.0375$ també.
+- num: 14
+  font: null
+  preambul: |
+    Calculeu les derivades direccionals de les funcions següents en els punts i direccions que s'indiquen:
+  indicacio: null
+  exercicis:
+  - id: t3-14a
+    apartat: a
+    tipus: calcul
+    enunciat: |
+      $f(x,y)=\log\left(\sqrt{x^2+y^2}\right)$, $a=(1,0)$, $\mathbf{v}=(2,1)$;
+    teoria:
+    - T3.1
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $D_{\mathbf v}f(1,0)=2$ (amb el vector $\mathbf v=(2,1)$ tal com és donat; si es normalitza, $D_{\mathbf v/\|\mathbf v\|}f(1,0)=2/\sqrt5$).
+      fuites:
+      - D_\{?[^=$]{0,25}f\s*\(\s*1\s*,\s*0\s*\)\s*=\s*2\b
+      - derivada direccional (és|val)\s*\$?2\b
+      - 2\s*/\s*\\sqrt\{?5
+      - \\[dt]?frac\{?2\}?\{\\sqrt\{?5
+    passos:
+    - id: diferenciable
+      titol: Diferenciabilitat al punt
+      objectiu: |
+        Decidir si es pot calcular la derivada direccional a partir del gradient.
+      idea: |
+        Si $f$ és diferenciable al punt, la derivada direccional s'obté de la diferencial; comprova-ho amb la condició suficient.
+      detall: |
+        $f(x,y)=\frac12\log(x^2+y^2)$ té parcials $\frac{x}{x^2+y^2}$, $\frac{y}{x^2+y^2}$, contínues a $\mathbb{R}^2\setminus\{(0,0)\}$; per tant $f$ és diferenciable a $(1,0)$.
+      fuites: []
+      teoria:
+      - T3.18
+    - id: gradient
+      titol: Gradient al punt
+      objectiu: |
+        Calcular $\nabla f(1,0)$.
+      idea: |
+        Simplifica primer el logaritme de l'arrel i deriva.
+      detall: |
+        $\nabla f(x,y)=\left(\frac{x}{x^2+y^2},\frac{y}{x^2+y^2}\right)$, així que $\nabla f(1,0)=(1,0)$.
+      fuites:
+      - \\nabla\s*f\s*\(1,\s*0\)\s*=\s*\(1,\s*0\)
+      teoria:
+      - T3.10
+    - id: direccional
+      titol: Derivada direccional
+      objectiu: |
+        Calcular $D_{\mathbf v}f(1,0)$.
+      idea: |
+        Per a una funció diferenciable, la derivada direccional és el producte escalar del gradient amb el vector.
+      detall: |
+        $D_{\mathbf v}f(1,0)=\langle(1,0),(2,1)\rangle=2$.
+      fuites:
+      - \\langle\s*\(1,\s*0\)\s*,\s*\(2,\s*1\)\s*\\rangle\s*=\s*2
+      - \\rangle\s*=\s*2\b
+      - 1\s*\\cdot\s*2\s*\+\s*0\s*\\cdot\s*1
+      teoria:
+      - T3.9
+    errors_comuns:
+    - id: normalitzacio
+      descripcio: |
+        Normalitza el vector sense que calgui, o barreja el vector normalitzat amb el no normalitzat (amb la definició dels apunts, $D_{\mathbf v}f$ es calcula amb $\mathbf v$ tal com és).
+      pregunta: |
+        La definició de $D_uf(a)$ dels apunts demana que $u$ sigui unitari? Què passa amb $D_{\lambda u}f(a)$?
+    - id: derivada_log
+      descripcio: |
+        Deriva malament $\log\sqrt{x^2+y^2}$ (oblida el factor $\frac12$ o el de la cadena).
+      pregunta: |
+        Pots reescriure $\log\sqrt{g}$ d'una manera més senzilla abans de derivar?
+    - id: sense_justificar
+      descripcio: |
+        Usa $\nabla f\cdot\mathbf v$ sense justificar la diferenciabilitat.
+      pregunta: |
+        La fórmula del gradient per la direcció, per a quines funcions està garantida?
+    nota_professor: |
+      Es pot comprovar amb la definició: $f(1+2t,t)=\frac12\log(1+4t+5t^2)$, la derivada a $t=0$ és $2$. Si el professor espera vector unitari, el valor és $2/\sqrt5$.
+  - id: t3-14b
+    apartat: b
+    tipus: calcul
+    enunciat: |
+      $f(x,y)=e^x\cos(\pi y)$, $a=(0,-1)$, $\mathbf{v}=(-1,2)$.
+    teoria:
+    - T3.1
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $D_{\mathbf v}f(0,-1)=1$ (amb $\mathbf v=(-1,2)$ tal com és donat; normalitzat, $1/\sqrt5$).
+      fuites:
+      - D_\{?[^=$]{0,25}f\s*\(\s*0\s*,\s*-\s*1\s*\)\s*=\s*1\b
+      - derivada direccional (és|val)\s*\$?1\b
+      - 1\s*/\s*\\sqrt\{?5
+      - \\[dt]?frac\{?1\}?\{\\sqrt\{?5
+    passos:
+    - id: diferenciable
+      titol: Diferenciabilitat
+      objectiu: |
+        Decidir si es pot calcular la derivada direccional a partir del gradient.
+      idea: |
+        Comprova la condició suficient de diferenciabilitat.
+      detall: |
+        Les parcials $e^x\cos(\pi y)$ i $-\pi e^x\sin(\pi y)$ són contínues a tot $\mathbb{R}^2$, així que $f$ és diferenciable a tot arreu.
+      fuites: []
+      teoria:
+      - T3.18
+    - id: gradient
+      titol: Gradient al punt
+      objectiu: |
+        Calcular $\nabla f(0,-1)$.
+      idea: |
+        Avalua les parcials al punt, amb compte amb el sinus i el cosinus de $-\pi$.
+      detall: |
+        $\nabla f(0,-1)=(\cos(-\pi),\ -\pi\sin(-\pi))=(-1,\ 0)$.
+      fuites:
+      - \(\s*-\s*1\s*,(\\\s|\s)*0\s*\)
+      teoria:
+      - T3.10
+    - id: direccional
+      titol: Derivada direccional
+      objectiu: |
+        Calcular $D_{\mathbf v}f(0,-1)$.
+      idea: |
+        Producte escalar del gradient amb el vector.
+      detall: |
+        $D_{\mathbf v}f(0,-1)=\langle(-1,0),(-1,2)\rangle=1$.
+      fuites:
+      - \\rangle\s*=\s*1\b
+      - \(\s*-\s*1\s*\)\s*\(\s*-\s*1\s*\)\s*\+\s*0
+      teoria:
+      - T3.9
+    errors_comuns:
+    - id: factor_pi
+      descripcio: |
+        Oblida el factor $\pi$ en derivar $\cos(\pi y)$ (aquí no afecta el resultat perquè $\sin(-\pi)=0$, però és un error).
+      pregunta: |
+        Quina és la derivada de $\cos(\pi y)$ respecte de $y$? D'on surt el factor extra?
+    - id: cos_menys_pi
+      descripcio: |
+        Pren $\cos(-\pi)=1$.
+      pregunta: |
+        Quant val el cosinus d'un angle pla? Canvia en canviar-li el signe?
+    - id: normalitzacio
+      descripcio: |
+        Barreja vector normalitzat i no normalitzat.
+      pregunta: |
+        Quin vector exacte has posat a la definició de derivada direccional?
+    nota_professor: |
+      Comprovació directa: $f(-t,-1+2t)=e^{-t}\cos(\pi(2t-1))=-e^{-t}\cos(2\pi t)$, de derivada $1$ a $t=0$.
+- num: 15
+  font: null
+  preambul: |
+    Justifiqueu l'existència d'hiperplà tangent a les gràfiques de les funcions següents en el punt $(a,f(a))$ i calculeu-lo:
+  indicacio: null
+  exercicis:
+  - id: t3-15a
+    apartat: a
+    tipus: calcul
+    enunciat: |
+      $f(x,y,z)=y\arcsin(x\log y)+2^{x/y}$, $a=(0,1,2)$;
+    teoria:
+    - T3.8
+    - T3.9
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $f$ és de classe $\mathcal{C}^1$ a l'obert $\{y>0,\ |x\log y|<1\}$, que conté $a$, i per tant diferenciable a $a$. Amb $f(a)=1$ i $\nabla f(a)=(\log2,\ 0,\ 0)$, l'hiperplà tangent (a $\mathbb{R}^4$, coordenades $(x,y,z,w)$) és
+        $w=1+(\log2)\,x$.
+      fuites:
+      - =\s*1\s*\+\s*\(?\\(log|ln)\s*2\)?\s*(\\,|\\cdot|\\;)?\s*\(?x\b
+      - =\s*1\s*\+\s*x\s*(\\,|\\cdot)?\s*\\(log|ln)\s*2
+      - \(\s*\\(log|ln)\s*2\s*,(\\\s|\s)*0\s*,(\\\s|\s)*0\s*\)
+    passos:
+    - id: diferenciable
+      titol: Justificar la diferenciabilitat
+      objectiu: |
+        Trobar un obert al voltant de $a$ on $f$ sigui diferenciable.
+      idea: |
+        Identifica on cada peça ($\log y$, $\arcsin$, $2^{x/y}$) és derivable amb derivada contínua i aplica la condició suficient.
+      detall: |
+        $\log y$ i $x/y$ són $\mathcal{C}^1$ per $y>0$; $\arcsin$ és derivable amb derivada contínua a $(-1,1)$. A l'obert $U=\{y>0,\ |x\log y|<1\}$ (a $a$: $x\log y=0$) totes les parcials existeixen i són contínues, per tant $f$ és diferenciable a $a$ i existeix l'hiperplà tangent.
+      fuites: []
+      teoria:
+      - T3.18
+    - id: valor
+      titol: Valor al punt
+      objectiu: |
+        Calcular $f(a)$.
+      idea: |
+        Substitueix directament.
+      detall: |
+        $f(0,1,2)=1\cdot\arcsin(0)+2^0=1$.
+      fuites: []
+      teoria: []
+    - id: gradient
+      titol: Gradient al punt
+      objectiu: |
+        Calcular $\nabla f(a)$.
+      idea: |
+        Deriva cada sumand (regla de la cadena d'una variable) i avalua; observa de quines variables depèn realment $f$.
+      detall: |
+        $\frac{\partial f}{\partial x}=\frac{y\log y}{\sqrt{1-x^2\log^2y}}+\frac{\log2}{y}2^{x/y}$, $\frac{\partial f}{\partial y}=\arcsin(x\log y)+\frac{x}{\sqrt{1-x^2\log^2y}}-\frac{x\log2}{y^2}2^{x/y}$, $\frac{\partial f}{\partial z}=0$. A $a$: $\nabla f(a)=(\log2,\ 0,\ 0)$.
+      fuites:
+      - \(\s*\\(log|ln)\s*2\s*,(\\\s|\s)*0\s*,(\\\s|\s)*0\s*\)
+      teoria:
+      - T3.10
+    - id: hiperpla
+      titol: Escriure l'hiperplà
+      objectiu: |
+        Escriure l'equació de l'hiperplà tangent a la gràfica a $(a,f(a))$.
+      idea: |
+        Usa la fórmula de l'hiperplà tangent: valor al punt més el gradient aplicat a $x-a$.
+      detall: |
+        $w=1+\log2\,(x-0)+0\,(y-1)+0\,(z-2)$, és a dir $w=1+(\log2)\,x$, a $\mathbb{R}^4$.
+      fuites:
+      - =\s*1\s*\+\s*\(?\\(log|ln)\s*2
+      - =\s*1\s*\+\s*x\s*(\\,|\\cdot)?\s*\\(log|ln)\s*2
+      teoria:
+      - T3.9
+    errors_comuns:
+    - id: pla_a_R3
+      descripcio: |
+        Escriu un pla de $\mathbb{R}^3$ en lloc d'un hiperplà de $\mathbb{R}^4$ (la gràfica d'una funció de 3 variables viu a $\mathbb{R}^4$).
+      pregunta: |
+        Quantes coordenades té un punt de la gràfica d'una funció de tres variables?
+    - id: derivada_exponencial
+      descripcio: |
+        Deriva $2^{x/y}$ com si fos $e^{x/y}$ (oblida el factor $\log2$).
+      pregunta: |
+        Com escriuries $2^{s}$ en forma d'exponencial de base $e$? Què dona en derivar?
+    - id: domini_arcsin
+      descripcio: |
+        No comprova que l'argument de l'arcsinus és a $(-1,1)$ prop de $a$, on $\arcsin$ és derivable.
+      pregunta: |
+        On és derivable $\arcsin$? Es compleix això en un entorn de $a$?
+    nota_professor: |
+      $f$ no depèn de $z$, per això $\partial_zf=0$; l'hiperplà tangent tampoc no hi depèn.
+  - id: t3-15b
+    apartat: b
+    tipus: calcul
+    enunciat: |
+      $f(x,y,z)=xy^2+y^2z^3+xz^3$, $a=(4,-2,-1)$;
+    teoria:
+    - T3.8
+    - T3.9
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $f$ és polinòmica, amb parcials contínues a $\mathbb{R}^3$, per tant diferenciable. $f(a)=8$, $\nabla f(a)=(3,-12,24)$, i l'hiperplà tangent és
+        $w=8+3(x-4)-12(y+2)+24(z+1)$, és a dir $w=3x-12y+24z-4$.
+      fuites:
+      - \(\s*3\s*,\s*-\s*12\s*,\s*24\s*\)
+      - w\s*=\s*3x\s*-\s*12y\s*\+\s*24z
+      - 8\s*\+\s*3\s*\(x\s*-\s*4\)
+    passos:
+    - id: diferenciable
+      titol: Justificar la diferenciabilitat
+      objectiu: |
+        Justificar que $f$ és diferenciable a $a$.
+      idea: |
+        Mira de quin tipus de funció es tracta i aplica la condició suficient.
+      detall: |
+        $f$ és un polinomi: les seves parcials són polinomis, contínues a tot $\mathbb{R}^3$; per tant $f$ és diferenciable a tot arreu.
+      fuites: []
+      teoria:
+      - T3.18
+    - id: gradient
+      titol: Valor i gradient al punt
+      objectiu: |
+        Calcular $f(a)$ i $\nabla f(a)$.
+      idea: |
+        Deriva respecte de cada variable i avalua amb cura els signes ($y=-2$, $z=-1$).
+      detall: |
+        $f(a)=16-4-4=8$. $\frac{\partial f}{\partial x}=y^2+z^3=3$, $\frac{\partial f}{\partial y}=2xy+2yz^3=-16+4=-12$, $\frac{\partial f}{\partial z}=3y^2z^2+3xz^2=12+12=24$. $\nabla f(a)=(3,-12,24)$.
+      fuites:
+      - \(\s*3\s*,\s*-\s*12\s*,\s*24\s*\)
+      teoria:
+      - T3.10
+    - id: hiperpla
+      titol: Escriure l'hiperplà
+      objectiu: |
+        Escriure l'equació de l'hiperplà tangent.
+      idea: |
+        Valor al punt més el gradient aplicat a $x-a$.
+      detall: |
+        $w=8+3(x-4)-12(y+2)+24(z+1)=3x-12y+24z-4$.
+      fuites:
+      - 8\s*\+\s*3\s*\(x\s*-\s*4\)
+      - 3x\s*-\s*12y\s*\+\s*24z
+      teoria:
+      - T3.9
+    errors_comuns:
+    - id: signes
+      descripcio: |
+        S'equivoca amb els signes de les potències de nombres negatius ($z^3=-1$, $z^2=1$, $y^2=4$).
+      pregunta: |
+        Quin signe té $(-1)^3$? I $(-1)^2$?
+    - id: increments
+      descripcio: |
+        Escriu $(y-2)$ i $(z-1)$ en lloc de $(y+2)$ i $(z+1)$.
+      pregunta: |
+        Quines són les coordenades exactes de $a$? Què val $y-a_2$?
+    - id: pla_a_R3
+      descripcio: |
+        Escriu l'hiperplà sense la variable de l'alçada, o com un pla de $\mathbb{R}^3$.
+      pregunta: |
+        On viu la gràfica d'una funció de tres variables?
+  - id: t3-15c
+    apartat: c
+    tipus: calcul
+    enunciat: |
+      $f(x,y,z)=x^{yz}$, $a=(e,e,0)$.
+    teoria:
+    - T3.8
+    - T3.9
+    teoria_reservada: []
+    resultat:
+      valor: |
+        A l'obert $\{x>0\}$, $f=e^{yz\log x}$ és $\mathcal{C}^1$, per tant diferenciable a $a$. $f(a)=1$, $\nabla f(a)=(0,0,e)$, i l'hiperplà tangent és $w=1+e\,z$.
+      fuites:
+      - =\s*1\s*\+\s*e\s*(\\,|\\cdot|\\;)?\s*\(?z\b
+      - \(\s*0\s*,\s*0\s*,\s*e\s*\)
+    passos:
+    - id: diferenciable
+      titol: Justificar la diferenciabilitat
+      objectiu: |
+        Justificar que $f$ és diferenciable a $a$.
+      idea: |
+        Reescriu la potència amb base i exponent variables com una exponencial de base $e$, i mira on té sentit.
+      detall: |
+        Per $x>0$, $f(x,y,z)=e^{yz\log x}$, composició de funcions $\mathcal{C}^1$; les parcials són contínues a l'obert $\{x>0\}\ni a$, i $f$ hi és diferenciable.
+      fuites: []
+      teoria:
+      - T3.18
+    - id: gradient
+      titol: Valor i gradient al punt
+      objectiu: |
+        Calcular $f(a)$ i $\nabla f(a)$.
+      idea: |
+        Deriva l'exponencial per la regla de la cadena d'una variable i avalua a $a$.
+      detall: |
+        $f(a)=e^0=1$. $\frac{\partial f}{\partial x}=\frac{yz}{x}x^{yz}$, $\frac{\partial f}{\partial y}=z\log x\,x^{yz}$, $\frac{\partial f}{\partial z}=y\log x\,x^{yz}$. A $a$: $\nabla f(a)=(0,0,e)$.
+      fuites:
+      - \(\s*0\s*,\s*0\s*,\s*e\s*\)
+      teoria:
+      - T3.10
+    - id: hiperpla
+      titol: Escriure l'hiperplà
+      objectiu: |
+        Escriure l'equació de l'hiperplà tangent.
+      idea: |
+        Valor al punt més el gradient aplicat a $x-a$.
+      detall: |
+        $w=1+0(x-e)+0(y-e)+e(z-0)$, és a dir $w=1+e\,z$.
+      fuites:
+      - =\s*1\s*\+\s*e\s*(\\,|\\cdot|\\;)?\s*\(?z\b
+      - e\s*\(z\s*-\s*0\)
+      teoria:
+      - T3.9
+    errors_comuns:
+    - id: potencia_com_polinomi
+      descripcio: |
+        Deriva $x^{yz}$ respecte de $y$ o $z$ com si l'exponent fos constant, o respecte de $x$ com si la base fos constant.
+      pregunta: |
+        Quan la variable és a l'exponent, quina regla de derivació fas servir? Ajuda escriure-ho com $e^{\text{algo}}$?
+    - id: log_e
+      descripcio: |
+        No simplifica $\log e=1$ o avalua malament $e^{0}$.
+      pregunta: |
+        Quant val $yz$ al punt $a$? I $\log x$?
+    - id: pla_a_R3
+      descripcio: |
+        Escriu un pla de $\mathbb{R}^3$ en lloc d'un hiperplà de $\mathbb{R}^4$.
+      pregunta: |
+        Quantes coordenades té un punt de la gràfica d'una funció de tres variables?
+- num: 16
+  font: null
+  preambul: ''
+  indicacio: null
+  exercicis:
+  - id: t3-16
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Calculeu tots els punts de $\mathbb{R}^2$ on la gràfica de la funció $f(x,y)=(1-\sin x)\,y+y^3$ té pla tangent paral·lel al pla $XY$. Escriviu també l'equació d'aquests plans tangents.
+    teoria:
+    - T3.9
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $f$ és $\mathcal{C}^1$ a $\mathbb{R}^2$, així que té pla tangent a tot punt, i aquest és horitzontal si i només si $\nabla f=0$. Els punts són $\left(\frac{\pi}{2}+2k\pi,\ 0\right)$, $k\in\mathbb{Z}$, on $f=0$, i el pla tangent és en tots ells $z=0$ (el mateix pla $XY$).
+      fuites:
+      - \\[dt]?frac\{?\\pi\}?\{?2\}?\s*\+\s*2\s*(k\s*\\pi|\\pi\s*k)
+      - \\pi\s*/\s*2\s*\+\s*2\s*(k\s*\\pi|\\pi\s*k)
+      - \bz\s*=\s*0\b
+    passos:
+    - id: diferenciable
+      titol: Existència de pla tangent
+      objectiu: |
+        Justificar que la gràfica té pla tangent a tot punt.
+      idea: |
+        Comprova la condició suficient de diferenciabilitat.
+      detall: |
+        $\frac{\partial f}{\partial x}=-y\cos x$ i $\frac{\partial f}{\partial y}=1-\sin x+3y^2$ són contínues a $\mathbb{R}^2$; $f$ és diferenciable a tot arreu i té pla tangent a cada punt.
+      fuites: []
+      teoria:
+      - T3.18
+      - T3.9
+    - id: condicio
+      titol: Traduir 'paral·lel al pla XY'
+      objectiu: |
+        Escriure la condició perquè el pla tangent a $(a,f(a))$ sigui paral·lel al pla $XY$.
+      idea: |
+        Mira l'equació del pla tangent: quan no depèn ni de $x$ ni de $y$?
+      detall: |
+        El pla $z=f(a)+\frac{\partial f}{\partial x}(a)(x-a_1)+\frac{\partial f}{\partial y}(a)(y-a_2)$ és horitzontal si i només si $\nabla f(a)=(0,0)$.
+      fuites: []
+      teoria:
+      - T3.9
+    - id: resoldre
+      titol: Resoldre el sistema
+      objectiu: |
+        Trobar tots els punts on s'anul·len les dues derivades parcials.
+      idea: |
+        Comença per l'equació que és una suma de termes de signe conegut.
+      detall: |
+        $1-\sin x+3y^2=0$ amb $1-\sin x\ge0$ i $3y^2\ge0$ obliga $y=0$ i $\sin x=1$, és a dir $x=\frac{\pi}{2}+2k\pi$. Llavors $-y\cos x=0$ també es compleix. Punts: $\left(\frac{\pi}{2}+2k\pi,\ 0\right)$, $k\in\mathbb{Z}$.
+      fuites:
+      - \\[dt]?frac\{?\\pi\}?\{?2\}?\s*\+\s*2\s*(k\s*\\pi|\\pi\s*k)
+      - \\pi\s*/\s*2\s*\+\s*2\s*(k\s*\\pi|\\pi\s*k)
+      - \\sin\s*x\s*=\s*1
+      teoria: []
+    - id: plans
+      titol: Equació dels plans
+      objectiu: |
+        Escriure l'equació del pla tangent en aquests punts.
+      idea: |
+        Calcula el valor de $f$ en aquests punts.
+      detall: |
+        $f\left(\frac{\pi}{2}+2k\pi,0\right)=0$, així que el pla tangent és $z=0$ en tots ells.
+      fuites:
+      - \bz\s*=\s*0\b
+      teoria:
+      - T3.9
+    errors_comuns:
+    - id: perd_solucions
+      descripcio: |
+        Només dona $x=\pi/2$ i oblida la periodicitat.
+      pregunta: |
+        L'equació trigonomètrica a què has arribat, quantes solucions té a tot $\mathbb{R}$, i no només a $[0,2\pi)$?
+    - id: cos_zero
+      descripcio: |
+        De $-y\cos x=0$ afegeix punts amb $\cos x=0$ i $y\neq0$ sense comprovar l'altra equació.
+      pregunta: |
+        Els punts que has trobat amb la primera equació, satisfan també la segona?
+    - id: confon_condicio
+      descripcio: |
+        Imposa $f=0$ en lloc de $\nabla f=0$.
+      pregunta: |
+        Què determina la inclinació del pla tangent: el valor de $f$ o les seves derivades?
+- num: 17
+  font: null
+  preambul: ''
+  indicacio: null
+  exercicis:
+  - id: t3-17
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Estudieu la continuïtat, l'existència de les derivades direccionals i la diferenciabilitat de la funció $f(x,y)=e^{\sqrt{|xy|}}$, definida a $\mathbb{R}^2$.
+    teoria:
+    - T2.14
+    - T3.1
+    - T3.8
+    teoria_reservada: []
+    resultat:
+      valor: |
+        Continuïtat: $f$ és contínua a tot $\mathbb{R}^2$.
+        Derivades direccionals: als punts amb $xy\neq0$ existeixen totes ($D_uf=\langle\nabla f,u\rangle$). A $(a,0)$ amb $a\neq0$ només existeixen per a $u=(u_1,0)$ (valen $0$); a $(0,b)$ amb $b\neq0$ només per a $u=(0,u_2)$ (valen $0$); a l'origen només existeixen en les direccions dels eixos ($u_1u_2=0$), i valen $0$.
+        Diferenciabilitat: $f$ és diferenciable exactament a $\{(x,y):xy\neq0\}$; no ho és a cap punt dels eixos.
+      fuites:
+      - diferenciable exactament
+      - xy\s*\\neq\s*0\s*\\\}?\s*\$?\s*(i\s+)?no ho és
+      - u_1\s*u_2\s*=\s*0
+      - no\s+(és\s+)?diferenciable[^.]{0,30}eixos
+      - no\s+(és\s+)?diferenciable[^.]{0,30}xy\s*=\s*0
+    passos:
+    - id: continuitat
+      titol: Continuïtat
+      objectiu: |
+        Estudiar la continuïtat de $f$ a $\mathbb{R}^2$.
+      idea: |
+        Descompon $f$ com a composició de funcions contínues conegudes.
+      detall: |
+        $(x,y)\mapsto|xy|$ és contínua (producte i valor absolut), $\sqrt{\cdot}$ és contínua a $[0,\infty)$ i $\exp$ a $\mathbb{R}$; per composició, $f$ és contínua a tot $\mathbb{R}^2$.
+      fuites: []
+      teoria:
+      - T2.19
+      - T2.20
+    - id: fora_eixos
+      titol: Fora dels eixos
+      objectiu: |
+        Estudiar derivades direccionals i diferenciabilitat als punts amb $xy\neq0$.
+      idea: |
+        En un entorn d'un punt amb $xy\neq0$ el signe de $xy$ és constant: el valor absolut i l'arrel deixen de ser problemàtics. Aplica la condició suficient.
+      detall: |
+        En un entorn on $\operatorname{sgn}(xy)=s$ constant, $f=e^{\sqrt{sxy}}$ amb $sxy>0$; les parcials $\frac{\partial f}{\partial x}=e^{\sqrt{|xy|}}\frac{sy}{2\sqrt{|xy|}}$, $\frac{\partial f}{\partial y}=e^{\sqrt{|xy|}}\frac{sx}{2\sqrt{|xy|}}$ són contínues; $f$ és diferenciable i té totes les derivades direccionals, $D_uf=\langle\nabla f,u\rangle$.
+      fuites: []
+      teoria:
+      - T3.18
+      - T3.9
+    - id: eixos_no_origen
+      titol: Punts dels eixos fora de l'origen
+      objectiu: |
+        Estudiar les derivades direccionals a $(a,0)$ amb $a\neq0$ (i, per simetria, a $(0,b)$ amb $b\neq0$).
+      idea: |
+        Aplica la definició de derivada direccional i separa la direcció de l'eix de la resta; compara el creixement de $\sqrt{|t|}$ amb $t$.
+      detall: |
+        $\frac{f(a+tu_1,tu_2)-1}{t}=\frac{e^{\sqrt{|a+tu_1||u_2|}\sqrt{|t|}}-1}{t}\sim\frac{\sqrt{|a||u_2|}\sqrt{|t|}}{t}$, que no té límit finit si $u_2\neq0$. Si $u_2=0$, $f\equiv1$ sobre l'eix i $D_uf(a,0)=0$. Igualment a $(0,b)$: només existeix per a $u_1=0$, i val $0$.
+      fuites:
+      - \\sqrt\{\|t\|\}\s*\}?\s*\{?t\}?
+      - \\[dt]?frac\{1\}\{\\sqrt\{\|t\|\}\}
+      - \|t\|\^\{?\s*-\s*1/2
+      teoria:
+      - T3.1
+    - id: origen
+      titol: L'origen
+      objectiu: |
+        Estudiar les derivades direccionals a $(0,0)$.
+      idea: |
+        Aplica la definició; calcula $f(tu)$ explícitament i mira els límits laterals.
+      detall: |
+        $f(tu_1,tu_2)=e^{|t|\sqrt{|u_1u_2|}}$, i $\frac{e^{c|t|}-1}{t}$ amb $c=\sqrt{|u_1u_2|}$ té límit $c$ per $t\to0^+$ i $-c$ per $t\to0^-$. Existeix només si $c=0$, és a dir $u_1u_2=0$ (direccions dels eixos), i llavors val $0$.
+      fuites:
+      - e\^\{\s*c\s*\|t\|\s*\}
+      - u_1\s*u_2\s*=\s*0
+      teoria:
+      - T3.1
+    - id: diferenciabilitat_eixos
+      titol: No diferenciabilitat als eixos
+      objectiu: |
+        Decidir si $f$ és diferenciable als punts dels eixos.
+      idea: |
+        Recorda què implica la diferenciabilitat sobre les derivades direccionals.
+      detall: |
+        Si $f$ fos diferenciable en un punt dels eixos, hi existirien totes les derivades direccionals; com que no és així, $f$ no és diferenciable a cap punt amb $xy=0$.
+      fuites: []
+      teoria:
+      - T3.9
+    errors_comuns:
+    - id: parcials_suficients
+      descripcio: |
+        Als eixos troba que les parcials existeixen (o que una existeix) i conclou que és diferenciable.
+      pregunta: |
+        L'existència de derivades parcials, garanteix la diferenciabilitat? Quines altres direccions has mirat?
+    - id: limits_laterals
+      descripcio: |
+        A l'origen calcula només el límit per $t\to0^+$ i conclou que la derivada direccional val $\sqrt{|u_1u_2|}$.
+      pregunta: |
+        La definició de derivada direccional demana $t\to0$ per tots dos costats. Què passa amb $|t|/t$?
+    - id: oblida_eixos
+      descripcio: |
+        Estudia només l'origen i oblida la resta de punts dels eixos.
+      pregunta: |
+        A quins punts deixa de ser derivable l'expressió $\sqrt{|xy|}$? Només a l'origen?
+    - id: discontinua
+      descripcio: |
+        Creu que $f$ no és contínua als eixos perquè no hi és diferenciable.
+      pregunta: |
+        Per veure la continuïtat, necessites derivar? Quines funcions componen $f$?
+- num: 18
+  font: null
+  preambul: ''
+  indicacio: null
+  exercicis:
+  - id: t3-18
+    apartat: null
+    tipus: teoric
+    enunciat: |
+      Considerem el conjunt $A=\{(x,y)\in\mathbb{R}^2\mid0<y<x^2\}$ i la funció
+      $$f(x,y)=\begin{cases}0 & \text{si } (x,y)\in A\\ 1 & \text{altrament.}\end{cases}$$
+      Proveu que existeixen i tenen el mateix valor totes les derivades direccionals a l'origen, però la funció no hi és diferenciable.
+    teoria:
+    - T3.1
+    - T3.8
+    teoria_reservada:
+    - T3.6
+    resultat:
+      valor: |
+        Totes les derivades direccionals a l'origen valen $0$, perquè cada recta per l'origen evita $A$ prop de $0$ i $f\equiv1$ allà. Però $f$ no és diferenciable a l'origen: sobre un camí dins de $A$ (p. ex. $y=x^2/2$) el quocient de diferenciabilitat no tendeix a $0$ (de fet, $f$ ni tan sols és contínua a l'origen).
+      fuites: []
+    passos:
+    - id: rectes_fora
+      titol: Les rectes eviten $A$ prop de l'origen
+      objectiu: |
+        Entendre com és $f$ sobre cada recta per l'origen, a prop de l'origen.
+      idea: |
+        Mira quan un punt $(tu_1,tu_2)$ pot pertànyer a $A$ i què passa quan $t$ és petit.
+      detall: |
+        Si $u_2=0$, $y=0\notin(0,x^2)$. Si $u_1=0$, caldria $0<tu_2<0$, impossible. Si $u_1,u_2\neq0$, caldria $0<tu_2<t^2u_1^2$, que implica $|u_2|<|t|u_1^2$, fals per a $|t|<|u_2|/u_1^2$. Per tant $f(tu)=1$ prop de $t=0$.
+      fuites:
+      - \|u_2\|\s*<\s*\|t\|
+      teoria: []
+    - id: calcular_direccionals
+      titol: Calcular les direccionals
+      objectiu: |
+        Calcular $D_uf(0,0)$ amb la definició.
+      idea: |
+        Recorda quant val $f$ a l'origen i sobre la recta, prop de l'origen.
+      detall: |
+        $(0,0)\notin A$, així que $f(0,0)=1$, i $D_uf(0,0)=\lim_{t\to0}\frac{1-1}{t}=0$ per a tota $u\neq0$.
+      fuites:
+      - \\frac\{1\s*-\s*1\}\{t\}
+      teoria:
+      - T3.1
+    - id: candidat_diferencial
+      titol: Quina hauria de ser la diferencial
+      objectiu: |
+        Veure quina aplicació lineal seria la diferencial si existís.
+      idea: |
+        Si $f$ fos diferenciable, la diferencial determinaria totes les derivades direccionals.
+      detall: |
+        Si fos diferenciable, $D_uf(0,0)=\langle\nabla f(0,0),u\rangle=0$ per a tota $u$, per tant $Df(0,0)=0$ i caldria $\frac{f(x,y)-1}{\|(x,y)\|}\to0$.
+      fuites:
+      - \\frac\{f\(x,\s*y\)\s*-\s*1\}
+      teoria:
+      - T3.9
+    - id: cami_dins_A
+      titol: Un camí dins de $A$
+      objectiu: |
+        Comprovar que el quocient de diferenciabilitat no tendeix a $0$.
+      idea: |
+        Tria un camí cap a l'origen que quedi sempre dins de $A$.
+      detall: |
+        Sobre $y=x^2/2$, $x\neq0$ (dins de $A$, ja que $0<x^2/2<x^2$): $\frac{|0-1|}{\|(x,x^2/2)\|}\to+\infty$, no tendeix a $0$. No és diferenciable. (Alternativament: sobre aquest camí $f\to0\neq1=f(0,0)$, no és contínua, i diferenciable implica contínua.)
+      fuites:
+      - y\s*=\s*x\^\{?2\}?\s*/\s*[2-9]
+      - y\s*=\s*\\[dt]?frac\{\s*x\^\{?2\}?\s*\}\{\s*[2-9]\s*\}
+      - y\s*=\s*\\[dt]?frac\{?1\}?\{?[2-9]\}?\s*x\^\{?2
+      teoria:
+      - T3.8
+      - T2.10
+      - T3.14
+    errors_comuns:
+    - id: direccionals_implica_diferenciable
+      descripcio: |
+        Creu que si totes les derivades direccionals existeixen (i coincideixen) la funció és diferenciable.
+      pregunta: |
+        Les derivades direccionals només miren rectes. La diferenciabilitat mira totes les maneres d'acostar-se; hi ha camins que no siguin rectes?
+    - id: f_origen_zero
+      descripcio: |
+        Suposa que $f(0,0)=0$.
+      pregunta: |
+        L'origen pertany a $A$? Quant val, doncs, $f(0,0)$?
+    - id: nomes_t_positiu
+      descripcio: |
+        En estudiar les rectes, només considera $t>0$ o no justifica que la recta surt de $A$ per a $t$ petit.
+      pregunta: |
+        La condició per ser a $A$, es compleix per a algun $t$ petit, positiu o negatiu?
+    - id: rectes_per_diferenciabilitat
+      descripcio: |
+        Intenta refutar la diferenciabilitat només amb rectes.
+      pregunta: |
+        Sobre les rectes tot funciona bé. On s'amaga el problema?
+    nota_professor: |
+      És la funció de l'Observació 6(a) dels apunts (i del problema 6 del tema 2). Fitxa portada de l'antiga t3-18.
+- num: 19
+  font: null
+  preambul: ''
+  indicacio: null
+  exercicis:
+  - id: t3-19
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Considerem $g(x,y)=f(x,y)+x+2y$, on $f(x,y)$ és la funció de l'exercici anterior. Calculeu les derivades parcials de $g(x,y)$ a l'origen. Comproveu que, usant la matriu de les derivades parcials, no se satisfà la condició de diferenciabilitat a l'origen. És $z=x+2y+1$ el pla tangent a la gràfica de la funció $g(x,y)$?
+    teoria:
+    - T3.2
+    - T3.8
+    - T3.9
+    teoria_reservada:
+    - T3.6
+    resultat:
+      valor: |
+        $\frac{\partial g}{\partial x}(0,0)=1$, $\frac{\partial g}{\partial y}(0,0)=2$ ($g(0,0)=1$). Amb la matriu $(1\ \ 2)$, el quocient $\frac{|g(x,y)-1-x-2y|}{\|(x,y)\|}=\frac{|f(x,y)-1|}{\|(x,y)\|}$ val $\frac{1}{\|(x,y)\|}\to\infty$ sobre punts de $A$ (p. ex. $y=x^2/2$), així que no tendeix a $0$: $g$ no és diferenciable a l'origen. Per tant, $z=x+2y+1$ no és el pla tangent: la gràfica no en té (tot i que aquest pla conté les rectes tangents en totes les direccions, ja que $D_ug(0,0)=u_1+2u_2$).
+      fuites:
+      - no (és|es) el pla tangent
+      - \bno\s+t[ée]\s+pla tangent
+    passos:
+    - id: parcials
+      titol: Derivades parcials a l'origen
+      objectiu: |
+        Calcular $\frac{\partial g}{\partial x}(0,0)$ i $\frac{\partial g}{\partial y}(0,0)$.
+      idea: |
+        Aplica la definició de derivada parcial; recorda quant val $f$ sobre els eixos prop de l'origen.
+      detall: |
+        Sobre els eixos $f=1$ (no són a $A$), i $g(0,0)=1$. $\frac{\partial g}{\partial x}(0,0)=\lim_{t\to0}\frac{1+t-1}{t}=1$, $\frac{\partial g}{\partial y}(0,0)=\lim_{t\to0}\frac{1+2t-1}{t}=2$.
+      fuites:
+      - \\frac\{1\s*\+\s*2t\s*-\s*1\}\{t\}
+      - \\partial\s*g\s*\}\s*\{\s*\\partial\s*[xy]\s*\}\s*\(\s*0\s*,\s*0\s*\)\s*=\s*[12]\b
+      - g_[xy]\s*\(\s*0\s*,\s*0\s*\)\s*=\s*[12]\b
+      teoria:
+      - T3.2
+    - id: quocient
+      titol: Plantejar la condició de diferenciabilitat
+      objectiu: |
+        Escriure el quocient de la definició de diferenciabilitat amb la matriu de les parcials i simplificar-lo.
+      idea: |
+        L'única candidata a diferencial és la de matriu $(1\ \ 2)$; substitueix $g=f+x+2y$ al numerador.
+      detall: |
+        $\frac{|g(x,y)-g(0,0)-x-2y|}{\|(x,y)\|}=\frac{|f(x,y)-1|}{\|(x,y)\|}$.
+      fuites:
+      - \\frac\{\|f\(x,\s*y\)\s*-\s*1\|\}
+      teoria:
+      - T3.8
+      - T3.9
+    - id: no_diferenciable
+      titol: El quocient no tendeix a 0
+      objectiu: |
+        Comprovar que aquest quocient no tendeix a $0$.
+      idea: |
+        Acosta't a l'origen per un camí que quedi dins de $A$.
+      detall: |
+        Sobre $y=x^2/2$ ($x\neq0$), que és dins de $A$: el quocient val $\frac{1}{\|(x,x^2/2)\|}\to+\infty$. No tendeix a $0$; $g$ no és diferenciable a l'origen.
+      fuites:
+      - y\s*=\s*x\^\{?2\}?\s*/\s*[2-9]
+      - y\s*=\s*\\[dt]?frac\{\s*x\^\{?2\}?\s*\}\{\s*[2-9]\s*\}
+      - y\s*=\s*\\[dt]?frac\{?1\}?\{?[2-9]\}?\s*x\^\{?2
+      teoria:
+      - T3.8
+      - T2.10
+    - id: pla_tangent
+      titol: És el pla tangent?
+      objectiu: |
+        Decidir si $z=x+2y+1$ és el pla tangent a la gràfica de $g$ a l'origen.
+      idea: |
+        Recorda per a quines funcions està definit el pla tangent a la gràfica. Què fa aquest pla amb les derivades direccionals?
+      detall: |
+        El pla tangent només existeix si $g$ és diferenciable al punt, i no ho és: $z=x+2y+1$ no és el pla tangent. És el pla que formaria la candidata ($g(0,0)+Jg$), i conté les rectes tangents a les seccions per totes les rectes ($D_ug(0,0)=u_1+2u_2$), però no aproxima la gràfica (que ni tan sols és contínua a l'origen).
+      fuites:
+      - no (és|es) el pla tangent
+      teoria:
+      - T3.9
+      - T3.14
+    errors_comuns:
+    - id: parcials_implica_pla
+      descripcio: |
+        Creu que si existeixen les parcials ja hi ha pla tangent.
+      pregunta: |
+        A partir de quina propietat de $g$ es defineix el pla tangent a la gràfica?
+    - id: g_origen
+      descripcio: |
+        Pren $g(0,0)=0$.
+      pregunta: |
+        Quant val $f(0,0)$? I, per tant, $g(0,0)$?
+    - id: rectes_per_diferenciabilitat
+      descripcio: |
+        Estudia el quocient de diferenciabilitat només sobre rectes i conclou que tendeix a $0$.
+      pregunta: |
+        Les rectes per l'origen entren mai a $A$ prop de l'origen? Quins camins sí que hi entren?
+    nota_professor: |
+      Depèn de l'exercici 18 (mateixa $f$; vegeu l'Observació 6(a) dels apunts). Les direccionals de $g$ a l'origen són $u_1+2u_2=\langle(1,2),u\rangle$: lineals en $u$, i tot i així $g$ no és diferenciable.
+- num: 20
+  font: null
+  preambul: ''
+  indicacio: null
+  exercicis:
+  - id: t3-20
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Calculeu les derivades parcials de la funció $f(x,y,z)=g(u(x,y,z),v(x,y,z))$, on $g(u,v)=uv^2+\sin(uv)$, $u(x,y,z)=xe^y$ i $v(x,y,z)=xy-z$.
+    teoria:
+    - T3.2
+    teoria_reservada: []
+    resultat:
+      valor: |
+        Amb $u=xe^y$, $v=xy-z$, $g_u=v^2+v\cos(uv)$, $g_v=2uv+u\cos(uv)$:
+        $\frac{\partial f}{\partial x}=\big(v^2+v\cos(uv)\big)e^y+\big(2uv+u\cos(uv)\big)y$,
+        $\frac{\partial f}{\partial y}=\big(v^2+v\cos(uv)\big)xe^y+\big(2uv+u\cos(uv)\big)x$,
+        $\frac{\partial f}{\partial z}=-\big(2uv+u\cos(uv)\big)$.
+      fuites:
+      - -\s*\\big\(\s*2uv\s*\+\s*u\s*\\cos
+      - \\partial\s*z\}\s*=\s*-\s*\(?\s*2uv
+      - v\s*\\cos\s*\(uv\)\s*(\\big)?\)\s*(\\,)?\s*x?\s*e\^\{?y
+    passos:
+    - id: diferenciabilitat
+      titol: Justificar la regla de la cadena
+      objectiu: |
+        Comprovar que es pot aplicar la regla de la cadena.
+      idea: |
+        Mira si les funcions interior i exterior són diferenciables.
+      detall: |
+        $g$, $u$ i $v$ tenen parcials contínues a tot l'espai, per tant són diferenciables, i $f=g\circ(u,v)$ també ho és.
+      fuites: []
+      teoria:
+      - T3.18
+      - T3.21
+    - id: parcials_g
+      titol: Parcials de la funció exterior
+      objectiu: |
+        Calcular $\frac{\partial g}{\partial u}$ i $\frac{\partial g}{\partial v}$.
+      idea: |
+        Deriva $g$ tractant l'altra variable com a constant.
+      detall: |
+        $\frac{\partial g}{\partial u}=v^2+v\cos(uv)$, $\frac{\partial g}{\partial v}=2uv+u\cos(uv)$.
+      fuites:
+      - v\^\{?2\}?\s*\+\s*v\s*\\cos\s*\(uv\)
+      - 2uv\s*\+\s*u\s*\\cos
+      teoria: []
+    - id: parcials_interiors
+      titol: Parcials de les funcions interiors
+      objectiu: |
+        Calcular les parcials de $u$ i $v$ respecte de $x$, $y$, $z$.
+      idea: |
+        Són derivades directes.
+      detall: |
+        $u_x=e^y$, $u_y=xe^y$, $u_z=0$; $v_x=y$, $v_y=x$, $v_z=-1$.
+      fuites: []
+      teoria: []
+    - id: cadena
+      titol: Aplicar la regla de la cadena
+      objectiu: |
+        Combinar-ho tot per obtenir les tres parcials de $f$.
+      idea: |
+        Cada parcial de $f$ és una suma sobre les variables intermèdies (producte de la jacobiana de $g$ per la de $(u,v)$).
+      detall: |
+        $\frac{\partial f}{\partial x}=g_ue^y+g_vy$, $\frac{\partial f}{\partial y}=g_uxe^y+g_vx$, $\frac{\partial f}{\partial z}=-g_v$, amb $g_u=v^2+v\cos(uv)$, $g_v=2uv+u\cos(uv)$ avaluades a $u=xe^y$, $v=xy-z$.
+      fuites:
+      - =\s*-\s*g_v
+      - g_u\s*e\^\{?y\}?\s*\+\s*g_v\s*y
+      teoria:
+      - T3.21
+      - T3.22
+    errors_comuns:
+    - id: oblida_terme
+      descripcio: |
+        Oblida un dels termes de la suma (p. ex. només deriva a través de $u$).
+      pregunta: |
+        Si canvies $x$, quines de les variables intermèdies $u$, $v$ canvien?
+    - id: no_avalua
+      descripcio: |
+        Deixa les parcials de $g$ sense avaluar a $(u(x,y,z),v(x,y,z))$ o les avalua al punt $(x,y)$.
+      pregunta: |
+        En quin punt cal avaluar les parcials de $g$?
+    - id: signe_z
+      descripcio: |
+        Oblida el signe de $v_z=-1$.
+      pregunta: |
+        Quant val la derivada de $xy-z$ respecte de $z$?
+    nota_professor: |
+      Resultat verificat derivant directament $f=xe^y(xy-z)^2+\sin\big(xe^y(xy-z)\big)$.
+- num: 21
+  font: null
+  preambul: |
+    Calculeu les derivades parcials $D_1F$, $D_2F$ de les funcions compostes següents:
+  indicacio: null
+  exercicis:
+  - id: t3-21a
+    apartat: a
+    tipus: calcul
+    enunciat: |
+      $F=f\circ g$, amb $f(x,y,z)=x^2y+y^2z-xyz$, $g(u,v)=(u+v,u-v,u)$.
+    teoria:
+    - T3.2
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $D_1F(u,v)=3u^2-2uv+v^2$, $D_2F(u,v)=-u^2+2uv-3v^2$ (de fet $F(u,v)=u^3-u^2v+uv^2-v^3$).
+      fuites:
+      - 3u\^\{?2\}?\s*-\s*2uv\s*\+\s*v\^\{?2\}?
+      - -\s*u\^\{?2\}?\s*\+\s*2uv\s*-\s*3v\^\{?2\}?
+      - u\^\{?3\}?\s*-\s*u\^\{?2\}?\s*v\s*\+\s*uv\^\{?2\}?\s*-\s*v\^\{?3\}?
+    passos:
+    - id: jacobianes
+      titol: Jacobianes de f i g
+      objectiu: |
+        Calcular $\nabla f(x,y,z)$ i $Jg(u,v)$.
+      idea: |
+        Derivades parcials directes de cada funció.
+      detall: |
+        $\nabla f=(2xy-yz,\ x^2+2yz-xz,\ y^2-xy)$, $Jg=\begin{pmatrix}1&1\\1&-1\\1&0\end{pmatrix}$.
+      fuites: []
+      teoria:
+      - T3.10
+    - id: cadena
+      titol: Aplicar la regla de la cadena
+      objectiu: |
+        Expressar $D_1F$ i $D_2F$ en termes de les parcials de $f$.
+      idea: |
+        Multiplica la jacobiana de $f$ (avaluada a $g(u,v)$) per la de $g$.
+      detall: |
+        $f$ i $g$ són polinòmiques (parcials contínues), per tant diferenciables, i es pot aplicar la regla de la cadena: $JF(u,v)=Jf(g(u,v))\,Jg(u,v)$, és a dir $D_1F=(f_x+f_y+f_z)\big|_{g(u,v)}$, $D_2F=(f_x-f_y)\big|_{g(u,v)}$.
+      fuites:
+      - f_x\s*\+\s*f_y\s*\+\s*f_z
+      - f_x\s*-\s*f_y
+      teoria:
+      - T3.18
+      - T3.21
+      - T3.22
+    - id: substituir
+      titol: Substituir i simplificar
+      objectiu: |
+        Obtenir $D_1F$ i $D_2F$ com a funcions de $(u,v)$.
+      idea: |
+        Substitueix $x=u+v$, $y=u-v$, $z=u$ i simplifica.
+      detall: |
+        $f_x=(u-v)(u+2v)$, $f_y=2u^2-uv+v^2$, $f_z=-2v(u-v)$ a $g(u,v)$. Llavors $D_1F=3u^2-2uv+v^2$, $D_2F=-u^2+2uv-3v^2$.
+      fuites:
+      - 3u\^\{?2\}?\s*-\s*2uv
+      - -\s*u\^\{?2\}?\s*\+\s*2uv\s*-\s*3v
+      teoria: []
+    errors_comuns:
+    - id: avalua_malament
+      descripcio: |
+        Avalua les parcials de $f$ a $(u,v)$ en lloc de $g(u,v)$.
+      pregunta: |
+        Les parcials de $f$ són funcions de $(x,y,z)$; quins valors prenen $x,y,z$ quan componem amb $g$?
+    - id: ordre_matrius
+      descripcio: |
+        Multiplica les jacobianes en l'ordre equivocat.
+      pregunta: |
+        Quines dimensions tenen les dues jacobianes? En quin ordre es poden multiplicar?
+    - id: tercera_component
+      descripcio: |
+        Oblida la contribució de la tercera component $z=u$ en $D_1F$.
+      pregunta: |
+        De quines de les variables $u,v$ depèn la tercera component de $g$?
+    nota_professor: |
+      Comprovació: substituint directament, $F(u,v)=u^3-u^2v+uv^2-v^3$.
+  - id: t3-21b
+    apartat: b
+    tipus: calcul
+    enunciat: |
+      $F=f\circ g$, amb $f(x,y)=\dfrac{x+y}{1-xy}$, $g(u,v)=(\tan u,\tan v)$.
+    teoria:
+    - T3.2
+    teoria_reservada: []
+    resultat:
+      valor: |
+        On està definida ($\cos u\neq0$, $\cos v\neq0$ i $\tan u\tan v\neq1$; amb les dues primeres, la tercera equival a $\cos(u+v)\neq0$):
+        $D_1F(u,v)=\frac{(1+\tan^2u)(1+\tan^2v)}{(1-\tan u\tan v)^2}=\frac{1}{\cos^2(u+v)}$, i $D_2F(u,v)=\frac{1}{\cos^2(u+v)}$ igualment. (De fet $F(u,v)=\tan(u+v)$.)
+      fuites:
+      - \\cos\^\{?2\}?\s*\(u\s*\+\s*v\)
+      - \\tan\s*\(u\s*\+\s*v\)
+      - \\sec\^\{?2\}?\s*\(u\s*\+\s*v\)
+      - 1\s*\+\s*\\tan\^\{?2\}?\s*\(u\s*\+\s*v\)
+    passos:
+    - id: domini
+      titol: Domini i diferenciabilitat
+      objectiu: |
+        Determinar on està definida $F$ i on es pot aplicar la regla de la cadena.
+      idea: |
+        Cal que $g$ estigui definida i que el seu valor caigui on $f$ és diferenciable.
+      detall: |
+        $g$ és $\mathcal{C}^1$ on $\cos u\neq0\neq\cos v$; $f$ és $\mathcal{C}^1$ a l'obert $xy\neq1$. Així $F$ està definida i és diferenciable (regla de la cadena) on $\cos u\neq0$, $\cos v\neq0$ i $\tan u\tan v\neq1$.
+      fuites: []
+      teoria:
+      - T3.18
+      - T3.21
+    - id: parcials_f
+      titol: Parcials de f
+      objectiu: |
+        Calcular $\frac{\partial f}{\partial x}$ i $\frac{\partial f}{\partial y}$.
+      idea: |
+        Regla del quocient, i simplifica el numerador.
+      detall: |
+        $\frac{\partial f}{\partial x}=\frac{(1-xy)+(x+y)y}{(1-xy)^2}=\frac{1+y^2}{(1-xy)^2}$, i per simetria $\frac{\partial f}{\partial y}=\frac{1+x^2}{(1-xy)^2}$.
+      fuites:
+      - \\frac\{1\s*\+\s*y\^\{?2\}?\}\{\(1\s*-\s*xy\)\^\{?2\}?\}
+      teoria: []
+    - id: cadena
+      titol: Regla de la cadena
+      objectiu: |
+        Obtenir $D_1F$ i $D_2F$.
+      idea: |
+        $g$ té cada component dependent d'una sola variable; la jacobiana de $g$ és diagonal.
+      detall: |
+        $D_1F=\frac{\partial f}{\partial x}(g)\cdot(1+\tan^2u)=\frac{(1+\tan^2v)(1+\tan^2u)}{(1-\tan u\tan v)^2}$, i $D_2F=\frac{(1+\tan^2u)(1+\tan^2v)}{(1-\tan u\tan v)^2}$.
+      fuites:
+      - \\frac\{\(1\s*\+\s*\\tan\^\{?2\}?\s*[uv]\)\s*\(1\s*\+\s*\\tan\^\{?2\}?\s*[uv]\)\}
+      teoria:
+      - T3.21
+      - T3.22
+    - id: simplificar
+      titol: Simplificar
+      objectiu: |
+        Simplificar l'expressió obtinguda.
+      idea: |
+        Passa a sinus i cosinus i reconeix una fórmula d'addició.
+      detall: |
+        $\frac{1}{\cos^2u\cos^2v(1-\tan u\tan v)^2}=\frac{1}{(\cos u\cos v-\sin u\sin v)^2}=\frac{1}{\cos^2(u+v)}$. Ambdues parcials valen el mateix (coherent amb $F=\tan(u+v)$).
+      fuites:
+      - \\cos\^\{?2\}?\s*\(u\s*\+\s*v\)
+      teoria: []
+    errors_comuns:
+    - id: quocient_malament
+      descripcio: |
+        Errors de signe en la regla del quocient (el denominador $1-xy$ té derivada $-y$).
+      pregunta: |
+        Quina és la derivada de $1-xy$ respecte de $x$? Quin signe té en el numerador?
+    - id: oblida_derivada_tan
+      descripcio: |
+        Oblida multiplicar per la derivada de $\tan u$.
+      pregunta: |
+        Quan $u$ canvia, quant canvia $x=\tan u$?
+    - id: domini
+      descripcio: |
+        No esmenta on és vàlida la fórmula.
+      pregunta: |
+        Per a quins $(u,v)$ està definida $F$?
+    nota_professor: |
+      $F(u,v)=\tan(u+v)$ per la fórmula d'addició de la tangent; derivar directament dona el mateix resultat.
+- num: 22
+  font: null
+  preambul: |
+    Calculeu, si existeix, la derivada en el punt zero de la funció $(f\circ\gamma)(t)$, on
+    $$f(x,y)=\begin{cases}\dfrac{x^2y}{x^2+y^2} & \text{si } (x,y)\neq(0,0),\\ 0 & \text{si } (x,y)=(0,0).\end{cases}$$
+    i $\gamma(t)=(t,t)$, $\forall t\in\mathbb{R}$. Raoneu si es pot obtenir el resultat aplicant la regla de la cadena.
+  indicacio: null
+  exercicis:
+  - id: t3-22
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Calculeu, si existeix, la derivada en el punt zero de la funció $(f\circ\gamma)(t)$, on
+      $$f(x,y)=\begin{cases}\dfrac{x^2y}{x^2+y^2} & \text{si } (x,y)\neq(0,0),\\ 0 & \text{si } (x,y)=(0,0).\end{cases}$$
+      i $\gamma(t)=(t,t)$, $\forall t\in\mathbb{R}$. Raoneu si es pot obtenir el resultat aplicant la regla de la cadena.
+    teoria:
+    - T3.21
+    teoria_reservada:
+    - T3.17
+    resultat:
+      valor: |
+        $(f\circ\gamma)(t)=t/2$ per a tot $t$ (també a $t=0$), per tant $(f\circ\gamma)'(0)=1/2$. No es pot obtenir amb la regla de la cadena: $\frac{\partial f}{\partial x}(0,0)=\frac{\partial f}{\partial y}(0,0)=0$, de manera que la fórmula $\nabla f(0,0)\cdot\gamma'(0)$ donaria $0\neq 1/2$. La regla de la cadena no s'aplica perquè $f$ no és diferenciable a l'origen (si ho fos, $D_{(1,1)}f(0,0)$ hauria de ser $\nabla f(0,0)\cdot(1,1)=0$, i en canvi val $1/2$).
+      fuites:
+      - \(f\s*\\circ\s*\\gamma\)'\s*\(0\)\s*\$?\s*(=|és|val)\s*\$?\s*(\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*2|1\s*/\s*2|0[.,]5)
+      - derivada\b[^.]{0,40}?\b(és|val|=)\s*\$?\s*(\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*2|1\s*/\s*2|0[.,]5)
+    passos:
+    - id: composicio
+      titol: Escriure la composició
+      objectiu: |
+        Obtenir una expressió explícita de $(f\circ\gamma)(t)$ per a tot $t\in\mathbb{R}$.
+      idea: |
+        Substitueix $x=t$, $y=t$ a la fórmula de $f$, separant el cas $t=0$ (on $\gamma(0)$ és l'origen).
+      detall: |
+        Per $t\neq0$: $(f\circ\gamma)(t)=\frac{t^2\cdot t}{t^2+t^2}=\frac{t}{2}$. Per $t=0$: $f(0,0)=0=\frac{0}{2}$. Per tant $(f\circ\gamma)(t)=t/2$ per a tot $t$.
+      fuites:
+      - \bt\s*/\s*2
+      - \\[dt]?frac\s*\{?\s*t\s*\}?\s*\{?\s*2
+      - \\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*2\s*\}?\s*t\b
+      teoria: []
+    - id: derivada
+      titol: Derivar a zero
+      objectiu: |
+        Calcular $(f\circ\gamma)'(0)$, si existeix.
+      idea: |
+        És una funció d'una variable: aplica la definició de derivada en una variable (o deriva l'expressió que has obtingut, vàlida a tot $\mathbb{R}$).
+      detall: |
+        $(f\circ\gamma)'(0)=\lim_{t\to0}\frac{t/2-0}{t}=\frac12$. Existeix i val $1/2$.
+      fuites:
+      - (=|és|val)\s*\$?\s*(\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*2\b|1\s*/\s*2|0[.,]5)
+      teoria:
+      - T3.x1
+    - id: parcials
+      titol: Parcials de $f$ a l'origen
+      objectiu: |
+        Calcular les derivades parcials de $f$ a $(0,0)$, que és el que necessitaria la regla de la cadena.
+      idea: |
+        A l'origen la funció està definida a part: usa la definició de derivada parcial com a límit, restringint $f$ als eixos.
+      detall: |
+        $f(t,0)=0$ i $f(0,t)=0$ per a tot $t$, així que $\frac{\partial f}{\partial x}(0,0)=\lim_{t\to0}\frac{0-0}{t}=0$ i igualment $\frac{\partial f}{\partial y}(0,0)=0$. Per tant $\nabla f(0,0)=(0,0)$.
+      fuites:
+      - \\nabla\s*f\s*\(0,\s*0\)\s*=\s*\(0,\s*0\)
+      - \\partial\s*f\s*\}?\s*\{?\s*\\partial\s*[xy]\s*\}?\s*\(0,\s*0\)\s*=\s*0\b
+      - f\s*\(t,\s*0\)\s*=\s*0
+      teoria:
+      - T3.2
+    - id: cadena
+      titol: Per què falla la regla de la cadena
+      objectiu: |
+        Comparar el resultat amb el que donaria la regla de la cadena i explicar la diferència.
+      idea: |
+        Escriu què donaria la fórmula $J(f\circ\gamma)(0)=Jf(\gamma(0))\,J\gamma(0)$ i revisa quines hipòtesis demana el teorema. Relaciona la derivada que has calculat amb una derivada direccional de $f$ a l'origen.
+      detall: |
+        La fórmula donaria $\nabla f(0,0)\cdot\gamma'(0)=(0,0)\cdot(1,1)=0\neq\frac12$. No hi ha contradicció: la regla de la cadena exigeix que $f$ sigui diferenciable a $\gamma(0)=(0,0)$, i no ho és. En efecte, $(f\circ\gamma)'(0)=D_{(1,1)}f(0,0)=\frac12$, mentre que si $f$ fos diferenciable caldria $D_{(1,1)}f(0,0)=Df(0,0)(1,1)=\nabla f(0,0)\cdot(1,1)=0$. Per tant $f$ no és diferenciable a l'origen i el resultat no es pot obtenir amb la regla de la cadena.
+      fuites:
+      - \(0,\s*0\)\s*\\cdot\s*\(1,\s*1\)\s*=\s*0
+      - no\s+és\s+diferenciable
+      teoria:
+      - T3.21
+      - T3.9
+      - T3.1
+    errors_comuns:
+    - id: cadena_cega
+      descripcio: |
+        Aplica la regla de la cadena sense comprovar hipòtesis i conclou que la derivada és $0$.
+      pregunta: |
+        Has calculat $(f\circ\gamma)(t)$ explícitament? Coincideix la seva derivada amb el que t'ha donat la fórmula?
+    - id: parcials_implica_diferenciable
+      descripcio: |
+        Creu que, com que existeixen les derivades parcials a l'origen, $f$ hi és diferenciable i la regla de la cadena s'hi pot aplicar.
+      pregunta: |
+        Quina hipòtesi sobre $f$ demana exactament la regla de la cadena? L'existència de parcials és suficient per tenir-la?
+    - id: oblida_cas_origen
+      descripcio: |
+        Usa la fórmula $\frac{x^2y}{x^2+y^2}$ també a l'origen o no comprova que $(f\circ\gamma)(0)=0$.
+      pregunta: |
+        Quina branca de la definició de $f$ s'aplica quan $t=0$? Quant val $(f\circ\gamma)(0)$?
+    nota_professor: |
+      És l'exemple de l'observació 17 dels apunts (direccionals sense diferenciabilitat): aquí la derivada de $f\circ\gamma$ a $0$ és precisament $D_{(1,1)}f(0,0)$. És l'exemple canònic per veure que la hipòtesi de diferenciabilitat de la regla de la cadena és necessària.
+- num: 23
+  font: null
+  preambul: |
+    Considerem la funció $f(x,y)=(\sin(y\log x),(y\log x)^2)$ definida a $D=\{(x,y)\in\mathbb{R}^2:x>0\}$. Determineu dues funcions $g:\mathbb{R}\to\mathbb{R}^2$ i $h:D\to\mathbb{R}$ tals que $f=g\circ h$ i useu la regla de la cadena per calcular $Df(x,y)$.
+  indicacio: null
+  exercicis:
+  - id: t3-23
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Considerem la funció $f(x,y)=(\sin(y\log x),(y\log x)^2)$ definida a $D=\{(x,y)\in\mathbb{R}^2:x>0\}$. Determineu dues funcions $g:\mathbb{R}\to\mathbb{R}^2$ i $h:D\to\mathbb{R}$ tals que $f=g\circ h$ i useu la regla de la cadena per calcular $Df(x,y)$.
+    teoria:
+    - T3.21
+    - T3.10
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $h(x,y)=y\log x$, $g(s)=(\sin s,s^2)$. Llavors
+        $Jf(x,y)=Jg(h(x,y))\,Jh(x,y)=\begin{pmatrix}\cos(y\log x)\\ 2y\log x\end{pmatrix}\begin{pmatrix}\frac{y}{x} & \log x\end{pmatrix}=\begin{pmatrix}\frac{y}{x}\cos(y\log x) & \log x\cos(y\log x)\\ \frac{2y^2\log x}{x} & 2y(\log x)^2\end{pmatrix}$.
+      fuites:
+      - \\[dt]?frac\s*\{\s*2\s*y\^\{?2\}?\s*\\(log|ln)\s*x\s*\}\s*\{\s*x\s*\}
+      - 2\s*y\s*(\(\s*\\(log|ln)\s*x\s*\)\^\{?2\}?|\\(log|ln)\^\{?2\}?\s*x)
+      - \\[dt]?frac\s*\{\s*y\s*\}\s*\{\s*x\s*\}\s*\\cos\s*\(\s*y\s*\\(log|ln)
+    passos:
+    - id: descomposicio
+      titol: Trobar $g$ i $h$
+      objectiu: |
+        Escriure $f$ com a composició $g\circ h$ amb $h$ a valors reals i $g$ d'una variable.
+      idea: |
+        Busca l'expressió que es repeteix dins de les dues components de $f$: aquesta serà la funció interior.
+      detall: |
+        $h(x,y)=y\log x$ (definida a $D$, on $x>0$) i $g(s)=(\sin s,s^2)$. Llavors $g(h(x,y))=(\sin(y\log x),(y\log x)^2)=f(x,y)$.
+      fuites:
+      - h\s*\(x,\s*y\)\s*=\s*y\s*\\(log|ln)\s*x
+      - g\s*\(\w\)\s*=\s*\(\s*\\sin
+      teoria: []
+    - id: diferenciabilitat
+      titol: Comprovar les hipòtesis
+      objectiu: |
+        Justificar que $g$ i $h$ són diferenciables, per poder aplicar la regla de la cadena.
+      idea: |
+        Escriu cada funció a partir de funcions elementals que ja saps diferenciables (o mira si les seves parcials són contínues) i usa les propietats algebraiques de la diferenciabilitat.
+      detall: |
+        $h(x,y)=y\log x$ és el producte de $(x,y)\mapsto y$ i $(x,y)\mapsto\log x$, que tenen derivades parcials contínues a l'obert $D$ (on $x>0$) i per tant són diferenciables a $D$; pel producte de funcions diferenciables, $h$ és diferenciable a $D$. Les components de $g$, $\sin s$ i $s^2$, són derivables amb derivada contínua a tot $\mathbb{R}$, per tant $g$ és diferenciable a $\mathbb{R}$.
+      fuites: []
+      teoria:
+      - T3.18
+      - T3.23
+    - id: jacobianes
+      titol: Jacobianes de $g$ i $h$
+      objectiu: |
+        Calcular $Jh(x,y)$ i $Jg(s)$, indicant la mida de cada matriu.
+      idea: |
+        $h$ va de $\mathbb{R}^2$ a $\mathbb{R}$ i $g$ de $\mathbb{R}$ a $\mathbb{R}^2$: una és una fila i l'altra una columna.
+      detall: |
+        $Jh(x,y)=\begin{pmatrix}\frac{y}{x} & \log x\end{pmatrix}$ ($1\times2$) i $Jg(s)=\begin{pmatrix}\cos s\\ 2s\end{pmatrix}$ ($2\times1$).
+      fuites:
+      - \\[dt]?frac\s*\{\s*y\s*\}\s*\{\s*x\s*\}\s*(&|\\quad|\\\s|,)\s*\\(log|ln)\s*x
+      - \\partial\s*h\s*\}?\s*\{?\s*\\partial\s*x\s*\}?\s*(\([^)]*\))?\s*=\s*(\\[dt]?frac\s*\{?\s*y\s*\}?\s*\{?\s*x|y\s*/\s*x)
+      - \\cos\s*s\s*\\\\\s*2\s*s
+      teoria:
+      - T3.10
+    - id: producte
+      titol: Aplicar la regla de la cadena
+      objectiu: |
+        Obtenir la matriu $Jf(x,y)$.
+      idea: |
+        Multiplica les jacobianes en l'ordre que dona la regla de la cadena, avaluant la de $g$ al punt $h(x,y)$.
+      detall: |
+        $Jf(x,y)=Jg(y\log x)\,Jh(x,y)=\begin{pmatrix}\cos(y\log x)\\ 2y\log x\end{pmatrix}\begin{pmatrix}\frac{y}{x} & \log x\end{pmatrix}=\begin{pmatrix}\frac{y}{x}\cos(y\log x) & \log x\cos(y\log x)\\ \frac{2y^2\log x}{x} & 2y(\log x)^2\end{pmatrix}$ (matriu $2\times2$).
+      fuites:
+      - \\[dt]?frac\s*\{\s*2\s*y\^\{?2\}?\s*\\(log|ln)\s*x\s*\}\s*\{\s*x\s*\}
+      - 2\s*y\s*(\(\s*\\(log|ln)\s*x\s*\)\^\{?2\}?|\\(log|ln)\^\{?2\}?\s*x)
+      teoria:
+      - T3.21
+      - T3.22
+    errors_comuns:
+    - id: ordre_producte
+      descripcio: |
+        Multiplica les jacobianes en l'ordre $Jh\cdot Jg$ (obtenint un nombre en lloc d'una matriu $2\times2$).
+      pregunta: |
+        Quina mida ha de tenir $Jf(x,y)$ si $f:D\subseteq\mathbb{R}^2\to\mathbb{R}^2$? Quin ordre del producte et dona aquesta mida?
+    - id: avalua_g_malament
+      descripcio: |
+        Avalua $Jg$ a $(x,y)$ o a $s$ genèric en lloc de a $h(x,y)=y\log x$.
+      pregunta: |
+        En quin punt cal avaluar la derivada de la funció exterior?
+    - id: descomposicio_invertida
+      descripcio: |
+        Intercanvia els papers de $g$ i $h$, o tria una $h$ que no fa la composició igual a $f$.
+      pregunta: |
+        Amb les teves $g$ i $h$, calcula $g(h(x,y))$: dona exactament $f(x,y)$? Els dominis i codominis encaixen amb l'enunciat?
+    nota_professor: |
+      Es pot comprovar el resultat derivant directament cada component de $f$.
+- num: 24
+  font: null
+  preambul: |
+    Sigui $f:\mathbb{R}\to\mathbb{R}$ diferenciable. Proveu que la funció $\varphi(x,y)=f(2x+3y)$, definida en $\mathbb{R}^2$, satisfà l'equació en derivades parcials $3\dfrac{\partial\varphi}{\partial x}-2\dfrac{\partial\varphi}{\partial y}=0$.
+  indicacio: null
+  exercicis:
+  - id: t3-24
+    apartat: null
+    tipus: teoric
+    enunciat: |
+      Sigui $f:\mathbb{R}\to\mathbb{R}$ diferenciable. Proveu que la funció $\varphi(x,y)=f(2x+3y)$, definida en $\mathbb{R}^2$, satisfà l'equació en derivades parcials $3\dfrac{\partial\varphi}{\partial x}-2\dfrac{\partial\varphi}{\partial y}=0$.
+    teoria:
+    - T3.2
+    teoria_reservada: []
+    resultat:
+      valor: |
+        Per la regla de la cadena, $\varphi_x=2f'(2x+3y)$ i $\varphi_y=3f'(2x+3y)$, per tant $3\varphi_x-2\varphi_y=6f'(2x+3y)-6f'(2x+3y)=0$.
+      fuites: []
+    passos:
+    - id: composicio
+      titol: Veure-ho com una composició
+      objectiu: |
+        Identificar $\varphi$ com a composició de dues funcions diferenciables.
+      idea: |
+        Hi ha una funció "interior" de dues variables i una "exterior" d'una variable.
+      detall: |
+        $\varphi=f\circ g$ amb $g(x,y)=2x+3y$, lineal (parcials constants $2$ i $3$, contínues) i per tant diferenciable; $f$ és diferenciable per hipòtesi.
+      fuites:
+      - \w\s*\(x,\s*y\)\s*=\s*2\s*x\s*\+\s*3\s*y
+      teoria:
+      - T3.18
+    - id: parcials
+      titol: Aplicar la regla de la cadena
+      objectiu: |
+        Calcular $\varphi_x$ i $\varphi_y$.
+      idea: |
+        La regla de la cadena multiplica la derivada de la funció exterior (avaluada al punt adequat) per la parcial de la interior.
+      detall: |
+        $J\varphi(x,y)=f'(2x+3y)\,Jg(x,y)=f'(2x+3y)\begin{pmatrix}2 & 3\end{pmatrix}$, és a dir, $\varphi_x=f'(2x+3y)\cdot 2$ i $\varphi_y=f'(2x+3y)\cdot 3$.
+      fuites:
+      - f\S{0,8}\(\s*2\s*x\s*\+\s*3\s*y\s*\)\s*(\\cdot)?\s*[23]\b
+      - '[23]\s*(\\cdot\s*)?f\S{0,8}\(\s*2\s*x\s*\+\s*3\s*y\s*\)'
+      teoria:
+      - T3.21
+    - id: substituir
+      titol: Substituir a l'equació
+      objectiu: |
+        Comprovar l'equació.
+      idea: |
+        Substitueix les parcials a $3\varphi_x-2\varphi_y$.
+      detall: |
+        $3\cdot2f'(2x+3y)-2\cdot3f'(2x+3y)=0$ per a tot $(x,y)\in\mathbb{R}^2$.
+      fuites:
+      - 3\s*\\cdot\s*2\s*f
+      - 6\s*f\S{0,8}\(\s*2\s*x\s*\+\s*3\s*y\s*\)\s*-\s*6
+      teoria: []
+    errors_comuns:
+    - id: oblida_factor
+      descripcio: |
+        Deriva $f(2x+3y)$ oblidant el factor de la derivada interior (regla de la cadena).
+      pregunta: |
+        Si només canvies $x$ una mica, quant canvia l'argument $2x+3y$?
+    - id: cas_particular
+      descripcio: |
+        Ho comprova per a una $f$ concreta (p. ex. $f(t)=t^2$) en lloc de demostrar-ho en general.
+      pregunta: |
+        Has comprovat un exemple. Com saps que funcionarà per a qualsevol $f$ diferenciable?
+    - id: confon_derivades
+      descripcio: |
+        Confon $f'$ amb $\varphi$ o tracta les dues parcials com a expressions sense relació entre elles.
+      pregunta: |
+        Les dues parcials que has trobat, contenen un factor comú? Quin?
+    nota_professor: |
+      Fitxa reutilitzada de l'antic t3-24 (mateix problema). Interpretació: $\varphi$ és constant sobre les rectes $2x+3y=c$, i $(3,-2)$ és la direcció d'aquestes rectes, de manera que l'equació diu $D_{(3,-2)}\varphi=0$.
+- num: 25
+  font: null
+  preambul: |
+    Sigui $G$ la funció que dona el canvi de variables a coordenades polars:
+    $$\begin{aligned}G:\mathbb{R}^+\times(0,2\pi)\subset\mathbb{R}^2&\to\mathbb{R}^2\\(r,\varphi)&\mapsto(r\cos\varphi,r\sin\varphi).\end{aligned}$$
+  indicacio: null
+  exercicis:
+  - id: t3-25a
+    apartat: a
+    tipus: teoric
+    enunciat: |
+      Si $f:\mathbb{R}^2\to\mathbb{R}$ és una funció de classe $\mathcal{C}^1$, obteniu les relacions entre les derivades parcials primeres en els dos sistemes de coordenades; és a dir, si $F=f\circ G$, demostreu que:
+      $$\frac{\partial F}{\partial r}=\frac{\partial f}{\partial x}\cos\varphi+\frac{\partial f}{\partial y}\sin\varphi,\qquad\frac{\partial F}{\partial\varphi}=-\frac{\partial f}{\partial x}r\sin\varphi+\frac{\partial f}{\partial y}r\cos\varphi,$$
+      $$\frac{\partial f}{\partial x}=\frac{\partial F}{\partial r}\frac{x}{\sqrt{x^2+y^2}}-\frac{\partial F}{\partial\varphi}\frac{y}{x^2+y^2},\qquad\frac{\partial f}{\partial y}=\frac{\partial F}{\partial r}\frac{y}{\sqrt{x^2+y^2}}+\frac{\partial F}{\partial\varphi}\frac{x}{x^2+y^2}.$$
+    teoria:
+    - T3.20
+    - T3.2
+    teoria_reservada: []
+    resultat:
+      valor: |
+        Per la regla de la cadena, $JF(r,\varphi)=Jf(G(r,\varphi))\,JG(r,\varphi)$ amb $JG=\begin{pmatrix}\cos\varphi & -r\sin\varphi\\ \sin\varphi & r\cos\varphi\end{pmatrix}$, que dona les dues primeres fórmules (amb les parcials de $f$ avaluades a $(x,y)=G(r,\varphi)$). Com que $\det JG=r>0$, el sistema es pot resoldre: $\frac{\partial f}{\partial x}=\cos\varphi\,\frac{\partial F}{\partial r}-\frac{\sin\varphi}{r}\frac{\partial F}{\partial\varphi}$, $\frac{\partial f}{\partial y}=\sin\varphi\,\frac{\partial F}{\partial r}+\frac{\cos\varphi}{r}\frac{\partial F}{\partial\varphi}$, i substituint $r=\sqrt{x^2+y^2}$, $\cos\varphi=x/r$, $\sin\varphi=y/r$ s'obtenen les dues últimes.
+      fuites: []
+    passos:
+    - id: jacobiana_G
+      titol: Diferenciabilitat i jacobiana de $G$
+      objectiu: |
+        Justificar que es pot aplicar la regla de la cadena a $F=f\circ G$ i calcular la matriu $JG(r,\varphi)$.
+      idea: |
+        Comprova que $G$ i $f$ són diferenciables (parcials contínues) i escriu la matriu de les parcials de les components de $G$ respecte de $r$ i $\varphi$.
+      detall: |
+        $f\in\mathcal{C}^1$ és diferenciable, i $G$ té parcials contínues, per tant també ho és. $JG(r,\varphi)=\begin{pmatrix}\cos\varphi & -r\sin\varphi\\ \sin\varphi & r\cos\varphi\end{pmatrix}$.
+      fuites:
+      - \\cos\s*\\varphi\s*&\s*-\s*r\s*\\sin\s*\\varphi
+      teoria:
+      - T3.18
+      - T3.10
+    - id: cadena
+      titol: Primeres fórmules
+      objectiu: |
+        Obtenir $\frac{\partial F}{\partial r}$ i $\frac{\partial F}{\partial\varphi}$ en termes de les parcials de $f$.
+      idea: |
+        Escriu $JF(r,\varphi)$ com a producte de la jacobiana de $f$ (avaluada a $G(r,\varphi)$) per la de $G$.
+      detall: |
+        $\left(\frac{\partial F}{\partial r}\ \ \frac{\partial F}{\partial\varphi}\right)=\left(\frac{\partial f}{\partial x}\ \ \frac{\partial f}{\partial y}\right)\begin{pmatrix}\cos\varphi & -r\sin\varphi\\ \sin\varphi & r\cos\varphi\end{pmatrix}$, amb les parcials de $f$ avaluades a $(r\cos\varphi,r\sin\varphi)$. Multiplicant s'obtenen exactament les dues primeres igualtats de l'enunciat.
+      fuites: []
+      teoria:
+      - T3.21
+      - T3.22
+    - id: invertir
+      titol: Aïllar les parcials de $f$
+      objectiu: |
+        Expressar $\frac{\partial f}{\partial x}$ i $\frac{\partial f}{\partial y}$ en termes de $\frac{\partial F}{\partial r}$, $\frac{\partial F}{\partial\varphi}$, $r$ i $\varphi$.
+      idea: |
+        Les dues fórmules anteriors són un sistema lineal $2\times2$ en les incògnites $\frac{\partial f}{\partial x}$, $\frac{\partial f}{\partial y}$; mira si la matriu és invertible al domini de $G$.
+      detall: |
+        El determinant de $JG$ és $r\cos^2\varphi+r\sin^2\varphi=r>0$. Resolent (per exemple, multiplicant la primera per $r\cos\varphi$, la segona per $\sin\varphi$ i restant): $\frac{\partial f}{\partial x}=\cos\varphi\,\frac{\partial F}{\partial r}-\frac{\sin\varphi}{r}\frac{\partial F}{\partial\varphi}$ i $\frac{\partial f}{\partial y}=\sin\varphi\,\frac{\partial F}{\partial r}+\frac{\cos\varphi}{r}\frac{\partial F}{\partial\varphi}$.
+      fuites:
+      - \\[dt]?frac\s*\{\s*\\(sin|cos)\s*\\varphi\s*\}\s*\{\s*r\s*\}
+      - \\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*r\s*\}?\s*\\(sin|cos)\s*\\varphi
+      - \\(sin|cos)\s*\\varphi\s*/\s*r\b
+      teoria: []
+    - id: cartesianes
+      titol: Passar a $x$, $y$
+      objectiu: |
+        Escriure els coeficients anteriors en funció de $x$ i $y$.
+      idea: |
+        Usa la relació entre $(r,\varphi)$ i $(x,y)=G(r,\varphi)$.
+      detall: |
+        $r=\sqrt{x^2+y^2}$, $\cos\varphi=\frac{x}{\sqrt{x^2+y^2}}$, $\sin\varphi=\frac{y}{\sqrt{x^2+y^2}}$, i per tant $\frac{\sin\varphi}{r}=\frac{y}{x^2+y^2}$, $\frac{\cos\varphi}{r}=\frac{x}{x^2+y^2}$. Substituint s'obtenen les dues últimes fórmules.
+      fuites: []
+      teoria: []
+    errors_comuns:
+    - id: punt_avaluacio
+      descripcio: |
+        No distingeix on s'avaluen les parcials: les de $f$ a $(x,y)=G(r,\varphi)$ i les de $F$ a $(r,\varphi)$.
+      pregunta: |
+        A la regla de la cadena, en quin punt s'avalua la jacobiana de la funció exterior?
+    - id: ordre_producte
+      descripcio: |
+        Multiplica $JG\cdot Jf$ en lloc de $Jf\cdot JG$, o fa servir la transposada de $JG$ sense adonar-se'n.
+      pregunta: |
+        Quines mides tenen $Jf$ i $JG$? Quin ordre del producte dona una matriu $1\times2$ amb les parcials respecte de $r$ i $\varphi$?
+    - id: inversa_per_composicio
+      descripcio: |
+        Per obtenir les últimes fórmules intenta derivar $\varphi=\arctan(y/x)$, cosa que només val en una part del domini, sense justificar-ho.
+      pregunta: |
+        La fórmula que fas servir per a $\varphi$ en funció de $(x,y)$, és vàlida per a tot $\varphi\in(0,2\pi)$? Pots obtenir el mateix resultat sense invertir $G$ explícitament?
+    nota_professor: |
+      Alternativa per a les dues últimes: $f=F\circ G^{-1}$ i $J(G^{-1})=(JG)^{-1}$; però invertir el sistema lineal evita haver d'escriure $G^{-1}$, que requereix diversos casos per a $\varphi$.
+  - id: t3-25b
+    apartat: b
+    tipus: teoric
+    enunciat: |
+      Sigui $f:\mathbb{R}^2\to\mathbb{R}^2$ una funció de classe $\mathcal{C}^1$, $f(x,y)=(f_1(x,y),f_2(x,y))$, i $F=f\circ G$, amb $F=(F_1,F_2)=(f_1\circ G,f_2\circ G)$. Si
+      $$\frac{\partial f_1}{\partial x}=\frac{\partial f_2}{\partial y},\qquad\frac{\partial f_1}{\partial y}=-\frac{\partial f_2}{\partial x},$$
+      proveu que
+      $$\frac{\partial F_1}{\partial r}=\frac{1}{r}\frac{\partial F_2}{\partial\varphi},\qquad\frac{\partial F_1}{\partial\varphi}=-r\frac{\partial F_2}{\partial r}.$$
+    teoria:
+    - T3.20
+    - T3.2
+    teoria_reservada: []
+    resultat:
+      valor: |
+        Aplicant l'apartat (a) a cada component: $\partial_r F_i=\partial_x f_i\cos\varphi+\partial_y f_i\sin\varphi$ i $\partial_\varphi F_i=r(-\partial_x f_i\sin\varphi+\partial_y f_i\cos\varphi)$. Substituint $\partial_x f_2=-\partial_y f_1$, $\partial_y f_2=\partial_x f_1$: $\partial_\varphi F_2=r(\partial_y f_1\sin\varphi+\partial_x f_1\cos\varphi)=r\,\partial_r F_1$ i $-r\,\partial_r F_2=r(\partial_y f_1\cos\varphi-\partial_x f_1\sin\varphi)=\partial_\varphi F_1$. Com que $r>0$, la primera dona $\partial_r F_1=\frac1r\partial_\varphi F_2$.
+      fuites: []
+    passos:
+    - id: components
+      titol: Aplicar (a) a cada component
+      objectiu: |
+        Usant l'apartat (a) (que es pot donar per conegut), escriure les quatre parcials $\partial_r F_1$, $\partial_\varphi F_1$, $\partial_r F_2$, $\partial_\varphi F_2$.
+      idea: |
+        Cada $F_i=f_i\circ G$ és la situació de l'apartat (a) amb $f_i\in\mathcal{C}^1$ en lloc de $f$.
+      detall: |
+        $\partial_r F_i=\partial_x f_i\cos\varphi+\partial_y f_i\sin\varphi$ i $\partial_\varphi F_i=-\partial_x f_i\,r\sin\varphi+\partial_y f_i\,r\cos\varphi$, per a $i=1,2$ (parcials de $f_i$ avaluades a $G(r,\varphi)$).
+      fuites: []
+      teoria:
+      - T3.21
+    - id: primera
+      titol: Primera igualtat
+      objectiu: |
+        Provar que $\partial_r F_1=\frac1r\partial_\varphi F_2$.
+      idea: |
+        Expressa $\partial_\varphi F_2$ només amb parcials de $f_1$ usant les dues hipòtesis, i compara amb $\partial_r F_1$.
+      detall: |
+        $\partial_\varphi F_2=-\partial_x f_2\,r\sin\varphi+\partial_y f_2\,r\cos\varphi=r(\partial_y f_1\sin\varphi+\partial_x f_1\cos\varphi)=r\,\partial_r F_1$. Com que $r>0$, $\partial_r F_1=\frac1r\partial_\varphi F_2$.
+      fuites:
+      - =\s*r\s*(\\,)?\s*\\partial_r\s*F_1
+      - =\s*r\s*(\\,)?\s*\\frac\s*\{\s*\\partial\s*F_1\s*\}\s*\{\s*\\partial\s*r
+      - r\s*\(\s*\\partial_y\s*f_1\s*\\sin\s*\\varphi\s*\+\s*\\partial_x\s*f_1\s*\\cos
+      teoria: []
+    - id: segona
+      titol: Segona igualtat
+      objectiu: |
+        Provar que $\partial_\varphi F_1=-r\,\partial_r F_2$.
+      idea: |
+        Fes el mateix amb $\partial_r F_2$.
+      detall: |
+        $-r\,\partial_r F_2=-r(\partial_x f_2\cos\varphi+\partial_y f_2\sin\varphi)=-r(-\partial_y f_1\cos\varphi+\partial_x f_1\sin\varphi)=-\partial_x f_1\,r\sin\varphi+\partial_y f_1\,r\cos\varphi=\partial_\varphi F_1$.
+      fuites:
+      - \(\s*-\s*\\partial_y\s*f_1\s*\\cos\s*\\varphi\s*\+\s*\\partial_x\s*f_1\s*\\sin
+      teoria: []
+    errors_comuns:
+    - id: signe_hipotesi
+      descripcio: |
+        Substitueix malament les hipòtesis (p. ex. $\partial_x f_2=\partial_y f_1$, perdent el signe).
+      pregunta: |
+        Escriu exactament què val $\partial_x f_2$ segons la segona hipòtesi. Quin signe porta?
+    - id: divideix_per_r
+      descripcio: |
+        Divideix per $r$ sense comentar que $r>0$ al domini de $G$.
+      pregunta: |
+        Pots dividir per $r$ a tot el domini de $G$? Per què?
+    - id: refa_cadena
+      descripcio: |
+        Refà tot el càlcul de la regla de la cadena en lloc d'aplicar (a) a cada component, i s'hi perd.
+      pregunta: |
+        Cada $F_i$ és de la forma $f_i\circ G$. Què et diu ja l'apartat anterior sobre funcions d'aquest tipus?
+    nota_professor: |
+      Són les equacions de Cauchy-Riemann en coordenades polars.
+- num: 26
+  font: null
+  preambul: |
+    Considereu la funció
+    $$f(x,y)=\begin{cases}2(x^2+y^2)\sin\left(\dfrac{1}{\sqrt{x^2+y^2}}\right) & \text{si } (x,y)\neq(0,0)\\ 0 & \text{si } (x,y)=(0,0).\end{cases}$$
+  indicacio: null
+  exercicis:
+  - id: t3-26a
+    apartat: a
+    tipus: teoric
+    enunciat: |
+      Proveu que existeixen les derivades parcials de $f$, però que no són contínues a $(0,0)$.
+    teoria:
+    - T3.2
+    - T2.14
+    teoria_reservada:
+    - T3.19
+    resultat:
+      valor: |
+        A l'origen, $\frac{\partial f}{\partial x}(0,0)=\lim_{t\to0}2t\sin\frac1{|t|}=0$ i, per simetria, $\frac{\partial f}{\partial y}(0,0)=0$. Fora de l'origen, amb $\rho=\sqrt{x^2+y^2}$: $\frac{\partial f}{\partial x}=4x\sin\frac1\rho-\frac{2x}{\rho}\cos\frac1\rho$ (i anàlogament $\frac{\partial f}{\partial y}$ canviant $x$ per $y$). Sobre el semieix $y=0$, $x>0$: $\frac{\partial f}{\partial x}(x,0)=4x\sin\frac1x-2\cos\frac1x$, que no té límit quan $x\to0^+$ (val $-2$ a $x_n=\frac{1}{2n\pi}$ i $2$ a $x_n=\frac{1}{(2n+1)\pi}$); per tant $\frac{\partial f}{\partial x}$ no és contínua a l'origen, i per simetria tampoc $\frac{\partial f}{\partial y}$.
+      fuites: []
+    passos:
+    - id: parcials_origen
+      titol: Parcials a l'origen
+      objectiu: |
+        Calcular $\frac{\partial f}{\partial x}(0,0)$ i $\frac{\partial f}{\partial y}(0,0)$.
+      idea: |
+        A l'origen cal usar la definició com a límit d'un quocient d'una variable; acota el sinus.
+      detall: |
+        $\frac{f(t,0)-f(0,0)}{t}=\frac{2t^2\sin(1/|t|)}{t}=2t\sin\frac1{|t|}$, i $\left|2t\sin\frac1{|t|}\right|\le2|t|\to0$. Per tant $\frac{\partial f}{\partial x}(0,0)=0$, i com que $f(x,y)=f(y,x)$, també $\frac{\partial f}{\partial y}(0,0)=0$.
+      fuites:
+      - 2\s*t\s*\\sin
+      teoria:
+      - T3.2
+      - T3.4
+    - id: parcials_fora
+      titol: Parcials fora de l'origen
+      objectiu: |
+        Calcular les derivades parcials en un punt $(x,y)\neq(0,0)$.
+      idea: |
+        Fora de l'origen $f$ ve donada per una sola expressió: deriva-la amb les regles d'una variable (cadena i producte), mantenint l'altra variable fixa.
+      detall: |
+        Amb $\rho=\sqrt{x^2+y^2}$ i $\frac{\partial\rho}{\partial x}=\frac{x}{\rho}$: $\frac{\partial f}{\partial x}=4x\sin\frac1\rho+2\rho^2\cos\frac1\rho\cdot\left(-\frac{1}{\rho^2}\right)\frac{x}{\rho}=4x\sin\frac1\rho-\frac{2x}{\rho}\cos\frac1\rho$. Anàlogament $\frac{\partial f}{\partial y}=4y\sin\frac1\rho-\frac{2y}{\rho}\cos\frac1\rho$. Així, les parcials existeixen a tot $\mathbb{R}^2$.
+      fuites:
+      - \\[dt]?frac\s*\{\s*2\s*x\s*\}\s*\{\s*(\\rho|\\sqrt)
+      - 4\s*x\s*\\sin
+      teoria:
+      - T3.2
+    - id: discontinuitat
+      titol: No continuïtat a l'origen
+      objectiu: |
+        Veure que $\frac{\partial f}{\partial x}$ no tendeix a $\frac{\partial f}{\partial x}(0,0)$ quan $(x,y)\to(0,0)$.
+      idea: |
+        Restringeix la parcial a un camí senzill cap a l'origen i separa el terme que tendeix a $0$ del que oscil·la.
+      detall: |
+        Sobre $y=0$, $x>0$: $\frac{\partial f}{\partial x}(x,0)=4x\sin\frac1x-2\cos\frac1x$. El primer terme tendeix a $0$ ($|4x\sin\frac1x|\le4x$), però $2\cos\frac1x$ no té límit. Concretament, les successions $p_n=\left(\frac1{2n\pi},0\right)$ i $q_n=\left(\frac1{(2n+1)\pi},0\right)$ tendeixen a $(0,0)$ i $\frac{\partial f}{\partial x}(p_n)=-2$, $\frac{\partial f}{\partial x}(q_n)=2$ per a tot $n$. Per la caracterització del límit amb successions, no existeix $\lim_{(x,y)\to(0,0)}\frac{\partial f}{\partial x}(x,y)$, i la parcial no és contínua a l'origen; per simetria ($f(x,y)=f(y,x)$), tampoc $\frac{\partial f}{\partial y}$.
+      fuites:
+      - 2\s*\\cos\s*\\[dt]?frac\s*\{?1\}?\s*\{?x
+      - 2\s*\\cos\s*\(\s*1\s*/\s*x
+      teoria:
+      - T2.6
+      - T2.14
+    errors_comuns:
+    - id: deriva_formula_origen
+      descripcio: |
+        Calcula la parcial a l'origen substituint $(0,0)$ a la fórmula de la parcial obtinguda fora de l'origen.
+      pregunta: |
+        La fórmula que has derivat, és vàlida a l'origen? Com es defineix la derivada parcial en un punt on la funció està definida a part?
+    - id: cos_tendeix_zero
+      descripcio: |
+        Creu que $\frac{2x}{\rho}\cos\frac1\rho\to0$ perquè hi ha una $x$ al numerador.
+      pregunta: |
+        Quant val $\left|\frac{x}{\rho}\right|$ sobre l'eix $y=0$? Es fa petit quan t'acostes a l'origen?
+    - id: oscillacio_sense_justificar
+      descripcio: |
+        Afirma que el límit no existeix sense donar dues successions (o camins) amb límits diferents.
+      pregunta: |
+        Pots trobar dues successions de punts que tendeixin a l'origen on la parcial tendeixi a valors diferents?
+    nota_professor: |
+      Mateixa funció que l'observació 19 dels apunts, amb un factor $2$; per això aquella observació és reservada. El factor $2$ només canvia les constants ($\pm2$ en lloc de $\pm1$).
+  - id: t3-26b
+    apartat: b
+    tipus: teoric
+    enunciat: |
+      Proveu que $f$ és diferenciable en tot el seu domini.
+    teoria:
+    - T3.8
+    teoria_reservada:
+    - T3.19
+    resultat:
+      valor: |
+        A $\mathbb{R}^2\setminus\{(0,0)\}$ (obert) les parcials existeixen i són contínues, per tant $f$ hi és diferenciable. A l'origen la candidata és $Df(0,0)=0$ (parcials nul·les, apartat (a)) i $\frac{|f(x,y)-0-0|}{\sqrt{x^2+y^2}}=2\sqrt{x^2+y^2}\left|\sin\frac1{\sqrt{x^2+y^2}}\right|\le2\sqrt{x^2+y^2}\to0$, per tant $f$ és diferenciable a l'origen amb $Df(0,0)=0$. Així, $f$ és diferenciable a tot $\mathbb{R}^2$ tot i que les parcials no són contínues a l'origen.
+      fuites: []
+    passos:
+    - id: fora_origen
+      titol: Fora de l'origen
+      objectiu: |
+        Provar que $f$ és diferenciable a tot punt $(x,y)\neq(0,0)$.
+      idea: |
+        Usa les parcials calculades a (a) i una condició suficient de diferenciabilitat.
+      detall: |
+        A l'obert $\mathbb{R}^2\setminus\{(0,0)\}$ les parcials obtingudes a (a) són composicions, productes i quocients de funcions contínues (amb $\rho\neq0$), per tant contínues; per la condició suficient, $f$ és diferenciable a cada punt diferent de l'origen.
+      fuites: []
+      teoria:
+      - T3.18
+      - T2.19
+      - T2.20
+    - id: candidata
+      titol: Candidata a diferencial a l'origen
+      objectiu: |
+        Determinar quina hauria de ser $Df(0,0)$ si existeix.
+      idea: |
+        Si $f$ és diferenciable, la seva jacobiana està formada per les derivades parcials.
+      detall: |
+        Per l'apartat (a), $\frac{\partial f}{\partial x}(0,0)=\frac{\partial f}{\partial y}(0,0)=0$, així que l'única candidata és $Df(0,0)=0$, amb jacobiana $(0\ \ 0)$.
+      fuites: []
+      teoria:
+      - T3.9
+    - id: quocient
+      titol: Comprovar la definició
+      objectiu: |
+        Veure que el quocient de la definició de diferenciabilitat tendeix a $0$ a l'origen.
+      idea: |
+        Escriu el quocient amb la candidata, acota el sinus per $1$ i aplica el criteri del sandvitx.
+      detall: |
+        $0\le\frac{|f(x,y)-f(0,0)-0|}{\sqrt{x^2+y^2}}=2\sqrt{x^2+y^2}\left|\sin\frac1{\sqrt{x^2+y^2}}\right|\le2\sqrt{x^2+y^2}\to0$. Per tant $f$ és diferenciable a l'origen i $Df(0,0)=0$.
+      fuites:
+      - (\\le|\\leq|≤)\s*2\s*(\\sqrt|\\rho|\\\||\|)
+      teoria:
+      - T3.8
+    errors_comuns:
+    - id: condicio_suficient_origen
+      descripcio: |
+        Intenta usar la condició suficient (parcials contínues) també a l'origen, o conclou que no és diferenciable perquè les parcials no hi són contínues.
+      pregunta: |
+        La continuïtat de les parcials és una condició necessària o només suficient per a la diferenciabilitat?
+    - id: nomes_parcials
+      descripcio: |
+        Conclou que és diferenciable a l'origen només perquè hi existeixen les parcials.
+      pregunta: |
+        Coneixes alguna funció amb totes les parcials (i fins i tot direccionals) a l'origen que no hi sigui diferenciable? Què més cal comprovar?
+    - id: quocient_sense_norma
+      descripcio: |
+        Comprova el límit de $f(x,y)$ en lloc del quocient dividit per $\|(x,y)\|$.
+      pregunta: |
+        A la definició de diferenciabilitat, per quina quantitat es divideix l'error $f(x,y)-f(0,0)-Df(0,0)(x,y)$?
+    nota_professor: |
+      Juntament amb (a), mostra que diferenciable no implica parcials contínues (recíproc fals de la condició suficient).
+- num: 27
+  font: null
+  preambul: |
+    Considerem la funció
+    $$f(x,y)=\begin{cases}xy^2\sin\left(\dfrac{1}{y}\right) & \text{si } y\neq0,\\ 0 & \text{si } y=0.\end{cases}$$
+  indicacio: null
+  exercicis:
+  - id: t3-27a
+    apartat: a
+    tipus: calcul
+    enunciat: |
+      Estudieu la diferenciabilitat de $f$ a $\mathbb{R}^2$.
+    teoria:
+    - T3.8
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $f$ és diferenciable a tot $\mathbb{R}^2$. A l'obert $\{y\neq0\}$ perquè les parcials $f_x=y^2\sin\frac1y$, $f_y=2xy\sin\frac1y-x\cos\frac1y$ són contínues. Als punts $(a,0)$: $f_x(a,0)=0$, $f_y(a,0)=\lim_{k\to0}ak\sin\frac1k=0$, i $\frac{|f(a+h,k)|}{\|(h,k)\|}\le\frac{|a+h|\,k^2}{\|(h,k)\|}\le|a+h|\,|k|\to0$, per tant $f$ és diferenciable a $(a,0)$ amb $Df(a,0)=0$.
+      fuites:
+      - diferenciable\s+(a|en)\s+tot(s)?\s+(el\s+pla|\$?\\mathbb\{?R)
+      - diferenciable\s+(a|en)\s+tots\s+els\s+punts
+      - diferenciable\s+(a|en)\s+tot\s+arreu
+    passos:
+    - id: fora_eix
+      titol: Punts amb $y\neq0$
+      objectiu: |
+        Estudiar la diferenciabilitat als punts on $y\neq0$.
+      idea: |
+        Al conjunt obert on $y\neq0$ la funció ve donada per una sola expressió: calcula les parcials i mira si són contínues.
+      detall: |
+        Per $y\neq0$: $f_x=y^2\sin\frac1y$ i $f_y=2xy\sin\frac1y+xy^2\cos\frac1y\cdot\left(-\frac1{y^2}\right)=2xy\sin\frac1y-x\cos\frac1y$, contínues a l'obert $\{y\neq0\}$. Per la condició suficient, $f$ hi és diferenciable.
+      fuites:
+      - -\s*x\s*\\cos\s*(\\[dt]?frac|\(\s*1\s*/\s*y)
+      teoria:
+      - T3.18
+      - T2.19
+      - T2.20
+    - id: parcials_eix
+      titol: Parcials als punts de l'eix
+      objectiu: |
+        Calcular les derivades parcials als punts $(a,0)$, $a\in\mathbb{R}$.
+      idea: |
+        Aplica la definició de derivada parcial; recorda quant val $f$ sobre l'eix $y=0$.
+      detall: |
+        $f(a+t,0)=0$, per tant $f_x(a,0)=0$. $f_y(a,0)=\lim_{k\to0}\frac{f(a,k)-0}{k}=\lim_{k\to0}a\,k\sin\frac1k=0$ (ja que $|ak\sin\frac1k|\le|a||k|$). Candidata: $Df(a,0)=0$.
+      fuites:
+      - a\s*(\\,)?\s*k\s*\\sin
+      teoria:
+      - T3.2
+      - T3.9
+    - id: diferenciable_eix
+      titol: Diferenciabilitat a l'eix
+      objectiu: |
+        Decidir si $f$ és diferenciable als punts $(a,0)$.
+      idea: |
+        Escriu el quocient de la definició amb la candidata i acota'l, usant que el sinus està fitat i que $|k|\le\|(h,k)\|$.
+      detall: |
+        Si $k\neq0$: $\frac{|f(a+h,k)-0-0|}{\|(h,k)\|}=\frac{|a+h|\,k^2|\sin\frac1k|}{\|(h,k)\|}\le|a+h|\,\frac{k^2}{\|(h,k)\|}\le|a+h|\,|k|$; si $k=0$ el quocient és $0$. Com que $|a+h|\,|k|\to0$ quan $(h,k)\to(0,0)$, pel sandvitx el quocient tendeix a $0$: $f$ és diferenciable a $(a,0)$ amb $Df(a,0)=0$.
+      fuites:
+      - \|a\s*\+\s*h\|\s*(\\,)?\s*\|k\|
+      teoria:
+      - T3.8
+    errors_comuns:
+    - id: oblida_eix
+      descripcio: |
+        Només estudia l'origen i oblida la resta de punts de l'eix $y=0$, on la funció també està definida a part.
+      pregunta: |
+        On està definida $f$ per la segona branca? Has estudiat tots aquests punts?
+    - id: parcials_no_continues_implica
+      descripcio: |
+        Conclou que $f$ no és diferenciable a $(a,0)$, $a\neq0$, perquè $f_y$ no hi és contínua.
+      pregunta: |
+        La continuïtat de les parcials, és necessària per ser diferenciable o només suficient?
+    - id: oblida_k_zero
+      descripcio: |
+        Usa la fórmula $xy^2\sin\frac1y$ quan $k=0$ en el quocient, on no està definida.
+      pregunta: |
+        Quan t'acostes a $(a,0)$, tots els punts tenen $y\neq0$? Què val el quocient si $k=0$?
+    nota_professor: |
+      Cal tractar tots els punts $(a,0)$, no només l'origen. La fita és uniforme perquè $|a+h|$ es manté fitat a prop de $h=0$.
+  - id: t3-27b
+    apartat: b
+    tipus: calcul
+    enunciat: |
+      Trobeu un obert $U\subseteq\mathbb{R}^2$ maximal tal que $f\in\mathcal{C}^1(U)$.
+    teoria:
+    - T3.20
+    - T1.11
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $U=\{(x,y)\in\mathbb{R}^2:\ y\neq0\}$. Les parcials són $f_x=y^2\sin\frac1y$ ($y\neq0$), $0$ ($y=0$), contínua a tot $\mathbb{R}^2$; i $f_y=2xy\sin\frac1y-x\cos\frac1y$ ($y\neq0$), $0$ ($y=0$), que és contínua a $\{y\neq0\}\cup\{(0,0)\}$ i no ho és a cap $(a,0)$ amb $a\neq0$. Un obert on $f$ sigui $\mathcal{C}^1$ ha d'estar contingut en aquest conjunt, i per ser obert no pot contenir l'origen (tota bola centrada a l'origen conté punts $(a,0)$, $a\neq0$). Per tant l'obert màxim és $\{y\neq0\}$, on efectivament $f$ és $\mathcal{C}^1$.
+      fuites:
+      - U\s*=\s*\\\{[^$]*y\s*\\neq?\s*0
+      - \\setminus\s*\\\{[^$]*y\s*=\s*0
+      - pla\s+(menys|sense)\s+l'eix
+    passos:
+    - id: fx_continua
+      titol: Continuïtat de $f_x$
+      objectiu: |
+        Usant les parcials obtingudes a l'apartat (a), estudiar on és contínua $f_x$.
+      idea: |
+        Fora de l'eix és clar; als punts de l'eix compara $f_x$ amb el seu valor allà, acotant el sinus.
+      detall: |
+        $f_x=y^2\sin\frac1y$ si $y\neq0$ i $f_x(a,0)=0$. Com que $|f_x(x,y)|\le y^2\to0$ quan $(x,y)\to(a,0)$, $f_x$ és contínua a tot $\mathbb{R}^2$.
+      fuites:
+      - (\\le|\\leq|≤)\s*y\^\{?2\}?\s*\\to
+      teoria:
+      - T2.14
+    - id: fy_continua
+      titol: Continuïtat de $f_y$
+      objectiu: |
+        Estudiar on és contínua $f_y$, en particular als punts de l'eix $y=0$.
+      idea: |
+        Separa els dos sumands de $f_y$ per $y\neq0$; mira quin d'ells pot no tendir a $0$ quan $y\to0$, i distingeix si el punt de l'eix és l'origen o no.
+      detall: |
+        $f_y=2xy\sin\frac1y-x\cos\frac1y$ si $y\neq0$, $f_y(a,0)=0$. Si $a\neq0$: sobre la recta $x=a$, $f_y(a,y)=2ay\sin\frac1y-a\cos\frac1y$, i $a\cos\frac1y$ no té límit quan $y\to0$ (val $a$ a $y_n=\frac1{2n\pi}$ i $-a$ a $y_n=\frac1{(2n+1)\pi}$): $f_y$ no és contínua a $(a,0)$. A l'origen: $|f_y(x,y)|\le2|x||y|+|x|\to0$, i és contínua.
+      fuites:
+      - \ba\s*\\cos\s*(\\[dt]?frac|\(\s*1\s*/\s*y)
+      - 2\s*\|x\|\s*\|y\|\s*\+\s*\|x\|
+      teoria:
+      - T2.14
+      - T2.6
+    - id: obert_maxim
+      titol: L'obert màxim
+      objectiu: |
+        Determinar el major obert $U$ on $f$ és de classe $\mathcal{C}^1$.
+      idea: |
+        Per ser $\mathcal{C}^1$ a un obert cal que les parcials hi siguin contínues a cada punt. Pregunta't si el conjunt de punts on les parcials són contínues és obert, i quin és el seu interior.
+      detall: |
+        Les parcials són contínues exactament a $\{y\neq0\}\cup\{(0,0)\}$. Aquest conjunt no és obert: tota bola centrada a l'origen conté punts $(a,0)$ amb $a\neq0$. Qualsevol obert $U$ amb $f\in\mathcal{C}^1(U)$ ha d'estar dins d'aquest conjunt i, per ser obert, no pot contenir l'origen; per tant $U\subseteq\{y\neq0\}$. I a $\{y\neq0\}$ (obert) $f$ és diferenciable amb parcials contínues. Així $U=\{(x,y):\ y\neq0\}$.
+      fuites:
+      - U\s*=\s*\\\{[^$]*y\s*\\neq?\s*0
+      - \\setminus\s*\\\{[^$]*y\s*=\s*0
+      teoria:
+      - T3.20
+      - T1.11
+    errors_comuns:
+    - id: inclou_origen
+      descripcio: |
+        Inclou l'origen a $U$ perquè les parcials hi són contínues.
+      pregunta: |
+        Si l'origen fos a $U$, una bola al voltant de l'origen hi hauria de ser. Les parcials són contínues a tots els punts d'aquesta bola?
+    - id: diferenciable_implica_C1
+      descripcio: |
+        Com que $f$ és diferenciable a tot $\mathbb{R}^2$ (apartat a), conclou que $U=\mathbb{R}^2$.
+      pregunta: |
+        Ser diferenciable a un punt, garanteix que les parcials hi siguin contínues?
+    - id: cos_amb_x
+      descripcio: |
+        Creu que $x\cos\frac1y$ tendeix a $0$ a tots els punts de l'eix, o oblida aquest terme.
+      pregunta: |
+        Si fixes $x=a\neq0$ i fas $y\to0$, què fa cadascun dels dos termes de $f_y(a,y)$? Tots dos tendeixen a $0$?
+    nota_professor: |
+      "Maximal" s'entén com el més gran: tot obert on $f$ és $\mathcal{C}^1$ està contingut a $\{y\neq0\}$. L'origen és un punt on les parcials són contínues però no pertany a cap obert on $f$ sigui $\mathcal{C}^1$.
+- num: 28
+  font: null
+  preambul: |
+    Donats $f:\mathbb{R}^n\to\mathbb{R}$ de classe $\mathcal{C}^1$ i $x_0\in\mathbb{R}^n$ tal que $f(x_0)=0$ i $Df(x_0)\neq0$, trobeu un vector $v$ de $\mathbb{R}^n$ tal que la funció $\phi(t)=f(x_0+tv)$ sigui creixent en un entorn de l'origen.
+  indicacio: null
+  exercicis:
+  - id: t3-28
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Donats $f:\mathbb{R}^n\to\mathbb{R}$ de classe $\mathcal{C}^1$ i $x_0\in\mathbb{R}^n$ tal que $f(x_0)=0$ i $Df(x_0)\neq0$, trobeu un vector $v$ de $\mathbb{R}^n$ tal que la funció $\phi(t)=f(x_0+tv)$ sigui creixent en un entorn de l'origen.
+    teoria:
+    - T3.20
+    teoria_reservada: []
+    resultat:
+      valor: |
+        Qualsevol $v$ amb $\nabla f(x_0)\cdot v>0$; per exemple $v=\nabla f(x_0)$, que dona $\phi'(0)=\|\nabla f(x_0)\|^2>0$ i, per continuïtat de $\phi'(t)=\nabla f(x_0+tv)\cdot v$, $\phi'>0$ en un entorn de $0$, on $\phi$ és (estrictament) creixent. (La hipòtesi $f(x_0)=0$ no fa falta.)
+      fuites:
+      - v\s*=\s*(\\nabla\s*f|Df)\s*\(x_0\)
+      - (direcci[óo]|sentit)\s+del\s+gradient
+    passos:
+    - id: derivar_phi
+      titol: Derivar $\phi$
+      objectiu: |
+        Calcular $\phi'(t)$.
+      idea: |
+        $\phi$ és la composició de $f$ amb la corba $t\mapsto x_0+tv$; aplica la regla de la cadena.
+      detall: |
+        $\phi'(t)=Df(x_0+tv)\,v=\nabla f(x_0+tv)\cdot v$.
+      fuites:
+      - \\nabla\s*f\(x_0\s*\+\s*tv\)\s*\\cdot\s*v
+      teoria:
+      - T3.21
+    - id: condicio
+      titol: Condició per ser creixent
+      objectiu: |
+        Reduir "creixent en un entorn de $0$" a una condició a $t=0$.
+      idea: |
+        Una derivada positiva en un interval dona creixement (fet d'una variable); què saps de la continuïtat de $\phi'$?
+      detall: |
+        Com que $f\in\mathcal{C}^1$, les parcials són contínues i $\phi'(t)=\sum_i\frac{\partial f}{\partial x_i}(x_0+tv)v_i$ és contínua. Si $\phi'(0)=\nabla f(x_0)\cdot v>0$, aleshores $\phi'>0$ en un entorn de $0$ i $\phi$ hi és creixent.
+      fuites:
+      - \\nabla\s*f\s*\(x_0\)\s*\\cdot\s*v\s*>\s*0
+      - \\langle\s*\\nabla\s*f\s*\(x_0\)\s*,\s*v\s*\\rangle\s*>\s*0
+      teoria:
+      - T3.20
+    - id: triar_v
+      titol: Triar el vector
+      objectiu: |
+        Trobar un $v$ concret que compleixi la condició.
+      idea: |
+        Tria $v$ de manera que el producte escalar amb el gradient sigui clarament positiu.
+      detall: |
+        $v=\nabla f(x_0)$: $\phi'(0)=\|\nabla f(x_0)\|^2>0$ perquè $Df(x_0)\neq0$. (És la direcció de màxim creixement.)
+      fuites:
+      - \\nabla\s*f\(x_0\)\\\|\^2
+      teoria:
+      - T3.10
+      - T3.13
+    errors_comuns:
+    - id: sense_entorn
+      descripcio: |
+        Conclou que $\phi$ és creixent a prop de $0$ només perquè $\phi'(0)>0$, sense usar la continuïtat de $\phi'$.
+      pregunta: |
+        Saber que $\phi'(0)>0$, et diu res de $\phi'(t)$ per a $t$ proper a $0$? Quina hipòtesi ho garanteix?
+    - id: usa_f_x0
+      descripcio: |
+        Creu que la hipòtesi $f(x_0)=0$ és essencial o intenta fer-la servir.
+      pregunta: |
+        Si canviessis $f$ per $f+5$, canviaria alguna cosa del que vols demostrar?
+    - id: cadena_malament
+      descripcio: |
+        Deriva $f(x_0+tv)$ com si fos una funció d'una variable, sense el vector $v$.
+      pregunta: |
+        $f$ és de $n$ variables; quina és la derivada de la corba $t\mapsto x_0+tv$?
+    - id: v_perpendicular
+      descripcio: |
+        Tria $v$ perpendicular al gradient o amb producte escalar negatiu.
+      pregunta: |
+        Quin signe té $\nabla f(x_0)\cdot v$ amb el teu $v$?
+    nota_professor: |
+      Fitxa reutilitzada de l'antic t3-28 (mateix problema). Sense la continuïtat de $\phi'$ (és a dir, sense $\mathcal{C}^1$), $\phi'(0)>0$ no garanteix monotonia en un entorn.
+- num: 29
+  font: null
+  preambul: |
+    Considerem la funció $f(x,y)=\displaystyle\int_y^x e^{xyt}\,dt$. Calculeu $\dfrac{\partial f}{\partial x}$ i $\dfrac{\partial f}{\partial y}$ usant la fórmula de Leibniz. Comproveu el resultat calculant primer la integral i derivant després.
+  indicacio: null
+  exercicis:
+  - id: t3-29
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Considerem la funció $f(x,y)=\displaystyle\int_y^x e^{xyt}\,dt$. Calculeu $\dfrac{\partial f}{\partial x}$ i $\dfrac{\partial f}{\partial y}$ usant la fórmula de Leibniz. Comproveu el resultat calculant primer la integral i derivant després.
+    teoria:
+    - T3.32
+    - T3.2
+    teoria_reservada: []
+    resultat:
+      valor: |
+        Per Leibniz: $\frac{\partial f}{\partial x}=e^{x^2y}+\int_y^x yt\,e^{xyt}\,dt$ i $\frac{\partial f}{\partial y}=-e^{xy^2}+\int_y^x xt\,e^{xyt}\,dt$. Per $xy\neq0$, $f(x,y)=\frac{e^{x^2y}-e^{xy^2}}{xy}$ (i $f=x-y$ si $xy=0$), i, per a $xy\neq0$, els dos camins donen
+        $\frac{\partial f}{\partial x}=e^{x^2y}\left(2-\frac{1}{x^2y}\right)-e^{xy^2}\left(\frac{y}{x}-\frac{1}{x^2y}\right)$, $\frac{\partial f}{\partial y}=e^{x^2y}\left(\frac{x}{y}-\frac{1}{xy^2}\right)-e^{xy^2}\left(2-\frac{1}{xy^2}\right)$.
+      fuites:
+      - e\^\{\s*x\^\{?2\}?\s*y\s*\}\s*\+\s*\\int
+      - -\s*e\^\{\s*x\s*y\^\{?2\}?\s*\}\s*\+\s*\\int
+      - 2\s*-\s*\\[dt]?frac\{1\}\{x\^\{?2\}?\s*y\}
+      - 2\s*-\s*\\[dt]?frac\{1\}\{x\s*y\^\{?2\}?\}
+    passos:
+    - id: leibniz_x
+      titol: Parcial respecte de $x$ amb Leibniz
+      objectiu: |
+        Calcular $\frac{\partial f}{\partial x}$ amb la regla de Leibniz, deixant-la expressada amb una integral.
+      idea: |
+        Amb $y$ fix, $x$ apareix a l'integrand i al límit superior. Identifica l'integrand com a funció de $(t,x)$ i els límits d'integració com a funcions de $x$, comprova les hipòtesis i aplica la fórmula.
+      detall: |
+        Amb $y$ fix, $g(t,x)=e^{xyt}$ és $\mathcal{C}^1$ a $\mathbb{R}^2$, el límit inferior $y$ és constant i el superior és $x$. Per Leibniz: $\frac{\partial f}{\partial x}=e^{x\cdot y\cdot x}\cdot1-0+\int_y^x yt\,e^{xyt}\,dt=e^{x^2y}+\int_y^x yt\,e^{xyt}\,dt$.
+      fuites:
+      - e\^\{\s*x\^\{?2\}?\s*y\s*\}\s*\+\s*\\int
+      teoria:
+      - T3.32
+    - id: leibniz_y
+      titol: Parcial respecte de $y$ amb Leibniz
+      objectiu: |
+        Calcular $\frac{\partial f}{\partial y}$ amb la regla de Leibniz.
+      idea: |
+        Ara $x$ és fix i $y$ apareix a l'integrand i al límit inferior; vigila el signe del terme de frontera.
+      detall: |
+        $\frac{\partial f}{\partial y}=0-e^{xy\cdot y}\cdot1+\int_y^x xt\,e^{xyt}\,dt=-e^{xy^2}+\int_y^x xt\,e^{xyt}\,dt$.
+      fuites:
+      - -\s*e\^\{\s*x\s*y\^\{?2\}?\s*\}\s*\+\s*\\int
+      teoria:
+      - T3.32
+    - id: integral_explicita
+      titol: Calcular la integral
+      objectiu: |
+        Obtenir una expressió de $f(x,y)$ sense integrals.
+      idea: |
+        Integra respecte de $t$ tractant $xy$ com una constant; separa el cas en què aquesta constant és $0$.
+      detall: |
+        Si $xy\neq0$: $f(x,y)=\left[\frac{e^{xyt}}{xy}\right]_{t=y}^{t=x}=\frac{e^{x^2y}-e^{xy^2}}{xy}$. Si $xy=0$: $f(x,y)=\int_y^x1\,dt=x-y$.
+      fuites:
+      - \\[dt]?frac\{\s*e\^\{\s*x\^\{?2\}?\s*y\s*\}\s*-\s*e\^\{\s*x\s*y\^\{?2\}?\s*\}\s*\}\{\s*x\s*y\s*\}
+      - \\[dt]?frac\s*\{\s*e\^\{\s*x\s*y\s*t\s*\}\s*\}\s*\{\s*x\s*y\s*\}
+      teoria: []
+    - id: comprovar
+      titol: Comparar els dos càlculs
+      objectiu: |
+        Comprovar que els dos mètodes donen les mateixes parcials.
+      idea: |
+        Deriva l'expressió explícita amb la regla del quocient, i calcula la integral que queda a Leibniz (per parts, $\int t\,e^{at}\,dt$); compara.
+      detall: |
+        Amb $a=xy\neq0$, $\int t\,e^{at}dt=e^{at}\left(\frac ta-\frac1{a^2}\right)$, de manera que $\int_y^x yt\,e^{xyt}dt=e^{x^2y}\left(1-\frac{1}{x^2y}\right)-e^{xy^2}\left(\frac yx-\frac{1}{x^2y}\right)$ i Leibniz dona $\frac{\partial f}{\partial x}=e^{x^2y}\left(2-\frac{1}{x^2y}\right)-e^{xy^2}\left(\frac{y}{x}-\frac{1}{x^2y}\right)$. Derivant $\frac{e^{x^2y}-e^{xy^2}}{xy}$ respecte de $x$ s'obté el mateix. Anàlogament (o per l'antisimetria $f(y,x)=-f(x,y)$) $\frac{\partial f}{\partial y}=e^{x^2y}\left(\frac{x}{y}-\frac{1}{xy^2}\right)-e^{xy^2}\left(2-\frac{1}{xy^2}\right)$ pels dos camins.
+      fuites:
+      - 2\s*-\s*\\frac\{1\}\{x\^2\s*y\}
+      - 2\s*-\s*\\frac\{1\}\{x\s*y\^2\}
+      teoria: []
+    errors_comuns:
+    - id: oblida_frontera
+      descripcio: |
+        Aplica només "derivar dins la integral" i oblida el terme que ve del límit d'integració variable.
+      pregunta: |
+        El límit d'integració depèn de la variable respecte de la qual derives? Quin terme aporta això a la fórmula de Leibniz?
+    - id: signe_limit_inferior
+      descripcio: |
+        Posa amb signe positiu el terme de frontera del límit inferior en derivar respecte de $y$.
+      pregunta: |
+        Si $\int_y^x g(t)\,dt=G(x)-G(y)$, quin signe té la derivada respecte de $y$?
+    - id: integrand_mal_avaluat
+      descripcio: |
+        Avalua el terme de frontera com $e^{xyx}$ però després el simplifica malament, o avalua a $t$ en lloc del límit.
+      pregunta: |
+        Al terme de frontera, quin valor de $t$ substitueixes a $e^{xyt}$? Què queda a l'exponent?
+    - id: divideix_per_zero
+      descripcio: |
+        Usa $\frac{e^{x^2y}-e^{xy^2}}{xy}$ a tot el pla, sense excloure $xy=0$.
+      pregunta: |
+        Per a quins $(x,y)$ té sentit dividir per $xy$? Què val $f$ en aquests punts?
+    nota_professor: |
+      La regla de Leibniz dels apunts té un sol paràmetre; aquí s'aplica derivant respecte d'una variable amb l'altra fixa. Les fórmules de Leibniz valen a tot $\mathbb{R}^2$; l'expressió tancada només per $xy\neq0$.
+- num: 30
+  font: null
+  preambul: |
+    Donada $f:\mathbb{R}\to\mathbb{R}$ contínua, comproveu que la funció $\varphi(x)=\displaystyle\int_0^x f(\xi)\sin(x-\xi)\,d\xi$ satisfà l'equació $\varphi''(x)+\varphi(x)=f(x)$, per a tot $x\in\mathbb{R}$.
+  indicacio: null
+  exercicis:
+  - id: t3-30
+    apartat: null
+    tipus: teoric
+    enunciat: |
+      Donada $f:\mathbb{R}\to\mathbb{R}$ contínua, comproveu que la funció $\varphi(x)=\displaystyle\int_0^x f(\xi)\sin(x-\xi)\,d\xi$ satisfà l'equació $\varphi''(x)+\varphi(x)=f(x)$, per a tot $x\in\mathbb{R}$.
+    teoria: []
+    teoria_reservada: []
+    resultat:
+      valor: |
+        Per Leibniz, $\varphi'(x)=f(x)\sin0+\int_0^xf(\xi)\cos(x-\xi)\,d\xi=\int_0^xf(\xi)\cos(x-\xi)\,d\xi$ i $\varphi''(x)=f(x)\cos0-\int_0^xf(\xi)\sin(x-\xi)\,d\xi=f(x)-\varphi(x)$, és a dir $\varphi''+\varphi=f$. (Com que $f$ només és contínua, la justificació rigorosa es pot fer escrivint $\sin(x-\xi)=\sin x\cos\xi-\cos x\sin\xi$ i usant el teorema fonamental del càlcul.)
+      fuites: []
+    passos:
+    - id: derivada_primera
+      titol: Primera derivada
+      objectiu: |
+        Calcular $\varphi'(x)$.
+      idea: |
+        $x$ apareix al límit superior i dins l'integrand: aplica la regla de Leibniz amb integrand $g(\xi,x)=f(\xi)\sin(x-\xi)$.
+      detall: |
+        $\varphi'(x)=g(x,x)\cdot1+\int_0^x\frac{\partial g}{\partial x}(\xi,x)\,d\xi=f(x)\sin0+\int_0^xf(\xi)\cos(x-\xi)\,d\xi=\int_0^xf(\xi)\cos(x-\xi)\,d\xi$.
+      fuites:
+      - \\int_\{?0\}?\^\{?x\}?\s*f\s*\(\\xi\)\s*\\cos\s*\(\s*x\s*-\s*\\xi\s*\)
+      teoria:
+      - T3.32
+    - id: derivada_segona
+      titol: Segona derivada
+      objectiu: |
+        Calcular $\varphi''(x)$ i relacionar-la amb $\varphi$.
+      idea: |
+        Torna a aplicar Leibniz a l'expressió de $\varphi'$ i reconeix a la integral que surt la definició de $\varphi$.
+      detall: |
+        $\varphi''(x)=f(x)\cos0+\int_0^xf(\xi)\,(-\sin(x-\xi))\,d\xi=f(x)-\varphi(x)$. Per tant $\varphi''+\varphi=f$ per a tot $x$.
+      fuites:
+      - =\s*f\(x\)\s*-\s*\\varphi\(x\)
+      teoria:
+      - T3.32
+    - id: hipotesis
+      titol: Justificar les hipòtesis
+      objectiu: |
+        Justificar que el càlcul és vàlid tenint en compte que $f$ només és contínua.
+      idea: |
+        La regla de Leibniz dels apunts demana integrand $\mathcal{C}^1$. Mira quines derivades de l'integrand fan servir realment els càlculs, o bé separa la dependència en $x$ de la dependència en $\xi$ amb una fórmula trigonomètrica.
+      detall: |
+        $g(\xi,x)=f(\xi)\sin(x-\xi)$ no és necessàriament $\mathcal{C}^1$ (no cal que $f$ sigui derivable), però $g$ i $\frac{\partial g}{\partial x}=f(\xi)\cos(x-\xi)$ són contínues, que és el que fa servir la demostració de Leibniz. Alternativa totalment elemental: $\varphi(x)=\sin x\,A(x)-\cos x\,B(x)$ amb $A(x)=\int_0^xf(\xi)\cos\xi\,d\xi$, $B(x)=\int_0^xf(\xi)\sin\xi\,d\xi$, derivables pel teorema fonamental del càlcul ($A'=f\cos x$, $B'=f\sin x$). Llavors $\varphi'=\cos x\,A+\sin x\,B$ i $\varphi''=-\sin x\,A+\cos x\,B+f(x)(\cos^2x+\sin^2x)=f(x)-\varphi(x)$.
+      fuites: []
+      teoria:
+      - T3.32
+    errors_comuns:
+    - id: oblida_frontera
+      descripcio: |
+        Deriva només dins la integral i oblida el terme de frontera (o, en la segona derivada, el terme $f(x)\cos0=f(x)$).
+      pregunta: |
+        El límit superior d'integració depèn de $x$? Quin terme hi afegeix la regla de Leibniz, i quant val en cada derivada?
+    - id: deriva_f
+      descripcio: |
+        Deriva respecte de $x$ el factor $f(\xi)$, o hi fa aparèixer $f'$, que pot no existir.
+      pregunta: |
+        Respecte de quina variable derives? Depèn $f(\xi)$ d'aquesta variable?
+    - id: signe_sinus
+      descripcio: |
+        Equivoca el signe de la derivada de $\sin(x-\xi)$ o de $\cos(x-\xi)$ respecte de $x$.
+      pregunta: |
+        Quina és la derivada de $\cos(x-\xi)$ respecte de $x$, amb $\xi$ fix?
+    nota_professor: |
+      És la fórmula de variació de constants per a $y''+y=f$ amb $y(0)=y'(0)=0$. La regla de Leibniz dels apunts (T3.32) es formula per a integrands $\mathcal{C}^1$; aquí l'integrand només té contínua la derivada respecte del paràmetre, que és el que realment fa servir la demostració. L'exemple 34 (fórmula recurrent amb $(x-y)^n$) és un càlcul semblant.
+- num: 31
+  font: null
+  preambul: |
+    Sigui $F:\mathbb{R}\to\mathbb{R}^2$ definida per $F(t)=(t^2,t^3)$. Existeix algun valor $t_0\in(0,1)$ tal que $F(1)-F(0)=DF(t_0)\cdot(1-0)$? Contradiu això el teorema del valor mitjà?
+  indicacio: null
+  exercicis:
+  - id: t3-31
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Sigui $F:\mathbb{R}\to\mathbb{R}^2$ definida per $F(t)=(t^2,t^3)$. Existeix algun valor $t_0\in(0,1)$ tal que $F(1)-F(0)=DF(t_0)\cdot(1-0)$? Contradiu això el teorema del valor mitjà?
+    teoria:
+    - T3.10
+    teoria_reservada:
+    - T3.x8
+    resultat:
+      valor: |
+        No existeix: caldria alhora $2t_0=1$ i $3t_0^2=1$, és a dir $t_0=1/2$ i $t_0=1/\sqrt3$. No contradiu el teorema del valor mitjà: el TVM amb igualtat és per a funcions a valors reals; per a $F:\mathbb{R}\to\mathbb{R}^2$ el teorema dels apunts només afirma que per a cada $u\in\mathbb{R}^2$ existeix $\xi$ (que depèn de $u$) amb $\langle u,F(1)-F(0)\rangle=\langle u,DF(\xi)(1-0)\rangle$. Aplicat a cada component, dona $t_0=1/2$ per a la primera i $t_0=1/\sqrt3$ per a la segona, diferents.
+      fuites:
+      - 1\s*/\s*\\sqrt\{?3\}?
+      - \\[dt]?frac\{1\}\{\\sqrt\{?3\}?\}
+      - no\s+existeix\s+(cap\s+)?(\$?t_0|tal|aquest|cap)
+      - no\s+existeix\s*[:.]
+      - no\s+hi\s+ha\s+cap\s+\$?t_0
+    passos:
+    - id: plantejar
+      titol: Escriure la igualtat
+      objectiu: |
+        Escriure explícitament els dos costats de la igualtat.
+      idea: |
+        Calcula $F(1)-F(0)$ i la derivada $DF(t_0)$, que és un vector (matriu $2\times1$).
+      detall: |
+        $F(1)-F(0)=(1,1)$ i $DF(t_0)=(2t_0,3t_0^2)$.
+      fuites:
+      - \(2t_0\s*,\s*3t_0\^2\)
+      teoria:
+      - T3.10
+    - id: sistema
+      titol: Resoldre el sistema
+      objectiu: |
+        Veure si hi ha un únic $t_0$ que serveixi per a les dues components.
+      idea: |
+        La igualtat de vectors són dues equacions que ha de complir el mateix $t_0$.
+      detall: |
+        $2t_0=1$ dona $t_0=1/2$, però aleshores $3t_0^2=3/4\neq1$. No existeix.
+      fuites:
+      - 3\s*/\s*4
+      - \\[dt]?frac\s*\{?3\}?\s*\{?4\}?
+      - t_0\s*=\s*(1\s*/\s*2|\\[dt]?frac\s*\{?1\}?\s*\{?2)
+      teoria: []
+    - id: interpretar
+      titol: Interpretar respecte del TVM
+      objectiu: |
+        Explicar per què això no contradiu el teorema del valor mitjà.
+      idea: |
+        Recorda exactament l'enunciat del TVM: per a quin tipus de funcions dona una igualtat amb un sol punt intermedi, i què diu per a funcions a valors vectorials.
+      detall: |
+        El TVM amb igualtat és per a funcions reals: aplicat a cada component dona $t_0=1/2$ per a la primera i $t_0=1/\sqrt3$ per a la segona, diferents. Per a funcions vectorials el teorema dels apunts només diu que per a cada $u\in\mathbb{R}^2$ hi ha un $\xi_u$ amb $\langle u,F(1)-F(0)\rangle=\langle u,DF(\xi_u)\rangle$; el punt depèn de $u$, i no hi ha cap $\xi$ que serveixi per a tots els $u$ alhora.
+      fuites:
+      - 1\s*/\s*\\sqrt
+      - \\xi_u
+      teoria:
+      - T3.25
+    errors_comuns:
+    - id: tvm_vectorial
+      descripcio: |
+        Creu que el TVM amb igualtat val per a funcions vectorials.
+      pregunta: |
+        L'enunciat del TVM que coneixes, per a quin tipus de funcions dona una igualtat amb un sol punt?
+    - id: una_component
+      descripcio: |
+        Troba $t_0$ per a una sola component i conclou que existeix.
+      pregunta: |
+        El $t_0$ que has trobat, funciona també per a l'altra component?
+    - id: tvm_fals
+      descripcio: |
+        Conclou que el TVM és fals o que hi ha una contradicció.
+      pregunta: |
+        Quines hipòtesis i quina conclusió té el TVM? Alguna d'elles falla aquí?
+    nota_professor: |
+      Fitxa reutilitzada de l'antic t3-31 (mateix problema). És l'"exemple sobre el teorema del valor mitjà" del final de la secció 3.3 dels apunts (reservat), que també verifica el teorema 25 per a tot $u$.
+- num: 32
+  font: null
+  preambul: |
+    Sigui $f\in\mathcal{C}^1(\mathbb{R}^2)$ tal que $f(x,x)=0$ per tot $x\in\mathbb{R}$ i $\dfrac{\partial f}{\partial x}(0,0)=1$. Determineu $\mathbf{v}$ (de norma 1) de manera que $D_{\mathbf{v}}f(0,0)$ sigui màxima.
+  indicacio: null
+  exercicis:
+  - id: t3-32
+    apartat: null
+    tipus: calcul
+    enunciat: |
+      Sigui $f\in\mathcal{C}^1(\mathbb{R}^2)$ tal que $f(x,x)=0$ per tot $x\in\mathbb{R}$ i $\dfrac{\partial f}{\partial x}(0,0)=1$. Determineu $\mathbf{v}$ (de norma 1) de manera que $D_{\mathbf{v}}f(0,0)$ sigui màxima.
+    teoria:
+    - T3.1
+    - T3.20
+    teoria_reservada: []
+    resultat:
+      valor: |
+        Derivant $f(t,t)=0$ a $t=0$: $\frac{\partial f}{\partial x}(0,0)+\frac{\partial f}{\partial y}(0,0)=0$, per tant $\nabla f(0,0)=(1,-1)$. La derivada direccional màxima s'obté per a $\mathbf{v}=\frac{\nabla f(0,0)}{\|\nabla f(0,0)\|}=\frac{1}{\sqrt2}(1,-1)$, i val $\sqrt2$.
+      fuites:
+      - \\[dt]?frac\{?1\}?\{?\\sqrt\{?2\}?\}?\s*\(1,\s*-\s*1\)
+      - \(\s*\\[dt]?frac\{1\}\{\\sqrt\{?2\}?\}\s*,\s*-\s*\\[dt]?frac
+      - \\[dt]?frac\{\\sqrt\{?2\}?\}\{2\}\s*,\s*-
+      - \\[dt]?frac\{\s*\(1,\s*-\s*1\)\s*\}\{\s*\\sqrt
+      - \(1,\s*-\s*1\)\s*/\s*\\sqrt
+      - \\nabla\s*f\s*\(0,\s*0\)\s*=\s*\(1,\s*-\s*1\)
+    passos:
+    - id: diagonal
+      titol: Usar que $f$ s'anul·la a la diagonal
+      objectiu: |
+        Obtenir una relació entre les dues derivades parcials de $f$ a l'origen.
+      idea: |
+        Considera la funció d'una variable $t\mapsto f(t,t)$: què en saps, i com es deriva amb la regla de la cadena? Comprova que $f$ compleix les hipòtesis.
+      detall: |
+        $f\in\mathcal{C}^1$ és diferenciable. $g(t)=f(t,t)=0$ per a tot $t$, i per la regla de la cadena $0=g'(0)=\frac{\partial f}{\partial x}(0,0)\cdot1+\frac{\partial f}{\partial y}(0,0)\cdot1$.
+      fuites:
+      - \\[dt]?frac\{\\partial\s*f\}\{\\partial\s*x\}\s*\(0,\s*0\)\s*(\\cdot\s*1\s*)?\+\s*\\[dt]?frac\{\\partial\s*f\}\{\\partial\s*y\}\s*\(0,\s*0\)
+      - f_x\s*\(0,\s*0\)\s*\+\s*f_y\s*\(0,\s*0\)
+      - g'\(0\)\s*=\s*\\frac
+      teoria:
+      - T3.18
+      - T3.21
+    - id: gradient
+      titol: Calcular el gradient
+      objectiu: |
+        Determinar $\nabla f(0,0)$.
+      idea: |
+        Combina la relació anterior amb la dada de l'enunciat.
+      detall: |
+        $\frac{\partial f}{\partial y}(0,0)=-\frac{\partial f}{\partial x}(0,0)=-1$, per tant $\nabla f(0,0)=(1,-1)$.
+      fuites:
+      - \\nabla\s*f\s*\(0,\s*0\)\s*=\s*\(1,\s*-\s*1\)
+      - \\partial\s*y\s*\}\s*\(0,\s*0\)\s*=\s*(-\s*\\[dt]?frac\{\\partial\s*f\}\{\\partial\s*x\}\s*\(0,\s*0\)\s*=\s*)?-\s*1\b
+      - f_y\s*\(0,\s*0\)\s*=\s*-\s*1\b
+      teoria:
+      - T3.10
+    - id: maxim
+      titol: Direcció de màxim creixement
+      objectiu: |
+        Trobar el vector unitari $\mathbf{v}$ que fa màxima $D_{\mathbf{v}}f(0,0)$.
+      idea: |
+        Per a $f$ diferenciable, $D_{\mathbf{v}}f(0,0)=\langle\nabla f(0,0),\mathbf{v}\rangle$; maximitza aquest producte escalar sobre els vectors unitaris.
+      detall: |
+        Per Cauchy-Schwarz, $\langle\nabla f(0,0),\mathbf{v}\rangle\le\|\nabla f(0,0)\|=\sqrt2$, amb igualtat per a $\mathbf{v}=\frac{\nabla f(0,0)}{\|\nabla f(0,0)\|}=\frac{1}{\sqrt2}(1,-1)$.
+      fuites:
+      - \\[dt]?frac\{?1\}?\{?\\sqrt\{?2\}?\}?\s*\(1,\s*-\s*1\)
+      - \(\s*\\[dt]?frac\{1\}\{\\sqrt\{?2\}?\}\s*,\s*-\s*\\[dt]?frac
+      - \\[dt]?frac\{\s*\(1,\s*-\s*1\)\s*\}\{\s*\\sqrt
+      - \(1,\s*-\s*1\)\s*/\s*\\sqrt
+      teoria:
+      - T3.9
+      - T3.13
+    errors_comuns:
+    - id: parcial_y_zero
+      descripcio: |
+        Suposa que $\frac{\partial f}{\partial y}(0,0)=0$ (o que no es pot determinar) i pren $\mathbf{v}=(1,0)$.
+      pregunta: |
+        Què et diu la condició $f(x,x)=0$ sobre com varia $f$ en la direcció de la diagonal?
+    - id: no_normalitza
+      descripcio: |
+        Dona com a resposta el gradient sense normalitzar.
+      pregunta: |
+        L'enunciat demana $\mathbf{v}$ de norma $1$. Quina norma té el vector que proposes?
+    - id: confon_diagonal
+      descripcio: |
+        Pren la direcció de la diagonal $(1,1)/\sqrt2$, on la derivada direccional és precisament nul·la.
+      pregunta: |
+        Quant val $D_{\mathbf{v}}f(0,0)$ en la direcció de la diagonal? Pot ser aquesta la màxima?
+    nota_professor: |
+      La hipòtesi $\mathcal{C}^1$ garanteix la diferenciabilitat, necessària tant per a la regla de la cadena com per a $D_{\mathbf{v}}f=\langle\nabla f,\mathbf{v}\rangle$. El gradient és ortogonal a la corba de nivell $y=x$, coherent amb la proposició 13(iii).
+- num: 33
+  font: null
+  preambul: |
+    Sigui $M_2(\mathbb{R})$ el conjunt de matrius quadrades $2\times2$ amb coeficients reals, que identifiquem amb $\mathbb{R}^4$ mitjançant l'aplicació $F:M_2(\mathbb{R})\longrightarrow\mathbb{R}^4$ donada per
+    $$F\begin{pmatrix}a&c\\b&d\end{pmatrix}=(a,b,c,d)^T$$
+    Considerem l'aplicació $\det:M_2(\mathbb{R})\longrightarrow\mathbb{R}$, que associa a cada matriu el seu determinant.
+  indicacio: null
+  exercicis:
+  - id: t3-33a
+    apartat: a
+    tipus: teoric
+    enunciat: |
+      Demostreu que $\det$ és diferenciable.
+    teoria:
+    - T3.8
+    teoria_reservada: []
+    resultat:
+      valor: |
+        Amb la identificació $F$, $\det(a,b,c,d)=ad-bc$, un polinomi. Les seves parcials $(\partial_a,\partial_b,\partial_c,\partial_d)\det=(d,-c,-b,a)$ existeixen i són contínues a tot $\mathbb{R}^4$, per tant $\det$ és diferenciable (de fet $\mathcal{C}^1$) a tot $\mathbb{R}^4\cong M_2(\mathbb{R})$.
+      fuites: []
+    passos:
+    - id: coordenades
+      titol: Escriure $\det$ en coordenades
+      objectiu: |
+        Expressar $\det$ com una funció de $(a,b,c,d)\in\mathbb{R}^4$.
+      idea: |
+        Usa la identificació $F$ per saber quina entrada de la matriu és cada coordenada.
+      detall: |
+        $\det\begin{pmatrix}a&c\\b&d\end{pmatrix}=ad-bc$, és a dir $\det\circ F^{-1}(a,b,c,d)=ad-bc$.
+      fuites: []
+      teoria: []
+    - id: parcials_continues
+      titol: Condició suficient
+      objectiu: |
+        Concloure que $\det$ és diferenciable a tot punt.
+      idea: |
+        Calcula les derivades parcials i mira si són contínues; o bé usa que sumes i productes de funcions diferenciables són diferenciables.
+      detall: |
+        $\frac{\partial\det}{\partial a}=d$, $\frac{\partial\det}{\partial b}=-c$, $\frac{\partial\det}{\partial c}=-b$, $\frac{\partial\det}{\partial d}=a$: contínues a tot $\mathbb{R}^4$. Per la condició suficient, $\det$ és diferenciable a tot $\mathbb{R}^4$. (Alternativament: les projeccions són lineals, i per tant diferenciables, i $ad-bc$ és suma de productes d'aquestes.)
+      fuites:
+      - \(d,\s*-\s*c,\s*-\s*b,\s*a\)
+      - \\frac\{\\partial\s*\\det\}\{\\partial\s*a\}\s*=\s*d
+      teoria:
+      - T3.18
+      - T3.23
+    errors_comuns:
+    - id: identificacio
+      descripcio: |
+        Confon l'ordre de les coordenades donat per $F$ (per exemple pren $c$ com la segona coordenada).
+      pregunta: |
+        Segons $F$, quina és la segona coordenada de $\begin{pmatrix}a&c\\b&d\end{pmatrix}$?
+    - id: sense_justificar
+      descripcio: |
+        Diu "és un polinomi, per tant és diferenciable" sense relacionar-ho amb cap resultat.
+      pregunta: |
+        Quin resultat del tema et permet passar de "parcials contínues" (o "suma de productes de funcions diferenciables") a "diferenciable"?
+    nota_professor: |
+      Cal fixar la identificació $F$, que és la que dona sentit a "diferenciable" a $M_2(\mathbb{R})$.
+  - id: t3-33b
+    apartat: b
+    tipus: calcul
+    enunciat: |
+      Calculeu la diferencial de $\det$ en $I$.
+    teoria:
+    - T3.8
+    - T3.10
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $F(I)=(1,0,0,1)$ i $J\det(I)=(d,-c,-b,a)|_{I}=(1\ \ 0\ \ 0\ \ 1)$. Per tant, per a $H=\begin{pmatrix}h_{11}&h_{12}\\h_{21}&h_{22}\end{pmatrix}$, $D\det(I)(H)=h_{11}+h_{22}=\operatorname{tr}H$.
+      fuites:
+      - h_\{?11\}?\s*\+\s*h_\{?22\}?
+      - \\(operatorname|mathrm)\{tr\}
+      - tra[çc]a
+    passos:
+    - id: gradient_general
+      titol: Jacobiana de $\det$ en un punt qualsevol
+      objectiu: |
+        Calcular la matriu jacobiana de $\det$ en un punt $(a,b,c,d)$.
+      idea: |
+        Com que $\det$ és diferenciable (apartat a), la jacobiana està formada per les parcials respecte de les coordenades donades per $F$.
+      detall: |
+        $J\det(a,b,c,d)=(d\ \ -c\ \ -b\ \ a)$.
+      fuites:
+      - \(d\s*(\\\s|,|\s)*-\s*c\s*(\\\s|,|\s)*-\s*b\s*(\\\s|,|\s)*a\)
+      teoria:
+      - T3.9
+      - T3.10
+    - id: avaluar_I
+      titol: Avaluar a $I$
+      objectiu: |
+        Escriure $D\det(I)$ i interpretar-la com una aplicació lineal sobre matrius.
+      idea: |
+        Avalua la jacobiana a $F(I)$ i aplica-la a una matriu genèrica $H$ expressada en coordenades.
+      detall: |
+        $F(I)=(1,0,0,1)$, per tant $J\det(I)=(1\ \ 0\ \ 0\ \ 1)$ i $D\det(I)(H)=(1\ \ 0\ \ 0\ \ 1)\,(h_{11},h_{21},h_{12},h_{22})^T=h_{11}+h_{22}=\operatorname{tr}H$.
+      fuites:
+      - h_\{?11\}?\s*\+\s*h_\{?22\}?
+      - \\(operatorname|mathrm)\{tr\}
+      teoria:
+      - T3.9
+    errors_comuns:
+    - id: diferencial_com_numero
+      descripcio: |
+        Dona com a diferencial el nombre $\det I=1$ o un vector sense dir com actua.
+      pregunta: |
+        La diferencial en un punt és un nombre o una aplicació lineal? Sobre quins objectes actua?
+    - id: ordre_coordenades
+      descripcio: |
+        Col·loca les entrades de $H$ en un ordre diferent del de $F$ i obté una expressió incorrecta.
+      pregunta: |
+        Quina coordenada de $\mathbb{R}^4$ correspon a cada entrada de $H$ segons $F$?
+    - id: avalua_malament
+      descripcio: |
+        Avalua la jacobiana a un punt diferent de $F(I)$.
+      pregunta: |
+        Quines són les coordenades $(a,b,c,d)$ de la matriu identitat?
+    nota_professor: |
+      Interpretació: $\det(I+tH)=1+t\operatorname{tr}H+O(t^2)$.
+  - id: t3-33c
+    apartat: c
+    tipus: calcul
+    enunciat: |
+      Calculeu la derivada direccional de $\det$ en el punt $I$ i en la direcció $v=\begin{pmatrix}0&-1\\1&0\end{pmatrix}$.
+    teoria:
+    - T3.1
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $D_v\det(I)=D\det(I)(v)=0+0=0$ (amb $F(v)=(0,1,-1,0)$, $(1,0,0,1)\cdot(0,1,-1,0)=0$). Directament: $\det(I+tv)=1+t^2$, amb derivada $0$ a $t=0$.
+      fuites:
+      - D_\{?v\}?\s*\\det\s*\(I\)\s*=\s*(D\\det\(I\)\(v\)\s*=\s*)?0
+      - (direccional|derivada)\s+(és|val)\s*\$?\s*0\b
+      - 1\s*\+\s*t\^\{?2\}?
+    passos:
+    - id: via_diferencial
+      titol: Relacionar amb la diferencial
+      objectiu: |
+        Expressar $D_v\det(I)$ en termes de la diferencial de $\det$ a $I$ (apartat b, que es pot donar per conegut).
+      idea: |
+        Per a funcions diferenciables, la derivada direccional s'obté aplicant la diferencial al vector.
+      detall: |
+        Com que $\det$ és diferenciable, $D_v\det(I)=D\det(I)(v)$, és a dir, la suma de les entrades diagonals de $v$.
+      fuites: []
+      teoria:
+      - T3.9
+    - id: calcular
+      titol: Calcular
+      objectiu: |
+        Obtenir el valor de $D_v\det(I)$.
+      idea: |
+        Escriu $v$ en coordenades amb $F$ i aplica-hi la jacobiana; pots comprovar-ho amb la definició, calculant $\det(I+tv)$.
+      detall: |
+        $F(v)=(0,1,-1,0)$ i $(1\ \ 0\ \ 0\ \ 1)\cdot(0,1,-1,0)^T=0$. Comprovació: $\det(I+tv)=\det\begin{pmatrix}1&-t\\t&1\end{pmatrix}=1+t^2$, i $\frac{d}{dt}(1+t^2)|_{t=0}=0$. Així $D_v\det(I)=0$.
+      fuites:
+      - 1\s*\+\s*t\^\{?2\}?
+      - D_\{?v\}?\s*\\det\s*\(I\)\s*=\s*0
+      teoria:
+      - T3.1
+    errors_comuns:
+    - id: normalitza_sense_motiu
+      descripcio: |
+        Normalitza $v$ i després no ho diu, o creu que el resultat canviaria (aquí no ho fa perquè val $0$, però en general sí).
+      pregunta: |
+        La definició de derivada direccional demana que el vector sigui unitari? Què passa si el multipliques per un escalar?
+    - id: coordenades_v
+      descripcio: |
+        Escriu $F(v)$ amb un ordre de coordenades incorrecte.
+      pregunta: |
+        Segons $F$, quines són les coordenades $(a,b,c,d)$ de $v$?
+    - id: confon_punt_direccio
+      descripcio: |
+        Avalua la jacobiana al punt $v$ en lloc de a $I$.
+      pregunta: |
+        En aquest apartat, quin és el punt i quin és la direcció?
+    nota_professor: |
+      $v$ és una rotació infinitesimal; $I+tv$ té determinant $1+t^2$, estacionari a $t=0$.
+  - id: t3-33d
+    apartat: d
+    tipus: calcul
+    enunciat: |
+      En quina direcció és màxima la derivada direccional de $\det$ en el punt $P=\begin{pmatrix}0&-1\\1&0\end{pmatrix}$?
+    teoria:
+    - T3.1
+    teoria_reservada: []
+    resultat:
+      valor: |
+        $F(P)=(0,1,-1,0)$ i $\nabla\det(P)=(d,-c,-b,a)|_P=(0,1,-1,0)$, que correspon a la matriu $P$ mateixa. La derivada direccional és màxima en la direcció del gradient: $u=\frac{1}{\sqrt2}(0,1,-1,0)$, és a dir la matriu $\frac{1}{\sqrt2}P=\frac{1}{\sqrt2}\begin{pmatrix}0&-1\\1&0\end{pmatrix}$, amb valor màxim $\|\nabla\det(P)\|=\sqrt2$.
+      fuites:
+      - \\nabla\s*\\det\s*\(P\)\s*=\s*\(0,\s*1,\s*-\s*1,\s*0\)
+      - \\frac\{?1\}?\{?\\sqrt\{?2\}?\}?\s*(P\b|\(0,\s*1,\s*-\s*1,\s*0\)|\\begin)
+      - P\s*/\s*\\sqrt
+    passos:
+    - id: gradient_P
+      titol: Gradient a $P$
+      objectiu: |
+        Calcular $\nabla\det(P)$.
+      idea: |
+        Usa la jacobiana general de $\det$ (apartats anteriors) i les coordenades de $P$ segons $F$.
+      detall: |
+        $F(P)=(0,1,-1,0)$, és a dir $a=0$, $b=1$, $c=-1$, $d=0$. Llavors $\nabla\det(P)=(d,-c,-b,a)=(0,1,-1,0)$, que via $F$ és la matriu $P$ mateixa.
+      fuites:
+      - \\nabla\s*\\det\s*\(P\)\s*=\s*(\(d,\s*-\s*c,\s*-\s*b,\s*a\)\s*=\s*)?\(0,\s*1,\s*-\s*1,\s*0\)
+      - P\$?\s+mateixa
+      teoria:
+      - T3.10
+    - id: maxim
+      titol: Direcció de màxim creixement
+      objectiu: |
+        Determinar la direcció (unitària) on la derivada direccional és màxima.
+      idea: |
+        Per a funcions diferenciables, la derivada direccional en direccions unitàries és màxima en la direcció del gradient normalitzat.
+      detall: |
+        $\|\nabla\det(P)\|=\sqrt2$, per tant la direcció és $u=\frac{1}{\sqrt2}(0,1,-1,0)$, és a dir la matriu $\frac{1}{\sqrt2}P$, i el valor màxim és $\sqrt2$.
+      fuites:
+      - \\frac\{?1\}?\{?\\sqrt\{?2\}?\}?\s*(P\b|\(0,\s*1,\s*-\s*1,\s*0\))
+      teoria:
+      - T3.13
+    errors_comuns:
+    - id: gradient_a_I
+      descripcio: |
+        Fa servir el gradient a $I$ (de l'apartat b) en lloc del gradient a $P$.
+      pregunta: |
+        En quin punt s'ha d'avaluar el gradient en aquest apartat?
+    - id: no_normalitza
+      descripcio: |
+        Dona la direcció sense normalitzar i en dona el valor màxim com si fos unitària.
+      pregunta: |
+        El màxim de $D_u\det(P)$ es busca sobre vectors de quina norma? Quina norma té el teu?
+    - id: signes_gradient
+      descripcio: |
+        S'equivoca amb els signes de les parcials $-c$, $-b$ en avaluar a $P$.
+      pregunta: |
+        Quins valors tenen $b$ i $c$ a $P$? Què dona, doncs, $-c$ i $-b$?
+    nota_professor: |
+      En general $\nabla\det(A)$ correspon a la matriu de cofactors de $A$; a $P$ (ortogonal amb $\det P=1$) coincideix amb $P$. Comprovació: $\det(P+tP)=(1+t)^2$, i $D_P\det(P)=2=\sqrt2\cdot\|P\|$ amb $\|P\|=\sqrt2$.

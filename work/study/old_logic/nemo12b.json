@@ -1,0 +1,770 @@
+{
+ "config": "nemo12b",
+ "stages": {
+  "diagnosi": [
+   "openrouter",
+   "mistralai/mistral-nemo",
+   ""
+  ],
+  "resposta": [
+   "openrouter",
+   "mistralai/mistral-nemo",
+   ""
+  ],
+  "guardia": [
+   "openrouter",
+   "mistralai/mistral-nemo",
+   ""
+  ]
+ },
+ "sessions": [
+  {
+   "exercici": "t2-4c",
+   "torns": [
+    {
+     "alumne": "He provat les rectes $y=kx$ i sempre dona $0$, per tant el límit és $0$.",
+     "tutor": "Has provat alguns camins i tots donen el mateix. Això demostra que el límit existeix, o només et dona un candidat?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [
+      "camins_com_a_prova"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": "camins_com_a_prova",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 10679,
+       "input_tokens": 2971,
+       "output_tokens": 247,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 1047,
+       "input_tokens": 1294,
+       "output_tokens": 31,
+       "cached_tokens": 512,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 8080,
+       "input_tokens": 2366,
+       "output_tokens": 170,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 19808
+    },
+    {
+     "alumne": "Què vol dir exactament que un límit existeixi?",
+     "tutor": "Has provat alguns camins i tots donen el mateix. Això demostra que el límit existeix, o només et dona un candidat?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [
+      "camins_com_a_prova"
+     ],
+     "want_intent": "pregunta_conceptual",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 12336,
+       "input_tokens": 3028,
+       "output_tokens": 267,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 1050,
+       "input_tokens": 1346,
+       "output_tokens": 31,
+       "cached_tokens": 592,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 2886,
+       "input_tokens": 2418,
+       "output_tokens": 119,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 16274
+    },
+    {
+     "alumne": "No sé com fitar-ho. Digues-me la solució, si us plau.",
+     "tutor": "Has provat alguns camins i tots donen el mateix. Això demostra que el límit existeix, o només et dona un candidat? Si el límit existeix, el quocient hauria de ser el mateix per a qualsevol camí que es prengui. Però has de tenir en compte que el quocient depèn del camí que es pren. Si treus un sumand positiu del denominador, el quocient creix o decreix?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [
+      "fita_incorrecta"
+     ],
+     "want_intent": "demana_solucio",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 14144,
+       "input_tokens": 3085,
+       "output_tokens": 292,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 6434,
+       "input_tokens": 1377,
+       "output_tokens": 101,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 9875,
+       "input_tokens": 2517,
+       "output_tokens": 156,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 30454
+    },
+    {
+     "alumne": "Com que $x^4\\le x^4+y^2$, tinc $|f|\\le\\frac{|x|^5}{x^4}=|x|\\to0$, i pel sandvitx el límit és $0$.",
+     "error": "LLMError: diagnosi: output truncated at max_tokens=8000",
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "latencia_ms": 235092
+    }
+   ]
+  },
+  {
+   "exercici": "t4-8",
+   "torns": [
+    {
+     "alumne": "Calculo el jacobià: $\\det JG=3+6z$, que a $(1,-1,2)$ val $15$.",
+     "tutor": "Has calculat correctament la Jacobiana i la seva determinanted al voltant del punt $(1,-1,2)$, però ara caldrà demostrar que aquesta determinanted no és zero en altres punts. En concret, hem de veure si la determinanted és diferent de zero en el punt $(4,4,-1)$, on volem calcular la diferencial de la inversa de $G$. Com podríem fer això?",
+     "referencies": [],
+     "accio": "demanar_justificacio",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 2,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 7079,
+       "input_tokens": 3761,
+       "output_tokens": 252,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 3431,
+       "input_tokens": 1861,
+       "output_tokens": 128,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 3225,
+       "input_tokens": 1922,
+       "output_tokens": 89,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 2689,
+       "input_tokens": 4198,
+       "output_tokens": 115,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 221412
+    },
+    {
+     "alumne": "Llavors $DG^{-1}(4,4,-1)$ és la jacobiana de $G$ al punt $(4,4,-1)$ invertida, no?",
+     "tutor": "Has calculat correctament la Jacobiana i la seva determinanted al voltant del punt $(1,-1,2)$, però ara caldrà demostrar que aquesta determinanted no és zero en altres punts. En concret, hem de veure si la determinanted és diferent de zero en el punt $(4,4,-1)$, on volem calcular la diferencial de la inversa de $G$. Com podríem fer això?",
+     "referencies": [],
+     "accio": "demanar_justificacio",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": "punt_equivocat",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 6531,
+       "input_tokens": 3902,
+       "output_tokens": 376,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 3189,
+       "input_tokens": 2072,
+       "output_tokens": 89,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 4118,
+       "input_tokens": 4408,
+       "output_tokens": 94,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 13839
+    },
+    {
+     "alumne": "Què diu exactament el teorema de la funció inversa?",
+     "tutor": "Has calculat correctament la Jacobiana i la seva determinanted al voltant del punt $(1,-1,2)$, però ara caldrà demostrar que aquesta determinanted no és zero en altres punts. En concret, hem de veure si la determinanted és diferent de zero en el punt $(4,4,-1)$, on volem calcular la diferencial de la inversa de $G$. Com podríem fer això?",
+     "referencies": [],
+     "accio": "demanar_justificacio",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [],
+     "want_intent": "pregunta_conceptual",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 12617,
+       "input_tokens": 4026,
+       "output_tokens": 384,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 2251,
+       "input_tokens": 2181,
+       "output_tokens": 89,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 3428,
+       "input_tokens": 4517,
+       "output_tokens": 157,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 18298
+    },
+    {
+     "alumne": "Com que té inversa local a tot arreu on $3+6z\\neq0$, $G$ té inversa global.",
+     "tutor": "Has calculat correctament la Jacobiana i la seva determinanted al voltant del punt $(1,-1,2)$, però ara caldrà demostrar que aquesta determinanted no és zero en altres punts. En concret, hem de veure si la determinanted és diferent de zero en el punt $(4,4,-1)$, on volem calcular la diferencial de la inversa de $G$. Com podríem fer això?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [
+      "local_implica_global"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": "local_implica_global",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 9407,
+       "input_tokens": 4149,
+       "output_tokens": 423,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 2207,
+       "input_tokens": 2402,
+       "output_tokens": 89,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 4256,
+       "input_tokens": 4739,
+       "output_tokens": 111,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 15873
+    }
+   ]
+  },
+  {
+   "exercici": "t6-3a",
+   "torns": [
+    {
+     "alumne": "No sé per on començar.",
+     "tutor": "Entenc que has trobat el valor correcte, però ara m'interessa saber com pots justificar-ho. Pots explicar-me com sabem que la funció $f(x,y)=x$ assoleix un màxim i un mínim sobre el lligam $x^2+2y^2=3$?",
+     "referencies": [],
+     "accio": "demanar_justificacio",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [],
+     "want_intent": "demana_pista",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 5118,
+       "input_tokens": 2471,
+       "output_tokens": 132,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 2975,
+       "input_tokens": 1119,
+       "output_tokens": 68,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 5469,
+       "input_tokens": 2162,
+       "output_tokens": 101,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 13563
+    },
+    {
+     "alumne": "Sobre l'el·lipse $x^2=3-2y^2\\le3$, així que $|x|\\le\\sqrt3$.",
+     "tutor": "Entenc que has trobat una fita per a la variable $x$, però no m'ha quedat clar si aquesta fita es pot assolir dins del lligam $x^2+2y^2=3$. Pots assegurar-me que existeix algun punt de l'el·lipse on $x$ valgui exactament la fita que has trobat?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [
+      "fita_sense_assolir"
+     ],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 7471,
+       "input_tokens": 2581,
+       "output_tokens": 290,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 4093,
+       "input_tokens": 1306,
+       "output_tokens": 81,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 5879,
+       "input_tokens": 2361,
+       "output_tokens": 138,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 17445
+    },
+    {
+     "alumne": "Per tant el màxim és $\\sqrt3$ i el mínim $-\\sqrt3$.",
+     "tutor": "Entenc que has trobat la fita correcta per a la variable $x$, però ara m'interessa saber com pots justificar que la funció $f(x,y)=x$ assoleix un màxim i un mínim sobre el lligam $x^2+2y^2=3$. Pots explicar-me com sabem que existeixen aquests extrems?",
+     "referencies": [],
+     "accio": "demanar_justificacio",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [],
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 7281,
+       "input_tokens": 2688,
+       "output_tokens": 199,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 2774,
+       "input_tokens": 1403,
+       "output_tokens": 80,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 4459,
+       "input_tokens": 2457,
+       "output_tokens": 147,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 14516
+    },
+    {
+     "alumne": "S'assoleixen a $(\\sqrt3,0)$ i $(-\\sqrt3,0)$, perquè quan $y=0$ tenim $x^2=3$, i l'el·lipse és compacta.",
+     "tutor": "Has trobat els extrems absoluts de $f$ correctament! Has fet una fita per a la variable $x$ i has trobat els punts on s'assoleixen aquests extrems. Has fet servir l'argument que l'el·lipse és compacta i això t'ha permès aplicar el teorema de Weierstrass per trobar els extrems. Molt bé!",
+     "referencies": [],
+     "accio": "tancar",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [],
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 8726,
+       "input_tokens": 2822,
+       "output_tokens": 285,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 5510,
+       "input_tokens": 1776,
+       "output_tokens": 86,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 4496,
+       "input_tokens": 2835,
+       "output_tokens": 163,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 18734
+    }
+   ]
+  },
+  {
+   "exercici": "t3-5",
+   "torns": [
+    {
+     "alumne": "Sobre les rectes $y=mx$ el límit a l'origen és $0$, per tant $f$ és contínua a l'origen.",
+     "tutor": "ALUMNE: Has fet una observació interessant sobre la continuïtat de la funció $f$ a l'origen. Has comprovat que és contínua en rectes de la forma $y=mx$. Però, això és suficient per concloure que $f$ és contínua en tot punt de l'origen? Pots pensar en camins cap a l'origen que no siguin rectes on numerador i denominador es comparin de manera diferent?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [
+      "nomes_rectes"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": "nomes_rectes",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 8599,
+       "input_tokens": 4841,
+       "output_tokens": 269,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 3085,
+       "input_tokens": 1195,
+       "output_tokens": 103,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 2978,
+       "input_tokens": 4304,
+       "output_tokens": 81,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 14663
+    },
+    {
+     "alumne": "A l'origen, $D_vf(0,0)=\\lim_{t\\to0}\\frac{f(tv)}{t}=\\frac{v_1^2}{v_2}$ si $v_2\\neq0$. Com que existeixen totes, $f$ és contínua a l'origen.",
+     "tutor": "ALUMNE: Has calculat correctament les derivades direccionals a l'origen i has comprovat que existeixen totes. Però, com ens diu la Definició 14 del Tema 2, la continuïtat d'una funció en un punt no es pot determinar només amb les derivades direccionals. Pots dir-me què és exactament una derivada direccional?",
+     "referencies": [
+      "T2.14"
+     ],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [
+      "direccionals_implica_continuitat"
+     ],
+     "want_intent": "mostra_treball",
+     "want_error": "direccionals_implica_continuitat",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 8664,
+       "input_tokens": 5023,
+       "output_tokens": 349,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 2180,
+       "input_tokens": 2647,
+       "output_tokens": 84,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 1183,
+       "input_tokens": 5741,
+       "output_tokens": 39,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 12028
+    },
+    {
+     "alumne": "Dona'm una pista per estudiar la continuïtat a l'origen.",
+     "tutor": "ALUMNE: Has calculat correctament les derivades direccionals a l'origen i has comprovat que existeixen totes. Però, com ens diu la Definició 14 del Tema 2, la continuïtat d'una funció en un punt no es pot determinar només amb les derivades direccionals. Pots dir-me què és exactament una derivada direccional?\n\nALUMNE: Dona'm una pista per estudiar la continuïtat a l'origen.",
+     "referencies": [
+      "T2.14"
+     ],
+     "accio": "questionar_resultat",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 2,
+     "draft_errors": 0,
+     "intencio": "pregunta_conceptual",
+     "errors": [],
+     "want_intent": "demana_pista",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 16371,
+       "input_tokens": 5134,
+       "output_tokens": 523,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 2980,
+       "input_tokens": 3156,
+       "output_tokens": 104,
+       "cached_tokens": 512,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 2714,
+       "input_tokens": 3216,
+       "output_tokens": 104,
+       "cached_tokens": 640,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 4094,
+       "input_tokens": 6271,
+       "output_tokens": 98,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 256430
+    },
+    {
+     "alumne": "Fora de l'eix $y=0$ és un quocient de polinomis amb denominador no nul, així que és contínua.",
+     "tutor": "ALUMNE: Has donat el resultat correcte però sense justificar-lo prou. Reconeix que el valor és bo i pregunta-li com ho pot demostrar, orientant-lo cap al pas objectiu. Pots dir-me què és exactament una derivada direccional?",
+     "referencies": [],
+     "accio": "demanar_justificacio",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 2,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 11650,
+       "input_tokens": 5297,
+       "output_tokens": 391,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 1834,
+       "input_tokens": 3576,
+       "output_tokens": 44,
+       "cached_tokens": 912,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 1576,
+       "input_tokens": 3633,
+       "output_tokens": 57,
+       "cached_tokens": 640,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "mistralai/mistral-nemo",
+       "latency_ms": 3894,
+       "input_tokens": 6640,
+       "output_tokens": 98,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 18957
+    }
+   ]
+  }
+ ],
+ "metrics": {
+  "turns": 16,
+  "failed_turns": 1,
+  "fallback": 0,
+  "drafts_per_turn": 1.2,
+  "draft_errors": 0,
+  "latex_broken": 0,
+  "intent_match": 3,
+  "error_match": 11,
+  "cost_usd": 0.0031,
+  "cost_per_turn_usd": 0.00021,
+  "latency_s": 46.8,
+  "input_tokens": 151195,
+  "cached_tokens": 3808,
+  "output_tokens": 7924
+ }
+}

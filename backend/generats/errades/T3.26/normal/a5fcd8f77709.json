@@ -1,0 +1,59 @@
+{
+  "id": "a5fcd8f77709",
+  "exercici": "T3.26",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "(Cas $m=1$). Sigui $f:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}$ diferenciable en un obert $\\Omega\\subseteq\\mathbb{R}^n$.",
+    "Aleshores existeix un $\\xi\\in\\Omega$ tal que, per a tots $a,b\\in\\Omega$ amb $[a,b]\\subseteq\\Omega$, es té $f(b)-f(a)=\\langle\\nabla f(\\xi),b-a\\rangle$.",
+    "Com que $f$ és diferenciable a l'obert $\\Omega$, és de classe $\\mathcal{C}^1(\\Omega)$, i això ens permet aplicar el teorema del valor mitjà general (teorema 25) en el cas $m=1$.",
+    "Siguin $a,b\\in\\Omega$ amb $[a,b]\\subseteq\\Omega$. Pel teorema 25, per a cada $u\\in\\mathbb{R}$ existeix $\\xi\\in(a,b)$ tal que $\\langle u,f(b)-f(a)\\rangle=\\langle u,Jf(\\xi)\\,(b-a)\\rangle$. N'hi ha prou a considerar $u=1$, de manera que el membre esquerre és $\\langle1,f(b)-f(a)\\rangle=f(b)-f(a)$.",
+    "Per a $m=1$, la jacobiana $Jf(\\xi)$ és la matriu fila que s'identifica amb $\\nabla f(\\xi)$, de manera que $\\langle1,Jf(\\xi)\\,(b-a)\\rangle=Jf(\\xi)\\,(b-a)=\\langle\\nabla f(\\xi),b-a\\rangle$.",
+    "En conseqüència, $f(b)-f(a)=\\langle\\nabla f(\\xi),b-a\\rangle$ per a un cert $\\xi\\in(a,b)\\subseteq[a,b]$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "existeix un $\\xi\\in\\Omega$ tal que, per a tots $a,b\\in\\Omega$ amb $[a,b]\\subseteq\\Omega$",
+      "inici": 10,
+      "fi": 98,
+      "tipus": "quantificador",
+      "explicacio": "L'ordre dels quantificadors està canviat: el punt $\\xi$ depèn de $a$ i $b$, i en general no n'hi ha cap de comú. Contraexemple: $f(x)=x^2$ a $\\mathbb{R}$; amb $a=0,b=1$ cal $\\xi=\\frac12$, i amb $a=0,b=2$ cal $\\xi=1$.",
+      "correccio": "Per a tots $a,b\\in\\Omega$ amb $[a,b]\\subseteq\\Omega$, existeix $\\xi\\in[a,b]$ tal que $f(b)-f(a)=\\langle\\nabla f(\\xi),b-a\\rangle$.",
+      "pista": "El punt $\\xi$ que dona el teorema, pot ser el mateix per a tots els parells de punts $a,b$? Prova-ho amb $f(x)=x^2$."
+    },
+    {
+      "id": "e2",
+      "fragment": 3,
+      "cita": "és de classe $\\mathcal{C}^1(\\Omega)$",
+      "inici": 49,
+      "fi": 85,
+      "tipus": "implicacio",
+      "explicacio": "Diferenciable no implica de classe $\\mathcal{C}^1$ (p. ex. $x^2\\sin(1/x)$ amb valor $0$ en $0$). A més, el teorema 25 només demana que $f$ sigui diferenciable a l'obert $\\Omega$, així que aquesta afirmació és falsa i innecessària.",
+      "correccio": "El teorema 25 s'aplica directament perquè $f$ és diferenciable a l'obert $\\Omega$; no cal (ni és cert) que $f$ sigui $\\mathcal{C}^1$.",
+      "pista": "Quines hipòtesis demana el teorema 25? I és cert que tota funció diferenciable és de classe $\\mathcal{C}^1$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t3.json",
+    "valoracio": "Quantificadors de l'enunciat intercanviats i afirmació falsa 'diferenciable implica $\\mathcal{C}^1$'.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "existeix un $\\xi\\in\\Omega$ tal que, per a tots $a,b\\in\\Omega$",
+        "gravetat": "error",
+        "explicacio": "Quantificadors intercanviats: als apunts, per a cada $a,b$ amb $[a,b]\\subseteq\\Omega$ existeix $\\xi\\in[a,b]$ (que depèn de $a,b$). Un únic $\\xi$ vàlid per a tots els parells és fals en general."
+      },
+      {
+        "fragment": 3,
+        "cita": "és de classe $\\mathcal{C}^1(\\Omega)$",
+        "gravetat": "error",
+        "explicacio": "Diferenciable en un obert no implica $\\mathcal{C}^1$; a més el teorema 25 només requereix diferenciabilitat."
+      }
+    ]
+  },
+  "creat": 1791296233.7475333
+}

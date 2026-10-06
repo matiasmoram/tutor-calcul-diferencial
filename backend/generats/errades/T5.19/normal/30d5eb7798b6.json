@@ -1,0 +1,64 @@
+{
+  "id": "30d5eb7798b6",
+  "exercici": "T5.19",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $f:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}$ de classe $\\mathcal{C}^\\infty(\\Omega)$. Si per a cada $r\\in\\mathbb{N}$ existeix $M>0$ tal que $|D_{i_1,\\ldots,i_r}f(\\mathbf{x})|\\leqslant M^r$ per a tot $\\mathbf{x}\\in\\Omega$ i tots els índexs $i_1,\\ldots,i_r$, llavors $f$ és analítica.",
+    "Sigui $\\mathbf{a}\\in\\Omega$ i $\\mathbf{x}$ amb $[\\mathbf{a},\\mathbf{x}]\\subseteq\\Omega$. Com que $f\\in\\mathcal{C}^{r+1}(\\Omega)$ per a tot $r\\in\\mathbb{N}$, el teorema de Taylor dona, per a cada $r$, $f(\\mathbf{x})=P_r(\\mathbf{x})+R_{r+1}(\\mathbf{x})=Q_0(\\mathbf{x})+\\cdots+Q_r(\\mathbf{x})+R_{r+1}(\\mathbf{x})$, on cada $Q_k$ és un polinomi homogeni de grau $k$ en $\\mathbf{x}-\\mathbf{a}$.",
+    "El residu és $R_{r+1}(\\mathbf{x})=\\frac{1}{(r+1)!}\\sum_{i_1,\\ldots,i_{r+1}=1}^{n}D_{i_1\\ldots i_{r+1}}f(\\xi_\\mathbf{x})(x_{i_1}-a_{i_1})\\cdots(x_{i_{r+1}}-a_{i_{r+1}})$, amb $\\xi_\\mathbf{x}\\in(\\mathbf{a},\\mathbf{x})$.",
+    "Per la desigualtat triangular, la fita de les derivades parcials i $|x_i-a_i|\\leq\\|\\mathbf{x}-\\mathbf{a}\\|$, cada sumand de $R_{r+1}(\\mathbf{x})$ té valor absolut com a molt $\\frac{1}{(r+1)!}M^{r+1}\\|\\mathbf{x}-\\mathbf{a}\\|^{r+1}$. Com que la suma té $(r+1)\\,n$ sumands, $|R_{r+1}(\\mathbf{x})|\\leq\\frac{(r+1)\\,n}{(r+1)!}\\big(M\\|\\mathbf{x}-\\mathbf{a}\\|\\big)^{r+1}$, que tendeix a $0$ quan $r\\to\\infty$, perquè $\\frac{c^k}{k!}\\to0$ per a tot $c\\geq0$.",
+    "Per tant, $f(\\mathbf{x})=\\lim_{r\\to\\infty}P_r(\\mathbf{x})=\\sum_{k=0}^{\\infty}Q_k(\\mathbf{x})$: la sèrie de Taylor de $f$ en $\\mathbf{a}$ convergeix a $f(\\mathbf{x})$ per a tot $\\mathbf{x}$ amb $[\\mathbf{a},\\mathbf{x}]\\subseteq\\Omega$, en particular en una bola centrada en $\\mathbf{a}$, i $f$ és analítica."
+  ],
+  "n_enunciat": 1,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "Si per a cada $r\\in\\mathbb{N}$ existeix $M>0$ tal que",
+      "inici": 91,
+      "fi": 144,
+      "tipus": "quantificador",
+      "explicacio": "Amb l'ordre dels quantificadors canviat, la constant pot dependre de $r$ i la hipòtesi només diu que cada derivada està fitada: $f(x)=e^{-1/x^2}$ ($f(0)=0$) en $\\Omega=(-1,1)$ té totes les derivades fitades però no és analítica en $0$.",
+      "correccio": "Els apunts demanen que existeixi un únic $M>0$ tal que $|D_{i_1,\\ldots,i_r}f(\\mathbf{x})|\\leqslant M^r$ per a tot $r\\in\\mathbb{N}$ i tot $\\mathbf{x}\\in\\Omega$.",
+      "pista": "La constant $M$ pot dependre de l'ordre $r$ de la derivada? Què passaria amb la fita del residu si $M=M_{r+1}$ creix molt de pressa?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "Com que la suma té $(r+1)\\,n$ sumands",
+      "inici": 232,
+      "fi": 269,
+      "tipus": "calcul",
+      "explicacio": "La suma és sobre tots els multiíndexs $(i_1,\\ldots,i_{r+1})$ amb cada $i_j\\in\\{1,\\ldots,n\\}$: té $n^{r+1}$ sumands, no $(r+1)\\,n$.",
+      "correccio": "La suma té $n^{r+1}$ sumands, i per tant $|R_{r+1}(\\mathbf{x})|\\leq\\frac{1}{(r+1)!}\\big(n\\,M\\|\\mathbf{x}-\\mathbf{a}\\|\\big)^{r+1}$, que tendeix a $0$ quan $r\\to\\infty$.",
+      "pista": "Quantes tries hi ha per als índexs $i_1,\\ldots,i_{r+1}$, si cadascun pot valer de $1$ a $n$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t5.json",
+    "valoracio": "Quantificador de $M$ intercanviat a l'enunciat i recompte de sumands incorrecte a la fita del residu.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "per a cada $r\\in\\mathbb{N}$ existeix $M>0$",
+        "gravetat": "error",
+        "explicacio": "Quantificadors intercanviats: als apunts $M$ és única, independent de $r$. Si $M$ depèn de $r$, la hipòtesi la compleix qualsevol $f$ amb derivades de cada ordre fitades (p. ex. una funció $\\mathcal{C}^\\infty$ plana no analítica restringida a un obert fitat) i l'enunciat és fals."
+      },
+      {
+        "fragment": 4,
+        "cita": "Com que la suma té $(r+1)\\,n$ sumands",
+        "gravetat": "error",
+        "explicacio": "La suma sobre $i_1,\\ldots,i_{r+1}\\in\\{1,\\ldots,n\\}$ té $n^{r+1}$ sumands, no $(r+1)n$. La fita correcta és $\\frac{(Mn\\|\\mathbf{x}-\\mathbf{a}\\|)^{r+1}}{(r+1)!}$ (que també tendeix a 0)."
+      },
+      {
+        "fragment": 4,
+        "cita": "que tendeix a $0$ quan $r\\to\\infty$",
+        "gravetat": "consequencia",
+        "explicacio": "El pas al límit $r\\to\\infty$ usa una $M$ fixa; amb l'enunciat de [1] ($M=M_r$ dependent de $r$) el terme $M_{r+1}^{r+1}/(r+1)!$ no té per què tendir a 0."
+      }
+    ]
+  },
+  "creat": 1791296162.0696046
+}

@@ -1,0 +1,62 @@
+{
+  "id": "b45316fb9d35",
+  "exercici": "T1.13",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $M$ un conjunt i $d$ una distància definida sobre $M$, i considerem la topologia sobre $M$ induïda per $d$. Aleshores: i) les boles tancades de $M$ són conjunts tancats; ii) la intersecció arbitrària de tancats és un tancat;",
+    "iii) la unió arbitrària (finita o infinita) de tancats és un tancat; iv) $M$ i $\\varnothing$ són conjunts tancats.",
+    "i) Sigui $\\overline{B}_r(x)=\\{y\\in M\\mid d(x,y)\\leq r\\}$, amb $x\\in M$ i $r>0$. Per veure que és tancat, provarem que el seu complementari a $M$, $\\overline{B}_r^c(x)$, és obert.",
+    "Sigui $y\\in\\overline{B}_r^c(x)$, de manera que $d(x,y)>r$, i sigui $r_1=d(x,y)-r>0$. Suposem, per reducció a l'absurd, que $B_{r_1}(y)\\not\\subseteq\\overline{B}_r^c(x)$: aleshores existeix $z\\in B_{r_1}(y)\\cap\\overline{B}_r(x)$, és a dir, $d(z,y)<r_1$ i $d(z,x)\\leq r$.",
+    "Per la desigualtat triangular, $d(y,x)\\leq d(y,z)+d(z,x)<r_1+r=d(x,y)$, una contradicció. Per tant, $B_{r_1}(y)\\subseteq\\overline{B}_r^c(x)$, i $\\overline{B}_r(x)$ és un tancat.",
+    "ii) Si $(F_\\mu)_{\\mu\\in I}$ és una col·lecció arbitrària de tancats, $(F_\\mu^c)_{\\mu\\in I}$ és una col·lecció arbitrària d'oberts, i $\\bigcap_{\\mu\\in I}F_\\mu=\\left(\\bigcup_{\\mu\\in I}F_\\mu^c\\right)^c$. Per la Proposició 12, $\\bigcup_{\\mu\\in I}F_\\mu^c$ és obert, i el seu complementari és tancat.",
+    "iii) Siguin $F_1,F_2,\\ldots,F_k$ una col·lecció finita de tancats. Aleshores $F_1^c,F_2^c,\\ldots,F_k^c$ són oberts i, per teoria de conjunts, $\\bigcup_{i=1}^k F_i=\\left(\\bigcup_{i=1}^k F_i^c\\right)^c$.",
+    "Com que $\\bigcap_{i=1}^k F_i^c$ és obert, per ser intersecció finita d'oberts, el seu complementari $\\bigcup_{i=1}^k F_i$ és tancat.",
+    "iv) $M$ és tancat perquè el seu complementari, $\\varnothing$, és obert; i $\\varnothing$ és tancat perquè el seu complementari, $M$, és obert (Proposició 12)."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "la unió arbitrària (finita o infinita) de tancats és un tancat",
+      "inici": 5,
+      "fi": 67,
+      "tipus": "quantificador",
+      "explicacio": "Una unió infinita de tancats no és tancada en general (la demostració només tracta el cas finit): a $\\mathbb{R}$, $\\bigcup_{n\\geq 1}[\\frac{1}{n},1]=(0,1]$ no és tancat.",
+      "correccio": "La unió FINITA de tancats és un tancat.",
+      "pista": "Quina és la unió dels intervals $[\\frac{1}{n},1]$ per a tot $n\\geq 1$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "$\\bigcup_{i=1}^k F_i=\\left(\\bigcup_{i=1}^k F_i^c\\right)^c$",
+      "inici": 142,
+      "fi": 200,
+      "tipus": "calcul",
+      "explicacio": "Llei de De Morgan mal aplicada: $\\left(\\bigcup_i F_i^c\\right)^c=\\bigcap_i F_i$, no $\\bigcup_i F_i$.",
+      "correccio": "$\\bigcup_{i=1}^k F_i=\\left(\\bigcap_{i=1}^k F_i^c\\right)^c$.",
+      "pista": "Quin és el complementari d'una unió?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t1a.json",
+    "valoracio": "Enunciat iii) fals (unió arbitrària) i De Morgan erroni a la demostració; la resta, inclosa la prova alternativa de iv), és correcta.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "la unió arbitrària (finita o infinita) de tancats és un tancat",
+        "gravetat": "error",
+        "explicacio": "Només la unió finita de tancats és tancada: $\\bigcup_n[1/n,1]=(0,1]$ no és tancat a $\\mathbb{R}$. La demostració de iii) només tracta el cas finit."
+      },
+      {
+        "fragment": 7,
+        "cita": "$\\bigcup_{i=1}^k F_i=\\left(\\bigcup_{i=1}^k F_i^c\\right)^c$",
+        "gravetat": "error",
+        "explicacio": "Llei de De Morgan mal aplicada: $\\left(\\bigcup F_i^c\\right)^c=\\bigcap F_i$. Ha de ser $\\left(\\bigcap_{i=1}^k F_i^c\\right)^c$, que és el que s'usa a [8]."
+      }
+    ]
+  },
+  "creat": 1791295858.0198054
+}

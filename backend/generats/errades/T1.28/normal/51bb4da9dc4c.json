@@ -1,0 +1,60 @@
+{
+  "id": "51bb4da9dc4c",
+  "exercici": "T1.28",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $(M,d)$ espai mètric i $B\\subseteq A\\subseteq M$, amb $A$ compacte i $B$ tancat.",
+    "Aleshores, $B$ és compacte, i també ho és $A\\setminus B$.",
+    "Sigui $B\\subseteq\\bigcup_{i\\in I}U_i$ un recobriment de $B$ per oberts $U_i$ de $M$. Cal veure que en podem extreure un subrecobriment finit.",
+    "Com que $B$ és tancat, $B^c=M\\setminus B$ és obert.",
+    "Aleshores $\\{U_i\\}_{i\\in I}\\cup\\{B^c\\}$ és un recobriment per oberts d'$A$: els punts de $B$ són coberts pels $U_i$, i els de $A\\setminus B$ pertanyen a $B^c$.",
+    "Com que $A$ és compacte, en podem extreure un subrecobriment finit: $A\\subseteq U_{i_1}\\cup\\cdots\\cup U_{i_r}\\cup B^c$.",
+    "Com que $B\\subseteq A$ i $B^c\\subseteq A^c$, podem prescindir de $B^c$: $B\\subseteq U_{i_1}\\cup\\cdots\\cup U_{i_r}$. Per tant, $B$ és compacte."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "i també ho és $A\\setminus B$",
+      "inici": 28,
+      "fi": 56,
+      "tipus": "conclusio",
+      "explicacio": "La conclusió afegida és falsa i la demostració no la prova. Contraexemple: $A=[0,1]$, $B=\\{0\\}$; $A\\setminus B=(0,1]$ no és compacte.",
+      "correccio": "Només es conclou que $B$ és compacte.",
+      "pista": "Si a $[0,1]$ li treieu el tancat $\\{0\\}$, el que queda és compacte?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "$B^c\\subseteq A^c$",
+      "inici": 25,
+      "fi": 43,
+      "tipus": "pas_injustificat",
+      "explicacio": "La inclusió és al revés: de $B\\subseteq A$ es dedueix $A^c\\subseteq B^c$. A més, el motiu per prescindir de $B^c$ és que no conté cap punt de $B$.",
+      "correccio": "Com que $B\\cap B^c=\\varnothing$, podem prescindir de $B^c$ i $B\\subseteq U_{i_1}\\cup\\cdots\\cup U_{i_r}$.",
+      "pista": "Si $B\\subseteq A$, quina relació d'inclusió hi ha entre els complementaris? I què cal realment per poder treure $B^c$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t1b.json",
+    "valoracio": "Conclusió addicional falsa sobre $A\\setminus B$ i justificació final amb una inclusió de complementaris invertida.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "i també ho és $A\\setminus B$",
+        "gravetat": "error",
+        "explicacio": "Afegit fals: $A\\setminus B$ no és tancat en general (p. ex. $A=[0,1]$, $B=\\{0\\}$, $A\\setminus B=(0,1]$ no és compacte)."
+      },
+      {
+        "fragment": 7,
+        "cita": "$B^c\\subseteq A^c$",
+        "gravetat": "error",
+        "explicacio": "Inclusió invertida: de $B\\subseteq A$ es dedueix $A^c\\subseteq B^c$. El motiu correcte per prescindir de $B^c$ és $B\\cap B^c=\\varnothing$."
+      }
+    ]
+  },
+  "creat": 1791295842.242819
+}

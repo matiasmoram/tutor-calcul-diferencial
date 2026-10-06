@@ -1,0 +1,61 @@
+{
+  "id": "cebf10f32ebc",
+  "exercici": "T1.19",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $(M,d)$ un espai mètric, $A\\subseteq M$ i $x\\in M$. Aleshores: i) $x$ és un punt d'acumulació d'$A\\Leftrightarrow$ existeix una successió $(a_n)_{n\\in\\mathbb{N}}$, amb $a_n\\in A$, tal que $x=\\lim_n a_n$.",
+    "ii) $x\\in\\overline{A}\\Leftrightarrow$ existeix una successió $(a_n)_{n\\in\\mathbb{N}}$, amb $a_n\\in A$, tal que $x=\\lim_n a_n$. iii) $A$ és tancat $\\Leftrightarrow$ el límit de tota successió convergent d'elements d'$A$ és d'$A$.",
+    "i) $\\Rightarrow$) Si $x\\in A'$, per a tot $r>0$ es té $B_r(x)\\cap(A\\setminus\\{x\\})\\neq\\varnothing$. Per a cada $n\\in\\mathbb{N}$, prenem $\\varepsilon_n=\\frac{1}{n}$ i escollim $a_n\\in B_{\\varepsilon_n}(x)\\cap(A\\setminus\\{x\\})$; així $a_n\\in A$, $a_n\\neq x$ i $d(a_n,x)<\\frac{1}{n}$.",
+    "Fixat $\\varepsilon>0$, sigui $n_0\\in\\mathbb{N}$ tal que $\\frac{1}{n_0}<\\varepsilon$. Per a tot $n\\geq n_0$ es té $d(a_n,x)<\\frac{1}{n}\\leq\\frac{1}{n_0}<\\varepsilon$, és a dir, $\\lim_n a_n=x$.",
+    "$\\Leftarrow$) Suposem que existeix $(a_n)_n$ amb $a_n\\in A\\setminus\\{x\\}$ i $\\lim_n a_n=x$. Donat $r>0$, existeix $n_0$ tal que per a tot $n\\geq n_0$ es té $0<d(a_n,x)<r$, és a dir, $a_n\\in B_r(x)\\cap(A\\setminus\\{x\\})$. Per tant, $x$ és punt d'acumulació d'$A$.",
+    "ii) Com que $x\\in\\overline{A}\\Leftrightarrow x\\in A'\\cup A$, la demostració és anàloga a la d'i), però sense haver d'imposar que $a_n\\neq x$.",
+    "iii) $\\Rightarrow$) Suposem $A$ tancat i sigui $(a_n)_n$ una successió convergent d'elements d'$A$, amb límit $x$. Per la propietat ii), $x\\in\\overline{A}$ i, com que $\\overline{A}\\subseteq A$ per a qualsevol conjunt $A$, es té $x\\in A$.",
+    "$\\Leftarrow$) Suposem que el límit de tota successió convergent d'elements d'$A$ és d'$A$, i vegem que $\\overline{A}=A$. Sempre $A\\subseteq\\overline{A}$. Si $x\\in\\overline{A}$, per ii) existeix $(a_n)_n$ amb $a_n\\in A$ i $x=\\lim_n a_n$, i per hipòtesi $x\\in A$. Així, $\\overline{A}=A$ i $A$ és tancat."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "existeix una successió $(a_n)_{n\\in\\mathbb{N}}$, amb $a_n\\in A$, tal que $x=\\lim_n a_n$",
+      "inici": 121,
+      "fi": 208,
+      "tipus": "hipotesi",
+      "explicacio": "Falta la condició $a_n\\neq x$; sense ella, $\\Leftarrow$ és fals: si $A=\\{0\\}$ a $\\mathbb{R}$, la successió constant $a_n=0$ tendeix a $0$, però $0$ no és punt d'acumulació d'$A$.",
+      "correccio": "Existeix una successió $(a_n)_n$ amb $a_n\\neq x$ i $a_n\\in A$ tal que $x=\\lim_n a_n$.",
+      "pista": "Un punt aïllat d'$A$ és límit d'alguna successió d'$A$? És punt d'acumulació?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "com que $\\overline{A}\\subseteq A$ per a qualsevol conjunt $A$",
+      "inici": 159,
+      "fi": 220,
+      "tipus": "pas_injustificat",
+      "explicacio": "La inclusió $\\overline{A}\\subseteq A$ no és certa per a qualsevol conjunt (p. ex. $A=(0,1)$); aquí es té perquè $A$ és tancat, que és la hipòtesi que s'ha d'usar.",
+      "correccio": "Com que $A$ és tancat, $\\overline{A}=A$, i per tant $x\\in A$.",
+      "pista": "On s'usa en aquest pas que $A$ és tancat?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t1a.json",
+    "valoracio": "Enunciat i) sense $a_n\\neq x$ (fals) i justificació falsa a iii) $\\Rightarrow$.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "existeix una successió $(a_n)_{n\\in\\mathbb{N}}$, amb $a_n\\in A$, tal que $x=\\lim_n a_n$",
+        "gravetat": "error",
+        "explicacio": "Falta la condició $a_n\\neq x$: sense ella la caracterització és la de $\\overline{A}$ (ii), i un punt aïllat de $A$ (p. ex. $x=0$, $A=\\{0\\}$, $a_n=0$) no és d'acumulació."
+      },
+      {
+        "fragment": 7,
+        "cita": "com que $\\overline{A}\\subseteq A$ per a qualsevol conjunt $A$",
+        "gravetat": "error",
+        "explicacio": "Fals en general ($A=(0,1)$); $\\overline{A}=A$ es té precisament perquè $A$ és tancat, hipòtesi que cal invocar aquí."
+      }
+    ]
+  },
+  "creat": 1791295858.0243206
+}

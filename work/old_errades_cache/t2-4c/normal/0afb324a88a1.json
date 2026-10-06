@@ -1,0 +1,113 @@
+{
+  "id": "0afb324a88a1",
+  "exercici": "t2-4c",
+  "dificultat": "normal",
+  "fragments": [
+    "Considerem $f(x,y)=\\frac{x^5}{x^4+y^2}$. En acostar-nos a $(0,0)$, el numerador i el denominador tendeixen a $0$, així que tenim una indeterminació del tipus $0/0$ i cal estudiar el límit amb més detall.",
+    "Provem primer camins senzills. Si $y=kx$, llavors $f(x,kx)=\\frac{x^5}{x^4+k^2x^2}=\\frac{x^3}{x^2+k^2}$ per a $x\\neq 0$, i això tendeix a $0$.",
+    "També és natural provar $y=kx^2$, perquè aleshores $y^2$ i $x^4$ tenen el mateix ordre. En aquest cas $f(x,kx^2)=\\frac{x^5}{x^4+k^2x^4}=\\frac{x}{1+k^2}$, que tendeix a $0$.",
+    "Com que tant les rectes com les paràboles adaptades donen el mateix valor $0$, ja podem prendre aquest valor com a límit de la funció. Així, el candidat queda confirmat: $\\lim_{(x,y)\\to(0,0)} f(x,y)=0$.",
+    "Per donar una justificació més global, mirem el valor absolut: $\\left|\\frac{x^5}{x^4+y^2}\\right|=\\frac{|x|^5}{x^4+y^2}$. Com que $x^4+y^2\\ge x^4$ i el denominador és positiu fora de l'origen, obtenim $\\frac{|x|^5}{x^4+y^2}\\le \\frac{|x|^5}{x^4}=|x|$ quan $x\\neq 0$.",
+    "En el cas $x=0$, la funció val $0$, de manera que la mateixa fita $\\left|f(x,y)\\right|\\le |x|$ també és vàlida. Per tant, per a tots els punts del domini propers a l'origen tenim $0\\le |f(x,y)|\\le |x|$.",
+    "Finalment, com que $|x|\\to 0$ quan $(x,y)\\to(0,0)$, pel criteri del sandvitx deduïm que $|f(x,y)|\\to 0$. D'aquí se segueix que $f(x,y)$ tendeix a $1$, i per tant el límit existeix."
+  ],
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "ja podem prendre aquest valor com a límit",
+      "inici": 79,
+      "fi": 120,
+      "tipus": "conclusio",
+      "explicacio": "Que diversos camins donin el mateix valor només suggereix un candidat, però no demostra l'existència del límit en dues variables. Podrien existir altres camins amb un comportament diferent.",
+      "correccio": "Cal dir que aquests camins només indiquen que el candidat és $0$, i després demostrar-ho amb una fita o un altre argument global.",
+      "pista": "Haver comprovat algunes trajectòries garanteix el comportament en totes les trajectòries possibles?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "$f(x,y)$ tendeix a $1$",
+      "inici": 127,
+      "fi": 149,
+      "tipus": "conclusio",
+      "explicacio": "Si $|f(x,y)|\\to 0$, aleshores necessàriament $f(x,y)\\to 0$, no pas $1$. És una conclusió incompatible amb la convergència del valor absolut a zero.",
+      "correccio": "D'aquí se segueix que $f(x,y)$ tendeix a $0$, i per tant el límit és $0$.",
+      "pista": "Si el valor absolut d'una funció es fa arbitràriament petit, quin valor pot tenir el límit de la funció?"
+    }
+  ],
+  "verificacio": {
+    "valoracio": "La resolució conté una prova global correcta als fragments 5-7 fins a obtenir $|f(x,y)|\\to 0$, però abans comet l'error de voler confirmar el límit només a partir d'uns quants camins. A més, al final hi ha un error greu en la conclusió: el límit és $0$, no $1$.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "Com que tant les rectes com les paràboles adaptades donen el mateix valor $0$, ja podem prendre aquest valor com a límit de la funció.",
+        "gravetat": "error",
+        "explicacio": "Que diversos camins donin el mateix valor només permet proposar un candidat, però no demostra que el límit existeixi ni que sigui aquest valor. Cal una prova global, com una acotació uniforme."
+      },
+      {
+        "fragment": 4,
+        "cita": "Així, el candidat queda confirmat: $\\lim_{(x,y)\\to(0,0)} f(x,y)=0$.",
+        "gravetat": "error",
+        "explicacio": "El candidat no queda confirmat només amb els camins estudiats. Aquesta conclusió encara no està justificada en aquest punt de la resolució."
+      },
+      {
+        "fragment": 6,
+        "cita": "En el cas $x=0$, la funció val $0$",
+        "gravetat": "imprecisio",
+        "explicacio": "Això és cert per als punts del domini amb $x=0$ i $y\\neq 0$, però no a l'origen, on la funció no està definida. Com que s'està estudiant un límit, caldria precisar que es parla de punts del domini propers a l'origen, exclosos l'origen."
+      },
+      {
+        "fragment": 7,
+        "cita": "D'aquí se segueix que $f(x,y)$ tendeix a $1$",
+        "gravetat": "error",
+        "explicacio": "De $|f(x,y)|\\to 0$ se segueix que $f(x,y)\\to 0$, no que tendeixi a $1$. Aquesta és una conclusió matemàticament falsa i contradiu també l'acotació anterior."
+      }
+    ],
+    "intents": [
+      {
+        "intent": 1,
+        "generacio": {
+          "model": "gpt-5.5",
+          "latency_ms": 11029,
+          "input_tokens": 1336,
+          "output_tokens": 853
+        },
+        "validacio": [],
+        "verificacio": {
+          "model": "gpt-5.5",
+          "latency_ms": 15145,
+          "input_tokens": 1452,
+          "output_tokens": 1311
+        },
+        "problemes_verificador": [
+          {
+            "fragment": 4,
+            "cita": "Com que tant les rectes com les paràboles adaptades donen el mateix valor $0$, ja podem prendre aquest valor com a límit de la funció.",
+            "gravetat": "error",
+            "explicacio": "Que diversos camins donin el mateix valor només permet proposar un candidat, però no demostra que el límit existeixi ni que sigui aquest valor. Cal una prova global, com una acotació uniforme."
+          },
+          {
+            "fragment": 4,
+            "cita": "Així, el candidat queda confirmat: $\\lim_{(x,y)\\to(0,0)} f(x,y)=0$.",
+            "gravetat": "error",
+            "explicacio": "El candidat no queda confirmat només amb els camins estudiats. Aquesta conclusió encara no està justificada en aquest punt de la resolució."
+          },
+          {
+            "fragment": 6,
+            "cita": "En el cas $x=0$, la funció val $0$",
+            "gravetat": "imprecisio",
+            "explicacio": "Això és cert per als punts del domini amb $x=0$ i $y\\neq 0$, però no a l'origen, on la funció no està definida. Com que s'està estudiant un límit, caldria precisar que es parla de punts del domini propers a l'origen, exclosos l'origen."
+          },
+          {
+            "fragment": 7,
+            "cita": "D'aquí se segueix que $f(x,y)$ tendeix a $1$",
+            "gravetat": "error",
+            "explicacio": "De $|f(x,y)|\\to 0$ se segueix que $f(x,y)\\to 0$, no que tendeixi a $1$. Aquesta és una conclusió matemàticament falsa i contradiu també l'acotació anterior."
+          }
+        ],
+        "discrepancies": []
+      }
+    ]
+  },
+  "creat": 1790752474.1271067
+}

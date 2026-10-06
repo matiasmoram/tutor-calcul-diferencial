@@ -1,0 +1,341 @@
+tema: 4
+titol: "Teoremes de funcions diferenciables"
+problemes:
+  - num: 1
+    font: null
+    preambul: |
+      Trobeu tots els punts $(x,y)\in\mathbb{R}^2$ tals que
+      $$\frac{\partial^2 f}{\partial x\partial y}(x,y)\neq\frac{\partial^2 f}{\partial y\partial x}(x,y)$$
+      on
+      $$f(x,y)=\begin{cases}\dfrac{xy(x^2-y^2)}{x^2+y^2} & \text{si } (x,y)\neq(0,0)\\ 0 & \text{altrament.}\end{cases}$$
+    apartats: []
+    indicacio: null
+  - num: 2
+    font: null
+    preambul: |
+      Comproveu que les derivades creuades de segon ordre de la funció
+      $$f(x,y)=\begin{cases}xy^2\sin\dfrac{1}{y} & \text{si } y\neq 0\\ 0 & \text{si } y=0\end{cases}$$
+      coincideixen a $(0,0)$, tot i que no se satisfà la hipòtesi del teorema de Schwarz.
+    apartats: []
+    indicacio: null
+  - num: 3
+    font: null
+    preambul: |
+      Sigui $G(r,\varphi)=(r\cos\varphi,r\sin\varphi)$ (canvi a polars). Donada $f:\mathbb{R}^2\to\mathbb{R}$, una funció de classe $\mathcal{C}^2$, sigui $F=f\circ G$. Si $f_{ij}$ vol dir la derivada segona de $f$ respecte $x_i,x_j$, demostreu que
+      $$(f_{xx}+f_{yy})\circ G=F_{rr}+\frac{1}{r^2}F_{\varphi\varphi}+\frac{1}{r}F_r.$$
+      L'expressió $f_{xx}+f_{yy}$ s'anomena el *laplacià de $f$* i s'escriu $\Delta f$. La igualtat anterior dona l'expressió del laplacià de $f$ en coordenades polars.
+    apartats: []
+    indicacio: null
+  - num: 4
+    font: null
+    preambul: |
+      Siguin $f,g:\mathbb{R}\to\mathbb{R}$ funcions dues vegades diferenciables i $c>0$ una constant. Proveu que la funció $\varphi(x,t)=f(x-ct)+g(x+ct)$ satisfà l'equació d'ones,
+      $$\frac{1}{c^2}\frac{\partial^2\varphi}{\partial t^2}-\frac{\partial^2\varphi}{\partial x^2}=0.$$
+    apartats: []
+    indicacio: null
+  - num: 5
+    font: null
+    preambul: |
+      Per a les funcions següents, determineu si $G$ satisfà les hipòtesis del teorema de la funció inversa; trobeu la imatge de $G$ i, si $G$ és injectiva, calculeu explícitament $G^{-1}$:
+    apartats:
+      - lletra: a
+        text: |
+          $\mathrm{Dom}(G)=\mathbb{R}^n$, $G(x)=x+a$, $a\in\mathbb{R}^n$ (translació pel vector $a$);
+      - lletra: b
+        text: |
+          $\mathrm{Dom}(G)=\mathbb{R}^2$, $G(x,y)=(x+2y,x-y)$;
+      - lletra: c
+        text: |
+          $\mathrm{Dom}(G)=\mathbb{R}^2\setminus\{(0,0)\}$, $G(x,y)=(x^2-y^2,xy)$;
+      - lletra: d
+        text: |
+          $\mathrm{Dom}(G)=\{(x,y)\in\mathbb{R}^2\mid 0<y<x\}$, $G(x,y)=(\log(xy),(x^2+y^2)^{-1})$.
+    indicacio: null
+  - num: 6
+    font: null
+    preambul: |
+      Considerem la funció definida per $G(s,t)=(\cosh(s)\cos(t),\sinh(s)\sin(t))$.
+    apartats:
+      - lletra: a
+        text: |
+          Demostreu que $G$ té inversa local entorn de tot punt del semipla $A=\{(s,t)\in\mathbb{R}^2\mid s>0\}$.
+      - lletra: b
+        text: |
+          Demostreu que $G(A)$ és un subconjunt obert de $\mathbb{R}^2$.
+      - lletra: c
+        text: |
+          Demostreu que la restricció de $G$ a $\{(s,t)\in A\mid 0<t<2\pi\}$ té inversa global.
+      - lletra: d
+        text: |
+          Dibuixeu $G(A)$.
+    indicacio: null
+  - num: 7
+    font: null
+    preambul: |
+      Sigui $F:\mathbb{R}^2\to\mathbb{R}^2$ definida per $F(x,y)=(x^2y,xy^2)$.
+    apartats:
+      - lletra: a
+        text: |
+          Proveu que $F$ és localment invertible al voltant de $(x,y)$, si $x\neq 0$ i $y\neq 0$.
+      - lletra: b
+        text: |
+          Calculeu la diferencial de la inversa local de $F$ en el punt $F(2,1)$.
+      - lletra: c
+        text: |
+          Suposeu que la inversa local de l'apartat anterior està definida en un entorn que conté el punt $(4.1,1.9)$. Obteniu un valor aproximat de $F^{-1}(4.1,1.9)$.
+      - lletra: d
+        text: |
+          Sigui $A=\{(x,y)\in\mathbb{R}^2\mid x\neq 0,\ y\neq 0\}$. Proveu que la restricció de $F$ a $A$ és injectiva i doneu-ne explícitament la funció inversa. Calculeu $F^{-1}(4.1,1.9)$ i compareu el resultat amb l'aproximació de l'apartat anterior.
+      - lletra: e
+        text: |
+          Obteniu $DF^{-1}(u,v)$.
+    indicacio: null
+  - num: 8
+    font: null
+    preambul: |
+      Proveu que la funció $G(x,y,z)=(x+y+z^2,\ x-y+z,\ 2x+y-z)$ admet una inversa local diferenciable al voltant del punt $(1,-1,2)$ i calculeu $DG^{-1}(4,4,-1)$. Admet $G$ inversa global?
+    apartats: []
+    indicacio: null
+  - num: 9
+    font: null
+    preambul: |
+      Demostreu que les funcions següents són difeomorfismes locals de classe $\mathcal{C}^\infty$ en tot punt del domini indicat. Doneu oberts màxims dins d'aquests dominis on les seves restriccions siguin difeomorfismes:
+    apartats:
+      - lletra: a
+        text: |
+          $F(r,\varphi)=(r\cos\varphi,r\sin\varphi)$, $(r,\varphi)\in(0,\infty)\times\mathbb{R}$ *(polars)*;
+          (Indicació: $F:(0,\infty)\times(0,2\pi)\to\mathbb{R}^2\setminus\{(x,y)\mid y=0,\ x\geqslant 0\}$ té inversa i $F^{-1}$ no es pot estendre amb continuïtat a cap obert que contingui estrictament $\mathbb{R}^2\setminus\{(x,y)\mid y=0,\ x>0\}$.)
+      - lletra: b
+        text: |
+          $G(r,\varphi,\theta)=(r\cos\varphi\sin\theta,r\sin\varphi\sin\theta,r\cos\theta)$, $(r,\varphi,\theta)\in(0,\infty)\times\mathbb{R}\times(0,\pi)$ *(esfèriques)*;
+      - lletra: c
+        text: |
+          $H(r,\varphi,z)=(r\cos\varphi,r\sin\varphi,z)$, $(r,\varphi,z)\in(0,\infty)\times\mathbb{R}\times\mathbb{R}$ *(cilíndriques)*.
+    indicacio: null
+  - num: 10
+    font: null
+    preambul: |
+      Siguin $G:\mathbb{R}^2\to\mathbb{R}^2$ definida per $G(u,v)=(u+v,\ v-u^2)$ i $T$ l'interior del triangle limitat per les rectes $u+v=2$, $u=0$, $v=0$. Determineu el recinte $S=G(T)$ i comproveu que $G:T\to S$ és un canvi de variables (o difeomorfisme).
+    apartats: []
+    indicacio: null
+  - num: 11
+    font: null
+    preambul: |
+      Per cadascun dels següents oberts $U\subseteq\mathbb{R}^2$, estudieu si la funció $G:U\to G(U)$ definida per $G(x,y)=(x^2-y^2,2xy)$ és un canvi de variables (o difeomorfisme):
+    apartats:
+      - lletra: a
+        text: |
+          $U=\mathbb{R}^2$;
+      - lletra: b
+        text: |
+          $U=\{(x,y)\in\mathbb{R}^2\mid x>0\}$;
+      - lletra: c
+        text: |
+          $U=\{(x,y)\in\mathbb{R}^2\mid |y|>|x|\}$;
+      - lletra: d
+        text: |
+          $U=\{(x,y)\in\mathbb{R}^2\mid x>0,\ y>0\}$.
+    indicacio: null
+  - num: 12
+    font: null
+    preambul: null
+    apartats:
+      - lletra: a
+        text: |
+          Comproveu quines hipòtesis i quines tesis del teorema de la funció inversa satisfà $f(x)=x^3$.
+      - lletra: b
+        text: |
+          Doneu un exemple de funció a $\mathbb{R}^2$ que satisfaci les mateixes hipòtesis i tesis que la funció anterior.
+      - lletra: c
+        text: |
+          Proveu que si $F:\mathbb{R}^m\to\mathbb{R}^m$ és diferenciable i invertible al voltant d'un punt $a$ on $\det JF(a)=0$, aleshores la inversa no pot ser diferenciable a $F(a)$.
+      - lletra: d
+        text: |
+          Doneu un exemple de funció $f:U\subseteq\mathbb{R}\to\mathbb{R}$ localment invertible en $p\in U$ que no sigui de classe $\mathcal{C}^1$ en $U$, però que tingui inversa de classe $\mathcal{C}^1$.
+    indicacio: null
+  - num: 13
+    font: null
+    preambul: null
+    apartats:
+      - lletra: a
+        text: |
+          Sigui $I\subseteq\mathbb{R}$ un interval obert. Demostreu que tota funció $g:I\to\mathbb{R}$ de classe $\mathcal{C}^1$ tal que $g'(x)\neq 0$ per tot $x\in I$ té inversa global de classe $\mathcal{C}^1$ en $g(I)$.
+      - lletra: b
+        text: |
+          Demostreu que $F(x,y)=(e^x\cos y,e^x\sin y)$ té inversa local de classe $\mathcal{C}^1$ en tot punt, però que no té inversa global.
+      - lletra: c
+        text: |
+          Determineu un obert maximal on $F$ tingui inversa global.
+    indicacio: null
+  - num: 14
+    font: null
+    preambul: |
+      Sigui $f:\mathbb{R}\to\mathbb{R}$ de classe $\mathcal{C}^1$ tal que existeix $k\in\mathbb{R}$ satisfent $|f'(x)|\leqslant k<1$ per a tot $x\in\mathbb{R}$. Considerem la funció $F:\mathbb{R}^2\to\mathbb{R}^2$ definida per $F(x,y)=(x+f(y),y+f(x))$.
+    apartats:
+      - lletra: a
+        text: |
+          Demostreu que $F$ admet inversa global de classe $\mathcal{C}^1$.
+      - lletra: b
+        text: |
+          Si $f(0)=0$, demostreu que $\|F(x,y)\|\leqslant(1+k)\,\|(x,y)\|$, per a tot $(x,y)\in\mathbb{R}^2$.
+    indicacio: |
+      useu el teorema del valor mitjà.
+  - num: 15
+    font: null
+    preambul: |
+      Sigui $f:\mathbb{R}\to\mathbb{R}$ de classe $\mathcal{C}^1$ i tal que $f'(x)\neq 0$, $\forall x\in\mathbb{R}$. Considerem $G:\mathbb{R}^2\to\mathbb{R}^2$ definida per
+      $$G(x,y)=(f(x),-y+xf(x)).$$
+    apartats:
+      - lletra: a
+        text: |
+          Demostreu que $G$ satisfà les hipòtesis del teorema de la funció inversa en tot punt de $\mathbb{R}^2$.
+      - lletra: b
+        text: |
+          Donat $(u_0,v_0)\in\mathrm{Im}\,G$, calculeu $DG^{-1}(u_0,v_0)$.
+      - lletra: c
+        text: |
+          Demostreu que $G$ és injectiva i calculeu l'expressió explícita de $G^{-1}$.
+    indicacio: null
+  - num: 16
+    font: null
+    preambul: |
+      Sigui $f:\mathbb{R}^2\to\mathbb{R}^2$ definida per $f(u,v)=(u^3-3uv^2,\ 3u^2v-v^3)$.
+    apartats:
+      - lletra: a
+        text: |
+          En quins punts existeix inversa local diferenciable?
+      - lletra: b
+        text: |
+          Calculeu les antiimatges dels punts $(0,0)$ i $(1,0)$. Té $f$ inversa global?
+      - lletra: c
+        text: |
+          Sigui $h=f^{-1}$ una inversa local de $f$ definida en un entorn de $(1,0)$. Calculeu $h(1,0)$ sabent que
+          $$Dh(1,0)=\begin{pmatrix}-\frac{3}{2}&\frac{3\sqrt3}{2}\\ -\frac{3\sqrt3}{2}&-\frac{3}{2}\end{pmatrix}^{-1}$$
+    indicacio: null
+  - num: 17
+    font: null
+    preambul: |
+      Considereu el sistema
+      $$\left.\begin{aligned}x-2y-z&=0\\ x+yt&=0\end{aligned}\right\}$$
+    apartats:
+      - lletra: a
+        text: |
+          Proveu que defineix implícitament funcions diferenciables $z=g_1(x,y)$ i $t=g_2(x,y)$ al voltant del punt $(1,1,-1,-1)$.
+      - lletra: b
+        text: |
+          Calculeu $\frac{\partial g_1}{\partial x}(1,1)$, $\frac{\partial g_1}{\partial y}(1,1)$, $\frac{\partial g_2}{\partial x}(1,1)$ i $\frac{\partial g_2}{\partial y}(1,1)$ per derivació implícita.
+      - lletra: c
+        text: |
+          Calculeu explícitament $g_1$ i $g_2$ i comproveu directament els resultats de (b).
+      - lletra: d
+        text: |
+          Calculeu les derivades segones de $g_1$ i $g_2$ en el punt $(1,1)$.
+    indicacio: null
+  - num: 18
+    font: null
+    preambul: |
+      Proveu que el sistema
+      $$\left.\begin{aligned}xz^3+y^2u^3&=1\\ 2xy^3+u^2z&=0\end{aligned}\right\}$$
+      permet definir $x$ i $y$ com a funcions implícites diferenciables de $z$ i de $u$ en un entorn de $(0,1,0,1)$. Si $x=g_1(z,u)$ i $y=g_2(z,u)$ són les funcions esmentades, proveu que la funció $g(z,u)=(g_1(z,u),g_2(z,u))$ té inversa local diferenciable al voltant del punt $(0,1)$.
+    apartats: []
+    indicacio: null
+  - num: 19
+    font: null
+    preambul: |
+      Considereu el sistema d'equacions
+      $$\left.\begin{aligned}x-u-v&=0\\ y-u^2-v^2&=0\\ z-u^3-v^3&=0\end{aligned}\right\}$$
+      Trobeu els punts $p=(x_0,y_0,z_0,u_0,v_0)\in\mathbb{R}^5$ que compleixin les dues condicions següents:
+    apartats:
+      - lletra: a
+        text: |
+          el sistema defineix funcions implícites diferenciables, $z=f_1(x,y)$, $u=f_2(x,y)$ i $v=f_3(x,y)$ al voltant de $p$;
+      - lletra: b
+        text: |
+          la derivada direccional de $f_1$ en $(x_0,y_0)$ és màxima en la direcció del vector $(1,0)$ i el valor d'aquesta derivada és 3.
+    indicacio: null
+  - num: 20
+    font: null
+    preambul: |
+      Demostreu que l'equació $x^2y+e^x+z=0$ defineix implícitament $x$ en funció de $y$ i $z$ al voltant del punt $(0,1,-1)$. Calculeu les derivades primeres i segones de $x(y,z)$ en el punt $(1,-1)$.
+    apartats: []
+    indicacio: null
+  - num: 21
+    font: null
+    preambul: |
+      Considereu l'equació $x^2+y^2+z^2=\psi(ax+by+cz)$, amb $a,b,c\in\mathbb{R}$, $c\neq 0$, on $\psi:\mathbb{R}\to\mathbb{R}$ és de classe $\mathcal{C}^2$ i satisfà $\psi(0)=0$ i $\psi'(0)\neq 0$.
+    apartats:
+      - lletra: a
+        text: |
+          Proveu que en un entorn de $(0,0,0)$ les solucions de l'equació es poden expressar de la forma $(x,y,f(x,y))$, amb $f$ diferenciable en un entorn de $(0,0)$.
+      - lletra: b
+        text: |
+          Calculeu $\frac{\partial f}{\partial x}(0,0)$, $\frac{\partial f}{\partial y}(0,0)$, $\frac{\partial^2 f}{\partial x^2}(0,0)$, i $\frac{\partial^2 f}{\partial y^2}(0,0)$.
+    indicacio: null
+  - num: 22
+    font: null
+    preambul: |
+      Proveu que l'equació $2x^2+y^2+z^3-5xz-2=0$ defineix implícitament $z=g(x,y)$, amb $g$ de classe $C^\infty$, en un entorn de $p=(1,2,1)$. Proveu que el gradient de $g$ en el punt $(1,2)$ val $(-1/2,2)$.
+    apartats: []
+    indicacio: null
+  - num: 23
+    font: null
+    preambul: |
+      Sigui $F:\mathbb{R}^3\to\mathbb{R}$ de classe $\mathcal{C}^1$ tal que per a tot punt $p$ on $F(p)=0$ se satisfà $\frac{\partial F}{\partial x}(p)\neq 0$, $\frac{\partial F}{\partial y}(p)\neq 0$ i $\frac{\partial F}{\partial z}(p)\neq 0$.
+    apartats:
+      - lletra: a
+        text: |
+          Proveu que si $F(p)=0$, aleshores en un entorn de $p$ es pot escriure cadascuna de les variables $x,y,z$ en termes de les altres dues; és a dir, existeixen funcions $X,Y,Z$ diferenciables tals que $F(X(y,z),y,z)=0$, $F(x,Y(x,z),z)=0$ i $F(x,y,Z(x,y))=0$.
+      - lletra: b
+        text: |
+          Proveu que, amb les notacions anteriors, $\frac{\partial Y}{\partial x}(p)\frac{\partial X}{\partial z}(p)\frac{\partial Z}{\partial y}(p)=-1$.
+    indicacio: null
+  - num: 24
+    font: null
+    preambul: |
+      Considerem el sistema d'equacions
+      $$\left.\begin{aligned}tx^3+xy^2+y-\tfrac{25}{4}t^3&=0\\ 3xy+t^2y^3-3x^2(t+1)-t+3&=0\end{aligned}\right\}$$
+    apartats:
+      - lletra: a
+        text: |
+          Al voltant de quins punts solució del sistema, de la forma $(x,y,t)=(1,0,t_0)$, el sistema defineix localment $x,y$ com a funcions derivables de $t$?
+
+          Considerem $\gamma(t)=(x(t),y(t))$, on les funcions $x(t),y(t)$ venen definides localment per l'anterior sistema d'equacions. A $\gamma$ se l'anomena corba parametritzada.
+      - lletra: b
+        text: |
+          Calculeu $(x'(0),y'(0))$ (aquest vector és el vector tangent a la corba $\gamma$ en $t=0$).
+      - lletra: c
+        text: |
+          Donada $f(x,y)=x^2-2y+3$, calculeu la derivada de la funció $f\circ\gamma$ a l'origen.
+    indicacio: null
+  - num: 25
+    font: null
+    preambul: |
+      Determineu si la corba definida en forma implícita per $x^2+y+\cos(xy)=1$ es pot escriure de la forma $y=g(x)$ en un entorn de l'origen. I de la forma $x=h(y)$?
+    apartats: []
+    indicacio: null
+  - num: 26
+    font: null
+    preambul: |
+      Demostreu que existeix un entorn obert $U\subseteq\mathbb{R}$ de $-1$ i funcions $u,v:U\to\mathbb{R}$ de classe $\mathcal{C}^1$ tals que $u(-1)=v(-1)=1$ i
+      $$\left.\begin{aligned}xe^{u(x)}+u(x)e^{v(x)}&=0\\ xe^{v(x)}+v(x)e^{u(x)}&=0\end{aligned}\right\}$$
+    apartats: []
+    indicacio: null
+  - num: 27
+    font: null
+    preambul: |
+      Demostreu que la corba d'equació
+      $$xy=\log\left(\frac{x}{y}\right)$$
+      és la gràfica d'una funció $f$ de classe $\mathcal{C}^\infty$ en un entorn de $x=\sqrt{e}$. Té $f$ un extrem local en $x=\sqrt{e}$?
+    apartats: []
+    indicacio: null
+  - num: 28
+    font: null
+    preambul: null
+    apartats:
+      - lletra: a
+        text: |
+          Considereu $F:U\subseteq\mathbb{R}^2\to\mathbb{R}$ de classe $\mathcal{C}^1$ i $p\in U$ tal que $F(p)=0$. Suposem que, en un entorn de $p$, l'equació $F(x,y)=0$ defineix localment $y$ com a funció implícita de $x$, $y=g(x)$. Demostreu que, si $\frac{\partial F}{\partial x}(p)\neq 0$ i $\frac{\partial F}{\partial y}(p)=0$, llavors $g$ no és de classe $\mathcal{C}^1$.
+      - lletra: b
+        text: |
+          Doneu un exemple de funció $F:U\subseteq\mathbb{R}^2\to\mathbb{R}$ de classe $\mathcal{C}^1$ i un punt $p\in U$, tals que $F(p)=0$, $\nabla F(p)=0$ i l'equació $F(x,y)=0$ defineixi $y$ com a funció de classe $\mathcal{C}^1$ de $x$, en un entorn de $p$. Contradiu això el teorema de la funció implícita?
+    indicacio: null

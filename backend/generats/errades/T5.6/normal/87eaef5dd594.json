@@ -1,0 +1,61 @@
+{
+  "id": "87eaef5dd594",
+  "exercici": "T5.6",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "(Schwarz) Sigui $\\Omega\\subseteq\\mathbb{R}^n$ obert i $f:\\Omega\\to\\mathbb{R}^m$ una funció tal que les derivades parcials $D_if$, $D_jf$, $D_iD_jf$ i $D_jD_if$ existeixen en $\\Omega$.",
+    "Aleshores, per a tot $\\mathbf{a}\\in\\Omega$, $D_iD_jf(\\mathbf{a})=D_jD_if(\\mathbf{a})$.",
+    "Ho demostrem per a $n=2$, $m=1$ i $\\mathbf{a}=(a,b)$; el cas general és anàleg. Prenem $h,k$ no nuls tals que el rectangle $R(h,k)$ de vèrtexs $(a,b)$, $(a+h,b)$, $(a+h,b+k)$ i $(a,b+k)$ sigui dins de $\\Omega$, i considerem $\\Delta(h,k)=f(a+h,b+k)-f(a+h,b)-f(a,b+k)+f(a,b)$.",
+    "Sigui $G(x)=f(x,b+k)-f(x,b)$, de manera que $\\Delta(h,k)=G(a+h)-G(a)$. Com que $D_1f$ existeix en $\\Omega$, $G$ és derivable (i, per tant, contínua) entre $a$ i $a+h$, amb $G'(x)=D_1f(x,b+k)-D_1f(x,b)$.",
+    "Pel teorema del valor mitjà, existeix $\\xi_x\\in(a,a+h)$ tal que $\\Delta(h,k)=h\\,G'(\\xi_x)=h\\big(D_1f(\\xi_x,b+k)-D_1f(\\xi_x,b)\\big)$.",
+    "Fixat $\\xi_x$, apliquem de nou el teorema del valor mitjà a la funció $y\\mapsto D_1f(\\xi_x,y)$, que és derivable amb derivada $D_2D_1f(\\xi_x,y)$: existeix $\\xi_y\\in(b,b+k)$ tal que $\\Delta(h,k)=h\\,k\\,D_2D_1f(\\xi_x,\\xi_y)$ (1), amb $(\\xi_x,\\xi_y)\\in R(h,k)$.",
+    "Anàlogament, amb $H(y)=f(a+h,y)-f(a,y)$ tenim $\\Delta(h,k)=H(b+k)-H(b)$; aplicant el teorema del valor mitjà primer en $y$ i després en $x$, obtenim $(\\eta_x,\\eta_y)\\in R(h,k)$ tal que $\\Delta(h,k)=h\\,k\\,D_1D_2f(\\eta_x,\\eta_y)$ (2).",
+    "Igualant (1) i (2) i dividint per $hk\\neq0$, obtenim $D_2D_1f(\\xi_x,\\xi_y)=D_1D_2f(\\eta_x,\\eta_y)$. Quan $(h,k)\\to(0,0)$, tots dos punts tendeixen a $(a,b)$, ja que són de $R(h,k)$, i per la continuïtat de $D_1f$ i $D_2f$ en un entorn de $(a,b)$ concloem que $D_2D_1f(a,b)=D_1D_2f(a,b)$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "Aleshores, per a tot $\\mathbf{a}\\in\\Omega$, $D_iD_jf(\\mathbf{a})=D_jD_if(\\mathbf{a})$.",
+      "inici": 0,
+      "fi": 86,
+      "tipus": "hipotesi",
+      "explicacio": "S'ha eliminat la hipòtesi de continuïtat de les derivades mixtes, i sense ella l'enunciat és fals: $f(x,y)=\\frac{xy(x^2-y^2)}{x^2+y^2}$, $f(0,0)=0$, té totes aquestes derivades en $\\mathbb{R}^2$, però $D_2D_1f(0,0)=-1$ i $D_1D_2f(0,0)=1$.",
+      "correccio": "Els apunts afegeixen: si $D_iD_jf$ i $D_jD_if$ són contínues en un entorn d'$\\mathbf{a}\\in\\Omega$, aleshores $D_iD_jf(\\mathbf{a})=D_jD_if(\\mathbf{a})$.",
+      "pista": "N'hi ha prou que existeixin les derivades segones mixtes perquè coincideixin? Recordes algun contraexemple clàssic en l'origen?"
+    },
+    {
+      "id": "e2",
+      "fragment": 8,
+      "cita": "per la continuïtat de $D_1f$ i $D_2f$ en un entorn de $(a,b)$",
+      "inici": 184,
+      "fi": 245,
+      "tipus": "pas_injustificat",
+      "explicacio": "La continuïtat de les derivades primeres no diu res del comportament de $D_2D_1f$ i $D_1D_2f$; per passar al límit en $D_2D_1f(\\xi_x,\\xi_y)$ i $D_1D_2f(\\eta_x,\\eta_y)$ cal la continuïtat de les derivades segones mixtes (el contraexemple clàssic és de classe $\\mathcal{C}^1$).",
+      "correccio": "Es pren el límit fent servir la continuïtat de les dues derivades segones mixtes $D_2D_1f$ i $D_1D_2f$ en un entorn de $(a,b)$.",
+      "pista": "Quines funcions s'avaluen en els punts $(\\xi_x,\\xi_y)$ i $(\\eta_x,\\eta_y)$? La continuïtat de quines derivades necessites per passar al límit?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t5.json",
+    "valoracio": "Enunciat sense la hipòtesi de continuïtat (fals) i pas final justificat amb la continuïtat de les derivades equivocades.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "Aleshores, per a tot $\\mathbf{a}\\in\\Omega$, $D_iD_jf(\\mathbf{a})=D_jD_if(\\mathbf{a})$.",
+        "gravetat": "error",
+        "explicacio": "S'ha eliminat la hipòtesi de continuïtat de $D_iD_jf$ i $D_jD_if$ en un entorn de $\\mathbf{a}$; sense ella el resultat és fals (contraexemple clàssic $f=xy\\frac{x^2-y^2}{x^2+y^2}$ a l'origen)."
+      },
+      {
+        "fragment": 8,
+        "cita": "per la continuïtat de $D_1f$ i $D_2f$ en un entorn de $(a,b)$",
+        "gravetat": "error",
+        "explicacio": "El pas al límit requereix la continuïtat de les derivades segones $D_2D_1f$ i $D_1D_2f$ en $(a,b)$; la continuïtat de les primeres derivades no permet concloure $D_2D_1f(\\xi_x,\\xi_y)\\to D_2D_1f(a,b)$."
+      }
+    ]
+  },
+  "creat": 1791296162.087743
+}

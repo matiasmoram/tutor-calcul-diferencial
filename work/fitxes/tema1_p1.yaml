@@ -1,0 +1,810 @@
+problemes:
+  - num: 1
+    font: null
+    preambul: |
+      Demostreu que a $\mathbb{R}^n$ les aplicacions $d_k$ són distàncies i, per tant, $(\mathbb{R}^n, d_k)$ són espais mètrics:
+    indicacio: null
+    exercicis:
+      - id: "t1-1a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          $d_2(x,y)=\sqrt{\displaystyle\sum_{i=1}^{n}(x_i-y_i)^2}$.
+        teoria: ["T1.5"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $d_2$ és una distància a $\mathbb{R}^n$: és no negativa i només s'anul·la si $x=y$, és simètrica i compleix la desigualtat triangular (aquesta última gràcies a la desigualtat de Cauchy-Schwarz per al producte escalar ordinari $\sum_i u_iv_i$).
+          fuites: []
+        passos:
+          - id: positivitat
+            titol: "Positivitat"
+            objectiu: |
+              Comprovar que $d_2(x,y)\geq 0$ i que $d_2(x,y)=0$ si i només si $x=y$.
+            idea: |
+              Mirar el signe de cada sumand dins l'arrel i quan una suma de termes no negatius pot valer zero.
+            detall: |
+              L'arrel quadrada positiva d'un nombre $\geq 0$ és $\geq 0$, així que $d_2(x,y)\geq 0$. Si $d_2(x,y)=0$, aleshores $\sum_{i=1}^n (x_i-y_i)^2=0$; com que cada sumand és $\geq 0$, tots són nuls, és a dir $x_i=y_i$ per a tot $i$, i per tant $x=y$. Recíprocament, si $x=y$ tots els sumands són $0$.
+            fuites: []
+            teoria: ["T1.5"]
+          - id: simetria
+            titol: "Simetria"
+            objectiu: |
+              Comprovar que $d_2(x,y)=d_2(y,x)$.
+            idea: |
+              Comparar terme a terme els sumands de les dues expressions.
+            detall: |
+              $(x_i-y_i)^2=(y_i-x_i)^2$ per a cada $i$, per tant les dues sumes, i les seves arrels, coincideixen.
+            fuites: []
+            teoria: ["T1.5"]
+          - id: reduir_triangular
+            titol: "Reduir la desigualtat triangular"
+            objectiu: |
+              Reescriure la desigualtat triangular $d_2(x,y)\leq d_2(x,z)+d_2(z,y)$ com una desigualtat més simple sobre sumes.
+            idea: |
+              Anomenar $u=x-z$, $v=z-y$ (de manera que $u+v=x-y$), observar que els dos costats són no negatius i elevar al quadrat per treure les arrels.
+            detall: |
+              Amb $u=x-z$, $v=z-y$ cal veure $\sqrt{\sum_i(u_i+v_i)^2}\leq\sqrt{\sum_i u_i^2}+\sqrt{\sum_i v_i^2}$. Com que els dos costats són $\geq 0$, equival a la desigualtat dels quadrats:
+              $\sum_i u_i^2+2\sum_i u_iv_i+\sum_i v_i^2\leq\sum_i u_i^2+2\sqrt{\sum_i u_i^2}\sqrt{\sum_i v_i^2}+\sum_i v_i^2$,
+              és a dir, a $\sum_i u_iv_i\leq\sqrt{\sum_i u_i^2}\,\sqrt{\sum_i v_i^2}$.
+            fuites: ['\\sum[_^{}=\w\s]*?u_i\s*(\\,)?\s*v_i\s*(\\leq?(slant)?|≤|<=)']
+            teoria: ["T1.6+dem"]
+          - id: cauchy_schwarz
+            titol: "Aplicar Cauchy-Schwarz"
+            objectiu: |
+              Justificar la desigualtat entre sumes obtinguda al pas anterior.
+            idea: |
+              Reconèixer $\sum_i u_iv_i$ com el producte escalar ordinari de $\mathbb{R}^n$ i les arrels com les normes associades; aplicar el resultat del curs que fita el producte escalar per les normes.
+            detall: |
+              Amb $\langle u,v\rangle=\sum_i u_iv_i$ (producte escalar ordinari) i $\|u\|=\sqrt{\langle u,u\rangle}$, Cauchy-Schwarz dona $\sum_i u_iv_i\leq|\langle u,v\rangle|\leq\|u\|\,\|v\|=\sqrt{\sum_i u_i^2}\sqrt{\sum_i v_i^2}$. Desfent el canvi, $d_2(x,y)\leq d_2(x,z)+d_2(z,y)$.
+            fuites: []
+            teoria: ["T1.7", "T1.8"]
+        errors_comuns:
+          - id: quadrat_no_triangular
+            descripcio: |
+              Demostra la desigualtat triangular per a $d_2^2$ (sense arrels) o eleva al quadrat i "simplifica" de manera que acaba provant una desigualtat diferent de la que cal.
+            pregunta: |
+              La desigualtat que has provat, és la de $d_2$ o la de $d_2^2$? Elevar al quadrat $a\leq b+c$, quina expressió dona exactament a la dreta?
+          - id: arrel_suma
+            descripcio: |
+              Usa $\sqrt{a+b}=\sqrt{a}+\sqrt{b}$ (fals) per separar l'arrel en sumes de components.
+            pregunta: |
+              Prova amb $a=b=1$: és cert que $\sqrt{a+b}=\sqrt a+\sqrt b$?
+          - id: suma_zero
+            descripcio: |
+              Afirma que de $\sum_i (x_i-y_i)^2=0$ se segueix $x=y$ sense justificar-ho (o amb un argument que també valdria per a sumes de termes de signe qualsevol).
+            pregunta: |
+              Una suma de nombres reals pot ser zero sense que ho siguin tots els sumands? Què tenen d'especial aquests sumands?
+        nota_professor: |
+          Via alternativa directa: $d_2(x,y)=\|x-y\|_2$ amb $\|\cdot\|_2$ la norma del producte escalar ordinari (Exemple 8 b), i la Proposició 6 (i)+(ii) dona que és una distància. Si el problema 3(a) ja està fet, n'hi ha prou amb la Proposició 6 (ii). La part delicada és la desigualtat triangular (desigualtat de Minkowski per a $p=2$).
+
+      - id: "t1-1b"
+        apartat: "b"
+        tipus: teoric
+        enunciat: |
+          $d_1(x,y)=\displaystyle\sum_{i=1}^{n}|x_i-y_i|$.
+        teoria: ["T1.5"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $d_1$ és una distància a $\mathbb{R}^n$: no negativa i nul·la només si $x=y$, simètrica, i la desigualtat triangular s'obté sumant les desigualtats triangulars de $\mathbb{R}$ component a component.
+          fuites: []
+        passos:
+          - id: positivitat_simetria
+            titol: "Positivitat i simetria"
+            objectiu: |
+              Comprovar que $d_1(x,y)\geq 0$, que $d_1(x,y)=0\iff x=y$ i que $d_1(x,y)=d_1(y,x)$.
+            idea: |
+              Analitzar cada sumand $|x_i-y_i|$: el seu signe, quan s'anul·la i com canvia en intercanviar $x$ i $y$.
+            detall: |
+              Cada $|x_i-y_i|\geq 0$, per tant la suma és $\geq 0$. Si la suma és $0$, tots els sumands (no negatius) són $0$, és a dir $x_i=y_i$ per a tot $i$, i $x=y$; el recíproc és immediat. A més $|x_i-y_i|=|y_i-x_i|$, d'on la simetria.
+            fuites: []
+            teoria: ["T1.5"]
+          - id: triangular
+            titol: "Desigualtat triangular"
+            objectiu: |
+              Demostrar que $d_1(x,y)\leq d_1(x,z)+d_1(z,y)$ per a tot $x,y,z\in\mathbb{R}^n$.
+            idea: |
+              Treballar component a component amb la desigualtat triangular del valor absolut a $\mathbb{R}$, $|a+b|\leq|a|+|b|$, i després sumar.
+            detall: |
+              Per a cada $i$: $|x_i-y_i|=|(x_i-z_i)+(z_i-y_i)|\leq|x_i-z_i|+|z_i-y_i|$. Sumant per $i=1,\dots,n$: $d_1(x,y)\leq d_1(x,z)+d_1(z,y)$.
+            fuites: ['\|\s*\(x_i\s*-\s*z_i\)\s*\+\s*\(z_i\s*-\s*y_i\)\s*\|', '\|\s*x_i\s*-\s*z_i\s*\|\s*\+\s*\|\s*z_i\s*-\s*y_i\s*\|']
+            teoria: []
+        errors_comuns:
+          - id: sense_component
+            descripcio: |
+              Escriu la desigualtat triangular "en bloc" sense justificar-la (per exemple, assumint ja que $d_1$ prové d'una norma, cosa que és el que es vol veure).
+            pregunta: |
+              Quina desigualtat coneguda tens per a nombres reals? Pots aplicar-la a cada sumand per separat?
+          - id: valor_absolut_igualtat
+            descripcio: |
+              Usa $|a+b|=|a|+|b|$ com a igualtat.
+            pregunta: |
+              Quant val $|1+(-1)|$ i quant val $|1|+|-1|$?
+        nota_professor: |
+          Si el problema 3(b) ja està fet, $d_1(x,y)=\|x-y\|_1$ i la Proposició 6 (ii) acaba.
+
+      - id: "t1-1c"
+        apartat: "c"
+        tipus: teoric
+        enunciat: |
+          $d_\infty(x,y)=\displaystyle\max_{1\leq i\leq n}|x_i-y_i|$.
+        teoria: ["T1.5"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $d_\infty$ és una distància a $\mathbb{R}^n$: no negativa i nul·la només si $x=y$, simètrica, i compleix la desigualtat triangular perquè cada component $|x_i-y_i|$ queda fitada per $d_\infty(x,z)+d_\infty(z,y)$.
+          fuites: []
+        passos:
+          - id: positivitat_simetria
+            titol: "Positivitat i simetria"
+            objectiu: |
+              Comprovar que $d_\infty(x,y)\geq 0$, que $d_\infty(x,y)=0\iff x=y$ i que $d_\infty(x,y)=d_\infty(y,x)$.
+            idea: |
+              El màxim d'una família finita de nombres no negatius és no negatiu, i és zero exactament quan tots ho són.
+            detall: |
+              Cada $|x_i-y_i|\geq 0$, per tant el màxim és $\geq 0$. Si $\max_i|x_i-y_i|=0$, com que $0\leq|x_j-y_j|\leq\max_i|x_i-y_i|=0$ per a cada $j$, tenim $x_j=y_j$ per a tot $j$, i $x=y$; el recíproc és immediat. La simetria ve de $|x_i-y_i|=|y_i-x_i|$.
+            fuites: []
+            teoria: ["T1.5"]
+          - id: fita_component
+            titol: "Fitar cada component"
+            objectiu: |
+              Fitar cada $|x_i-y_i|$ per una quantitat que no depengui de $i$.
+            idea: |
+              Desigualtat triangular del valor absolut a $\mathbb{R}$ i, després, que cada terme és com a màxim el màxim de la seva família.
+            detall: |
+              Per a cada $i$: $|x_i-y_i|\leq|x_i-z_i|+|z_i-y_i|\leq d_\infty(x,z)+d_\infty(z,y)$.
+            fuites: ['\|\s*(x_i\s*-\s*y_i|z_i\s*-\s*y_i)\s*\|\s*(\\leq?(slant)?|≤)\s*d_\{?\\infty\}?\s*\(\s*x\s*,\s*z\s*\)\s*\+\s*d_\{?\\infty\}?\s*\(\s*z\s*,\s*y\s*\)']
+            teoria: []
+          - id: prendre_maxim
+            titol: "Prendre el màxim"
+            objectiu: |
+              Passar de la fita per a cada component a la desigualtat triangular per a $d_\infty$.
+            idea: |
+              Si tots els elements d'una família finita estan fitats per una mateixa constant, el seu màxim també ho està.
+            detall: |
+              Com que la fita del pas anterior val per a tots els $i$, també val per al màxim: $d_\infty(x,y)=\max_i|x_i-y_i|\leq d_\infty(x,z)+d_\infty(z,y)$.
+            fuites: []
+            teoria: ["T1.5"]
+        errors_comuns:
+          - id: max_suma
+            descripcio: |
+              Afirma $\max_i(a_i+b_i)=\max_i a_i+\max_i b_i$ (en general només és $\leq$).
+            pregunta: |
+              Amb $a=(1,0)$ i $b=(0,1)$, quant val $\max_i(a_i+b_i)$? I $\max_i a_i+\max_i b_i$?
+          - id: index_fix
+            descripcio: |
+              Fixa l'índex $i_0$ on s'assoleix $d_\infty(x,y)$ i suposa que el mateix índex dona també el màxim de $|x_i-z_i|$ i de $|z_i-y_i|$.
+            pregunta: |
+              L'índex on s'assoleix el màxim de $|x_i-y_i|$ ha de ser el mateix on s'assoleix el màxim de $|x_i-z_i|$? Necessites que ho sigui?
+        nota_professor: |
+          Si el problema 3(c) ja està fet, $d_\infty(x,y)=\|x-y\|_\infty$ i la Proposició 6 (ii) acaba.
+
+  - num: 2
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t1-2"
+        apartat: null
+        tipus: teoric
+        enunciat: |
+          Demostreu que a $\mathbb{N}$ l'aplicació
+          $$d(m,n)=\begin{cases}\dfrac{1}{m}+\dfrac{1}{n} & \text{si } m\neq n\\ 0 & \text{si } m=n\end{cases}$$
+          és una distància i, per tant, $(\mathbb{N},d)$ és un espai mètric.
+        teoria: ["T1.5"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $d$ és una distància a $\mathbb{N}=\{1,2,3,\dots\}$: és $\geq 0$ i nul·la només si $m=n$ (perquè $\frac1m+\frac1n>0$), és simètrica, i la desigualtat triangular $d(m,n)\leq d(m,k)+d(k,n)$ es comprova per casos (si $m=n$ és trivial; si $k=m$ o $k=n$ és una igualtat; si $k\neq m,n$ el costat dret val $\frac1m+\frac2k+\frac1n>\frac1m+\frac1n$).
+          fuites: []
+        passos:
+          - id: positivitat
+            titol: "Positivitat"
+            objectiu: |
+              Comprovar que $d(m,n)\geq 0$ i que $d(m,n)=0\iff m=n$.
+            idea: |
+              Mirar el signe de $\frac1m+\frac1n$ per a naturals $m,n$.
+            detall: |
+              Si $m=n$, $d=0$. Si $m\neq n$, $d(m,n)=\frac1m+\frac1n>0$ perquè $m,n\geq 1$. Per tant $d\geq 0$ i $d(m,n)=0\iff m=n$.
+            fuites: []
+            teoria: ["T1.5"]
+          - id: simetria
+            titol: "Simetria"
+            objectiu: |
+              Comprovar que $d(m,n)=d(n,m)$.
+            idea: |
+              La condició $m\neq n$ i l'expressió de la fórmula són simètriques en $m$ i $n$.
+            detall: |
+              Si $m=n$ tots dos valen $0$; si $m\neq n$, $\frac1m+\frac1n=\frac1n+\frac1m$.
+            fuites: []
+            teoria: ["T1.5"]
+          - id: triangular_casos
+            titol: "Desigualtat triangular per casos"
+            objectiu: |
+              Demostrar que $d(m,n)\leq d(m,k)+d(k,n)$ per a tots $m,n,k\in\mathbb{N}$.
+            idea: |
+              Com que la definició va per casos, separar segons quins dels tres naturals coincideixen.
+            detall: |
+              Si $m=n$: el costat esquerre és $0$ i el dret és $\geq 0$.
+              Si $m\neq n$ i $k=m$: el costat dret és $0+d(m,n)$, igualtat. Anàlogament si $k=n$.
+              Si $k\neq m$ i $k\neq n$ (i $m\neq n$): el costat dret és $\frac1m+\frac1k+\frac1k+\frac1n=\frac1m+\frac1n+\frac2k>\frac1m+\frac1n=d(m,n)$.
+            fuites: ['\\[dt]?frac\s*(\{\s*2\s*\}|2)\s*(\{\s*k\s*\}|k)', '2\s*/\s*k\b']
+            teoria: ["T1.5"]
+        errors_comuns:
+          - id: oblida_casos
+            descripcio: |
+              Només tracta el cas en què $m,n,k$ són diferents dos a dos i oblida els casos en què $k$ coincideix amb $m$ o amb $n$ (o $m=n$).
+            pregunta: |
+              La fórmula de $d(m,k)$ és la mateixa quan $k=m$ que quan $k\neq m$? Has cobert totes les possibilitats?
+          - id: zero_natural
+            descripcio: |
+              Considera $0\in\mathbb{N}$, on la fórmula no té sentit ($\frac10$), o no fa servir enlloc que $m,n\geq 1$.
+            pregunta: |
+              Per a quins valors de $m$ té sentit $\frac1m$? On fas servir que $m\geq 1$?
+          - id: positivitat_sense_justificar
+            descripcio: |
+              Afirma $d(m,n)=0\iff m=n$ sense justificar que $\frac1m+\frac1n$ no pot ser $0$.
+            pregunta: |
+              Si $m\neq n$, pot ser que $\frac1m+\frac1n=0$? Per què?
+        nota_professor: |
+          Cal entendre $\mathbb{N}=\{1,2,3,\dots\}$. Observació interessant: la desigualtat triangular és estricta quan $k$ és diferent de $m$ i $n$. Aquest espai mètric és discret (cada $\{n\}$ és obert, amb $B(n,1/n)=\{n\}$) però la successió $(n)$ és de Cauchy i no convergeix: és un exemple d'espai no complet, útil més endavant.
+
+  - num: 3
+    font: null
+    preambul: |
+      Demostreu que a $\mathbb{R}^n$ les aplicacions següents són normes:
+    indicacio: null
+    exercicis:
+      - id: "t1-3a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          $\|x\|_2=\sqrt{\sum_{i=1}^{n}x_i^2}$.
+        teoria: ["T1.3"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $\|\cdot\|_2$ és una norma a $\mathbb{R}^n$: és $\geq 0$ i nul·la només per a $x=0$, és homogènia ($\|\lambda x\|_2=|\lambda|\,\|x\|_2$) i compleix la desigualtat triangular (via Cauchy-Schwarz per al producte escalar ordinari). Equivalentment, és la norma induïda pel producte escalar ordinari.
+          fuites: []
+        passos:
+          - id: positivitat
+            titol: "Positivitat"
+            objectiu: |
+              Comprovar que $\|x\|_2\geq 0$ i que $\|x\|_2=0\iff x=0$.
+            idea: |
+              Signe dels sumands dins l'arrel i quan una suma de termes no negatius s'anul·la.
+            detall: |
+              $\|x\|_2$ és l'arrel positiva d'una suma de quadrats, per tant $\geq 0$. Si $\sum_i x_i^2=0$, com que cada $x_i^2\geq 0$, tots són $0$ i $x=0$; el recíproc és immediat.
+            fuites: []
+            teoria: ["T1.3"]
+          - id: homogeneitat
+            titol: "Homogeneïtat"
+            objectiu: |
+              Comprovar que $\|\lambda x\|_2=|\lambda|\,\|x\|_2$ per a tot $\lambda\in\mathbb{R}$.
+            idea: |
+              Treure el factor comú dins l'arrel i recordar quant val $\sqrt{\lambda^2}$.
+            detall: |
+              $\|\lambda x\|_2=\sqrt{\sum_i\lambda^2x_i^2}=\sqrt{\lambda^2}\sqrt{\sum_i x_i^2}=|\lambda|\,\|x\|_2$.
+            fuites: ['\\sqrt\{\\lambda\^\{?2\}?\}\s*\\sqrt']
+            teoria: ["T1.3"]
+          - id: triangular
+            titol: "Desigualtat triangular"
+            objectiu: |
+              Demostrar que $\|x+y\|_2\leq\|x\|_2+\|y\|_2$.
+            idea: |
+              Com que els dos costats són no negatius, comparar-ne els quadrats; desenvolupar $\|x+y\|_2^2$ i fitar el terme creuat amb un resultat del curs sobre productes escalars.
+            detall: |
+              $\|x+y\|_2^2=\sum_i(x_i+y_i)^2=\|x\|_2^2+2\sum_i x_iy_i+\|y\|_2^2$. Per Cauchy-Schwarz amb el producte escalar ordinari $\langle x,y\rangle=\sum_i x_iy_i$ (que compleix $\|x\|_2=\sqrt{\langle x,x\rangle}$): $\sum_i x_iy_i\leq\|x\|_2\|y\|_2$. Per tant $\|x+y\|_2^2\leq(\|x\|_2+\|y\|_2)^2$ i, prenent arrels (tots dos costats $\geq 0$), $\|x+y\|_2\leq\|x\|_2+\|y\|_2$.
+            fuites: ['\\sum_?\{?i?\}?\s*x_i\s*y_i\s*(\\le|\\leq|≤)']
+            teoria: ["T1.7", "T1.8", "T1.6+dem"]
+        errors_comuns:
+          - id: lambda_sense_valor_absolut
+            descripcio: |
+              Escriu $\sqrt{\lambda^2}=\lambda$, oblidant el cas $\lambda<0$.
+            pregunta: |
+              Quant val $\sqrt{(-3)^2}$?
+          - id: arrel_suma
+            descripcio: |
+              Usa $\sqrt{a+b}=\sqrt a+\sqrt b$ per "separar" l'arrel en la desigualtat triangular.
+            pregunta: |
+              Amb $a=b=1$, és cert que $\sqrt{a+b}=\sqrt a+\sqrt b$?
+          - id: quadrats_sense_signe
+            descripcio: |
+              Passa de $A^2\leq B^2$ a $A\leq B$ sense comprovar que $A,B\geq 0$.
+            pregunta: |
+              Si $A^2\leq B^2$, és sempre cert que $A\leq B$? Què necessites saber de $A$ i $B$?
+        nota_professor: |
+          Via directa: $\langle x,y\rangle=\sum_i x_iy_i$ és un producte escalar (Exemple 8 b, comprovació de la Definició 1) i la Proposició 6 (i) dona que $\sqrt{\langle x,x\rangle}=\|x\|_2$ és una norma. La desigualtat triangular és la desigualtat de Minkowski per a $p=2$.
+
+      - id: "t1-3b"
+        apartat: "b"
+        tipus: teoric
+        enunciat: |
+          $\|x\|_1=\sum_{i=1}^{n}|x_i|$.
+        teoria: ["T1.3"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $\|\cdot\|_1$ és una norma a $\mathbb{R}^n$: és $\geq 0$ i nul·la només per a $x=0$, $\|\lambda x\|_1=|\lambda|\,\|x\|_1$, i la desigualtat triangular s'obté sumant $|x_i+y_i|\leq|x_i|+|y_i|$.
+          fuites: []
+        passos:
+          - id: positivitat
+            titol: "Positivitat"
+            objectiu: |
+              Comprovar que $\|x\|_1\geq 0$ i que $\|x\|_1=0\iff x=0$.
+            idea: |
+              Suma de termes no negatius: quan és zero?
+            detall: |
+              Cada $|x_i|\geq 0$, per tant la suma és $\geq 0$; si és $0$, tots els $|x_i|$ són $0$ i $x=0$. El recíproc és immediat.
+            fuites: []
+            teoria: ["T1.3"]
+          - id: homogeneitat
+            titol: "Homogeneïtat"
+            objectiu: |
+              Comprovar que $\|\lambda x\|_1=|\lambda|\,\|x\|_1$.
+            idea: |
+              Propietat multiplicativa del valor absolut a $\mathbb{R}$.
+            detall: |
+              $\|\lambda x\|_1=\sum_i|\lambda x_i|=\sum_i|\lambda|\,|x_i|=|\lambda|\sum_i|x_i|=|\lambda|\,\|x\|_1$.
+            fuites: []
+            teoria: ["T1.3"]
+          - id: triangular
+            titol: "Desigualtat triangular"
+            objectiu: |
+              Demostrar que $\|x+y\|_1\leq\|x\|_1+\|y\|_1$.
+            idea: |
+              Desigualtat triangular del valor absolut a $\mathbb{R}$ aplicada a cada component, i sumar.
+            detall: |
+              Per a cada $i$, $|x_i+y_i|\leq|x_i|+|y_i|$. Sumant: $\|x+y\|_1=\sum_i|x_i+y_i|\leq\sum_i|x_i|+\sum_i|y_i|=\|x\|_1+\|y\|_1$.
+            fuites: []
+            teoria: ["T1.3"]
+        errors_comuns:
+          - id: valor_absolut_igualtat
+            descripcio: |
+              Usa $|a+b|=|a|+|b|$ com a igualtat.
+            pregunta: |
+              Quant val $|1+(-1)|$? I $|1|+|-1|$?
+          - id: lambda_sense_valor_absolut
+            descripcio: |
+              Escriu $\|\lambda x\|_1=\lambda\|x\|_1$, que dona un nombre negatiu si $\lambda<0$.
+            pregunta: |
+              Si $\lambda=-1$, la teva fórmula dona un valor coherent amb que la norma és $\geq 0$?
+        nota_professor: |
+          No prové de cap producte escalar (no compleix la llei del paral·lelogram per a $n\geq 2$), així que no es pot fer via Proposició 6 (i).
+
+      - id: "t1-3c"
+        apartat: "c"
+        tipus: teoric
+        enunciat: |
+          $\|x\|_\infty=\max_{1\leq i\leq n}|x_i|$.
+        teoria: ["T1.3"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $\|\cdot\|_\infty$ és una norma a $\mathbb{R}^n$: és $\geq 0$ i nul·la només per a $x=0$, $\|\lambda x\|_\infty=|\lambda|\,\|x\|_\infty$, i la desigualtat triangular surt de $|x_i+y_i|\leq|x_i|+|y_i|\leq\|x\|_\infty+\|y\|_\infty$ per a cada $i$ i prenent el màxim.
+          fuites: []
+        passos:
+          - id: positivitat
+            titol: "Positivitat"
+            objectiu: |
+              Comprovar que $\|x\|_\infty\geq 0$ i que $\|x\|_\infty=0\iff x=0$.
+            idea: |
+              Cada component està entre $0$ i el màxim.
+            detall: |
+              El màxim de nombres $\geq 0$ és $\geq 0$. Si $\max_i|x_i|=0$, llavors $0\leq|x_j|\leq 0$ per a cada $j$, és a dir $x=0$. El recíproc és immediat.
+            fuites: []
+            teoria: ["T1.3"]
+          - id: homogeneitat
+            titol: "Homogeneïtat"
+            objectiu: |
+              Comprovar que $\|\lambda x\|_\infty=|\lambda|\,\|x\|_\infty$.
+            idea: |
+              Multiplicar per una constant no negativa conserva quin terme és el més gran.
+            detall: |
+              $|\lambda x_i|=|\lambda|\,|x_i|$ i, com que $|\lambda|\geq 0$, $\max_i|\lambda|\,|x_i|=|\lambda|\max_i|x_i|$.
+            fuites: []
+            teoria: ["T1.3"]
+          - id: triangular
+            titol: "Desigualtat triangular"
+            objectiu: |
+              Demostrar que $\|x+y\|_\infty\leq\|x\|_\infty+\|y\|_\infty$.
+            idea: |
+              Fitar cada component $|x_i+y_i|$ per una quantitat independent de $i$ i després prendre el màxim.
+            detall: |
+              Per a cada $i$: $|x_i+y_i|\leq|x_i|+|y_i|\leq\|x\|_\infty+\|y\|_\infty$. Com que la fita no depèn de $i$, també $\max_i|x_i+y_i|\leq\|x\|_\infty+\|y\|_\infty$.
+            fuites: ['\|\s*y_i\s*\|\s*(\\leq?(slant)?|≤)\s*\\\|\s*x\s*\\\|_\{?\\infty', '\|\s*x_i\s*\+\s*y_i\s*\|\s*(\\leq?(slant)?|≤)\s*\\\|\s*x\s*\\\|_\{?\\infty']
+            teoria: ["T1.3"]
+        errors_comuns:
+          - id: max_suma
+            descripcio: |
+              Afirma $\max_i(|x_i|+|y_i|)=\max_i|x_i|+\max_i|y_i|$ (en general només és $\leq$).
+            pregunta: |
+              Amb $x=(1,0)$ i $y=(0,1)$, quant val cada costat de la igualtat que has escrit?
+          - id: mateix_index
+            descripcio: |
+              Suposa que el màxim de $|x_i+y_i|$, de $|x_i|$ i de $|y_i|$ s'assoleixen al mateix índex.
+            pregunta: |
+              Has de saber on s'assoleix cada màxim, o n'hi ha prou amb una fita que valgui per a tots els índexs?
+        nota_professor: |
+          Tampoc prové de cap producte escalar per a $n\geq 2$.
+
+  - num: 4
+    font: null
+    preambul: |
+      Si $\|\cdot\|$ és la norma ordinària i $\langle\cdot,\cdot\rangle$ és el producte escalar ordinari a $\mathbb{R}^n$, proveu:
+    indicacio: null
+    exercicis:
+      - id: "t1-4a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          $4\langle x,y\rangle=\|x+y\|^2-\|x-y\|^2$ (identitat de polarització).
+        teoria: ["T1.1", "T1.8"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Desenvolupant per bilinealitat i simetria, $\|x+y\|^2=\|x\|^2+2\langle x,y\rangle+\|y\|^2$ i $\|x-y\|^2=\|x\|^2-2\langle x,y\rangle+\|y\|^2$; restant, $\|x+y\|^2-\|x-y\|^2=4\langle x,y\rangle$.
+          fuites: []
+        passos:
+          - id: desenvolupar_suma
+            titol: "Desenvolupar $\\|x+y\\|^2$"
+            objectiu: |
+              Expressar $\|x+y\|^2$ en termes de $\|x\|$, $\|y\|$ i $\langle x,y\rangle$.
+            idea: |
+              Escriure el quadrat de la norma com un producte escalar d'un vector amb ell mateix i usar la bilinealitat i la simetria del producte escalar.
+            detall: |
+              $\|x+y\|^2=\langle x+y,x+y\rangle=\langle x,x\rangle+\langle x,y\rangle+\langle y,x\rangle+\langle y,y\rangle=\|x\|^2+2\langle x,y\rangle+\|y\|^2$.
+            fuites: ['\+\s*2\s*\\langle\s*x\s*,\s*y\s*\\rangle']
+            teoria: ["T1.1", "T1.8"]
+          - id: desenvolupar_resta
+            titol: "Desenvolupar $\\|x-y\\|^2$ i restar"
+            objectiu: |
+              Fer el mateix amb $\|x-y\|^2$ i combinar els dos resultats.
+            idea: |
+              Mateix desenvolupament, vigilant els signes que surten de $-y$; després restar les dues expressions.
+            detall: |
+              $\|x-y\|^2=\langle x-y,x-y\rangle=\|x\|^2-2\langle x,y\rangle+\|y\|^2$. Restant: $\|x+y\|^2-\|x-y\|^2=4\langle x,y\rangle$.
+            fuites: ['-\s*2\s*\\langle\s*x\s*,\s*y\s*\\rangle']
+            teoria: ["T1.1"]
+        errors_comuns:
+          - id: quadrat_norma_components
+            descripcio: |
+              Escriu $\|x+y\|^2=\|x\|^2+\|y\|^2$ (com si fos un quadrat de nombres sense terme creuat, o oblidant-lo).
+            pregunta: |
+              Quan desenvolupes $(a+b)^2$ amb nombres apareix un terme creuat. Quin és l'anàleg per a $\langle x+y,x+y\rangle$?
+          - id: simetria_oblidada
+            descripcio: |
+              Deixa $\langle x,y\rangle+\langle y,x\rangle$ sense agrupar o els tracta com a diferents, i no arriba al factor $4$.
+            pregunta: |
+              Quina relació hi ha entre $\langle x,y\rangle$ i $\langle y,x\rangle$?
+        nota_professor: |
+          També es pot fer en coordenades ($\sum(x_i+y_i)^2-\sum(x_i-y_i)^2=\sum 4x_iy_i$); el desenvolupament abstracte val per a qualsevol espai euclidià.
+
+      - id: "t1-4b"
+        apartat: "b"
+        tipus: teoric
+        enunciat: |
+          si $x,y$ són ortogonals, $\|x+y\|^2=\|x\|^2+\|y\|^2$.
+        teoria: ["T1.9", "T1.8"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $\|x+y\|^2=\|x\|^2+2\langle x,y\rangle+\|y\|^2$ i, si $x\perp y$, $\langle x,y\rangle=0$, d'on $\|x+y\|^2=\|x\|^2+\|y\|^2$ (teorema de Pitàgores).
+          fuites: []
+        passos:
+          - id: desenvolupar
+            titol: "Desenvolupar $\\|x+y\\|^2$"
+            objectiu: |
+              Expressar $\|x+y\|^2$ en termes de $\|x\|$, $\|y\|$ i $\langle x,y\rangle$ (si ja has fet l'apartat (a), pots reutilitzar-lo).
+            idea: |
+              Quadrat de la norma com a producte escalar del vector amb ell mateix; bilinealitat i simetria.
+            detall: |
+              $\|x+y\|^2=\langle x+y,x+y\rangle=\|x\|^2+2\langle x,y\rangle+\|y\|^2$.
+            fuites: ['\+\s*2\s*\\langle\s*x\s*,\s*y\s*\\rangle']
+            teoria: ["T1.1", "T1.8"]
+          - id: ortogonalitat
+            titol: "Usar l'ortogonalitat"
+            objectiu: |
+              Fer servir la hipòtesi que $x$ i $y$ són ortogonals.
+            idea: |
+              Recordar la definició d'ortogonalitat en termes del producte escalar.
+            detall: |
+              $x\perp y$ vol dir $\langle x,y\rangle=0$, i el terme creuat desapareix: $\|x+y\|^2=\|x\|^2+\|y\|^2$.
+            fuites: []
+            teoria: ["T1.9"]
+        errors_comuns:
+          - id: sense_terme_creuat
+            descripcio: |
+              Escriu directament $\|x+y\|^2=\|x\|^2+\|y\|^2$ "desenvolupant" sense fer aparèixer el terme creuat, de manera que no usa la hipòtesi.
+            pregunta: |
+              On has fet servir que $x$ i $y$ són ortogonals? Si no l'has fet servir, la igualtat valdria per a $x=y\neq 0$?
+          - id: ortogonal_mal_definit
+            descripcio: |
+              Confon ortogonalitat amb alguna altra condició (per exemple, $\|x\|=\|y\|$ o $x_iy_i=0$ per a cada $i$).
+            pregunta: |
+              Quina és exactament la definició d'ortogonalitat del curs?
+        nota_professor: |
+          De fet el recíproc també és cert a $\mathbb{R}^n$: si $\|x+y\|^2=\|x\|^2+\|y\|^2$ aleshores $\langle x,y\rangle=0$.
+
+      - id: "t1-4c"
+        apartat: "c"
+        tipus: teoric
+        enunciat: |
+          $\|x+y\|\,\|x-y\|\leqslant\|x\|^2+\|y\|^2$.
+        teoria: ["T1.8"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Per la llei del paral·lelogram, $\|x+y\|^2+\|x-y\|^2=2\|x\|^2+2\|y\|^2$, i per a reals $a,b$ es té $ab\leq\frac{a^2+b^2}{2}$ (de $(a-b)^2\geq 0$). Amb $a=\|x+y\|$, $b=\|x-y\|$: $\|x+y\|\,\|x-y\|\leq\frac{\|x+y\|^2+\|x-y\|^2}{2}=\|x\|^2+\|y\|^2$.
+          fuites: []
+        passos:
+          - id: paralelogram
+            titol: "Llei del paral·lelogram"
+            objectiu: |
+              Calcular $\|x+y\|^2+\|x-y\|^2$ en termes de $\|x\|$ i $\|y\|$.
+            idea: |
+              Desenvolupar els dos quadrats com a productes escalars (com a l'apartat (a)) i ara sumar-los en lloc de restar-los.
+            detall: |
+              $\|x\pm y\|^2=\|x\|^2\pm2\langle x,y\rangle+\|y\|^2$; sumant, els termes creuats es cancel·len: $\|x+y\|^2+\|x-y\|^2=2\|x\|^2+2\|y\|^2$.
+            fuites: ['2\s*\\\|\s*x\s*\\\|\^\{?2\}?\s*\+\s*2\s*\\\|\s*y\s*\\\|\^\{?2\}?', '2\s*(\\left)?\(\s*\\\|\s*x\s*\\\|\^\{?2\}?\s*\+\s*\\\|\s*y\s*\\\|\^\{?2\}?\s*(\\right)?\)']
+            teoria: ["T1.1", "T1.8"]
+          - id: desigualtat_producte
+            titol: "Fitar un producte per quadrats"
+            objectiu: |
+              Fitar el producte $ab$ de dos nombres reals en termes de $a^2$ i $b^2$.
+            idea: |
+              Partir d'un quadrat, que sempre és no negatiu, i desenvolupar-lo.
+            detall: |
+              $0\leq(a-b)^2=a^2-2ab+b^2$, per tant $ab\leq\frac{a^2+b^2}{2}$.
+            fuites: ['\(\s*a\s*-\s*b\s*\)\^\{?2\}?', 'ab\s*(\\leq?(slant)?|≤)\s*\\[dt]?frac\s*\{\s*a\^\{?2\}?\s*\+\s*b\^\{?2\}?\s*\}\s*\{?2\}?']
+            teoria: []
+          - id: combinar
+            titol: "Combinar"
+            objectiu: |
+              Obtenir la desigualtat de l'enunciat a partir dels dos passos anteriors.
+            idea: |
+              Aplicar la fita del producte a dos nombres ben triats i substituir la suma de quadrats.
+            detall: |
+              Amb $a=\|x+y\|$, $b=\|x-y\|$: $\|x+y\|\,\|x-y\|\leq\frac{\|x+y\|^2+\|x-y\|^2}{2}=\frac{2\|x\|^2+2\|y\|^2}{2}=\|x\|^2+\|y\|^2$.
+            fuites: []
+            teoria: []
+        errors_comuns:
+          - id: cauchy_schwarz_sentit
+            descripcio: |
+              Intenta usar Cauchy-Schwarz amb $\langle x+y,x-y\rangle=\|x\|^2-\|y\|^2$, però Cauchy-Schwarz dona $|\langle x+y,x-y\rangle|\leq\|x+y\|\,\|x-y\|$, una fita inferior del producte, no superior.
+            pregunta: |
+              La desigualtat de Cauchy-Schwarz fita $\|x+y\|\,\|x-y\|$ per dalt o per baix?
+          - id: triangular_massa_grossa
+            descripcio: |
+              Fita cada factor per la desigualtat triangular, $\|x\pm y\|\leq\|x\|+\|y\|$, i obté $(\|x\|+\|y\|)^2$, que és més gran que $\|x\|^2+\|y\|^2$ i no serveix.
+            pregunta: |
+              Compara $(\|x\|+\|y\|)^2$ amb $\|x\|^2+\|y\|^2$: la fita que has obtingut és prou fina?
+          - id: norma_quadrat_producte
+            descripcio: |
+              Escriu $\|x+y\|\,\|x-y\|=\|x\|^2-\|y\|^2$ confonent el producte de normes amb el producte escalar.
+            pregunta: |
+              $\|x+y\|\,\|x-y\|$ i $\langle x+y,x-y\rangle$ són el mateix? Prova amb $x=(1,0)$, $y=(0,1)$.
+        nota_professor: |
+          La igualtat es dona quan $\|x+y\|=\|x-y\|$, és a dir, quan $\langle x,y\rangle=0$. Alternativa: elevar al quadrat i veure $\|x+y\|^2\|x-y\|^2=(\|x\|^2+\|y\|^2)^2-4\langle x,y\rangle^2\leq(\|x\|^2+\|y\|^2)^2$.
+
+  - num: 5
+    font: null
+    preambul: |
+      Siguin $A,B$ subconjunts no buits de $\mathbb{R}^m$ i $d$ la distància euclídia. Definim $d(A,B)=\inf\{d(a,b)\mid a\in A,\ b\in B\}$.
+    indicacio: null
+    exercicis:
+      - id: "t1-5a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          És cert que $d(A,B)=0\Leftrightarrow A\cap B\neq\emptyset$ ?
+        teoria: ["T1.5", "T1.8"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            No és cert en general. La implicació $A\cap B\neq\emptyset\Rightarrow d(A,B)=0$ sí que val (si $c\in A\cap B$, $0\leq d(A,B)\leq d(c,c)=0$), però la recíproca és falsa: per exemple, a $\mathbb{R}^m$, $A=\{0\}$ i $B=B(0,1)\setminus\{0\}$ són disjunts i $d(A,B)=\inf_{0<\|b\|<1}\|b\|=0$ (prenent $b=\frac1k e_1$).
+          fuites: ['no\s+(és|es)\s+(cert|veritat)\s+(en\s+general|que\s+\$?d\s*\(\s*A\s*,\s*B\s*\)\s*=\s*0)', '(equival[eè]ncia|rec[ií]proca|implicaci[oó])[^.]{0,40}?(és|es)\s+fals', 'rec[ií]proca\s+(no\s+(és\s+certa|val)|falla)', 'la\s+resposta\s+(és|es)\s+(que\s+)?no\b']
+        passos:
+          - id: implicacio_facil
+            titol: "La implicació $\\Leftarrow$"
+            objectiu: |
+              Estudiar si $A\cap B\neq\emptyset$ implica $d(A,B)=0$.
+            idea: |
+              Si hi ha un punt comú, quina parella $(a,b)$ dona la distància més petita possible? Recordar que $d\geq 0$ i que l'ínfim és una fita inferior.
+            detall: |
+              Si $c\in A\cap B$, prenent $a=b=c$ tenim $d(c,c)=0$ dins el conjunt; com que totes les distàncies són $\geq 0$, $0\leq d(A,B)\leq d(c,c)=0$, i per tant $d(A,B)=0$.
+            fuites: []
+            teoria: ["T1.5"]
+          - id: analitzar_reciproca
+            titol: "Què diu $d(A,B)=0$"
+            objectiu: |
+              Entendre què implica exactament $d(A,B)=0$ i si n'hi ha prou per obtenir un punt comú.
+            idea: |
+              Usar la caracterització de l'ínfim: ser $0$ vol dir que hi ha parelles $(a,b)$ amb distància tan petita com es vulgui, però no necessàriament una parella amb distància exactament $0$.
+            detall: |
+              $d(A,B)=0$ equival a: per a tot $\varepsilon>0$ existeixen $a\in A$, $b\in B$ amb $d(a,b)<\varepsilon$; és a dir, hi ha successions $a_k\in A$, $b_k\in B$ amb $d(a_k,b_k)\to 0$. Això no força que l'ínfim s'assoleixi: n'hi ha prou que els conjunts s'"acostin" sense tocar-se, per exemple si un punt d'$A$ és adherent a $B$ sense ser-hi.
+            fuites: []
+            teoria: []
+          - id: contraexemple
+            titol: "Contraexemple"
+            objectiu: |
+              Decidir si la recíproca és certa i justificar-ho completament.
+            idea: |
+              Buscar dos conjunts disjunts que "es toquin a la vora": un conjunt i un altre que tingui aquell punt a la seva adherència però no el contingui.
+            detall: |
+              $A=\{0\}$, $B=B(0,1)\setminus\{0\}=\{x\in\mathbb{R}^m\mid 0<\|x\|<1\}$. Són no buits i $A\cap B=\emptyset$, però $d(0,\tfrac1k e_1)=\tfrac1k\to 0$, així que $d(A,B)=0$. (A $\mathbb{R}$ també serveixen $A=(0,1)$, $B=(1,2)$.)
+            fuites: ['A\s*=\s*\\\{\s*0\s*\\\}', 'B\s*=\s*\(\s*1\s*,\s*2\s*\)', '\\setminus\s*\\\{\s*0\s*\\\}']
+            teoria: ["T1.8"]
+        errors_comuns:
+          - id: infim_assolit
+            descripcio: |
+              Suposa que l'ínfim és un mínim, és a dir, que existeixen $a\in A$, $b\in B$ amb $d(a,b)=d(A,B)$.
+            pregunta: |
+              L'ínfim d'un conjunt de nombres sempre pertany al conjunt? Quin és l'ínfim de $\{1/k\mid k\geq 1\}$?
+          - id: nomes_una_implicacio
+            descripcio: |
+              Demostra només una de les dues implicacions i conclou sobre l'equivalència.
+            pregunta: |
+              Una equivalència són dues implicacions. Les has estudiat totes dues?
+          - id: contraexemple_buit
+            descripcio: |
+              Proposa un contraexemple amb algun conjunt buit, o amb conjunts que sí que es tallen.
+            pregunta: |
+              El teu exemple compleix totes les hipòtesis (conjunts no buits) i realment els conjunts són disjunts?
+        nota_professor: |
+          Fins i tot amb $A,B$ tancats disjunts pot ser $d(A,B)=0$: a $\mathbb{R}^2$, $A=\{y=0\}$ i $B=\{xy=1,\ x>0\}$. En canvi, si $A$ és compacte i $B$ tancat, $d(A,B)=0\Rightarrow A\cap B\neq\emptyset$ (per compacitat seqüencial).
+
+      - id: "t1-5b"
+        apartat: "b"
+        tipus: teoric
+        enunciat: |
+          Demostreu $|d(x,A)-d(y,A)|\leq d(x,y)$, $\forall x,y\in\mathbb{R}^m$, on $d(x,A)=d(\{x\},A)$.
+        teoria: ["T1.5"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Per a tot $a\in A$, $d(x,A)\leq d(x,a)\leq d(x,y)+d(y,a)$; prenent l'ínfim en $a$, $d(x,A)\leq d(x,y)+d(y,A)$, és a dir $d(x,A)-d(y,A)\leq d(x,y)$. Intercanviant $x$ i $y$ (i usant $d(x,y)=d(y,x)$) s'obté $d(y,A)-d(x,A)\leq d(x,y)$, i les dues juntes donen $|d(x,A)-d(y,A)|\leq d(x,y)$.
+          fuites: []
+        passos:
+          - id: fita_per_a
+            titol: "Fita per a cada punt d'$A$"
+            objectiu: |
+              Relacionar $d(x,A)$ amb $d(x,y)$ i $d(y,a)$ per a un $a\in A$ qualsevol.
+            idea: |
+              $d(x,A)$ és una fita inferior de totes les distàncies $d(x,a)$; combinar-ho amb la desigualtat triangular passant per $y$.
+            detall: |
+              Per a tot $a\in A$: $d(x,A)\leq d(x,a)\leq d(x,y)+d(y,a)$.
+            fuites: ['d\(x,\s*a\)\s*(\\le|\\leq|≤)\s*d\(x,\s*y\)\s*\+\s*d\(y,\s*a\)']
+            teoria: ["T1.5"]
+          - id: prendre_infim
+            titol: "Prendre l'ínfim"
+            objectiu: |
+              Eliminar el punt $a$ de la desigualtat anterior.
+            idea: |
+              Aïllar $d(y,a)$: el nombre que queda a l'altre costat és una fita inferior de tots els $d(y,a)$, $a\in A$, i per tant és com a molt l'ínfim (l'ínfim és la més gran de les fites inferiors).
+            detall: |
+              $d(x,A)-d(x,y)\leq d(y,a)$ per a tot $a\in A$, per tant $d(x,A)-d(x,y)\leq\inf_{a\in A}d(y,a)=d(y,A)$, és a dir $d(x,A)-d(y,A)\leq d(x,y)$.
+            fuites: ['d\(x,\s*A\)\s*-\s*d\(y,\s*A\)\s*(\\le|\\leq|≤)\s*d\(x,\s*y\)', 'd\(x,\s*A\)\s*(\\le|\\leq|≤)\s*d\(x,\s*y\)\s*\+\s*d\(y,\s*A\)']
+            teoria: []
+          - id: simetritzar
+            titol: "Intercanviar els papers"
+            objectiu: |
+              Passar de la desigualtat d'un sol sentit a la desigualtat amb valor absolut.
+            idea: |
+              L'argument és simètric en $x$ i $y$; recordar que $|t|\leq c$ equival a $-c\leq t\leq c$.
+            detall: |
+              Intercanviant $x$ i $y$: $d(y,A)-d(x,A)\leq d(y,x)=d(x,y)$. Juntament amb l'anterior, $-d(x,y)\leq d(x,A)-d(y,A)\leq d(x,y)$, és a dir $|d(x,A)-d(y,A)|\leq d(x,y)$.
+            fuites: []
+            teoria: ["T1.5"]
+        errors_comuns:
+          - id: infim_com_minim
+            descripcio: |
+              Pren un $a_0\in A$ amb $d(x,a_0)=d(x,A)$ (o amb $d(y,a_0)=d(y,A)$), suposant que l'ínfim s'assoleix, cosa que no cal que passi si $A$ no és tancat.
+            pregunta: |
+              Existeix sempre un punt $a\in A$ tal que $d(x,a)=d(x,A)$? Pensa en $A=(0,1)$ i $x=2$.
+          - id: infim_sentit
+            descripcio: |
+              Pren l'ínfim en un sentit incorrecte, per exemple passa de $d(x,A)\leq d(x,y)+d(y,a)$ per a cada $a$ a una conclusió del tipus $d(x,A)\geq\dots$, o tracta l'ínfim d'una diferència com la diferència d'ínfims.
+            pregunta: |
+              Si un nombre $c$ és $\leq d(y,a)$ per a tots els $a\in A$, què pots dir de $c$ comparat amb $\inf_{a\in A}d(y,a)$?
+          - id: un_sol_sentit
+            descripcio: |
+              Prova només $d(x,A)-d(y,A)\leq d(x,y)$ i conclou el valor absolut.
+            pregunta: |
+              $|t|\leq c$ demana dues desigualtats. Les tens totes dues?
+        nota_professor: |
+          Conseqüència: $x\mapsto d(x,A)$ és 1-Lipschitz i, per tant, contínua (útil al Tema 2). L'argument val en qualsevol espai mètric.
+
+  - num: 6
+    font: null
+    preambul: ""
+    indicacio: |
+      dibuixeu aquests conjunts en $\mathbb{R}^2$ i $\mathbb{R}^3$.
+    exercicis:
+      - id: "t1-6"
+        apartat: null
+        tipus: calcul
+        enunciat: |
+          Donat $A\subset\mathbb{R}^m$, sigui $D_A=\{d(x,y)\mid x,y\in A\}\subset\mathbb{R}$. Proveu que aquest conjunt és fitat si, i només si, $A$ ho és. Aleshores, es defineix _diàmetre_ de $A$ per $\mathrm{diam}(A)=\sup D_A$. Siguin ara $B_1=\{x\in\mathbb{R}^m\mid\sum_{i=1}^{m}|x_i|<1\}$, $B_2=\{x\in\mathbb{R}^m\mid\|x\|<1\}$, i $B_3=\{x\in\mathbb{R}^m\mid\max|x_i|<1\}$. Calculeu el diàmetre de $B_1$, $B_2$ i $B_3$.
+        teoria: ["T1.33", "T1.5"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            (Amb $d$ la distància euclidiana i $A\neq\emptyset$.) $D_A$ és fitat $\iff$ $A$ és fitat: si $A\subseteq B_L(p)$, aleshores $d(x,y)\leq d(x,p)+d(p,y)<2L$; si $d(x,y)\leq K$ per a tots $x,y\in A$, fixat $a_0\in A$ es té $A\subseteq B_{K+1}(a_0)$.
+            Diàmetres: $\mathrm{diam}(B_1)=2$, $\mathrm{diam}(B_2)=2$, $\mathrm{diam}(B_3)=2\sqrt m$ (cap dels tres suprems no s'assoleix, perquè els conjunts són oberts).
+          fuites: ['2\s*\\sqrt\{?\s*m\s*\}?', 'diam[^$=]{0,20}?B_?\{?[123]\}?\s*\)?\s*(=|és|val)\s*\$?\s*2', 'di[àa]metre\s+(de\s+)?\$?B_?\{?[123]\}?\$?\s+(és|val)\s*\$?\s*2']
+        passos:
+          - id: fitat_implica
+            titol: "$A$ fitat $\\Rightarrow$ $D_A$ fitat"
+            objectiu: |
+              Suposant que $A$ és fitat, trobar una fita superior per a totes les distàncies $d(x,y)$ amb $x,y\in A$.
+            idea: |
+              Usar la definició de conjunt fitat (contingut en una bola) i la desigualtat triangular passant pel centre de la bola. Recordar que $D_A\subset[0,\infty)$, així que només cal fitar-lo per dalt.
+            detall: |
+              Si $A\subseteq B_L(p)$, per a $x,y\in A$: $0\leq d(x,y)\leq d(x,p)+d(p,y)<2L$. Per tant $D_A\subseteq[0,2L]$ és fitat.
+            fuites: ['<\s*2\s*L', '\[\s*0\s*,\s*2\s*L\s*\]']
+            teoria: ["T1.33", "T1.11", "T1.5"]
+          - id: reciproc
+            titol: "$D_A$ fitat $\\Rightarrow$ $A$ fitat"
+            objectiu: |
+              Suposant que totes les distàncies entre punts d'$A$ són $\leq K$, trobar una bola que contingui $A$.
+            idea: |
+              Si $A$ és no buit, fixar un punt d'$A$ com a centre i escollir un radi adequat (cal desigualtat estricta a la definició de bola oberta).
+            detall: |
+              Fixem $a_0\in A$. Per a tot $x\in A$, $d(x,a_0)\leq K<K+1$, així que $A\subseteq B_{K+1}(a_0)$. (Si $A=\emptyset$, tant $A$ com $D_A=\emptyset$ són trivialment fitats.)
+            fuites: ['B_\{?\s*K\s*\+\s*1\s*\}?', 'B\s*\(\s*a_0\s*,\s*K\s*\+\s*1']
+            teoria: ["T1.33", "T1.11"]
+          - id: diam_B2
+            titol: "Diàmetre de $B_2$"
+            objectiu: |
+              Calcular $\mathrm{diam}(B_2)$: trobar una fita superior de $d(x,y)$ per a $x,y\in B_2$ i veure que és la més petita possible.
+            idea: |
+              Fita: desigualtat triangular passant per l'origen. Optimalitat: prendre parelles de punts diametralment oposats sobre un eix, cada cop més a prop de la vora.
+            detall: |
+              Per a $x,y\in B_2$: $\|x-y\|\leq\|x\|+\|y\|<2$. Amb $x_t=te_1$, $y_t=-te_1$, $0<t<1$: $\|x_t-y_t\|=2t\to 2$ quan $t\to 1^-$. Per tant el suprem és $2$ (no assolit).
+            fuites: ['-\s*t\s*e_\{?1\}?', '=\s*2\s*t\b', '\\\|\s*x\s*\\\|\s*\+\s*\\\|\s*y\s*\\\|\s*<\s*2']
+            teoria: ["T1.5"]
+          - id: diam_B1
+            titol: "Diàmetre de $B_1$"
+            objectiu: |
+              Calcular $\mathrm{diam}(B_1)$ amb la distància euclidiana.
+            idea: |
+              Comparar la norma euclidiana amb la suma dels valors absoluts de les components per obtenir una fita, i buscar punts de $B_1$ que la gairebé assoleixin.
+            detall: |
+              Per a $v\in\mathbb{R}^m$, $\|v\|^2=\sum_i v_i^2\leq\left(\sum_i|v_i|\right)^2$, és a dir $\|v\|\leq\sum_i|v_i|$. Per a $x,y\in B_1$: $\|x-y\|\leq\sum_i|x_i-y_i|\leq\sum_i|x_i|+\sum_i|y_i|<2$. Els punts $\pm te_1$ ($0<t<1$) són a $B_1$ i són a distància $2t\to 2$. Per tant el suprem és $2$.
+            fuites: ['\\\|\s*v\s*\\\|\s*(\\leq?(slant)?|≤)\s*\\sum', '\\\|\s*[a-z\-\s]+\\\|(_\{?2\}?)?\s*(\\leq?(slant)?|≤)\s*\\\|\s*[a-z\-\s]+\\\|_\{?1\}?']
+            teoria: ["T1.5"]
+          - id: diam_B3
+            titol: "Diàmetre de $B_3$"
+            objectiu: |
+              Calcular $\mathrm{diam}(B_3)$ amb la distància euclidiana.
+            idea: |
+              Fitar cada component de $x-y$ i sumar els quadrats; per a l'optimalitat, pensar en vèrtexs oposats del cub (la diagonal).
+            detall: |
+              Per a $x,y\in B_3$: $|x_i-y_i|\leq|x_i|+|y_i|<2$ per a cada $i$, d'on $\|x-y\|^2=\sum_{i=1}^m(x_i-y_i)^2<4m$ i $\|x-y\|<2\sqrt m$. Amb $x_t=t(1,\dots,1)$, $y_t=-x_t$, $0<t<1$: $\|x_t-y_t\|=2t\sqrt m\to 2\sqrt m$. Per tant el suprem és $2\sqrt m$.
+            fuites: ['2\s*t?\s*\\sqrt\{?\s*m\s*\}?', '<\s*4\s*m\b']
+            teoria: ["T1.5"]
+        errors_comuns:
+          - id: fita_sense_optimalitat
+            descripcio: |
+              Troba una fita superior de $D_B$ i la dona com a diàmetre sense comprovar que és la més petita (que hi ha parelles de punts amb distància tan a prop com es vulgui de la fita).
+            pregunta: |
+              Has vist que totes les distàncies són menors que el teu valor. Per què no podria ser el suprem un nombre més petit?
+          - id: maxim_assolit
+            descripcio: |
+              Pren punts de la vora (per exemple $\pm e_1$ o els vèrtexs del cub) com si fossin del conjunt, sense notar que els conjunts són oberts i el suprem no s'assoleix.
+            pregunta: |
+              Els punts que has triat compleixen la desigualtat estricta que defineix el conjunt? Com ho arreglaries?
+          - id: distancia_equivocada
+            descripcio: |
+              Calcula cada diàmetre amb la distància "pròpia" del conjunt ($d_1$ per a $B_1$, $d_\infty$ per a $B_3$) en lloc de la distància euclidiana, o barreja distàncies.
+            pregunta: |
+              Amb quina distància està definit $D_A$ a l'enunciat? La fas servir per als tres conjunts?
+          - id: fitat_sense_bola
+            descripcio: |
+              Al recíproc, afirma que $A$ és fitat "perquè les distàncies ho són" sense exhibir cap bola que contingui $A$ (o pren com a centre un punt que no està ben definit).
+            pregunta: |
+              Segons la definició del curs, què has de trobar per dir que $A$ és fitat? Quin centre i quin radi proposes?
+        nota_professor: |
+          Interpreto $d$ com la distància euclidiana (com al problema 5). Si es mesurés cada conjunt amb la distància de la seva pròpia norma, els tres diàmetres serien $2$; amb $d_1$ es tindria $\mathrm{diam}(B_3)=2m$ i amb $d_\infty$, $\mathrm{diam}(B_1)=2$. Per a $m=1$ els tres conjunts coincideixen amb $(-1,1)$ i tots els diàmetres valen $2$. A $\mathbb{R}^2$: $B_1$ és un rombe, $B_2$ un disc, $B_3$ un quadrat; $B_1\subset B_2\subset B_3$.

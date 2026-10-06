@@ -1,0 +1,603 @@
+{
+ "config": "oss20b",
+ "stages": {
+  "diagnosi": [
+   "openrouter",
+   "openai/gpt-oss-20b",
+   "low"
+  ],
+  "resposta": [
+   "openrouter",
+   "openai/gpt-oss-20b",
+   "low"
+  ],
+  "guardia": [
+   "openrouter",
+   "openai/gpt-oss-20b",
+   "low"
+  ]
+ },
+ "sessions": [
+  {
+   "exercici": "t2-4c",
+   "torns": [
+    {
+     "alumne": "He provat les rectes $y=kx$ i sempre dona $0$, per tant el límit és $0$.",
+     "error": "LLMError: diagnosi: empty response (finish_reason=stop)",
+     "want_intent": "proposa_resultat",
+     "want_error": "camins_com_a_prova",
+     "latencia_ms": 12285
+    },
+    {
+     "alumne": "Què vol dir exactament que un límit existeixi?",
+     "tutor": "Bon treball, l’argumentació és clara i completa.  \nHas demostrat que el numerador s’anula més ràpid que el denominador, i per tant el límit és efectivament $0$.  \nL’idea clau és que el grau del numerador és superior al del denominador, de manera que la fractió es converteix en $0$ a mesura que $x$ i $y$ tendeixen a zero.  \nAixò és una aplicació directa de la Definició 6 del Tema 2 sobre límits.",
+     "referencies": [
+      "T2.6"
+     ],
+     "accio": "tancar",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_pista",
+     "errors": [],
+     "want_intent": "pregunta_conceptual",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 2851,
+       "input_tokens": 2972,
+       "output_tokens": 225,
+       "cached_tokens": 64,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 11682,
+       "input_tokens": 1428,
+       "output_tokens": 214,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 1487,
+       "input_tokens": 2669,
+       "output_tokens": 74,
+       "cached_tokens": 64,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 16022
+    },
+    {
+     "alumne": "No sé com fitar-ho. Digues-me la solució, si us plau.",
+     "tutor": "No és correcte el resultat que proposes.  \nA l’hora d’analitzar la fracció veus una indeterminació $0/0$ quan $(x,y)\\to(0,0)$.  \nQuin camí democràtic usaràs per a obtenir un candidat a límit?",
+     "referencies": [],
+     "accio": "questionar_resultat",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [],
+     "want_intent": "demana_solucio",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 3155,
+       "input_tokens": 3117,
+       "output_tokens": 180,
+       "cached_tokens": 64,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 1879,
+       "input_tokens": 1474,
+       "output_tokens": 106,
+       "cached_tokens": 64,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 3332,
+       "input_tokens": 2656,
+       "output_tokens": 210,
+       "cached_tokens": 64,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 8367
+    },
+    {
+     "alumne": "Com que $x^4\\le x^4+y^2$, tinc $|f|\\le\\frac{|x|^5}{x^4}=|x|\\to0$, i pel sandvitx el límit és $0$.",
+     "tutor": "Bon treball! Has acorat el quocient correctament i acabat amb la majoria d’una desigualtat simple. Per tant, el límit resulta $0$. Aquesta idea clau de limitar el denominador per $x^4$ ha donat el resultat final.",
+     "referencies": [],
+     "accio": "tancar",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [],
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 7270,
+       "input_tokens": 3244,
+       "output_tokens": 645,
+       "cached_tokens": 64,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 1279,
+       "input_tokens": 1786,
+       "output_tokens": 95,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 1385,
+       "input_tokens": 2963,
+       "output_tokens": 65,
+       "cached_tokens": 64,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 9936
+    }
+   ]
+  },
+  {
+   "exercici": "t4-8",
+   "torns": [
+    {
+     "alumne": "Calculo el jacobià: $\\det JG=3+6z$, que a $(1,-1,2)$ val $15$.",
+     "tutor": "Bon treball amb el determinant. Per demostrar la inversió local has de garantir que el punt $(1,-1,2)$ s’assigna correctament a una imatge específica. Pots comprovar quina és la imatge de $(1,-1,2)$ amb $G$ i així entendre que aquest punt correspon a $(4,4,-1)$. Quina és la imatge del punt indicat segons la funció?",
+     "referencies": [],
+     "accio": "demanar_justificacio",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 3,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 5492,
+       "input_tokens": 3996,
+       "output_tokens": 413,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 1980,
+       "input_tokens": 1247,
+       "output_tokens": 101,
+       "cached_tokens": 64,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 1686,
+       "input_tokens": 1303,
+       "output_tokens": 98,
+       "cached_tokens": 1232,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 1540,
+       "input_tokens": 1304,
+       "output_tokens": 121,
+       "cached_tokens": 1264,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 1686,
+       "input_tokens": 3814,
+       "output_tokens": 247,
+       "cached_tokens": 32,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 148786
+    },
+    {
+     "alumne": "Llavors $DG^{-1}(4,4,-1)$ és la jacobiana de $G$ al punt $(4,4,-1)$ invertida, no?",
+     "tutor": "Quin és el punt del domini de \\(G\\) que s’assigna a \\((4,4,-1)\\)? En quin punt s’ha d’avaluar la jacobiana de \\(G\\) per obtenir \\(DG^{-1}(4,4,-1)\\)?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 2,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [
+      "punt_equivocat"
+     ],
+     "want_intent": "mostra_treball",
+     "want_error": "punt_equivocat",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 2190,
+       "input_tokens": 4149,
+       "output_tokens": 290,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 1620,
+       "input_tokens": 1481,
+       "output_tokens": 131,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 6075,
+       "input_tokens": 1537,
+       "output_tokens": 74,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 1468,
+       "input_tokens": 4023,
+       "output_tokens": 120,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 20083
+    },
+    {
+     "alumne": "Què diu exactament el teorema de la funció inversa?",
+     "error": "LLMError: diagnosi: empty response (finish_reason=stop)",
+     "want_intent": "pregunta_conceptual",
+     "want_error": null,
+     "latencia_ms": 19879
+    },
+    {
+     "alumne": "Com que té inversa local a tot arreu on $3+6z\\neq0$, $G$ té inversa global.",
+     "error": "LLMError: diagnosi: empty response (finish_reason=stop)",
+     "want_intent": "proposa_resultat",
+     "want_error": "local_implica_global",
+     "latencia_ms": 30706
+    }
+   ]
+  },
+  {
+   "exercici": "t6-3a",
+   "torns": [
+    {
+     "alumne": "No sé per on començar.",
+     "tutor": "Per a decidir si $f$ pot assolir un màxim i un mínim sobre la corba \\(x^{2}+2y^{2}=3\\), cal saber si el conjunt és compacte. Pots comprovar que la corba és un ell i, per tant, està tancada i acotada; això garanteix que $f$ és continua sobre un conjunt compacte. Quina és la conclusió davant d’una funció contínua sobre un conjunt compacte?",
+     "referencies": [],
+     "accio": "pista",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [],
+     "want_intent": "demana_pista",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 4105,
+       "input_tokens": 2553,
+       "output_tokens": 337,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 1325,
+       "input_tokens": 1172,
+       "output_tokens": 119,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 2095,
+       "input_tokens": 2343,
+       "output_tokens": 132,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 7527
+    },
+    {
+     "alumne": "Sobre l'el·lipse $x^2=3-2y^2\\le3$, així que $|x|\\le\\sqrt3$.",
+     "tutor": "Centrem-nos en el pas següent: existència dels extrems. Què creus que hauries d'aconseguir ara, i com ho començaries?",
+     "referencies": [],
+     "accio": "pista",
+     "nivell": 2,
+     "fallback": true,
+     "intents": 3,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 21261,
+       "input_tokens": 3592,
+       "output_tokens": 368,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 1595,
+       "input_tokens": 1556,
+       "output_tokens": 121,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 11311,
+       "input_tokens": 1613,
+       "output_tokens": 216,
+       "cached_tokens": 67,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 7769,
+       "input_tokens": 1679,
+       "output_tokens": 134,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 62536
+    },
+    {
+     "alumne": "Per tant el màxim és $\\sqrt3$ i el mínim $-\\sqrt3$.",
+     "error": "LLMError: diagnosi: empty response (finish_reason=stop)",
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "latencia_ms": 17206
+    },
+    {
+     "alumne": "S'assoleixen a $(\\sqrt3,0)$ i $(-\\sqrt3,0)$, perquè quan $y=0$ tenim $x^2=3$, i l'el·lipse és compacta.",
+     "tutor": "Has comprovat que els punts \\((\\pm\\sqrt3,0)\\) satisfan exactament la condició \\(x^2+2y^2=3\\)? En altres paraules, si substitueixes \\(x=\\pm\\sqrt3\\) i \\(y=0\\) en l’equació de l’ellipse, obtenenun veritat? La política de la matriu és només tu per comprovar això. Què s’obté si facies aquesta substitució?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [
+      "fita_sense_assolir",
+      "sense_existencia"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 50889,
+       "input_tokens": 2786,
+       "output_tokens": 731,
+       "cached_tokens": 67,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 5604,
+       "input_tokens": 1845,
+       "output_tokens": 144,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 3853,
+       "input_tokens": 3009,
+       "output_tokens": 84,
+       "cached_tokens": 68,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 60348
+    }
+   ]
+  },
+  {
+   "exercici": "t3-5",
+   "torns": [
+    {
+     "alumne": "Sobre les rectes $y=mx$ el límit a l'origen és $0$, per tant $f$ és contínua a l'origen.",
+     "tutor": "Has comprovat si hi ha altres camins cap a l’origen que no siguin rectes, on el comportament de $x^2/y$ pot diferir del que veus a les rectes $y=mx$?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 3,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [
+      "nomes_rectes"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": "nomes_rectes",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 13188,
+       "input_tokens": 5067,
+       "output_tokens": 376,
+       "cached_tokens": 67,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 4965,
+       "input_tokens": 1285,
+       "output_tokens": 128,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 3529,
+       "input_tokens": 1353,
+       "output_tokens": 83,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 3575,
+       "input_tokens": 1341,
+       "output_tokens": 64,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 1655,
+       "input_tokens": 4584,
+       "output_tokens": 179,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 33536
+    },
+    {
+     "alumne": "A l'origen, $D_vf(0,0)=\\lim_{t\\to0}\\frac{f(tv)}{t}=\\frac{v_1^2}{v_2}$ si $v_2\\neq0$. Com que existeixen totes, $f$ és contínua a l'origen.",
+     "error": "LLMError: diagnosi: empty response (finish_reason=stop)",
+     "want_intent": "mostra_treball",
+     "want_error": "direccionals_implica_continuitat",
+     "latencia_ms": 50517
+    },
+    {
+     "alumne": "Dona'm una pista per estudiar la continuïtat a l'origen.",
+     "error": "LLMError: diagnosi: empty response (finish_reason=stop)",
+     "want_intent": "demana_pista",
+     "want_error": null,
+     "latencia_ms": 17389
+    },
+    {
+     "alumne": "Fora de l'eix $y=0$ és un quocient de polinomis amb denominador no nul, així que és contínua.",
+     "tutor": "No és suficient només mencionar que és quocient de polinomis. Per demostrar la discontinuïtat a un punt $\\,(x_0,0)$ amb $x_0\\neq0$, que cosa has de comprovar respecte al límit de $f$ quan t'acosti a aquest punt?",
+     "referencies": [],
+     "accio": "demanar_justificacio",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 6467,
+       "input_tokens": 5162,
+       "output_tokens": 484,
+       "cached_tokens": 64,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 2025,
+       "input_tokens": 1704,
+       "output_tokens": 95,
+       "cached_tokens": 64,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "openai/gpt-oss-20b",
+       "latency_ms": 3585,
+       "input_tokens": 5031,
+       "output_tokens": 116,
+       "cached_tokens": 432,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 12079
+    }
+   ]
+  }
+ ],
+ "metrics": {
+  "turns": 16,
+  "failed_turns": 6,
+  "fallback": 1,
+  "drafts_per_turn": 1.7,
+  "draft_errors": 0,
+  "latex_broken": 0,
+  "intent_match": 2,
+  "error_match": 9,
+  "cost_usd": 0.0023,
+  "cost_per_turn_usd": 0.00023,
+  "latency_s": 37.9,
+  "input_tokens": 92838,
+  "cached_tokens": 3869,
+  "output_tokens": 7320
+ }
+}

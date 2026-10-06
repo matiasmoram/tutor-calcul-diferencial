@@ -1,0 +1,72 @@
+{
+  "id": "0f552500ddc9",
+  "exercici": "T6.4",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $M\\subseteq\\mathbb{R}^n$. Definició 2 (forma implícita) de $m$-varietat de classe $\\mathcal{C}^r$: per a tot $\\mathbf{a}\\in M$ existeixen un obert $G$, amb $\\mathbf{a}\\in G\\subseteq\\mathbb{R}^n$, i una funció $\\Phi\\colon G\\subseteq\\mathbb{R}^n\\to\\mathbb{R}^{n-m}$, $\\Phi\\in\\mathcal{C}^r(G)$, tals que $\\mathrm{rang}\\left(D\\Phi(\\mathbf{x})\\right)=n-m$ per a tot $\\mathbf{x}\\in G$ i $M\\cap G\\subseteq\\{\\mathbf{x}\\in G\\mid\\Phi(\\mathbf{x})=\\mathbf{0}\\}$.",
+    "Definició 3 (forma paramètrica): per a tot $\\mathbf{a}\\in M$ existeixen un obert $G$, amb $\\mathbf{a}\\in G\\subseteq\\mathbb{R}^n$, un obert $\\Omega\\subseteq\\mathbb{R}^m$ i una funció $\\rho\\colon\\Omega\\subseteq\\mathbb{R}^m\\to\\mathbb{R}^n$, $\\rho\\in\\mathcal{C}^r(\\Omega)$, tals que $\\mathrm{rang}\\left(D\\rho(\\mathbf{u})\\right)=m$ per a tot $\\mathbf{u}\\in\\Omega$ i $\\rho\\colon\\Omega\\to M\\cap G$ és bijectiva amb inversa contínua.",
+    "Aleshores, les definicions 2 i 3 són equivalents: $M$ és una $m$-varietat de classe $\\mathcal{C}^r$ segons la definició 2 si i només si ho és segons la definició 3.",
+    "$\\Longrightarrow$ Fixem $\\mathbf{a}\\in M$ i prenem $G$ i $\\Phi$ com a la definició 2. Com que $\\mathbf{a}\\in M\\cap G$, $\\Phi(\\mathbf{a})=\\mathbf{0}$ i, com que $\\mathrm{rang}\\left(D\\Phi(\\mathbf{a})\\right)=n-m$, hi ha un requadre $(n-m)\\times(n-m)$ de $D\\Phi(\\mathbf{a})$ amb determinant no nul; fent permutacions de variables si cal, podem suposar que ocupa les darreres $n-m$ columnes.",
+    "Aplicant el teorema de la funció implícita (amb $N=m$ i $M=n-m$), existeixen oberts $U\\subseteq G\\subseteq\\mathbb{R}^n$ i $\\Omega\\subseteq\\mathbb{R}^m$, amb $\\mathbf{a}\\in U$ i $(a_1,\\ldots,a_m)\\in\\Omega$, i una funció $\\varphi\\colon\\Omega\\to\\mathbb{R}^{n-m}$ de classe $\\mathcal{C}^r$ tals que $\\varphi(a_1,\\ldots,a_m)=(a_{m+1},\\ldots,a_n)$ i $\\{\\mathbf{x}\\in U\\mid\\Phi(\\mathbf{x})=\\mathbf{0}\\}=\\{(\\mathbf{u},\\varphi(\\mathbf{u}))\\mid\\mathbf{u}\\in\\Omega\\}$.",
+    "Definim $\\rho\\colon\\Omega\\to\\mathbb{R}^n$, $\\rho(\\mathbf{u})=(\\mathbf{u},\\varphi(\\mathbf{u}))$. És injectiva i de classe $\\mathcal{C}^r$, i $D\\rho(\\mathbf{u})=\\begin{pmatrix}\\mathrm{Id}_{m\\times m}\\\\ D\\varphi(\\mathbf{u})\\end{pmatrix}$ té rang $m$ per a tot $\\mathbf{u}\\in\\Omega$.",
+    "A més, $\\rho(\\Omega)=\\{\\mathbf{x}\\in U\\mid\\Phi(\\mathbf{x})=\\mathbf{0}\\}=U\\cap\\{\\mathbf{x}\\in G\\mid\\Phi(\\mathbf{x})=\\mathbf{0}\\}=U\\cap(M\\cap G)=M\\cap U$, ja que $U\\subseteq G$. Per tant, $\\rho\\colon\\Omega\\to M\\cap U$ és bijectiva i la seva inversa, $(\\mathbf{x},\\mathbf{y})\\mapsto\\mathbf{x}$, és contínua: prenent l'obert $U$, es compleix la definició 3.",
+    "$\\Longleftarrow$ Fixem $\\mathbf{a}\\in M$ i prenem $G$, $\\Omega$ i $\\rho$ com a la definició 3, i sigui $\\mathbf{b}\\in\\Omega$ l'únic punt amb $\\rho(\\mathbf{b})=\\mathbf{a}$. Escrivim $\\rho=(\\rho_m,\\rho_{n-m})$, on $\\rho_m$ són les $m$ primeres components i $\\rho_{n-m}$ les $n-m$ darreres. Com que $\\mathrm{rang}\\left(D\\rho(\\mathbf{b})\\right)=m$, $D\\rho(\\mathbf{b})$ té algun menor d'ordre $m$ no nul i, reordenant variables si cal, podem suposar que és el de les $m$ primeres files: $\\det D\\rho_m(\\mathbf{b})\\neq0$.",
+    "Pel teorema de la funció inversa, existeix un obert $\\Omega'\\subseteq\\Omega$, amb $\\mathbf{b}\\in\\Omega'$, tal que $U=\\rho_m(\\Omega')$ és un obert de $\\mathbb{R}^m$, $\\rho_m\\colon\\Omega'\\to U$ és bijectiva i $\\rho_m^{-1}\\in\\mathcal{C}^r(U)$.",
+    "Prenem $G'=U\\times\\mathbb{R}^{n-m}$, obert de $\\mathbb{R}^n$, i $\\Phi\\colon G\\cap G'\\to\\mathbb{R}^{n-m}$, $\\Phi(x_1,\\ldots,x_n)=(x_{m+1},\\ldots,x_n)-\\rho_{n-m}(\\rho_m^{-1}(x_1,\\ldots,x_m))$. Està ben definida (si $\\mathbf{x}\\in G'$, $(x_1,\\ldots,x_m)\\in U$), és de classe $\\mathcal{C}^r$ i $D\\Phi(\\mathbf{x})=(\\star\\mid\\mathrm{Id}_{n-m})$ té rang $n-m$ per a tot $\\mathbf{x}\\in G\\cap G'$.",
+    "Encara no podem assegurar que $M\\cap(G\\cap G')$ sigui el conjunt de zeros de $\\Phi$. Com que $\\rho$ és contínua i $\\Omega'$ és obert, $\\rho(\\Omega')$ és un obert relatiu de $M\\cap G$, és a dir, $\\rho(\\Omega')=G''\\cap(M\\cap G)$ per a cert obert $G''$ de $\\mathbb{R}^n$. Restringim $\\Phi$ a $\\mathcal{G}:=G\\cap G'\\cap G''$, que conté $\\mathbf{a}$.",
+    "$\\subseteq$ Si $\\mathbf{x}\\in\\mathcal{G}$ i $\\Phi(\\mathbf{x})=\\mathbf{0}$, sigui $\\mathbf{u}=\\rho_m^{-1}(x_1,\\ldots,x_m)\\in\\Omega'$. Aleshores $\\rho_m(\\mathbf{u})=(x_1,\\ldots,x_m)$ i, per $\\Phi(\\mathbf{x})=\\mathbf{0}$, $\\rho_{n-m}(\\mathbf{u})=(x_{m+1},\\ldots,x_n)$; és a dir, $\\mathbf{x}=\\rho(\\mathbf{u})\\in\\rho(\\Omega')\\subseteq M$.",
+    "$\\supseteq$ Si $\\mathbf{x}\\in\\mathcal{G}\\cap M$, aleshores $\\mathbf{x}\\in G''\\cap(M\\cap G)=\\rho(\\Omega')$, i $\\mathbf{x}=\\rho(\\mathbf{u})$ amb $\\mathbf{u}\\in\\Omega'$; com que $\\rho_m(\\mathbf{u})=(x_1,\\ldots,x_m)$, és $\\mathbf{u}=\\rho_m^{-1}(x_1,\\ldots,x_m)$ i $\\Phi(\\mathbf{x})=(x_{m+1},\\ldots,x_n)-\\rho_{n-m}(\\mathbf{u})=\\mathbf{0}$. Per tant, $M\\cap\\mathcal{G}=\\{\\mathbf{x}\\in\\mathcal{G}\\mid\\Phi(\\mathbf{x})=\\mathbf{0}\\}$ i es compleix la definició 2."
+  ],
+  "n_enunciat": 3,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "$M\\cap G\\subseteq\\{\\mathbf{x}\\in G\\mid\\Phi(\\mathbf{x})=\\mathbf{0}\\}$",
+      "inici": 387,
+      "fi": 455,
+      "tipus": "hipotesi",
+      "explicacio": "Amb només la inclusió, la definició 2 admet conjunts massa petits: un punt $M=\\{\\mathbf{0}\\}\\subseteq\\mathbb{R}^2$ compliria la definició 2 amb $m=1$ i $\\Phi(x,y)=y$, però no és la imatge bijectiva d'un obert de $\\mathbb{R}$.",
+      "correccio": "$M\\cap G=\\{\\mathbf{x}\\in G\\mid\\Phi(\\mathbf{x})=\\mathbf{0}\\}$ (igualtat).",
+      "pista": "Si $M\\cap G$ només està contingut en el conjunt de zeros, pot ser molt més petit que una varietat?"
+    },
+    {
+      "id": "e2",
+      "fragment": 11,
+      "cita": "Com que $\\rho$ és contínua i $\\Omega'$ és obert, $\\rho(\\Omega')$ és un obert relatiu",
+      "inici": 85,
+      "fi": 169,
+      "tipus": "pas_injustificat",
+      "explicacio": "La continuïtat de $\\rho$ dona que les antiimatges d'oberts són obertes, no les imatges. Cal la continuïtat de $\\rho^{-1}$: $\\rho(\\Omega')=(\\rho^{-1})^{-1}(\\Omega')$.",
+      "correccio": "Com que $\\rho^{-1}\\colon M\\cap G\\to\\Omega$ és contínua, $\\rho(\\Omega')=(\\rho^{-1})^{-1}(\\Omega')$ és un obert relatiu de $M\\cap G$.",
+      "pista": "Una funció contínua envia oberts a oberts? Quina funció has de fer servir per escriure $\\rho(\\Omega')$ com una antiimatge?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t6.json",
+    "valoracio": "Definició 2 afeblida (inclusió en lloc d'igualtat) amb la seva conseqüència, i un argument topològic incorrecte al pas de $G''$.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "$M\\cap G\\subseteq\\{\\mathbf{x}\\in G\\mid\\Phi(\\mathbf{x})=\\mathbf{0}\\}$",
+        "gravetat": "error",
+        "explicacio": "La definició 2 requereix la igualtat $M\\cap G=\\{\\Phi=\\mathbf{0}\\}$; amb només la inclusió qualsevol subconjunt d'una varietat (p. ex. dos punts d'una recta) compliria la definició 2 amb $m=1$, i l'equivalència és falsa."
+      },
+      {
+        "fragment": 7,
+        "cita": "U\\cap\\{\\mathbf{x}\\in G\\mid\\Phi(\\mathbf{x})=\\mathbf{0}\\}=U\\cap(M\\cap G)",
+        "gravetat": "consequencia",
+        "explicacio": "Aquesta igualtat usa $M\\cap G=\\{\\Phi=\\mathbf{0}\\}$, que la definició 2 modificada ja no dona."
+      },
+      {
+        "fragment": 11,
+        "cita": "Com que $\\rho$ és contínua i $\\Omega'$ és obert, $\\rho(\\Omega')$ és un obert relatiu",
+        "gravetat": "error",
+        "explicacio": "La continuïtat de $\\rho$ no fa oberta la imatge d'un obert; cal la continuïtat de $\\rho^{-1}$: $\\rho(\\Omega')=(\\rho^{-1})^{-1}(\\Omega')$."
+      }
+    ]
+  },
+  "creat": 1791296017.2445488
+}

@@ -1,0 +1,63 @@
+{
+  "id": "858c3ff93231",
+  "exercici": "T4.4",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $\\Omega\\subseteq\\mathbb{R}^n$ obert, $f:\\Omega\\to\\mathbb{R}^m$ una funció i $a\\in\\Omega$. (i) Si $f$ és diferenciable en $a$, llavors per a tot $\\varepsilon>0$ existeix $\\delta>0$ tal que per a tot $x,y\\in B(a,\\delta)\\subseteq\\Omega$ es compleix $\\|f(x)-f(y)\\|\\leq\\big(\\|Df(a)\\|+\\varepsilon\\big)\\|x-y\\|$.",
+    "(ii) Si $f\\in\\mathcal{C}^1(\\Omega)$, llavors per a tot $\\varepsilon>0$ existeix $\\delta>0$ tal que per a tot $x,y\\in B(a,\\delta)\\subseteq\\Omega$ es compleix $\\|f(x)-f(y)\\|\\leq\\big(\\|Df(a)\\|+\\varepsilon\\big)\\|x-y\\|$.",
+    "(iii) Si $n=m$, $f\\in\\mathcal{C}^1(\\Omega)$ i $\\det Jf(a)\\neq 0$, llavors per a tot $\\varepsilon>0$ existeix $\\delta>0$ tal que per a tot $x,y\\in B(a,\\delta)\\subseteq\\Omega$ es compleix $\\|f(x)-f(y)\\|\\geq(c-\\varepsilon)\\|x-y\\|$, on $c=1/\\|(Df(a))^{-1}\\|$. (En particular, $f$ és localment injectiva.)",
+    "(i) Com que $f$ és diferenciable en $a$, donat $\\varepsilon>0$ existeix $\\delta>0$ tal que $\\|f(x)-f(a)-Df(a)(x-a)\\|\\leq\\varepsilon\\|x-a\\|$ per a tot $x\\in B(a,\\delta)\\subseteq\\Omega$. Per la desigualtat triangular i la consistència entre normes de matrius i vectors, $\\|f(x)-f(a)\\|\\leq\\|f(x)-f(a)-Df(a)(x-a)\\|+\\|Df(a)(x-a)\\|\\leq(\\varepsilon+\\|Df(a)\\|)\\|x-a\\|$.",
+    "(ii) Com que $f\\in\\mathcal{C}^1(\\Omega)$, la diferencial $Df$ i la seva norma $\\|Df\\|$ són contínues en $\\Omega$. Per tant, donat $\\varepsilon>0$, existeix $\\delta>0$ tal que $\\|Df(z)\\|<\\|Df(a)\\|+\\varepsilon$ per a tot $z\\in B(a,\\delta)\\subseteq\\Omega$.",
+    "Siguin $x,y\\in B(a,\\delta)$. Pel teorema del valor mitjà per a camps vectorials, aplicat amb $u=f(x)-f(y)$, existeix $z\\in[x,y]\\subseteq B(a,\\delta)$ tal que $\\langle f(x)-f(y),f(x)-f(y)\\rangle=\\langle f(x)-f(y),Df(z)(x-y)\\rangle$, és a dir, $\\|f(x)-f(y)\\|^2=\\langle f(x)-f(y),Df(z)(x-y)\\rangle$.",
+    "Per la desigualtat de Cauchy-Schwarz i la consistència de normes, $\\|f(x)-f(y)\\|^2\\leq\\|f(x)-f(y)\\|\\,\\|Df(z)\\|\\,\\|x-y\\|\\leq\\|f(x)-f(y)\\|\\big(\\|Df(a)\\|+\\varepsilon\\big)\\|x-y\\|$. Dividint per $\\|f(x)-f(y)\\|$ (si és nul, la desigualtat és immediata), obtenim $\\|f(x)-f(y)\\|\\leq\\big(\\|Df(a)\\|+\\varepsilon\\big)\\|x-y\\|$.",
+    "(iii) Sigui $h(x)=f(x)-Df(a)(x-a)$, que és de classe $\\mathcal{C}^1$ amb $Dh(x)=Df(x)-Df(a)$; en particular, $Dh(a)=0$. Per l'apartat (ii) aplicat a $h$, donat $\\varepsilon>0$ existeix $\\delta>0$ tal que $\\|h(x)-h(y)\\|\\leq\\varepsilon\\|x-y\\|$ per a tot $x,y\\in B(a,\\delta)\\subseteq\\Omega$, és a dir, $\\|f(x)-f(y)-Df(a)(x-y)\\|\\leq\\varepsilon\\|x-y\\|$.",
+    "Usant que $\\|A-B\\|\\geq\\|A\\|-\\|B\\|$, tenim $\\|f(x)-f(y)\\|\\geq\\|Df(a)(x-y)\\|-\\|f(x)-f(y)-Df(a)(x-y)\\|\\geq\\|Df(a)(x-y)\\|-\\varepsilon\\|x-y\\|$. N'hi ha prou, doncs, de veure que $\\|Df(a)(x-y)\\|\\geq c\\|x-y\\|$.",
+    "Com que $\\det Jf(a)\\neq 0$, existeix $(Df(a))^{-1}$ i $\\|x-y\\|=\\|(Df(a))^{-1}Df(a)(x-y)\\|\\geq\\|(Df(a))^{-1}\\|\\,\\|Df(a)(x-y)\\|$, d'on $c\\|x-y\\|\\leq\\|Df(a)(x-y)\\|$. Per tant, $\\|f(x)-f(y)\\|\\geq(c-\\varepsilon)\\|x-y\\|$ per a tot $x,y\\in B(a,\\delta)$."
+  ],
+  "n_enunciat": 3,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "per a tot $x,y\\in B(a,\\delta)\\subseteq\\Omega$ es compleix $\\|f(x)-f(y)\\|\\leq\\big(\\|Df(a)\\|+\\varepsilon\\big)\\|x-y\\|$",
+      "inici": 194,
+      "fi": 309,
+      "tipus": "conclusio",
+      "explicacio": "Amb només diferenciabilitat en $a$ no es pot fitar $\\|f(x)-f(y)\\|$ per a dos punts qualssevol a prop de $a$: això requereix $\\mathcal{C}^1$ (apartat (ii)). Contraexemple: $f(x)=x^2\\sin(1/x)$, $f(0)=0$, és diferenciable en $0$ amb $f'(0)=0$, però en tota bola centrada en $0$ hi ha punts on $f'$ val gairebé $-1$, i per tant parells $x,y$ amb $|f(x)-f(y)|/|x-y|$ proper a $1>0+\\varepsilon$ si $\\varepsilon<1$. La demostració de (i) només compara $x$ amb $a$.",
+      "correccio": "L'apartat (i) només afirma $\\|f(x)-f(a)\\|\\leq\\big(\\|Df(a)\\|+\\varepsilon\\big)\\|x-a\\|$ per a tot $x\\in B(a,\\delta)$: la comparació és amb el punt $a$.",
+      "pista": "Quina diferència hi ha entre la conclusió de (i) i la de (ii), i quina hipòtesi addicional té (ii)?"
+    },
+    {
+      "id": "e2",
+      "fragment": 10,
+      "cita": "$\\|x-y\\|=\\|(Df(a))^{-1}Df(a)(x-y)\\|\\geq\\|(Df(a))^{-1}\\|\\,\\|Df(a)(x-y)\\|$",
+      "inici": 54,
+      "fi": 126,
+      "tipus": "desigualtat",
+      "explicacio": "La consistència de normes dona $\\|Av\\|\\leq\\|A\\|\\,\\|v\\|$; aplicada a $A=(Df(a))^{-1}$ i $v=Df(a)(x-y)$ la desigualtat va en sentit contrari. Amb $\\geq$ no se'n dedueix $c\\|x-y\\|\\leq\\|Df(a)(x-y)\\|$ (i, en general, és falsa: per a $Df(a)=\\mathrm{diag}(1,10)$ i $x-y=e_2$ dona $1\\geq 10$).",
+      "correccio": "$\\|x-y\\|=\\|(Df(a))^{-1}Df(a)(x-y)\\|\\leq\\|(Df(a))^{-1}\\|\\,\\|Df(a)(x-y)\\|$, i dividint per $\\|(Df(a))^{-1}\\|$ s'obté $c\\|x-y\\|\\leq\\|Df(a)(x-y)\\|$.",
+      "pista": "Quina desigualtat dona la consistència entre la norma d'una matriu i la d'un vector, $\\|Av\\|$ versus $\\|A\\|\\,\\|v\\|$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t4.json",
+    "valoracio": "Dos errors: l'enunciat (i) s'ha reforçat a una fita per a parells $x,y$ (fals amb només diferenciabilitat en $a$) i la desigualtat de consistència de [10] està girada.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "per a tot $x,y\\in B(a,\\delta)\\subseteq\\Omega$ es compleix $\\|f(x)-f(y)\\|\\leq\\big(\\|Df(a)\\|+\\varepsilon\\big)\\|x-y\\|$",
+        "gravetat": "error",
+        "explicacio": "L'apartat (i) dels apunts només fita $\\|f(x)-f(a)\\|$ (comparació amb el punt $a$). Amb només diferenciabilitat en $a$ la fita de tipus Lipschitz per a parells $x,y$ és falsa (p. ex. $x^2\\sin(1/x^2)$ en $a=0$, derivada no fitada a prop de 0); a més, la demostració [4] només prova el cas $y=a$."
+      },
+      {
+        "fragment": 10,
+        "cita": "\\|x-y\\|=\\|(Df(a))^{-1}Df(a)(x-y)\\|\\geq\\|(Df(a))^{-1}\\|\\,\\|Df(a)(x-y)\\|",
+        "gravetat": "error",
+        "explicacio": "Desigualtat girada: per la consistència de normes $\\|(Df(a))^{-1}Df(a)(x-y)\\|\\leq\\|(Df(a))^{-1}\\|\\,\\|Df(a)(x-y)\\|$. Amb $\\geq$ no se'n dedueix $c\\|x-y\\|\\leq\\|Df(a)(x-y)\\|$ (en sortiria la desigualtat contrària)."
+      }
+    ]
+  },
+  "creat": 1791296058.5258086
+}

@@ -1,0 +1,66 @@
+{
+  "id": "1298e9043c43",
+  "exercici": "t1-6",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Treballem amb la distància euclidiana i $A\\neq\\emptyset$ (si $A=\\emptyset$, $D_A=\\emptyset$ i tots dos són trivialment fitats). Si $A$ és fitat, $A\\subseteq B_L(p)$ per a algun $p$ i algun $L>0$, i per a $x,y\\in A$: $0\\leq d(x,y)\\leq d(x,p)+d(p,y)<2L$. Per tant $D_A\\subseteq[0,2L]$ és fitat.",
+    "Recíprocament, suposem que $D_A$ és fitat, és a dir, que existeix $K\\geq0$ amb $d(x,y)\\leq K$ per a tots $x,y\\in A$. Aleshores, per a tot $x\\in A$, $\\|x\\|=d(x,0)\\leq K<K+1$, de manera que $A\\subseteq B_{K+1}(0)$ i $A$ és fitat.",
+    "Diàmetre de $B_2$: per a $x,y\\in B_2$, $\\|x-y\\|\\leq\\|x\\|+\\|y\\|<2$. Els punts $\\pm te_1$, amb $0<t<1$, són de $B_2$ i són a distància $2t$, que tendeix a $2$ quan $t\\to1^-$. Per tant $\\mathrm{diam}(B_2)=2$ (el suprem no s'assoleix).",
+    "Diàmetre de $B_1$: per a tot $v\\in\\mathbb{R}^m$, $\\|v\\|^2=\\sum_i v_i^2\\leq\\left(\\sum_i|v_i|\\right)^2$, és a dir, $\\|v\\|\\leq\\sum_i|v_i|$. Així, per a $x,y\\in B_1$, $\\|x-y\\|\\leq\\sum_i|x_i-y_i|\\leq\\sum_i|x_i|+\\sum_i|y_i|<2$.",
+    "Els punts $\\pm te_1$, amb $0<t<1$, també són de $B_1$ i són a distància $2t\\to2$. Per tant $\\mathrm{diam}(B_1)=2$, i tampoc no s'assoleix.",
+    "Diàmetre de $B_3$: per a $x,y\\in B_3$, $|x_i-y_i|\\leq|x_i|+|y_i|<2$ per a cada $i$, d'on $\\|x-y\\|^2=\\sum_{i=1}^m(x_i-y_i)^2<4m$, és a dir, $\\|x-y\\|<2\\sqrt m$.",
+    "Els vèrtexs $x=(1,\\dots,1)$ i $y=(-1,\\dots,-1)$ del cub són punts de $B_3$ i $\\|x-y\\|=\\sqrt{4m}=2\\sqrt m$. Per tant el suprem s'assoleix i $\\mathrm{diam}(B_3)=2\\sqrt m$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$\\|x\\|=d(x,0)\\leq K<K+1$",
+      "inici": 148,
+      "fi": 172,
+      "tipus": "logica",
+      "explicacio": "La hipòtesi només fita les distàncies entre punts d'$A$; l'origen no té per què ser d'$A$, així que $d(x,0)\\leq K$ no se'n dedueix (per exemple, $A=\\{(10,0,\\dots,0)\\}$ té $K=0$ però $\\|x\\|=10$).",
+      "correccio": "Fixar un punt $a_0\\in A$: per a tot $x\\in A$, $d(x,a_0)\\leq K<K+1$, i per tant $A\\subseteq B_{K+1}(a_0)$.",
+      "pista": "Per què hauria de ser l'origen un punt d'$A$? Quin centre pots fer servir que segur que hi pertany?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "són punts de $B_3$",
+      "inici": 56,
+      "fi": 74,
+      "tipus": "logica",
+      "explicacio": "$B_3$ és obert, definit per $\\max|x_i|<1$: els vèrtexs tenen $\\max|x_i|=1$ i no hi pertanyen. El suprem $2\\sqrt m$ no s'assoleix; cal aproximar-lo amb punts interiors.",
+      "correccio": "Prendre $x_t=t(1,\\dots,1)$ i $y_t=-x_t$ amb $0<t<1$, que són de $B_3$ i compleixen $\\|x_t-y_t\\|=2t\\sqrt m\\to2\\sqrt m$; el suprem és $2\\sqrt m$ i no s'assoleix.",
+      "pista": "Quant val $\\max_i|x_i|$ al punt $(1,\\dots,1)$? Compleix la condició que defineix $B_3$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t12.json",
+    "valoracio": "El recíproc usa un centre que no és d'A i l'optimalitat de B_3 pren punts de la vora com si fossin del conjunt obert.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$\\|x\\|=d(x,0)\\leq K<K+1$",
+        "gravetat": "error",
+        "explicacio": "La fita $d(x,y)\\le K$ només val per a $x,y\\in A$; l'origen no cal que sigui d'$A$. Cal centrar la bola en un punt $a_0\\in A$: $A\\subseteq B_{K+1}(a_0)$."
+      },
+      {
+        "fragment": 7,
+        "cita": "Els vèrtexs $x=(1,\\dots,1)$ i $y=(-1,\\dots,-1)$ del cub són punts de $B_3$",
+        "gravetat": "error",
+        "explicacio": "$B_3$ és obert ($\\max|x_i|<1$): els vèrtexs no hi pertanyen i el suprem $2\\sqrt m$ no s'assoleix; cal usar $\\pm t(1,\\dots,1)$ amb $t\\to1^-$."
+      },
+      {
+        "fragment": 7,
+        "cita": "Per tant el suprem s'assoleix",
+        "gravetat": "consequencia",
+        "explicacio": "Conclusió basada en considerar els vèrtexs com a punts de $B_3$; el valor $2\\sqrt m$ és correcte però no s'assoleix."
+      }
+    ]
+  },
+  "creat": 1791295812.8749352
+}

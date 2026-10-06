@@ -1,0 +1,47 @@
+{
+  "id": "c82270ebea62",
+  "exercici": "T4.13",
+  "font": "teoria",
+  "dificultat": "facil",
+  "fragments": [
+    "Sigui $G\\subseteq\\mathbb{R}^{n+m}$ obert, $\\Phi:G\\to\\mathbb{R}^m$, $(x,y)\\mapsto\\Phi(x,y)$, una funció $\\mathcal{C}^r(G)$, $r\\geq 1$, i $(a,b)\\in G$ tal que $\\Phi(a,b)=0$ i $\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$.",
+    "Aleshores existeixen dos oberts $U$ i $\\Omega$, amb $a\\in\\Omega\\subseteq\\mathbb{R}^n$ i $(a,b)\\in U\\subseteq G$, i una funció $\\varphi:\\Omega\\to\\mathbb{R}^m$ tals que: (i) $\\det\\big(\\partial\\Phi_i/\\partial y_j(z)\\big)_{i,j=1,\\ldots,m}\\neq 0$ per a tot $z\\in U$; (ii) $\\varphi\\in\\mathcal{C}^\\infty(\\Omega)$ i $\\varphi(a)=b$;",
+    "(iii) $\\{(x,y)\\in U\\mid\\Phi(x,y)=0\\}=\\{(u,\\varphi(u))\\mid u\\in\\Omega\\}$; en particular, $\\Phi(x,\\varphi(x))=0$ per a tot $x\\in\\Omega$.",
+    "(i) Considerem $f:G\\to\\mathbb{R}^{n+m}$, $f(x,y)=(x,\\Phi(x,y))$. Clarament $f\\in\\mathcal{C}^r(G)$ i $f(a,b)=(a,0)$. La matriu $Jf$ és triangular inferior per blocs, amb blocs diagonals $\\mathrm{Id}_n$ i $\\big(\\partial\\Phi_i/\\partial y_j\\big)_{i,j=1,\\ldots,m}$; per tant, $\\det Jf(a,b)=\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)\\neq 0$.",
+    "Pel teorema de la funció inversa, existeix un obert $U\\subseteq G$ amb $(a,b)\\in U$ tal que $f|_U$ és injectiva i $\\det Jf(z)\\neq 0$ per a tot $z\\in U$, $V=f(U)$ és obert i $f^{-1}:V\\to U$ és de classe $\\mathcal{C}^r(V)$. Com que $\\det Jf(z)=\\det\\big(\\partial\\Phi_i/\\partial y_j(z)\\big)$, això demostra (i).",
+    "(ii) Com que $f$ conserva les $n$ primeres coordenades, $f^{-1}$ és de la forma $f^{-1}(u,v)=(u,h(u,v))$ per a $(u,v)\\in V$. Definim $\\Omega=\\{x\\in\\mathbb{R}^n:(x,0)\\in V\\}$ i $\\varphi:\\Omega\\to\\mathbb{R}^m$, $\\varphi(u)=h(u,0)$. Observem que $a\\in\\Omega$, ja que $(a,0)=f(a,b)\\in V$.",
+    "$\\Omega$ és obert: si $x_0\\in\\Omega$, aleshores $(x_0,0)\\in V$, que és obert, i existeix $\\varepsilon>0$ amb $B((x_0,0),\\varepsilon)\\subseteq V$. Si $\\|x-x_0\\|<\\varepsilon$, aleshores $\\|(x,0)-(x_0,0)\\|=\\|x-x_0\\|<\\varepsilon$, de manera que $(x,0)\\in V$, és a dir, $x\\in\\Omega$.",
+    "$\\varphi$ està ben definida, perquè $(u,0)\\in V$ per a tot $u\\in\\Omega$; i com que $f^{-1}(u,0)=(u,h(u,0))=(u,\\varphi(u))$, $\\varphi$ és una component de $f^{-1}$, i per tant $\\varphi\\in\\mathcal{C}^r(\\Omega)$.",
+    "Per la bijectivitat de $f:U\\to V$, per a $(x,y)\\in U$ i $(u,v)\\in V$ es té $(x,y)=f^{-1}(f(x,y))=(x,h(x,\\Phi(x,y)))$ i $(u,v)=f(f^{-1}(u,v))=(u,\\Phi(u,h(u,v)))$; és a dir, $y=h(x,\\Phi(x,y))$ i $\\Phi(u,h(u,v))=v$. En particular, $b=h(a,\\Phi(a,b))=h(a,0)=\\varphi(a)$, i queda demostrat (ii).",
+    "(iii) $\\subseteq$: sigui $(x,y)\\in U$ amb $\\Phi(x,y)=0$. Aleshores $f(x,y)=(x,0)\\in V$, és a dir, $x\\in\\Omega$, i per la primera de les igualtats anteriors, $y=h(x,\\Phi(x,y))=h(x,0)=\\varphi(x)$.",
+    "$\\supseteq$: sigui $u\\in\\Omega$. Aleshores $(u,0)\\in V$ i $(u,\\varphi(u))=f^{-1}(u,0)\\in U$, ja que $f^{-1}:V\\to U$; a més, per la segona igualtat, $\\Phi(u,\\varphi(u))=\\Phi(u,h(u,0))=0$."
+  ],
+  "n_enunciat": 3,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$\\varphi\\in\\mathcal{C}^\\infty(\\Omega)$",
+      "inici": 267,
+      "fi": 305,
+      "tipus": "conclusio",
+      "explicacio": "La funció implícita hereta exactament la regularitat de $\\Phi$, no més. Contraexemple: $\\Phi(x,y)=y-x|x|$, de classe $\\mathcal{C}^1$ i no $\\mathcal{C}^2$, amb $(a,b)=(0,0)$; la funció implícita és $\\varphi(x)=x|x|$, que no és $\\mathcal{C}^\\infty$.",
+      "correccio": "(ii) $\\varphi\\in\\mathcal{C}^r(\\Omega)$ i $\\varphi(a)=b$, amb el mateix $r$ que $\\Phi$.",
+      "pista": "Si $\\Phi$ només és de classe $\\mathcal{C}^1$, d'on podria sortir més regularitat per a $\\varphi$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t4.json",
+    "valoracio": "Demostració correcta; l'enunciat afirma regularitat $\\mathcal{C}^\\infty$ en lloc de $\\mathcal{C}^r$.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$\\varphi\\in\\mathcal{C}^\\infty(\\Omega)$",
+        "gravetat": "error",
+        "explicacio": "Conclusió massa forta: amb $\\Phi\\in\\mathcal{C}^r$ només s'obté $\\varphi\\in\\mathcal{C}^r(\\Omega)$ (que és el que demostra [8]); $\\varphi$ no és en general $\\mathcal{C}^\\infty$."
+      }
+    ]
+  },
+  "creat": 1791296058.5332067
+}

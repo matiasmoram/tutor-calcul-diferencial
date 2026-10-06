@@ -1,0 +1,64 @@
+{
+  "id": "7cc062fca933",
+  "exercici": "T4.13",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $G\\subseteq\\mathbb{R}^{n+m}$ obert, $\\Phi:G\\to\\mathbb{R}^m$, $(x,y)\\mapsto\\Phi(x,y)$, una funció $\\mathcal{C}^r(G)$, $r\\geq 1$, i $(a,b)\\in G$ tal que $\\Phi(a,b)=0$ i $\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$.",
+    "Aleshores existeixen dos oberts $U$ i $\\Omega$, amb $a\\in\\Omega\\subseteq\\mathbb{R}^n$ i $(a,b)\\in U\\subseteq G$, i una funció $\\varphi:\\Omega\\to\\mathbb{R}^m$ tals que: (i) $\\det\\big(\\partial\\Phi_i/\\partial y_j(z)\\big)_{i,j=1,\\ldots,m}\\neq 0$ per a tot $z\\in G$; (ii) $\\varphi\\in\\mathcal{C}^r(\\Omega)$ i $\\varphi(a)=b$;",
+    "(iii) $\\{(x,y)\\in U\\mid\\Phi(x,y)=0\\}=\\{(u,\\varphi(u))\\mid u\\in\\Omega\\}$; en particular, $\\Phi(x,\\varphi(x))=0$ per a tot $x\\in\\Omega$.",
+    "(i) Considerem $f:G\\to\\mathbb{R}^{n+m}$, $f(x,y)=(x,\\Phi(x,y))$. Clarament $f\\in\\mathcal{C}^r(G)$ i $f(a,b)=(a,0)$. La matriu $Jf$ és triangular inferior per blocs, amb blocs diagonals $\\mathrm{Id}_n$ i $\\big(\\partial\\Phi_i/\\partial y_j\\big)_{i,j=1,\\ldots,m}$; per tant, $\\det Jf(a,b)=\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)\\neq 0$.",
+    "Pel teorema de la funció inversa, existeix un obert $U\\subseteq G$ amb $(a,b)\\in U$ tal que $f|_U$ és injectiva i $\\det Jf(z)\\neq 0$ per a tot $z\\in U$, $V=f(U)$ és obert i $f^{-1}:V\\to U$ és de classe $\\mathcal{C}^r(V)$. Com que $\\det Jf(z)=\\det\\big(\\partial\\Phi_i/\\partial x_j(z)\\big)$, això demostra (i).",
+    "(ii) Com que $f$ conserva les $n$ primeres coordenades, $f^{-1}$ és de la forma $f^{-1}(u,v)=(u,h(u,v))$ per a $(u,v)\\in V$. Definim $\\Omega=\\{x\\in\\mathbb{R}^n:(x,0)\\in V\\}$ i $\\varphi:\\Omega\\to\\mathbb{R}^m$, $\\varphi(u)=h(u,0)$. Observem que $a\\in\\Omega$, ja que $(a,0)=f(a,b)\\in V$.",
+    "$\\Omega$ és obert: si $x_0\\in\\Omega$, aleshores $(x_0,0)\\in V$, que és obert, i existeix $\\varepsilon>0$ amb $B((x_0,0),\\varepsilon)\\subseteq V$. Si $\\|x-x_0\\|<\\varepsilon$, aleshores $\\|(x,0)-(x_0,0)\\|=\\|x-x_0\\|<\\varepsilon$, de manera que $(x,0)\\in V$, és a dir, $x\\in\\Omega$.",
+    "$\\varphi$ està ben definida, perquè $(u,0)\\in V$ per a tot $u\\in\\Omega$; i com que $f^{-1}(u,0)=(u,h(u,0))=(u,\\varphi(u))$, $\\varphi$ és una component de $f^{-1}$, i per tant $\\varphi\\in\\mathcal{C}^r(\\Omega)$.",
+    "Per la bijectivitat de $f:U\\to V$, per a $(x,y)\\in U$ i $(u,v)\\in V$ es té $(x,y)=f^{-1}(f(x,y))=(x,h(x,\\Phi(x,y)))$ i $(u,v)=f(f^{-1}(u,v))=(u,\\Phi(u,h(u,v)))$; és a dir, $y=h(x,\\Phi(x,y))$ i $\\Phi(u,h(u,v))=v$. En particular, $b=h(a,\\Phi(a,b))=h(a,0)=\\varphi(a)$, i queda demostrat (ii).",
+    "(iii) $\\subseteq$: sigui $(x,y)\\in U$ amb $\\Phi(x,y)=0$. Aleshores $f(x,y)=(x,0)\\in V$, és a dir, $x\\in\\Omega$, i per la primera de les igualtats anteriors, $y=h(x,\\Phi(x,y))=h(x,0)=\\varphi(x)$.",
+    "$\\supseteq$: sigui $u\\in\\Omega$. Aleshores $(u,0)\\in V$ i $(u,\\varphi(u))=f^{-1}(u,0)\\in U$, ja que $f^{-1}:V\\to U$; a més, per la segona igualtat, $\\Phi(u,\\varphi(u))=\\Phi(u,h(u,0))=0$."
+  ],
+  "n_enunciat": 3,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "per a tot $z\\in G$",
+      "inici": 242,
+      "fi": 260,
+      "tipus": "conclusio",
+      "explicacio": "La condició sobre el determinant només es pot garantir en un entorn $U$ de $(a,b)$, no a tot el domini $G$. Contraexemple: $\\Phi(x,y)=x^2+y^2-1$ a $G=\\mathbb{R}^2$, $(a,b)=(0,1)$: $\\partial\\Phi/\\partial y(1,0)=0$.",
+      "correccio": "(i) $\\det\\big(\\partial\\Phi_i/\\partial y_j(z)\\big)\\neq 0$ per a tot $z\\in U$, l'obert que dona el teorema.",
+      "pista": "La hipòtesi sobre el determinant és en un sol punt: fins on se'n pot propagar la conclusió per continuïtat?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$\\det Jf(z)=\\det\\big(\\partial\\Phi_i/\\partial x_j(z)\\big)$",
+      "inici": 230,
+      "fi": 287,
+      "tipus": "calcul",
+      "explicacio": "$Jf$ és triangular per blocs amb blocs diagonals $\\mathrm{Id}_n$ i $\\big(\\partial\\Phi_i/\\partial y_j\\big)$, de manera que el determinant és el del bloc de derivades respecte de $y$; el bloc $\\big(\\partial\\Phi_i/\\partial x_j\\big)$ és $m\\times n$ i ni tan sols és quadrat en general.",
+      "correccio": "$\\det Jf(z)=\\det\\big(\\partial\\Phi_i/\\partial y_j(z)\\big)$, i per tant aquest determinant és no nul a tot $U$.",
+      "pista": "Quins blocs hi ha a la diagonal de $Jf$, i de quina mida és el bloc de derivades respecte de $x$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t4.json",
+    "valoracio": "Dos errors: (i) estès a tot $G$ i, a la demostració, el determinant identificat amb derivades respecte de $x$ en lloc de $y$.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "per a tot $z\\in G$",
+        "gravetat": "error",
+        "explicacio": "Conclusió (i) massa forta: el determinant $\\det(\\partial\\Phi_i/\\partial y_j)$ només és no nul a l'entorn $U$, no a tot $G$ (p. ex. a l'el·lipse de la figura s'anul·la als extrems)."
+      },
+      {
+        "fragment": 5,
+        "cita": "$\\det Jf(z)=\\det\\big(\\partial\\Phi_i/\\partial x_j(z)\\big)$",
+        "gravetat": "error",
+        "explicacio": "El bloc diagonal de $Jf$ és $(\\partial\\Phi_i/\\partial y_j)$, no $(\\partial\\Phi_i/\\partial x_j)$ (que a més no és quadrada si $n\\neq m$); amb aquesta igualtat no es demostra (i)."
+      }
+    ]
+  },
+  "creat": 1791296058.5341635
+}

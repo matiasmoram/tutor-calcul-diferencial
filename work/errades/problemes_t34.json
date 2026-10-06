@@ -1,0 +1,375 @@
+[
+ {
+  "font": "problema",
+  "id": "t3-7",
+  "dificultat": "dificil",
+  "fragments": [
+   "Fora de l'origen, les funcions $x$, $|y|$ i $\\sqrt{x^2+y^2}$ són contínues i el denominador no s'anul·la a $\\mathbb{R}^2\\setminus\\{(0,0)\\}$, de manera que $f$ hi és contínua.",
+   "A l'origen, sobre les rectes $y=mx$ tenim $f(x,mx)=\\dfrac{x\\,|m|\\,|x|}{|x|\\sqrt{1+m^2}}=\\dfrac{|m|\\,x}{\\sqrt{1+m^2}}\\to0$, i sobre l'eix $x=0$ la funció val $0$. Per tant el límit a l'origen és $0=f(0,0)$ i $f$ és contínua a tot $\\mathbb{R}^2$.",
+   "A l'obert $\\{y>0\\}$ tenim $f=\\dfrac{xy}{\\sqrt{x^2+y^2}}$, amb $\\dfrac{\\partial f}{\\partial x}=\\dfrac{y^3}{(x^2+y^2)^{3/2}}$ i $\\dfrac{\\partial f}{\\partial y}=\\dfrac{x^3}{(x^2+y^2)^{3/2}}$; a l'obert $\\{y<0\\}$ són les mateixes amb el signe canviat. Com que les dues derivades parcials existeixen a tot punt d'aquests oberts, $f$ és diferenciable a tot punt amb $y\\neq0$.",
+   "En un punt $(x_0,0)$ amb $x_0\\neq0$: $\\dfrac{f(x_0,t)-f(x_0,0)}{t}=\\dfrac{x_0|t|}{t\\sqrt{x_0^2+t^2}}$, que tendeix a $\\dfrac{x_0}{|x_0|}$ quan $t\\to0^+$ i a $-\\dfrac{x_0}{|x_0|}$ quan $t\\to0^-$. Els límits laterals són diferents, no existeix $\\dfrac{\\partial f}{\\partial y}(x_0,0)$ i, per tant, $f$ no és diferenciable en aquests punts.",
+   "A l'origen, $f(t,0)=0$ i $f(0,t)=0$ per a tot $t$, així que $\\nabla f(0,0)=(0,0)$ i l'única candidata a diferencial és l'aplicació lineal nul·la.",
+   "Per a la diferenciabilitat a l'origen cal que $\\dfrac{f(x,y)}{x^2+y^2}=\\dfrac{x|y|}{(x^2+y^2)^{3/2}}$ tendeixi a $0$. Sobre la recta $y=x$, amb $x>0$, val $\\dfrac{x^2}{2\\sqrt2\\,x^3}=\\dfrac{1}{2\\sqrt2\\,x}\\to+\\infty$, de manera que $f$ no és diferenciable a l'origen.",
+   "En resum, $f$ és contínua a tot $\\mathbb{R}^2$ i és diferenciable exactament als punts amb $y\\neq0$: no ho és en cap punt de l'eix $y=0$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "sobre l'eix $x=0$ la funció val $0$. Per tant el límit a l'origen és $0=f(0,0)$",
+    "tipus": "conclusio",
+    "explicacio": "Que el límit sigui $0$ sobre totes les rectes per l'origen no prova que el límit doble existeixi: hi ha funcions amb el mateix límit per totes les rectes i sense límit (p. ex. per paràboles). Cal una fita vàlida en tot un entorn.",
+    "correccio": "Cal fitar en un entorn: com que $|x|\\le\\sqrt{x^2+y^2}$, $|f(x,y)|\\le|y|\\to0$, i pel criteri del sandvitx el límit és $0=f(0,0)$.",
+    "pista": "N'hi ha prou de comprovar totes les rectes per assegurar que existeix un límit de dues variables?"
+   },
+   {
+    "fragment": 3,
+    "cita": "Com que les dues derivades parcials existeixen a tot punt d'aquests oberts",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "L'existència de les derivades parcials no implica la diferenciabilitat. La condició suficient demana que les parcials siguin contínues (en un entorn del punt).",
+    "correccio": "Les parcials són quocients de funcions $\\mathcal{C}^1$ amb denominador no nul, per tant són contínues a cada obert; per la condició suficient, $f$ és diferenciable a tot punt amb $y\\neq0$.",
+    "pista": "Quina hipòtesi sobre les derivades parcials demana la condició suficient de diferenciabilitat?"
+   },
+   {
+    "fragment": 6,
+    "cita": "$\\dfrac{f(x,y)}{x^2+y^2}=\\dfrac{x|y|}{(x^2+y^2)^{3/2}}$ tendeixi a $0$",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "La definició de diferenciabilitat divideix el residu per la norma $\\sqrt{x^2+y^2}$, no pel seu quadrat. Amb $x^2+y^2$ es comprova una condició diferent (més forta), i que falli no prova que $f$ no sigui diferenciable.",
+    "correccio": "Cal estudiar $\\dfrac{f(x,y)}{\\sqrt{x^2+y^2}}=\\dfrac{x|y|}{x^2+y^2}$; sobre $y=x$ val $\\pm\\dfrac12$, que no tendeix a $0$, i per tant $f$ no és diferenciable a l'origen.",
+    "pista": "En la definició de diferenciabilitat, per quina quantitat es divideix el residu $f(a+h)-f(a)-Df(a)h$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t3-12",
+  "dificultat": "normal",
+  "fragments": [
+   "Les components de $f$ són $f_1(x,y)=xy^{3/2}$ i $f_2(x,y)=x^{3/2}-y^2$. Hem de justificar la diferenciabilitat a prop de $(4,1)$, escriure l'aproximació lineal en aquest punt i avaluar-la en $(4.2,1.1)$.",
+   "Les dues components són sumes i productes de potències de $x$ i de $y$, que són funcions elementals; per tant $f$ és diferenciable a tot $\\mathbb{R}^2$, i en particular en un entorn de $(4,1)$.",
+   "Les derivades parcials són $\\frac{\\partial f_1}{\\partial x}=y^{3/2}$, $\\frac{\\partial f_1}{\\partial y}=\\frac32xy^{1/2}$, $\\frac{\\partial f_2}{\\partial x}=\\frac32x^{1/2}$ i $\\frac{\\partial f_2}{\\partial y}=-2y$. Al punt, com que $\\frac32\\cdot4\\cdot1=6$ i $\\frac32\\sqrt4=3$, queda $Jf(4,1)=\\begin{pmatrix}1&6\\\\3&-2\\end{pmatrix}$.",
+   "A més, $f(4,1)=(4\\cdot1,\\ 4^{3/2}-1)=(4,7)$, i l'aproximació lineal és $L(x,y)=(4,7)+\\begin{pmatrix}1&6\\\\3&-2\\end{pmatrix}\\begin{pmatrix}x-4\\\\y-1\\end{pmatrix}=\\big(4+(x-4)+6(y-1),\\ 7+3(x-4)-2(y-1)\\big)$.",
+   "Per aproximar $f(4.2,1.1)$ apliquem la jacobiana al punt: $f(4.2,1.1)\\approx(4+4.2+6\\cdot1.1,\\ 7+3\\cdot4.2-2\\cdot1.1)=(14.8,\\ 17.4)$.",
+   "Per tant, l'aproximació lineal dona $f(4.2,1.1)\\approx(14.8,\\ 17.4)$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "per tant $f$ és diferenciable a tot $\\mathbb{R}^2$",
+    "tipus": "hipotesi",
+    "explicacio": "Ser «elemental» no garanteix la diferenciabilitat: $y^{3/2}$ i $x^{3/2}$ ni tan sols estan definides per a $y<0$ o $x<0$. Cal comprovar on les parcials existeixen i són contínues.",
+    "correccio": "A l'obert $U=\\{x>0,\\ y>0\\}$, que conté $(4,1)$, les quatre derivades parcials existeixen i són contínues; per la condició suficient, $f$ és diferenciable a tot $U$.",
+    "pista": "Està definida $y^{3/2}$ per a valors negatius de $y$? On són contínues les derivades parcials?"
+   },
+   {
+    "fragment": 5,
+    "cita": "$f(4.2,1.1)\\approx(4+4.2+6\\cdot1.1,\\ 7+3\\cdot4.2-2\\cdot1.1)=(14.8,\\ 17.4)$",
+    "tipus": "calcul",
+    "explicacio": "La jacobiana s'ha d'aplicar a l'increment $(4.2-4,\\ 1.1-1)=(0.2,\\ 0.1)$, no a les coordenades del punt; a més, no és coherent amb la fórmula de $L$ escrita al pas anterior.",
+    "correccio": "$L(4.2,1.1)=(4+0.2+6\\cdot0.1,\\ 7+3\\cdot0.2-2\\cdot0.1)=(4.8,\\ 7.4)$.",
+    "pista": "A quin vector s'ha d'aplicar la jacobiana en l'aproximació lineal: al punt o al desplaçament respecte de $(4,1)$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t3-13",
+  "dificultat": "normal",
+  "fragments": [
+   "Considero $f(x,y)=\\sqrt{3+e^x\\cos y+5\\sin y}$; el nombre que volem és $f(-0.1,\\ 0.05)$. Com a punt base prenc $(0,0)$, proper al punt i on $f(0,0)=\\sqrt{3+1+0}=2$.",
+   "Prop de $(0,0)$ l'argument de l'arrel és proper a $4>0$ i $t\\mapsto\\sqrt t$ és $\\mathcal{C}^1$ a $(0,+\\infty)$; per tant $f$ té derivades parcials contínues en un entorn de $(0,0)$ i, per la condició suficient, és diferenciable a $(0,0)$.",
+   "Derivant, $\\dfrac{\\partial f}{\\partial x}=\\dfrac{e^x\\cos y}{2f}$ i $\\dfrac{\\partial f}{\\partial y}=\\dfrac{e^x\\sin y+5\\cos y}{2f}$.",
+   "Al punt base, amb $f(0,0)=2$: $\\nabla f(0,0)=\\left(\\dfrac{1}{4},\\ \\dfrac{5}{4}\\right)$.",
+   "L'aproximació lineal dona $f(-0.1,\\ 0.05)\\approx2+\\frac14(0.05)+\\frac54(-0.1)=2+0.0125-0.125=1.8875$.",
+   "Per tant, $\\sqrt{3+e^{-0.1}\\cos0.05+5\\sin0.05}\\approx1.8875$."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "$\\dfrac{\\partial f}{\\partial y}=\\dfrac{e^x\\sin y+5\\cos y}{2f}$",
+    "tipus": "calcul",
+    "explicacio": "La derivada de $\\cos y$ és $-\\sin y$, de manera que el terme $e^x\\sin y$ ha de portar signe negatiu (al punt $(0,0)$ no canvia el valor perquè $\\sin0=0$, però la fórmula és falsa).",
+    "correccio": "$\\dfrac{\\partial f}{\\partial y}=\\dfrac{-e^x\\sin y+5\\cos y}{2f}$.",
+    "pista": "Quina és la derivada de $\\cos y$ respecte de $y$?"
+   },
+   {
+    "fragment": 5,
+    "cita": "\\approx2+\\frac14(0.05)+\\frac54(-0.1)",
+    "tipus": "calcul",
+    "explicacio": "S'han intercanviat els increments: la derivada respecte de $x$ s'ha de multiplicar per l'increment de $x$, que és $-0.1$, i la de $y$ per $0.05$.",
+    "correccio": "$f(-0.1,\\ 0.05)\\approx2+\\frac14(-0.1)+\\frac54(0.05)=2-0.025+0.0625=2.0375$.",
+    "pista": "Quin increment correspon a cada variable, i per quina derivada parcial s'ha de multiplicar?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t3-16",
+  "dificultat": "normal",
+  "fragments": [
+   "Les derivades parcials de $f$ són $\\dfrac{\\partial f}{\\partial x}=y\\cos x$ i $\\dfrac{\\partial f}{\\partial y}=1-\\sin x+3y^2$, contínues a tot $\\mathbb{R}^2$. Per tant $f$ és diferenciable a tot arreu i la seva gràfica té pla tangent a cada punt.",
+   "El pla tangent a la gràfica en $(a,f(a))$ és $z=f(a)+\\frac{\\partial f}{\\partial x}(a)(x-a_1)+\\frac{\\partial f}{\\partial y}(a)(y-a_2)$, i és paral·lel al pla $XY$ si i només si $\\nabla f(a)=(0,0)$.",
+   "Cal resoldre $y\\cos x=0$ i $1-\\sin x+3y^2=0$. A la segona equació, $1-\\sin x\\geq0$ i $3y^2\\geq0$, i la suma només s'anul·la si tots dos termes són zero: $y=0$ i $\\sin x=1$.",
+   "De $\\sin x=1$ obtenim $x=\\frac{\\pi}{2}$, i amb $y=0$ la primera equació també es compleix. L'únic punt és, doncs, $\\left(\\frac{\\pi}{2},\\ 0\\right)$.",
+   "En aquest punt $f\\left(\\frac{\\pi}{2},0\\right)=(1-1)\\cdot0+0=0$ i el gradient s'anul·la, de manera que el pla tangent és $z=0$, el mateix pla $XY$."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "$\\dfrac{\\partial f}{\\partial x}=y\\cos x$",
+    "tipus": "calcul",
+    "explicacio": "La derivada de $1-\\sin x$ respecte de $x$ és $-\\cos x$, així que la parcial té signe negatiu.",
+    "correccio": "$\\dfrac{\\partial f}{\\partial x}=-y\\cos x$ (els zeros són els mateixos, però la fórmula ha de ser correcta).",
+    "pista": "Quina és la derivada de $1-\\sin x$ respecte de $x$?"
+   },
+   {
+    "fragment": 4,
+    "cita": "De $\\sin x=1$ obtenim $x=\\frac{\\pi}{2}$",
+    "tipus": "logica",
+    "explicacio": "$\\sin x=1$ té infinites solucions, $x=\\frac{\\pi}{2}+2k\\pi$ amb $k\\in\\mathbb{Z}$; s'han perdut tots els punts menys un.",
+    "correccio": "$x=\\frac{\\pi}{2}+2k\\pi$, $k\\in\\mathbb{Z}$: els punts són $\\left(\\frac{\\pi}{2}+2k\\pi,\\ 0\\right)$, i en tots ells el pla tangent és $z=0$.",
+    "pista": "Quants valors de $x\\in\\mathbb{R}$ compleixen $\\sin x=1$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t3-21b",
+  "dificultat": "facil",
+  "fragments": [
+   "$g$ és de classe $\\mathcal{C}^1$ on $\\cos u\\neq0$ i $\\cos v\\neq0$, i $f$ és de classe $\\mathcal{C}^1$ a l'obert $\\{xy\\neq1\\}$. Per la regla de la cadena, $F=f\\circ g$ és diferenciable als punts amb $\\cos u\\neq0$, $\\cos v\\neq0$ i $\\tan u\\tan v\\neq1$.",
+   "Derivant el quocient, $\\dfrac{\\partial f}{\\partial x}=\\dfrac{(1-xy)+(x+y)y}{(1-xy)^2}=\\dfrac{1+y^2}{(1-xy)^2}$ i, per simetria, $\\dfrac{\\partial f}{\\partial y}=\\dfrac{1+x^2}{(1-xy)^2}$.",
+   "A més, $\\dfrac{d}{du}\\tan u=1+\\tan^2u$, i la segona component de $g$ no depèn de $u$. Per la regla de la cadena, $D_1F=\\dfrac{\\partial f}{\\partial x}(g(u,v))\\,(1+\\tan^2u)=\\dfrac{(1+\\tan^2u)(1+\\tan^2v)}{(1-\\tan u\\tan v)^2}$.",
+   "Anàlogament, $D_2F=\\dfrac{\\partial f}{\\partial y}(g(u,v))\\,(1+\\tan^2v)=\\dfrac{(1+\\tan^2u)(1+\\tan^2v)}{(1-\\tan u\\tan v)^2}$.",
+   "Per simplificar, usem $1+\\tan^2u=\\dfrac{1}{\\cos^2u}$: $D_1F=\\dfrac{1}{\\cos^2u\\cos^2v\\,(1-\\tan u\\tan v)^2}=\\dfrac{1}{(\\cos u\\cos v+\\sin u\\sin v)^2}$.",
+   "Per tant, $D_1F(u,v)=D_2F(u,v)=\\dfrac{1}{\\cos^2(u-v)}$ a tots els punts on $F$ està definida."
+  ],
+  "errors": [
+   {
+    "fragment": 5,
+    "cita": "=\\dfrac{1}{(\\cos u\\cos v+\\sin u\\sin v)^2}",
+    "tipus": "calcul",
+    "explicacio": "En multiplicar, $\\cos u\\cos v\\,(1-\\tan u\\tan v)=\\cos u\\cos v-\\sin u\\sin v$: el signe és negatiu, no positiu.",
+    "correccio": "$D_1F=\\dfrac{1}{(\\cos u\\cos v-\\sin u\\sin v)^2}=\\dfrac{1}{\\cos^2(u+v)}$, i el mateix per a $D_2F$.",
+    "pista": "Quant val $\\cos u\\cos v\\cdot\\tan u\\tan v$? Amb quin signe apareix a l'expressió?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t3-22",
+  "dificultat": "normal",
+  "fragments": [
+   "Per a $t\\neq0$ tenim $\\gamma(t)=(t,t)\\neq(0,0)$, i $(f\\circ\\gamma)(t)=\\dfrac{t^2\\cdot t}{t^2+t^2}=\\dfrac{t^3}{2t^2}=\\dfrac{t}{2}$.",
+   "Per a $t=0$, la mateixa expressió $\\dfrac{t^3}{2t^2}$ avaluada en $t=0$ dona $0$, de manera que $(f\\circ\\gamma)(t)=\\dfrac t2$ per a tot $t\\in\\mathbb{R}$.",
+   "Aleshores $(f\\circ\\gamma)'(0)=\\lim_{t\\to0}\\dfrac{t/2-0}{t}=\\dfrac12$: la derivada existeix i val $\\dfrac12$.",
+   "Les parcials de $f$ a l'origen: $f(t,0)=0$ i $f(0,t)=0$ per a tot $t$, així que $\\dfrac{\\partial f}{\\partial x}(0,0)=\\dfrac{\\partial f}{\\partial y}(0,0)=0$ i $\\nabla f(0,0)=(0,0)$.",
+   "Si apliquéssim la regla de la cadena obtindríem $\\nabla f(0,0)\\cdot\\gamma'(0)=(0,0)\\cdot(1,1)=0$, que és diferent de $\\dfrac12$.",
+   "La regla de la cadena exigeix que $f$ sigui diferenciable a $\\gamma(0)=(0,0)$, i aquí no ho és perquè $f$ no és contínua a l'origen: el límit de $\\dfrac{x^2y}{x^2+y^2}$ quan $(x,y)\\to(0,0)$ depèn del camí.",
+   "Per tant $(f\\circ\\gamma)'(0)=\\dfrac12$, i aquest resultat no es pot obtenir aplicant la regla de la cadena."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "la mateixa expressió $\\dfrac{t^3}{2t^2}$ avaluada en $t=0$ dona $0$",
+    "tipus": "calcul",
+    "explicacio": "En $t=0$ l'expressió $\\dfrac{t^3}{2t^2}$ és $\\dfrac00$, no està definida. El valor en $0$ s'ha d'obtenir de la definició de $f$ a l'origen.",
+    "correccio": "Per a $t=0$, $(f\\circ\\gamma)(0)=f(0,0)=0=\\dfrac02$, i per tant $(f\\circ\\gamma)(t)=\\dfrac t2$ per a tot $t$.",
+    "pista": "Quant val $\\dfrac{t^3}{2t^2}$ exactament en $t=0$? Com està definida $f$ a l'origen?"
+   },
+   {
+    "fragment": 6,
+    "cita": "$f$ no és contínua a l'origen: el límit de $\\dfrac{x^2y}{x^2+y^2}$ quan $(x,y)\\to(0,0)$ depèn del camí",
+    "tipus": "conclusio",
+    "explicacio": "$f$ sí que és contínua a l'origen: $\\left|\\dfrac{x^2y}{x^2+y^2}\\right|\\le|y|\\to0$. El motiu correcte és que no és diferenciable, cosa que es dedueix de la discrepància amb la derivada direccional.",
+    "correccio": "$f$ no és diferenciable a l'origen: $(f\\circ\\gamma)'(0)=D_{(1,1)}f(0,0)=\\frac12$, mentre que si ho fos caldria $D_{(1,1)}f(0,0)=\\nabla f(0,0)\\cdot(1,1)=0$.",
+    "pista": "Pots fitar $\\left|\\dfrac{x^2y}{x^2+y^2}\\right|$ per alguna cosa que tendeixi a $0$? Què hauria de valer $D_{(1,1)}f(0,0)$ si $f$ fos diferenciable?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-1",
+  "dificultat": "normal",
+  "fragments": [
+   "A $\\Omega=\\mathbb{R}^2\\setminus\\{(0,0)\\}$, que és obert, $f$ és un quocient de polinomis amb denominador no nul. Com que $f$ i les seves derivades primeres són contínues a $\\Omega$, pel teorema de Schwarz les dues derivades creuades coincideixen a tot punt de $\\Omega$. L'únic candidat és l'origen.",
+   "Per a $(x,y)\\neq(0,0)$: $\\dfrac{\\partial f}{\\partial x}=\\dfrac{y(x^4+4x^2y^2-y^4)}{(x^2+y^2)^2}$ i $\\dfrac{\\partial f}{\\partial y}=\\dfrac{x(x^4-4x^2y^2-y^4)}{(x^2+y^2)^2}$.",
+   "A l'origen, substituint $(0,0)$ en aquestes fórmules obtenim $\\dfrac{\\partial f}{\\partial x}(0,0)=\\dfrac{\\partial f}{\\partial y}(0,0)=0$.",
+   "Sobre l'eix $x=0$, per a $y\\neq0$: $\\dfrac{\\partial f}{\\partial x}(0,y)=\\dfrac{y\\cdot(-y^4)}{y^4}=-y$, i en $y=0$ també val $0=-0$; així $\\dfrac{\\partial f}{\\partial x}(0,y)=-y$ per a tot $y$. Anàlogament, $\\dfrac{\\partial f}{\\partial y}(x,0)=\\dfrac{x\\cdot x^4}{x^4}=x$ per a tot $x$.",
+   "Llavors $\\dfrac{\\partial^2 f}{\\partial x\\partial y}(0,0)=\\dfrac{\\partial}{\\partial y}\\Big(\\dfrac{\\partial f}{\\partial x}\\Big)(0,0)=\\dfrac{d}{dy}(-y)\\Big|_{y=0}=-1$ i $\\dfrac{\\partial^2 f}{\\partial y\\partial x}(0,0)=\\dfrac{\\partial}{\\partial x}\\Big(\\dfrac{\\partial f}{\\partial y}\\Big)(0,0)=\\dfrac{d}{dx}(x)\\Big|_{x=0}=1$.",
+   "Les dues derivades creuades a l'origen són diferents, per tant el conjunt de punts demanat és $\\{(0,0)\\}$."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "Com que $f$ i les seves derivades primeres són contínues a $\\Omega$",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "Per aplicar el teorema de Schwarz no n'hi ha prou amb la continuïtat de les derivades primeres: cal que les derivades segones (creuades) existeixin i siguin contínues.",
+    "correccio": "$f\\in\\mathcal{C}^\\infty(\\Omega)$ (quocient de polinomis amb denominador no nul), en particular les derivades segones hi són contínues, i pel teorema de Schwarz les creuades coincideixen a $\\Omega$.",
+    "pista": "Quines derivades han de ser contínues perquè el teorema de Schwarz garanteixi la igualtat de les derivades creuades?"
+   },
+   {
+    "fragment": 3,
+    "cita": "substituint $(0,0)$ en aquestes fórmules obtenim",
+    "tipus": "logica",
+    "explicacio": "Les fórmules només valen fora de l'origen i en $(0,0)$ donen $\\frac00$. Les parcials a l'origen s'han de calcular per la definició (el valor $0$ és correcte, però no per aquest motiu).",
+    "correccio": "Com que $f(h,0)=f(0,k)=0$, per definició $\\dfrac{\\partial f}{\\partial x}(0,0)=\\lim_{h\\to0}\\dfrac{f(h,0)-f(0,0)}{h}=0$ i igualment $\\dfrac{\\partial f}{\\partial y}(0,0)=0$.",
+    "pista": "Què passa si substitueixes $(0,0)$ al denominador $(x^2+y^2)^2$? Com es calcula una derivada parcial en un punt on la fórmula no val?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-8",
+  "dificultat": "normal",
+  "fragments": [
+   "Primer situem el punt: $G(1,-1,2)=(1-1+4,\\ 1+1+2,\\ 2-1-2)=(4,4,-1)$. Per tant $DG^{-1}(4,4,-1)$ és la diferencial de la inversa local definida al voltant de $(1,-1,2)$.",
+   "$G$ és polinòmica, de classe $\\mathcal{C}^\\infty$, i $JG(x,y,z)=\\begin{pmatrix}1&1&2z\\\\ 1&-1&1\\\\ 2&1&-1\\end{pmatrix}$. Desenvolupant per la primera fila, $\\det JG(x,y,z)=1\\cdot(1-1)-1\\cdot(-1-2)+2z\\cdot(1+2)=3+6z$.",
+   "En $(1,-1,2)$, $\\det JG(1,-1,2)=15\\neq0$. Pel teorema de la funció inversa, hi ha un entorn $U$ de $(1,-1,2)$ tal que $G|_U$ és injectiva, $G(U)$ és obert i la inversa és de classe $\\mathcal{C}^\\infty$, amb $DG^{-1}(4,4,-1)=\\big(JG(1,-1,2)\\big)^{-1}$.",
+   "Amb $JG(1,-1,2)=\\begin{pmatrix}1&1&4\\\\ 1&-1&1\\\\ 2&1&-1\\end{pmatrix}$, calculem els adjunts i dividim pel determinant: $DG^{-1}(4,4,-1)=\\frac{1}{15}\\begin{pmatrix}0&3&3\\\\ 5&-9&1\\\\ 5&3&-2\\end{pmatrix}$.",
+   "Pel que fa a la inversa global: com que $\\det JG(x,y,z)=3+6z$ s'anul·la als punts del pla $z=-\\frac12$, $G$ no pot ser injectiva a $\\mathbb{R}^3$, i per tant no admet inversa global."
+  ],
+  "errors": [
+   {
+    "fragment": 4,
+    "cita": "$DG^{-1}(4,4,-1)=\\frac{1}{15}\\begin{pmatrix}0&3&3\\\\ 5&-9&1\\\\ 5&3&-2\\end{pmatrix}$",
+    "tipus": "calcul",
+    "explicacio": "S'ha posat la matriu de cofactors sense transposar: la inversa és la transposada de la matriu d'adjunts dividida pel determinant. Es comprova que el producte per $JG(1,-1,2)$ no dona la identitat.",
+    "correccio": "$DG^{-1}(4,4,-1)=\\frac{1}{15}\\begin{pmatrix}0&5&5\\\\ 3&-9&3\\\\ 3&1&-2\\end{pmatrix}$.",
+    "pista": "Si multipliques la matriu obtinguda per $JG(1,-1,2)$, dona la identitat? Què cal fer amb la matriu de cofactors abans de dividir pel determinant?"
+   },
+   {
+    "fragment": 5,
+    "cita": "s'anul·la als punts del pla $z=-\\frac12$, $G$ no pot ser injectiva a $\\mathbb{R}^3$",
+    "tipus": "logica",
+    "explicacio": "Que el jacobià s'anul·li en alguns punts no impedeix la injectivitat (p. ex. $x\\mapsto x^3$ és bijectiva i $f'(0)=0$); només impedeix que la inversa sigui diferenciable en aquells punts. La conclusió és certa, però no està justificada.",
+    "correccio": "$G$ no és injectiva: per exemple $G(0,0,0)=G(0,-1,-1)=(0,0,0)$; per tant no té inversa global.",
+    "pista": "Coneixes alguna funció bijectiva la derivada de la qual s'anul·li en un punt? Pots trobar dos punts diferents amb la mateixa imatge?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-10",
+  "dificultat": "normal",
+  "fragments": [
+   "Mirem primer les vores de $T$. Costat $u=0$, $0<v<2$: $G(0,v)=(v,v)$, el segment de la recta $y=x$ amb $0<x<2$. Costat $v=0$, $0<u<2$: $G(u,0)=(u,-u^2)$, l'arc de la paràbola $y=-x^2$ amb $0<x<2$.",
+   "Costat $u+v=2$, $0<u<2$: $x=u+v=2$ i $y=v-u^2=2-u-u^2$, que per a $0<u<2$ recorre l'interval $(-2,2)$; és un segment vertical sobre la recta $x=2$. La candidata a $S$ és la regió limitada per aquestes tres corbes.",
+   "Resolem $G(u,v)=(x,y)$: de $u+v=x$ i $v-u^2=y$ surt $v=x-u$ i $u^2+u=x-y$. Com que volem $u>0$, cal $x-y=u^2+u>0$, i prenem l'arrel positiva $u=\\dfrac{-1+\\sqrt{1+4(x-y)}}{2}$.",
+   "La condició $v>0$ és $u<x$; com que $t\\mapsto t^2+t$ és creixent per a $t>0$, equival a $x-y<x^2+x$, és a dir $y>-x^2$. La condició $u+v<2$ és $x<2$, i $x=u+v>0$. Recíprocament, si $0<x<2$ i $-x^2<y<x$, la $u$ anterior dona el punt $(u,x-u)\\in T$. Per tant $S=G(T)=\\{(x,y)\\mid 0<x<2,\\ -x^2<y<x\\}$.",
+   "La jacobiana és $JG(u,v)=\\begin{pmatrix}1&1\\\\ -2u&1\\end{pmatrix}$, amb $\\det JG(u,v)=1+2u>0$ per a $u>0$, i en particular a tot $T$.",
+   "Com que $T$ és obert, $G$ és polinòmica (de classe $\\mathcal{C}^\\infty$) i $\\det JG\\neq0$ a tot $T$, el teorema de la funció inversa assegura que $G$ és injectiva a $T$, que $S=G(T)$ és obert i que la inversa $G^{-1}:S\\to T$ és de classe $\\mathcal{C}^\\infty$.",
+   "Per tant $G:T\\to S$ és un difeomorfisme de classe $\\mathcal{C}^\\infty$, amb $S=\\{(x,y)\\mid 0<x<2,\\ -x^2<y<x\\}$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "recorre l'interval $(-2,2)$",
+    "tipus": "calcul",
+    "explicacio": "Per a $0<u<2$, $2-u-u^2$ és decreixent i va de $2$ (quan $u\\to0$) a $2-2-4=-4$ (quan $u\\to2$): l'interval és $(-4,2)$.",
+    "correccio": "$y=2-u-u^2$ recorre $(-4,2)$: el segment vertical va de $(2,2)$ a $(2,-4)$, coherent amb la paràbola $y=-x^2$ en $x=2$.",
+    "pista": "Quant val $2-u-u^2$ quan $u$ s'acosta a $2$?"
+   },
+   {
+    "fragment": 6,
+    "cita": "el teorema de la funció inversa assegura que $G$ és injectiva a $T$",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "El teorema de la funció inversa només dona injectivitat local (en un entorn de cada punt), no a tot $T$. La injectivitat global s'ha de provar a part.",
+    "correccio": "La injectivitat surt de la resolució: per a cada $(x,y)\\in S$ l'equació $u^2+u=x-y$ té una única arrel positiva, i $v=x-u$; per tant $G:T\\to S$ és bijectiva. Llavors el TFI a cada punt dona que $S$ és obert i $G^{-1}$ és $\\mathcal{C}^\\infty$.",
+    "pista": "El teorema de la funció inversa dona informació local o global? Com es pot veure que dos punts diferents de $T$ no tenen la mateixa imatge?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-16a",
+  "dificultat": "normal",
+  "fragments": [
+   "La jacobiana de $f$ és $Jf(u,v)=\\begin{pmatrix}3u^2-3v^2&-6uv\\\\ 6uv&3u^2-3v^2\\end{pmatrix}$.",
+   "El seu determinant és $\\det Jf(u,v)=(3u^2-3v^2)^2+36u^2v^2=9(u^2+v^2)^2$, que només s'anul·la a l'origen.",
+   "$f$ és polinòmica, de classe $\\mathcal{C}^\\infty(\\mathbb{R}^2)$, i a tot punt $(u,v)\\neq(0,0)$ el determinant és no nul. Pel teorema de la funció inversa, a tots aquests punts hi ha inversa local de classe $\\mathcal{C}^\\infty$.",
+   "A l'origen, en canvi, $\\det Jf(0,0)=0$, i per tant, pel teorema de la funció inversa, $f$ no hi té inversa local diferenciable.",
+   "De fet, $f$ ni tan sols és localment injectiva a l'origen: en polars, $f(r\\cos\\theta,r\\sin\\theta)=(r^3\\cos3\\theta,\\ r^3\\sin3\\theta)$, de manera que $(r,0)$ i $\\left(r\\cos\\frac{\\pi}{3},\\ r\\sin\\frac{\\pi}{3}\\right)$ tenen la mateixa imatge per a tot $r>0$.",
+   "Conclusió: $f$ té inversa local diferenciable a tots els punts $(u,v)\\neq(0,0)$, i no en té a l'origen."
+  ],
+  "errors": [
+   {
+    "fragment": 4,
+    "cita": "$\\det Jf(0,0)=0$, i per tant, pel teorema de la funció inversa, $f$ no hi té inversa local diferenciable",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "La condició $\\det\\neq0$ del teorema de la funció inversa és suficient, no necessària: que el determinant s'anul·li no permet concloure res amb aquest teorema (p. ex. $x\\mapsto x^3$ té inversa local, encara que no diferenciable).",
+    "correccio": "Si existís $h$ diferenciable amb $h\\circ f=\\mathrm{Id}$ a prop de l'origen, la regla de la cadena donaria $Dh(0,0)\\,Df(0,0)=I$, impossible perquè $Df(0,0)=0$.",
+    "pista": "El teorema de la funció inversa diu què passa quan el determinant s'anul·la, o només quan no s'anul·la?"
+   },
+   {
+    "fragment": 5,
+    "cita": "$(r,0)$ i $\\left(r\\cos\\frac{\\pi}{3},\\ r\\sin\\frac{\\pi}{3}\\right)$ tenen la mateixa imatge",
+    "tipus": "calcul",
+    "explicacio": "Amb $\\theta=\\frac{\\pi}{3}$ s'obté $3\\theta=\\pi$ i la imatge és $(-r^3,0)$, diferent de $(r^3,0)$. Cal $3\\theta=2\\pi$, és a dir $\\theta=\\frac{2\\pi}{3}$.",
+    "correccio": "$(r,0)$ i $\\left(r\\cos\\frac{2\\pi}{3},\\ r\\sin\\frac{2\\pi}{3}\\right)$ tenen la mateixa imatge $(r^3,0)$ per a tot $r>0$.",
+    "pista": "Quant valen $\\cos3\\theta$ i $\\sin3\\theta$ per a $\\theta=\\frac{\\pi}{3}$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-20",
+  "dificultat": "facil",
+  "fragments": [
+   "Sigui $F(x,y,z)=x^2y+e^x+z$, de classe $\\mathcal{C}^\\infty$. Tenim $F(0,1,-1)=0+1-1=0$ i $\\dfrac{\\partial F}{\\partial x}=2xy+e^x$, que en $(0,1,-1)$ val $e^0=1\\neq0$.",
+   "Pel teorema de la funció implícita (aplicat amb $r=2$) existeixen un entorn obert $\\Omega$ de $(1,-1)$ i una funció $x=x(y,z)$ de classe $\\mathcal{C}^2(\\Omega)$ amb $x(1,-1)=0$ i $F(x(y,z),y,z)=0$ per a tot $(y,z)\\in\\Omega$.",
+   "Derivant la identitat respecte de $y$: $2x\\,x_y\\,y+x^2+e^xx_y=0$; en $(1,-1)$, on $x=0$, queda $x_y(1,-1)=0$.",
+   "Derivant-la respecte de $z$: $2x\\,x_z\\,y+e^xx_z+1=0$; en el punt queda $x_z(1,-1)=1$.",
+   "Derivant $2x\\,x_y\\,y+x^2+e^xx_y=0$ respecte de $y$: $4x\\,x_y+2x_y^2y+2x\\,x_{yy}y+e^xx_y^2+e^xx_{yy}=0$; en el punt ($x=0$, $x_y=0$) dona $x_{yy}(1,-1)=0$.",
+   "Derivant $2x\\,x_z\\,y+e^xx_z+1=0$ respecte de $y$: $2x_yx_zy+2x\\,x_{zy}y+2x\\,x_z+e^xx_yx_z+e^xx_{zy}=0$; en el punt, $x_{zy}(1,-1)=0$, i per Schwarz $x_{yz}(1,-1)=0$.",
+   "Derivant la mateixa identitat respecte de $z$: $2x_z^2y+2x\\,x_{zz}y+e^xx_z^2+e^xx_{zz}=0$; en el punt, amb $x_z^2=1$ i $y=1$: $2+1+x_{zz}=0$, és a dir $x_{zz}(1,-1)=-3$."
+  ],
+  "errors": [
+   {
+    "fragment": 4,
+    "cita": "en el punt queda $x_z(1,-1)=1$",
+    "tipus": "calcul",
+    "explicacio": "Substituint $x=0$, $y=1$ queda $x_z+1=0$, és a dir $x_z(1,-1)=-1$, no $1$ (el signe no afecta $x_{zz}$, que depèn de $x_z^2$).",
+    "correccio": "$x_z(1,-1)=-1$.",
+    "pista": "Si $x_z+1=0$, quin valor ha de tenir $x_z$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-27",
+  "dificultat": "dificil",
+  "fragments": [
+   "Per a $x=\\sqrt e>0$, l'equació demana $\\frac{x}{y}>0$, és a dir $y>0$, i es pot escriure $\\sqrt e\\,y=\\frac12-\\log y$. Els dos membres són funcions creixents de $y$, i per tant hi ha com a màxim una solució; $y_0=\\frac{1}{\\sqrt e}$ ho és, ja que $1=\\frac12+\\frac12$.",
+   "A l'obert $\\{x>0,\\ y>0\\}$ considerem $F(x,y)=xy-\\log x+\\log y$, de classe $\\mathcal{C}^\\infty$, amb $F\\left(\\sqrt e,\\frac{1}{\\sqrt e}\\right)=0$. Com que $\\frac{\\partial F}{\\partial y}=x+\\frac1y$ val $\\sqrt e+\\sqrt e=2\\sqrt e\\neq0$ en el punt, el teorema de la funció implícita (amb $r=\\infty$) dona un interval obert $I\\ni\\sqrt e$ i $f\\in\\mathcal{C}^\\infty(I)$ amb $f(\\sqrt e)=\\frac{1}{\\sqrt e}$ tal que, prop del punt, la corba és exactament la gràfica de $f$.",
+   "Derivant $xf(x)-\\log x+\\log f(x)=0$: $f+xf'-\\frac1x+\\frac{f'}{f}=0$. En $x=\\sqrt e$, amb $f=\\frac{1}{\\sqrt e}$: $\\frac{1}{\\sqrt e}-\\frac{1}{\\sqrt e}+2\\sqrt e\\,f'(\\sqrt e)=0$, per tant $f'(\\sqrt e)=0$ i $f$ té un extrem local en $x=\\sqrt e$.",
+   "Per saber de quin tipus és, derivem de nou: $2f'+xf''+\\frac{1}{x^2}+\\frac{f''}{f}=0$.",
+   "En el punt, amb $f'(\\sqrt e)=0$: $f''(\\sqrt e)\\,(\\sqrt e+\\sqrt e)=-\\frac1e$, d'on $f''(\\sqrt e)=-\\frac{1}{2e^{3/2}}<0$. Per tant $x=\\sqrt e$ és un màxim local estricte de $f$."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "Els dos membres són funcions creixents de $y$, i per tant hi ha com a màxim una solució",
+    "tipus": "logica",
+    "explicacio": "El membre dret $\\frac12-\\log y$ és decreixent, no creixent; i, si tots dos fossin creixents, no se'n podria deduir que hi ha com a màxim una solució (dues funcions creixents es poden tallar moltes vegades).",
+    "correccio": "El membre esquerre és creixent i el dret és decreixent en $y$, de manera que la seva diferència és estrictament monòtona i hi ha com a màxim una solució.",
+    "pista": "Com és $\\log y$ quan $y$ creix? Dues funcions creixents es poden tallar en més d'un punt?"
+   },
+   {
+    "fragment": 3,
+    "cita": "$f'(\\sqrt e)=0$ i $f$ té un extrem local en $x=\\sqrt e$",
+    "tipus": "conclusio",
+    "explicacio": "Que la derivada s'anul·li només diu que és un punt crític; no garanteix que hi hagi extrem (p. ex. $x^3$ en $0$). Cal l'estudi de la derivada segona per concloure-ho.",
+    "correccio": "$f'(\\sqrt e)=0$: $x=\\sqrt e$ és un punt crític, i cal classificar-lo (amb la derivada segona).",
+    "pista": "Tota funció amb derivada nul·la en un punt hi té un extrem?"
+   },
+   {
+    "fragment": 4,
+    "cita": "$2f'+xf''+\\frac{1}{x^2}+\\frac{f''}{f}=0$",
+    "tipus": "calcul",
+    "explicacio": "Falta el terme de derivar el denominador de $\\frac{f'}{f}$: $\\left(\\frac{f'}{f}\\right)'=\\frac{f''}{f}-\\frac{f'^2}{f^2}$. En aquest punt no canvia el valor perquè $f'=0$, però l'equació és incorrecta.",
+    "correccio": "$2f'+xf''+\\frac{1}{x^2}+\\frac{f''}{f}-\\frac{f'^2}{f^2}=0$.",
+    "pista": "Quina és la derivada d'un quocient $\\frac{f'}{f}$?"
+   }
+  ]
+ }
+]

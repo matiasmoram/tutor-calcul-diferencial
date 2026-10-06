@@ -1,0 +1,707 @@
+{
+ "config": "mini+dsflash",
+ "stages": {
+  "diagnosi": [
+   "openai",
+   "gpt-5.4-mini",
+   "low"
+  ],
+  "resposta": [
+   "openrouter",
+   "deepseek/deepseek-v4-flash",
+   ""
+  ],
+  "guardia": [
+   "openrouter",
+   "deepseek/deepseek-v4-flash",
+   ""
+  ]
+ },
+ "sessions": [
+  {
+   "exercici": "t2-4c",
+   "torns": [
+    {
+     "alumne": "He provat les rectes $y=kx$ i sempre dona $0$, per tant el límit és $0$.",
+     "tutor": "Has comprovat que per les rectes $y=kx$ el quocient tendeix a $0$. Això et proporciona un candidat, però ¿demostra realment que el límit existeix o només et dona una pista?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [
+      "camins_com_a_prova"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": "camins_com_a_prova",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 2562,
+       "input_tokens": 3884,
+       "output_tokens": 276,
+       "cached_tokens": 2816,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 10939,
+       "input_tokens": 1657,
+       "output_tokens": 1390,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 7676,
+       "input_tokens": 2725,
+       "output_tokens": 110,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 21178
+    },
+    {
+     "alumne": "Què vol dir exactament que un límit existeixi?",
+     "tutor": "La definició de límit (Definició 6 del Tema 2) estableix que per a tot ε>0 ha d'existir un δ>0 tal que, per qualsevol punt a distància menor de δ (però diferent del punt), la funció estigui a distància menor de ε del candidat. Això significa que el límit ha de ser únic per a totes les trajectòries possibles, no només per a les rectes. Ara, com podries aplicar aquesta definició o alguna eina que en derivi per demostrar que el límit val el candidat que has trobat?",
+     "referencies": [
+      "T2.6"
+     ],
+     "accio": "explicar_concepte",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "pregunta_conceptual",
+     "errors": [],
+     "want_intent": "pregunta_conceptual",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1911,
+       "input_tokens": 3958,
+       "output_tokens": 226,
+       "cached_tokens": 3328,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 24467,
+       "input_tokens": 1666,
+       "output_tokens": 1642,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 51181,
+       "input_tokens": 2980,
+       "output_tokens": 1970,
+       "cached_tokens": 2951,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 77560
+    },
+    {
+     "alumne": "No sé com fitar-ho. Digues-me la solució, si us plau.",
+     "tutor": "Observa que al denominador tots dos termes són no negatius, per tant $x^4+y^2\\ge x^4$. Com pots aprofitar això per acotar el mòdul del quocient per una funció de $x$ que tendeixi a $0$?",
+     "referencies": [],
+     "accio": "pista",
+     "nivell": 3,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [],
+     "want_intent": "demana_solucio",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 2697,
+       "input_tokens": 4113,
+       "output_tokens": 263,
+       "cached_tokens": 2816,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 24932,
+       "input_tokens": 1852,
+       "output_tokens": 1506,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 13831,
+       "input_tokens": 3009,
+       "output_tokens": 883,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 41462
+    },
+    {
+     "alumne": "Com que $x^4\\le x^4+y^2$, tinc $|f|\\le\\frac{|x|^5}{x^4}=|x|\\to0$, i pel sandvitx el límit és $0$.",
+     "error": "APIStatusError: Error code: 402 - {'error': {'message': 'This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.', 'code': 402, 'metadata': {'reason': 'in_flight_budget_exhausted', 'limit_source': 'openrouter_in_flight_budget', 'remedy_hint': 'Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a c",
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "latencia_ms": 2799
+    }
+   ]
+  },
+  {
+   "exercici": "t4-8",
+   "torns": [
+    {
+     "alumne": "Calculo el jacobià: $\\det JG=3+6z$, que a $(1,-1,2)$ val $15$.",
+     "tutor": "Molt bé, el càlcul del determinant és correcte i la conclusió que $G$ compleix les hipòtesis del Teorema 5 del Tema 4 (Teorema de la funció inversa) al voltant de $(1,-1,2)$ és encertada.\n\nAra, per aplicar la fórmula $DG^{-1}(y_0) = \\big(DG(G^{-1}(y_0))\\big)^{-1}$ que dona el teorema, primer necessitem saber a quin punt de l'entorn original correspon la imatge $(4,4,-1)$. Pots trobar quina és la preimatge d'aquest punt?",
+     "referencies": [
+      "T4.5"
+     ],
+     "accio": "validar_i_avancar",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 2605,
+       "input_tokens": 4825,
+       "output_tokens": 321,
+       "cached_tokens": 4352,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 6696,
+       "input_tokens": 1931,
+       "output_tokens": 145,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 14587,
+       "input_tokens": 4374,
+       "output_tokens": 939,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 23890
+    },
+    {
+     "alumne": "Llavors $DG^{-1}(4,4,-1)$ és la jacobiana de $G$ al punt $(4,4,-1)$ invertida, no?",
+     "tutor": "Gairebé, però fixa't: el punt $(4,4,-1)$ és un valor de $G$, no un punt del seu domini. La jacobiana de $G$, on l'has d'avaluar per obtenir $DG^{-1}(4,4,-1)$?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 2,
+     "draft_errors": 0,
+     "intencio": "pregunta_conceptual",
+     "errors": [
+      "punt_equivocat"
+     ],
+     "want_intent": "mostra_treball",
+     "want_error": "punt_equivocat",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 5077,
+       "input_tokens": 5019,
+       "output_tokens": 510,
+       "cached_tokens": 4352,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 83501,
+       "input_tokens": 2228,
+       "output_tokens": 2282,
+       "cached_tokens": 512,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 26386,
+       "input_tokens": 4948,
+       "output_tokens": 2312,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 73392,
+       "input_tokens": 2378,
+       "output_tokens": 1490,
+       "cached_tokens": 2048,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 12445,
+       "input_tokens": 4589,
+       "output_tokens": 780,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 200803
+    },
+    {
+     "alumne": "Què diu exactament el teorema de la funció inversa?",
+     "error": "APIStatusError: Error code: 402 - {'error': {'message': 'This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.', 'code': 402, 'metadata': {'reason': 'in_flight_budget_exhausted', 'limit_source': 'openrouter_in_flight_budget', 'remedy_hint': 'Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a c",
+     "want_intent": "pregunta_conceptual",
+     "want_error": null,
+     "latencia_ms": 25343
+    },
+    {
+     "alumne": "Com que té inversa local a tot arreu on $3+6z\\neq0$, $G$ té inversa global.",
+     "tutor": "Veig que intentes aplicar la idea que si el determinant no s'anul·la en molts punts, aleshores hi ha inversa global. El teorema de la funció inversa, però, només garanteix l'existència d'una inversa local en un entorn de cada punt, no una de global. Què hauria de complir $G$ a tot $\\mathbb{R}^3$, a banda de tenir jacobià no nul, perquè poguéssim parlar d'una inversa global?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [
+      "local_implica_global"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": "local_implica_global",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 2555,
+       "input_tokens": 5135,
+       "output_tokens": 306,
+       "cached_tokens": 4864,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 54632,
+       "input_tokens": 2346,
+       "output_tokens": 1620,
+       "cached_tokens": 768,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 7922,
+       "input_tokens": 4758,
+       "output_tokens": 156,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 65110
+    }
+   ]
+  },
+  {
+   "exercici": "t6-3a",
+   "torns": [
+    {
+     "alumne": "No sé per on començar.",
+     "tutor": "No et preocupis, comencem pel principi. Per saber si podem garantir que $f$ assoleix extrems sobre el lligam, podem aplicar el Teorema de Weierstrass (T2.23), que demana que el conjunt sigui compacte. El lligam $x^2+2y^2=3$ defineix una el·lipse; pots dir si aquest conjunt és tancat i fitat segons el Teorema de Heine-Borel (T1.34)?",
+     "referencies": [],
+     "accio": "pista",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "frustracio",
+     "errors": [],
+     "want_intent": "demana_pista",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 1851,
+       "input_tokens": 3355,
+       "output_tokens": 182,
+       "cached_tokens": 2816,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 17207,
+       "input_tokens": 1358,
+       "output_tokens": 1149,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 15000,
+       "input_tokens": 2468,
+       "output_tokens": 939,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 34059
+    },
+    {
+     "alumne": "Sobre l'el·lipse $x^2=3-2y^2\\le3$, així que $|x|\\le\\sqrt3$.",
+     "tutor": "Correcte! Has fitat $x$ sobre el lligam: la $x$ està compresa entre $-\\sqrt{3}$ i $\\sqrt{3}$. Ara, per aplicar el Teorema de Weierstrass (T2.23), cal que el conjunt del lligam sigui compacte. Pots comprovar si $y$ també està fitat i si l'el·lipse és un conjunt tancat, per decidir si és compacte?",
+     "referencies": [],
+     "accio": "validar_i_avancar",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 2,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 2408,
+       "input_tokens": 3510,
+       "output_tokens": 261,
+       "cached_tokens": 2816,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 9332,
+       "input_tokens": 1614,
+       "output_tokens": 155,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 55796,
+       "input_tokens": 1697,
+       "output_tokens": 3250,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 35493,
+       "input_tokens": 2715,
+       "output_tokens": 2576,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 103031
+    },
+    {
+     "alumne": "Per tant el màxim és $\\sqrt3$ i el mínim $-\\sqrt3$.",
+     "tutor": "Veig que has conclòs directament els valors extrems a partir de la fita de $x$, però perquè aquestes fites siguin realment el màxim i el mínim cal saber que $f$ els assoleix sobre el lligam. Quina propietat del conjunt definit per l'el·lipse, comprovable amb el Teorema de Heine-Borel (T1.34), et permet aplicar el Teorema de Weierstrass (T2.23) i garantir que aquests extrems existeixen?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 2,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [
+      "sense_existencia"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 4056,
+       "input_tokens": 3635,
+       "output_tokens": 629,
+       "cached_tokens": 2816,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 20144,
+       "input_tokens": 1823,
+       "output_tokens": 853,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 23830,
+       "input_tokens": 2028,
+       "output_tokens": 3382,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 14705,
+       "input_tokens": 2942,
+       "output_tokens": 1076,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 62738
+    },
+    {
+     "alumne": "S'assoleixen a $(\\sqrt3,0)$ i $(-\\sqrt3,0)$, perquè quan $y=0$ tenim $x^2=3$, i l'el·lipse és compacta.",
+     "tutor": "Has encertat els punts i els valors, i la conclusió que l'el·lipse és compacta és correcta; ara es tracta de justificar-ho. Per garantir que aquests valors són realment extrems absoluts, pots aplicar el Teorema de Weierstrass (T2.23), que només demana que el conjunt $M=\\{x^2+2y^2=3\\}$ sigui compacte i que $f$ sigui contínua. Com demostraries, amb el Teorema de Heine-Borel (T1.34), que $M$ és tancat i fitat, i per què $f$ és contínua?",
+     "referencies": [],
+     "accio": "demanar_justificacio",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [],
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 3878,
+       "input_tokens": 3804,
+       "output_tokens": 484,
+       "cached_tokens": 3328,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 13901,
+       "input_tokens": 2081,
+       "output_tokens": 1959,
+       "cached_tokens": 1664,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 9500,
+       "input_tokens": 3152,
+       "output_tokens": 189,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 27281
+    }
+   ]
+  },
+  {
+   "exercici": "t3-5",
+   "torns": [
+    {
+     "alumne": "Sobre les rectes $y=mx$ el límit a l'origen és $0$, per tant $f$ és contínua a l'origen.",
+     "tutor": "Per rectes, has comprovat un cas, però la continuïtat (Definició 14 del Tema 2) exigeix que el límit sigui el mateix per qualsevol camí cap a l'origen. Comprovar les rectes $y=mx$ només cobreix una família particular de camins. Hi ha camins cap a l'origen que no són rectes, com corbes on $x$ i $y$ tendeixen a zero amb ritmes diferents, on el numerador i el denominador es podrien comparar d'una altra manera?",
+     "referencies": [
+      "T2.14"
+     ],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [
+      "nomes_rectes"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": "nomes_rectes",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 2802,
+       "input_tokens": 5994,
+       "output_tokens": 411,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 25681,
+       "input_tokens": 1238,
+       "output_tokens": 3231,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 11546,
+       "input_tokens": 4457,
+       "output_tokens": 596,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 40030
+    },
+    {
+     "alumne": "A l'origen, $D_vf(0,0)=\\lim_{t\\to0}\\frac{f(tv)}{t}=\\frac{v_1^2}{v_2}$ si $v_2\\neq0$. Com que existeixen totes, $f$ és contínua a l'origen.",
+     "error": "APIStatusError: Error code: 402 - {'error': {'message': 'This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.', 'code': 402, 'metadata': {'reason': 'in_flight_budget_exhausted', 'limit_source': 'openrouter_in_flight_budget', 'remedy_hint': 'Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a c",
+     "want_intent": "mostra_treball",
+     "want_error": "direccionals_implica_continuitat",
+     "latencia_ms": 30542
+    },
+    {
+     "alumne": "Dona'm una pista per estudiar la continuïtat a l'origen.",
+     "tutor": "Per a punts on \\(y \\neq 0\\), la funció ve donada per una sola expressió: \\(f(x,y) = \\frac{x^2}{y}\\). Es tracta d’una funció racional, i la Proposició 20 del Tema 2 ens diu que les funcions racionals són contínues al seu domini. En quin conjunt obert podem garantir la continuïtat?",
+     "referencies": [
+      "T2.20"
+     ],
+     "accio": "pista",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_pista",
+     "errors": [],
+     "want_intent": "demana_pista",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 3201,
+       "input_tokens": 6215,
+       "output_tokens": 418,
+       "cached_tokens": 5888,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 29577,
+       "input_tokens": 1634,
+       "output_tokens": 2138,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 15231,
+       "input_tokens": 4815,
+       "output_tokens": 641,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 48010
+    },
+    {
+     "alumne": "Fora de l'eix $y=0$ és un quocient de polinomis amb denominador no nul, així que és contínua.",
+     "tutor": "Bé, has raonat correctament que $f$ és contínua a l'obert $\\{y\\neq0\\}$ gràcies a la Proposició 20 del Tema 2. Ara fixa't en els punts que queden per estudiar: els de l'eix $y=0$, però diferents de l'origen, per exemple $(x_0,0)$ amb $x_0\\neq0$. En aquests punts la funció val $0$. Què cal comprovar, segons la definició de continuïtat, per veure si $f$ és contínua en un punt així?",
+     "referencies": [
+      "T2.20"
+     ],
+     "accio": "validar_i_avancar",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5.4-mini",
+       "latency_ms": 2806,
+       "input_tokens": 6339,
+       "output_tokens": 378,
+       "cached_tokens": 4864,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 11846,
+       "input_tokens": 1853,
+       "output_tokens": 691,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "deepseek/deepseek-v4-flash",
+       "latency_ms": 14233,
+       "input_tokens": 5082,
+       "output_tokens": 1076,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 28887
+    }
+   ]
+  }
+ ],
+ "metrics": {
+  "turns": 16,
+  "failed_turns": 3,
+  "fallback": 0,
+  "drafts_per_turn": 1.23,
+  "draft_errors": 0,
+  "latex_broken": 0,
+  "intent_match": 11,
+  "error_match": 12,
+  "cost_usd": 0.0881,
+  "cost_per_turn_usd": 0.00678,
+  "latency_s": 59.5,
+  "input_tokens": 142184,
+  "cached_tokens": 52999,
+  "output_tokens": 45791
+ }
+}

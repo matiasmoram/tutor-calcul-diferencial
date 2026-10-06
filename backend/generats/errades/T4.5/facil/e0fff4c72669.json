@@ -1,0 +1,49 @@
+{
+  "id": "e0fff4c72669",
+  "exercici": "T4.5",
+  "font": "teoria",
+  "dificultat": "facil",
+  "fragments": [
+    "Sigui $\\Omega\\subseteq\\mathbb{R}^n$ obert, $f:\\Omega\\to\\mathbb{R}^n$ una funció $\\mathcal{C}^r(\\Omega)$, $r\\geq 1$, i $a\\in\\Omega$ tal que $\\det\\big(Jf(a)\\big)\\neq 0$. Llavors existeix $U\\in\\mathcal{E}_a$, $U\\subseteq\\Omega$, tal que:",
+    "(i) $f|_U:U\\to\\mathbb{R}^n$ és injectiva i $\\det\\big(Jf(z)\\big)\\neq 0$ per a tot $z\\in U$; (ii) $V=f(U)\\subseteq\\mathbb{R}^n$ és obert;",
+    "(iii) la inversa $f^{-1}:V\\to U$ és de classe $\\mathcal{C}^r(V)$ i, per a tot $y_0\\in V$, $Df^{-1}(y_0)=\\big(Df(y_0)\\big)^{-1}$.",
+    "Com que $f\\in\\mathcal{C}^1$, la funció $x\\mapsto\\det Df(x)$ és contínua i, per tant, existeix $\\delta_1>0$ tal que $\\det Df(z)\\neq 0$ per a tot $z\\in B(a,\\delta_1)$. Per l'apartat (iii) de la proposició 4 amb $\\varepsilon=c/2$, on $c=1/\\|(Df(a))^{-1}\\|$, existeix $\\delta_2>0$ tal que $\\|f(x)-f(y)\\|\\geq\\frac{c}{2}\\|x-y\\|$ per a tot $x,y\\in B(a,\\delta_2)\\subseteq\\Omega$. Prenem $\\delta=\\min\\{\\delta_1,\\delta_2\\}$ i $U=B(a,\\delta)$.",
+    "(i) Si $z\\in U$, aleshores $z\\in B(a,\\delta_1)$ i, per tant, $\\det Df(z)\\neq 0$. A més, si $x,y\\in U$ compleixen $f(x)=f(y)$, la desigualtat anterior dona $\\frac{c}{2}\\|x-y\\|\\leq 0$, és a dir, $x=y$; per tant, $f|_U$ és injectiva.",
+    "(ii) Sigui $y_0\\in V$ i sigui $x_0\\in U$ l'únic punt amb $f(x_0)=y_0$. Prenem $\\eta>0$ tal que $U_0=B(x_0,\\eta)$ compleixi $\\overline{U_0}\\subseteq U$. La frontera $\\mathrm{Fr}(U_0)$ és compacta; per tant, també ho és $f(\\mathrm{Fr}(U_0))$, que no conté $y_0$ per la injectivitat de $f|_U$. Així, $\\sigma=\\min_{x\\in\\mathrm{Fr}(U_0)}\\|y_0-f(x)\\|>0$.",
+    "Vegem que $V_0=B(y_0,\\sigma/2)\\subseteq V$. Fixat $y\\in V_0$, la funció $\\varphi(x)=\\|f(x)-y\\|$ és contínua i, pel teorema de Weierstrass, assoleix el mínim sobre el compacte $\\overline{U_0}$ en un punt $z$.",
+    "D'una banda, $\\varphi(z)\\leq\\varphi(x_0)=\\|y_0-y\\|<\\sigma/2$. De l'altra, per a tot $x\\in\\mathrm{Fr}(U_0)$, $\\varphi(x)=\\|f(x)-y\\|\\geq\\|f(x)-y_0\\|-\\|y_0-y\\|>\\sigma-\\sigma/2=\\sigma/2$. Per tant, el mínim no és a la frontera, i $z\\in U_0$, que és obert.",
+    "Aleshores $\\varphi^2=\\sum_{k=1}^n(f_k-y_k)^2$ també assoleix el mínim sobre $\\overline{U_0}$ en $z$, que és un punt interior, i per a $i=1,\\ldots,n$ es té $0=\\frac{\\partial(\\varphi^2)}{\\partial x_i}(z)=2\\sum_{k=1}^n(f_k(z)-y_k)\\frac{\\partial f_k}{\\partial x_i}(z)$, és a dir, $(f(z)-y)^{T}Jf(z)=0$. Com que $z\\in U$, $\\det Jf(z)\\neq 0$, i per tant $f(z)=y$. Així, $y\\in f(U)=V$, i $V_0\\subseteq V$.",
+    "(iii) Sigui $y_0\\in V$, $x_0=f^{-1}(y_0)$, $c_1=1/\\|(Df(x_0))^{-1}\\|$ i, per a $y\\in V$, $x=f^{-1}(y)$. Per a tot $u\\in\\mathbb{R}^n$, $\\|u\\|=\\|(Df(x_0))^{-1}Df(x_0)u\\|\\leq\\|(Df(x_0))^{-1}\\|\\,\\|Df(x_0)u\\|$, és a dir, $c_1\\|u\\|\\leq\\|Df(x_0)u\\|$. Aplicat a $u=f^{-1}(y)-f^{-1}(y_0)-(Df(x_0))^{-1}(y-y_0)$, per al qual $Df(x_0)u=Df(x_0)(x-x_0)-(f(x)-f(x_0))$, obtenim $c_1\\|u\\|\\leq\\|f(x)-f(x_0)-Df(x_0)(x-x_0)\\|$.",
+    "Donat $\\varepsilon>0$, per la diferenciabilitat de $f$ en $x_0$ existeix un obert $U_3$, amb $x_0\\in U_3\\subseteq U$, tal que $\\|f(x)-f(x_0)-Df(x_0)(x-x_0)\\|\\leq\\frac{\\varepsilon c c_1}{2}\\|x-x_0\\|$ per a tot $x\\in U_3$. D'altra banda, per la desigualtat de l'inici de la demostració, $\\|y-y_0\\|\\geq\\frac{c}{2}\\|x-x_0\\|$ per a tot $x\\in U$; en particular, $f^{-1}$ és contínua i, si $y$ és prou a prop de $y_0$, $x=f^{-1}(y)\\in U_3$.",
+    "Combinant-ho, per a $y$ prou a prop de $y_0$, $\\|u\\|\\leq\\frac{1}{c_1}\\cdot\\frac{\\varepsilon c c_1}{2}\\|x-x_0\\|\\leq\\frac{\\varepsilon c}{2}\\cdot\\frac{2}{c}\\|y-y_0\\|=\\varepsilon\\|y-y_0\\|$. Per tant, $f^{-1}$ és diferenciable en $y_0$ i $Df^{-1}(y_0)=(Df(x_0))^{-1}=\\big(Df(f^{-1}(y_0))\\big)^{-1}$.",
+    "Finalment, $Df^{-1}(y)=\\big(Df(f^{-1}(y))\\big)^{-1}$ per a tot $y\\in V$. Com que $f^{-1}$ i $Df$ són contínues, $Df(f^{-1}(y))$ és contínua, i les components de la seva inversa (que existeix per (i)) són quocients de polinomis en les seves components amb denominador $\\det Df(f^{-1}(y))\\neq 0$; per tant, $f^{-1}\\in\\mathcal{C}^1(V)$. Iterant, si $f^{-1}\\in\\mathcal{C}^k(V)$ amb $k<r$, aleshores $Df(f^{-1}(y))$ i la seva inversa són de classe $\\mathcal{C}^k$, és a dir, $f^{-1}\\in\\mathcal{C}^{k+1}(V)$; així arribem a $f^{-1}\\in\\mathcal{C}^r(V)$."
+  ],
+  "n_enunciat": 3,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "$Df^{-1}(y_0)=\\big(Df(y_0)\\big)^{-1}$",
+      "inici": 90,
+      "fi": 127,
+      "tipus": "conclusio",
+      "explicacio": "La diferencial de $f$ s'ha d'avaluar en el punt $x_0=f^{-1}(y_0)$, no en $y_0$ (que ni tan sols ha de pertànyer a $\\Omega$). Contraexemple: $f(x)=x^2$ prop de $a=1$; $(f^{-1})'(4)=1/4$, però $1/f'(4)=1/8$.",
+      "correccio": "$Df^{-1}(y_0)=\\big(Df(f^{-1}(y_0))\\big)^{-1}$ per a tot $y_0\\in V$.",
+      "pista": "En quin espai viu $y_0$ i en quin està definida $Df$? En quin punt s'ha d'avaluar $Df$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t4.json",
+    "valoracio": "Demostració correcta; l'enunciat (iii) avalua $Df$ en el punt equivocat.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$Df^{-1}(y_0)=\\big(Df(y_0)\\big)^{-1}$",
+        "gravetat": "error",
+        "explicacio": "La fórmula correcta és $Df^{-1}(y_0)=\\big(Df(f^{-1}(y_0))\\big)^{-1}$: la diferencial de $f$ s'avalua en $x_0=f^{-1}(y_0)\\in U$, no en $y_0\\in V$ (que pot no ser ni al domini de $f$). La pròpia demostració [12] arriba a la fórmula correcta."
+      }
+    ]
+  },
+  "creat": 1791296058.5296934
+}

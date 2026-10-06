@@ -1,0 +1,261 @@
+{
+ "T2.7:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "per a tota successió $(x_n)_{n\\in\\mathbb{N}}\\subseteq\\Omega$ amb $\\lim_{n\\to+\\infty}x_n=x_0$",
+    "gravetat": "error",
+    "explicacio": "Falta la condició $x_n\\neq x_0$. Amb $x_0\\in\\Omega$ i $f(x_0)\\neq b$, (a) es pot complir i (c) no (successió constant $x_n=x_0$): l'equivalència és falsa."
+   },
+   {
+    "fragment": 6,
+    "cita": "per a $n\\geq n_0$, $x_n\\in(\\mathcal{U}\\setminus\\{x_0\\})\\cap\\Omega$",
+    "gravetat": "consequencia",
+    "explicacio": "El pas (b)⇒(c) és el dels apunts i només val per a successions amb $x_n\\neq x_0$; no demostra la (c) tal com s'ha enunciat (sense aquesta condició)."
+   },
+   {
+    "fragment": 7,
+    "cita": "existeixen $\\epsilon>0$ i $\\delta>0$ tals que hi ha algun $x\\in\\Omega$",
+    "gravetat": "error",
+    "explicacio": "Negació incorrecta de (a): la negació és $\\exists\\epsilon>0$ tal que $\\forall\\delta>0$ existeix $x$..., no 'existeixen $\\epsilon$ i $\\delta$'."
+   },
+   {
+    "fragment": 7,
+    "cita": "Prenent $\\delta=1/n$, per a cada $n$ podem escollir $x_n\\in\\Omega$",
+    "gravetat": "consequencia",
+    "explicacio": "Triar $x_n$ per a cada $\\delta=1/n$ requereix el quantificador universal sobre $\\delta$, que la suposició (mal negada) no dona."
+   }
+  ],
+  "valoracio": "Enunciat (c) sense $x_n\\neq x_0$ (fals) i negació de (a) mal quantificada a la reducció a l'absurd."
+ },
+ "T2.8:normal": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "$x_0\\in\\overline{\\Omega}$",
+    "gravetat": "error",
+    "explicacio": "La hipòtesi ha de ser $x_0\\in\\Omega'$ (punt d'acumulació). Si $x_0$ és un punt aïllat d'$\\overline{\\Omega}$, la definició de límit es compleix per a qualsevol $b$ i no hi ha unicitat."
+   },
+   {
+    "fragment": 3,
+    "cita": "Prenem una successió $(x_n)_{n\\in\\mathbb{N}}\\subseteq\\Omega$ tal que $x_n\\to x_0$ i $x_n\\neq x_0$ per a tota $n$.",
+    "gravetat": "consequencia",
+    "explicacio": "Aquesta successió existeix només si $x_0\\in\\Omega'$; amb la hipòtesi $x_0\\in\\overline{\\Omega}$ de l'enunciat pot no existir."
+   },
+   {
+    "fragment": 5,
+    "cita": "$n\\geq\\min(n_0,n_0')$",
+    "gravetat": "error",
+    "explicacio": "Cal $n\\geq\\max(n_0,n_0')$ perquè les dues desigualtats valguin alhora; amb el mínim només se'n garanteix una."
+   }
+  ],
+  "valoracio": "Hipòtesi $x_0\\in\\overline{\\Omega}$ en lloc de $x_0\\in\\Omega'$ i mínim en lloc de màxim d'índexs."
+ },
+ "T2.10:normal": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "si i només si",
+    "gravetat": "error",
+    "explicacio": "L'apunt només afirma la implicació límit doble ⇒ límit per camins. El recíproc és fals (p. ex. $F=1$ sobre la recta $x=a$, $y\\neq b$, i $F=0$ altrament: tots els camins $y=g(x)$ donen 0 però no hi ha límit), i la demostració només fa una direcció."
+   },
+   {
+    "fragment": 5,
+    "cita": "$\\delta=\\min\\left\\{\\delta_1(\\epsilon),\\ \\delta_2\\!\\left(\\delta_1(\\epsilon)/\\sqrt{2}\\right)\\right\\}$",
+    "gravetat": "error",
+    "explicacio": "Ha de ser $\\delta_1(\\epsilon)/\\sqrt{2}$ dins el mínim; amb $\\delta_1(\\epsilon)$ no se segueix que $|x-a|<\\delta_1(\\epsilon)/\\sqrt{2}$, com s'afirma tot seguit."
+   },
+   {
+    "fragment": 6,
+    "cita": "$\\|(x,g(x))-(a,b)\\|=\\sqrt{(x-a)^2+(g(x)-b)^2}<\\sqrt{\\left(\\frac{\\delta_1(\\epsilon)}{\\sqrt{2}}\\right)^2+\\left(\\frac{\\delta_1(\\epsilon)}{\\sqrt{2}}\\right)^2}=\\delta_1(\\epsilon)$",
+    "gravetat": "consequencia",
+    "explicacio": "La fita és la dels apunts però usa $|x-a|<\\delta_1(\\epsilon)/\\sqrt{2}$, que amb el $\\delta$ definit no es té."
+   }
+  ],
+  "valoracio": "Enunciat convertit en equivalència (fals) i $\\delta$ mal definit que invalida la fita de la distància."
+ },
+ "T2.12:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "a més, $\\lim_{y\\to b}f(x,y)=L$ per a tot $x\\in(a-\\eta,a+\\eta)$",
+    "gravetat": "error",
+    "explicacio": "Afirmació falsa i no present als apunts: $\\lim_{y\\to b}f(x,y)=g(x)$ depèn de $x$ (p. ex. $f(x,y)=x+y$ en $(0,0)$ dona $g(x)=x\\neq0$)."
+   },
+   {
+    "fragment": 4,
+    "cita": "existeix $\\delta_2=\\delta_2(\\epsilon)>0$, el mateix per a tots els $x$",
+    "gravetat": "error",
+    "explicacio": "L'existència dels límits per a cada $x$ no dona un $\\delta_2$ uniforme en $x$; als apunts $\\delta_2=\\delta_2(\\epsilon,x)$. (A més, és incoherent amb el pas [7], que usa $\\delta_2(\\epsilon/2,x)$.)"
+   }
+  ],
+  "valoracio": "Conclusió addicional falsa a l'enunciat i uniformitat de $\\delta_2$ injustificada."
+ },
+ "T2.17:facil": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "$f$ és uniformement contínua en $\\Omega$",
+    "gravetat": "error",
+    "explicacio": "La (a) dels apunts és continuïtat, no continuïtat uniforme; (b), (c), (d) caracteritzen la continuïtat i no impliquen la uniforme (p. ex. $1/x$ a $(0,1]$)."
+   },
+   {
+    "fragment": 10,
+    "cita": "Per tant, $\\lim_{x\\to x_0}f(x)=f(x_0)$ i $f$ és contínua en $x_0$.",
+    "gravetat": "consequencia",
+    "explicacio": "(c)⇒(a) demostra continuïtat punt a punt (com als apunts), no la continuïtat uniforme que diu l'enunciat (a)."
+   }
+  ],
+  "valoracio": "Substitueix continuïtat per continuïtat uniforme a (a), cosa que fa falsa l'equivalència; la resta de la demostració és correcta."
+ },
+ "T2.17:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "$f^{-1}(V)$ és un obert de $M$",
+    "gravetat": "error",
+    "explicacio": "La (c) dels apunts diu $f^{-1}(V)=U\\cap\\Omega$ amb $U$ obert (obert relatiu a $\\Omega$). Si $\\Omega$ no és obert, $f^{-1}(N)=\\Omega$ no és obert de $M$ tot i $f$ contínua: l'equivalència és falsa."
+   },
+   {
+    "fragment": 4,
+    "cita": "$d(x_n,x_0)<\\epsilon$",
+    "gravetat": "error",
+    "explicacio": "Cal $d(x_n,x_0)<\\delta_1$ per poder aplicar la continuïtat; amb $\\epsilon$ no se segueix $d'(f(x_n),f(x_0))<\\epsilon$."
+   },
+   {
+    "fragment": 8,
+    "cita": "$f^{-1}(V)=\\Omega\\setminus(D\\cap\\Omega)=D^c\\cap\\Omega$, on $U=D^c$ és un obert de $M$",
+    "gravetat": "consequencia",
+    "explicacio": "El pas és el dels apunts i dona $f^{-1}(V)=U\\cap\\Omega$, no que $f^{-1}(V)$ sigui obert de $M$ com exigeix la (c) enunciada."
+   }
+  ],
+  "valoracio": "(c) reforçada a 'antiimatge oberta de $M$' (fals) i índex $n_0$ triat amb $\\epsilon$ en lloc de $\\delta_1$."
+ },
+ "T2.17:dificil": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "$f^{-1}(E)\\subseteq D\\cap\\Omega$",
+    "gravetat": "error",
+    "explicacio": "Als apunts és una igualtat. Amb la inclusió, (d) és trivial ($D=M$) i deixa de ser equivalent a la continuïtat."
+   },
+   {
+    "fragment": 7,
+    "cita": "$f(x_0)$ és un punt d'acumulació d'$E$",
+    "gravetat": "error",
+    "explicacio": "El límit d'una successió d'$E$ és un punt adherent, no necessàriament d'acumulació (p. ex. $f(x_n)$ constant igual a un punt aïllat d'$E$). Cal dir $f(x_0)\\in\\overline{E}=E$."
+   },
+   {
+    "fragment": 8,
+    "cita": "per (d), existeix $D\\subseteq M$ tancat amb $f^{-1}(V^c)=D\\cap\\Omega$",
+    "gravetat": "consequencia",
+    "explicacio": "Usa la igualtat de la (d) dels apunts; la (d) enunciada només dona una inclusió."
+   },
+   {
+    "fragment": 9,
+    "cita": "$B(x_0,\\delta)\\subseteq U\\cap\\Omega$",
+    "gravetat": "error",
+    "explicacio": "Només es té $B(x_0,\\delta)\\subseteq U$; $\\Omega$ no és necessàriament obert, i per això es pren $x\\in\\Omega$ al pas següent."
+   }
+  ],
+  "valoracio": "(d) afeblida a inclusió, límit confós amb punt d'acumulació i bola inclosa indegudament en $U\\cap\\Omega$."
+ },
+ "T2.18:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "i és l'adherència de $A$",
+    "gravetat": "error",
+    "explicacio": "Fals en general: si $f=g$, $A=\\emptyset$ i $B=\\mathbb{R}^n$. Els apunts només afirmen que $B$ és tancat."
+   },
+   {
+    "fragment": 4,
+    "cita": "existeix $U\\subseteq\\mathbb{R}^n$ obert tal que $h(U)=V$ i, per tant, $h^{-1}(V)=U$",
+    "gravetat": "error",
+    "explicacio": "El teorema 17(c) dona $h^{-1}(V)=U\\cap\\mathbb{R}^n=U$, no $h(U)=V$; a més, $h(U)=V$ no implica $h^{-1}(V)=U$."
+   }
+  ],
+  "valoracio": "Afegeix a (ii) una afirmació falsa i aplica malament la caracterització per oberts de la continuïtat."
+ },
+ "T2.20:normal": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "$h:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}$ fitada",
+    "gravetat": "error",
+    "explicacio": "Als apunts $h$ és contínua. Amb $h$ només fitada, $hf$ no és contínua en general (p. ex. $h=\\mathrm{sgn}$, $f=1$)."
+   },
+   {
+    "fragment": 4,
+    "cita": "Per la continuïtat de $f$ i de $h$ en $x_0$",
+    "gravetat": "consequencia",
+    "explicacio": "Usa la continuïtat de $h$, hipòtesi que l'enunciat ha substituït per fitació."
+   },
+   {
+    "fragment": 7,
+    "cita": "$\\delta:=\\min\\left\\{\\delta_1\\!\\left(\\frac{\\epsilon}{2(1+|h(x_0)|)}\\right),\\ \\delta_2\\!\\left(\\frac{\\epsilon}{2\\|f(x_0)\\|}\\right)\\right\\}$",
+    "gravetat": "error",
+    "explicacio": "Falta $\\delta_2(1)$ al mínim: sense ell no es garanteix $|h(x)|<1+|h(x_0)|$, fita que s'usa a [8]."
+   },
+   {
+    "fragment": 8,
+    "cita": "$\\|h(x)f(x)-h(x_0)f(x_0)\\|<(1+|h(x_0)|)\\frac{\\epsilon}{2(1+|h(x_0)|)}+\\|f(x_0)\\|\\frac{\\epsilon}{2\\|f(x_0)\\|}=\\epsilon$",
+    "gravetat": "consequencia",
+    "explicacio": "La fita és la dels apunts però usa $|h(x)|<1+|h(x_0)|$, que amb el $\\delta$ de [7] no està garantida."
+   }
+  ],
+  "valoracio": "Hipòtesi de continuïtat de $h$ canviada per fitació i $\\delta_2(1)$ omès del mínim."
+ },
+ "T2.21:normal": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "$K$ tancat $\\Rightarrow f(K)$ tancat",
+    "gravetat": "error",
+    "explicacio": "Els apunts diuen compacte ⇒ compacte. La imatge contínua d'un tancat no és tancada en general (p. ex. $\\arctan(\\mathbb{R})=(-\\pi/2,\\pi/2)$)."
+   },
+   {
+    "fragment": 3,
+    "cita": "Per ser $K$ compacte",
+    "gravetat": "consequencia",
+    "explicacio": "Usa la compacitat de $K$, que l'enunciat (i) ha substituït per 'tancat'; i conclou compacitat, no el que s'enuncia."
+   },
+   {
+    "fragment": 5,
+    "cita": "Per ser $K$ compacte, existeixen $i_1,\\dots,i_r$",
+    "gravetat": "consequencia",
+    "explicacio": "Igual que a [3]: usa compacitat de $K$, hipòtesi que l'enunciat ja no dona."
+   },
+   {
+    "fragment": 9,
+    "cita": "per construcció tenim $U_1\\cap U_2=\\emptyset$",
+    "gravetat": "error",
+    "explicacio": "De $f(K)\\cap V_1\\cap V_2=\\emptyset$ no se segueix $U_1\\cap U_2=\\emptyset$ (els oberts $U_i$ poden tallar-se fora de $\\Omega$ o de $K$); només es pot afirmar per als punts de $K$: $U_1\\cap U_2\\cap K=\\emptyset$."
+   }
+  ],
+  "valoracio": "(i) canviada a tancat⇒tancat (fals) i disjunció dels $U_i$ afirmada globalment sense justificació."
+ },
+ "T2.28:normal": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "fins i tot quan $\\Omega$ és compacte",
+    "gravetat": "error",
+    "explicacio": "Fals: en un compacte, contínua implica uniformement contínua (Heine). A més, el contraexemple $1/x$ és sobre $(0,1]$, no compacte."
+   },
+   {
+    "fragment": 2,
+    "cita": "prenem $\\delta=C\\,\\epsilon$",
+    "gravetat": "error",
+    "explicacio": "Cal $\\delta=\\epsilon/C$; amb $\\delta=C\\epsilon$ es té $C\\,d(x,y)<C^2\\epsilon$, no $<\\epsilon$."
+   },
+   {
+    "fragment": 2,
+    "cita": "$d'(f(x),f(y))\\leq C\\,d(x,y)<\\epsilon$",
+    "gravetat": "consequencia",
+    "explicacio": "La desigualtat $C\\,d(x,y)<\\epsilon$ no se segueix amb $\\delta=C\\epsilon$."
+   }
+  ],
+  "valoracio": "Afegeix una afirmació falsa sobre compactes i tria $\\delta=C\\epsilon$ en lloc de $\\epsilon/C$."
+ }
+}

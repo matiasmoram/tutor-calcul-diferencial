@@ -1,0 +1,66 @@
+{
+  "id": "9cd814bbd261",
+  "exercici": "t3-18",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Prenem una direcció $u=(u_1,u_2)$. Els punts de la recta corresponent són $(tu_1,tu_2)$, i perquè fossin a $A$ caldria $0<tu_2<t^2u_1^2$.",
+    "Si $u_2=0$, aleshores $tu_2=0$ i no es compleix la desigualtat estricta $0<y$. Si $u_2\\ne0$, la pertinença a $A$ implicaria $|u_2|<|t|u_1^2$, cosa impossible per a $|t|$ prou petit; per tant $f(tu)=1$ en un entorn de $t=0$.",
+    "Com que $(0,0)\\notin A$, tenim $f(0,0)=1$. Així, per a cada $u$, $D_uf(0,0)=\\lim_{t\\to0}\\frac{f(tu)-f(0,0)}{t}=\\lim_{t\\to0}\\frac{1-1}{t}=0$.",
+    "Per determinar la possible diferencial, considerem una aplicació lineal $L$. Necessàriament $L(u)=D_uf(0,0)$ per a qualsevol funció, i com que totes les derivades direccionals són nul·les, l'única candidata és $L=0$.",
+    "Si $f$ fos diferenciable a l'origen, amb aquesta candidata hauria de passar que $\\frac{f(x,y)-1}{\\sqrt{x^2+y^2}}\\to0$ quan $(x,y)\\to(0,0)$. Per tant n'hi ha prou de trobar un camí que faci que aquest quocient no tendeixi a $0$.",
+    "Prenem ara el camí $(x,x^2)$, amb $x\\ne0$ i $x\\to0$; el camí $(x,x^2)$ queda dins d'$A$. Sobre aquest camí $f(x,x^2)=0$, i per això $\\frac{f(x,x^2)-1}{\\sqrt{x^2+x^4}}=\\frac{-1}{|x|\\sqrt{1+x^2}}\\to-\\infty$.",
+    "Així el quocient de diferenciabilitat no pot tenir límit $0$, i la funció no és diferenciable a l'origen. També es veu que la fallada no contradiu l'existència de totes les derivades direccionals, perquè aquestes només miren rectes."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "per a qualsevol funció",
+      "inici": 109,
+      "fi": 131,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "La relació $L(u)=D_uf(0,0)$ només està garantida quan $f$ és diferenciable i $L$ és la seva diferencial. No és una propietat vàlida per a una funció arbitrària.",
+      "correccio": "Hauria de dir: si $f$ fos diferenciable a l'origen amb diferencial $L$, aleshores $D_uf(0,0)=L(u)$ per a tot $u$.",
+      "pista": "En quines hipòtesis es pot identificar una derivada direccional amb l'aplicació diferencial aplicada a la direcció?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "el camí $(x,x^2)$ queda dins d'$A$",
+      "inici": 53,
+      "fi": 87,
+      "tipus": "desigualtat",
+      "explicacio": "Els punts $(x,x^2)$ són a la frontera de la paràbola, no dins d'$A$, perquè cal $0<y<x^2$ i aquí $y=x^2$.",
+      "correccio": "Es pot prendre, per exemple, el camí $(x,x^2/2)$, que sí que compleix $0<x^2/2<x^2$ per a $x\\ne0$.",
+      "pista": "La desigualtat que defineix $A$ és estricta o permet la igualtat $y=x^2$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "antics.json",
+    "valoracio": "Les derivades direccionals es calculen bé, però el camí triat per refutar la diferenciabilitat no és dins de $A$ (i la caracterització de la diferencial s'enuncia per a qualsevol funció), de manera que la no-diferenciabilitat queda sense demostrar.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "Necessàriament $L(u)=D_uf(0,0)$ per a qualsevol funció",
+        "gravetat": "error",
+        "explicacio": "La igualtat $D_uf(a)=Df(a)u$ només val si $f$ és diferenciable (Proposició 9), no per a qualsevol funció; aquí és justament el que es vol refutar."
+      },
+      {
+        "fragment": 6,
+        "cita": "el camí $(x,x^2)$ queda dins d'$A$",
+        "gravetat": "error",
+        "explicacio": "Fals: $A=\\{0<y<x^2\\}$ amb desigualtat estricta, i $y=x^2$ no hi pertany. Sobre aquest camí $f(x,x^2)=1$ (no $0$) i el quocient val $0$. Cal un camí estrictament entre $0$ i $x^2$, p. ex. $y=x^2/2$."
+      },
+      {
+        "fragment": 7,
+        "cita": "la funció no és diferenciable a l'origen",
+        "gravetat": "consequencia",
+        "explicacio": "La conclusió és certa, però en el document es dedueix del càlcul erroni sobre $(x,x^2)$, on en realitat el quocient és $0$; queda sense justificar."
+      }
+    ]
+  },
+  "creat": 1791295369.3985846
+}

@@ -1,0 +1,64 @@
+{
+  "id": "e60b076fe625",
+  "exercici": "t2-4a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Considero la funció $f(x,y)=\\frac{2+3x+4y^2}{x+1}$. El numerador $2+3x+4y^2$ i el denominador $x+1$ són polinomis, per tant són funcions contínues.",
+    "En el punt $(0,0)$, el denominador val $0+1=0$, de manera que la substitució directa no és suficient per decidir el límit. Per això convé comprovar el comportament de la funció quan ens acostem a l’origen per alguns camins.",
+    "Si prenem el camí $y=0$, queda $\\frac{2+3x}{x+1}$. Quan $x\\to 0$, aquest quocient tendeix a $\\frac{2}{1}=2$.",
+    "Si prenem ara el camí $x=0$, obtenim $\\frac{2+4y^2}{1}$. Quan $y\\to 0$, això tendeix a $2$.",
+    "Com que en aquests dos camins s'obté el mateix valor, el límit existeix i val $2$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "el denominador val $0+1=0$",
+      "inici": 20,
+      "fi": 46,
+      "tipus": "calcul",
+      "explicacio": "El càlcul del denominador al punt és incorrecte: $0+1$ no és $0$, sinó $1$. Això fa que no hi hagi cap problema de divisió per zero.",
+      "correccio": "Ha de dir que al punt $(0,0)$ el denominador val $0+1=1\\neq 0$, i per tant el quocient és continu en aquest punt.",
+      "pista": "Quant val exactament $x+1$ quan substitueixes $x=0$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "en aquests dos camins s'obté el mateix valor, el límit existeix",
+      "inici": 8,
+      "fi": 71,
+      "tipus": "conclusio",
+      "explicacio": "Que dos camins donin el mateix valor no demostra que el límit existeixi; només serviria per descartar-lo si donessin valors diferents. Aquí el límit existeix, però no per aquest raonament.",
+      "correccio": "La manera correcta és usar la continuïtat del quocient, ja que el denominador no s’anul·la a $(0,0)$; aleshores el límit és $f(0,0)=2$.",
+      "pista": "Comprovar dos camins és suficient per provar l’existència d’un límit de dues variables?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "antics.json",
+    "valoracio": "Resultat numèric correcte però amb un error aritmètic al denominador i una conclusió basada només en camins, que no és una demostració.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$0+1=0$",
+        "gravetat": "error",
+        "explicacio": "Error aritmètic: a $(0,0)$ el denominador val $0+1=1\\neq0$, no $0$."
+      },
+      {
+        "fragment": 2,
+        "cita": "la substitució directa no és suficient per decidir el límit",
+        "gravetat": "consequencia",
+        "explicacio": "Hereta el valor erroni del denominador: com que val $1\\neq0$, la funció és contínua a $(0,0)$ (quocient de polinomis amb denominador no nul) i el límit és el valor $f(0,0)=2$; no hi ha cap indeterminació."
+      },
+      {
+        "fragment": 5,
+        "cita": "Com que en aquests dos camins s'obté el mateix valor, el límit existeix i val $2$.",
+        "gravetat": "error",
+        "explicacio": "Que dos camins donin el mateix valor no demostra l'existència del límit (només dona un candidat). La justificació correcta és la continuïtat de $f$ a $(0,0)$."
+      }
+    ]
+  },
+  "creat": 1791295369.387588
+}

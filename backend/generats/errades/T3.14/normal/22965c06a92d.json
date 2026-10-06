@@ -1,0 +1,66 @@
+{
+  "id": "22965c06a92d",
+  "exercici": "T3.14",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $f:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}^m$ i $a\\in\\mathring{\\Omega}$. Si $f$ és diferenciable al punt $a$, aleshores: (i) $f$ és contínua al punt $a$;",
+    "(ii) $f$ és localment Lipschitz en $a$, és a dir, existeixen $\\delta>0$ i $M>0$ tals que $\\|f(x)-f(y)\\|\\leq M\\|x-y\\|$ per a tots $x,y\\in B(a,\\delta)$.",
+    "Observem primer que, per la desigualtat triangular i considerant una norma matricial consistent amb la norma vectorial, $\\|f(x)-f(a)\\|\\leq\\|f(x)-f(a)-Df(a)(x-a)\\|+\\|Df(a)(x-a)\\|\\leq\\|f(x)-f(a)-Df(a)(x-a)\\|+\\|Jf(a)\\|\\,\\|x-a\\|$. (8)",
+    "Per la diferenciabilitat de $f$ en $a$, per a tot $\\varepsilon>0$ existeix $\\delta_1=\\delta_1(\\varepsilon)>0$ tal que si $0<\\|x-a\\|<\\delta_1$, aleshores $\\|f(x)-f(a)-Df(a)(x-a)\\|<\\varepsilon\\,\\|x-a\\|$.",
+    "(ii) Fixem $\\varepsilon_0>0$ qualsevol. A partir de (8), si $0<\\|x-a\\|<\\delta_1(\\varepsilon_0)$, llavors $\\|f(x)-f(a)\\|<(\\varepsilon_0+\\|Jf(a)\\|)\\,\\|x-a\\|$ (9); és a dir, $f$ és (puntualment) localment Lipschitz al punt $a$, amb constant $L:=\\varepsilon_0+\\|Jf(a)\\|$.",
+    "(i) Donat $\\varepsilon>0$, definim $\\delta=\\dfrac{\\varepsilon}{L}$. Si $0<\\|x-a\\|<\\delta$, usant (9) obtenim $\\|f(x)-f(a)\\|<L\\,\\|x-a\\|<L\\,\\dfrac{\\varepsilon}{L}=\\varepsilon$.",
+    "Com que per a $x=a$ la desigualtat $\\|f(x)-f(a)\\|<\\varepsilon$ és immediata, concloem que $f$ és contínua en $a$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$\\|f(x)-f(y)\\|\\leq M\\|x-y\\|$ per a tots $x,y\\in B(a,\\delta)$",
+      "inici": 89,
+      "fi": 149,
+      "tipus": "conclusio",
+      "explicacio": "La diferenciabilitat en $a$ només dona la fita puntual $\\|f(x)-f(a)\\|\\leq M\\|x-a\\|$ (un dels punts és $a$), no la condició de Lipschitz entre dos punts qualssevol de la bola. Contraexemple: $f(x)=x^2\\sin(1/x^2)$, $f(0)=0$, és diferenciable en $0$ però $f'$ no és fitada a cap entorn de $0$, i $f$ no és Lipschitz a cap bola $B(0,\\delta)$.",
+      "correccio": "$f$ és (puntualment) localment Lipschitz en $a$: existeixen $\\delta>0$ i $M>0$ tals que $\\|f(x)-f(a)\\|\\leq M\\|x-a\\|$ per a tot $x\\in B(a,\\delta)$.",
+      "pista": "A la desigualtat de Lipschitz que demostra la prova, quin paper hi fa el punt $a$? Hi poden aparèixer dos punts qualssevol?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "definim $\\delta=\\dfrac{\\varepsilon}{L}$",
+      "inici": 27,
+      "fi": 66,
+      "tipus": "cas_oblidat",
+      "explicacio": "La fita (9) només és vàlida si $\\|x-a\\|<\\delta_1(\\varepsilon_0)$; si $\\frac{\\varepsilon}{L}>\\delta_1(\\varepsilon_0)$ no es pot usar (9) per a tots els $x$ amb $\\|x-a\\|<\\delta$.",
+      "correccio": "$\\delta=\\min\\left\\{\\delta_1(\\varepsilon_0),\\dfrac{\\varepsilon}{L}\\right\\}$.",
+      "pista": "Per a quins $x$ hem demostrat la desigualtat (9)? El $\\delta$ escollit ho garanteix?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t3.json",
+    "valoracio": "Enunciat de (ii) reforçat a Lipschitz local (fals) i $\\delta$ de la continuïtat sense el mínim amb $\\delta_1(\\varepsilon_0)$.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$\\|f(x)-f(y)\\|\\leq M\\|x-y\\|$ per a tots $x,y\\in B(a,\\delta)$",
+        "gravetat": "error",
+        "explicacio": "Els apunts afirmen només Lipschitz puntual en $a$: $\\|f(x)-f(a)\\|<M\\|x-a\\|$. La versió per a tots $x,y$ de la bola és falsa per a funcions només diferenciables en $a$ (p. ex. $x^2\\sin(1/x^2)$ en $0$)."
+      },
+      {
+        "fragment": 5,
+        "cita": "és a dir, $f$ és (puntualment) localment Lipschitz al punt $a$",
+        "gravetat": "consequencia",
+        "explicacio": "El pas és el dels apunts i prova la propietat puntual, que no és la que afirma l'enunciat modificat [2]; la demostració deixa de provar l'enunciat."
+      },
+      {
+        "fragment": 6,
+        "cita": "definim $\\delta=\\dfrac{\\varepsilon}{L}$",
+        "gravetat": "error",
+        "explicacio": "La desigualtat (9) només val si $\\|x-a\\|<\\delta_1(\\varepsilon_0)$; cal $\\delta=\\min\\{\\delta_1(\\varepsilon_0),\\varepsilon/L\\}$. Amb $\\delta=\\varepsilon/L$ no es pot usar (9)."
+      }
+    ]
+  },
+  "creat": 1791296233.7424545
+}

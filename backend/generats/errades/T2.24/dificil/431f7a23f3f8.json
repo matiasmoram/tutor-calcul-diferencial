@@ -1,0 +1,77 @@
+{
+  "id": "431f7a23f3f8",
+  "exercici": "T2.24",
+  "font": "teoria",
+  "dificultat": "dificil",
+  "fragments": [
+    "Sigui $f:\\Omega\\subseteq M\\to\\mathbb{R}$ contínua, $K\\subseteq\\Omega$ connex, i $x,y\\in K$.",
+    "Aleshores, existeix $\\xi\\in K$ tal que, per a tota $c\\in\\mathbb{R}$ amb $f(x)<c<f(y)$, $f(\\xi)=c$.",
+    "Com que $f$ és contínua i $K$ és connex, per l'apartat (b) de la proposició 21 sabem que $f(K)$ és connex.",
+    "Suposem, per reducció a l'absurd, que existeix $c_0\\in\\mathbb{R}$ amb $f(x)<c_0<f(y)$ i algun $\\xi\\in K$ tal que $f(\\xi)\\neq c_0$.",
+    "Definim els oberts de $\\mathbb{R}$ $V_1:=(-\\infty,c_0)$ i $V_2:=(c_0,+\\infty)$. Aleshores $f(K)\\subseteq V_1\\cup V_2$, ja que $V_1\\cup V_2=\\mathbb{R}$.",
+    "A més, $f(x)\\in f(K)\\cap V_1$ i $f(y)\\in f(K)\\cap V_2$, mentre que $f(K)\\cap V_1\\cap V_2=\\emptyset$ perquè $V_1\\cap V_2=\\emptyset$.",
+    "Per tant, $f(K)$ és disconnex, cosa que contradiu que $f(K)$ és connex. Així, aquest $c_0$ no pot existir."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "existeix $\\xi\\in K$ tal que, per a tota $c\\in\\mathbb{R}$ amb $f(x)<c<f(y)$, $f(\\xi)=c$",
+      "inici": 11,
+      "fi": 97,
+      "tipus": "quantificador",
+      "explicacio": "S'ha canviat l'ordre dels quantificadors: un mateix $\\xi$ hauria de prendre tots els valors entre $f(x)$ i $f(y)$, cosa impossible si n'hi ha més d'un. Contraexemple: $K=[0,1]$, $f(t)=t$, $x=0$, $y=1$.",
+      "correccio": "Per a tota $c$ amb $f(x)<c<f(y)$ existeix $\\xi\\in K$ (que depèn de $c$) tal que $f(\\xi)=c$.",
+      "pista": "El punt $\\xi$ pot dependre de $c$, o ha de ser el mateix per a tots els valors?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "algun $\\xi\\in K$ tal que $f(\\xi)\\neq c_0$",
+      "inici": 88,
+      "fi": 129,
+      "tipus": "quantificador",
+      "explicacio": "La negació de «existeix $\\xi$ amb $f(\\xi)=c_0$» és «per a tot $\\xi\\in K$, $f(\\xi)\\neq c_0$», no «existeix $\\xi$ amb $f(\\xi)\\neq c_0$»; amb aquesta hipòtesi no es pot deduir $c_0\\notin f(K)$.",
+      "correccio": "Suposem que existeix $c_0$ amb $f(x)<c_0<f(y)$ tal que $f(\\xi)\\neq c_0$ per a tot $\\xi\\in K$, és a dir, $c_0\\notin f(K)$.",
+      "pista": "Com es nega correctament una afirmació del tipus «existeix $\\xi$ tal que...»?"
+    },
+    {
+      "id": "e3",
+      "fragment": 5,
+      "cita": "ja que $V_1\\cup V_2=\\mathbb{R}$",
+      "inici": 119,
+      "fi": 150,
+      "tipus": "pas_injustificat",
+      "explicacio": "$V_1\\cup V_2=\\mathbb{R}\\setminus\\{c_0\\}$, no tot $\\mathbb{R}$; la inclusió $f(K)\\subseteq V_1\\cup V_2$ és certa perquè $c_0\\notin f(K)$.",
+      "correccio": "$f(K)\\subseteq V_1\\cup V_2$ perquè $c_0\\notin f(K)$ (i $V_1\\cup V_2=\\mathbb{R}\\setminus\\{c_0\\}$).",
+      "pista": "Quin punt de $\\mathbb{R}$ no és ni a $V_1$ ni a $V_2$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t2b.json",
+    "valoracio": "Tres errors: quantificadors invertits a l'enunciat, negació incorrecta i justificació falsa de $f(K)\\subseteq V_1\\cup V_2$.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "existeix $\\xi\\in K$ tal que, per a tota $c\\in\\mathbb{R}$ amb $f(x)<c<f(y)$, $f(\\xi)=c$",
+        "gravetat": "error",
+        "explicacio": "Ordre dels quantificadors invertit: un sol $\\xi$ hauria de tenir com a imatge tots els $c$ de l'interval, cosa impossible (n'hi ha infinits)."
+      },
+      {
+        "fragment": 4,
+        "cita": "algun $\\xi\\in K$ tal que $f(\\xi)\\neq c_0$",
+        "gravetat": "error",
+        "explicacio": "La negació de la tesi és que $f(\\xi)\\neq c_0$ per a TOT $\\xi\\in K$ (és a dir, $c_0\\notin f(K)$), no per a algun."
+      },
+      {
+        "fragment": 5,
+        "cita": "ja que $V_1\\cup V_2=\\mathbb{R}$",
+        "gravetat": "error",
+        "explicacio": "$V_1\\cup V_2=\\mathbb{R}\\setminus\\{c_0\\}$; la inclusió $f(K)\\subseteq V_1\\cup V_2$ ve de $c_0\\notin f(K)$, no del que s'afirma."
+      }
+    ]
+  },
+  "creat": 1791295930.34536
+}

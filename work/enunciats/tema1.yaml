@@ -1,0 +1,295 @@
+tema: 1
+titol: "Topologia a $\\mathbb{R}^n$"
+problemes:
+  - num: 1
+    font: null
+    preambul: |
+      Demostreu que a $\mathbb{R}^n$ les aplicacions $d_k$ són distàncies i, per tant, $(\mathbb{R}^n, d_k)$ són espais mètrics:
+    apartats:
+      - lletra: a
+        text: |
+          $d_2(x,y)=\sqrt{\displaystyle\sum_{i=1}^{n}(x_i-y_i)^2}$.
+      - lletra: b
+        text: |
+          $d_1(x,y)=\displaystyle\sum_{i=1}^{n}|x_i-y_i|$.
+      - lletra: c
+        text: |
+          $d_\infty(x,y)=\displaystyle\max_{1\leq i\leq n}|x_i-y_i|$.
+    indicacio: null
+  - num: 2
+    font: null
+    preambul: |
+      Demostreu que a $\mathbb{N}$ l'aplicació
+      $$d(m,n)=\begin{cases}\dfrac{1}{m}+\dfrac{1}{n} & \text{si } m\neq n\\ 0 & \text{si } m=n\end{cases}$$
+      és una distància i, per tant, $(\mathbb{N},d)$ és un espai mètric.
+    apartats: []
+    indicacio: null
+  - num: 3
+    font: null
+    preambul: |
+      Demostreu que a $\mathbb{R}^n$ les aplicacions següents són normes:
+    apartats:
+      - lletra: a
+        text: |
+          $\|x\|_2=\sqrt{\sum_{i=1}^{n}x_i^2}$.
+      - lletra: b
+        text: |
+          $\|x\|_1=\sum_{i=1}^{n}|x_i|$.
+      - lletra: c
+        text: |
+          $\|x\|_\infty=\max_{1\leq i\leq n}|x_i|$.
+    indicacio: null
+  - num: 4
+    font: null
+    preambul: |
+      Si $\|\cdot\|$ és la norma ordinària i $\langle\cdot,\cdot\rangle$ és el producte escalar ordinari a $\mathbb{R}^n$, proveu:
+    apartats:
+      - lletra: a
+        text: |
+          $4\langle x,y\rangle=\|x+y\|^2-\|x-y\|^2$ (identitat de polarització).
+      - lletra: b
+        text: |
+          si $x,y$ són ortogonals, $\|x+y\|^2=\|x\|^2+\|y\|^2$.
+      - lletra: c
+        text: |
+          $\|x+y\|\,\|x-y\|\leqslant\|x\|^2+\|y\|^2$.
+    indicacio: null
+  - num: 5
+    font: null
+    preambul: |
+      Siguin $A,B$ subconjunts no buits de $\mathbb{R}^m$ i $d$ la distància euclídia. Definim $d(A,B)=\inf\{d(a,b)\mid a\in A,\ b\in B\}$.
+    apartats:
+      - lletra: a
+        text: |
+          És cert que $d(A,B)=0\Leftrightarrow A\cap B\neq\emptyset$ ?
+      - lletra: b
+        text: |
+          Demostreu $|d(x,A)-d(y,A)|\leq d(x,y)$, $\forall x,y\in\mathbb{R}^m$, on $d(x,A)=d(\{x\},A)$.
+    indicacio: null
+  - num: 6
+    font: null
+    preambul: |
+      Donat $A\subset\mathbb{R}^m$, sigui $D_A=\{d(x,y)\mid x,y\in A\}\subset\mathbb{R}$. Proveu que aquest conjunt és fitat si, i només si, $A$ ho és. Aleshores, es defineix _diàmetre_ de $A$ per $\mathrm{diam}(A)=\sup D_A$. Siguin ara $B_1=\{x\in\mathbb{R}^m\mid\sum_{i=1}^{m}|x_i|<1\}$, $B_2=\{x\in\mathbb{R}^m\mid\|x\|<1\}$, i $B_3=\{x\in\mathbb{R}^m\mid\max|x_i|<1\}$. Calculeu el diàmetre de $B_1$, $B_2$ i $B_3$.
+    apartats: []
+    indicacio: |
+      dibuixeu aquests conjunts en $\mathbb{R}^2$ i $\mathbb{R}^3$.
+  - num: 7
+    font: null
+    preambul: |
+      Descriviu l'interior, la frontera, l'adherència i el conjunt de punts d'acumulació dels conjunts següents:
+    apartats:
+      - lletra: a
+        text: |
+          $A=\{(x,y)\in\mathbb{R}^2\mid y>0\}$.
+      - lletra: b
+        text: |
+          $B=\{(x,y)\in\mathbb{R}^2\mid x=\lambda y\}$, $\lambda\in\mathbb{R}$.
+      - lletra: c
+        text: |
+          $C=\{(x,y)\in\mathbb{R}^2\mid xy=1\}$.
+      - lletra: d
+        text: |
+          $D=\{(x,y)\in\mathbb{R}^2\mid 0<x<1,\ y=0\}$.
+      - lletra: e
+        text: |
+          $E=A\setminus\{(0,1)\}$.
+      - lletra: f
+        text: |
+          $F=B\cup\{(0,-1)\}$.
+      - lletra: g
+        text: |
+          $G=\{(x,y)\in\mathbb{R}^2\mid x^2+y^2\leq 1,\ x\neq 0\}$.
+      - lletra: h
+        text: |
+          $H=\mathbb{Q}\subset\mathbb{R}$.
+    indicacio: null
+  - num: 8
+    font: null
+    preambul: |
+      Estudieu l'interior, la frontera, l'adherència i el conjunt de punts d'acumulació dels subconjunts següents, i decidiu si són oberts o tancats, o cap de les dues coses:
+    apartats:
+      - lletra: a
+        text: |
+          $A=\{(x,y,z)\in\mathbb{R}^3\mid x+y=1,\ x^2+y^2=9,\ \text{i } z=0\}$.
+      - lletra: b
+        text: |
+          $B=\{(x,y,z)\in\mathbb{R}^3\mid x=2,\ y=3,\ \text{i } z\in(-1,1)\}$.
+      - lletra: c
+        text: |
+          $C=\{(x,y,z)\in\mathbb{R}^3\mid x=2,\ y=3,\ \text{i } z\in[-1,1]\}$.
+      - lletra: d
+        text: |
+          $D=\{(x,y)\in\mathbb{R}^2\mid x^2+y=5\}$.
+      - lletra: e
+        text: |
+          $E=\{(x,y)\in\mathbb{R}^2\mid x^2+|y|=5\}$.
+      - lletra: f
+        text: |
+          $F=\{(x,y,z)\in\mathbb{R}^3\mid x^2+y^2<1,\ \text{i } |z|<1\}$.
+      - lletra: g
+        text: |
+          $G=\{(x,y,z)\in\mathbb{R}^3\mid x^2-y^2+z^2<2,\ \text{i } |z|=1\}$.
+    indicacio: null
+  - num: 9
+    font: null
+    preambul: |
+      Siguin $A\subset\mathbb{R}^m$ i $x\in\mathbb{R}^m$. Proveu que:
+    apartats:
+      - lletra: a
+        text: |
+          $x\in Fr(A)\Leftrightarrow\exists$ successions convergents $(x_n)_{n\in\mathbb{N}}$ i $(y_n)_{n\in\mathbb{N}}$, ambdues amb límit $x$, tals que $\forall n\in\mathbb{N}$, $x_n\in A$ i $y_n\notin A$.
+      - lletra: b
+        text: |
+          $x\in A'\Leftrightarrow\exists$ una successió $(x_n)_{n\in\mathbb{N}}$ amb límit $x$, tal que $\forall n\in\mathbb{N}$, $x\neq x_n\in A$.
+      - lletra: c
+        text: |
+          $x\in\mathring{A}\Leftrightarrow\forall$ successió $(x_n)_{n\in\mathbb{N}}$ amb límit $x$. $\exists n_0$ tal que, $\forall n\geqslant n_0$, $x_n\in A$.
+    indicacio: null
+  - num: 10
+    font: null
+    preambul: |
+      Si $A\subset\mathbb{R}^m$, demostreu que
+    apartats:
+      - lletra: a
+        text: |
+          $\mathring{A}$ és el conjunt obert més gran contingut en $A$, és a dir, si $B$ és un obert dins $A$, aleshores $B\subset\mathring{A}$.
+      - lletra: b
+        text: |
+          $\overline{A}$ és el conjunt tancat més petit que conté $A$, és a dir, si $C$ és un tancat que conté $A$, aleshores $\overline{A}\subset C$.
+    indicacio: null
+  - num: 11
+    font: null
+    preambul: |
+      Donats dos subconjunts $A,B\subseteq\mathbb{R}^n$, es defineix $A+B=\{x+y\mid x\in A,\ y\in B\}$. Suposem que $A$ és obert.
+    apartats:
+      - lletra: a
+        text: |
+          Demostreu que si $y\in\mathbb{R}^n$, el conjunt $A+\{y\}$ és obert.
+      - lletra: b
+        text: |
+          Demostreu que el conjunt $A+B$ és obert.
+    indicacio: null
+  - num: 12
+    font: null
+    preambul: |
+      Estudieu si són compactes els conjunts següents. Per als que no ho siguin, trobeu el compacte més petit que els conté (si és que n'hi ha cap).
+    apartats:
+      - lletra: a
+        text: |
+          $A=\{(x,y,z)\in\mathbb{R}^3\mid x+y=1,\ x^2+y^2=9,\ \text{i } z=0\}$.
+      - lletra: b
+        text: |
+          $B=\{(x,y,z)\in\mathbb{R}^3\mid x=2,\ y=3,\ \text{i } z\in(-1,1)\}$.
+      - lletra: c
+        text: |
+          $C=\{(x,y,z)\in\mathbb{R}^3\mid x=2,\ y=3,\ \text{i } z\in[-1,1]\}$.
+      - lletra: d
+        text: |
+          $D=\{(x,y)\in\mathbb{R}^2\mid x^2+y=5\}$.
+      - lletra: e
+        text: |
+          $E=\{(x,y)\in\mathbb{R}^2\mid x^2+|y|=5\}$.
+      - lletra: f
+        text: |
+          $F=\{(x,y,z)\in\mathbb{R}^3\mid x^2+y^2<1,\ \text{i } |z|<1\}$.
+    indicacio: null
+  - num: 13
+    font: null
+    preambul: |
+      Demostreu que
+    apartats:
+      - lletra: a
+        text: |
+          la intersecció d'un nombre arbitrari (finit o infinit) de subconjunts compactes de $\mathbb{R}^n$ també és compacte,
+      - lletra: b
+        text: |
+          la unió d'un nombre finit de compactes de $\mathbb{R}^n$ també és compacte,
+      - lletra: c
+        text: |
+          la unió d'un nombre infinit de compactes de $\mathbb{R}^n$ pot no ser compacte.
+    indicacio: null
+  - num: 14
+    font: null
+    preambul: ""
+    apartats:
+      - lletra: a
+        text: |
+          Demostreu que si $K_1\subset\mathbb{R}^{n_1}$ i $K_2\subset\mathbb{R}^{n_2}$ són compactes, aleshores $K_1\times K_2\subset\mathbb{R}^{n_1+n_2}$ també és compacte.
+      - lletra: b
+        text: |
+          Demostreu que si $K_1\subset\mathbb{R}^{n_1},\ldots,K_r\subset\mathbb{R}^{n_r}$ són compactes, aleshores $K_1\times\cdots\times K_r\subset\mathbb{R}^{n_1+\cdots+n_r}$ també és compacte. En particular, proveu que tot $k$-rectangle tancat és compacte.
+    indicacio: null
+  - num: 15
+    font: null
+    preambul: |
+      Demostreu que, donada una successió $(x_n)_{n\in\mathbb{N}}$ amb $\lim_{n\to\infty}x_n=x_0$, el conjunt $(x_n)_{n\in\mathbb{N}}\cup\{x_0\}$ és compacte.
+    apartats: []
+    indicacio: null
+  - num: 16
+    font: "Exercici d'examen, maig 2008"
+    preambul: |
+      Doneu exemples de subconjunts $A,B\subseteq\mathbb{R}^n$, $A\neq B$, que satisfacin les condicions següents, o justifiqueu que no n'existeixen.
+    apartats:
+      - lletra: a
+        text: |
+          $A\subseteq B$ però $Fr(B)\subseteq Fr(A)$.
+      - lletra: b
+        text: |
+          $Fr(A\cup B)\subseteq Fr(A)$ però $Fr(B)\subseteq Fr(A\cup B)$.
+      - lletra: c
+        text: |
+          $Fr(A\cap B)\subseteq Fr(A)$ però $Fr(B)\subseteq Fr(A\cap B)$.
+    indicacio: null
+  - num: 17
+    font: "Exercici d'examen, març 2010"
+    preambul: |
+      Sigui
+      $$A=\left\{\left(\cos\frac{1}{t}+2t\sin\frac{1}{t},\ 2t\cos\frac{1}{t}-\sin\frac{1}{t}\right)\in\mathbb{R}^2\ \middle|\ t\in\mathbb{R}\setminus\{0\}\right\}.$$
+    apartats:
+      - lletra: a
+        text: |
+          Calculeu $\|\mathbf{a}\|$ per $\mathbf{a}\in A$ i raoneu si és cert que $(0,0)\in A'$.
+      - lletra: b
+        text: |
+          Què podeu dir sobre l'existència de punts d'acumulació del conjunt $A$ sobre la circumferència unitat $C=\{(x,y)\in\mathbb{R}^2\mid x^2+y^2=1\}$ ?
+    indicacio: null
+  - num: 18
+    font: "Exercici d'examen, març 2011"
+    preambul: |
+      Considerem $A,B\subseteq\mathbb{R}^n$ i $V=A\cap B$.
+    apartats:
+      - lletra: a
+        text: |
+          Demostreu que $\mathring{V}=\mathring{A}\cap\mathring{B}$.
+      - lletra: b
+        text: |
+          Doneu un contraexemple que provi la falsedat de $\overline{V}=\overline{A}\cap\overline{B}$.
+    indicacio: null
+  - num: 19
+    font: "Exercici d'examen, abril 2018"
+    preambul: |
+      Considereu els conjunts i aplicacions següents:
+    apartats:
+      - lletra: a
+        text: |
+          $(\mathbb{Z},d)$, $d(m,n)=|m-n|^3$.
+      - lletra: b
+        text: |
+          $(\mathbb{R}^2,d)$, $d((x_1,x_2),(y_1,y_2))=|x_1+x_2-y_1-y_2|$.
+      - lletra: c
+        text: |
+          $(\{0,1\}^{\mathbb{N}},d)$, $d(a,b)=\begin{cases}0 & a=b\\ 1/\min\{k\in\mathbb{N}\mid a_k\neq b_k\} & a\neq b.\end{cases}$
+    indicacio: |
+      Digueu quins són espais mètrics i quins no, demostrant les propietats de la distància si és el cas o proporcionant contraexemples en cas contrari. En els casos que siguin espai mètric, descriviu la bola oberta $B(\mathbf{0},\epsilon)$, per a $\epsilon>0$.
+  - num: 20
+    font: "Exercici d'examen"
+    preambul: |
+      Siguin $A,B\subseteq\mathbb{R}$ i $E=\{xy\in\mathbb{R}\mid x\in A,\ y\in B\}$. Demostreu:
+    apartats:
+      - lletra: a
+        text: |
+          $A$ obert i $B\subseteq(0,+\infty)\Rightarrow E$ obert.
+      - lletra: b
+        text: |
+          $A$ obert **no** implica $E$ obert.
+    indicacio: null

@@ -1,0 +1,44 @@
+{
+  "id": "15e5ad36f035",
+  "exercici": "T2.23",
+  "font": "teoria",
+  "dificultat": "facil",
+  "fragments": [
+    "Sigui $f:\\Omega\\subseteq M\\to\\mathbb{R}$ contínua i $K\\subseteq\\Omega$ compacte.",
+    "Llavors $f(K)$ és fitat i existeixen únics $x_0,x_1\\in K$ tals que $f(x_0)=\\min_{x\\in K}f(x)$ i $f(x_1)=\\max_{x\\in K}f(x)$.",
+    "La primera part és immediata: com que $f$ és contínua i $K$ és compacte, per la proposició 21 el conjunt $f(K)\\subset\\mathbb{R}$ és compacte i, per tant, fitat.",
+    "Com que $f(K)$ és fitat, podem considerar els nombres reals $f_M:=\\sup_{x\\in K}f(x)$ i $f_m:=\\inf_{x\\in K}f(x)$. Demostrarem que s'assoleixen en punts de $K$; ho fem només per al màxim, ja que per al mínim la demostració és anàloga.",
+    "Per la definició de suprem, podem prendre una successió $(x_n)_n\\subset K$ tal que $f(x_n)\\to f_M$ quan $n\\to\\infty$.",
+    "Com que $K$ és compacte, la successió $(x_n)_n$ admet una parcial convergent $(x_{n_k})_k$, amb $x_{n_k}\\to x^*\\in K$ quan $k\\to\\infty$.",
+    "Per continuïtat de $f$, tenim que $f(x_{n_k})\\to f(x^*)$. Però, com que també $f(x_{n_k})\\to f_M$, per la unicitat del límit deduïm que $f(x^*)=f_M$.",
+    "Per tant, $f$ ateny el seu màxim al punt $x^*\\in K$, i $x_1:=x^*$ compleix el que volíem."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "existeixen únics $x_0,x_1\\in K$",
+      "inici": 26,
+      "fi": 57,
+      "tipus": "conclusio",
+      "explicacio": "El teorema garanteix l'existència dels punts on s'assoleixen el mínim i el màxim, però no la unicitat: per a $f$ constant a $K=[0,1]$, tots els punts de $K$ són de mínim i de màxim.",
+      "correccio": "Existeixen $x_0,x_1\\in K$ (no necessàriament únics) tals que $f(x_0)=\\min_{x\\in K}f(x)$ i $f(x_1)=\\max_{x\\in K}f(x)$.",
+      "pista": "Què passa amb els punts de màxim d'una funció constant? La demostració diu res sobre quants punts hi ha?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t2b.json",
+    "valoracio": "Un sol error: s'afegeix unicitat dels extrems a l'enunciat; la demostració és la dels apunts i correcta.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "existeixen únics $x_0,x_1\\in K$",
+        "gravetat": "error",
+        "explicacio": "Els apunts només afirmen l'existència; la unicitat és falsa (p. ex. $f$ constant: tot punt de $K$ és mínim i màxim)."
+      }
+    ]
+  },
+  "creat": 1791295930.3400035
+}

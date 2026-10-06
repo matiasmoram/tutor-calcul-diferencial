@@ -1,0 +1,641 @@
+{
+ "exercici": "t2-5d",
+ "tema": 2,
+ "persona": "perdut",
+ "arquetip": "perdut",
+ "persona_descripcio": "Estàs completament perdut i no saps per on començar («no sé per on començar», «no entenc què he de fer»). Quan el tutor et dona pistes, intentes seguir-les amb inseguretat i a poc a poc; només avances si la pista és clara, i sovint dubtes de si ho fas bé. No sabries resoldre l'exercici tu sol: només avances amb el que el tutor t'ajuda a descobrir.",
+ "final": "tancar",
+ "torns": [
+  {
+   "n": 1,
+   "alumne": "No sé per on començar, però he provat a estudiar la recta $y=mx$: si poso $y=mx$ surt $f(x,mx)=\\dfrac{x}{x+m^2x^2}=\\dfrac{1}{1+m^2x}$ i em sembla que quan $x\\to0$ això tendeix a $1$. En canvi sobre la corba $x=-y^2$ la definició dona $f=0$, així que em sembla que donen valors diferents i per tant no existeix el límit, però no estic segur si això és correcte.",
+   "tutor": "La comprovació que has fet amb $y=mx$ està ben encaminada. Però per estudiar una recta vertical que passi per l’origen, quina equació hauria de tenir la recta, i és $x=-y^2$ una recta?",
+   "accio": "questionar_error",
+   "pas_objectiu": "recta_vertical",
+   "nivell": 0,
+   "intencio": "mostra_treball",
+   "errors_detectats": [
+    "altre"
+   ],
+   "fallback": false,
+   "drafts": 1,
+   "rebuigs": [],
+   "progres": true,
+   "completats": [
+    "rectes_no_verticals"
+   ],
+   "trace": {
+    "torn": 1,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "\"si poso $y=mx$... tendeix a $1$\" i \"sobre la corba $x=-y^2$ la definició dona $f=0$\"",
+     "resum_alumne": "Ha calculat bé el límit sobre les rectes no verticals, però després ha fet servir una corba que no és la recta vertical demanada i encara no ha justificat rigorosament la conclusió global.",
+     "estat_passos": [
+      {
+       "pas": "rectes_no_verticals",
+       "estat": "completat"
+      },
+      {
+       "pas": "recta_vertical",
+       "estat": "erroni"
+      },
+      {
+       "pas": "concloure",
+       "estat": "en_curs"
+      }
+     ],
+     "pas_actual": "recta_vertical",
+     "errors_detectats": [
+      "altre"
+     ],
+     "error_altre": "Ha substituït la recta vertical requerida per la corba parabòlica $x=-y^2$; això no prova el comportament sobre $x=0$.",
+     "resultat_proposat": "correcte",
+     "resultat_justificat": false,
+     "nivell_desorientacio": "encallat",
+     "intencio": "mostra_treball",
+     "teoria_pregunta": []
+    },
+    "pla": {
+     "accio": "questionar_error",
+     "motiu": "Error detectat: altre.",
+     "pas_objectiu": "recta_vertical",
+     "nivell_pista": 0,
+     "error_objectiu": "altre",
+     "error_text": "Ha substituït la recta vertical requerida per la corba parabòlica $x=-y^2$; això no prova el comportament sobre $x=0$.",
+     "pregunta_suggerida": null,
+     "pot_dir_resultat": false,
+     "resultat_dit_per_alumne": false,
+     "requereix_pregunta": true,
+     "max_frases": 4,
+     "regex_prohibides": [
+      "l[íi]mit(\\s+(a|en)\\s+\\$?\\(0,\\s*0\\)\\$?|\\s+global|\\s+de\\s+\\$?f\\$?)?\\s+no\\s+existeix",
+      "\\$?f\\$?\\s+no\\s+t[ée]\\s+l[íi]mit",
+      "\\\\d?frac\\{a\\}\\{a\\s*\\+\\s*1\\}",
+      "f\\(0,\\s*y\\)\\s*=\\s*\\\\frac\\{0\\}"
+     ],
+     "teoria_extra": [],
+     "to": "normal",
+     "moviment": "Probing"
+    },
+    "contingut_permes": "Passos que l'alumne JA té resolts (pots referir-t'hi):\n  - Rectes no verticals: Sobre $y=mx$, $x+m^2x^2=0$ només per $x=0$ o $x=-1/m^2$, de manera que a prop de l'origen $f(x,mx)=\\frac{x}{x+m^2x^2}=\\frac{1}{1+m^2x}\\to1$.\n\nPAS OBJECTIU: Recta vertical\nERROR DE L'ALUMNE (no l'anomenis directament): Ha substituït la recta vertical requerida per la corba parabòlica $x=-y^2$; això no prova el comportament sobre $x=0$.",
+    "teoria_permesa": [
+     "T2.6"
+    ],
+    "intents": [
+     {
+      "missatge": "La comprovació que has fet amb $y=mx$ està ben encaminada. Però per estudiar una recta vertical que passi per l’origen, quina equació hauria de tenir la recta, i és $x=-y^2$ una recta?",
+      "referencies": [],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "Fa una pregunta en català que guia l’alumne a detectar que ha de mirar la recta vertical i no la corba, sense revelar el resultat ni avançar-se al pas següent."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [],
+     "nivell_per_pas": {},
+     "torns": 0,
+     "tancat": false,
+     "ultim_pas": null,
+     "ultima_accio": null,
+     "estats": {},
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {},
+     "resultat_confirmat": false,
+     "intents_alumne": 0
+    },
+    "estat": {
+     "completats": [
+      "rectes_no_verticals"
+     ],
+     "nivell_per_pas": {
+      "recta_vertical": 0
+     },
+     "torns": 1,
+     "tancat": false,
+     "ultim_pas": "recta_vertical",
+     "ultima_accio": "questionar_error",
+     "estats": {
+      "rectes_no_verticals": "completat",
+      "recta_vertical": "erroni",
+      "concloure": "en_curs"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "altre": 1
+     },
+     "repeticions": {
+      "recta_vertical": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 1
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 4363,
+      "input_tokens": 4745,
+      "output_tokens": 614,
+      "cached_tokens": 4352,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2136,
+      "input_tokens": 1858,
+      "output_tokens": 153,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1766,
+      "input_tokens": 3616,
+      "output_tokens": 155,
+      "cached_tokens": 0,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 8267
+   },
+   "jutge": {
+    "revela_resultat_final": false,
+    "passos_revelats": [],
+    "explicacio": "",
+    "permesos": [
+     "rectes_no_verticals"
+    ],
+    "resultat_permes": false,
+    "fuga": false,
+    "fuga_resultat": false,
+    "passos_filtrats": []
+   }
+  },
+  {
+   "n": 2,
+   "alumne": "Crec que una recta vertical és $x=0$, i i $x=-y^2$ no és una recta sinó una parabola. Sobre la recta $x=0$ amb $y\\to0$ tenim $f(0,y)=\\dfrac{0}{0+y^2}=0$, però per $y=mx$ jo vaig trobar $f(x,mx)=\\dfrac{1}{1+m^2x}\\to1$ quan $x\\to0$, així que sembla que donen valors diferents i per tant el límit general no existeix, però no estic segur si això està ben justificat.",
+   "tutor": "La comprovació que has fet és bona i els dos camins donen valors diferents a prop de l’origen. Si una funció tingués límit a $(0,0)$, què hauria de passar amb el valor al llarg de qualsevol recta o camí que s’hi acosti, segons la Definició 6 del Tema 2?",
+   "accio": "demanar_justificacio",
+   "pas_objectiu": "concloure",
+   "nivell": 1,
+   "intencio": "mostra_treball",
+   "errors_detectats": [],
+   "fallback": false,
+   "drafts": 2,
+   "rebuigs": [
+    "conté contingut prohibit"
+   ],
+   "progres": true,
+   "completats": [
+    "rectes_no_verticals",
+    "recta_vertical"
+   ],
+   "trace": {
+    "torn": 2,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "“Sobre la recta $x=0$ amb $y\\to0$ tenim $f(0,y)=\\dfrac{0}{0+y^2}=0$ ... així que sembla que donen valors diferents i per tant el límit general no existeix”",
+     "resum_alumne": "Ha comprovat correctament les rectes no verticals i la recta vertical, i ara està gairebé a la conclusió, però encara no la justifica del tot de manera rigorosa.",
+     "estat_passos": [
+      {
+       "pas": "rectes_no_verticals",
+       "estat": "completat"
+      },
+      {
+       "pas": "recta_vertical",
+       "estat": "completat"
+      },
+      {
+       "pas": "concloure",
+       "estat": "en_curs"
+      }
+     ],
+     "pas_actual": "concloure",
+     "errors_detectats": [],
+     "error_altre": "",
+     "resultat_proposat": "correcte",
+     "resultat_justificat": false,
+     "nivell_desorientacio": "en_cami",
+     "intencio": "mostra_treball",
+     "teoria_pregunta": []
+    },
+    "pla": {
+     "accio": "demanar_justificacio",
+     "motiu": "Resultat correcte amb raonament parcial.",
+     "pas_objectiu": "concloure",
+     "nivell_pista": 1,
+     "error_objectiu": null,
+     "error_text": null,
+     "pregunta_suggerida": null,
+     "pot_dir_resultat": false,
+     "resultat_dit_per_alumne": true,
+     "requereix_pregunta": true,
+     "max_frases": 4,
+     "regex_prohibides": [
+      "l[íi]mit(\\s+(a|en)\\s+\\$?\\(0,\\s*0\\)\\$?|\\s+global|\\s+de\\s+\\$?f\\$?)?\\s+no\\s+existeix",
+      "\\\\d?frac\\{a\\}\\{a\\s*\\+\\s*1\\}"
+     ],
+     "teoria_extra": [],
+     "to": "normal",
+     "moviment": "Probing"
+    },
+    "contingut_permes": "Passos que l'alumne JA té resolts (pots referir-t'hi):\n  - Rectes no verticals: Sobre $y=mx$, $x+m^2x^2=0$ només per $x=0$ o $x=-1/m^2$, de manera que a prop de l'origen $f(x,mx)=\\frac{x}{x+m^2x^2}=\\frac{1}{1+m^2x}\\to1$.\n\n  - Recta vertical: Per $y\\neq0$, $0\\neq-y^2$, així que $f(0,y)=\\frac{0}{y^2}=0$: límit $0$.\n\nPAS OBJECTIU: Concloure sobre el límit\n  objectiu: Decidir si existeix el límit a $(0,0)$.\n",
+    "teoria_permesa": [
+     "T2.6"
+    ],
+    "intents": [
+     {
+      "missatge": "Bé, la teva anàlisi és correcta i has trobat dos comportaments diferents a prop de l’origen. Ara, per poder concloure que el límit no existeix, què exigeix exactament la Definició 6 del Tema 2 quan un límit existeix?",
+      "referencies": [
+       "T2.6"
+      ],
+      "determinista": [
+       "conté contingut prohibit: «límit no existeix» (patró l[íi]mit(\\s+(a|en)\\s+\\$?\\(0,\\s*0\\)\\$?|\\s+global|\\s+de\\s+\\$?f\\$?)?\\s+no\\s+existeix)"
+      ],
+      "llm": null
+     },
+     {
+      "missatge": "La comprovació que has fet és bona i els dos camins donen valors diferents a prop de l’origen. Si una funció tingués límit a $(0,0)$, què hauria de passar amb el valor al llarg de qualsevol recta o camí que s’hi acosti, segons la Definició 6 del Tema 2?",
+      "referencies": [
+       "T2.6"
+      ],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "Respon en català, acaba amb pregunta i guia bé cap a la conclusió sense donar-la feta ni avançar teoria no permesa."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [
+      "rectes_no_verticals"
+     ],
+     "nivell_per_pas": {
+      "recta_vertical": 0
+     },
+     "torns": 1,
+     "tancat": false,
+     "ultim_pas": "recta_vertical",
+     "ultima_accio": "questionar_error",
+     "estats": {
+      "rectes_no_verticals": "completat",
+      "recta_vertical": "erroni",
+      "concloure": "en_curs"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "altre": 1
+     },
+     "repeticions": {
+      "recta_vertical": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 1
+    },
+    "estat": {
+     "completats": [
+      "rectes_no_verticals",
+      "recta_vertical"
+     ],
+     "nivell_per_pas": {
+      "recta_vertical": 0,
+      "concloure": 1
+     },
+     "torns": 2,
+     "tancat": false,
+     "ultim_pas": "concloure",
+     "ultima_accio": "demanar_justificacio",
+     "estats": {
+      "rectes_no_verticals": "completat",
+      "recta_vertical": "completat",
+      "concloure": "en_curs"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "altre": 1
+     },
+     "repeticions": {
+      "recta_vertical": 1,
+      "concloure": 1
+     },
+     "resultat_confirmat": true,
+     "intents_alumne": 2
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 4373,
+      "input_tokens": 4956,
+      "output_tokens": 483,
+      "cached_tokens": 4352,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1833,
+      "input_tokens": 2089,
+      "output_tokens": 114,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1730,
+      "input_tokens": 2196,
+      "output_tokens": 159,
+      "cached_tokens": 1792,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 3070,
+      "input_tokens": 3870,
+      "output_tokens": 282,
+      "cached_tokens": 2304,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 11009
+   },
+   "jutge": {
+    "revela_resultat_final": false,
+    "passos_revelats": [],
+    "explicacio": "",
+    "permesos": [
+     "rectes_no_verticals",
+     "recta_vertical"
+    ],
+    "resultat_permes": true,
+    "fuga": false,
+    "fuga_resultat": false,
+    "passos_filtrats": []
+   }
+  },
+  {
+   "n": 3,
+   "alumne": "Ha de ser el mateix per a qualsevol recta o camí que s'aproximi a $(0,0)$. Però per $y=mx$ he trobat $f(x,mx)=\\dfrac{1}{1+m^2x}\\to1$ quan $x\\to0$, i per la recta $x=0$ tenim $f(0,y)=0$, així que semblen donar valors diferents i per tant el límit no existeix.",
+   "tutor": "Molt bé: la justificació és correcta i la conclusió és que el límit a $(0,0)$ no existeix. La idea clau és aplicar la Proposició 10 del Tema 2: si el límit existís, hauria de donar el mateix valor per qualsevol camí d’aproximació, i aquí la recta $y=0$ dona $1$ mentre que la recta $x=0$ dona $0$.",
+   "accio": "tancar",
+   "pas_objectiu": null,
+   "nivell": 0,
+   "intencio": "proposa_resultat",
+   "errors_detectats": [],
+   "fallback": false,
+   "drafts": 1,
+   "rebuigs": [],
+   "progres": true,
+   "completats": [
+    "rectes_no_verticals",
+    "recta_vertical",
+    "concloure"
+   ],
+   "trace": {
+    "torn": 3,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "\"per $y=mx$ he trobat ... \\to1$, i per la recta $x=0$ tenim $f(0,y)=0$, així que semblen donar valors diferents i per tant el límit no existeix\"",
+     "resum_alumne": "Ha calculat correctament els límits sobre $y=mx$ i sobre $x=0$, i ha conclòs que el límit a $(0,0)$ no existeix.",
+     "estat_passos": [
+      {
+       "pas": "rectes_no_verticals",
+       "estat": "completat"
+      },
+      {
+       "pas": "recta_vertical",
+       "estat": "completat"
+      },
+      {
+       "pas": "concloure",
+       "estat": "completat"
+      }
+     ],
+     "pas_actual": "cap",
+     "errors_detectats": [],
+     "error_altre": "",
+     "resultat_proposat": "correcte",
+     "resultat_justificat": true,
+     "nivell_desorientacio": "en_cami",
+     "intencio": "proposa_resultat",
+     "teoria_pregunta": []
+    },
+    "pla": {
+     "accio": "tancar",
+     "motiu": "Resultat correcte i justificat.",
+     "pas_objectiu": null,
+     "nivell_pista": 0,
+     "error_objectiu": null,
+     "error_text": null,
+     "pregunta_suggerida": null,
+     "pot_dir_resultat": true,
+     "resultat_dit_per_alumne": false,
+     "requereix_pregunta": false,
+     "max_frases": 4,
+     "regex_prohibides": [],
+     "teoria_extra": [],
+     "to": "normal",
+     "moviment": "Generic"
+    },
+    "contingut_permes": "Passos que l'alumne JA té resolts (pots referir-t'hi):\n  - Rectes no verticals: Sobre $y=mx$, $x+m^2x^2=0$ només per $x=0$ o $x=-1/m^2$, de manera que a prop de l'origen $f(x,mx)=\\frac{x}{x+m^2x^2}=\\frac{1}{1+m^2x}\\to1$.\n\n  - Recta vertical: Per $y\\neq0$, $0\\neq-y^2$, així que $f(0,y)=\\frac{0}{y^2}=0$: límit $0$.\n\n  - Concloure sobre el límit: La recta $y=0$ dona $1$ i la recta $x=0$ dona $0$; per la proposició de límit per camins (aplicada a $y=g(x)=0$, i a la recta $x=0$ amb els papers de $x$ i $y$ intercanviats), el límit a $(0,0)$ no existeix. (També ho mostren les paràboles $x=ay^2$, que donen $\\frac{a}{a+1}$.)\n\nRESULTAT: Sobre les rectes $y=mx$ ($m\\in\\mathbb{R}$, inclòs l'eix $y=0$) el límit és $1$; sobre la recta $x=0$ el límit és $0$. Com que les restriccions donen valors diferents, el límit $\\lim_{(x,y)\\to(0,0)}f(x,y)$ no existeix.\n",
+    "teoria_permesa": [
+     "T2.6",
+     "T2.10"
+    ],
+    "intents": [
+     {
+      "missatge": "Molt bé: la justificació és correcta i la conclusió és que el límit a $(0,0)$ no existeix. La idea clau és aplicar la Proposició 10 del Tema 2: si el límit existís, hauria de donar el mateix valor per qualsevol camí d’aproximació, i aquí la recta $y=0$ dona $1$ mentre que la recta $x=0$ dona $0$.",
+      "referencies": [
+       "T2.10"
+      ],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "El missatge és en català, respon a la darrera intervenció de l’alumne, tanca correctament i només usa la idea permesa de la proposició de límit per camins, sense avançar contingut prohibit."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [
+      "rectes_no_verticals",
+      "recta_vertical"
+     ],
+     "nivell_per_pas": {
+      "recta_vertical": 0,
+      "concloure": 1
+     },
+     "torns": 2,
+     "tancat": false,
+     "ultim_pas": "concloure",
+     "ultima_accio": "demanar_justificacio",
+     "estats": {
+      "rectes_no_verticals": "completat",
+      "recta_vertical": "completat",
+      "concloure": "en_curs"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "altre": 1
+     },
+     "repeticions": {
+      "recta_vertical": 1,
+      "concloure": 1
+     },
+     "resultat_confirmat": true,
+     "intents_alumne": 2
+    },
+    "estat": {
+     "completats": [
+      "rectes_no_verticals",
+      "recta_vertical",
+      "concloure"
+     ],
+     "nivell_per_pas": {
+      "recta_vertical": 0,
+      "concloure": 1
+     },
+     "torns": 3,
+     "tancat": true,
+     "ultim_pas": "concloure",
+     "ultima_accio": "tancar",
+     "estats": {
+      "rectes_no_verticals": "completat",
+      "recta_vertical": "completat",
+      "concloure": "completat"
+     },
+     "mostrats": [],
+     "errors_vistos": {
+      "altre": 1
+     },
+     "repeticions": {
+      "recta_vertical": 1,
+      "concloure": 1
+     },
+     "resultat_confirmat": true,
+     "intents_alumne": 3
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2983,
+      "input_tokens": 5151,
+      "output_tokens": 331,
+      "cached_tokens": 4352,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1397,
+      "input_tokens": 2552,
+      "output_tokens": 125,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2224,
+      "input_tokens": 4355,
+      "output_tokens": 208,
+      "cached_tokens": 2816,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 6605
+   }
+  }
+ ],
+ "crides_alumne": [
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 4880,
+   "input_tokens": 566,
+   "output_tokens": 459,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 4988,
+   "input_tokens": 747,
+   "output_tokens": 403,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 2763,
+   "input_tokens": 970,
+   "output_tokens": 237,
+   "cached_tokens": 0,
+   "extra": {}
+  }
+ ],
+ "crides_jutge": [
+  {
+   "stage": "jutge",
+   "model": "gpt-5.4-mini",
+   "latency_ms": 1014,
+   "input_tokens": 1187,
+   "output_tokens": 60,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "jutge",
+   "model": "gpt-5.4-mini",
+   "latency_ms": 1044,
+   "input_tokens": 1211,
+   "output_tokens": 68,
+   "cached_tokens": 0,
+   "extra": {}
+  }
+ ],
+ "durada_s": 40.6,
+ "metriques": {
+  "torns": 3,
+  "torns_error": 0,
+  "completat": true,
+  "torns_fins_tancar": 3,
+  "final": "tancar",
+  "loops": [],
+  "fallbacks": 0,
+  "drafts": 4,
+  "rebuigs": {
+   "conté contingut prohibit": 1
+  },
+  "preguntes_conceptuals": 0,
+  "preguntes_ignorades": 0,
+  "torns_jutjats": 2,
+  "fuites": [],
+  "fuites_resultat": [],
+  "accions": {
+   "questionar_error": 1,
+   "demanar_justificacio": 1,
+   "tancar": 1
+  },
+  "cost_tutor_usd": 0.02487,
+  "cost_simulacio_usd": 0.00514,
+  "models_sense_preu": []
+ },
+ "config": "default",
+ "_fitxer": "default__t2-5d__perdut.json"
+}

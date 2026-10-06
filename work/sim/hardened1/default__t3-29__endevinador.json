@@ -1,0 +1,50 @@
+{
+ "exercici": "t3-29",
+ "tema": 3,
+ "persona": "endevinador",
+ "arquetip": "endevinador",
+ "persona_descripcio": "No raones: proposes resultats en forma de pregunta sense cap justificació («és 0?», «dona 1?», «no existeix, oi?»). Si el tutor et demana com hi has arribat, dones una justificació molt vaga o proves un altre valor. No sabries resoldre l'exercici tu sol: només avances amb el que el tutor t'ajuda a descobrir.",
+ "final": "error_tutor",
+ "torns": [
+  {
+   "n": 1,
+   "alumne": "Per la fórmula de Leibniz, és $\\dfrac{\\partial f}{\\partial x}(x,y)=e^{xyx}+\\displaystyle\\int_y^x yt\\,e^{xyt}\\,dt$ i $\\dfrac{\\partial f}{\\partial y}(x,y)=-e^{xyy}+\\displaystyle\\int_y^x xt\\,e^{xyt}\\,dt$?",
+   "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5.4-mini in organization org-aWic6JXH1ufAi063obKtm6QB on tokens per min (TPM): Limit 200000, Used 198158, Requested 2594. Please try again in 225ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+  }
+ ],
+ "crides_alumne": [
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 3571,
+   "input_tokens": 582,
+   "output_tokens": 285,
+   "cached_tokens": 0,
+   "extra": {}
+  }
+ ],
+ "crides_jutge": [],
+ "durada_s": 5.1,
+ "metriques": {
+  "torns": 0,
+  "torns_error": 1,
+  "completat": false,
+  "torns_fins_tancar": null,
+  "final": "error_tutor",
+  "loops": [],
+  "fallbacks": 0,
+  "drafts": 0,
+  "rebuigs": {},
+  "preguntes_conceptuals": 0,
+  "preguntes_ignorades": 0,
+  "torns_jutjats": 0,
+  "fuites": [],
+  "fuites_resultat": [],
+  "accions": {},
+  "cost_tutor_usd": 0,
+  "cost_simulacio_usd": 0.00072,
+  "models_sense_preu": []
+ },
+ "config": "default",
+ "_fitxer": "default__t3-29__endevinador.json"
+}

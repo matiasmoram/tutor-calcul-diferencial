@@ -1,0 +1,1091 @@
+tema: 1
+titol: "Topologia a $\\mathbb{R}^n$"
+seccions:
+  - id: "1.1"
+    titol: "Espai euclidià, normat i mètric."
+  - id: "1.2"
+    titol: "Topologia d'espais mètrics."
+  - id: "1.3"
+    titol: "Completesa (convergència de successions)"
+  - id: "1.4"
+    titol: "Compacitat."
+  - id: "1.5"
+    titol: "Connexió."
+items:
+  - id: "T1.x1"
+    tipus: text
+    num: null
+    resum: null
+    seccio: null
+    pagina: 2
+    nom: "Introducció del tema"
+    enunciat: |
+      El protagonista d'aquest curs és, essencialment, $\mathbb{R}^n$. Els conceptes més importants que s'introduiran al final d'aquest tema són: completesa, compacitat i connexió.
+    problemes: []
+
+  - id: "T1.x2"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "1.1"
+    pagina: 2
+    nom: "Espai vectorial de partida"
+    enunciat: |
+      Sigui $E$ un $\mathbb{R}$-espai vectorial ($\mathbb{R}$-e.v.).
+    problemes: []
+
+  - id: "T1.1"
+    tipus: definicio
+    num: 1
+    resum: 1
+    seccio: "1.1"
+    pagina: 2
+    nom: "Producte escalar"
+    enunciat: |
+      Una funció $\langle\cdot,\cdot\rangle: E\times E\longrightarrow\mathbb{R}$ es diu que és un _producte escalar_ si compleix; $\forall u,u_j,v\in E$:
+
+      i) $\langle u,u\rangle\geq 0$; $\langle u,u\rangle=0\iff u=0$.
+
+      ii) $\langle u,v\rangle=\langle v,u\rangle$ (simètric).
+
+      iii) $\langle\lambda u,v\rangle=\lambda\langle u,v\rangle$, $\forall\lambda\in\mathbb{R}$ (i, per tant, $\langle u,\lambda v\rangle=\lambda\langle u,v\rangle$).
+
+      iv) $\langle u_1+u_2,v\rangle=\langle u_1,v\rangle+\langle u_2,v\rangle$ (ídem respecte a la segona component).
+
+      En aquest cas es diu que $(E,\langle\cdot,\cdot\rangle)$ és un _espai euclidià_.
+    problemes: []
+
+  - id: "T1.x3"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "1.1"
+    pagina: 2
+    nom: "Linealitat del producte escalar"
+    enunciat: |
+      Observem que les condicions (iii) o (iv) ens asseguren la linealitat del producte escalar.
+    problemes: []
+
+  - id: "T1.2"
+    tipus: exemple
+    num: 2
+    resum: null
+    seccio: "1.1"
+    pagina: 2
+    nom: "Exemples de productes escalars"
+    enunciat: |
+      a) $E=\mathbb{R}^2$, amb $\langle(a,b),(c,d)\rangle=ac+bd$.
+
+      b) $E=\mathcal{C}([a,b])=\{f:[a,b]\to\mathbb{R}\mid f \text{ contínua}\}$, amb
+
+      $$\begin{aligned}E\times E&\longrightarrow\mathbb{R}\\(f,g)&\longmapsto\langle f,g\rangle=\int_a^b f(x)g(x)\,dx.\end{aligned}$$
+    problemes: []
+
+  - id: "T1.3"
+    tipus: definicio
+    num: 3
+    resum: 2
+    seccio: "1.1"
+    pagina: 2
+    nom: "Norma"
+    enunciat: |
+      Una funció $\|\cdot\|:E\longrightarrow\mathbb{R}$ es diu que és una _norma_ si compleix, $\forall u,v\in E$:
+
+      i) $\|u\|\geq 0$; $\|u\|=0\iff u=0$.
+
+      ii) $\|\lambda u\|=|\lambda|\,\|u\|$, $\forall\lambda\in\mathbb{R}$.
+
+      iii) $\|u+v\|\leq\|u\|+\|v\|$ (desigualtat triangular).
+
+      En aquest cas es diu que $(E,\|\cdot\|)$ és un _espai normat_.
+    problemes: []
+
+  - id: "T1.4"
+    tipus: exemple
+    num: 4
+    resum: null
+    seccio: "1.1"
+    pagina: 2
+    nom: "Exemples de normes"
+    enunciat: |
+      a) $E=\mathbb{R}^2$, $\|(u_1,u_2)\|=\sqrt{u_1^2+u_2^2}$.
+
+      b) $E=\mathcal{C}([a,b])$, amb
+
+      $$\|f\|_1=\int_a^b|f(t)|dt.$$
+
+      En aquest cas, les propietats (i), (ii), (iii) es verifiquen fàcilment. La propietat $\|f\|_1>0\iff f\equiv 0$ es demostra com a conseqüència del teorema del valor mitjà (que veurem més endavant).
+    problemes: []
+
+  - id: "T1.5"
+    tipus: definicio
+    num: 5
+    resum: 3
+    seccio: "1.1"
+    pagina: 3
+    nom: "Distància"
+    enunciat: |
+      Sigui $M$ un conjunt. Una funció $d(\cdot,\cdot):M\times M\longrightarrow\mathbb{R}$ es diu que és una _distància_ si per a tot $x,y,z\in M$, es compleixen:
+
+      i) $d(x,y)\geq 0$; $d(x,y)=0\iff x=y$.
+
+      ii) $d(x,y)=d(y,x)$ (simètrica).
+
+      iii) $d(x,y)\leq d(x,z)+d(z,y)$ (desigualtat triangular).
+
+      Direm en aquest cas que $(M,d)$ és un _espai mètric_.
+    problemes: []
+
+  - id: "T1.6"
+    tipus: proposicio
+    num: 6
+    resum: 4
+    seccio: "1.1"
+    pagina: 3
+    nom: "Euclidià implica normat implica mètric"
+    enunciat: |
+      i) Tot espai euclidià és un espai normat si definim $\|u\|=\sqrt{\langle u,u\rangle}$.
+
+      ii) Tot espai normat és un espai mètric si prenem $d(u,v)=\|u-v\|$.
+
+      [Figura: diagrama de conjunts imbricats: espais euclidians dins d'espais normats dins d'espais mètrics.]
+
+      Figura 1: Espais euclidians $\subset$ espais normats $\subset$ espais mètrics.
+
+      Per a demostrar aquesta proposició usarem, en algun moment, el següent resultat:
+    demostracio: |
+      **Demostració de la proposició 6:**
+
+      i) Sigui $E$ un espai euclidià i definim la norma $\|u\|=\sqrt{\langle u,u\rangle}$.
+      Vegem que satisfà les propietats que defineixen una norma:
+
+      - $\|u\|=\sqrt{\langle u,u\rangle}\geq 0$ ja que $\langle u,u\rangle\geq 0$. $\|u\|=0\iff\langle u,u\rangle=0\iff u=0$.
+      - $\|\lambda u\|=\sqrt{\langle\lambda u,\lambda u\rangle}=\sqrt{\lambda^2\langle u,u\rangle}=|\lambda|\sqrt{\langle u,u\rangle}=|\lambda|\,\|u\|$.
+      - Veure que $\|u+v\|\leq\|u\|+\|v\|$ és equivalent a veure que $(\|u+v\|)^2\leq(\|u\|+\|v\|)^2$ (ja que ambdós costats són positius).
+
+      Aleshores,
+
+      $$\|u+v\|^2=\langle u+v,u+v\rangle=\langle u,u\rangle+2\langle u,v\rangle+\langle v,v\rangle=\|u\|^2+\|v\|^2+2\langle u,v\rangle\ \underset{\text{Cauchy-Schwarz}}{\leq}\ \|u\|^2+\|v\|^2+2\|u\|\,\|v\|=(\|u\|+\|v\|)^2.$$
+
+      Per tant, $\|u\|=\sqrt{\langle u,u\rangle}$ és una norma i $(E,\|\cdot\|)$ és un espai normat.
+
+      ii) Anàlogament, veiem que si $(E,\|\cdot\|)$ és un espai normat i definim $d(u,v)=\|u-v\|$, aleshores $d(\cdot,\cdot)$ satisfà les propietats per a ser una distància i, per tant, $(E,d)$ és un espai mètric.
+
+      - $d(u,v)=\|u-v\|\geq 0$; $d(u,v)=0\iff\|u-v\|=0\iff u-v=0\iff u=v$.
+      - $d(u,v)=\|u-v\|=\|(-1)(v-u)\|=|-1|\,\|v-u\|=\|v-u\|=d(v,u)$.
+      - Respecte la desigualtat triangular:
+
+      $$\begin{aligned}d(u,w)&=\|u-w\|=\|u-v+v-w\|=\|(u-v)+(v-w)\|\\&\leq\|u-v\|+\|v-w\|=d(u,v)+d(v,w).\end{aligned}$$
+    problemes: []
+
+  - id: "T1.7"
+    tipus: proposicio
+    num: 7
+    resum: 5
+    seccio: "1.1"
+    pagina: 3
+    nom: "Desigualtat de Cauchy-Schwarz"
+    enunciat: |
+      (Desigualtat de Cauchy-Schwarz.) Sigui $(E,\langle\cdot,\cdot\rangle)$ un espai euclidià (normat si definim $\|u\|=\sqrt{\langle u,u\rangle}$). Aleshores es verifica que
+
+      $$|\langle u,v\rangle|\leq\|u\|\cdot\|v\|.$$
+
+      (Nota: Augustin Louis Cauchy (1789-1857), Hermann Schwarz (1843-1921).)
+    demostracio: |
+      **Demostració de la desigualtat de Cauchy-Schwarz:**
+
+      - Vegem primer que se satisfà per al cas $u=0$ (anàlogament, per al cas $v=0$). D'un costat, $u=0\implies\|u\|=0\implies\|u\|\cdot\|v\|=0$. De l'altre,
+
+      $$\langle 0,v\rangle=\langle 0+0,v\rangle=\langle 0,v\rangle+\langle 0,v\rangle\implies\langle 0,v\rangle=2\langle 0,v\rangle\implies\langle 0,v\rangle=0.$$
+
+      Per tant,
+
+      $$\left.\begin{aligned}|\langle 0,v\rangle|&=0\\\|0\|\cdot\|v\|&=0\end{aligned}\right\}\implies|\langle 0,v\rangle|\leq\|0\|\cdot\|v\|.$$
+
+      - Suposem ara el cas que $u\neq 0$ i $v\neq 0$. Això implica que $\|u\|\neq 0$ i $\|v\|\neq 0$, de manera que podem definir
+
+      $$u'=\frac{1}{\|u\|}u\quad\text{i}\quad v'=\frac{1}{\|v\|}v.$$
+
+      És directe comprovar que $\|u'\|=1$ i $\|v'\|=1$. En efecte:
+
+      $$\|u'\|=\left\|\frac{1}{\|u\|}u\right\|=\frac{1}{\|u\|}\|u\|=1.\quad\text{(ídem per a } v'\text{)}.$$
+
+      Aleshores:
+
+      $$\begin{aligned}0&\leq\|u'-v'\|^2=\langle u'-v',u'-v'\rangle=\langle u',u'\rangle-2\langle u',v'\rangle+\langle v',v'\rangle\\&=\underbrace{\|u'\|^2}_{=1}-2\langle u',v'\rangle+\underbrace{\|v'\|^2}_{=1}=2-2\langle u',v'\rangle.\end{aligned}$$
+
+      Per tant,
+
+      $$2\langle u',v'\rangle\leq 2,\ \text{és a dir, }\langle u',v'\rangle\leq 1\Rightarrow\langle u,v\rangle\leq\|u\|\cdot\|v\|,\tag{1}$$
+
+      on hem usat que
+
+      $$\langle u',v'\rangle=\left\langle\frac{u}{\|u\|},\frac{v}{\|v\|}\right\rangle=\frac{1}{\|u\|\,\|v\|}\langle u,v\rangle.$$
+
+      Vegem ara la desigualtat contrària, és a dir, que $\langle u,v\rangle\geq-\|u\|\,\|v\|$. En efecte:
+
+      $$-\langle u,v\rangle=\langle u,-v\rangle\ \underset{C-S}{\leq}\ \|u\|\,\|-v\|=\|u\|\,\|v\|\implies\langle u,v\rangle\geq-\|u\|\,\|v\|.\tag{2}$$
+
+      Usant (1) i (2), es dedueix que:
+
+      $$-\|u\|\,\|v\|\leq\langle u,v\rangle\leq\|u\|\,\|v\|\implies|\langle u,v\rangle|\leq\|u\|\,\|v\|.$$
+
+      Ara ja podem fer la demostració de la proposició anterior.
+    problemes: []
+
+  - id: "T1.8"
+    tipus: exemple
+    num: 8
+    resum: 6
+    seccio: "1.1"
+    pagina: 5
+    nom: "Norma i distància en exemples"
+    enunciat: |
+      a) A $\mathbb{R}^2$, definim $\langle(a,b),(c,d)\rangle=ac+bd$. Llavors,
+
+      $$\begin{aligned}\|(a,b)\|&=\sqrt{\langle(a,b),(a,b)\rangle}=\sqrt{a^2+b^2},\\d((a,b),(c,d))&=\|(a,b)-(c,d)\|=\|(a-c,b-d)\|\\&=\sqrt{\langle(a-c,b-d),(a-c,b-d)\rangle}=\sqrt{(a-c)^2+(b-d)^2}\quad\text{(Pitàgores).}\end{aligned}$$
+
+      b) A $\mathbb{R}^3$, $\|(a,b,c)\|=\sqrt{a^2+b^2+c^2}$ i, en general, a $\mathbb{R}^n$:
+
+      $$\begin{aligned}\langle(a_1,a_2,\ldots,a_n),(b_1,b_2,\ldots,b_n)\rangle&:=\sum_{i=1}^n a_i\cdot b_i;\\\|(a_1,a_2,\ldots,a_n)\|&=\sqrt{\sum_{i=1}^n a_i^2};\\d((a_1,a_2,\ldots,a_n),(b_1,b_2,\ldots,b_n))&=\sqrt{\sum_{i=1}^n(a_i-b_i)^2}.\end{aligned}$$
+
+      c) $E=\mathcal{C}([a,b])$. Aleshores:
+
+      $$\begin{aligned}\langle f,g\rangle&:=\int_a^b f(x)g(x)\,dx;\\\|f\|&=\sqrt{\int_a^b f^2(x)\,dx};\\d(f,g)=\|f-g\|&=\sqrt{\int_a^b(f(x)-g(x))^2dx}\quad\text{("àrea" entre }y=f(x)\text{ i }y=g(x)\text{).}\end{aligned}$$
+
+      d) $E=\mathcal{B}(A)=$ conjunt de funcions $f:A\to\mathbb{R}$ fitades (inferiorment i superior), amb $A$ conjunt arbitrari. Aleshores, $d(f,g)=\displaystyle\sup_{t\in A}|f(t)-g(t)|$ és una distància.
+    problemes: []
+
+  - id: "T1.9"
+    tipus: definicio
+    num: 9
+    resum: 7
+    seccio: "1.1"
+    pagina: 5
+    nom: "Ortogonalitat i angle"
+    enunciat: |
+      Sigui $(E,\langle\cdot,\cdot\rangle)$ un espai euclidià. Aleshores:
+
+      i) $u$ i $v$ són _ortogonals_ $\Leftrightarrow\langle u,v\rangle=0$.
+
+      ii) L'angle entre dos vectors $u$ i $v$ es defineix com
+
+      $$\alpha=\Delta(u,v)=\arccos\frac{\langle u,v\rangle}{\|u\|\,\|v\|}\in[0,\pi].$$
+    problemes: []
+
+  - id: "T1.10"
+    tipus: observacio
+    num: 10
+    resum: null
+    seccio: "1.1"
+    pagina: 6
+    nom: "Espais mètrics no normats"
+    enunciat: |
+      Hi ha espais mètrics que no són normats. Per exemple:
+
+      a) Donat $M$ un conjunt, definim la següent _distància discreta_:
+
+      $$d(x,y)=\begin{cases}0&\text{si }x=y,\\1&\text{si }x\neq y.\end{cases}$$
+
+      Aleshores, la norma induïda, $\|x-y\|=d(x,y)$, no té sentit en un espai vectorial.
+
+      b) En un espai mètric $(M,d)$, $M$ és un conjunt arbitrari (en particular, podria ser finit) mentre que per a ser normat caldria que fos espai vectorial (en particular, infinit).
+    problemes: []
+
+  - id: "T1.11"
+    tipus: definicio
+    num: 11
+    resum: 8
+    seccio: "1.2"
+    pagina: 6
+    nom: "Boles, oberts i tancats"
+    enunciat: |
+      Sigui $(M,d)$ un espai mètric i sigui $x\in M$ un element. Aleshores, es defineix:
+
+      i) _Bola oberta_ de centre $x$ i radi $r>0$: $B_r(x)=B(x,r)=\{y\in M\mid d(x,y)<r\}$.
+
+      ii) _Bola tancada_ de centre $x$ i radi $r>0$: $\overline{B}_r(x)=\overline{B}(x,r)=\{y\in M\mid d(x,y)\leq r\}$.
+
+      iii) $A$ és un _conjunt obert_ de $M\Leftrightarrow A\subseteq M$ i per a tot $x\in A$ existeix $r>0$ tal que $B_r(x)\subseteq A$.
+
+      iv) $A$ és un _conjunt tancat_ de $M\Leftrightarrow A^c=M\setminus A$, el seu complementari a $M$, és obert.
+
+      Noteu que sempre $x\in B(x,r)$ i $x\in\overline{B}(x,r)$.
+    problemes: []
+
+  - id: "T1.12"
+    tipus: proposicio
+    num: 12
+    resum: 9
+    seccio: "1.2"
+    pagina: 6
+    nom: "Propietats dels conjunts oberts"
+    enunciat: |
+      (Propietats dels conjunts oberts.) Sigui $(M,d)$ un espai mètric. Aleshores,
+
+      i) tota bola oberta $B_r(x)$ és un conjunt obert;
+
+      ii) la unió arbitrària (finita o infinita) d'oberts és un obert;
+
+      iii) la intersecció finita d'oberts és un obert;
+
+      iv) $M$ i $\varnothing$ són conjunts oberts.
+    demostracio: |
+      **Demostració de la proposició 12:**
+
+      i) Cal veure que $\forall y\in B_r(x)$ existeix $r_y>0$ tal que $B_{r_y}(y)\subset B_r(x)$.
+
+      Del fet que $y\in B_r(x)$ es dedueix que $d(x,y)<r$. Definim $r_y:=r-d(x,y)>0$. Aleshores, si $z\in B_{r_y}(y)\Rightarrow d(y,z)<r_y=r-d(x,y)$, de forma que
+
+      $$d(z,x)\leq d(z,y)+d(y,x)<(r-d(x,y))+d(x,y)=r,$$
+
+      fet que implica que $B_{r_y}(y)\subset B_r(x)$.
+
+      ii) Sigui $(A_\mu)_{\mu\in I}$, $I$ conjunt arbitrari, $A_\mu$ obert, $A_\mu\subset M$. Volem veure que $\bigcup_{\mu\in I}A_\mu$ és també un conjunt obert de $M$.
+
+      Clarament $\bigcup_{\mu\in I}A_\mu\subset M$. Per tant, si $x\in\bigcup_{\mu\in I}A_\mu$ llavors existeix $\mu_0\in I$ tal que $x\in A_{\mu_0}$. Del fet que $A_{\mu_0}$ és un obert (a $M$) es té que existeix $r_0>0$ de manera que $B_{r_0}(x)\subseteq A_{\mu_0}\subseteq\bigcup_{\mu\in I}A_\mu$.
+
+      iii) És suficient mostrar que si $A_1$ i $A_2$ són oberts de $M$ aleshores $A_1\cap A_2$ també és un obert de $M$. La resta s'obté per inducció
+
+      En efecte, sigui $x\in A_1\cap A_2$. D'una banda, $x\in A_1$, obert, i per tant existeix $r_1>0$ tal que $B_{r_1}(x)\subseteq A_1$. De l'altra, $x\in A_2$, obert, d'on es té que existeix $r_2>0$ tal que $B_{r_2}(x)\subseteq A_2$. Aleshores, si definim $r=\min\{r_1,r_2\}$ tenim:
+
+      $$B_r(x)\subseteq B_{r_1}(x)\subseteq A_1,\quad\text{i}\quad B_r(x)\subseteq B_{r_2}(x)\subseteq A_2\quad\Rightarrow B_r(x)\subseteq A_1\cap A_2$$
+
+      iv) Clarament $M$ és obert. En efecte, sigui $x\in M$. Considerem $r>0$ qualsevol. Aleshores la bola oberta de centre $x$ i radi $r$ es defineix com $B_r(x)=\{y\in M\mid d(x,y)<r\}$. Noteu que, per definició, tot punt $y$ d'aquesta bola ha de pertànyer, necessàriament, al conjunt $M$. Per tant $B_r(x)\subseteq M$, que implica que $M$ és un obert.
+
+      La demostració de que $\varnothing$ és un obert serà conseqüència del fet que $M$ és també un tancat (vegeu Prop. 13) i $\varnothing$ és el seu complementari a $M$.
+    problemes: []
+
+  - id: "T1.x4"
+    tipus: text
+    num: null
+    resum: 10
+    seccio: "1.2"
+    pagina: 7
+    nom: "Comentaris sobre oberts"
+    enunciat: |
+      **Comentaris:**
+
+      1) Per exemple, a $\mathbb{R}$, tot interval del tipus $(a,+\infty)$ és un obert car $(a,+\infty)=\bigcup_{x>a}(a,x)$. (usem (ii)). De manera anàloga es mostra que $(-\infty,a)$ és un obert de $\mathbb{R}$.
+
+      2) En general, la intersecció infinita d'oberts no és un obert. Per exemple $O_n=\left(-\dfrac{1}{n},\dfrac{1}{n}\right)$ és un obert de $\mathbb{R}$. En canvi
+
+      $$\bigcap_{n\geq 1}O_n=\{0\},$$
+
+      que no és obert (ja que $\forall r>0$, $B(0,r)\not\subset\{0\}$ a $\mathbb{R}$).
+    problemes: []
+
+  - id: "T1.x5"
+    tipus: text
+    num: null
+    resum: 11
+    seccio: "1.2"
+    pagina: 7
+    nom: "Topologia discreta sobre un conjunt"
+    enunciat: |
+      **Comentari (topologia discreta sobre un conjunt $M$):**
+      Donat un conjunt $M$ es defineix la _topologia discreta sobre_ $M$, com aquella topologia $\mathcal{T}$ en la qual tots els seus subconjunts són oberts. És a dir
+
+      $$\mathcal{T}=\mathcal{P}(M),$$
+
+      on $\mathcal{P}(M)$ denota el conjunt de les parts de $M$. És la topologia més fina sobre $M$ (conté tots els oberts de qualsevol altra topologia $\mathcal{T}_1$ sobre $M$). Satisfà, entre d'altres, les següents propietats:
+
+      (i) Tot element de $M$ és un obert: en efecte, si $x\in M$ aleshores $\{x\}\in\mathcal{P}(M)$. Del fet que l'unió arbitrària d'oberts és un obert, es dedueix que tot subconjunt $A\subseteq M$ és un conjunt obert, ja que
+
+      $$A=\bigcup_{x\in A}\{x\}.$$
+
+      (ii) Tot subconjunt $A\subset M$ és també tancat: en efecte, $A^c=M\setminus A\in\mathcal{P}(M)$ és un obert.
+
+      Per tant, amb la topologia discreta, tot subconjunt $A\subseteq M$ és tancat i obert a la vegada.
+
+      (iii) La topologia discreta sobre $M$ es pot definir també a través de la distància
+
+      $$d(x,y)=\begin{cases}0&\text{si }x=y,\\1&\text{si }x\neq y.\end{cases}$$
+
+      **Exemple 1:** Si considerem $M=\mathbb{Z}$ amb la topologia discreta, aleshores qualsevol conjunt de nombres enters és un obert. En particular també ho són $\mathbb{Z}$ i $\varnothing$.
+
+      **Exemple 2:** Si $M=\{a,b,c\}$ aleshores la topologia discreta associada a $M$ és
+
+      $$\mathcal{T}=\mathcal{P}(M)=\{\varnothing,\{a\},\{b\},\{c\},\{a,b\},\{a,c\},\{b,c\},\{a,b,c\}\}.$$
+    problemes: []
+
+  - id: "T1.x6"
+    tipus: text
+    num: null
+    resum: 12
+    seccio: "1.2"
+    pagina: 8
+    nom: "Topologia euclidiana sobre Z"
+    enunciat: |
+      Sigui ara $M=\mathbb{Z}$ i considereu sobre $\mathbb{Z}$ la topologia induïda per la distància euclidiana
+
+      $$d(m,n)=|m-n|.$$
+
+      És aleshores $\mathbb{N}$ un obert a $\mathbb{Z}$?
+
+      Observeu que si $n\in\mathbb{Z}$ i $r>0$, aleshores la bola oberta de centre $n$ i radi $r$ es defineix com
+
+      $$B_r(n)=\left\{m\in\mathbb{Z}\ \middle|\ |m-n|<r\right\}.$$
+
+      Així, per exemple, $B_{1/2}(n)=\{n\}$ i $B_{3/2}(n)=\{n-1,n,n+1\}$. Per tant, del fet que
+
+      $$\mathbb{N}=\bigcup_{n\in\mathbb{N}}B_{1/2}(n)$$
+
+      és unió arbitrària d'oberts es dedueix que $\mathbb{N}$ és un obert de $\mathbb{Z}$ en la topologia induïda per aquesta distància euclidiana.
+
+      Recordeu que $A\subseteq M$ és tancat $\Leftrightarrow A^c=M\setminus A$ és obert.
+    problemes: []
+
+  - id: "T1.13"
+    tipus: proposicio
+    num: 13
+    resum: 13
+    seccio: "1.2"
+    pagina: 8
+    nom: "Propietats dels conjunts tancats"
+    enunciat: |
+      Sigui $M$ un conjunt i $d$ una distància definida sobre ell. Considereu la topologia sobre $M$ induïda per $d$. Aleshores:
+
+      i) les boles tancades de $M$ són conjunts tancats.
+
+      ii) La intersecció arbitrària de tancats és un tancat.
+
+      iii) La unió finita de tancats és un tancat.
+
+      iv) $M$ i $\varnothing$ són conjunts tancats.
+    demostracio: |
+      **Demostració de la proposició 13:**
+
+      i) Sigui $\overline{B}_r(x)=\{y\in M\mid d(x,y)\leq r\}$, amb $x\in M$ i $r>0$. Vegem que és un tancat.
+
+      Per a fer-ho, demostrarem que el seu complementari a $M$, $\overline{B}_r^c(x)$ és un obert.
+
+      En efecte, per a qualsevol $y\in\overline{B}_r^c(x)$ es té que $d(x,y)>r$. Sigui $r_1=d(x,y)-r>0$. Si provem que $B_{r_1}(y)\subseteq\overline{B}_r^c(x)$ aleshores $\overline{B}_r^c(x)$ és un obert.
+
+      En efecte (per reducció a l'absurd, _R.A._): suposem que $B_{r_1}(y)\not\subseteq\overline{B}_r^c(x)$. Això implica que existeix $z\in B_{r_1}(y)\cap\overline{B}_r(x)$, d'on es deriva que
+
+      $$\begin{cases}z\in B_{r_1}(y)&\Rightarrow d(z,y)<r_1\\z\in\overline{B}_r(x)&\Rightarrow d(z,x)\leq r\end{cases}$$
+
+      En conseqüència, per la desigualtat triangular,
+
+      $$d(y,x)\leq d(y,z)+d(z,x)<r_1+r=d(x,y)-r+r=d(x,y),\qquad\text{contradicció!!}$$
+
+      Per tant, $B_{r_1}(y)\subseteq\overline{B}_r^c(x)$ i $\overline{B}_r(x)$ és un tancat.
+
+      ii) D'un costat, si $(F_\mu)_{\mu\in I}$ és una col·lecció arbitrària de tancats, aleshores $(F_\mu^c)_{\mu\in I}$ és una col·lecció arbitrària d'oberts. De l'altre, per teoria de conjunts, tenim que
+
+      $$\bigcap_{\mu\in I}F_\mu=\left(\bigcup_{\mu\in I}F_\mu^c\right)^c$$
+
+      De la Proposició 12 es dedueix que $\bigcup_{\mu\in I}F_\mu^c$ és un obert (per ser unió arbitrària d'oberts) i, conseqüentment, el seu complementari $\left(\cup_{\mu\in I}F_\mu^c\right)^c$ és un tancat.
+
+      iii) Siguin $F_1,F_2,\ldots,F_k$ una col·lecció finita de tancats. Per tant $F_1^c,F_2^c,\ldots,F_k^c$ és una col·lecció finita d'oberts. A més, per teoria de conjunts,
+
+      $$\bigcup_{i=1}^k F_i=\left(\bigcap_{i=1}^k F_i^c\right)^c.$$
+
+      Com que $\bigcap_{i=1}^k F_i^c$ és un obert (per ser intersecció finita d'oberts), el seu complementari és un tancat. És a dir, $\bigcup_{i=1}^k F_i$ és un tancat.
+
+      iv) La demostració de que $M$ és tancat dins de $M$ és directa: per a tot punt $x\in M$, donat $r>0$, la bola tancada $\{y\in M\mid d(y,x)\leq r\}$ cau dins del conjunt $M$.
+
+      D'aquest fet i del que $M$ sigui també un conjunt obert (dins $M$) es dedueix que $\varnothing$ és obert i tancat a $M$ (per ser complementari de tancat i obert, respectivament).
+    problemes: []
+
+  - id: "T1.14"
+    tipus: definicio
+    num: 14
+    resum: 14
+    seccio: "1.2"
+    pagina: 10
+    nom: "Tipus de punts d'un conjunt"
+    enunciat: |
+      Sigui $A\subseteq M$. Aleshores:
+
+      i) Un punt $x\in A$ és _interior_ a $A$ si existeix $r>0$ tal que $B_r(x)\subseteq A$.
+
+      ii) Un punt $x\in M$ és _d'acumulació_ d'$A$ si per a tot $r>0$ es té que $B_r(x)\cap(A\setminus\{x\})\neq\varnothing$.
+
+      iii) Un punt $x\in M$ és de la frontera d'$A$, si per a tot $r>0$ es té que $B_r(x)\cap A\neq\varnothing$ i també $B_r(x)\cap A^c\neq\varnothing$.
+
+      iv) Un punt $x\in M$ és _exterior_ d'$A$ si $x$ és interior a $A^c$ (és a dir, si existeix $r>0$ tal que $B_r(x)\subseteq A^c$).
+    problemes: []
+
+  - id: "T1.15"
+    tipus: exemple
+    num: 15
+    resum: 15
+    seccio: "1.2"
+    pagina: 10
+    nom: "Punts d'un conjunt a R"
+    enunciat: |
+      Siguin $M=\mathbb{R}$ i $A=(1,2]\cup[3,5]$. Aleshores:
+
+      - Tot punt $x\in(1,2)\cup(3,5)$ és interior a $A$;
+      - $x=1$ i $x=3$ són punts d'acumulació d'$A$; de fet, tot $x\in[1,2]\cup[3,5]$ ho és;
+      - $x=1,2,3,5$ són punts de la frontera d'$A$;
+      - Tot $x\in(-\infty,1)\cup(2,3)\cup(5,+\infty)$ és exterior a $A$. En efecte, $A^c=(-\infty,1]\cup(2,3)\cup[5,+\infty)$ i els seus punts interiors són $(-\infty,1)\cup(2,3)\cup(5,+\infty)$.
+    problemes: []
+
+  - id: "T1.16"
+    tipus: definicio
+    num: 16
+    resum: 16
+    seccio: "1.2"
+    pagina: 10
+    nom: "Interior, derivat, frontera, clausura"
+    enunciat: |
+      Sigui $A\subseteq M$. Aleshores es defineixen:
+
+      i) _Interior_ d'$A$: $\mathring{A}=\{x\in A\mid x\text{ és interior a }A\}$. També s'acostuma a denotar per $\mathrm{int}(A)$.
+
+      ii) _Conjunt derivat_ d'$A$: $A'=\{x\in M\mid x\text{ és punt d'acumulació d'}A\}$.
+
+      iii) _Frontera_ d'$A$: $\mathrm{Fr}A=\{x\in M\mid x\text{ és de la frontera d'}A\}$. També és denota per $\partial A$.
+
+      iv) _Clausura_ o _adherència_ d'$A$: $\overline{A}=\{x\in M\mid\forall r>0\text{ es té que }B_r(x)\cap A\neq\varnothing\}$.
+      De manera equivalent, es pot definir de les dues maneres següents:
+      a) $\overline{A}=A\cup A'$; b) $\overline{A}$ és el conjunt tancat més petit que conté $A$.
+
+      v) _Exterior_ d'$A$: $\mathrm{ext}(A)=\mathrm{int}(A^c)$.
+    problemes: []
+
+  - id: "T1.17"
+    tipus: proposicio
+    num: 17
+    resum: 17
+    seccio: "1.2"
+    pagina: 10
+    nom: "Propietats de la clausura"
+    enunciat: |
+      Les següents afirmacions són certes:
+
+      i) $A\subseteq B\Rightarrow\overline{A}\subseteq\overline{B}$.
+
+      ii) $A$ és tancat $\Leftrightarrow\overline{A}=A$.
+
+      iii) $\overline{A\cup B}=\overline{A}\cup\overline{B}$.
+
+      iv) $\overline{A\cap B}\subseteq\overline{A}\cap\overline{B}$.
+    demostracio: |
+      **Demostració de la proposició 17:**
+
+      i) Suposem que $A\subseteq B$. Aleshores: si $x\in\overline{A}$ llavors per a tot $r>0$ es té que $B_r(x)\cap A\neq\varnothing$. Del fet $A\subseteq B$ es dedueix que $\forall r>0$ $B_r(x)\cap B\neq\varnothing$, que implica que $x\in\overline{B}$.
+
+      ii) Demostrem primer la implicació $\Rightarrow$):
+      D'un costat, sabem que $A\subseteq\overline{A}$. Vegem ara que $\overline{A}\subseteq A$. Ho farem per reducció a l'absurd (_R.A._). És a dir, suposem que existeix $x\in\overline{A}$ tal que $x\notin A$. Del fet que $A$ és tancat tenim que $A^c$ és un obert. Per tant, usant que $x\notin A\Leftrightarrow x\in A^c$, obert, tenim que existeix $r_0>0$ de manera que $B_{r_0}(x)\subseteq A^c\Rightarrow B_{r_0}(x)\cap A=\varnothing$, fet que contradiu la hipòtesi que $x\in\overline{A}$. Per tant, $\overline{A}\subseteq A\Rightarrow A=\overline{A}$.
+
+      Vegem ara la implicació $\Leftarrow$) :
+      que $A$ sigui tancat és equivalent a comprovar que $A^c$ és un obert. En efecte, sigui $x\in A^c$. Això implica que $x\notin A=\overline{A}$, per hipòtesi. Aleshores $x\notin\overline{A}\Rightarrow$ existeix $r_0>0$ tal que $B_{r_0}(x)\cap A=\varnothing$ que, a la vegada, implica que $B_{r_0}(x)\subseteq A^c$; és a dir, $A^c$ obert.
+
+      iii) Cal veure les dues inclusions. $\subseteq$): D'un costat, de la propietat i) tenim:
+
+      $$A\subseteq A\cup B\Rightarrow\overline{A}\subseteq\overline{A\cup B},\qquad B\subseteq A\cup B\Rightarrow\overline{B}\subseteq\overline{A\cup B}.$$
+
+      Per tant, $\overline{A}\cup\overline{B}\subseteq\overline{A\cup B}$.
+
+      $\supseteq$): Vegem ara que $\overline{A}\cup\overline{B}\supseteq\overline{A\cup B}$ o, anàlogament, que $\overline{A\cup B}\subseteq\overline{A}\cup\overline{B}$. Ho fem per _R.A._: suposem que existeix $x\in\overline{A\cup B}$ tal que $x\notin\overline{A}\cup\overline{B}$. Del fet que $x\notin\overline{A}\cup\overline{B}$ tenim que $x\notin\overline{A}$ i $x\notin\overline{B}$. Ara: $x\notin\overline{A}\Rightarrow\exists r_1>0$ tal que $B_{r_1}(x)\cap A=\varnothing$. D'igual manera, de $x\notin\overline{B}$ es dedueix que existeix $r_2>0$ tal que $B_{r_2}(x)\cap B=\varnothing$. Sigui ara $r_0<\min\{r_1,r_2\}$. Aleshores $B_{r_0}(x)\cap A=\varnothing$, $B_{r_0}(x)\cap B=\varnothing\Rightarrow B_{r_0}(x)\cap(A\cup B)=\varnothing$, en contradicció amb la hipòtesi que $x\in\overline{A\cup B}$.
+
+      En conclusió, $\overline{A\cup B}\subseteq\overline{A}\cup\overline{B}$ i, per tant, $\overline{A\cup B}=\overline{A}\cup\overline{B}$.
+
+      iv) Prenem $x\in\overline{A\cap B}$. Per tant, per a tot $r>0$, $B_r(x)\cap A\cap B\neq\varnothing$; d'aquí es dedueix fàcilment que $B_r(x)\cap A\neq\varnothing$ i que $B_r(x)\cap B\neq\varnothing$ i, en conseqüència, que $x\in\overline{A}\cap\overline{B}$.
+
+      Un contraexemple mostrant que la inclusió és estricta és el següent: considereu a $M=\mathbb{R}$ els conjunts $A=[0,1]$ i $B=(1,2]$. Aleshores, $A\cap B=\varnothing\Rightarrow\overline{A\cap B}=\varnothing$; per contra, $\overline{A}=[0,1]$, $\overline{B}=[1,2]$ i $\overline{A}\cap\overline{B}=\{1\}$.
+    problemes: []
+
+  - id: "T1.18"
+    tipus: definicio
+    num: 18
+    resum: 18
+    seccio: "1.3"
+    pagina: 11
+    nom: "Successió convergent"
+    enunciat: |
+      Sigui $(M,d)$ un espai mètric. Direm que una successió $(x_n)_{n\in\mathbb{N}}$ és _convergent_ a $M$ si existeix $x\in M$ tal que $\forall\varepsilon>0,\exists n_0\in\mathbb{N}$ tal que $d(x_n,x)<\varepsilon$ $\forall n\geq n_0$. En aquest cas, diem que $x$ és el límit de la successió, i ho denotem per $x=\displaystyle\lim_{n\to\infty}x_n$ (el límit, si existeix, és únic).
+    problemes: []
+
+  - id: "T1.19"
+    tipus: proposicio
+    num: 19
+    resum: 19
+    seccio: "1.3"
+    pagina: 11
+    nom: "Caracterització amb successions"
+    enunciat: |
+      Sigui $(M,d)$ un espai mètric, $A\subseteq M$ i $x\in M$. Aleshores:
+
+      i) $x$ és un punt d'acumulació d'$A\Leftrightarrow$ existeix una successió $(a_n)_{n\in\mathbb{N}}$, amb $a_n\neq x$, $a_n\in A$, tal que $x=\lim_n a_n$.
+
+      ii) $x\in\overline{A}\Leftrightarrow$ existeix una successió $(a_n)_{n\in\mathbb{N}}$, amb $a_n\in A$ tal que $x=\lim_n a_n$.
+
+      iii) $A$ és tancat $\Leftrightarrow$ el límit de tota successió convergent d'elements d'$A$ és d'$A$.
+    demostracio: |
+      **Demostració de la proposició 19:**
+
+      i) $\Rightarrow$): Si $x\in A'$ aleshores per a tot $r>0$ es té que $B_r(x)\cap(A\setminus\{x\})\neq\varnothing$. Prenem $\varepsilon_n:=\frac{1}{n}$ i considerem $B_{\varepsilon_n}(x)$. Pel comentari anterior, per a cada $n\in\mathbb{N}$ tenim que $B_{\varepsilon_n}(x)\cap(A\setminus\{x\})\neq\varnothing$. Prenem $a_n\in B_{\varepsilon_n}(x)\cap(A\setminus\{x\})$ i definim $(a_n)_n$ la successió així generada. Observeu que, en particular, $d(a_n,x)<\varepsilon_n=\frac{1}{n}$ per a tot $n\geq 1$.
+
+      Fixat $\varepsilon>0$, sigui $n_0=n_0(\varepsilon)\in\mathbb{N}$ tal que $\varepsilon_{n_0}=\frac{1}{n_0}<\varepsilon$. Això implica que per a tot $n\geq n_0(\varepsilon)$ es té que $d(a_n,x)<\frac{1}{n}<\frac{1}{n_0}<\varepsilon$, és a dir, que $\lim_n a_n=x$.
+
+      $\Leftarrow$): Suposem ara que existeix una successió $(a_n)_n$ amb $a_n\in A\setminus\{x\}$ tal que $\lim_n a_n=x$. Volem veure que $x\in A'$, és a dir, és punt d'acumulació d'$A$.
+
+      Sigui $r=\varepsilon>0$. Del fet que $\lim_n a_n=x$ i que $a_n\in A\setminus\{x\}$ per a tot $n\in\mathbb{N}$, es dedueix que existeix un $n_0=n_0(r)$ de forma que per a tot $n\geq n_0$ tenim $0<d(a_n,x)<r$. És a dir, que $a_n\in B_r(x)\cap(A\setminus\{x\})$, que és la definició de que $x$ sigui punt d'acumulació d'$A$.
+
+      ii) Recordeu que $x\in\overline{A}\Leftrightarrow x\in A'\cup A$. La demostració és anàloga a la del punt i) però sense haver d'imposar que $a_n\neq x$.
+
+      iii) $\Rightarrow$): Suposem que $A$ és tancat. Considerem una successió $(a_n)_n$, amb $a_n\in A$ per a tot $n$, que sigui convergent. Sigui $x=\lim_n a_n$. Per la propietat ii), es dedueix que $x\in\overline{A}=A$, on hem usat a la darrera igualtat que $A$ és tancat.
+
+      $\Leftarrow$): Suposem ara que qualsevol successió convergent de punts d'$A$ té el seu límit a $A$. Volem veure que $A=\overline{A}$.
+
+      Clarament, $A\subseteq\overline{A}$. Vegem que la inclusió contrària, $\overline{A}\subseteq A$, també es dona i que, per tant, tenim la igualtat. En efecte, sigui $x\in\overline{A}$. Per la propietat ii), tenim que existeix una successió $(a_n)_n$, amb $a_n\in A$, tal que $x=\lim_n a_n$. Per hipòtesi, aquest valor límit $x$ pertany a $A$ i, per tant, $\overline{A}\subseteq A$.
+    problemes: []
+
+  - id: "T1.20"
+    tipus: definicio
+    num: 20
+    resum: 20
+    seccio: "1.3"
+    pagina: 12
+    nom: "Successió de Cauchy"
+    enunciat: |
+      Sigui $(M,d)$ un espai mètric. Una successió $(a_n)_{n\in\mathbb{N}}$, amb $a_n\in M$ per a tot $n$, es diu que és de _Cauchy_ si per a tot $\varepsilon>0$, existeix $n_0$ tal que per a tot $n,m\geqslant n_0$, es té que $d(a_n,a_m)<\varepsilon$.
+    problemes: []
+
+  - id: "T1.21"
+    tipus: proposicio
+    num: 21
+    resum: 21
+    seccio: "1.3"
+    pagina: 12
+    nom: "Convergent, Cauchy i fitada"
+    enunciat: |
+      Sigui $(M,d)$ espai mètric.
+
+      i) Si $(x_n)_{n\in\mathbb{N}}$ és convergent, aleshores és de Cauchy.
+
+      ii) Si $(x_n)_{n\in\mathbb{N}}$ és convergent, aleshores és fitada.
+
+      iii) Si $(x_n)_{n\in\mathbb{N}}$ és de Cauchy i té una subsuccessió convergent, aleshores és convergent.
+    demostracio: |
+      **Demostració de la proposició 21:**
+
+      i) Suposem que $\lim_{n\to\infty}x_n=x$. Volem veure que $(x_n)_n$ és de Cauchy. Sabem que $\forall\varepsilon>0,\exists n_0\in\mathbb{N}$ tal que $d(x_n,x)<\frac{\varepsilon}{2}$ per a tot $n\geq n_0$. Per tant, si $p,q\geq n_0$, aleshores $d(x_p,x_q)\leq d(x_p,x)+d(x,x_q)<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon$.
+
+      ii) Suposem que $(x_n)_n$ és convergent i sigui $x=\lim_n x_n$. Volem veure que $(x_n)_n$ és fitada. Prenem, per exemple, $\varepsilon=1$. Aleshores, existeix $n_0=n_0(\varepsilon)\in\mathbb{N}$ tal que $d(x_n,x)<1$ $\forall n\geq n_0$. Considerem ara
+
+      $$R=\max\{d(x_1,x),d(x_2,x),\ldots,d(x_{n_0-1},x),1\}.$$
+
+      Aleshores, $d(x_n,x)\leq R$ per a tot $n\in\mathbb{N}$ i, en conclusió, $(x_n)_n$ és fitada.
+
+      iii) Sigui $(x_n)_n$ de Cauchy. Sigui $(x_{n_k})_k$ una subsuccessió de $(x_n)_n$ convergent. Sigui $x=\lim_k x_{n_k}$. Volem veure que $\lim_n x_n=x$. En efecte, sigui $\varepsilon>0$ qualsevol: com que $(x_n)_n$ és de Cauchy, existeix $n_1\in\mathbb{N}$ tal que $d(x_p,x_q)<\frac{\varepsilon}{2}$ $\forall p,q\geq n_1$. D'altra banda, com que $(x_{n_k})_k$ convergeix a $x$, existeix $n_2\in\mathbb{N}$ tal que $d(x_{n_k},x)<\frac{\varepsilon}{2}$ per a tot $n_k\geq n_2$. Escollim $N=\max\{n_1,n_2\}$. Per a $n\geq N$, prenem un $n_k\geq N$. Aleshores: $d(x_n,x)\leq d(x_n,x_{n_k})+d(x_{n_k},x)<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon$.
+    problemes: []
+
+  - id: "T1.22"
+    tipus: definicio
+    num: 22
+    resum: 22
+    seccio: "1.3"
+    pagina: 13
+    nom: "Espai mètric complet"
+    enunciat: |
+      Un espai mètric $(M,d)$ es diu que és _complet_ si tota successió de Cauchy en $M$ és convergent a $M$.
+    problemes: []
+
+  - id: "T1.23"
+    tipus: exemple
+    num: 23
+    resum: null
+    seccio: "1.3"
+    pagina: 13
+    nom: "R complet, Q no complet"
+    enunciat: |
+      $\mathbb{R}$ amb la distància euclidiana és complet. En canvi, $\mathbb{Q}$ amb la distància euclidiana no és complet. Per exemple: considereu el nombre $\sqrt{2}$. Del fet que sigui irracional, $\sqrt{2}$ admet una expressió en forma decimal infinita on cap bloc es repeteix de forma periòdica (en cas contrari seria racional). Considereu la successió $(a_n)_n$ definida de la forma següent: $a_1$ és el truncament a $1$ xifra decimal de l'expressió (infinita) de $\sqrt{2}$; el terme $a_2$ és el mateix però truncant a $2$ xifres decimals; en general, $a_n$ serà el seu truncament a $n$ xifres decimals. Per exemple:
+
+      $$a_1=1.4,\qquad a_2=1.41,\qquad a_3=1.414,\qquad a_4=1.4142,\qquad\ldots$$
+
+      Aleshores, la successió $(a_n)_n$, amb $a_n\in\mathbb{Q}$, és de Cauchy perquè la diferència entre els seus termes es fa cada cop més petita. En canvi, aquesta successió no convergeix a un valor a $\mathbb{Q}$ (perquè $\sqrt{2}\notin\mathbb{Q}$).
+    problemes: []
+
+  - id: "T1.x7"
+    tipus: text
+    num: null
+    resum: 23
+    seccio: "1.3"
+    pagina: 13
+    nom: "R^n és complet"
+    enunciat: |
+      **Comentari:** $\mathbb{R}^n$ és complet. En efecte: suposem que $(x_k)_{k\in\mathbb{N}}$ és una successió de Cauchy en $\mathbb{R}^n$. Denotem els seus elements com $x_k=(x_{k_1},\ldots,x_{k_n})$. Per a cada component $j=1,\ldots,n$, la successió $(x_{k_j})_j$ és una successió de Cauchy en $\mathbb{R}$, complet, d'on se dedueix que $(x_{k_j})_j$ convergeix a un cert $x_j$ en $\mathbb{R}$. Per tant, la successió $(x_k)_k\subset\mathbb{R}^n$ convergeix al punt $x=(x_1,\ldots,x_n)\in\mathbb{R}^n$.
+    problemes: []
+
+  - id: "T1.24"
+    tipus: definicio
+    num: 24
+    resum: 24
+    seccio: "1.4"
+    pagina: 13
+    nom: "Compacte i seqüencialment compacte"
+    enunciat: |
+      Sigui $(M,d)$ espai mètric, $A\subseteq M$.
+
+      i) $A$ és _compacte_ si tot recobriment per oberts de $A$ admet un subrecobriment finit, és a dir: si $A\subseteq\bigcup_{i\in I}U_i$, amb $U_i$ obert, aleshores existeixen $i_1,\ldots,i_k\in I$ tals que $A\subseteq\bigcup_{j=1}^k U_{i_j}$.
+
+      ii) $A$ és _seqüencialment compacte_ si tota successió $(x_n)_{n\in\mathbb{N}}\subseteq A$ admet una subsuccessió (una parcial) convergent a un punt de $A$.
+    problemes: []
+
+  - id: "T1.25"
+    tipus: exemple
+    num: 25
+    resum: null
+    seccio: "1.4"
+    pagina: 14
+    nom: "Intervals compactes i no compactes"
+    enunciat: |
+      i) $[0,1]$ a $\mathbb{R}$ és compacte.
+
+      ii) $(0,1)$ a $\mathbb{R}$ no és compacte.
+    problemes: []
+
+  - id: "T1.x8"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "1.4"
+    pagina: 14
+    nom: "Mètode de l'interval de Cantor"
+    enunciat: |
+      **Comentari:** La primera prova de que l'interval $[0,1]$ és compacte (a $\mathbb{R}$) va ser donada pel matemàtic alemany Georg Cantor. Va usar el posteriorment anomenat "mètode de l'interval (de Cantor)".
+
+      Es fa per reducció a l'absurd (_R.A._): Donat $\cup_i U_i$ un recobriment obert (infinit) de $[0,1]$, suposem que no es pot obtenir d'ell cap subrecobriment finit. Hi apliquem un mètode iteratiu tipus bisecció. En efecte:
+
+      _Pas 1_: Del fet que $I_0=[0,1]$ no admet cap subrecobriment finit es pot deduir que o bé l'interval $\left[0,\frac{1}{2}\right]$ o l'interval $\left[\frac{1}{2},1\right]$ tampoc l'admeten (en cas contrari hauríem arribat a que $[0,1]$ l'admet!) Suposem que és, per exemple, $I_1=\left[0,\frac{1}{2}\right]$ qui no admet cap subrecobriment finit. Noteu que $I_1\subset I_0$.
+
+      _Pas n_: De la mateixa manera, construïm una successió d'intervals $(I_n)_n$, encaixats, la longitud dels quals satisfà $\mathrm{long}(I_n)=\frac{1}{2^n}$, amb la propietat que cap d'ells admet un recobriment finit: $I_{n+1}\subset I_n$. Si fem $n\to\infty$ aleshores $\mathrm{long}(I_n)\to 0$ i tenim que $\cap_n I_n=\{x^*\}$. Aquest punt $x^*$ ha de pertànyer, necessàriament, a algun dels oberts $U_i$ del recobriment inicial de $I_0=[0,1]$, ja que el recobreixen. Sigui $U^*\in\{U_i\}_i$ un d'aquests oberts tal que $x^*\in U^*$. A més, $\exists N$ tal que $x^*\in I_N\subset U^*$. Però, per construcció, cap interval $I_n$ pot ser recobert per un nombre finit d'oberts del recobriment (i ara acabem de trobar un únic obert que recobreix $I_N$). Contradicció !! Per tant, l'interval $[0,1]$ és compacte.
+
+      (Nota: Georg Cantor, Saint Petersburg 1845 - Halle 1918.)
+    problemes: []
+
+  - id: "T1.26"
+    tipus: teorema
+    num: 26
+    resum: 26
+    seccio: "1.4"
+    pagina: 14
+    nom: "Teorema de Bolzano-Weierstrass"
+    enunciat: |
+      (Bolzano-Weierstrass.) Sigui $(M,d)$ espai mètric i $A\subseteq M$. Aleshores:
+      $A$ és compacte $\Leftrightarrow$ $A$ és seqüencialment compacte.
+    demostracio: |
+      **Demostració del teorema 26:**
+
+      $\Rightarrow$): Suposem que $A$ és compacte. Volem veure que $A$ és seqüencialment compacte. Apliquem un argument de _R.A._: sigui $(x_n)_n$ una successió d'elements $x_n\in A$ tal que no admet cap parcial convergent.
+
+      Clarament, $(x_n)_n$ no pot contenir infinites còpies d'un mateix element $x_{n_0}$ (en cas contrari, la subsuccessió o parcial $x_n=x_{n_0}$ $\forall n$ seria convergent). Definim ara la successió $(y_n)_n\subset A$ formada pels elements de $(x_n)_n$ que són diferents dos a dos; és a dir, eliminem les còpies de punts de $(x_n)_n$. Noteu que $(y_n)_n$ és una subsuccessió de $(x_n)_n$.
+
+      **Afirmació:** Existeix una successió d'oberts $(U_n)_n$, amb $U_n\subseteq M$, tal que $y_n\in U_n$ és l'únic punt de la successió $(y_n)_n$ que pertany a $U_n$.
+
+      **Demostració de l'afirmació:** Novament, per _R.A._: la successió d'oberts $(U_n)_n$ es pot construir de manera trivial considerant boles d'un determinat radi (fixat o no). El fet de suposar que l'afirmació no és certa implica que no podem construir cap successió $(U_n)_n$ tal que cada $U_n$ contingui un, i només un, punt $y_n$ de la successió $(y_n)_n$. És a dir, qualsevol d'aquestes successions $(U_n)_n$ satisfà que existeix almenys un $y_{n_0}\in U_{n_0}$ de manera que $U_{n_0}$ conté una infinitat de punts (diferents entre ells per construcció) de la successió $(y_n)_n$ a banda del punt $y_{n_0}$. En particular, això s'ha de donar també pel següent conjunt d'entorns del punt $y_{n_0}$ :
+
+      $$V_m=B_{\frac{1}{m}}(y_{n_0})\cap U_{n_0},\qquad m\geq 1.$$
+
+      Anomenem $y_m^0\in V_m\setminus\{y_{n_0}\}$ a cadascun d'aquests punts i definim la successió $(y_m^0)_m$. Del fet que $y_m^0\in V_m$ i que el radi d'aquestes boles $\frac{1}{m}\to 0$ si $m\to+\infty$, s'obté que la subsuccessió $(y_m^0)_m$ és convergent al punt $y_{n_0}\in A$. Això contradiu la hipòtesi que $(x_n)_n$ no tingui cap parcial convergent dins del conjunt $A$.
+
+      Per tant, continuant amb la demostració del teorema, podem considerar aquesta successió d'oberts $(U_n)_n$ d'$A$ que satisfà que cada $U_n$ conté un i només un element $y_n$ de la successió $(y_n)_n$.
+
+      Sigui $Y$ el conjunt format pels elements de la successió $(y_n)_n$, és a dir, $Y=\{y_1,y_2,\ldots,y_n,\ldots\}\subseteq A$. Per l'afirmació anterior, $Y$ no té punts d'acumulació. Això implica que $\overline{Y}=Y\Rightarrow Y$ és un conjunt tancat dins d'$A$. A més $\cup_{n\geq 1}U_m\ni Y$ és un recobriment d'oberts de $Y$. Pel Lema 28, car $A$ és compacte, es dedueix que $Y$ és també un compacte. En canvi, però, del recobriment $\cup_{n\geq 1}U_m$ no se'n pot extraure cap recobriment finit perquè cada obert $U_m$ conté exactament un punt diferent $y_m\in Y$ i tots són essencials. Contradicció!! Per tant, $(x_n)_n$ admet una subsuccessió convergent. Falta veure que és convergent a un punt de $A$.
+
+      En efecte, sigui $(x_{n_k})_k\subseteq(x_n)_n$ aquesta parcial convergent i sigui $x=\lim_k x_{n_k}$ el seu límit. En principi $x\in M$. Del fet que $x_{n_k}\in A$ per a tot $k\geq 1$ es dedueix, per definició de punt adherent, que $x\in\overline{A}$. Però, aplicant el Lema 28, $A$ compacte $\Rightarrow A$ tancat $\Leftrightarrow\overline{A}=A$. En conclusió, $x=\lim_k x_{n_k}\in A$.
+
+      $\Leftarrow$) : Suposem ara que $A$ és seqüencialment compacte. Vegem que aleshores és compacte.
+
+      Sigui $\bigcup_{i\in I}U_i\supseteq A$ un recobriment (de fet infinit) per oberts d'$A$. Cal veure que podem extraure un subrecobriment finit. Aleshores:
+
+      - Pel Lema 29 existeix un $\delta>0$ de manera que per a tot $a\in A$ tenim $B_\delta(a)\subseteq U_i$, per a un cert $i\in I$ (que depèn de $a$).
+      - Prenem ara, al Lema 30, $\varepsilon=\delta$, on $\delta>0$ és el valor trobat al punt anterior. Aleshores, tenim que existeixen $y_1,y_2,\ldots,y_r$ punts de $A$ tals que
+
+      $$A\subseteq B_\delta(y_1)\cup B_\delta(y_2)\cup\ldots\cup B_\delta(y_r)\subseteq U_{i_1}\cup U_{i_2}\cup\ldots\cup U_{i_r}.$$
+
+      És a dir, hem extret un subrecobriment finit d'$A$. Per tant, $A$ és compacte.
+    problemes: []
+
+  - id: "T1.x9"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "1.4"
+    pagina: 14
+    nom: "Lemes previs a Bolzano-Weierstrass"
+    enunciat: |
+      La demostració del Teorema de Bolzano-Weierstrass està basada en la prova d'un seguit de lemes previs que presentem i demostrem a continuació.
+    problemes: []
+
+  - id: "T1.27"
+    tipus: lema
+    num: 27
+    resum: 27
+    seccio: "1.4"
+    pagina: 14
+    nom: "Compacte implica tancat"
+    enunciat: |
+      $A$ compacte $\Rightarrow$ $A$ tancat.
+    demostracio: |
+      **Demostració del lema 27:** Vegem que $A^c$ és obert. Per fer-ho cal comprovar que si $x\in A^c$, aleshores existeix una bola centrada en $x$ continguda en $A^c$. Definim la següent família d'oberts:
+
+      $$U_n=\left(\overline{B}_{1/n}(x)\right)^c.$$
+
+      Observeu que:
+
+      - $U_n$ és un obert (per a tot $n\geq 1$) perquè és el complementari d'un tancat.
+      - Per construcció, $\overline{B}_1(x)\supset\overline{B}_{1/2}(x)\supset\overline{B}_{1/3}(x)\supset\ldots$, de forma que $U_1\subset U_2\subset U_3\subset\ldots$
+      - $(U_n)_n$ és un recobriment d'$A$ per oberts: $A\subseteq\bigcup_{n\in\mathbb{N}}U_n$; de fet, $\bigcup_{n\in\mathbb{N}}U_n=M\setminus\{x\}$.
+
+      Atès que $A$ és compacte, d'aquest recobriment en podem extraure un recobriment finit, és a dir, existeixen índexs $i_1,i_2,\ldots,i_r$ tals que $A\subseteq U_{i_1}\cup U_{i_2}\cup\cdots\cup U_{i_r}$. Si ordenem aquests índexs, podem suposar que $i_1\leq i_2\leq i_3\leq\ldots\leq i_r$, de manera que $U_{i_1}\subset U_{i_2}\subset U_{i_3}\subset\ldots\subset U_{i_r}$. Per tant $A\subset U_{i_r}=\left(\overline{B}_{1/i_r}(x)\right)^c$, que implica $\overline{B}_{1/i_r}(x)\subset A^c\Rightarrow B_{1/i_r}(x)\subset A^c$.
+    problemes: []
+
+  - id: "T1.28"
+    tipus: lema
+    num: 28
+    resum: 28
+    seccio: "1.4"
+    pagina: 15
+    nom: "Tancat d'un compacte és compacte"
+    enunciat: |
+      Tot tancat d'un compacte és un compacte.
+    demostracio: |
+      **Demostració del lema 28:** Suposem que $B\subseteq A\subseteq M$, amb $A$ compacte i $B$ tancat. Volem veure que $B$ és compacte.
+
+      Considerem un recobriment de $B$ per oberts $U_i$ de $M$: $B\subseteq\bigcup_{i\in I}U_i\subseteq M$. Comprovem que en podem extraure un recobriment finit.
+
+      Del fet que $B$ és tancat, es deriva que $B^c\subseteq M$ és obert; llavors, usant que $B\subseteq A$, obtenim que $(\cup_{i\in I}U_i)\cup B^c$ és un recobriment per oberts d'$A$. En ser $A$ compacte, n'existeix un subrecobriment finit, és a dir: $A\subseteq U_{i_1}\cup U_{i_2}\ldots\cup U_{i_r}\cup B^c$. Però com que $B\subseteq A$, es dedueix que $B\subseteq U_{i_1}\cup U_{i_2}\cup\ldots\cup U_{i_r}$ (podem ignorar $B^c$ al recobriment ja que $B\cap B^c=\varnothing$). Per tant, $B$ admet un subrecobriment finit i, en conseqüència, és compacte.
+    problemes: []
+
+  - id: "T1.x10"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "1.4"
+    pagina: 15
+    nom: "Hipòtesi dels dos lemes següents"
+    enunciat: |
+      Els dos lemes següents parteixen de la hipòtesi que $A$ és seqüencialment compacte.
+    problemes: []
+
+  - id: "T1.29"
+    tipus: lema
+    num: 29
+    resum: 29
+    seccio: "1.4"
+    pagina: 15
+    nom: "Nombre de Lebesgue"
+    enunciat: |
+      Sigui $A\subset M$ seqüencialment compacte i sigui $\bigcup_{i\in I}U_i\supseteq A$ un recobriment per oberts d'$A$. Aleshores, existeix $\delta>0$ tal que per a tot $a\in A$ es té que $B_\delta(a)\subseteq U_{i_0}$, per a algun $i_0=i_0(a)\in I$.
+    demostracio: |
+      **Demostració del lema 29:** Ho provem per _R.A._: suposem que no existeix tal $\delta>0$, és a dir, que per a tot $\delta>0$ existeix $a_\delta\in A$ tal que $B_\delta(a_\delta)\not\subseteq U_i$, $\forall i\in I$. Si prenem, per exemple, una successió $(\delta_n)_n$ amb $\delta_n=\frac{1}{n}$, tenim que $\forall n\geq 1$ existeix $a_n=a_n(\delta_n)\in A$ tal que $B_{1/n}(a_n)\not\subseteq U_i$, $\forall i\in I$. Del fet que $A$ sigui seqüencialment compacte es dedueix que la successió $(a_n)_n$ admet una parcial $(a_{n_k})_k$ convergent a $A$. És a dir $a=\lim_k a_{n_k}$, amb $a\in A$. Com que $a\in A\subseteq\bigcup_{i\in I}U_i$ tenim que existeix $i_0\in I$ tal que $a\in U_{i_0}$.
+
+      Prenem ara $\varepsilon>0$ tal que $B_\varepsilon(a)\in U_{i_0}$. Sigui $K\gg 0$ de manera que
+
+      $$d(a_{n_k},a)<\frac{\varepsilon}{2}\qquad\text{i}\qquad\frac{1}{n_k}<\frac{\varepsilon}{2},\qquad\forall k\geq K.$$
+
+      Sigui $z\in B_{1/n_k}(a_{n_k})$, per a $k\geq K$. Aleshores,
+
+      $$d(z,a)\leq d(z,a_{n_k})+d(a_{n_k},a)<\frac{1}{n_k}+\frac{\varepsilon}{2}<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon\Rightarrow z\in B_\varepsilon(a).$$
+
+      Per tant, tenim que per a tot $k\geq K$,
+
+      $$B_{1/n_k}(a_{n_k})\subseteq B_\varepsilon(a)\subseteq U_{i_0},$$
+
+      que és una contradicció (!!) perquè estem suposant que $B_{1/n}(a_n)\not\subseteq U_i$, per a tot $i\in I$.
+    problemes: []
+
+  - id: "T1.30"
+    tipus: lema
+    num: 30
+    resum: 30
+    seccio: "1.4"
+    pagina: 16
+    nom: "Recobriment finit per boles"
+    enunciat: |
+      Suposem que $A$ és seqüencialment compacte. Aleshores, per a tot $\varepsilon>0$, existeixen $y_1,y_2,\ldots,y_r\in A$ tals que $A\subseteq\cup_{i=1}^r B_\varepsilon(y_i)$, és a dir, $A$ està recobert per una unió finita de boles centrades en punts de $A$ i de radi $\varepsilon$.
+    demostracio: |
+      **Demostració del lema 30:** Ho tornem a provar per _R.A._. En efecte, suposem el contrari, és a dir, que existeix $\varepsilon_0>0$ tal que $A$ no està recobert per cap unió finita de boles de radi $\varepsilon_0$ i centre a punts d'$A$. Definim aleshores la següent successió $(y_n)_n$:
+
+      $$y_1\in A\text{ qualsevol},\qquad y_2\in A\setminus B_{\varepsilon_0}(y_1),\qquad y_3\in A\setminus\left(B_{\varepsilon_0}(y_1)\cup B_{\varepsilon_0}(y_2)\right)$$
+
+      i, en general,
+
+      $$y_k\in A\setminus\bigcup_{j=1}^{k-1}B_{\varepsilon_0}(y_j).$$
+
+      Observeu que la successió $(y_n)_n$ satisfà, per construcció que si $k>j$ llavors $d(y_k,y_j)>\varepsilon_0$. Per tant, $(y_n)_n$ no admet cap parcial convergent, que és una contradicció (!!) amb el fet que $A$ sigui seqüencialment compacte.
+
+      Abordem ara la demostració del teorema.
+    problemes: []
+
+  - id: "T1.31"
+    tipus: corollari
+    num: 31
+    resum: 31
+    seccio: "1.4"
+    pagina: 17
+    nom: "Propietat de l'encaixament"
+    enunciat: |
+      (Propietat de l'encaixament.) Sigui $(M,d)$ espai mètric, $M$ compacte. Sigui
+
+      $$K_1\supseteq K_2\supseteq\cdots\supseteq K_n\supseteq K_{n+1}\supseteq\ldots$$
+
+      una cadena descendent de tancats no buits. Aleshores, es té que $\displaystyle\bigcap_{n=1}^{\infty}K_n\neq\varnothing$.
+    demostracio: |
+      **Demostració del corol·lari 31:** D'un costat, sabem que la intersecció arbitrària de tancats és un tancat. Per tant $\bigcap_{n=1}^{+\infty}K_n$ és un tancat. Vegem que és no buit.
+
+      Fem-ho per _R.A._: suposem que $\bigcap_{n=1}^{+\infty}K_n=\varnothing$. Del fet que $K_1\supseteq K_2\supseteq\ldots\supseteq K_n\supseteq\ldots$ és una cadena de tancats encaixats es dedueix que
+
+      $$K_1^c\subseteq K_2^c\subseteq K_3^c\subseteq\ldots\subseteq\bigcup_{n=1}^{+\infty}K_n^c\tag{3}$$
+
+      és una cadena de conjunts oberts $(K_j^c)_j$ encaixats. Ara,
+
+      $$\bigcup_{n=1}^{+\infty}K_n^c=\left(\bigcap_{n=1}^{+\infty}K_n\right)^c=(\varnothing)^c=M.\tag{4}$$
+
+      Per tant, en particular, $\cup_{n=1}^{+\infty}K_n^c$ és un recobriment per oberts de $M$. Com que $M$ és compacte, en podem extraure un subrecobriment finit, és a dir, existeixen $n_1,n_2,n_3,\ldots,n_s$ tals que
+
+      $$M\subseteq K_{n_1}^c\cup K_{n_2}^c\cup\ldots\cup K_{n_s}^c.$$
+
+      A més, del fet que aquests oberts estiguin encaixats, fa que
+
+      $$M\subseteq K_{n_1}^c\cup K_{n_2}^c\cup\ldots\cup K_{n_s}^c=K_N^c,$$
+
+      on $N=\max\{n_1,n_2,\ldots,n_s\}$. Noteu que $K_N^c$ és un dels oberts a (3).
+
+      Així doncs, tenim que $M\subseteq K_N^c$. Però, a més, si usem (3) i (4), tenim també que $K_N^c\subseteq M$.
+
+      Per tant, $M=K_N^c\Rightarrow K_N=M^c=\varnothing$, que és una contradicció (!!) perquè els tancats $K_j$ són tots no buits. En conclusió, $\bigcap_{n=1}^{+\infty}K_n\neq\varnothing$.
+    problemes: []
+
+  - id: "T1.32"
+    tipus: exemple
+    num: 32
+    resum: 32
+    seccio: "1.4"
+    pagina: 17
+    nom: "Exemples de la propietat d'encaixament"
+    enunciat: |
+      Aquí teniu dos exemples que il·lustren aquest resultat:
+
+      1) $[0,1]\supseteq[0,1/2]\supseteq[0,1/3]\supseteq\ldots$ Aleshores, $\displaystyle\bigcap_{n=1}^{\infty}[0,1/n]=\{0\}\neq\varnothing$.
+
+      2) $(0,1]\supseteq(0,1/2]\supseteq(0,1/3]\supseteq\ldots$ Aleshores, $\displaystyle\bigcap_{n=1}^{\infty}(0,1/n]=\varnothing$.
+
+      Fixeu-vos que, en aquest cas, els intervals de la forma $(0,1/n]$ no són conjunts tancats (a $\mathbb{R}$) i, per tant, no cauen dins de les hipòtesis del corol·lari.
+    problemes: []
+
+  - id: "T1.33"
+    tipus: definicio
+    num: 33
+    resum: 33
+    seccio: "1.4"
+    pagina: 18
+    nom: "Conjunt fitat"
+    enunciat: |
+      Es diu que $A\subseteq M$ és _fitat_ si i només si existeix un $x\in M$ i un valor $L>0$ tal que $A\subseteq B_L(x)$.
+    problemes: []
+
+  - id: "T1.34"
+    tipus: teorema
+    num: 34
+    resum: 34
+    seccio: "1.4"
+    pagina: 18
+    nom: "Teorema de Heine-Borel"
+    enunciat: |
+      (Heine-Borel.) Sigui $A\subseteq\mathbb{R}^n$, amb $n>1$. Aleshores, $A$ és compacte $\Leftrightarrow$ $A$ és tancat i fitat.
+    demostracio: |
+      **Demostració del teorema 34:**
+
+      $\Rightarrow$) Si $A$ compacte, aleshores $A$ és seqüencialment compacte (pel Teorema de Bolzano-Weierstrass) i, en particular, es pot aplicar el Lema 30. És a dir, per a tot $\varepsilon>0$ existeixen $y_1,y_2,\ldots,y_r\in A$ tals que $A\subseteq\bigcup_{i=1}^r B(y_i,\varepsilon)$. Prenem, per exemple, $\varepsilon=1$ i definim $L=\max\{d(y_1,y_2),d(y_1,y_3),\ldots,d(y_1,y_r)\}$.
+
+      Aquest màxim està ben definit ja que el conjunt $\{y_1,y_2,\ldots,y_r\}$ és finit. Aleshores, $A\subseteq B(y_1,L+1)$ i, per tant, és fitat.
+
+      En efecte, donat $a\in A$ existeix $i\in\{1,2,\ldots,r\}$ tal que $a\in B(y_i,1)\Rightarrow d(a,y_i)<1\Rightarrow d(a,y_1)\leq d(a,y_i)+d(y_i,y_1)\leq 1+L$.
+
+      D'altra banda, pel Lema 27, sabem que si $A$ és compacte, també és tancat.
+
+      $\Leftarrow$) Suposem ara que $A\subseteq\mathbb{R}^n$ és tancat i fitat i vegem que $A$ és compacte.
+
+      A $\mathbb{R}$ (és a dir $n=1$), ja és conegut: $A$ fitat implica que tota successió $(a_n)_n\subset A$ és també fitada i, per tant, admet una parcial $(a_{n_k})_k$ convergent, amb $\lim_k a_{n_k}=a^*\in\overline{A}=A$, perquè $A$ tancat.
+
+      Vegem que també és certa a $\mathbb{R}^n$ amb $n>1$. En efecte, per a $i\in\{1,2,\ldots,n\}$, considerem $\pi_i:\mathbb{R}^n\to\mathbb{R}$ definida per $\pi_i(x)=\pi_i(x_1,x_2,\ldots,x_n)=x_i$. És a dir, $\pi_i(x)$, amb $x\in\mathbb{R}^n$, és la projecció de $x$ sobre la seva component $i$-èsima. Si $A\in\mathbb{R}^n$ és fitat $\Rightarrow$, existeix $L>0$ tal que $A\subseteq B(0,L)$. En particular, això implica que $\pi_i(A)\subseteq[-L,L]$. Fem l'argument per a $\mathbb{R}^2$ (és a dir $n=2$). Anàlogament es pot reproduir per a $n\geq 3$.
+
+      Clarament, $A\subseteq[-L,L]\times[-L,L]$ i, com que $A$ és tancat, pel lema 28, si demostrem que $[-L,L]\times[-L,L]$ és compacte, ja haurem acabat.
+
+      Fent ús del teorema 26 (Bolzano-Weierstrass), demostrarem que $[-L,L]\times[-L,L]$ és seqüencialment compacte. Així doncs, prenem $(a_n,b_n)_n$ una successió de punts de $[-L,L]\times[-L,L]$. Com que $[-L,L]$ és fitat, la successió "projecció" $(a_n)_n=\pi_1((a_n,b_n)_n)\subseteq[-L,L]$ és fitada i, per tant, admet una subsuccessió parcial $(a_{n_k})_k$ convergent a un punt $a^*\in[-L,L]$. Considerem la successió $(a_{n_k},b_{n_k})_k$, que anomenarem $(a_k',b_k')_k$ per simplificar la notació. Ja sabem que $(a_k')_k$ convergeix a $a^*$. Considerem ara la projecció sobre la segona coordenada, $(b_k')_k=\pi_2((a_k',b_k')_k)\subseteq[-L,L]$; pels mateixos arguments, admet una subsuccessió parcial $(b_{k_s})_s$ convergent a un punt $b^*\in[-L,L]$. Per tant, la parcial $(a_{k_s}',b_{k_s}')_s\xrightarrow{s\uparrow+\infty}(a^*,b^*)\in[-L,L]\times[-L,L]$. Hem demostrat, doncs, que $[-L,L]\times[-L,L]$ és seqüencialment compacte.
+    problemes: []
+
+  - id: "T1.x11"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "1.4"
+    pagina: 19
+    nom: "Dimensió finita i Teorema de Riesz"
+    enunciat: |
+      **Comentari:** Al Teorema de Heine-Borel, la finitud de la dimensió de l'espai $\mathbb{R}^n$ on viu $A$ és essencial. De fet, si $A$ visqués a un espai de dimensió infinita aquesta afirmació seria falsa. Quan estudieu _anàlisi funcional_ veureu l'anomenat Teorema de Riesz, que diu que la bola unitat tancada $\overline{B}_1(0)=\{x\in E\mid\|x\|\leq 1\}$ d'un espai normat $(E,\|\cdot\|)$ és compacta si i només si l'espai té dimensió finita.
+    problemes: []
+
+  - id: "T1.35"
+    tipus: definicio
+    num: 35
+    resum: 35
+    seccio: "1.5"
+    pagina: 19
+    nom: "Conjunt connex"
+    enunciat: |
+      Sigui $(M,d)$ espai mètric, i $A\subseteq M$. Direm que $A$ és _disconnex_ si existeixen dos oberts disjunts $U$ i $V$ tals que $A\subseteq U\cup V$ i $U\cap A\neq\varnothing$ i $V\cap A\neq\varnothing$ i $U\cap V\cap A=\varnothing$. En cas contrari direm que $A$ és un conjunt _connex_.
+    problemes: []
+
+  - id: "T1.36"
+    tipus: exemple
+    num: 36
+    resum: null
+    seccio: "1.5"
+    pagina: 19
+    nom: "Exemples de connexió"
+    enunciat: |
+      Casos simples són aquests:
+
+      1) $A\subset\mathbb{R}$, $A=[0,1]\cup[3,4]$ és disconnex.
+
+      2) $A\subset\mathbb{R}^2$, $A=B_L((0,0))$ és connex.
+
+      3) L'interval $[0,1]$ és connex a $\mathbb{R}$.
+    demostracio: |
+      **Demostració de que l'interval $[0,1]$ és connex:** Ho provarem per _R.A._: suposem que $[0,1]$ és disconnex. Això implica que existeixen dos oberts $U,V$ a $\mathbb{R}$ tal que satisfan:
+
+      $$[0,1]\subseteq U\cup V,\qquad U\cap V\cap[0,1]=\varnothing,\qquad U\cap[0,1]\neq\varnothing,\qquad V\cap[0,1]\neq\varnothing.$$
+
+      Per tant, com a mínim, existeixen dos punts $a\in U$ i $b\in V$ tals que $0\leq a<b\leq 1$. Sigui $U$ l'obert que conté el $0$. Definim el conjunt $S=\{x\in[0,1]\mid[0,x]\subseteq U\}$. $S$ satisfà: (i) $S\neq\varnothing$ (ja que $0\in S$); (ii) $S$ està fitat superiorment (per 1). Aleshores, per l'axioma del suprem tenim que existeix $x^*\leq 1$ tal que $x^*=\sup S$. Per a aquest valor $x^*$ es poden donar dos casos: (a) $x^*\in U$ o (b) $x^*\in V$.
+
+      (a) Si $x^*\in U$, com $U$ és un obert, tenim que existeix $\varepsilon>0$ tal que $(x^*-\varepsilon,x^*+\varepsilon)\subset U$. En particular $x^*+\delta\in[0,1]\cap U$ per a tot $0<\delta\leq\frac{\varepsilon}{2}$, fet que contradiu que $x^*=\sup S$!!
+
+      (b) En aquest cas, podem aplicar un argument similar: $x^*\in V$, $V$ obert $\Rightarrow$ existeix $\varepsilon>0$ tal que $(x^*-\varepsilon,x^*+\varepsilon)\subset V$. Per tant, en particular, $x^*-\frac{\varepsilon}{2}\in V$, contradient el fet que $x^*=\sup S$ !!
+
+      En conclusió, $[0,1]$ és connex.
+    problemes: []
+
+  - id: "T1.x12"
+    tipus: text
+    num: null
+    resum: 36
+    seccio: "1.5"
+    pagina: 20
+    nom: "Clausura d'un connex és connexa"
+    enunciat: |
+      **Comentari:** Si $A$ és connex $\Rightarrow\overline{A}$ és connex.
+
+      El recíproc és fals: $A=[0,1)\cup(1,2]$; noteu que $\overline{A}=[0,2]$ és connex i en canvi $A$ és disconnex: en efecte, podem considerar els oberts $U=(-\infty,1)$ i $V=(1,+\infty)$, que satisfan: $A\subseteq U\cup V$, $A\cap U=[0,1)\neq\varnothing$, $A\cap V=(1,2]\neq\varnothing$ i $U\cap V\cap A=\varnothing$.
+    problemes: []
+
+  - id: "T1.37"
+    tipus: teorema
+    num: 37
+    resum: 37
+    seccio: "1.5"
+    pagina: 20
+    nom: "Obert i tancat en un connex"
+    enunciat: |
+      Sigui $(M,d)$ espai mètric connex i sigui $A\subseteq M$. Si $A$ és obert i tancat a la vegada, aleshores, o bé $A=M$, o bé $A=\varnothing$.
+    demostracio: |
+      Si $A$ és obert i tancat a la vegada implica que $A$ i $A^c=M\setminus A$ són oberts disjunts que satisfan que $M=A\cup A^c$. Això contradiu la hipòtesi que $M$ és connex, a menys que un dels dos oberts sigui el conjunt buit, és a dir, o bé $A=\varnothing$, o bé $A^c=\varnothing$, que equival a $A=M$.
+    problemes: []

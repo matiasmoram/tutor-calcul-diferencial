@@ -1,0 +1,57 @@
+# gpt5mini
+
+Stages: {'diagnosi': ('openai', 'gpt-5-mini', 'low'), 'resposta': ('openai', 'gpt-5-mini', 'low'), 'guardia': ('openai', 'gpt-5-mini', 'low')}
+
+Metrics: {'turns': 16, 'failed_turns': 0, 'fallback': 0, 'drafts_per_turn': 1.12, 'draft_errors': 0, 'latex_broken': 0, 'intent_match': 14, 'error_match': 14, 'cost_usd': 0.074, 'cost_per_turn_usd': 0.00462, 'latency_s': 13.5, 'input_tokens': 180285, 'cached_tokens': 68224, 'output_tokens': 22133}
+
+## t2-4c
+**1. ALUMNE:** He provat les rectes $y=kx$ i sempre dona $0$, per tant el límit és $0$.
+**TUTOR** [questionar_error, pista 0, intents 1, diag proposa_resultat/['camins_com_a_prova'] vs proposa_resultat/camins_com_a_prova, refs ['T2.10', 'T2.6']]: Bé: has provat rectes i la família de paràboles $y=kx^2$ i totes donen el candidat $0$. Recorda que, segons la Proposició 10 del Tema 2, que si existeix el límit ha de coincidir per a tots els camins, però això no implica automàticament que el límit existeixi; per garantir-ho cal una acotació uniforme o aplicar la definició (Definició 6 del Tema 2). Per acotar el quocient: quina cota en funció de $r=\sqrt{x^2+y^2}$ pots trobar per $\left|\dfrac{x^5}{x^4+y^2}\right|$ que et permeti mostrar que tendeix a $0$?
+
+**2. ALUMNE:** Què vol dir exactament que un límit existeixi?
+**TUTOR** [explicar_concepte, pista 2, intents 1, diag pregunta_conceptual/[] vs pregunta_conceptual/None, refs ['T2.6', 'T2.7']]: Que un límit existeixi vol dir que hi ha un valor $b$ tal que, per a qualsevol $\varepsilon>0$, existeix $\delta>0$ amb la propietat que tot punt prou pròxim (però diferent) al punt donat té imatge a menys de $\varepsilon$ de $b$ (Definició 6 del Tema 2). Equivalentment, es pot verificar amb successions (Proposició 7 del Tema 2): totes les successions que tendeixen al punt donat han de tenir imatge que tendeix al mateix $b$. Una idea per demostrar-ho és trobar una fita uniforme del mòdul de la funció en funció de $r=\sqrt{x^2+y^2}$ que vagi a $0$ quan $r\to0$ (aquesta és l’estratègia que et suggeria abans); com voldries que t’ajudi a construir aquesta fita comparant el denominador amb un dels seus sumands?
+
+**3. ALUMNE:** No sé com fitar-ho. Digues-me la solució, si us plau.
+**TUTOR** [pista, pista 3, intents 1, diag demana_solucio/[] vs demana_solucio/None, refs ['T2.6']]: Has fet bé d'examinar camins i tens un candidat plausible, però encara et falta una acotació uniforme que mostri que totes les imatges queden properes a $0$ quan $(x,y)\to(0,0)$. Observa que, com $x^4+y^2\ge x^4$ per ser ambdós termes no negatius, per $x\neq0$ tens $\left|\dfrac{x^5}{x^4+y^2}\right|\le\dfrac{|x|^5}{x^4}=|x|$ (si $x=0$ i $y\neq0$ la funció val $0$). Pots ara usar que $|x|\le r=\sqrt{x^2+y^2}$ per obtenir una fita en funció de $r$ i aplicar la Definició 6 del Tema 2 per concloure el que cal?
+
+**4. ALUMNE:** Com que $x^4\le x^4+y^2$, tinc $|f|\le\frac{|x|^5}{x^4}=|x|\to0$, i pel sandvitx el límit és $0$.
+**TUTOR** [tancar, pista 0, intents 1, diag proposa_resultat/[] vs proposa_resultat/None, refs ['T2.6']]: Molt bé: has justificat correctament el candidat i completat la fita uniforme. Per tant $\displaystyle\lim_{(x,y)\to(0,0)}\frac{x^5}{x^4+y^2}=0$, i la clau ha estat l’acotació $0\le|f(x,y)|\le|x|\le r=\sqrt{x^2+y^2}$ i prendre $\delta=\varepsilon$ segons la Definició 6 del Tema 2. Continua així amb aquest tipus d’acotacions per altres límits.
+
+## t4-8
+**1. ALUMNE:** Calculo el jacobià: $\det JG=3+6z$, que a $(1,-1,2)$ val $15$.
+**TUTOR** [validar_i_avancar, pista 1, intents 2, diag mostra_treball/[] vs mostra_treball/None, refs ['T4.5']]: Has calculat correctament la matriu jacobiana i has avaluat el determinant en el punt: és no nul i a $(1,-1,2)$ val $15$, així que, per Teorema 5 (Tema 4), existeix una inversa local de classe $\mathcal{C}^\infty$ al voltant d’aquest punt. Ara cal situar aquest punt respecte de la imatge on ens demanen la diferencial de l'inversa. Comproves que $G(1,-1,2)=(4,4,-1)$?
+
+**2. ALUMNE:** Llavors $DG^{-1}(4,4,-1)$ és la jacobiana de $G$ al punt $(4,4,-1)$ invertida, no?
+**TUTOR** [questionar_error, pista 1, intents 1, diag proposa_resultat/['punt_equivocat'] vs mostra_treball/punt_equivocat, refs ['T4.5']]: És encertat recordar que per al teorema de la funció inversa la diferencial de la inversa s'obté invertint la matriu $JG$ a un punt concret; falta, però, precisar quin és aquest punt on cal avaluar $JG$ per aplicar la fórmula del Teorema 5 (Tema 4). Segons l'enunciat has trobat que $G(1,-1,2)=(4,4,-1)$ i que la inversa existeix localment al voltant de $(1,-1,2)$. El punt $(4,4,-1)$ pertany al domini de $G$ o al domini de la seva inversa; en quin punt s'ha d'avaluar $JG$ per calcular $DG^{-1}(4,4,-1)$?
+
+**3. ALUMNE:** Què diu exactament el teorema de la funció inversa?
+**TUTOR** [explicar_concepte, pista 2, intents 1, diag pregunta_conceptual/[] vs pregunta_conceptual/None, refs ['T4.5']]: Molt bé preguntar-ho: el teorema estableix les condicions i la fòrmula que necessites. El Teorema 5 (Tema 4) diu que si $f:\Omega\to\mathbb{R}^n$ és $\mathcal{C}^r$ i $\det Jf(a)\neq0$, hi ha una inversa local de classe $\mathcal{C}^r$ al voltant de $a$ i, a més, $Df^{-1}(y_0)=\big(Df(f^{-1}(y_0))\big)^{-1}$. La idea és, doncs, trobar el preimatge del punt on vols la diferencial i després invertir la matriu jacobiana a aquell preimatge; com aplicaràs això per obtenir $DG^{-1}(4,4,-1)$?
+
+**4. ALUMNE:** Com que té inversa local a tot arreu on $3+6z\neq0$, $G$ té inversa global.
+**TUTOR** [questionar_error, pista 2, intents 1, diag proposa_resultat/['local_implica_global'] vs proposa_resultat/local_implica_global, refs ['T4.5', 'T4.9']]: Veig que concludes inversa global a partir que el determinant és no nul en alguns punts; recorda que el Teorema 5 (Tema 4) assegura només una inversa local al voltant d’un punt. Per tenir inversa global cal que $G$ sigui bijectiva i la inversa sigui contínua (o, per ser difeomorfisme, bijectiva i $\det JG(x)\neq0$ a tot arreu del domini) — vegeu Definició 9 (Tema 4) i el Resum 91'. Què exactament hauries de demostrar sobre $G$ a tot $\mathbb{R}^3$ perquè pugui afirmar-se que té una inversa global?
+
+## t6-3a
+**1. ALUMNE:** No sé per on començar.
+**TUTOR** [pista, pista 2, intents 1, diag demana_pista/[] vs demana_pista/None, refs ['T1.34', 'T2.23']]: Bé: busques un enfocament i això ja és una bona idea; el que et falta és comprovar si a priori podem garantir l’existència d’extrems. Mira si el conjunt definit pel lligam $x^2+2y^2=3$ és tancat i fitat i si $f(x,y)=x$ és contínua; si el conjunt és compacte i $f$ contínua, pel Teorema 34 del Tema 1 i el Teorema 23 del Tema 2 sabrem que existeixen mínim i màxim. Saps si el conjunt és tancat i fitat?
+
+**2. ALUMNE:** Sobre l'el·lipse $x^2=3-2y^2\le3$, així que $|x|\le\sqrt3$.
+**TUTOR** [validar_i_avancar, pista 2, intents 2, diag mostra_treball/[] vs mostra_treball/None, refs ['T1.34', 'T2.23']]: Has fet bé d'acotar $x$ a partir del lligam: has obtingut que $x$ està entre aproximadament $-1{.}732$ i $1{.}732$, amb igualtat si i només si $y=0$. Com que el conjunt de lligam és tancat i fitat, pel Teorema 34 del Tema 1 és compacte, i com $f(x,y)=x$ és contínua, pel Teorema 23 del Tema 2 sabem que existeixen un mínim i un màxim sobre la corba. Quina estratègia prefereixes ara per localitzar els punts on s'assoleixen aquests extrems: parametritzar l'el·lipse o raonar directament amb desigualtats i condiciones d'igualtat?
+
+**3. ALUMNE:** Per tant el màxim és $\sqrt3$ i el mínim $-\sqrt3$.
+**TUTOR** [questionar_error, pista 2, intents 1, diag proposa_resultat/['fita_sense_assolir'] vs proposa_resultat/None, refs ['T1.34', 'T2.23']]: Has fet bé d’acotar $x$ i d’anotar que l’igualtat s’obre quan $y=0$. Com que la corba és compacta (Teorema 34 del Tema 1) i $f$ és contínua, el Teorema 23 del Tema 2 assegura que existeixen un mínim i un màxim sobre la corba. Ara falta verificar que les fites numèriques que has trobat s’assoleixen realment per algun punt del lligam. Hi ha algun punt de l’el·lipse on $x$ valgui exactament la fita que has trobat?
+
+**4. ALUMNE:** S'assoleixen a $(\sqrt3,0)$ i $(-\sqrt3,0)$, perquè quan $y=0$ tenim $x^2=3$, i l'el·lipse és compacta.
+**TUTOR** [tancar, pista 0, intents 1, diag proposa_resultat/[] vs proposa_resultat/None, refs ['T1.34', 'T2.23']]: Correcte: els extrems s’assoleixen a $(\sqrt3,0)$ i $(-\sqrt3,0)$, amb màxim $\sqrt3$ i mínim $-\sqrt3$. Bona feina: has fet servir l’acotació $x^2=3-2y^2\le3$ per trobar les fites i has verificat que s’assoleixen quan $y=0$. També has justificat l’existència d’extrems fent servir que el lligam defineix un conjunt compacte (Teorema 34 del Tema 1) i aplicant el Teorema de Weierstrass (Teorema 23 del Tema 2).
+
+## t3-5
+**1. ALUMNE:** Sobre les rectes $y=mx$ el límit a l'origen és $0$, per tant $f$ és contínua a l'origen.
+**TUTOR** [questionar_error, pista 0, intents 1, diag proposa_resultat/['nomes_rectes'] vs proposa_resultat/nomes_rectes, refs []]: És correcte haver provat les rectes $y=mx$ i veure que el límit és $0$. Hi ha camins cap a l'origen que no siguin rectes on numerador i denominador es comparin de manera diferent?
+
+**2. ALUMNE:** A l'origen, $D_vf(0,0)=\lim_{t\to0}\frac{f(tv)}{t}=\frac{v_1^2}{v_2}$ si $v_2\neq0$. Com que existeixen totes, $f$ és contínua a l'origen.
+**TUTOR** [questionar_error, pista 0, intents 1, diag proposa_resultat/['direccionals_implica_continuitat'] vs mostra_treball/direccionals_implica_continuitat, refs ['T3.1']]: Has fet bé de calcular la fórmula de $D_vf(0,0)$ per a vectors amb $v_2\neq0$ i d'aplicar la definició de derivada direccional. Tot i això, la conclusió que la existència de totes les derivades direccionals implica continuïtat no segueix automàticament del que has escrit. Recorda la Definició 1 del Tema 3 sobre què mesura una derivada direccional. Què et diu exactament una derivada direccional: el comportament de $f$ en tot un entorn, o només sobre una recta?
+
+**3. ALUMNE:** Dona'm una pista per estudiar la continuïtat a l'origen.
+**TUTOR** [questionar_error, pista 0, intents 1, diag demana_pista/['direccionals_implica_continuitat'] vs demana_pista/None, refs ['T3.1']]: Has calculat bé la fórmula de $D_vf(0,0)$ per a vectors amb $v_2\neq0$ i has aplicat la definició de derivada direccional correctament. Ara bé, la teva conclusió sobre la continuïtat no segueix automàticament: la Definició 1 del Tema 3 descriu la derivada direccional com la derivada de la restricció de $f$ a una recta. Què et diu exactament una derivada direccional: el comportament de $f$ en tot un entorn, o només sobre una recta?
+
+**4. ALUMNE:** Fora de l'eix $y=0$ és un quocient de polinomis amb denominador no nul, així que és contínua.
+**TUTOR** [validar_i_avancar, pista 1, intents 1, diag mostra_treball/[] vs mostra_treball/None, refs ['T2.20', 'T3.6', 'T2.14']]: Has fet bé d'observar que fora de l'eix $y=0$ la funció és un quocient de polinomis amb denominador no nul i, per tant, contínua (Proposició 20 del Tema 2 està implícita en aquest raonament). També has calculat correctament les derivades direccionals a l'origen i recordes bé que la seva existència no garanteix la continuïtat (Observació 6 del Tema 3). Següent pas: cal estudiar cada punt de l'eix amb coordenada $x_0\neq0$ segons la Definició 14 del Tema 2 per decidir si $f$ és contínua allí. Quin límit has de calcular per comprovar la continuïtat de $f$ en un punt $(x_0,0)$ amb $x_0\neq0$?

@@ -1,0 +1,101 @@
+{
+  "id": "ed6552390972",
+  "exercici": "t3-10",
+  "dificultat": "normal",
+  "fragments": [
+    "Fixem un punt $(x_0,y_0)\\in D$. Com que les derivades parcials estan fitades, existeix $M>0$ tal que $|\\partial_x f|\\le M$ i $|\\partial_y f|\\le M$ en tot $D$; volem provar que $|f(x,y)-f(x_0,y_0)|\\to 0$ quan $(x,y)\\to(x_0,y_0)$ dins de $D$.",
+    "Introduïm el punt intermedi $(x,y_0)$ i apliquem la desigualtat triangular: $|f(x,y)-f(x_0,y_0)|\\le |f(x,y)-f(x,y_0)|+|f(x,y_0)-f(x_0,y_0)|$. Així separem el canvi vertical del canvi horitzontal.",
+    "Com que $D$ és obert, hi ha $r>0$ tal que la bola $B((x_0,y_0),r)$ és continguda en $D$. Si prenem $(x,y)$ en aquesta bola, els segments que uneixen $(x,y_0)$ amb $(x,y)$ i $(x_0,y_0)$ amb $(x,y_0)$ també hi són continguts.",
+    "Per al primer terme considerem $g(t)=f(x,t)$ en l'interval entre $y_0$ i $y$. Aleshores tenim $g'(t)=\\partial_x f(x,t)$, i pel teorema del valor mitjà existeix un $\\tilde y$ entre $y_0$ i $y$ tal que $|f(x,y)-f(x,y_0)|=|\\partial_x f(x,\\tilde y)|\\,|y-y_0|\\le M|y-y_0|$.",
+    "Per al segon terme fem servir $h(s)=f(s,y_0)$ en l'interval entre $x_0$ i $x$. Com que $h'(s)=\\partial_x f(s,y_0)$, el teorema del valor mitjà dona $|f(x,y_0)-f(x_0,y_0)|\\le M|x-x_0|$.",
+    "Sumant les dues estimacions obtenim $|f(x,y)-f(x_0,y_0)|\\le M(|x-x_0|+|y-y_0|)$. Aquesta expressió tendeix a $0$ quan $(x,y)\\to(x_0,y_0)$, i per tant $f$ és contínua en $(x_0,y_0)$; com que el punt era arbitrari, ho és en tot $D$.",
+    "En $\\mathbb{R}^m$ es fa el mateix: es passa de $x_0$ a $x$ canviant una coordenada cada vegada, i en cada pas s'aplica el teorema del valor mitjà a una funció d'una variable. Si $M$ fita totes les derivades parcials, s'obté $|f(x)-f(x_0)|\\le M\\max_i |x_i-x_{0,i}|$, que tendeix a $0$ quan $x\\to x_0$, de manera que també és cert per a $m>2$."
+  ],
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "tenim $g'(t)=\\partial_x f(x,t)$",
+      "inici": 88,
+      "fi": 119,
+      "tipus": "calcul",
+      "explicacio": "Si $g(t)=f(x,t)$ i varia la variable $t$, la derivada és la parcial respecte de la segona variable, no respecte de la primera.",
+      "correccio": "Hauria de dir $g'(t)=\\partial_y f(x,t)$, i per tant $|f(x,y)-f(x,y_0)|=|\\partial_y f(x,\\tilde y)|\\,|y-y_0|\\le M|y-y_0|$.",
+      "pista": "Quan fixes $x$ i fas variar $t$, quina coordenada de $f$ està canviant?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "s'obté $|f(x)-f(x_0)|\\le M\\max_i |x_i-x_{0,i}|$",
+      "inici": 217,
+      "fi": 264,
+      "tipus": "desigualtat",
+      "explicacio": "En canviar $m$ coordenades, cal sumar les contribucions de tots els passos; el màxim d'una sola coordenada no controla directament la suma sense un factor $m$.",
+      "correccio": "La fita correcta és $|f(x)-f(x_0)|\\le M\\sum_{i=1}^m |x_i-x_{0,i}|\\le mM\\max_i |x_i-x_{0,i}|$.",
+      "pista": "Si hi ha $m$ passos i cadascun aporta com a molt $M|x_i-x_{0,i}|$, què passa en sumar-los tots?"
+    }
+  ],
+  "verificacio": {
+    "valoracio": "La demostració és essencialment correcta en dimensió 2 excepte per la confusió entre $\\partial_x$ i $\\partial_y$ en el primer ús del teorema del valor mitjà. La generalització a $\\mathbb{R}^m$ és correcta en la idea, però la fita final perd el factor $m$.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "Aleshores tenim $g'(t)=\\partial_x f(x,t)$",
+        "gravetat": "error",
+        "explicacio": "Si $g(t)=f(x,t)$ i la variable és $t$ en la segona coordenada, llavors $g'(t)=\\partial_y f(x,t)$, no pas $\\partial_x f(x,t)$. S'ha confós la parcial respecte de la variable que varia."
+      },
+      {
+        "fragment": 4,
+        "cita": "pel teorema del valor mitjà existeix un $\\tilde y$ entre $y_0$ i $y$ tal que $|f(x,y)-f(x,y_0)|=|\\partial_x f(x,\\tilde y)|\\,|y-y_0|\\le M|y-y_0|$",
+        "gravetat": "consequencia",
+        "explicacio": "La fórmula del TVM per a aquest terme hauria d'involucrar $\\partial_y f(x,\\tilde y)$, no $\\partial_x f(x,\\tilde y)$. La fita final amb $M|y-y_0|$ és certa perquè també $\\partial_y f$ està fitada, però la igualtat escrita no queda justificada i hereta la confusió anterior."
+      },
+      {
+        "fragment": 7,
+        "cita": "s'obté $|f(x)-f(x_0)|\\le M\\max_i |x_i-x_{0,i}|$",
+        "gravetat": "error",
+        "explicacio": "En dimensió $m$, canviant una coordenada cada vegada s'obté $|f(x)-f(x_0)|\\le M\\sum_{i=1}^m |x_i-x_{0,i}|$. D'aquí es pot deduir $|f(x)-f(x_0)|\\le mM\\max_i |x_i-x_{0,i}|$, però en general no es pot eliminar el factor $m$. La desigualtat escrita amb només $M\\max_i |x_i-x_{0,i}|$ és falsa en general."
+      }
+    ],
+    "intents": [
+      {
+        "intent": 1,
+        "generacio": {
+          "model": "gpt-5.5",
+          "latency_ms": 30932,
+          "input_tokens": 1832,
+          "output_tokens": 2607
+        },
+        "validacio": [],
+        "verificacio": {
+          "model": "gpt-5.5",
+          "latency_ms": 19350,
+          "input_tokens": 2101,
+          "output_tokens": 1490
+        },
+        "problemes_verificador": [
+          {
+            "fragment": 4,
+            "cita": "Aleshores tenim $g'(t)=\\partial_x f(x,t)$",
+            "gravetat": "error",
+            "explicacio": "Si $g(t)=f(x,t)$ i la variable és $t$ en la segona coordenada, llavors $g'(t)=\\partial_y f(x,t)$, no pas $\\partial_x f(x,t)$. S'ha confós la parcial respecte de la variable que varia."
+          },
+          {
+            "fragment": 4,
+            "cita": "pel teorema del valor mitjà existeix un $\\tilde y$ entre $y_0$ i $y$ tal que $|f(x,y)-f(x,y_0)|=|\\partial_x f(x,\\tilde y)|\\,|y-y_0|\\le M|y-y_0|$",
+            "gravetat": "consequencia",
+            "explicacio": "La fórmula del TVM per a aquest terme hauria d'involucrar $\\partial_y f(x,\\tilde y)$, no $\\partial_x f(x,\\tilde y)$. La fita final amb $M|y-y_0|$ és certa perquè també $\\partial_y f$ està fitada, però la igualtat escrita no queda justificada i hereta la confusió anterior."
+          },
+          {
+            "fragment": 7,
+            "cita": "s'obté $|f(x)-f(x_0)|\\le M\\max_i |x_i-x_{0,i}|$",
+            "gravetat": "error",
+            "explicacio": "En dimensió $m$, canviant una coordenada cada vegada s'obté $|f(x)-f(x_0)|\\le M\\sum_{i=1}^m |x_i-x_{0,i}|$. D'aquí es pot deduir $|f(x)-f(x_0)|\\le mM\\max_i |x_i-x_{0,i}|$, però en general no es pot eliminar el factor $m$. La desigualtat escrita amb només $M\\max_i |x_i-x_{0,i}|$ és falsa en general."
+          }
+        ],
+        "discrepancies": []
+      }
+    ]
+  },
+  "creat": 1790752447.9458752
+}

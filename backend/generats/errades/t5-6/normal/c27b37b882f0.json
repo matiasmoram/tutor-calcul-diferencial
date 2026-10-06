@@ -1,0 +1,66 @@
+{
+  "id": "c27b37b882f0",
+  "exercici": "t5-6",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Les derivades parcials són $f_x=x+ky$ i $f_y=kx+y$. Els punts crítics són les solucions d'un sistema lineal homogeni de determinant $1-k^2$.",
+    "Si $k\\neq\\pm1$, el determinant no és zero i l'única solució és $(0,0)$. Si $k=1$, les dues equacions són $x+y=0$ i tots els punts de la recta $y=-x$ són crítics; si $k=-1$, queda $x-y=0$ i són crítics tots els punts de la recta $y=x$.",
+    "La hessiana és constant: $Hf=\\begin{pmatrix}1&k\\\\k&1\\end{pmatrix}$, amb $\\det Hf=1-k^2$ i $\\mathrm{tr}\\,Hf=2>0$.",
+    "Si $|k|<1$, $\\det Hf>0$ i $\\mathrm{tr}\\,Hf>0$, de manera que la hessiana és definida positiva i l'origen és un mínim local estricte; de fet és absolut, perquè $f$ és la forma quadràtica $\\frac12(x,y)\\,Hf\\,(x,y)^T$, que és $\\geq0$.",
+    "Si $k>1$, $\\det Hf<0$, la hessiana és indefinida i l'origen és un punt de sella: $f(t,t)=(1+k)t^2>0$ i $f(t,-t)=(1-k)t^2<0$ per a $t\\neq0$. Si $k<-1$, en canvi, $f(t,t)=(1+k)t^2<0$ per a $t\\neq0$, i l'origen és un màxim local.",
+    "Si $k=1$, $f=\\frac12(x+y)^2\\geq0$ i val $0$ exactament sobre la recta $y=-x$. Per tant cada punt crític és un mínim local estricte, ja que $f>0$ a tots els punts fora de la recta.",
+    "Si $k=-1$, $f=\\frac12(x-y)^2$, i el mateix raonament s'aplica als punts de la recta $y=x$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 5,
+      "cita": "Si $k<-1$, en canvi, $f(t,t)=(1+k)t^2<0$ per a $t\\neq0$, i l'origen és un màxim local.",
+      "inici": 140,
+      "fi": 226,
+      "tipus": "logica",
+      "explicacio": "Per a $k<-1$ també $\\det Hf=1-k^2<0$ i la hessiana és indefinida; a més $f(t,-t)=(1-k)t^2>0$, de manera que l'origen és un punt de sella, no un màxim. Mirar una sola direcció no basta.",
+      "correccio": "Si $|k|>1$ (és a dir, $k>1$ o $k<-1$), $\\det Hf<0$ i l'origen és un punt de sella: $f(t,t)=(1+k)t^2$ i $f(t,-t)=(1-k)t^2$ tenen signes oposats.",
+      "pista": "Quin signe té $\\det Hf$ quan $k<-1$? Què passa amb $f$ sobre la recta $y=-x$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "cada punt crític és un mínim local estricte, ja que $f>0$ a tots els punts fora de la recta",
+      "inici": 87,
+      "fi": 178,
+      "tipus": "conclusio",
+      "explicacio": "Un mínim local estricte exigeix $f(x,y)>f(p)$ per a tot $(x,y)\\neq p$ d'un entorn; aquí qualsevol bola al voltant d'un punt de la recta conté altres punts de la recta, on $f$ també val $0$.",
+      "correccio": "Cada punt crític és un mínim local (i absolut), però no estricte, perquè a qualsevol bola hi ha altres punts de la recta amb $f=0$.",
+      "pista": "En una bola petita al voltant d'un punt de la recta $y=-x$, hi ha altres punts on $f$ val exactament el mateix?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t56.json",
+    "valoracio": "Cas k<-1 mal classificat (és sella, no màxim) i els casos k=±1 donats com a mínims estrictes quan no ho són.",
+    "problemes": [
+      {
+        "fragment": 5,
+        "cita": "i l'origen és un màxim local",
+        "gravetat": "error",
+        "explicacio": "Si $k<-1$, $\\det Hf=1-k^2<0$ i la hessiana és indefinida; a més $f(t,-t)=(1-k)t^2>0$: l'origen és un punt de sella, no un màxim."
+      },
+      {
+        "fragment": 6,
+        "cita": "cada punt crític és un mínim local estricte",
+        "gravetat": "error",
+        "explicacio": "Tota bola centrada en un punt de la recta $y=-x$ conté altres punts de la recta amb $f=0$: el mínim és local (i absolut) però no estricte."
+      },
+      {
+        "fragment": 7,
+        "cita": "el mateix raonament s'aplica",
+        "gravetat": "consequencia",
+        "explicacio": "Hereta la conclusió errònia de mínim estricte del fragment 6; per $k=-1$ els punts de $y=x$ són mínims no estrictes."
+      }
+    ]
+  },
+  "creat": 1791295916.999936
+}

@@ -1,0 +1,909 @@
+problemes:
+  - num: 3
+    font: null
+    preambul: |
+      Identifiqueu les superfícies de nivell de les funcions següents:
+    indicacio: null
+    exercicis:
+      - id: "t2-3a"
+        apartat: "a"
+        tipus: calcul
+        enunciat: |
+          $f(x,y,z)=x+2y+3z$.
+        teoria: ["T2.4"]
+        teoria_reservada: ["T2.5"]
+        resultat:
+          valor: |
+            Per a cada $k\in\mathbb{R}$, la superfície de nivell $C_k(f)=\{(x,y,z)\mid x+2y+3z=k\}$ és un pla de vector normal $(1,2,3)$. Totes són plans paral·lels entre si (cap nivell és buit, ja que $\mathrm{Im}(f)=\mathbb{R}$).
+          fuites: ['pla(ns)?\s+(de\s+vector\s+)?(normal|paral)', 'normal\s*\(?\s*1\s*,\s*2\s*,\s*3', '\b(és|són)\s+(un\s+)?pla(ns)?\b']
+        passos:
+          - id: equacio
+            titol: "Escriure el conjunt de nivell"
+            objectiu: |
+              Escriure explícitament l'equació que defineix el conjunt de nivell $k$ de $f$.
+            idea: |
+              Aplicar la definició de conjunt de nivell: punts on la funció pren el valor $k$.
+            detall: |
+              $C_k(f)=\{(x,y,z)\in\mathbb{R}^3\mid x+2y+3z=k\}$, per a cada $k\in\mathbb{R}$.
+            fuites: []
+            teoria: ["T2.4"]
+          - id: identificar
+            titol: "Identificar la superfície"
+            objectiu: |
+              Reconèixer quin objecte geomètric de $\mathbb{R}^3$ descriu aquesta equació i com varia amb $k$.
+            idea: |
+              És una equació lineal en $x,y,z$: pensa en l'equació general d'un pla i en el significat dels coeficients.
+            detall: |
+              $x+2y+3z=k$ és un pla amb vector normal $(1,2,3)$. En variar $k$ obtenim plans paral·lels (el mateix vector normal), que recobreixen tot $\mathbb{R}^3$; cap conjunt de nivell és buit.
+            fuites: ['normal\s*\(?\s*1\s*,\s*2\s*,\s*3', 'pla(ns)?\s+paral', '\b(és|són)\s+(un\s+)?pla(ns)?\b']
+            teoria: []
+        errors_comuns:
+          - id: confon_corba
+            descripcio: |
+              Descriu el conjunt de nivell com una recta (pensant en el cas de dues variables).
+            pregunta: |
+              Quants graus de llibertat té un punt de $\mathbb{R}^3$ que satisfà una sola equació?
+          - id: oblida_nivells
+            descripcio: |
+              Només estudia alguns valors de $k$ (p. ex. $k=0$) i no diu què passa per a la resta.
+            pregunta: |
+              Per a quins valors de $k$ el conjunt de nivell és no buit? Canvia la seva forma quan canvia $k$?
+        nota_professor: |
+          L'Exemple 5 dels apunts tracta exactament $ax+by+cz$ (plans de vector normal $(a,b,c)$).
+
+      - id: "t2-3b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          $f(x,y,z)=x^2+y^2-z^2$.
+        teoria: ["T2.4"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $C_k(f)=\{x^2+y^2-z^2=k\}$. Per a $k>0$: hiperboloide d'una fulla d'eix $Oz$ (secció a l'altura $z$: circumferència de radi $\sqrt{k+z^2}$). Per a $k=0$: el con circular $x^2+y^2=z^2$ de vèrtex l'origen i eix $Oz$. Per a $k<0$: hiperboloide de dues fulles d'eix $Oz$ (només hi ha punts amb $|z|\ge\sqrt{-k}$).
+          fuites: ['hiperboloides?', '\bcon\b', 'dues\s+fulles', 'una\s+fulla']
+        passos:
+          - id: equacio
+            titol: "Escriure el conjunt de nivell"
+            objectiu: |
+              Escriure l'equació del conjunt de nivell $k$ i decidir quins casos de $k$ cal separar.
+            idea: |
+              Aplicar la definició de conjunt de nivell i observar que el signe de $k$ pot canviar la forma de la superfície.
+            detall: |
+              $C_k(f)=\{(x,y,z)\mid x^2+y^2-z^2=k\}$. Cal distingir $k>0$, $k=0$ i $k<0$.
+            fuites: []
+            teoria: ["T2.4"]
+          - id: seccions
+            titol: "Estudiar les seccions horitzontals"
+            objectiu: |
+              Descriure la intersecció de la superfície amb cada pla horitzontal $z=z_0$.
+            idea: |
+              Fixar $z=z_0$ i mirar quina corba del pla $(x,y)$ queda; després observar com depèn el seu radi de $z_0$.
+            detall: |
+              Amb $z=z_0$: $x^2+y^2=k+z_0^2$, circumferència de radi $\sqrt{k+z_0^2}$ (si $k+z_0^2>0$), un punt si $k+z_0^2=0$, buit si $k+z_0^2<0$. La superfície és de revolució al voltant de l'eix $Oz$.
+            fuites: ['\\sqrt\{\s*k\s*\+\s*z_?0?\^\{?2\}?\s*\}', 'x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*=\s*k\s*\+\s*z']
+            teoria: []
+          - id: classificar
+            titol: "Classificar segons el signe de k"
+            objectiu: |
+              Identificar la quàdrica que s'obté en cada un dels tres casos.
+            idea: |
+              Mirar si totes les seccions horitzontals són no buides, si n'hi ha una que és un sol punt, o si hi ha una franja de $z$ sense punts.
+            detall: |
+              $k>0$: totes les seccions són circumferències (la més petita, de radi $\sqrt{k}$, a $z=0$): hiperboloide d'una fulla. $k=0$: $x^2+y^2=z^2$, radi $|z_0|$: con de vèrtex l'origen. $k<0$: no hi ha punts per a $|z|<\sqrt{-k}$: hiperboloide de dues fulles.
+            fuites: ['hiperboloides?', 'dues\s+fulles', '\bcon\b']
+            teoria: []
+        errors_comuns:
+          - id: un_sol_cas
+            descripcio: |
+              Dona una única descripció per a tots els $k$ sense distingir el signe.
+            pregunta: |
+              Què passa a la secció $z=0$ quan $k$ és negatiu? I quan $k=0$?
+          - id: confon_fulles
+            descripcio: |
+              Intercanvia els casos d'una i dues fulles.
+            pregunta: |
+              Per a $k<0$, hi ha algun punt de la superfície amb $z=0$? Què et diu això sobre si la superfície és connexa?
+          - id: oblida_k0
+            descripcio: |
+              Oblida el cas degenerat $k=0$ o el descriu com un punt.
+            pregunta: |
+              Per a $k=0$, quins punts compleixen $x^2+y^2=z^2$ a l'altura $z=1$? I a $z=2$?
+
+      - id: "t2-3c"
+        apartat: "c"
+        tipus: calcul
+        enunciat: |
+          $f(x,y,z)=ax^2+by^2+cz^2$,  $a,b,c\in\mathbb{R}^+$.
+        teoria: ["T2.4"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Per a $k>0$, $C_k(f)$ és l'el·lipsoide centrat a l'origen $\frac{x^2}{k/a}+\frac{y^2}{k/b}+\frac{z^2}{k/c}=1$, de semieixos $\sqrt{k/a},\sqrt{k/b},\sqrt{k/c}$ sobre els eixos coordenats (esfera si $a=b=c$). Per a $k=0$ és el punt $(0,0,0)$, i per a $k<0$ és el conjunt buit.
+          fuites: ['el[·.]?l?ipsoides?', 'semieixos?\s*\$?\s*\\sqrt\{\s*k\s*/\s*a', '\\sqrt\{\s*\\d?frac\s*\{?k\}?\s*\{?a\}?\s*\}']
+        passos:
+          - id: signe
+            titol: "Signe de la funció"
+            objectiu: |
+              Determinar per a quins valors de $k$ el conjunt de nivell és buit, un punt o una superfície.
+            idea: |
+              Tots els coeficients són positius: quin signe té $f$ i quan s'anul·la?
+            detall: |
+              $f\ge 0$ i $f=0$ només a $(0,0,0)$. Per tant $C_k=\emptyset$ si $k<0$, $C_0=\{(0,0,0)\}$ i per a $k>0$ hi ha una superfície.
+            fuites: []
+            teoria: ["T2.4"]
+          - id: forma_canonica
+            titol: "Forma canònica"
+            objectiu: |
+              Identificar la superfície per a $k>0$ i donar-ne els paràmetres geomètrics.
+            idea: |
+              Dividir l'equació per $k$ per portar-la a la forma canònica d'una quàdrica; compara amb el cas $x^2+y^2+z^2=k$ dels apunts.
+            detall: |
+              $ax^2+by^2+cz^2=k \iff \frac{x^2}{k/a}+\frac{y^2}{k/b}+\frac{z^2}{k/c}=1$: el·lipsoide centrat a l'origen amb semieixos $\sqrt{k/a}$, $\sqrt{k/b}$, $\sqrt{k/c}$ en les direccions dels eixos. Si $a=b=c$ és una esfera de radi $\sqrt{k/a}$.
+            fuites: ['el[·.]?l?ipsoides?', '\\sqrt\{\s*k\s*/\s*a\s*\}', '\\sqrt\{\s*\\d?frac\s*\{?k\}?\s*\{?a\}?\s*\}']
+            teoria: ["T2.5"]
+        errors_comuns:
+          - id: semieixos_invertits
+            descripcio: |
+              Dona els semieixos com $\sqrt{a/k}$ o $\sqrt{ak}$.
+            pregunta: |
+              Si poses $y=z=0$, a quins valors de $x$ talla la superfície l'eix $Ox$?
+          - id: oblida_casos
+            descripcio: |
+              No tracta els casos $k\le 0$.
+            pregunta: |
+              Pot $ax^2+by^2+cz^2$ valer un nombre negatiu? I quins punts el fan valer $0$?
+
+      - id: "t2-3d"
+        apartat: "d"
+        tipus: calcul
+        enunciat: |
+          $f(x,y,z)=y^2+z^2$.
+        teoria: ["T2.4"]
+        teoria_reservada: ["T2.5"]
+        resultat:
+          valor: |
+            Per a $k>0$, $C_k(f)=\{y^2+z^2=k\}$ és el cilindre circular de radi $\sqrt{k}$ i eix l'eix $Ox$; per a $k=0$ és l'eix $Ox$ (la recta $y=z=0$); per a $k<0$ és buit.
+          fuites: ['cilindres?']
+        passos:
+          - id: variable_absent
+            titol: "Observar la variable absent"
+            objectiu: |
+              Escriure el conjunt de nivell i veure quin paper hi juga la coordenada $x$.
+            idea: |
+              Si una coordenada no apareix a l'equació, què passa amb un punt de la superfície quan la canvies?
+            detall: |
+              $C_k(f)=\{(x,y,z)\mid y^2+z^2=k\}$; $x$ no hi apareix, de manera que si $(x_0,y_0,z_0)\in C_k$, tota la recta $\{(t,y_0,z_0)\}$, paral·lela a l'eix $Ox$, hi és.
+            fuites: []
+            teoria: ["T2.4"]
+          - id: seccio
+            titol: "Secció transversal"
+            objectiu: |
+              Identificar la secció de la superfície amb un pla $x=x_0$ i deduir la superfície, segons el valor de $k$.
+            idea: |
+              Al pla $(y,z)$ l'equació és una corba coneguda; després s'estén al llarg de la direcció de la variable absent.
+            detall: |
+              A cada pla $x=x_0$: $y^2+z^2=k$, circumferència de radi $\sqrt{k}$ (si $k>0$). Desplaçada al llarg de $Ox$ dona un cilindre circular d'eix $Ox$ i radi $\sqrt{k}$. Si $k=0$, només $y=z=0$: l'eix $Ox$. Si $k<0$, buit.
+            fuites: ['cilindres?']
+            teoria: []
+        errors_comuns:
+          - id: circumferencia
+            descripcio: |
+              Respon "circumferències" com si fos una funció de dues variables, oblidant la coordenada $x$.
+            pregunta: |
+              El punt $(5,\sqrt{k},0)$ compleix l'equació? I $(100,\sqrt{k},0)$? Quin conjunt de $\mathbb{R}^3$ formen tots aquests punts?
+          - id: eix_equivocat
+            descripcio: |
+              Situa l'eix de la superfície sobre $Oz$ o $Oy$.
+            pregunta: |
+              Quina coordenada pots canviar lliurement sense sortir de la superfície?
+          - id: oblida_k0
+            descripcio: |
+              Diu que $C_0$ és el punt $(0,0,0)$.
+            pregunta: |
+              El punt $(3,0,0)$ compleix $y^2+z^2=0$?
+        nota_professor: |
+          L'Exemple 5 dels apunts fa el cas anàleg $x^2+2y^2$ (cilindres el·líptics), d'aquí que sigui reservat.
+
+      - id: "t2-3e"
+        apartat: "e"
+        tipus: calcul
+        enunciat: |
+          $f(x,y,z)=xy$.
+        teoria: ["T2.4"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Per a $k\neq 0$, $C_k(f)=\{xy=k\}$ és un cilindre hiperbòlic: a cada pla $z=z_0$ la secció és la hipèrbola equilàtera $xy=k$ (asímptotes els eixos $Ox$, $Oy$; branques al 1r i 3r quadrant si $k>0$, al 2n i 4t si $k<0$), estesa paral·lelament a l'eix $Oz$. Per a $k=0$ és la unió dels plans $x=0$ i $y=0$.
+          fuites: ['cilindres?\s+hiperb', 'uni[óo]\s+dels\s+plans']
+        passos:
+          - id: variable_absent
+            titol: "Observar la variable absent"
+            objectiu: |
+              Escriure el conjunt de nivell i veure quin paper hi juga la coordenada $z$.
+            idea: |
+              La coordenada $z$ no apareix a l'equació: n'hi ha prou d'entendre la secció en un pla horitzontal.
+            detall: |
+              $C_k(f)=\{(x,y,z)\mid xy=k\}$; si $(x_0,y_0,z_0)\in C_k$, tota la recta vertical per $(x_0,y_0)$ hi és.
+            fuites: []
+            teoria: ["T2.4"]
+          - id: seccio
+            titol: "Secció i superfície"
+            objectiu: |
+              Identificar la corba $xy=k$ del pla i deduir la superfície per a $k\neq0$ i per a $k=0$.
+            idea: |
+              Al pla, $xy=k$ és una corba coneguda (pensa en $y=k/x$); el cas $k=0$ és un producte igual a zero.
+            detall: |
+              Per a $k\neq 0$, $xy=k$ és la hipèrbola $y=k/x$ (equilàtera, asímptotes els eixos); estesa al llarg de $Oz$ dona un cilindre hiperbòlic. Per a $k=0$, $xy=0\iff x=0$ o $y=0$: unió dels plans $x=0$ i $y=0$.
+            fuites: ['cilindres?\s+hiperb', 'uni[óo]\s+dels\s+plans', 'hip[eè]rbol']
+            teoria: []
+        errors_comuns:
+          - id: corba_en_lloc_de_superficie
+            descripcio: |
+              Respon "hipèrboles" sense adonar-se que a $\mathbb{R}^3$ el conjunt de nivell és una superfície.
+            pregunta: |
+              El punt $(1,k,7)$ compleix l'equació? Quina dimensió té el conjunt de tots els punts que la compleixen?
+          - id: k0_eixos
+            descripcio: |
+              Diu que $C_0$ són els eixos $Ox$ i $Oy$ (rectes) en lloc de plans.
+            pregunta: |
+              El punt $(0,5,3)$ pertany a $C_0$? Està sobre algun eix coordenat?
+
+  - num: 4
+    font: null
+    preambul: |
+      Calculeu els límits següents:
+    indicacio: null
+    exercicis:
+      - id: "t2-4a"
+        apartat: "a"
+        tipus: calcul
+        enunciat: |
+          $\displaystyle\lim_{(x,y)\to(0,0)}\frac{2+3x+4y^2}{x+1}$.
+        teoria: ["T2.6"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $2$
+          fuites: ['l[íi]mit\s+(és|val|dona|=)\s*\$?\s*2\b']
+        passos:
+          - id: continuitat
+            titol: "Reconèixer la continuïtat"
+            objectiu: |
+              Adonar-se que no hi ha cap indeterminació: estudiar el denominador a $(0,0)$.
+            idea: |
+              Un quocient de funcions contínues és continu on el denominador no s'anul·la; i en un punt de continuïtat el límit és el valor de la funció.
+            detall: |
+              Numerador i denominador són polinomis (contínues) i a $(0,0)$ el denominador val $x+1=1\neq 0$. Per tant $f$ és contínua en un entorn de $(0,0)$.
+            fuites: ['x\s*\+\s*1\s*=\s*1']
+            teoria: ["T2.20", "T2.14"]
+          - id: avaluar
+            titol: "Avaluar al punt"
+            objectiu: |
+              Calcular el valor de la funció a $(0,0)$.
+            idea: |
+              Per continuïtat, n'hi ha prou de substituir les coordenades del punt.
+            detall: |
+              $f(0,0)=\frac{2+0+0}{0+1}=2$, que és el límit.
+            fuites: ['f\(0,\s*0\)\s*=\s*\\frac', '\\frac\{2[^}]*\}\{[^}]*\}\s*=\s*2']
+            teoria: ["T2.14"]
+        errors_comuns:
+          - id: fals_indeterminacio
+            descripcio: |
+              Tracta el límit com una indeterminació (camins, polars…) quan la funció és contínua al punt.
+            pregunta: |
+              Abans de buscar camins: què val el denominador exactament al punt $(0,0)$?
+          - id: camins_com_a_prova
+            descripcio: |
+              Creu que comprovar uns quants camins demostra que el límit existeix.
+            pregunta: |
+              Si dos camins donen el mateix valor, això garanteix que tots els camins el donaran?
+          - id: error_aritmetic
+            descripcio: |
+              Error de càlcul en substituir.
+            pregunta: |
+              Pots tornar a substituir $x=0$ i $y=0$ terme per terme?
+
+      - id: "t2-4b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          $\displaystyle\lim_{(x,y)\to(0,0)}\frac{x^4y^4}{\sqrt{x^2+y^2}}$.
+        teoria: ["T2.6"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $0$
+          fuites: ['l[íi]mit\s+(és|val|dona|=)\s*\$?\s*0\b']
+        passos:
+          - id: indeterminacio
+            titol: "Detectar la indeterminació"
+            objectiu: |
+              Veure què fan numerador i denominador quan $(x,y)\to(0,0)$.
+            idea: |
+              Substituir directament: si surt $0/0$ cal una estratègia que controli el quocient a prop de l'origen.
+            detall: |
+              $x^4y^4\to 0$ i $\sqrt{x^2+y^2}\to 0$: indeterminació $0/0$.
+            fuites: []
+            teoria: []
+          - id: acotar
+            titol: "Acotar amb la norma"
+            objectiu: |
+              Trobar una fita del mòdul del quocient que només depengui de la distància a l'origen.
+            idea: |
+              Cada coordenada està fitada per la norma: $|x|\le\sqrt{x^2+y^2}$ i $|y|\le\sqrt{x^2+y^2}$ (o, equivalentment, passar a polars).
+            detall: |
+              Amb $r=\sqrt{x^2+y^2}$: $|x^4y^4|\le r^8$, per tant $\left|\frac{x^4y^4}{r}\right|\le r^7$. En polars: $r^7\cos^4\theta\sin^4\theta$, amb $|\cos^4\theta\sin^4\theta|\le 1$.
+            fuites: ['r\^\{?7\}?', 'r\^\{?8\}?']
+            teoria: []
+          - id: concloure
+            titol: "Concloure amb el sandvitx"
+            objectiu: |
+              Deduir el valor del límit a partir de la fita.
+            idea: |
+              Si $|f(x,y)|\le g(r)$ amb $g(r)\to 0$, la definició $\epsilon$-$\delta$ de límit es compleix directament.
+            detall: |
+              $0\le|f(x,y)|\le r^7$; donat $\epsilon>0$, prenent $\delta=\epsilon^{1/7}$, si $0<r<\delta$ aleshores $|f(x,y)|<\epsilon$. El límit és $0$.
+            fuites: []
+            teoria: ["T2.6"]
+        errors_comuns:
+          - id: camins_com_a_prova
+            descripcio: |
+              Conclou el valor del límit només perquè alguns camins donen $0$.
+            pregunta: |
+              Els camins et donen un candidat. Què caldria per assegurar que tots els camins, fins i tot els més retorçats, donen el mateix?
+          - id: fita_incorrecta
+            descripcio: |
+              Fa una desigualtat falsa o en sentit contrari (p. ex. fita el denominador per dalt quan necessita fitar-lo per baix).
+            pregunta: |
+              Revisa el sentit de la desigualtat: si fas el denominador més gran, el quocient es fa més gran o més petit?
+          - id: polars_sense_uniformitat
+            descripcio: |
+              Passa a polars i fa tendir $r$ a $0$ sense controlar la dependència en $\theta$.
+            pregunta: |
+              En polars, la part que depèn de $\theta$ està fitada independentment de $\theta$?
+
+      - id: "t2-4c"
+        apartat: "c"
+        tipus: calcul
+        enunciat: |
+          $\displaystyle\lim_{(x,y)\to(0,0)}\frac{x^5}{x^4+y^2}$.
+        teoria: ["T2.6"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $0$
+          fuites: ['l[íi]mit\s+(és|val|dona|=)\s*\$?\s*0\b']
+        passos:
+          - id: candidat
+            titol: "Trobar un candidat"
+            objectiu: |
+              Detectar la indeterminació $0/0$ i obtenir un candidat a límit amb algun camí.
+            idea: |
+              Provar camins, especialment els adaptats a l'estructura del denominador: camins on $x^4$ i $y^2$ tinguin el mateix ordre de magnitud.
+            detall: |
+              Per $y=kx$ i per $y=kx^2$ el quocient tendeix a $0$: el candidat és $0$, però això encara no demostra res.
+            fuites: ['y\s*=\s*k\s*x\^\{?2\}?']
+            teoria: ["T2.10"]
+          - id: acotar
+            titol: "Acotar el quocient"
+            objectiu: |
+              Trobar una fita del mòdul del quocient que tendeixi a $0$.
+            idea: |
+              Comparar el denominador amb un dels seus sumands (tots dos són no negatius) per fitar el quocient per dalt.
+            detall: |
+              $\frac{|x|^5}{x^4+y^2}\le\frac{|x|^5}{x^4}=|x|$ (per $x\neq 0$; si $x=0$ i $y\neq0$ la funció val $0$).
+            fuites: ['(\\le|\\leq|≤|=)\s*\|x\|', 'x\^\{?4\}?\s*(\\le|\\leq|≤)\s*x\^\{?4\}?\s*\+\s*y\^\{?2\}?']
+            teoria: []
+          - id: concloure
+            titol: "Concloure amb el sandvitx"
+            objectiu: |
+              Deduir el valor del límit a partir de la fita.
+            idea: |
+              Si $|f|\le g$ amb $g\to 0$, la definició $\epsilon$-$\delta$ de límit es compleix directament.
+            detall: |
+              $0\le|f(x,y)|\le|x|\le\|(x,y)\|$; donat $\epsilon>0$ n'hi ha prou amb $\delta=\epsilon$. El límit és $0$.
+            fuites: []
+            teoria: ["T2.6"]
+        errors_comuns:
+          - id: camins_com_a_prova
+            descripcio: |
+              Conclou que el límit existeix perquè uns quants camins (rectes, paràboles) donen $0$.
+            pregunta: |
+              Has provat alguns camins i tots donen el mateix. Això demostra que el límit existeix, o només et dona un candidat?
+          - id: polars_sense_uniformitat
+            descripcio: |
+              Passa a polars i conclou sense una fita independent de $\theta$ (el denominador en polars pot fer-se petit per alguns $\theta$).
+            pregunta: |
+              En polars, el denominador pot fer-se molt petit per a algun angle concret? Com afecta això la teva conclusió?
+          - id: fita_incorrecta
+            descripcio: |
+              Fa una desigualtat falsa o en sentit contrari.
+            pregunta: |
+              Si treus un sumand positiu del denominador, el quocient creix o decreix?
+          - id: conclou_no_existeix
+            descripcio: |
+              Creu erròniament que el límit no existeix (p. ex. per un càlcul de camí mal fet).
+            pregunta: |
+              Pots refer el càlcul pel camí que t'ha donat un valor diferent, pas a pas?
+        nota_professor: |
+          Exercici clàssic per veure que els camins només donen candidat. Les polars són incòmodes aquí; la fita $x^4\le x^4+y^2$ és el camí net.
+
+      - id: "t2-4d"
+        apartat: "d"
+        tipus: calcul
+        enunciat: |
+          $\displaystyle\lim_{(x,y)\to(0,0)}\frac{3\sin(xy)}{xy}$.
+        teoria: ["T2.6"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $3$
+          fuites: ['l[íi]mit\s+(és|val|dona|=)\s*\$?\s*3\b']
+        passos:
+          - id: domini
+            titol: "Entendre el domini"
+            objectiu: |
+              Determinar on està definida la funció i si té sentit el límit a $(0,0)$.
+            idea: |
+              El límit només considera punts del domini; cal que l'origen en sigui punt d'acumulació, no que hi pertanyi.
+            detall: |
+              Domini: $\Omega=\{(x,y): xy\neq 0\}$ (el pla sense els eixos). L'origen és punt d'acumulació de $\Omega$ (p. ex. $(1/n,1/n)\in\Omega$), així que el límit té sentit.
+            fuites: []
+            teoria: ["T1.14", "T2.6"]
+          - id: canvi_variable
+            titol: "Reduir a una variable"
+            objectiu: |
+              Reduir el problema a un límit d'una variable.
+            idea: |
+              L'expressió només depèn del producte $xy$, que tendeix a $0$; escriu $f$ com una composició amb una funció d'una variable.
+            detall: |
+              Sigui $g(t)=\frac{\sin t}{t}$ per a $t\neq0$ i $g(0)=1$, contínua a $\mathbb{R}$. Llavors $f(x,y)=3\,g(xy)$ a $\Omega$, i $(x,y)\mapsto xy$ és contínua amb valor $0$ a l'origen.
+            fuites: ['g\(xy\)', 't\s*=\s*xy', 'u\s*=\s*xy']
+            teoria: ["T2.19"]
+          - id: limit_fonamental
+            titol: "Límit fonamental"
+            objectiu: |
+              Calcular el límit fent servir un límit conegut d'una variable.
+            idea: |
+              El límit $\lim_{t\to 0}\frac{\sin t}{t}$ és un límit fonamental d'una variable.
+            detall: |
+              $\lim_{t\to0}\frac{\sin t}{t}=1$, per tant $3\,g(xy)\to 3\,g(0)=3\cdot1=3$.
+            fuites: ['\\frac\{\\sin\s*t\}\{t\}\s*(\\to|=)\s*1', '3\s*(\\cdot)?\s*1\s*=\s*3', '\\d?frac\{\\sin\s*\(?\s*xy\s*\)?\}\{xy\}\s*(\\to|=|→)\s*1']
+            teoria: ["T2.19"]
+        errors_comuns:
+          - id: no_definida_no_existeix
+            descripcio: |
+              Diu que el límit no existeix perquè la funció no està definida als eixos.
+            pregunta: |
+              Per calcular un límit, cal que la funció estigui definida al punt, o només a prop del punt (dins del domini)?
+          - id: lhopital_dues_variables
+            descripcio: |
+              Intenta aplicar L'Hôpital directament en dues variables.
+            pregunta: |
+              L'Hôpital és un resultat d'una variable. Hi ha alguna manera de convertir aquest límit en un d'una sola variable?
+          - id: oblida_constant
+            descripcio: |
+              Oblida el factor $3$ i dona $1$ com a resultat.
+            pregunta: |
+              Revisa el numerador: quin factor multiplica el sinus?
+
+      - id: "t2-4e"
+        apartat: "e"
+        tipus: calcul
+        enunciat: |
+          $\displaystyle\lim_{(x,y)\to(0,0)}\left(\frac{e^{x(y-1)-x-1}}{x^2+y^2},\ \sin\left(x-y\right)\right)$.
+        teoria: ["T2.1", "T2.6"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            El límit no existeix (a $\mathbb{R}^2$): la segona component tendeix a $0$, però la primera tendeix a $+\infty$ (numerador $\to e^{-1}>0$, denominador $\to 0^+$), de manera que no té límit finit.
+          fuites: ['l[íi]mit(\s+(a|en)\s+\$?\(0,\s*0\)\$?|\s+global|\s+de\s+\$?f\$?)?\s+no\s+existeix', 'no\s+existeix\s+(el\s+)?l[íi]mit', '\$?f\$?\s+no\s+t[ée]\s+l[íi]mit', '\\to\s*\+\s*\\infty', 'tendeix\s+a\s*\$?\s*\+\s*\\infty']
+        passos:
+          - id: components
+            titol: "Separar per components"
+            objectiu: |
+              Decidir com es redueix el límit d'una funció vectorial a límits de funcions escalars.
+            idea: |
+              Estudiar per separat cada component: el límit vectorial existeix si i només si existeix el de cada component (la norma euclidiana controla cada coordenada i al revés).
+            detall: |
+              Si existeixen $\lim f_1=b_1$ i $\lim f_2=b_2$, el límit és $(b_1,b_2)$; recíprocament, com que $|f_i-b_i|\le\|f-b\|$, si el límit vectorial existeix, existeix el de cada component. Cal estudiar $f_1$ i $f_2$.
+            fuites: []
+            teoria: ["T2.9", "T2.x1"]
+          - id: segona_component
+            titol: "Segona component"
+            objectiu: |
+              Calcular el límit de $\sin(x-y)$.
+            idea: |
+              És una composició de funcions contínues.
+            detall: |
+              $\sin(x-y)$ és contínua (composició de contínues), per tant tendeix a $\sin 0=0$.
+            fuites: ['\\sin\s*0\s*=\s*0']
+            teoria: ["T2.19"]
+          - id: primera_component
+            titol: "Primera component"
+            objectiu: |
+              Estudiar el comportament de $\frac{e^{x(y-1)-x-1}}{x^2+y^2}$ a prop de l'origen, començant per numerador i denominador per separat.
+            idea: |
+              Mira on tendeix el numerador per continuïtat (atenció: tot $x(y-1)-x-1$ és l'exponent) i on tendeix el denominador; no és una indeterminació $0/0$.
+            detall: |
+              L'exponent $x(y-1)-x-1\to -1$, així que el numerador $\to e^{-1}>0$, mentre que $x^2+y^2\to 0^+$. A prop de l'origen el numerador és $\ge \frac{1}{2e}$, i per tant $f_1(x,y)\ge\frac{1}{2e\,(x^2+y^2)}\to+\infty$: $f_1$ no és fitada en cap entorn de l'origen.
+            fuites: ['e\^\{-1\}', '\\frac\{1\}\{2e', '\\to\s*\+\s*\\infty']
+            teoria: ["T2.19", "T2.20"]
+          - id: concloure
+            titol: "Conclusió"
+            objectiu: |
+              Decidir què passa amb el límit de la funció vectorial.
+            idea: |
+              Una funció amb límit finit en un punt ha de ser fitada en un entorn d'aquest punt (pren $\epsilon=1$ a la definició).
+            detall: |
+              Si existís $\lim f_1=b_1\in\mathbb{R}$, amb $\epsilon=1$ tindríem $|f_1|<|b_1|+1$ a prop de l'origen, cosa falsa. Per tant $f_1$ no té límit i el límit vectorial no existeix.
+            fuites: ['l[íi]mit\s+vectorial\s+no\s+existeix']
+            teoria: ["T2.6"]
+        errors_comuns:
+          - id: llegeix_malament_exponent
+            descripcio: |
+              Llegeix l'enunciat com $e^{x(y-1)}-x-1$ (amb $-x-1$ fora de l'exponent) i fa un desenvolupament de Taylor innecessari.
+            pregunta: |
+              Mira bé l'enunciat: el $-x-1$ forma part de l'exponent o està restant l'exponencial? Què val el numerador a l'origen?
+          - id: fals_indeterminacio
+            descripcio: |
+              Tracta la primera component com una indeterminació $0/0$ i busca camins o fites.
+            pregunta: |
+              Què val exactament el numerador quan $(x,y)=(0,0)$? És zero?
+          - id: nomes_una_component
+            descripcio: |
+              Calcula només una component i en dedueix el límit vectorial.
+            pregunta: |
+              Quina condició han de complir les components perquè existeixi el límit d'una funció vectorial?
+        nota_professor: |
+          Enunciat verificat contra el PDF (pàg. 8): l'exponent és realment $x(y-1)-x-1$, i la transcripció hi coincideix. Tal com està imprès, el límit és trivial (la primera component tendeix a $+\infty$). Probablement és un error tipogràfic de l'enunciat original; amb les lectures plausibles el límit tampoc existeix: amb $\frac{e^{x(y-1)}-x-1}{x^2+y^2}$, sobre $y=0$ es comporta com $-2/x$; amb $\frac{e^{x(y-1)}+x-1}{x^2+y^2}$ o $\frac{e^{x(y+1)}-x-1}{x^2+y^2}$ el numerador és $xy+\frac{x^2}{2}+O(r^3)$ i sobre $y=mx$ dona $\frac{m+1/2}{1+m^2}$, que depèn de $m$. Si l'alumne treballa amb una d'aquestes lectures, cal fer-li notar l'enunciat.
+
+      - id: "t2-4f"
+        apartat: "f"
+        tipus: calcul
+        enunciat: |
+          $\displaystyle\lim_{(x,y,z)\to(0,0,0)}\frac{x^3+z^5}{\sqrt{x^2+2y^2+4z^2}}$.
+        teoria: ["T2.6"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $0$
+          fuites: ['l[íi]mit\s+(és|val|dona|=)\s*\$?\s*0\b']
+        passos:
+          - id: fita_denominador
+            titol: "Fitar el denominador per baix"
+            objectiu: |
+              Comparar el denominador amb la norma euclidiana $\rho=\sqrt{x^2+y^2+z^2}$.
+            idea: |
+              Mira els coeficients del radicand: són tots més grans o iguals que $1$?
+            detall: |
+              $x^2+2y^2+4z^2\ge x^2+y^2+z^2$, per tant $\sqrt{x^2+2y^2+4z^2}\ge\sqrt{x^2+y^2+z^2}=\rho$.
+            fuites: ['(\\ge|\\geq|≥)\s*\\sqrt\{\s*x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*\+\s*z\^\{?2\}?\s*\}', '(\\ge|\\geq|≥)\s*x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*\+\s*z\^\{?2\}?', '(\\ge|\\geq|≥)\s*\\rho\b']
+            teoria: []
+          - id: fita_numerador
+            titol: "Fitar el numerador"
+            objectiu: |
+              Fitar el numerador, i després el quocient, en funció de $\rho$.
+            idea: |
+              Cada coordenada està fitada per la norma: $|x|\le\rho$, $|z|\le\rho$.
+            detall: |
+              $|x^3+z^5|\le\rho^3+\rho^5$, per tant $|f|\le\frac{\rho^3+\rho^5}{\rho}=\rho^2+\rho^4$.
+            fuites: ['\\rho\^\{?2\}?\s*\+\s*\\rho\^\{?4\}?']
+            teoria: []
+          - id: concloure
+            titol: "Concloure amb el sandvitx"
+            objectiu: |
+              Deduir el valor del límit a partir de la fita.
+            idea: |
+              Una fita del mòdul que tendeix a $0$ amb $\rho$ dona directament la definició $\epsilon$-$\delta$.
+            detall: |
+              $0\le|f|\le\rho^2+\rho^4\le 2\rho^2$ si $\rho\le1$; donat $\epsilon>0$, amb $\delta=\min(1,\sqrt{\epsilon/2})$ tenim $|f|<\epsilon$. El límit és $0$.
+            fuites: []
+            teoria: ["T2.6"]
+        errors_comuns:
+          - id: fita_incorrecta
+            descripcio: |
+              Fita el denominador en el sentit equivocat (per dalt) o fa una desigualtat falsa.
+            pregunta: |
+              Per fitar un quocient per dalt, el denominador l'has de fer més gran o més petit?
+          - id: esferiques_embolic
+            descripcio: |
+              Passa a coordenades esfèriques i s'embolica amb el denominador no esfèric.
+            pregunta: |
+              Cal canviar de coordenades, o n'hi ha prou de comparar el denominador amb la norma?
+          - id: camins_com_a_prova
+            descripcio: |
+              Conclou només amb camins.
+            pregunta: |
+              Els camins et donen un candidat; què et falta per demostrar-lo?
+
+      - id: "t2-4g"
+        apartat: "g"
+        tipus: calcul
+        enunciat: |
+          $\displaystyle\lim_{(x,y,z)\to(0,0,0)}e^{-1/(x^2+y^2+z^2)}$.
+        teoria: ["T2.6"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $0$
+          fuites: ['l[íi]mit\s+(és|val|dona|=)\s*\$?\s*0\b']
+        passos:
+          - id: canvi_variable
+            titol: "Reduir a una variable"
+            objectiu: |
+              Reduir-ho a un límit d'una variable.
+            idea: |
+              La funció només depèn de $x^2+y^2+z^2$: quins valors pren aquesta quantitat a prop de l'origen?
+            detall: |
+              Amb $t=x^2+y^2+z^2$, tenim $t>0$ fora de l'origen i $t\to 0^+$.
+            fuites: ['t\s*\\to\s*0\^\{?\+\}?']
+            teoria: []
+          - id: exponent
+            titol: "Comportament de l'exponent"
+            objectiu: |
+              Veure cap a on va l'exponent.
+            idea: |
+              Quan $t$ és petit i positiu, què fa $1/t$? I el seu oposat?
+            detall: |
+              $-\frac{1}{t}\to-\infty$ quan $t\to0^+$.
+            fuites: ['\\to\s*-\s*\\infty']
+            teoria: []
+          - id: exponencial
+            titol: "Límit de l'exponencial"
+            objectiu: |
+              Concloure el valor del límit.
+            idea: |
+              Comportament de $e^s$ quan $s$ es fa molt negatiu; per fer-ho rigorós, la funció d'una variable $g(t)=e^{-1/t}$ ($t>0$), $g(0)=0$, és contínua a $[0,\infty)$, i es compon amb $(x,y,z)\mapsto x^2+y^2+z^2$.
+            detall: |
+              $e^{s}\to0$ quan $s\to-\infty$; per tant $g$ és contínua a $0$ i $f=g(x^2+y^2+z^2)\to g(0)=0$. El límit és $0$.
+            fuites: []
+            teoria: ["T2.19"]
+        errors_comuns:
+          - id: indeterminat
+            descripcio: |
+              Diu que $-1/0$ és indeterminat i conclou que el límit no existeix.
+            pregunta: |
+              El denominador $x^2+y^2+z^2$ pot ser negatiu? Què fa $1/t$ quan $t$ és petit i positiu?
+          - id: signe_exponent
+            descripcio: |
+              Oblida el signe menys i creu que tendeix a $+\infty$.
+            pregunta: |
+              Fixa't en el signe de l'exponent: cap on tendeix $-1/t$?
+
+  - num: 5
+    font: null
+    preambul: |
+      Estudieu el límit a $(0,0)$ de la restricció de les funcions següents a qualsevol recta que passa per $(0,0)$ i esbrineu si existeix el límit $\lim_{(x,y)\to(0,0)}f(x,y)$ per a les funcions següents:
+    indicacio: null
+    exercicis:
+      - id: "t2-5a"
+        apartat: "a"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=\dfrac{xy}{x^2+y^2}$.
+        teoria: ["T2.6"]
+        teoria_reservada: ["T2.13"]
+        resultat:
+          valor: |
+            Sobre la recta $y=mx$ el límit és $\frac{m}{1+m^2}$; sobre la recta $x=0$ és $0$. Com que depèn de la recta (p. ex. $0$ per a $m=0$ i $\frac12$ per a $m=1$), el límit $\lim_{(x,y)\to(0,0)}f(x,y)$ no existeix.
+          fuites: ['l[íi]mit(\s+(a|en)\s+\$?\(0,\s*0\)\$?|\s+global|\s+de\s+\$?f\$?)?\s+no\s+existeix', 'no\s+existeix\s+(el\s+)?l[íi]mit', '\$?f\$?\s+no\s+t[ée]\s+l[íi]mit', '\\frac\{m\}\{1\s*\+\s*m\^\{?2\}?\}', 'm\s*/\s*\(1\s*\+\s*m\^\{?2']
+        passos:
+          - id: restriccio
+            titol: "Restringir a les rectes"
+            objectiu: |
+              Parametritzar totes les rectes per l'origen i calcular el límit de $f$ sobre cadascuna.
+            idea: |
+              Les rectes per l'origen són $y=mx$ ($m\in\mathbb{R}$) i la recta vertical $x=0$; substitueix i simplifica.
+            detall: |
+              $f(x,mx)=\frac{mx^2}{x^2+m^2x^2}=\frac{m}{1+m^2}$ (constant, $x\neq0$), de límit $\frac{m}{1+m^2}$. Sobre $x=0$: $f(0,y)=0$, límit $0$.
+            fuites: ['\\frac\{m\}\{1\s*\+\s*m\^\{?2\}?\}', 'm\s*/\s*\(1\s*\+\s*m\^\{?2']
+            teoria: []
+          - id: concloure
+            titol: "Concloure sobre el límit"
+            objectiu: |
+              Decidir, a partir dels límits sobre rectes, si existeix el límit a $(0,0)$.
+            idea: |
+              Si el límit existís, la seva restricció a qualsevol corba contínua per l'origen hauria de tenir el mateix límit.
+            detall: |
+              El valor depèn de $m$: per $m=0$ dona $0$ i per $m=1$ dona $\frac12$. Per la proposició de límit per camins, el límit a $(0,0)$ no pot existir.
+            fuites: ['no\s+pot\s+existir', 'dep[èe]n\s+de\s+(la\s+recta|\$?\s*m\b)', 'm\s*=\s*1\$?\s*(dona|val|[ée]s)\s*\$?\s*\\d?frac\s*\{?1\}?\s*\{?2']
+            teoria: ["T2.10"]
+        errors_comuns:
+          - id: oblida_vertical
+            descripcio: |
+              Considera només $y=mx$ i oblida la recta $x=0$.
+            pregunta: |
+              Totes les rectes per l'origen es poden escriure com $y=mx$? Quina en falta?
+          - id: rectes_com_a_prova
+            descripcio: |
+              Creu que si totes les rectes donessin el mateix valor, el límit existiria.
+            pregunta: |
+              Saber què passa sobre totes les rectes és suficient per conèixer què passa sobre una paràbola?
+          - id: limit_fix_m
+            descripcio: |
+              Pensa que el límit sobre $y=mx$ és $0$ perquè "numerador i denominador són d'ordre 2".
+            pregunta: |
+              Quan substitueixes $y=mx$ i simplifiques $x^2$, què queda? Depèn encara de $x$?
+
+      - id: "t2-5b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=\dfrac{xy^2}{x^2y+xy^2}$.
+        teoria: ["T2.6"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            El domini és $\{xy(x+y)\neq0\}$, de manera que les rectes $x=0$, $y=0$ i $y=-x$ queden fora del domini. Sobre les altres rectes, $y=mx$ amb $m\neq0,-1$, el límit és $\frac{m}{1+m}$, que depèn de $m$; per tant el límit $\lim_{(x,y)\to(0,0)}f(x,y)$ no existeix.
+          fuites: ['l[íi]mit(\s+(a|en)\s+\$?\(0,\s*0\)\$?|\s+global|\s+de\s+\$?f\$?)?\s+no\s+existeix', 'no\s+existeix\s+(el\s+)?l[íi]mit', '\$?f\$?\s+no\s+t[ée]\s+l[íi]mit', '\\frac\{m\}\{1\s*\+\s*m\}', 'm\s*/\s*\(1\s*\+\s*m\)']
+        passos:
+          - id: domini
+            titol: "Domini i simplificació"
+            objectiu: |
+              Determinar el domini de $f$ i quines rectes per l'origen hi són contingudes (llevat de l'origen).
+            idea: |
+              Factoritza el denominador; les rectes on s'anul·la no formen part del domini.
+            detall: |
+              $x^2y+xy^2=xy(x+y)$. Domini: $x\neq0$, $y\neq0$, $y\neq-x$. Allà $f(x,y)=\frac{y}{x+y}$. Sobre els eixos i sobre $y=-x$ la restricció no està definida.
+            fuites: ['xy\s*\(x\s*\+\s*y\)', '\\frac\{y\}\{x\s*\+\s*y\}']
+            teoria: []
+          - id: restriccio
+            titol: "Restringir a les rectes"
+            objectiu: |
+              Calcular el límit de $f$ sobre les rectes per l'origen que són dins del domini.
+            idea: |
+              Substitueix $y=mx$ per als valors de $m$ admissibles i simplifica.
+            detall: |
+              $f(x,mx)=\frac{m^2x^3}{mx^3+m^2x^3}=\frac{m}{1+m}$ ($m\neq0,-1$), constant: el límit sobre la recta és $\frac{m}{1+m}$.
+            fuites: ['\\frac\{m\}\{1\s*\+\s*m\}', 'm\s*/\s*\(1\s*\+\s*m\)']
+            teoria: []
+          - id: concloure
+            titol: "Concloure sobre el límit"
+            objectiu: |
+              Decidir si existeix el límit a $(0,0)$.
+            idea: |
+              Si el límit existís, totes les restriccions a corbes contínues per l'origen dins del domini haurien de tenir el mateix límit.
+            detall: |
+              Per $m=1$ el límit és $\frac12$ i per $m=2$ és $\frac23$: valors diferents, de manera que, per la proposició de límit per camins, el límit a $(0,0)$ no existeix (l'origen sí que és punt d'acumulació del domini).
+            fuites: ['\\d?frac\s*\{?2\}?\s*\{?3\}?', 'l[íi]mit(\s+(a|en)\s+\$?\(0,\s*0\)\$?|\s+global|\s+de\s+\$?f\$?)?\s+no\s+existeix']
+            teoria: ["T2.10"]
+        errors_comuns:
+          - id: ignora_domini
+            descripcio: |
+              Calcula la restricció a $x=0$ o $y=0$ com si estigués definida (p. ex. obtenint $0$ o $1$).
+            pregunta: |
+              Què val el denominador sobre l'eix $y=0$? Hi està definida, la funció?
+          - id: simplificacio_global
+            descripcio: |
+              Simplifica a $\frac{y}{x+y}$ i oblida que la funció original no està definida als eixos, o bé creu que la simplificació canvia el límit.
+            pregunta: |
+              Per a quins punts és vàlida la simplificació que has fet?
+          - id: rectes_com_a_prova
+            descripcio: |
+              Pensa que, com que cada restricció té límit, el límit global existeix.
+            pregunta: |
+              Que cada recta tingui un límit és el mateix que totes tinguin el mateix límit?
+
+      - id: "t2-5c"
+        apartat: "c"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=\dfrac{xy}{x^3+y^4}$.
+        teoria: ["T2.6"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Sobre els eixos ($y=0$ i $x=0$) la restricció és idènticament $0$ i el límit és $0$. Sobre $y=mx$ amb $m\neq0$, $f(x,mx)=\frac{m}{x(1+m^4x)}$, que tendeix a $\pm\infty$ segons el costat: la restricció no té límit. Per tant el límit $\lim_{(x,y)\to(0,0)}f(x,y)$ no existeix.
+          fuites: ['l[íi]mit(\s+(a|en)\s+\$?\(0,\s*0\)\$?|\s+global|\s+de\s+\$?f\$?)?\s+no\s+existeix', 'no\s+existeix\s+(el\s+)?l[íi]mit', '\$?f\$?\s+no\s+t[ée]\s+l[íi]mit', '\\frac\{m\}\{x\s*\(1\s*\+\s*m\^\{?4\}?\s*x\)\}', '\\pm\s*\\infty']
+        passos:
+          - id: eixos
+            titol: "Restricció als eixos"
+            objectiu: |
+              Calcular el límit de $f$ sobre les rectes $y=0$ i $x=0$.
+            idea: |
+              Substitueix directament; compte que el numerador conté el producte de les dues coordenades.
+            detall: |
+              $f(x,0)=\frac{0}{x^3}=0$ per $x\neq0$ i $f(0,y)=\frac{0}{y^4}=0$ per $y\neq0$: tots dos límits són $0$.
+            fuites: ['f\(x,\s*0\)\s*=\s*\\frac\{0\}', 'f\(0,\s*y\)\s*=\s*\\frac\{0\}']
+            teoria: []
+          - id: rectes_obliqües
+            titol: "Restricció a les rectes obliqües"
+            objectiu: |
+              Calcular el límit de $f$ sobre $y=mx$ amb $m\neq0$.
+            idea: |
+              Substitueix i simplifica la màxima potència comuna de $x$; mira quin grau queda al denominador.
+            detall: |
+              $f(x,mx)=\frac{mx^2}{x^3+m^4x^4}=\frac{m}{x(1+m^4x)}$, definit per $x\neq0$ petit. Quan $x\to0^\pm$ tendeix a $\pm\infty$ (si $m>0$; signes invertits si $m<0$): no té límit.
+            fuites: ['\\frac\{m\}\{x\s*\(1\s*\+\s*m\^\{?4\}?\s*x\)\}', '\\pm\s*\\infty']
+            teoria: []
+          - id: concloure
+            titol: "Concloure sobre el límit"
+            objectiu: |
+              Decidir si existeix el límit a $(0,0)$.
+            idea: |
+              Si el límit existís, la restricció a cada recta per l'origen hauria de tenir aquest mateix límit.
+            detall: |
+              Sobre $y=x$ la restricció no té límit (no és fitada), mentre que si existís $L=\lim f$ hauria de tenir límit $L$. El límit a $(0,0)$ no existeix.
+            fuites: ['l[íi]mit(\s+(a|en)\s+\$?\(0,\s*0\)\$?|\s+global|\s+de\s+\$?f\$?)?\s+no\s+existeix', 'restricci[óo]\s+no\s+t[ée]\s+l[íi]mit']
+            teoria: ["T2.10"]
+        errors_comuns:
+          - id: eixos_suficients
+            descripcio: |
+              Calcula només sobre els eixos, obté $0$ i conclou que el límit és $0$.
+            pregunta: |
+              Els eixos són les úniques rectes per l'origen? Què passa sobre la diagonal $y=x$?
+          - id: graus
+            descripcio: |
+              Compara "graus" ingènuament (numerador grau 2, denominador grau 3 i 4) i s'equivoca de conclusió.
+            pregunta: |
+              Després de substituir $y=mx$, quina és la potència més baixa de $x$ al denominador, i quina al numerador?
+          - id: ignora_domini
+            descripcio: |
+              No observa que el denominador s'anul·la a la corba $x^3=-y^4$, que passa per l'origen.
+            pregunta: |
+              Hi ha punts propers a l'origen on el denominador s'anul·li? Afecta això les rectes?
+        nota_professor: |
+          El domini és $\{x^3+y^4\neq0\}$; la corba $x=-y^{4/3}$ passa per l'origen, però cada recta $y=mx$ la talla només a $x=-1/m^4$, lluny de l'origen. Alternativa per a la no-existència: $f$ no és fitada en cap entorn de l'origen.
+
+      - id: "t2-5d"
+        apartat: "d"
+        tipus: calcul
+        enunciat: |
+          $$f(x,y)=\begin{cases}\dfrac{x}{x+y^2} & \text{si } x\neq-y^2\\ 0 & \text{si } x=-y^2.\end{cases}$$
+        teoria: ["T2.6"]
+        teoria_reservada: ["T2.11"]
+        resultat:
+          valor: |
+            Sobre les rectes $y=mx$ ($m\in\mathbb{R}$, inclòs l'eix $y=0$) el límit és $1$; sobre la recta $x=0$ el límit és $0$. Com que les restriccions donen valors diferents, el límit $\lim_{(x,y)\to(0,0)}f(x,y)$ no existeix.
+          fuites: ['l[íi]mit(\s+(a|en)\s+\$?\(0,\s*0\)\$?|\s+global|\s+de\s+\$?f\$?)?\s+no\s+existeix', 'no\s+existeix\s+(el\s+)?l[íi]mit', '\$?f\$?\s+no\s+t[ée]\s+l[íi]mit', '\\frac\{1\}\{1\s*\+\s*m\^\{?2\}?\s*x\}']
+        passos:
+          - id: rectes_no_verticals
+            titol: "Rectes no verticals"
+            objectiu: |
+              Calcular el límit de $f$ sobre les rectes $y=mx$.
+            idea: |
+              Comprova primer quina de les dues expressions de $f$ s'aplica a prop de l'origen sobre la recta, i després substitueix.
+            detall: |
+              Sobre $y=mx$, $x+m^2x^2=0$ només per $x=0$ o $x=-1/m^2$, de manera que a prop de l'origen $f(x,mx)=\frac{x}{x+m^2x^2}=\frac{1}{1+m^2x}\to1$.
+            fuites: ['\\frac\{1\}\{1\s*\+\s*m\^\{?2\}?\s*x\}']
+            teoria: []
+          - id: recta_vertical
+            titol: "Recta vertical"
+            objectiu: |
+              Calcular el límit de $f$ sobre la recta $x=0$.
+            idea: |
+              Substitueix $x=0$ i comprova en quina branca de la definició estàs.
+            detall: |
+              Per $y\neq0$, $0\neq-y^2$, així que $f(0,y)=\frac{0}{y^2}=0$: límit $0$.
+            fuites: ['f\(0,\s*y\)\s*=\s*\\frac\{0\}']
+            teoria: []
+          - id: concloure
+            titol: "Concloure sobre el límit"
+            objectiu: |
+              Decidir si existeix el límit a $(0,0)$.
+            idea: |
+              Si el límit existís, totes les restriccions a corbes contínues per l'origen haurien de tenir el mateix límit.
+            detall: |
+              La recta $y=0$ dona $1$ i la recta $x=0$ dona $0$; per la proposició de límit per camins (aplicada a $y=g(x)=0$, i a la recta $x=0$ amb els papers de $x$ i $y$ intercanviats), el límit a $(0,0)$ no existeix. (També ho mostren les paràboles $x=ay^2$, que donen $\frac{a}{a+1}$.)
+            fuites: ['l[íi]mit(\s+(a|en)\s+\$?\(0,\s*0\)\$?|\s+global|\s+de\s+\$?f\$?)?\s+no\s+existeix', '\\d?frac\{a\}\{a\s*\+\s*1\}']
+            teoria: ["T2.10"]
+        errors_comuns:
+          - id: nomes_y_mx
+            descripcio: |
+              Només considera $y=mx$, obté sempre $1$ i conclou que el límit és $1$.
+            pregunta: |
+              Has considerat totes les rectes que passen per l'origen? N'hi ha alguna que no sigui de la forma $y=mx$?
+          - id: branca_equivocada
+            descripcio: |
+              Fa servir el valor $0$ de la segona branca sobre una recta on no s'aplica (o al revés).
+            pregunta: |
+              Sobre la recta que estàs estudiant, els punts propers a l'origen compleixen $x=-y^2$?
+          - id: rectes_com_a_prova
+            descripcio: |
+              Creu que si totes les rectes donessin el mateix, el límit existiria.
+            pregunta: |
+              Saber què passa sobre totes les rectes és suficient per conèixer què passa sobre una paràbola?
+        nota_professor: |
+          És la mateixa funció de l'Exemple 11 dels apunts amb els papers de $x$ i $y$ intercanviats (allà sobre paràboles), per això queda reservat.

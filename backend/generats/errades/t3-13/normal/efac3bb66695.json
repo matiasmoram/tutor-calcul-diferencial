@@ -1,0 +1,65 @@
+{
+  "id": "efac3bb66695",
+  "exercici": "t3-13",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Considero $f(x,y)=\\sqrt{3+e^x\\cos y+5\\sin y}$; el nombre que volem és $f(-0.1,\\ 0.05)$. Com a punt base prenc $(0,0)$, proper al punt i on $f(0,0)=\\sqrt{3+1+0}=2$.",
+    "Prop de $(0,0)$ l'argument de l'arrel és proper a $4>0$ i $t\\mapsto\\sqrt t$ és $\\mathcal{C}^1$ a $(0,+\\infty)$; per tant $f$ té derivades parcials contínues en un entorn de $(0,0)$ i, per la condició suficient, és diferenciable a $(0,0)$.",
+    "Derivant, $\\dfrac{\\partial f}{\\partial x}=\\dfrac{e^x\\cos y}{2f}$ i $\\dfrac{\\partial f}{\\partial y}=\\dfrac{e^x\\sin y+5\\cos y}{2f}$.",
+    "Al punt base, amb $f(0,0)=2$: $\\nabla f(0,0)=\\left(\\dfrac{1}{4},\\ \\dfrac{5}{4}\\right)$.",
+    "L'aproximació lineal dona $f(-0.1,\\ 0.05)\\approx2+\\frac14(0.05)+\\frac54(-0.1)=2+0.0125-0.125=1.8875$.",
+    "Per tant, $\\sqrt{3+e^{-0.1}\\cos0.05+5\\sin0.05}\\approx1.8875$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "$\\dfrac{\\partial f}{\\partial y}=\\dfrac{e^x\\sin y+5\\cos y}{2f}$",
+      "inici": 67,
+      "fi": 129,
+      "tipus": "calcul",
+      "explicacio": "La derivada de $\\cos y$ és $-\\sin y$, de manera que el terme $e^x\\sin y$ ha de portar signe negatiu (al punt $(0,0)$ no canvia el valor perquè $\\sin0=0$, però la fórmula és falsa).",
+      "correccio": "$\\dfrac{\\partial f}{\\partial y}=\\dfrac{-e^x\\sin y+5\\cos y}{2f}$.",
+      "pista": "Quina és la derivada de $\\cos y$ respecte de $y$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "\\approx2+\\frac14(0.05)+\\frac54(-0.1)",
+      "inici": 41,
+      "fi": 77,
+      "tipus": "calcul",
+      "explicacio": "S'han intercanviat els increments: la derivada respecte de $x$ s'ha de multiplicar per l'increment de $x$, que és $-0.1$, i la de $y$ per $0.05$.",
+      "correccio": "$f(-0.1,\\ 0.05)\\approx2+\\frac14(-0.1)+\\frac54(0.05)=2-0.025+0.0625=2.0375$.",
+      "pista": "Quin increment correspon a cada variable, i per quina derivada parcial s'ha de multiplicar?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t34.json",
+    "valoracio": "Funció i gradient al punt correctes, però la parcial respecte de $y$ té un signe malament i l'aproximació intercanvia els increments, donant 1.8875 en lloc de 2.0375.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$\\dfrac{\\partial f}{\\partial y}=\\dfrac{e^x\\sin y+5\\cos y}{2f}$",
+        "gravetat": "error",
+        "explicacio": "La derivada de $e^x\\cos y$ respecte de $y$ és $-e^x\\sin y$: el signe és incorrecte (al punt base no afecta el valor, ja que $\\sin0=0$)."
+      },
+      {
+        "fragment": 5,
+        "cita": "$f(-0.1,\\ 0.05)\\approx2+\\frac14(0.05)+\\frac54(-0.1)",
+        "gravetat": "error",
+        "explicacio": "Intercanvia els increments: $\\partial_xf$ s'ha de multiplicar per $\\Delta x=-0.1$ i $\\partial_yf$ per $\\Delta y=0.05$; correcte: $2-0.025+0.0625=2.0375$."
+      },
+      {
+        "fragment": 6,
+        "cita": "\\approx1.8875",
+        "gravetat": "consequencia",
+        "explicacio": "Hereta el valor erroni de l'aproximació."
+      }
+    ]
+  },
+  "creat": 1791295851.9267752
+}

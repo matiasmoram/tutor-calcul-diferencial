@@ -1,0 +1,66 @@
+{
+  "id": "22aa5cbf64c6",
+  "exercici": "T2.24",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $f:\\Omega\\subseteq M\\to\\mathbb{R}$ contínua, $K\\subseteq\\Omega$ connex, i $x,y\\in K$.",
+    "Aleshores, per a tota $c\\in\\mathbb{R}$ tal que $f(x)<c<f(y)$, existeix $\\xi\\in\\mathring{K}$ tal que $f(\\xi)=c$.",
+    "Com que $f$ és contínua i $K$ és connex, per l'apartat (b) de la proposició 21 sabem que $f(K)$ és connex.",
+    "Suposem, per reducció a l'absurd, que existeix $c_0\\in\\mathbb{R}$ amb $f(x)<c_0<f(y)$ tal que $f(\\xi)\\neq c_0$ per a tot $\\xi\\in K$, és a dir, $c_0\\notin f(K)$.",
+    "Definim els oberts de $\\mathbb{R}$ $V_1:=(-\\infty,c_0]$ i $V_2:=(c_0,+\\infty)$. Com que $c_0\\notin f(K)$, és clar que $f(K)\\subseteq V_1\\cup V_2$.",
+    "A més, $f(x)\\in f(K)\\cap V_1$ i $f(y)\\in f(K)\\cap V_2$, mentre que $f(K)\\cap V_1\\cap V_2=\\emptyset$ perquè $V_1\\cap V_2=\\emptyset$.",
+    "Per tant, $f(K)$ és disconnex, cosa que contradiu que $f(K)$ és connex. Així, aquest $c_0$ no pot existir."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "existeix $\\xi\\in\\mathring{K}$",
+      "inici": 62,
+      "fi": 91,
+      "tipus": "conclusio",
+      "explicacio": "La demostració només dona $\\xi\\in K$, i l'interior de $K$ pot ser buit. Contraexemple: $K=[0,1]\\times\\{0\\}\\subset\\mathbb{R}^2$ (connex, d'interior buit), $f(a,b)=a$, $x=(0,0)$, $y=(1,0)$, $c=1/2$.",
+      "correccio": "Existeix $\\xi\\in K$ tal que $f(\\xi)=c$.",
+      "pista": "On viu el punt $\\xi$ que dona la demostració? Pot un connex tenir interior buit?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "els oberts de $\\mathbb{R}$ $V_1:=(-\\infty,c_0]$",
+      "inici": 8,
+      "fi": 55,
+      "tipus": "pas_injustificat",
+      "explicacio": "$(-\\infty,c_0]$ no és obert de $\\mathbb{R}$, i la definició de conjunt disconnex demana dos oberts; així no es pot concloure que $f(K)$ és disconnex.",
+      "correccio": "$V_1:=(-\\infty,c_0)$ i $V_2:=(c_0,+\\infty)$, tots dos oberts.",
+      "pista": "Quina propietat han de tenir $V_1$ i $V_2$ per poder parlar de disconnexió? La compleix $V_1$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t2b.json",
+    "valoracio": "Dos errors: $\\xi$ a l'interior de $K$ a l'enunciat i un $V_1$ que no és obert a la demostració.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "existeix $\\xi\\in\\mathring{K}$",
+        "gravetat": "error",
+        "explicacio": "Conclusió més forta: l'interior de $K$ pot ser buit (p. ex. $K$ un segment de $\\mathbb{R}^2$, $f$ la primera coordenada), i aleshores no hi ha cap $\\xi$ interior."
+      },
+      {
+        "fragment": 5,
+        "cita": "$V_1:=(-\\infty,c_0]$",
+        "gravetat": "error",
+        "explicacio": "$(-\\infty,c_0]$ no és un obert de $\\mathbb{R}$, de manera que $V_1,V_2$ no serveixen per desconnectar $f(K)$; cal $(-\\infty,c_0)$."
+      },
+      {
+        "fragment": 7,
+        "cita": "Per tant, $f(K)$ és disconnex",
+        "gravetat": "consequencia",
+        "explicacio": "La conclusió és la dels apunts però només és vàlida amb $V_1$ obert, que el fragment 5 ha perdut."
+      }
+    ]
+  },
+  "creat": 1791295930.3445752
+}

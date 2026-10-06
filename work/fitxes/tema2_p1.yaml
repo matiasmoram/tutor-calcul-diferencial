@@ -1,0 +1,933 @@
+problemes:
+  - num: 1
+    font: null
+    preambul: |
+      Determineu el domini d'existència i el recorregut (imatge) de les funcions següents, i digueu si aquests conjunts són oberts o tancats:
+    indicacio: null
+    exercicis:
+      - id: "t2-1a"
+        apartat: "a"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=\sqrt{\cos\left(x^2+y^2\right)}$,
+        teoria: ["T2.3", "T1.11"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $\mathrm{Dom}(f)=\{(x,y)\mid \cos(x^2+y^2)\ge 0\}$: el disc tancat $x^2+y^2\le \pi/2$ unió les corones circulars tancades $2k\pi-\pi/2\le x^2+y^2\le 2k\pi+\pi/2$, $k\ge 1$. És tancat i no és obert.
+            $\mathrm{Im}(f)=[0,1]$, que és tancat i no és obert a $\mathbb{R}$.
+          fuites: ['\[\s*0\s*,\s*1\s*\]']
+        passos:
+          - id: domini
+            titol: "Calcular el domini"
+            objectiu: |
+              Determinar el conjunt de punts $(x,y)$ on l'expressió de $f$ té sentit.
+            idea: |
+              L'arrel quadrada real només està definida per a radicands no negatius. Escriu $s=x^2+y^2\ge 0$ i resol la desigualtat trigonomètrica en la variable $s$; després tradueix-ho a una condició geomètrica sobre $(x,y)$.
+            detall: |
+              Cal $\cos(x^2+y^2)\ge 0$. Amb $s=x^2+y^2\in[0,+\infty)$: $\cos s\ge 0 \iff s\in[2k\pi-\pi/2,\,2k\pi+\pi/2]$ per a algun $k\in\mathbb{Z}$. Intersecant amb $s\ge 0$: $s\in[0,\pi/2]\cup\bigcup_{k\ge1}[2k\pi-\pi/2,\,2k\pi+\pi/2]$. Geomètricament: el disc tancat de centre l'origen i radi $\sqrt{\pi/2}$ i les corones circulars tancades $\sqrt{2k\pi-\pi/2}\le\sqrt{x^2+y^2}\le\sqrt{2k\pi+\pi/2}$, $k\ge 1$.
+            fuites: ['2k\\pi\s*-\s*(\\pi\s*/\s*2|\\[dt]?frac\s*\{?\s*\\pi\s*\}?\s*\{?\s*2\s*\}?)', 'coron(a|es)\b']
+            teoria: ["T2.3"]
+          - id: domini_topologia
+            titol: "Topologia del domini"
+            objectiu: |
+              Decidir si el domini és obert, tancat, totes dues coses o cap de les dues.
+            idea: |
+              Escriu el domini com el conjunt on una funció contínua a tot $\mathbb{R}^2$ és $\ge 0$ i usa el resultat sobre conjunts definits per desigualtats. Per descartar l'altra propietat, busca un punt del domini tal que tota bola centrada en ell surti del domini.
+            detall: |
+              $g(x,y)=\cos(x^2+y^2)$ és contínua a $\mathbb{R}^2$ (composició d'un polinomi amb el cosinus) i $\mathrm{Dom}(f)=\{g\ge 0\}$, que és tancat pel Corol·lari 18(ii). El domini no és obert: el punt $p=(\sqrt{\pi/2},0)$ hi pertany ($g(p)=\cos(\pi/2)=0$), però, donat $r>0$, prenent $0<\varepsilon<r$ prou petit perquè $(\sqrt{\pi/2}+\varepsilon)^2<3\pi/2$, el punt $(\sqrt{\pi/2}+\varepsilon,0)\in B(p,r)$ té $s=(\sqrt{\pi/2}+\varepsilon)^2\in(\pi/2,3\pi/2)$ i per tant $\cos s<0$: cap bola centrada en $p$ és dins del domini. Així, el domini és tancat però no obert.
+            fuites: ['domini\s+és\s+(un\s+conjunt\s+)?tancat', 'tancat\s+(però|i)\s+no\s+(és\s+)?obert', '\(\s*\\sqrt\s*\{?\s*(\\pi\s*/\s*2|\\[dt]?frac\s*\{?\s*\\pi\s*\}?\s*\{?\s*2\s*\}?)\s*\}?\s*,\s*0\s*\)']
+            teoria: ["T2.18", "T2.19", "T1.11"]
+          - id: imatge
+            titol: "Calcular la imatge"
+            objectiu: |
+              Determinar el conjunt de valors que pren $f$.
+            idea: |
+              Fita els valors possibles del cosinus sobre el domini i, després, comprova que tots els valors candidats s'assoleixen realment movent-te sobre una semirecta des de l'origen.
+            detall: |
+              Sobre el domini, $0\le\cos(x^2+y^2)\le 1$, i per tant $0\le f\le 1$. Recíprocament, sobre el segment $(t,0)$, $t\in[0,\sqrt{\pi/2}]$ (contingut en el domini), la funció $t\mapsto\cos(t^2)$ és contínua i passa de $1$ a $0$, de manera que (valor intermedi en una variable) pren tots els valors de $[0,1]$, i també els pren $f=\sqrt{\cos(t^2)}$. Per tant $\mathrm{Im}(f)=[0,1]$.
+            fuites: ['\[\s*0\s*,\s*1\s*\]']
+            teoria: ["T2.3"]
+          - id: imatge_topologia
+            titol: "Topologia de la imatge"
+            objectiu: |
+              Decidir si la imatge, com a subconjunt de $\mathbb{R}$, és oberta, tancada, totes dues coses o cap.
+            idea: |
+              Reconeix la imatge com una bola tancada de $\mathbb{R}$, i mira si els seus extrems admeten una bola oberta continguda en el conjunt.
+            detall: |
+              $[0,1]=\overline{B}(1/2,1/2)$ és una bola tancada, per tant tancada. No és oberta: tota bola $(1-r,1+r)$ centrada en $1$ conté punts més grans que $1$.
+            fuites: []
+            teoria: ["T1.13", "T1.11"]
+        errors_comuns:
+          - id: oblidar_periodicitat
+            descripcio: |
+              Només considera $x^2+y^2\le\pi/2$ (el disc) i oblida la resta d'intervals on el cosinus torna a ser no negatiu.
+            pregunta: |
+              El cosinus és no negatiu només a prop de $0$, o hi ha més valors de $s>0$ on torna a ser $\ge 0$?
+          - id: tancat_implica_no_obert
+            descripcio: |
+              Dedueix "no és obert" automàticament de "és tancat", com si fossin propietats contràries.
+            pregunta: |
+              Hi ha subconjunts de $\mathbb{R}^2$ que siguin oberts i tancats alhora? Què has de comprovar, doncs, per descartar que el domini sigui obert?
+          - id: imatge_cos_sencer
+            descripcio: |
+              Diu que la imatge és $[-1,1]$ o $[0,+\infty)$ sense tenir en compte l'arrel ni el rang del cosinus.
+            pregunta: |
+              Quins valors pot prendre el radicand en els punts del domini, i què fa l'arrel quadrada amb ells?
+        nota_professor: |
+          El tancament també es pot veure com $\mathrm{Dom}(f)=g^{-1}([0,+\infty))$, antiimatge d'un tancat per una funció $g$ contínua a $\mathbb{R}^2$ (Teorema 17(d)). Cal remarcar que les corones són infinites i cada cop més primes (amplada radial $\to 0$).
+
+      - id: "t2-1b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=\log\left(y-x\right)$,
+        teoria: ["T2.3", "T1.11"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $\mathrm{Dom}(f)=\{(x,y)\mid y>x\}$, el semiplà obert per sobre de la recta $y=x$: és obert i no és tancat.
+            $\mathrm{Im}(f)=\mathbb{R}$, que és obert i tancat a $\mathbb{R}$.
+          fuites: ['imatge\s+(és|=)\s+(tot\s+)?\$?\s*\\mathbb\s*(\{\s*R\s*\}|R)(?!\s*\^)', '\\(mathrm|text|operatorname)\s*\{\s*Im\s*\}\s*\(\s*f\s*\)\s*=\s*\\mathbb\s*(\{\s*R\s*\}|R)(?!\s*\^)']
+        passos:
+          - id: domini
+            titol: "Calcular el domini"
+            objectiu: |
+              Determinar el conjunt de punts $(x,y)$ on l'expressió de $f$ té sentit.
+            idea: |
+              El logaritme real només està definit per a arguments estrictament positius.
+            detall: |
+              Cal $y-x>0$, és a dir, $\mathrm{Dom}(f)=\{(x,y)\mid y>x\}$: el semiplà obert situat per sobre de la recta $y=x$.
+            fuites: ['y\s*-\s*x\s*>\s*0', 'y\s*>\s*x']
+            teoria: ["T2.3"]
+          - id: domini_topologia
+            titol: "Topologia del domini"
+            objectiu: |
+              Decidir si el domini és obert, tancat, totes dues coses o cap de les dues.
+            idea: |
+              Expressa el domini com un conjunt definit per una desigualtat estricta entre funcions contínues a $\mathbb{R}^2$. Per a l'altra propietat, mira què passa amb els punts de la recta que el limita.
+            detall: |
+              Amb $F(x,y)=y$, $G(x,y)=x$ contínues, $\mathrm{Dom}(f)=\{F>G\}$, que és obert pel Corol·lari 18(i). No és tancat: el complementari $\{y\le x\}$ no és obert, perquè conté $(0,0)$ i tota bola $B((0,0),r)$ conté el punt $(0,r/2)$, que és del domini. Per tant el domini és obert però no tancat.
+            fuites: ['obert\s+(però|i)\s+no\s+(és\s+)?tancat', '\(\s*0\s*,\s*r\s*/\s*2\s*\)']
+            teoria: ["T2.18", "T1.11"]
+          - id: imatge
+            titol: "Calcular la imatge"
+            objectiu: |
+              Determinar el conjunt de valors que pren $f$.
+            idea: |
+              Mira quins valors pot prendre l'argument $y-x$ sobre el domini i quina és la imatge del logaritme sobre aquest conjunt; per comprovar-ho, busca explícitament un punt on $f$ valgui un valor $c$ donat.
+            detall: |
+              L'argument $y-x$ recorre tot $(0,+\infty)$ i $\log((0,+\infty))=\mathbb{R}$. Explícitament, per a $c\in\mathbb{R}$, el punt $(0,e^c)$ és del domini i $f(0,e^c)=\log e^c=c$. Per tant la imatge és tot $\mathbb{R}$.
+            fuites: ['\(\s*0\s*,\s*e\^\{?c\}?\s*\)']
+            teoria: ["T2.3"]
+          - id: imatge_topologia
+            titol: "Topologia de la imatge"
+            objectiu: |
+              Decidir si la imatge, com a subconjunt de $\mathbb{R}$, és oberta, tancada, totes dues coses o cap.
+            idea: |
+              Recorda què diuen les propietats dels oberts i dels tancats sobre l'espai sencer.
+            detall: |
+              $\mathbb{R}$ és alhora obert i tancat dins de $\mathbb{R}$ (Proposicions 12(iv) i 13(iv) del Tema 1).
+            fuites: []
+            teoria: ["T1.12", "T1.13"]
+        errors_comuns:
+          - id: desigualtat_no_estricta
+            descripcio: |
+              Posa $y-x\ge 0$ (inclou la recta $y=x$ al domini), oblidant que $\log 0$ no està definit.
+            pregunta: |
+              Què val el logaritme quan l'argument és exactament $0$?
+          - id: confusio_imatge
+            descripcio: |
+              Diu que la imatge és $(0,+\infty)$, confonent el rang de l'argument amb el rang del logaritme.
+            pregunta: |
+              El conjunt $(0,+\infty)$ és el dels valors de $y-x$ o el dels valors de $\log(y-x)$? Quin valor de $f$ obtens si $y-x$ és molt petit?
+          - id: R_no_tancat
+            descripcio: |
+              Afirma que $\mathbb{R}$ no és tancat perquè "no té extrems" o perquè és obert.
+            pregunta: |
+              Per definició, quan és tancat un conjunt? Quin és el complementari de $\mathbb{R}$ dins de $\mathbb{R}$?
+        nota_professor: |
+          El no-tancament també es pot veure amb successions: $(0,1/n)\in\mathrm{Dom}(f)$ convergeix a $(0,0)\notin\mathrm{Dom}(f)$.
+
+      - id: "t2-1c"
+        apartat: "c"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=\arcsin\left(x/y\right)$,
+        teoria: ["T2.3", "T1.11"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $\mathrm{Dom}(f)=\{(x,y)\mid y\neq 0,\ |x|\le|y|\}=\{|x|\le|y|\}\setminus\{(0,0)\}$ (la regió entre les diagonals que conté l'eix $y$, sense l'origen): no és ni obert ni tancat.
+            $\mathrm{Im}(f)=[-\pi/2,\pi/2]$, que és tancat i no és obert.
+          fuites: ['\[\s*-\s*(\\pi\s*/\s*2|\\[dt]?frac\s*\{?\s*\\pi\s*\}?\s*\{?\s*2\s*\}?)\s*,\s*(\\pi\s*/\s*2|\\[dt]?frac\s*\{?\s*\\pi\s*\}?\s*\{?\s*2\s*\}?)\s*\]']
+        passos:
+          - id: domini
+            titol: "Calcular el domini"
+            objectiu: |
+              Determinar el conjunt de punts $(x,y)$ on l'expressió de $f$ té sentit.
+            idea: |
+              Hi ha dues condicions: que el quocient existeixi i que estigui dins del domini de l'arcsinus. Després, reescriu la segona sense quocients.
+            detall: |
+              Cal $y\neq0$ i $-1\le x/y\le 1$, és a dir $|x/y|\le1$, que (multiplicant per $|y|>0$) equival a $|x|\le|y|$. Per tant $\mathrm{Dom}(f)=\{(x,y)\mid |x|\le|y|\}\setminus\{(0,0)\}$: la regió tancada entre les rectes $y=x$ i $y=-x$ que conté l'eix $y$, sense l'origen.
+            fuites: ['\|x\|\s*(\\le|\\leq|≤)\s*\|y\|', '\|y\|\s*(\\ge|\\geq|≥)\s*\|x\|']
+            teoria: ["T2.3"]
+          - id: domini_topologia
+            titol: "Topologia del domini"
+            objectiu: |
+              Decidir si el domini és obert, tancat, totes dues coses o cap de les dues.
+            idea: |
+              Mira els punts de les dues rectes que limiten la regió (per a l'obertura) i el punt que s'ha hagut d'excloure (per al tancament).
+            detall: |
+              No és obert: $(1,1)\in\mathrm{Dom}(f)$, però tota bola centrada en $(1,1)$ conté punts $(1+\varepsilon,1)$ amb $|x|>|y|$. No és tancat: els punts $(0,1/n)$ són del domini i convergeixen a $(0,0)$, que no hi és; per tant $(0,0)$ és adherent al domini sense pertànyer-hi, i un tancat conté tots els seus punts adherents. El domini no és ni obert ni tancat.
+            fuites: ['ni\s+obert\s+ni\s+tancat', '\(\s*0\s*,\s*1\s*/\s*n\s*\)']
+            teoria: ["T1.11", "T1.16", "T1.19"]
+          - id: imatge
+            titol: "Calcular la imatge"
+            objectiu: |
+              Determinar el conjunt de valors que pren $f$.
+            idea: |
+              Determina quins valors pren el quocient $x/y$ sobre el domini i aplica-hi l'arcsinus, que és bijectiu des del seu domini a la seva imatge.
+            detall: |
+              Sobre el domini $x/y$ pren tots els valors de $[-1,1]$ (per exemple als punts $(t,1)$, $t\in[-1,1]$), i $\arcsin([-1,1])=[-\pi/2,\pi/2]$. Per tant $\mathrm{Im}(f)=[-\pi/2,\pi/2]$.
+            fuites: ['\[\s*-\s*(\\pi\s*/\s*2|\\[dt]?frac\s*\{?\s*\\pi\s*\}?\s*\{?\s*2\s*\}?)\s*,\s*(\\pi\s*/\s*2|\\[dt]?frac\s*\{?\s*\\pi\s*\}?\s*\{?\s*2\s*\}?)\s*\]', '\(\s*t\s*,\s*1\s*\)']
+            teoria: ["T2.3"]
+          - id: imatge_topologia
+            titol: "Topologia de la imatge"
+            objectiu: |
+              Decidir si la imatge, com a subconjunt de $\mathbb{R}$, és oberta, tancada, totes dues coses o cap.
+            idea: |
+              Reconeix la imatge com una bola tancada de $\mathbb{R}$ i mira si els extrems admeten una bola oberta dins del conjunt.
+            detall: |
+              És la bola tancada $\overline{B}(0,\pi/2)$, per tant tancada. No és oberta: tota bola centrada en $\pi/2$ conté punts més grans que $\pi/2$.
+            fuites: []
+            teoria: ["T1.13", "T1.11"]
+        errors_comuns:
+          - id: multiplicar_sense_signe
+            descripcio: |
+              Passa de $-1\le x/y\le 1$ a $-y\le x\le y$ multiplicant per $y$ sense tenir en compte que $y$ pot ser negatiu.
+            pregunta: |
+              Què passa amb el sentit de les desigualtats quan multipliques per $y$ i $y<0$?
+          - id: oblidar_origen
+            descripcio: |
+              Inclou l'origen al domini (o conclou que el domini és tancat) oblidant que cal $y\neq0$.
+            pregunta: |
+              Té sentit el quocient $x/y$ en el punt $(0,0)$? Hi ha punts del domini tan a prop com vulguis d'aquest punt?
+          - id: obert_si_no_tancat
+            descripcio: |
+              Conclou que el domini és obert perquè no és tancat (o a l'inrevés).
+            pregunta: |
+              "No tancat" vol dir "obert"? Pots trobar un punt del domini on cap bola hi quedi continguda?
+
+      - id: "t2-1d"
+        apartat: "d"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=\sqrt{\cos\left(2\pi x\right)-1}$,
+        teoria: ["T2.3", "T1.11"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $\mathrm{Dom}(f)=\mathbb{Z}\times\mathbb{R}$ (les rectes verticals $x=k$, $k\in\mathbb{Z}$): és tancat i no és obert (té interior buit).
+            $\mathrm{Im}(f)=\{0\}$, que és tancat i no és obert.
+          fuites: ['\\\{\s*0\s*\\\}', '\\mathbb\{?Z\}?\s*\\times\s*\\mathbb\{?R']
+        passos:
+          - id: domini
+            titol: "Calcular el domini"
+            objectiu: |
+              Determinar el conjunt de punts $(x,y)$ on l'expressió de $f$ té sentit.
+            idea: |
+              L'arrel exigeix radicand no negatiu; recorda quin és el valor màxim del cosinus i quin signe té, per tant, el radicand.
+            detall: |
+              Cal $\cos(2\pi x)-1\ge0$; com que $\cos\le1$, això obliga $\cos(2\pi x)=1$, és a dir $2\pi x\in2\pi\mathbb{Z}$, $x\in\mathbb{Z}$, sense cap condició sobre $y$. Per tant $\mathrm{Dom}(f)=\mathbb{Z}\times\mathbb{R}$: la unió de les rectes verticals $x=k$, $k\in\mathbb{Z}$.
+            fuites: ['\\mathbb\{?Z\}?\s*\\times\s*\\mathbb\{?R', 'x\s*\\in\s*\\mathbb\{?Z', 'rectes\s+verticals']
+            teoria: ["T2.3"]
+          - id: domini_topologia
+            titol: "Topologia del domini"
+            objectiu: |
+              Decidir si el domini és obert, tancat, totes dues coses o cap de les dues.
+            idea: |
+              Escriu el domini com el conjunt on una funció contínua és $\ge$ una constant. Per a l'altra propietat, pensa si algun punt del domini té una bola al voltant continguda en el domini.
+            detall: |
+              $g(x,y)=\cos(2\pi x)$ és contínua a $\mathbb{R}^2$ i $\mathrm{Dom}(f)=\{g\ge1\}$, que és tancat pel Corol·lari 18(ii). No és obert: $(0,0)$ hi pertany, però tota bola $B((0,0),r)$ conté $(\varepsilon,0)$ amb $0<\varepsilon<\min(r,1)$, que no hi és ($\varepsilon\notin\mathbb{Z}$). De fet, l'interior és buit. El domini és tancat però no obert.
+            fuites: ['domini\s+és\s+(un\s+conjunt\s+)?tancat', 'tancat\s+(però|i)\s+no\s+(és\s+)?obert', '\\\{\s*g\s*(\\ge|\\geq|≥)\s*1\s*\\\}']
+            teoria: ["T2.18", "T1.11"]
+          - id: imatge
+            titol: "Calcular la imatge"
+            objectiu: |
+              Determinar el conjunt de valors que pren $f$.
+            idea: |
+              Avalua el radicand en els punts del domini que acabes de trobar.
+            detall: |
+              Als punts del domini, $\cos(2\pi x)-1=0$, i per tant $f\equiv0$: $\mathrm{Im}(f)=\{0\}$.
+            fuites: ['f\s*\\equiv\s*0', '\\\{\s*0\s*\\\}']
+            teoria: ["T2.3"]
+          - id: imatge_topologia
+            titol: "Topologia de la imatge"
+            objectiu: |
+              Decidir si la imatge, com a subconjunt de $\mathbb{R}$, és oberta, tancada, totes dues coses o cap.
+            idea: |
+              Estudia el complementari del conjunt dins de $\mathbb{R}$, i mira si l'únic punt del conjunt té alguna bola continguda en ell.
+            detall: |
+              El complementari és $(-\infty,0)\cup(0,+\infty)$, unió d'oberts, per tant obert: la imatge és tancada. No és oberta: tota bola $(-r,r)$ conté punts diferents de $0$.
+            fuites: []
+            teoria: ["T1.x4", "T1.12", "T1.11"]
+        errors_comuns:
+          - id: domini_buit
+            descripcio: |
+              Conclou que el domini és buit perquè "$\cos(2\pi x)-1$ és sempre negatiu", oblidant els punts on val exactament $0$.
+            pregunta: |
+              El radicand és estrictament negatiu a tot arreu, o hi ha valors de $x$ on el cosinus arriba al seu màxim?
+          - id: oblidar_y
+            descripcio: |
+              Dona el domini com un subconjunt de $\mathbb{R}$ (els enters) en lloc d'un subconjunt del pla.
+            pregunta: |
+              La funció és de dues variables: quina condició imposa l'expressió sobre $y$?
+          - id: discret_obert
+            descripcio: |
+              Pensa que el domini és obert perquè "està format per rectes separades" o el confon amb un conjunt discret.
+            pregunta: |
+              Si prens un punt d'una d'aquestes rectes, hi ha alguna bola del pla centrada en ell que quedi dins del domini?
+
+      - id: "t2-1e"
+        apartat: "e"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=1-|x|-|y|$,
+        teoria: ["T2.3", "T1.11"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $\mathrm{Dom}(f)=\mathbb{R}^2$, que és obert i tancat.
+            $\mathrm{Im}(f)=(-\infty,1]$, que és tancat i no és obert.
+          fuites: ['[(\]]\s*-\s*\\infty\s*,\s*1\s*\]']
+        passos:
+          - id: domini
+            titol: "Calcular el domini"
+            objectiu: |
+              Determinar el conjunt de punts $(x,y)$ on l'expressió de $f$ té sentit.
+            idea: |
+              Mira si alguna de les operacions que apareixen a l'expressió té restriccions.
+            detall: |
+              El valor absolut i les sumes estan definits per a tot nombre real: $\mathrm{Dom}(f)=\mathbb{R}^2$.
+            fuites: []
+            teoria: ["T2.3"]
+          - id: domini_topologia
+            titol: "Topologia del domini"
+            objectiu: |
+              Decidir si el domini és obert, tancat, totes dues coses o cap de les dues.
+            idea: |
+              Recorda què diuen les propietats dels oberts i dels tancats sobre l'espai sencer.
+            detall: |
+              $\mathbb{R}^2$ és alhora obert i tancat (Proposicions 12(iv) i 13(iv) del Tema 1).
+            fuites: []
+            teoria: ["T1.12", "T1.13"]
+          - id: imatge
+            titol: "Calcular la imatge"
+            objectiu: |
+              Determinar el conjunt de valors que pren $f$.
+            idea: |
+              Troba una fita superior de $f$ usant el signe dels valors absoluts, i comprova que s'assoleixen tots els valors per sota d'aquesta fita restringint-te a un eix.
+            detall: |
+              Com que $|x|,|y|\ge0$, $f(x,y)\le1$. Recíprocament, donat $c\le1$, prenent $t=1-c\ge0$ tenim $f(t,0)=1-t=c$. Per tant $\mathrm{Im}(f)=(-\infty,1]$.
+            fuites: ['[(\]]\s*-\s*\\infty\s*,\s*1\s*\]', 't\s*=\s*1\s*-\s*c']
+            teoria: ["T2.3"]
+          - id: imatge_topologia
+            titol: "Topologia de la imatge"
+            objectiu: |
+              Decidir si la imatge, com a subconjunt de $\mathbb{R}$, és oberta, tancada, totes dues coses o cap.
+            idea: |
+              Estudia el complementari dins de $\mathbb{R}$ i el comportament a prop de l'extrem finit.
+            detall: |
+              El complementari $(1,+\infty)$ és obert, de manera que la imatge és tancada. No és oberta: tota bola centrada en $1$ conté punts més grans que $1$.
+            fuites: []
+            teoria: ["T1.x4", "T1.11"]
+        errors_comuns:
+          - id: imatge_tot_R
+            descripcio: |
+              Diu que la imatge és tot $\mathbb{R}$ perquè "els valors absoluts poden ser tan grans com es vulgui".
+            pregunta: |
+              Pot $f$ prendre el valor $2$? Quin signe tenen els termes que restes a $1$?
+          - id: nomes_fita
+            descripcio: |
+              Troba la fita $f\le1$ però no comprova que tots els valors per sota s'assoleixen.
+            pregunta: |
+              Saber que $f$ no supera un cert valor, et garanteix que pren tots els valors més petits? Com ho pots comprovar?
+          - id: R2_no_tancat
+            descripcio: |
+              Afirma que $\mathbb{R}^2$ és obert i per tant no és tancat.
+            pregunta: |
+              Quin és el complementari de $\mathbb{R}^2$ dins de $\mathbb{R}^2$, i és obert?
+        nota_professor: |
+          La mateixa funció apareix al problema 2(h) (corbes de nivell: rombes $|x|+|y|=1-k$).
+
+      - id: "t2-1f"
+        apartat: "f"
+        tipus: calcul
+        enunciat: |
+          $f(t)=\left(\cos\left(1/t\right),\sin\left(1/t\right)\right)$.
+        teoria: ["T2.1", "T2.3", "T1.11"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $\mathrm{Dom}(f)=\mathbb{R}\setminus\{0\}$, que és obert i no és tancat.
+            $\mathrm{Im}(f)=\{(x,y)\in\mathbb{R}^2\mid x^2+y^2=1\}$, la circumferència unitat, que és tancada i no és oberta.
+          fuites: ['circumfer[eè]ncia\s+(unitat|unit[àa]ria|de\s+radi\s+1)', 'x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*=\s*1']
+        passos:
+          - id: domini
+            titol: "Calcular el domini"
+            objectiu: |
+              Determinar el conjunt de valors de $t$ on l'expressió de $f$ té sentit.
+            idea: |
+              Mira quina operació de les components pot no estar definida.
+            detall: |
+              $\cos$ i $\sin$ estan definits a tot $\mathbb{R}$; només cal que existeixi $1/t$, és a dir $t\neq0$: $\mathrm{Dom}(f)=\mathbb{R}\setminus\{0\}$.
+            fuites: ['\\mathbb\{?R\}?\s*\\setminus\s*\\\{\s*0']
+            teoria: ["T2.3"]
+          - id: domini_topologia
+            titol: "Topologia del domini"
+            objectiu: |
+              Decidir si el domini, com a subconjunt de $\mathbb{R}$, és obert, tancat, totes dues coses o cap.
+            idea: |
+              Escriu el domini com a unió de semirectes obertes. Per a l'altra propietat, estudia el complementari.
+            detall: |
+              $\mathbb{R}\setminus\{0\}=(-\infty,0)\cup(0,+\infty)$ és unió d'oberts, per tant obert. No és tancat: el complementari $\{0\}$ no és obert (tota bola $(-r,r)$ conté punts diferents de $0$); equivalentment, $1/n\to0\notin\mathrm{Dom}(f)$.
+            fuites: []
+            teoria: ["T1.x4", "T1.12", "T1.11"]
+          - id: imatge
+            titol: "Calcular la imatge"
+            objectiu: |
+              Determinar el conjunt de punts del pla per on passa $f$.
+            idea: |
+              Calcula la norma euclidiana de $f(t)$ per trobar un conjunt que contingui la imatge; després comprova que tot punt d'aquest conjunt s'assoleix, escrivint-lo en forma trigonomètrica.
+            detall: |
+              $\|f(t)\|^2=\cos^2(1/t)+\sin^2(1/t)=1$, així $\mathrm{Im}(f)\subseteq S^1=\{x^2+y^2=1\}$. Recíprocament, tot $(x,y)\in S^1$ s'escriu $(\cos\theta,\sin\theta)$ amb $\theta\in[2\pi,4\pi)$; prenent $t=1/\theta>0$ s'obté $f(t)=(x,y)$. Per tant la imatge és la circumferència unitat $S^1$.
+            fuites: ['x\^\{?2\}?\s*\+\s*y\^\{?2\}?\s*=\s*1', 't\s*=\s*1\s*/\s*\\theta', 'circumfer[eè]ncia\s+unitat']
+            teoria: ["T2.3"]
+          - id: imatge_topologia
+            titol: "Topologia de la imatge"
+            objectiu: |
+              Decidir si la imatge, com a subconjunt de $\mathbb{R}^2$, és oberta, tancada, totes dues coses o cap.
+            idea: |
+              Escriu la imatge amb desigualtats no estrictes entre funcions contínues de $\mathbb{R}^2$. Per a l'altra propietat, mira una bola al voltant d'un punt de la imatge.
+            detall: |
+              Amb $h(x,y)=x^2+y^2$ contínua, $S^1=\{h\ge1\}\cap\{1\ge h\}$, intersecció de dos tancats (Corol·lari 18(ii)), per tant tancat. No és obert: tota bola centrada en $(1,0)$ de radi $r$ conté $(1+r/2,0)$, que no és de $S^1$.
+            fuites: ['\(\s*1\s*\+\s*r\s*/\s*2\s*,\s*0\s*\)']
+            teoria: ["T2.18", "T1.13", "T1.11"]
+        errors_comuns:
+          - id: imatge_disc
+            descripcio: |
+              Diu que la imatge és el disc tancat (o un arc) en lloc de la circumferència sencera.
+            pregunta: |
+              Quina distància a l'origen té cada punt $f(t)$? I quins angles $1/t$ pots aconseguir?
+          - id: nomes_inclusio
+            descripcio: |
+              Veu que $\|f(t)\|=1$ però no comprova que s'assoleixen tots els punts de la circumferència.
+            pregunta: |
+              Saber que tots els punts $f(t)$ estan sobre un cert conjunt, et diu que els recorren tots? Donat un punt concret, quin $t$ hi arriba?
+          - id: domini_al_pla
+            descripcio: |
+              Estudia el domini com si fos un subconjunt del pla en lloc de la recta real.
+            pregunta: |
+              Quantes variables té $f$? On viu, doncs, el seu domini?
+        nota_professor: |
+          Cada punt de la circumferència s'assoleix infinites vegades (prenent $\theta+2k\pi$). L'apartat prepara l'exemple de corba sense límit en $t\to0$.
+
+  - num: 2
+    font: null
+    preambul: |
+      Identifiqueu les corbes de nivell de les funcions següents:
+    indicacio: null
+    exercicis:
+      - id: "t2-2a"
+        apartat: "a"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=x+5y-7$.
+        teoria: ["T2.4"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Per a cada $k\in\mathbb{R}$, $C_k(f)$ és la recta $x+5y=7+k$: una família de rectes paral·leles de pendent $-1/5$ (vector normal $(1,5)$).
+          fuites: ['rectes?\s+paral[·.]?lel']
+        passos:
+          - id: equacio
+            titol: "Escriure el conjunt de nivell"
+            objectiu: |
+              Escriure l'equació que defineix el conjunt de nivell $k$ per a un $k$ qualsevol.
+            idea: |
+              Aplica la definició de conjunt de nivell i aïlla els termes constants.
+            detall: |
+              $C_k(f)=\{(x,y)\mid x+5y-7=k\}=\{(x,y)\mid x+5y=7+k\}$.
+            fuites: ['x\s*\+\s*5\s*y\s*=\s*7\s*\+\s*k']
+            teoria: ["T2.4"]
+          - id: geometria
+            titol: "Identificar les corbes"
+            objectiu: |
+              Identificar geomètricament aquests conjunts i com varien amb $k$.
+            idea: |
+              Reconeix el tipus d'equació (de quin grau és?) i mira què canvia i què no canvia quan varia $k$.
+            detall: |
+              Per a tot $k\in\mathbb{R}$ és una recta, $y=(7+k-x)/5$, de pendent $-1/5$ i vector normal $(1,5)$, independent de $k$: les corbes de nivell són rectes paral·leles; $k$ només les desplaça (per exemple, tallen l'eix $x$ a $x=7+k$).
+            fuites: ['rectes?\s+paral[·.]?lel', 'pendent\s+\$?\s*-\s*1\s*/\s*5', '\(\s*1\s*,\s*5\s*\)']
+            teoria: []
+        errors_comuns:
+          - id: un_sol_nivell
+            descripcio: |
+              Estudia només un nivell concret (per exemple $k=0$) i no la família.
+            pregunta: |
+              El problema demana la corba d'un nivell o les de tots? Què canvia si poses un altre valor de $k$?
+          - id: confondre_grafica
+            descripcio: |
+              Descriu la gràfica (un pla a $\mathbb{R}^3$) en lloc de les corbes de nivell al pla $(x,y)$.
+            pregunta: |
+              Les corbes de nivell són subconjunts de quin espai: de $\mathbb{R}^2$ o de $\mathbb{R}^3$?
+
+      - id: "t2-2b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=xy$.
+        teoria: ["T2.4"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $C_0(f)$ és la unió dels dos eixos de coordenades. Per a $k\neq0$, $C_k(f)$ és la hipèrbola equilàtera $y=k/x$, amb asímptotes els eixos: branques al primer i tercer quadrants si $k>0$, i al segon i quart si $k<0$.
+          fuites: ['hip[èe]rbol', 'uni[óo]\s+dels\s+(dos\s+)?eixos']
+        passos:
+          - id: equacio
+            titol: "Escriure el conjunt de nivell"
+            objectiu: |
+              Escriure l'equació de $C_k(f)$ i separar els casos de $k$ que es comporten diferent.
+            idea: |
+              Aplica la definició i pensa quan pots aïllar una variable dividint per l'altra.
+            detall: |
+              $C_k=\{xy=k\}$. Si $k\neq0$, ha de ser $x\neq0$ i $y=k/x$. Si $k=0$, $xy=0\iff x=0$ o $y=0$.
+            fuites: ['y\s*=\s*k\s*/\s*x', 'y\s*=\s*\\frac\s*\{?\s*k\s*\}?\s*\{?\s*x']
+            teoria: ["T2.4"]
+          - id: geometria
+            titol: "Identificar les corbes"
+            objectiu: |
+              Identificar geomètricament $C_k$ en cada cas.
+            idea: |
+              Reconeix la corba $y=\text{constant}/x$ de la variable real, i mira en quins quadrants hi ha punts segons el signe de $k$.
+            detall: |
+              $k=0$: la unió dels dos eixos. $k\neq0$: hipèrboles equilàteres amb asímptotes els eixos; si $k>0$ ($x,y$ del mateix signe) les branques són al primer i tercer quadrants, si $k<0$ al segon i quart.
+            fuites: ['hip[èe]rbol', 'uni[óo]\s+dels\s+(dos\s+)?eixos']
+            teoria: []
+        errors_comuns:
+          - id: oblidar_k0
+            descripcio: |
+              No tracta el cas $k=0$ o diu que és buit, quan és la unió de dues rectes.
+            pregunta: |
+              Quins punts compleixen $xy=0$? Pots dividir per $x$ en aquest cas?
+          - id: quadrants
+            descripcio: |
+              Dibuixa totes les hipèrboles als mateixos quadrants independentment del signe de $k$.
+            pregunta: |
+              Si $xy$ és negatiu, quins signes poden tenir $x$ i $y$?
+
+      - id: "t2-2c"
+        apartat: "c"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=ax^2+by^2$, $a,b\in\mathbb{R}^+$.
+        teoria: ["T2.4"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $C_k(f)=\varnothing$ si $k<0$; $C_0(f)=\{(0,0)\}$; per a $k>0$, $C_k(f)$ és l'el·lipse centrada a l'origen $\frac{x^2}{k/a}+\frac{y^2}{k/b}=1$, de semieixos $\sqrt{k/a}$ (sobre l'eix $x$) i $\sqrt{k/b}$ (sobre l'eix $y$); és una circumferència si $a=b$. Totes les el·lipses són semblants (mateixa raó de semieixos $\sqrt{b/a}$).
+          fuites: ['el[·.]?l?ips']
+        passos:
+          - id: signe
+            titol: "Casos segons el signe de $k$"
+            objectiu: |
+              Determinar per a quins valors de $k$ el conjunt de nivell és buit o degenerat.
+            idea: |
+              Observa el signe de cada sumand, tenint en compte que $a,b>0$, i quan s'anul·la la suma.
+            detall: |
+              $ax^2+by^2\ge0$, amb igualtat només a $(0,0)$. Per tant $C_k=\varnothing$ si $k<0$ i $C_0=\{(0,0)\}$.
+            fuites: []
+            teoria: ["T2.4"]
+          - id: forma_canonica
+            titol: "Cas $k>0$"
+            objectiu: |
+              Identificar $C_k$ per a $k>0$.
+            idea: |
+              Divideix l'equació per $k$ i compara-la amb una forma canònica d'una cònica coneguda.
+            detall: |
+              $ax^2+by^2=k\iff\frac{x^2}{k/a}+\frac{y^2}{k/b}=1$: és una el·lipse centrada a l'origen amb semieixos $\sqrt{k/a}$ sobre l'eix $x$ i $\sqrt{k/b}$ sobre l'eix $y$ (circumferència de radi $\sqrt{k/a}$ si $a=b$). En augmentar $k$ les el·lipses creixen proporcionalment a $\sqrt{k}$.
+            fuites: ['\\sqrt\{?\s*k\s*/\s*a', 'el[·.]?lips', '\\frac\{x\^\{?2\}?\}\{k\s*/\s*a\}']
+            teoria: []
+        errors_comuns:
+          - id: oblidar_casos
+            descripcio: |
+              Diu que totes les corbes de nivell són el·lipses, sense separar $k<0$ i $k=0$.
+            pregunta: |
+              Pot $ax^2+by^2$ valer $-1$? I quins punts compleixen $ax^2+by^2=0$?
+          - id: semieixos_erronis
+            descripcio: |
+              Dona semieixos $k/a$, $k/b$ o $\sqrt{a/k}$, sense passar correctament a la forma canònica.
+            pregunta: |
+              On talla la corba l'eix $x$? Substitueix $y=0$ i resol.
+
+      - id: "t2-2d"
+        apartat: "d"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=x^2-y^2$.
+        teoria: ["T2.4"]
+        teoria_reservada: ["T2.5"]
+        resultat:
+          valor: |
+            Per a $k>0$, $C_k(f)$ és la hipèrbola $x^2-y^2=k$ centrada a l'origen, que talla l'eix $x$ a $(\pm\sqrt{k},0)$; per a $k<0$, la hipèrbola que talla l'eix $y$ a $(0,\pm\sqrt{-k})$. $C_0(f)$ és la unió de les rectes $y=x$ i $y=-x$, que són les asímptotes de totes les altres.
+          fuites: ['hip[èe]rbol']
+        passos:
+          - id: k_no_nul
+            titol: "Cas $k\\neq 0$"
+            objectiu: |
+              Identificar $C_k$ quan $k\neq0$, distingint el signe de $k$.
+            idea: |
+              Compara l'equació amb una forma canònica de cònica i busca els talls amb els eixos.
+            detall: |
+              $x^2-y^2=k$. Si $k>0$: hipèrbola centrada a l'origen que talla l'eix $x$ a $(\pm\sqrt{k},0)$ i no talla l'eix $y$. Si $k<0$: $y^2-x^2=-k>0$, hipèrbola que talla l'eix $y$ a $(0,\pm\sqrt{-k})$ i no talla l'eix $x$.
+            fuites: ['\(\s*\\pm\s*\\sqrt\{?\s*k\s*\}?\s*,\s*0\s*\)', 'hip[èe]rbol']
+            teoria: ["T2.4"]
+          - id: k_nul
+            titol: "Cas $k=0$"
+            objectiu: |
+              Identificar $C_0$ i relacionar-lo amb els altres nivells.
+            idea: |
+              Factoritza la diferència de quadrats.
+            detall: |
+              $x^2-y^2=(x-y)(x+y)=0\iff y=\pm x$: $C_0$ és la unió de les dues diagonals, que són les asímptotes de totes les hipèrboles anteriors.
+            fuites: ['y\s*=\s*\\pm\s*x', '\(\s*x\s*-\s*y\s*\)\s*\(\s*x\s*\+\s*y\s*\)']
+            teoria: []
+        errors_comuns:
+          - id: confondre_eixos
+            descripcio: |
+              Posa els vèrtexs a l'eix $y$ quan $k>0$ (o a l'eix $x$ quan $k<0$).
+            pregunta: |
+              Si $k>0$, pot un punt de l'eix $y$, $(0,y)$, complir l'equació?
+          - id: k0_buit
+            descripcio: |
+              Diu que $C_0$ és només l'origen, com passaria amb $x^2+y^2$.
+            pregunta: |
+              Hi ha punts diferents de l'origen on $x^2=y^2$?
+        nota_professor: |
+          Aquesta funció és un dels exemples resolts de la teoria (Exemple 5 del Tema 2). Atenció: allà s'escriu $(0,\pm\sqrt{k})$ per a $k<0$, quan hauria de ser $(0,\pm\sqrt{-k})$.
+
+      - id: "t2-2e"
+        apartat: "e"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=2x^2+y^2-4x+y$.
+        teoria: ["T2.4"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $f(x,y)=2(x-1)^2+(y+1/2)^2-9/4$. Per a $k>-9/4$, $C_k(f)$ és l'el·lipse de centre $(1,-1/2)$ i semieixos $\sqrt{(k+9/4)/2}$ (direcció $x$) i $\sqrt{k+9/4}$ (direcció $y$); $C_{-9/4}(f)=\{(1,-1/2)\}$; $C_k(f)=\varnothing$ si $k<-9/4$.
+          fuites: ['\(\s*1\s*,\s*-\s*(1\s*/\s*2|\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*2\s*\}?)\s*\)', 'el[·.]?l?ips']
+        passos:
+          - id: completar
+            titol: "Completar quadrats"
+            objectiu: |
+              Reescriure l'equació $f(x,y)=k$ en una forma on es reconegui la cònica.
+            idea: |
+              Agrupa els termes en $x$ i en $y$ per separat i completa quadrats en cada grup.
+            detall: |
+              $2x^2-4x=2(x-1)^2-2$ i $y^2+y=(y+1/2)^2-1/4$. Per tant $f(x,y)=k\iff 2(x-1)^2+(y+1/2)^2=k+9/4$.
+            fuites: ['\(\s*x\s*-\s*1\s*\)\^\{?2', 'k\s*\+\s*(9\s*/\s*4|\\[dt]?frac\s*\{?\s*9\s*\}?\s*\{?\s*4)']
+            teoria: ["T2.4"]
+          - id: casos
+            titol: "Classificar segons $k$"
+            objectiu: |
+              Identificar $C_k$ per a cada valor de $k$.
+            idea: |
+              El membre esquerre és una suma de quadrats amb coeficients positius: mira el signe del membre dret i divideix per ell quan sigui positiu.
+            detall: |
+              Si $k<-9/4$, $C_k=\varnothing$. Si $k=-9/4$, $C_k=\{(1,-1/2)\}$ (el mínim de $f$). Si $k>-9/4$, dividint per $k+9/4$: el·lipse de centre $(1,-1/2)$ i semieixos $\sqrt{(k+9/4)/2}$ en la direcció $x$ i $\sqrt{k+9/4}$ en la direcció $y$.
+            fuites: ['\(\s*1\s*,\s*-\s*(1\s*/\s*2|\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*2\s*\}?)\s*\)', '-\s*(9\s*/\s*4|\\[dt]?frac\s*\{?\s*9\s*\}?\s*\{?\s*4)']
+            teoria: []
+        errors_comuns:
+          - id: completar_malament
+            descripcio: |
+              Completa quadrats oblidant el coeficient $2$ de $x^2$ (escriu $(x-2)^2$ o resta $4$ en lloc de $2$).
+            pregunta: |
+              Si desenvolupes la teva expressió en $x$, recuperes exactament $2x^2-4x$?
+          - id: sempre_elipse
+            descripcio: |
+              Diu que tots els nivells són el·lipses, sense considerar quan el membre dret és nul o negatiu.
+            pregunta: |
+              Pot una suma de quadrats amb coeficients positius ser igual a un nombre negatiu?
+          - id: centre_signe
+            descripcio: |
+              Situa el centre amb el signe canviat.
+            pregunta: |
+              En quin punt s'anul·len els dos quadrats que has obtingut?
+
+      - id: "t2-2f"
+        apartat: "f"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=|y|$.
+        teoria: ["T2.4"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $C_k(f)=\varnothing$ si $k<0$; $C_0(f)$ és l'eix $x$ ($y=0$); per a $k>0$, $C_k(f)$ és el parell de rectes horitzontals $y=k$ i $y=-k$.
+          fuites: ['(parell\s+de|dues)\s+rectes\s+horitzontal', 'y\s*=\s*\\pm\s*k', 'y\s*=\s*-\s*k\b']
+        passos:
+          - id: estructura
+            titol: "Observar la dependència"
+            objectiu: |
+              Entendre quina forma han de tenir els conjunts de nivell abans de calcular-los.
+            idea: |
+              Mira de quines variables depèn realment $f$; si un punt és al conjunt de nivell, què passa si en canvies la $x$?
+            detall: |
+              $f$ no depèn de $x$: si $(x_0,y_0)\in C_k$, tota la recta horitzontal $y=y_0$ hi és. Els conjunts de nivell són unions de rectes horitzontals.
+            fuites: ['rectes?\s+horitzontal']
+            teoria: ["T2.4"]
+          - id: casos
+            titol: "Resoldre $|y|=k$"
+            objectiu: |
+              Determinar $C_k$ per a cada $k$.
+            idea: |
+              Resol l'equació amb valor absolut distingint el signe de $k$.
+            detall: |
+              $|y|=k$: sense solució si $k<0$ ($C_k=\varnothing$); $y=0$ si $k=0$ ($C_0$ és l'eix $x$); $y=\pm k$ si $k>0$ (dues rectes horitzontals simètriques respecte de l'eix $x$).
+            fuites: ['y\s*=\s*\\pm\s*k']
+            teoria: []
+        errors_comuns:
+          - id: punts_no_rectes
+            descripcio: |
+              Respon "$y=\pm k$" pensant en dos punts (o en nombres reals) en lloc de dues rectes del pla.
+            pregunta: |
+              El conjunt de nivell és un subconjunt de $\mathbb{R}$ o de $\mathbb{R}^2$? Quins valors pot prendre $x$?
+          - id: k_negatiu
+            descripcio: |
+              Dona les rectes $y=\pm k$ també per a $k<0$.
+            pregunta: |
+              Pot $|y|$ valer un nombre negatiu?
+
+      - id: "t2-2g"
+        apartat: "g"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=\max(|x|,|y|)$.
+        teoria: ["T2.4"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $C_k(f)=\varnothing$ si $k<0$; $C_0(f)=\{(0,0)\}$; per a $k>0$, $C_k(f)$ és la vora del quadrat $[-k,k]^2$, de vèrtexs $(\pm k,\pm k)$ i costats paral·lels als eixos (la circumferència de radi $k$ de la norma del màxim).
+          fuites: ['quadrat']
+        passos:
+          - id: casos_trivials
+            titol: "Casos $k\\le 0$"
+            objectiu: |
+              Determinar $C_k$ quan $k\le0$.
+            idea: |
+              Mira el signe de $f$ i quan pot valer exactament $0$.
+            detall: |
+              $f\ge0$, de manera que $C_k=\varnothing$ per a $k<0$; i $\max(|x|,|y|)=0\iff x=y=0$, és a dir $C_0=\{(0,0)\}$.
+            fuites: []
+            teoria: ["T2.4"]
+          - id: cas_positiu
+            titol: "Cas $k>0$"
+            objectiu: |
+              Identificar $C_k$ quan $k>0$.
+            idea: |
+              Tradueix "el màxim val $k$" en condicions sobre $|x|$ i $|y|$: tots dos com a molt $k$, i algun exactament $k$. Reconeix $f$ com una de les normes de $\mathbb{R}^2$.
+            detall: |
+              $\max(|x|,|y|)=k\iff |x|\le k,\ |y|\le k$ i ($|x|=k$ o $|y|=k$). És la vora del quadrat $[-k,k]^2$: els segments $x=\pm k$, $|y|\le k$ i $y=\pm k$, $|x|\le k$, amb vèrtexs $(\pm k,\pm k)$. És la "circumferència" de radi $k$ de la norma del màxim $\|\cdot\|_\infty$.
+            fuites: ['quadrat', '\[\s*-\s*k\s*,\s*k\s*\]\^\{?2']
+            teoria: ["T2.34"]
+        errors_comuns:
+          - id: quadrat_ple
+            descripcio: |
+              Dona la regió sencera $\{|x|\le k,|y|\le k\}$ en lloc de només la seva vora.
+            pregunta: |
+              En el punt $(0,0)$, quant val $f$? Pertany al conjunt de nivell $k>0$?
+          - id: nomes_rectes
+            descripcio: |
+              Dona les rectes completes $x=\pm k$ i $y=\pm k$, sense limitar-les.
+            pregunta: |
+              El punt $(k,2k)$ compleix $|x|=k$; quant val $f$ en aquest punt?
+
+      - id: "t2-2h"
+        apartat: "h"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=1-|x|-|y|$.
+        teoria: ["T2.4"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $C_k(f)=\{|x|+|y|=1-k\}$: buit si $k>1$; $C_1(f)=\{(0,0)\}$; per a $k<1$, el quadrat girat $45^\circ$ (rombe) de vèrtexs $(\pm(1-k),0)$ i $(0,\pm(1-k))$, és a dir, la circumferència de radi $1-k$ de la norma $\|\cdot\|_1$.
+          fuites: ['rombe', 'quadrat\s+(girat|rotat)', '\(\s*\\pm\s*\(\s*1\s*-\s*k\s*\)\s*,\s*0\s*\)']
+        passos:
+          - id: equacio
+            titol: "Escriure el conjunt de nivell"
+            objectiu: |
+              Escriure l'equació de $C_k$ i trobar els valors de $k$ per als quals és buit o degenerat.
+            idea: |
+              Aïlla els valors absoluts i mira el signe del que queda a l'altre costat.
+            detall: |
+              $1-|x|-|y|=k\iff|x|+|y|=1-k$. Si $k>1$ el membre dret és negatiu: $C_k=\varnothing$. Si $k=1$: $|x|+|y|=0$, $C_1=\{(0,0)\}$.
+            fuites: ['\|x\|\s*\+\s*\|y\|\s*=\s*1\s*-\s*k']
+            teoria: ["T2.4"]
+          - id: cas_general
+            titol: "Cas $k<1$"
+            objectiu: |
+              Identificar $C_k$ quan $k<1$.
+            idea: |
+              Escriu $c=1-k>0$ i resol l'equació en cada quadrant, on els valors absoluts es poden treure amb un signe fix. Reconeix l'expressió com una de les normes de $\mathbb{R}^2$.
+            detall: |
+              Amb $c=1-k>0$: al primer quadrant, $x+y=c$ (segment de $(c,0)$ a $(0,c)$); anàlogament als altres quadrants ($-x+y=c$, $-x-y=c$, $x-y=c$). La unió és un quadrat girat $45^\circ$ (rombe) de vèrtexs $(\pm c,0)$ i $(0,\pm c)$: la "circumferència" de radi $c$ de la norma $\|\cdot\|_1$. Els nivells són rombes concèntrics que s'encongeixen fins a l'origen quan $k\to1$.
+            fuites: ['rombe', 'quadrat\s+girat', '\(\s*\\pm\s*c\s*,\s*0\s*\)']
+            teoria: ["T2.34"]
+        errors_comuns:
+          - id: un_sol_quadrant
+            descripcio: |
+              Només resol $x+y=1-k$ (un segment) i oblida els altres quadrants.
+            pregunta: |
+              Si $(x,y)$ és al conjunt, hi són també $(-x,y)$ i $(x,-y)$?
+          - id: k_gran
+            descripcio: |
+              Dona corbes de nivell per a $k>1$.
+            pregunta: |
+              Quin és el valor màxim que pot prendre $f$?
+        nota_professor: |
+          És la mateixa funció que al problema 1(e); la imatge $(-\infty,1]$ explica per què els nivells $k>1$ són buits.
+
+      - id: "t2-2i"
+        apartat: "i"
+        tipus: calcul
+        enunciat: |
+          $$f(x,y)=\begin{cases}\dfrac{x}{x+y^2} & \text{si } x\neq-y^2\\ 0 & \text{si } x=-y^2.\end{cases}$$
+        teoria: ["T2.4"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $C_0(f)=\{x=0\}\cup\{x=-y^2\}$ (l'eix $y$ i la paràbola $x=-y^2$, on $f$ val $0$ per definició).
+            $C_1(f)=\{(x,0)\mid x\neq0\}$ (l'eix $x$ sense l'origen).
+            Per a $k\neq0,1$: $C_k(f)=\{x=\frac{k}{1-k}y^2\}\setminus\{(0,0)\}$, una paràbola de vèrtex l'origen i eix l'eix $x$, sense el vèrtex; s'obre cap a $x>0$ si $0<k<1$ i cap a $x<0$ si $k<0$ o $k>1$. Hi apareixen totes les paràboles $x=cy^2$ amb $c\neq0,-1$ (sense el vèrtex); la de $c=-1$ forma part de $C_0(f)$.
+          fuites: ['\\[dt]?frac\s*\{\s*k\s*\}\s*\{\s*1\s*-\s*k\s*\}', 'k\s*/\s*\(\s*1\s*-\s*k\s*\)']
+        passos:
+          - id: equacio
+            titol: "Equació fora de la paràbola"
+            objectiu: |
+              Escriure la condició $f(x,y)=k$ per als punts on $f$ ve donada pel quocient.
+            idea: |
+              Fora del conjunt on s'anul·la el denominador, pots multiplicar per ell; agrupa després els termes en $x$.
+            detall: |
+              Si $x\neq-y^2$: $\frac{x}{x+y^2}=k\iff x=k(x+y^2)\iff x(1-k)=ky^2$.
+            fuites: ['x\s*\(\s*1\s*-\s*k\s*\)\s*=\s*k\s*y\^\{?2']
+            teoria: ["T2.4"]
+          - id: k_u
+            titol: "Cas $k=1$"
+            objectiu: |
+              Determinar $C_1$.
+            idea: |
+              Substitueix $k=1$ a l'equació obtinguda i recorda la condició d'estar fora del conjunt on el denominador s'anul·la.
+            detall: |
+              Si $k=1$: $0=y^2$, és a dir $y=0$, i cal $x\neq-0^2=0$. Així $C_1$ és l'eix d'abscisses sense l'origen (i, en efecte, $f(x,0)=x/x=1$). Cap punt de la paràbola $x=-y^2$ hi és, perquè allà $f=0$.
+            fuites: ['eix\s+d.abscisses\s+sense']
+            teoria: []
+          - id: k_zero
+            titol: "Cas $k=0$"
+            objectiu: |
+              Determinar $C_0$, tenint en compte tots els punts on $f$ val $0$.
+            idea: |
+              Hi ha dues fonts de zeros: els del quocient i els punts on $f$ està definida directament.
+            detall: |
+              Fora de la paràbola, $k=0$ dona $x=0$ amb $y\neq0$ (l'eix $y$ sense l'origen). Sobre la paràbola $x=-y^2$, $f=0$ per definició. Per tant $C_0=\{x=0\}\cup\{x=-y^2\}$ (l'origen hi és, perquè és de la paràbola).
+            fuites: ['\\cup\s*\\\{\s*x\s*=\s*-\s*y\^\{?2']
+            teoria: []
+          - id: k_general
+            titol: "Cas $k\\neq 0,1$"
+            objectiu: |
+              Determinar $C_k$ per a la resta de valors de $k$.
+            idea: |
+              Aïlla $x$ en funció de $y^2$ i reconeix la corba. Comprova si talla el conjunt on $f$ es defineix a part.
+            detall: |
+              $x=\frac{k}{1-k}y^2$: paràbola de vèrtex l'origen i eix l'eix $x$. Com que $c=\frac{k}{1-k}\neq-1$ per a tot $k$, aquesta paràbola només talla $x=-y^2$ a l'origen, on $f=0\neq k$. Per tant $C_k$ és la paràbola sense l'origen. Si $0<k<1$, $c>0$ (s'obre cap a la dreta); si $k<0$, $-1<c<0$; si $k>1$, $c<-1$ (s'obre cap a l'esquerra).
+            fuites: ['\\[dt]?frac\s*\{\s*k\s*\}\s*\{\s*1\s*-\s*k\s*\}', 'k\s*/\s*\(\s*1\s*-\s*k\s*\)']
+            teoria: []
+        errors_comuns:
+          - id: oblidar_definicio
+            descripcio: |
+              Ignora la segona línia de la definició i no inclou la paràbola $x=-y^2$ a $C_0$.
+            pregunta: |
+              Quant val $f$ en un punt com $(-1,1)$? A quin conjunt de nivell pertany?
+          - id: incloure_origen
+            descripcio: |
+              Inclou l'origen a $C_k$ per a $k\neq0$, perquè satisfà l'equació $x(1-k)=ky^2$.
+            pregunta: |
+              L'origen compleix $x=-y^2$? Quina expressió de la definició s'hi aplica, doncs, i quin valor dona?
+          - id: dividir_per_1_menys_k
+            descripcio: |
+              Divideix per $1-k$ sense separar el cas $k=1$.
+            pregunta: |
+              Per a quin valor de $k$ no pots aïllar $x$ dividint? Què queda en aquest cas?
+        nota_professor: |
+          Totes les corbes de nivell passen (adherentment) per l'origen: és la mateixa estructura que l'Exemple 11 del Tema 2 (amb $x$ i $y$ intercanviades), i anticipa que $f$ no té límit a $(0,0)$.
+
+      - id: "t2-2j"
+        apartat: "j"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=x^2-2y^2+4y$.
+        teoria: ["T2.4"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $f(x,y)=k\iff x^2-2(y-1)^2=k-2$. Per a $k>2$, hipèrboles centrades a $(0,1)$ amb vèrtexs $(\pm\sqrt{k-2},1)$ (branques a esquerra i dreta); per a $k<2$, hipèrboles centrades a $(0,1)$ amb vèrtexs $(0,1\pm\sqrt{(2-k)/2})$ (branques amunt i avall); $C_2(f)$ és el parell de rectes $x=\pm\sqrt{2}(y-1)$, que es tallen a $(0,1)$ i són les asímptotes de totes les hipèrboles.
+          fuites: ['hip[èe]rbol']
+        passos:
+          - id: completar
+            titol: "Completar quadrats"
+            objectiu: |
+              Reescriure l'equació $f(x,y)=k$ en una forma on es reconegui la cònica.
+            idea: |
+              Agrupa els termes en $y$ (traient el coeficient de $y^2$ factor comú) i completa el quadrat.
+            detall: |
+              $-2y^2+4y=-2(y^2-2y)=-2(y-1)^2+2$. Per tant $f(x,y)=k\iff x^2-2(y-1)^2=k-2$.
+            fuites: ['\(\s*y\s*-\s*1\s*\)\^\{?2\}?\s*=\s*k\s*-\s*2', '2\s*\(\s*y\s*-\s*1\s*\)\^\{?2']
+            teoria: ["T2.4"]
+          - id: k_diferent_2
+            titol: "Cas $k\\neq2$"
+            objectiu: |
+              Identificar $C_k$ quan $k\neq2$, distingint el signe de $k-2$.
+            idea: |
+              És una diferència de quadrats igual a una constant no nul·la: compara amb el cas $x^2-y^2=k$ desplaçant el centre, i busca els vèrtexs sobre les rectes de simetria.
+            detall: |
+              Si $k>2$: $\frac{x^2}{k-2}-\frac{(y-1)^2}{(k-2)/2}=1$, hipèrbola de centre $(0,1)$ amb vèrtexs $(\pm\sqrt{k-2},1)$, branques a esquerra i dreta. Si $k<2$: $\frac{(y-1)^2}{(2-k)/2}-\frac{x^2}{2-k}=1$, hipèrbola de centre $(0,1)$ amb vèrtexs $(0,1\pm\sqrt{(2-k)/2})$, branques amunt i avall.
+            fuites: ['\(\s*0\s*,\s*1\s*\)', '\\pm\s*\\sqrt\{?\s*k\s*-\s*2']
+            teoria: []
+          - id: k_igual_2
+            titol: "Cas $k=2$"
+            objectiu: |
+              Identificar $C_2$ i relacionar-lo amb els altres nivells.
+            idea: |
+              Amb membre dret nul, factoritza la diferència de quadrats.
+            detall: |
+              $x^2=2(y-1)^2\iff x=\pm\sqrt{2}(y-1)$: dues rectes que es tallen al centre $(0,1)$ i que són les asímptotes comunes de totes les hipèrboles anteriors.
+            fuites: ['x\s*=\s*\\pm\s*\\sqrt\{?2\}?\s*\(\s*y\s*-\s*1']
+            teoria: []
+        errors_comuns:
+          - id: completar_malament
+            descripcio: |
+              Completa el quadrat en $y$ sense treure el $-2$ factor comú, o s'equivoca de signe en la constant.
+            pregunta: |
+              Si desenvolupes el quadrat que has escrit, et torna a donar exactament $-2y^2+4y$, o hi sobra o hi falta alguna constant?
+          - id: k2_oblidat
+            descripcio: |
+              No tracta a part el cas en què el membre dret s'anul·la, o diu que $C_2$ és un sol punt.
+            pregunta: |
+              Quan el membre dret val $0$, una diferència de quadrats nul·la té només una solució?
+          - id: confondre_branques
+            descripcio: |
+              No distingeix l'orientació de les branques segons el signe de $k-2$.
+            pregunta: |
+              Si $k<2$, hi ha punts de $C_k$ amb $y=1$?

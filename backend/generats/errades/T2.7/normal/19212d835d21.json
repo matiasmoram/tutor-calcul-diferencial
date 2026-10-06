@@ -1,0 +1,73 @@
+{
+  "id": "19212d835d21",
+  "exercici": "T2.7",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Siguin $(M,d)$ i $(N,d')$ dos espais mètrics, $f:\\Omega\\subseteq M\\longrightarrow N$, $x_0\\in\\Omega'$ i $b\\in N$. Les condicions següents són equivalents: (a) $\\forall\\epsilon>0,\\exists\\delta>0$ tal que $\\forall x\\in\\Omega$ amb $0<d(x,x_0)<\\delta$, es té que $d'(f(x),b)<\\epsilon$; (b) per a tot obert $\\mathcal{V}$ que conté $b$, existeix un obert $\\mathcal{U}$ que conté $x_0$ tal que $f\\left((\\mathcal{U}\\setminus\\{x_0\\})\\cap\\Omega\\right)\\subseteq\\mathcal{V}$;",
+    "(c) per a tota successió $(x_n)_{n\\in\\mathbb{N}}\\subseteq\\Omega$ amb $\\lim_{n\\to+\\infty}x_n=x_0$, es té que $\\lim_{n\\to+\\infty}f(x_n)=b$.",
+    "(a) $\\Rightarrow$ (b). Sigui $\\mathcal{V}$ un obert que conté $b$. Aleshores existeix $\\epsilon>0$ tal que $B(b,\\epsilon)\\subseteq\\mathcal{V}$ i, per (a), existeix $\\delta>0$ tal que $\\forall x\\in\\Omega$ amb $0<d(x,x_0)<\\delta$ es té $d'(f(x),b)<\\epsilon$.",
+    "Prenent $\\mathcal{U}=B(x_0,\\delta)$, que és un obert que conté $x_0$, es dedueix que $f\\left((\\mathcal{U}\\setminus\\{x_0\\})\\cap\\Omega\\right)\\subseteq B(b,\\epsilon)\\subseteq\\mathcal{V}$.",
+    "(b) $\\Rightarrow$ (c). Prenem una successió $(x_n)_{n\\in\\mathbb{N}}$ amb $x_0\\neq x_n\\in\\Omega$ i $\\lim_{n\\to+\\infty}x_n=x_0$, i un $\\epsilon>0$ qualsevol. Per (b) aplicat a $\\mathcal{V}=B(b,\\epsilon)$, existeix un obert $\\mathcal{U}$ que conté $x_0$ tal que $f\\left((\\mathcal{U}\\setminus\\{x_0\\})\\cap\\Omega\\right)\\subseteq\\mathcal{V}$.",
+    "Com que $\\mathcal{U}$ és obert, existeix $\\delta>0$ tal que $B(x_0,\\delta)\\subseteq\\mathcal{U}$, i com que $x_n\\to x_0$, existeix $n_0$ tal que $d(x_n,x_0)<\\delta$ si $n\\geq n_0$. Així, per a $n\\geq n_0$, $x_n\\in(\\mathcal{U}\\setminus\\{x_0\\})\\cap\\Omega$ i, per tant, $d'(f(x_n),b)<\\epsilon$.",
+    "(c) $\\Rightarrow$ (a). Ho farem per reducció a l'absurd: suposem que (a) no es compleix, és a dir, que existeixen $\\epsilon>0$ i $\\delta>0$ tals que hi ha algun $x\\in\\Omega$ amb $0<d(x,x_0)<\\delta$ i $d'(f(x),b)\\geq\\epsilon$. Prenent $\\delta=1/n$, per a cada $n$ podem escollir $x_n\\in\\Omega$ amb $0<d(x_n,x_0)<1/n$ i $d'(f(x_n),b)\\geq\\epsilon$.",
+    "Aleshores $x_n\\neq x_0$ i $\\lim_{n\\to+\\infty}x_n=x_0$, de manera que, per (c), caldria que $\\lim_{n\\to+\\infty}f(x_n)=b$, cosa incompatible amb $d'(f(x_n),b)\\geq\\epsilon$ per a tota $n$. Aquesta contradicció demostra (a)."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "per a tota successió $(x_n)_{n\\in\\mathbb{N}}\\subseteq\\Omega$ amb $\\lim_{n\\to+\\infty}x_n=x_0$",
+      "inici": 4,
+      "fi": 96,
+      "tipus": "definicio",
+      "explicacio": "S'ha tret la condició $x_n\\neq x_0$, i aleshores (c) ja no equival a (a): si $x_0\\in\\Omega$ i $f(x_0)\\neq b$, la successió constant $x_n=x_0$ la falla. Contraexemple: $f(x)=0$ si $x\\neq0$, $f(0)=1$, a $x_0=0$ amb $b=0$, compleix (a) però no (c).",
+      "correccio": "(c) per a tota successió $(x_n)_{n\\in\\mathbb{N}}$ amb $x_0\\neq x_n\\in\\Omega$ i $\\lim_{n\\to+\\infty}x_n=x_0$, es té que $\\lim_{n\\to+\\infty}f(x_n)=b$.",
+      "pista": "El límit en $x_0$ ha de dependre del valor $f(x_0)$? Què passa amb la successió constant igual a $x_0$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "existeixen $\\epsilon>0$ i $\\delta>0$ tals que hi ha algun $x\\in\\Omega$",
+      "inici": 103,
+      "fi": 173,
+      "tipus": "quantificador",
+      "explicacio": "La negació de (a) és $\\exists\\epsilon>0$ tal que $\\forall\\delta>0$ hi ha un $x$ dolent; amb «existeix un $\\delta$» no es pot prendre després $\\delta=1/n$ per a tota $n$.",
+      "correccio": "Suposem que existeix un $\\epsilon>0$ tal que per a qualsevol $\\delta>0$ existeix $x\\in\\Omega$ amb $0<d(x,x_0)<\\delta$ i $d(f(x),b)\\geq\\epsilon$.",
+      "pista": "Com es nega correctament «$\\forall\\epsilon\\,\\exists\\delta\\,\\forall x$»? Quin quantificador ha de portar $\\delta$ perquè es pugui triar $\\delta=1/n$ per a cada $n$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t2a.json",
+    "valoracio": "Enunciat (c) sense $x_n\\neq x_0$ (fals) i negació de (a) mal quantificada a la reducció a l'absurd.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "per a tota successió $(x_n)_{n\\in\\mathbb{N}}\\subseteq\\Omega$ amb $\\lim_{n\\to+\\infty}x_n=x_0$",
+        "gravetat": "error",
+        "explicacio": "Falta la condició $x_n\\neq x_0$. Amb $x_0\\in\\Omega$ i $f(x_0)\\neq b$, (a) es pot complir i (c) no (successió constant $x_n=x_0$): l'equivalència és falsa."
+      },
+      {
+        "fragment": 6,
+        "cita": "per a $n\\geq n_0$, $x_n\\in(\\mathcal{U}\\setminus\\{x_0\\})\\cap\\Omega$",
+        "gravetat": "consequencia",
+        "explicacio": "El pas (b)⇒(c) és el dels apunts i només val per a successions amb $x_n\\neq x_0$; no demostra la (c) tal com s'ha enunciat (sense aquesta condició)."
+      },
+      {
+        "fragment": 7,
+        "cita": "existeixen $\\epsilon>0$ i $\\delta>0$ tals que hi ha algun $x\\in\\Omega$",
+        "gravetat": "error",
+        "explicacio": "Negació incorrecta de (a): la negació és $\\exists\\epsilon>0$ tal que $\\forall\\delta>0$ existeix $x$..., no 'existeixen $\\epsilon$ i $\\delta$'."
+      },
+      {
+        "fragment": 7,
+        "cita": "Prenent $\\delta=1/n$, per a cada $n$ podem escollir $x_n\\in\\Omega$",
+        "gravetat": "consequencia",
+        "explicacio": "Triar $x_n$ per a cada $\\delta=1/n$ requereix el quantificador universal sobre $\\delta$, que la suposició (mal negada) no dona."
+      }
+    ]
+  },
+  "creat": 1791295999.5440433
+}

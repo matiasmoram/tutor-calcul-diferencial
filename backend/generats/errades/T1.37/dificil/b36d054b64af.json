@@ -1,0 +1,81 @@
+{
+  "id": "b36d054b64af",
+  "exercici": "T1.37",
+  "font": "teoria",
+  "dificultat": "dificil",
+  "fragments": [
+    "Sigui $(M,d)$ un espai mètric i sigui $A\\subseteq M$ obert i tancat a la vegada. Si $M\\setminus A$ és connex, aleshores, o bé $A=M$, o bé $A=\\varnothing$.",
+    "Com que $A$ és tancat, el seu complementari $A^c=M\\setminus A$ és obert. Així, $A$ i $A^c$ són dos oberts disjunts tals que $M=A\\cup A^c$.",
+    "Suposem, per reducció a l'absurd, que $A\\neq\\varnothing$ o $A\\neq M$, és a dir, que $A\\neq\\varnothing$ o $A^c\\neq\\varnothing$.",
+    "Prenent $U=A$ i $V=M$ a la definició de conjunt disconnex, tenim $M\\subseteq U\\cup V$, $U\\cap M\\neq\\varnothing$, $V\\cap M\\neq\\varnothing$ i $U\\cap V\\cap M=\\varnothing$.",
+    "Per tant, $M$ seria disconnex, en contradicció amb la hipòtesi que $M$ és connex. Així, o bé $A=\\varnothing$, o bé $A^c=\\varnothing$, que equival a $A=M$."
+  ],
+  "n_enunciat": 1,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "Si $M\\setminus A$ és connex",
+      "inici": 81,
+      "fi": 108,
+      "tipus": "hipotesi",
+      "explicacio": "La connexió de $M\\setminus A$ no basta; cal que $M$ sigui connex: a $M=[0,1]\\cup[3,4]$, $A=[0,1]$ és obert i tancat, $M\\setminus A=[3,4]$ és connex, però $A\\neq M$ i $A\\neq\\varnothing$.",
+      "correccio": "Sigui $(M,d)$ un espai mètric connex i sigui $A\\subseteq M$; si $A$ és obert i tancat, o bé $A=M$, o bé $A=\\varnothing$.",
+      "pista": "La demostració usa la connexió de $M\\setminus A$ o la d'un altre conjunt?"
+    },
+    {
+      "id": "e2",
+      "fragment": 3,
+      "cita": "$A\\neq\\varnothing$ o $A\\neq M$",
+      "inici": 38,
+      "fi": 68,
+      "tipus": "implicacio",
+      "explicacio": "La negació de «$A=\\varnothing$ o $A=M$» és «$A\\neq\\varnothing$ i $A\\neq M$»; amb «o» no es pot assegurar que $A$ i $A^c$ siguin tots dos no buits, que és el que es necessita després.",
+      "correccio": "Suposem que $A\\neq\\varnothing$ i $A\\neq M$, és a dir, que $A\\neq\\varnothing$ i $A^c\\neq\\varnothing$.",
+      "pista": "Quina és la negació d'una disjunció?"
+    },
+    {
+      "id": "e3",
+      "fragment": 4,
+      "cita": "Prenent $U=A$ i $V=M$",
+      "inici": 0,
+      "fi": 21,
+      "tipus": "pas_injustificat",
+      "explicacio": "Amb $V=M$, els oberts no són disjunts i $U\\cap V\\cap M=A\\neq\\varnothing$, de manera que la condició $U\\cap V\\cap M=\\varnothing$ és falsa.",
+      "correccio": "Cal prendre $U=A$ i $V=A^c$, dos oberts disjunts no buits que recobreixen $M$.",
+      "pista": "Quant val $U\\cap V\\cap M$ amb aquesta elecció?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t1a.json",
+    "valoracio": "Hipòtesi canviada a l'enunciat, negació mal feta a la reducció a l'absurd i elecció errònia $V=M$.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "Si $M\\setminus A$ és connex",
+        "gravetat": "error",
+        "explicacio": "Hipòtesi canviada: cal que $M$ sigui connex. Amb $M=[0,1]\\cup[2,3]$, $A=[0,1]$, $M\\setminus A=[2,3]$ és connex i $A\\neq M,\\varnothing$: l'enunciat és fals."
+      },
+      {
+        "fragment": 3,
+        "cita": "$A\\neq\\varnothing$ o $A\\neq M$",
+        "gravetat": "error",
+        "explicacio": "La negació de 'o bé $A=M$ o bé $A=\\varnothing$' és '$A\\neq\\varnothing$ i $A\\neq M$' (és a dir, $A\\neq\\varnothing$ i $A^c\\neq\\varnothing$); amb 'o' la suposició és sempre certa i no permet construir la desconnexió."
+      },
+      {
+        "fragment": 4,
+        "cita": "$V=M$",
+        "gravetat": "error",
+        "explicacio": "Cal prendre $V=A^c$: amb $V=M$, $U\\cap V\\cap M=A\\neq\\varnothing$, de manera que la condició $U\\cap V\\cap M=\\varnothing$ afirmada és falsa."
+      },
+      {
+        "fragment": 5,
+        "cita": "en contradicció amb la hipòtesi que $M$ és connex",
+        "gravetat": "consequencia",
+        "explicacio": "Usa la connexió de $M$, hipòtesi que l'enunciat erroni ha substituït per la connexió de $M\\setminus A$."
+      }
+    ]
+  },
+  "creat": 1791295858.0331786
+}

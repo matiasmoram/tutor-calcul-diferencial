@@ -1,0 +1,59 @@
+{
+  "id": "c415ff238a65",
+  "exercici": "t2-18b",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Via la identificació $F$, el determinant és $\\det(a,b,c,d)=ad-bc$, un polinomi en les coordenades de $\\mathbb{R}^4$, i per tant és una funció contínua a $M_2(\\mathbb{R})$.",
+    "$C_1=\\det^{-1}(\\mathbb{R}\\setminus\\{0\\})$ i $\\mathbb{R}\\setminus\\{0\\}$ és obert, per tant $C_1$ és obert. No és tancat: $\\frac1nI\\in C_1$, perquè $\\det(\\frac1nI)=\\frac1{n^2}\\neq0$, i $\\frac1nI\\to0\\notin C_1$.",
+    "$C_2=\\det^{-1}(\\{1\\})$ i $\\{1\\}$ és tancat, per tant $C_2$ és tancat. En canvi, no és obert, perquè $\\{1\\}$ no és un obert de $\\mathbb{R}$.",
+    "$C_3=\\det^{-1}((0,+\\infty))$ i $(0,+\\infty)$ és obert, per tant $C_3$ és obert. No és tancat: $\\frac1nI\\in C_3$, ja que $\\det(\\frac1nI)=\\frac1{n^2}>0$, però $\\frac1nI\\to0$ i $\\det0=0$.",
+    "Compacitat: un compacte és tancat, així que $C_1$ i $C_3$, que no són tancats, no són compactes.",
+    "$C_2$ és tancat però no és fitat: les matrius $A_n=nI$ són de $C_2$ i $\\|F(A_n)\\|=n\\sqrt2\\to\\infty$. Per Heine-Borel, $C_2$ tampoc no és compacte. Cap dels tres conjunts és compacte."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "no és obert, perquè $\\{1\\}$ no és un obert de $\\mathbb{R}$",
+      "inici": 80,
+      "fi": 138,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "La continuïtat garanteix que l'antiimatge d'un obert és oberta, però no que l'antiimatge d'un no-obert no ho sigui (per exemple, una funció constant té com a antiimatges $\\varnothing$ o tot l'espai, que són oberts). Cal un argument directe.",
+      "correccio": "$I\\in C_2$, però $(1+\\frac1n)I\\to I$ i $\\det((1+\\frac1n)I)=(1+\\frac1n)^2\\neq1$: tota bola centrada en $I$ conté punts fora de $C_2$, així que $I$ no és interior i $C_2$ no és obert.",
+      "pista": "Si $g$ és contínua i $B$ no és obert, pots assegurar que $g^{-1}(B)$ no és obert? Pensa en una funció constant."
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "les matrius $A_n=nI$ són de $C_2$",
+      "inici": 34,
+      "fi": 67,
+      "tipus": "calcul",
+      "explicacio": "$\\det(nI)=n^2\\neq1$ per a $n\\geq2$, així que aquestes matrius no són de $C_2$. Cal un exemple de matrius no fitades amb determinant $1$.",
+      "correccio": "Prendre $A_n=\\begin{pmatrix}n&0\\\\0&1/n\\end{pmatrix}$, amb $\\det A_n=1$ i $\\|F(A_n)\\|\\geq n\\to\\infty$.",
+      "pista": "Quant val el determinant de $nI$ per a una matriu $2\\times2$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t12.json",
+    "valoracio": "Classificació final correcta, però la no-obertura de C_2 es justifica amb un argument invàlid i l'exemple de no fitat no pertany a C_2.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "no és obert, perquè $\\{1\\}$ no és un obert de $\\mathbb{R}$",
+        "gravetat": "error",
+        "explicacio": "L'antiimatge d'un no obert pot ser oberta; cal veure-ho directament, p. ex. $(1+\\frac1n)I\\to I$ amb $\\det\\neq1$, de manera que $I$ no és interior."
+      },
+      {
+        "fragment": 6,
+        "cita": "les matrius $A_n=nI$ són de $C_2$",
+        "gravetat": "error",
+        "explicacio": "$\\det(nI)=n^2\\neq1$, així que $nI\\notin C_2$; cal un exemple com $\\mathrm{diag}(n,1/n)$."
+      }
+    ]
+  },
+  "creat": 1791295812.9178693
+}

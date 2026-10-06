@@ -1,0 +1,64 @@
+{
+  "id": "d00624c638a6",
+  "exercici": "t2-10",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $S=\\{x^2+y^2=1\\}$. El conjunt $U=\\mathbb{R}^2\\setminus S=\\{x^2+y^2<1\\}\\cup\\{x^2+y^2>1\\}$ és obert, i a $U$ la funció és un quocient de polinomis amb denominador no nul. Per tant $f$ és contínua a cada punt de $U$.",
+    "Sigui $(a,b)\\in S$ amb $ab\\neq0$. Sobre els punts $(1+t)(a,b)$, $t\\neq0$ petit, $f=\\frac{(1+t)^4a^3b}{(1+t)^2-1}=\\frac{(1+t)^4a^3b}{t^2}$, que no és fitat quan $t\\to0$ perquè el numerador tendeix a $a^3b\\neq0$. Per tant $f$ no és contínua a $(a,b)$.",
+    "A $(1,0)$: per a $y\\neq0$, $f(1,y)=\\frac{y}{1+y^2-1}=\\frac1y$, que no és fitat quan $y\\to0$. Anàlogament, $f(-1,y)=-\\frac1y$. Per tant $f$ no és contínua a $(\\pm1,0)$.",
+    "A $(0,1)$: sobre la recta $y=1$, $f(x,1)=\\frac{x^3}{x^2}=x\\to0$, i sobre la circumferència $f$ val $0$; com que els dos camins donen $0=f(0,1)$, $f$ és contínua a $(0,1)$, i per simetria també a $(0,-1)$.",
+    "Conclusió: $f$ és contínua a $\\mathbb{R}^2\\setminus S$ i als punts $(0,\\pm1)$, i és discontínua a la resta de punts de la circumferència unitat."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "petit, $f=\\frac{(1+t)^4a^3b}{(1+t)^2-1}=\\frac{(1+t)^4a^3b}{t^2}$",
+      "inici": 73,
+      "fi": 137,
+      "tipus": "calcul",
+      "explicacio": "$(1+t)^2-1=2t+t^2=t(2+t)$, no $t^2$. La conclusió (no fitat) es manté, ja que el denominador també tendeix a $0$.",
+      "correccio": "$f=\\frac{(1+t)^4a^3b}{t(2+t)}$, que no és fitat quan $t\\to0$.",
+      "pista": "Desenvolupa $(1+t)^2$: quin terme de primer grau en $t$ queda després de restar $1$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "com que els dos camins donen $0=f(0,1)$, $f$ és contínua a $(0,1)$",
+      "inici": 104,
+      "fi": 170,
+      "tipus": "conclusio",
+      "explicacio": "Que dos camins donin el mateix límit no prova la continuïtat. De fet, sobre la corba $y=\\sqrt{1-x^2+x^4}$ (que tendeix a $(0,1)$) el denominador val $x^4$ i $f=\\frac{y}{x}$, no fitat: $f$ no és contínua a $(0,\\pm1)$.",
+      "correccio": "Sobre $y=\\sqrt{1-x^2+x^4}$, $f=\\frac{x^3y}{x^4}=\\frac yx$, no fitat quan $x\\to0$; $f$ no és contínua a $(0,1)$ (ni a $(0,-1)$), i és discontínua a tots els punts de la circumferència.",
+      "pista": "Comprovar dos camins és suficient per assegurar que un límit existeix? Hi ha corbes cap a $(0,1)$ on el denominador s'anul·li més ràpid que el numerador?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t12.json",
+    "valoracio": "Càlcul del denominador erroni i, sobretot, conclou continuïtat a (0,±1) a partir de només dos camins, cosa falsa.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "=\\frac{(1+t)^4a^3b}{t^2}",
+        "gravetat": "error",
+        "explicacio": "$(1+t)^2-1=t(2+t)$, no $t^2$. (El quocient continua sense ser fitat.)"
+      },
+      {
+        "fragment": 4,
+        "cita": "com que els dos camins donen $0=f(0,1)$, $f$ és contínua a $(0,1)$",
+        "gravetat": "error",
+        "explicacio": "Que dos camins donin el mateix valor no prova l'existència del límit. De fet $f$ és discontínua a $(0,\\pm1)$: sobre $y=\\sqrt{1-x^2+x^4}$, $f=\\frac yx$ no és fitada."
+      },
+      {
+        "fragment": 5,
+        "cita": "$f$ és contínua a $\\mathbb{R}^2\\setminus S$ i als punts $(0,\\pm1)$",
+        "gravetat": "consequencia",
+        "explicacio": "Conclusió que hereta la falsa continuïtat a $(0,\\pm1)$; $f$ és discontínua a tota la circumferència."
+      }
+    ]
+  },
+  "creat": 1791295812.9129052
+}

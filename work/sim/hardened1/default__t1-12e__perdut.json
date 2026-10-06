@@ -1,0 +1,591 @@
+{
+ "exercici": "t1-12e",
+ "tema": 1,
+ "persona": "perdut",
+ "arquetip": "perdut",
+ "persona_descripcio": "Estàs completament perdut i no saps per on començar («no sé per on començar», «no entenc què he de fer»). Quan el tutor et dona pistes, intentes seguir-les amb inseguretat i a poc a poc; només avances si la pista és clara, i sovint dubtes de si ho fas bé. No sabries resoldre l'exercici tu sol: només avances amb el que el tutor t'ajuda a descobrir.",
+ "final": "tancar",
+ "torns": [
+  {
+   "n": 1,
+   "alumne": "No sé per on començar: per ser compacte cal que sigui tancat i acotat, però no sé com aplicar-ho al conjunt $E=\\{(x,y)\\in\\mathbb{R}^2\\mid x^2+|y|=5\\}$. Em pots dir si primer hem de provar que és tancat o si convé mirar-ne la projecció en l'eix $x$ i $y$?",
+   "tutor": "Bona idea fixar-te en la fitació abans d’entrar a tancar el conjunt. Aquí la clau és mirar l’equació $x^2+|y|=5$: com que $x^2$ i $|y|$ són tots dos no negatius, què pots dir de cadascun d’ells comparant-los amb el costat dret?",
+   "accio": "pista",
+   "pas_objectiu": "fitat",
+   "nivell": 2,
+   "intencio": "demana_pista",
+   "errors_detectats": [],
+   "fallback": false,
+   "drafts": 1,
+   "rebuigs": [],
+   "progres": false,
+   "completats": [],
+   "trace": {
+    "torn": 1,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "\"No sé per on començar\" i \"no sé com aplicar-ho\"",
+     "resum_alumne": "Sap que per compacitat cal mirar tancat i fitat, però no ha començat cap prova ni ha fet cap pas de la solució.",
+     "estat_passos": [
+      {
+       "pas": "fitat",
+       "estat": "no_iniciat"
+      },
+      {
+       "pas": "tancat",
+       "estat": "no_iniciat"
+      },
+      {
+       "pas": "concloure",
+       "estat": "no_iniciat"
+      }
+     ],
+     "pas_actual": "fitat",
+     "errors_detectats": [],
+     "error_altre": "",
+     "resultat_proposat": "cap",
+     "resultat_justificat": false,
+     "nivell_desorientacio": "encallat",
+     "intencio": "demana_pista",
+     "teoria_pregunta": []
+    },
+    "pla": {
+     "accio": "pista",
+     "motiu": "Desorientació 'encallat', intenció 'demana_pista', nivell previ 0.",
+     "pas_objectiu": "fitat",
+     "nivell_pista": 2,
+     "error_objectiu": null,
+     "error_text": null,
+     "pregunta_suggerida": null,
+     "pot_dir_resultat": false,
+     "resultat_dit_per_alumne": false,
+     "requereix_pregunta": true,
+     "max_frases": 4,
+     "regex_prohibides": [
+      "\\bE\\$?\\s+(sí\\s+)?és\\s+(un\\s+)?(conjunt\\s+)?compacte",
+      "\\bE\\$?\\s+és\\s+tancat\\s+i\\s+fitat",
+      "\\|y\\|\\s*=\\s*5\\s*-\\s*x\\^\\{?2\\}?\\s*(\\\\leq?(slant)?|≤)\\s*5",
+      "\\\\sqrt\\{?\\s*30"
+     ],
+     "teoria_extra": [],
+     "to": "normal",
+     "moviment": "Focus"
+    },
+    "contingut_permes": "PAS OBJECTIU: Fitat\n  objectiu: Decidir si $E$ és fitat.\n\n  idea: Com que els dos sumands són no negatius, cadascun està fitat pel total.\n",
+    "teoria_permesa": [
+     "T1.24",
+     "T1.33"
+    ],
+    "intents": [
+     {
+      "missatge": "Bona idea fixar-te en la fitació abans d’entrar a tancar el conjunt. Aquí la clau és mirar l’equació $x^2+|y|=5$: com que $x^2$ i $|y|$ són tots dos no negatius, què pots dir de cadascun d’ells comparant-los amb el costat dret?",
+      "referencies": [],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "Dóna una pista en català del nivell permès, suggereix l’estratègia sense fer càlculs, respon a la pregunta de l’alumne i acaba amb pregunta."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [],
+     "nivell_per_pas": {},
+     "torns": 0,
+     "tancat": false,
+     "ultim_pas": null,
+     "ultima_accio": null,
+     "estats": {},
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {},
+     "resultat_confirmat": false,
+     "intents_alumne": 0
+    },
+    "estat": {
+     "completats": [],
+     "nivell_per_pas": {
+      "fitat": 2
+     },
+     "torns": 1,
+     "tancat": false,
+     "ultim_pas": "fitat",
+     "ultima_accio": "pista",
+     "estats": {
+      "fitat": "no_iniciat",
+      "tancat": "no_iniciat",
+      "concloure": "no_iniciat"
+     },
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {
+      "fitat": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 0
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2494,
+      "input_tokens": 3961,
+      "output_tokens": 248,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1454,
+      "input_tokens": 1393,
+      "output_tokens": 104,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1628,
+      "input_tokens": 2570,
+      "output_tokens": 134,
+      "cached_tokens": 0,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 5579
+   },
+   "jutge": {
+    "revela_resultat_final": false,
+    "passos_revelats": [],
+    "explicacio": "",
+    "permesos": [],
+    "resultat_permes": false,
+    "fuga": false,
+    "fuga_resultat": false,
+    "passos_filtrats": []
+   }
+  },
+  {
+   "n": 2,
+   "alumne": "Crec que d’aquí surt que $x^2\\le 5$ i $|y|\\le 5$, així que $- \\sqrt{5}\\le x\\le \\sqrt{5}$ i $|y|\\le 5$, per tant sembla que $E$ és acotat; no estic segur si això ja és suficient per ser compacte o cal veure que és tancat també.",
+   "tutor": "Sí, la part de la fitació ja la tens ben encaminada; ara falta decidir si aquest mateix tipus d’equació es conserva quan mires punts límit. Si una successió de punts de $E$ convergeix, el punt límit també ha de satisfer $x^2+|y|=5$?",
+   "accio": "pista",
+   "pas_objectiu": "tancat",
+   "nivell": 1,
+   "intencio": "demana_pista",
+   "errors_detectats": [],
+   "fallback": false,
+   "drafts": 1,
+   "rebuigs": [],
+   "progres": true,
+   "completats": [
+    "fitat"
+   ],
+   "trace": {
+    "torn": 2,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "\"x^2\\le 5 i |y|\\le 5, així que - \\sqrt{5}\\le x\\le \\sqrt{5} ... per tant sembla que E és acotat; no estic segur si això ja és suficient per ser compacte\"",
+     "resum_alumne": "Ha justificat correctament que el conjunt és fitat, però encara no ha abordat la tancadesa ni ha conclòs la compacitat.",
+     "estat_passos": [
+      {
+       "pas": "fitat",
+       "estat": "completat"
+      },
+      {
+       "pas": "tancat",
+       "estat": "no_iniciat"
+      },
+      {
+       "pas": "concloure",
+       "estat": "no_iniciat"
+      }
+     ],
+     "pas_actual": "tancat",
+     "errors_detectats": [],
+     "error_altre": "",
+     "resultat_proposat": "cap",
+     "resultat_justificat": false,
+     "nivell_desorientacio": "dubte_puntual",
+     "intencio": "demana_pista",
+     "teoria_pregunta": []
+    },
+    "pla": {
+     "accio": "pista",
+     "motiu": "Desorientació 'dubte_puntual', intenció 'demana_pista', nivell previ 0.",
+     "pas_objectiu": "tancat",
+     "nivell_pista": 1,
+     "error_objectiu": null,
+     "error_text": null,
+     "pregunta_suggerida": null,
+     "pot_dir_resultat": false,
+     "resultat_dit_per_alumne": false,
+     "requereix_pregunta": true,
+     "max_frases": 4,
+     "regex_prohibides": [
+      "\\bE\\$?\\s+(sí\\s+)?és\\s+(un\\s+)?(conjunt\\s+)?compacte",
+      "\\bE\\$?\\s+és\\s+tancat\\s+i\\s+fitat"
+     ],
+     "teoria_extra": [],
+     "to": "normal",
+     "moviment": "Focus"
+    },
+    "contingut_permes": "Passos que l'alumne JA té resolts (pots referir-t'hi):\n  - Fitat: $|y|=5-x^2\\leq5$ i $x^2=5-|y|\\leq5$, és a dir $|x|\\leq\\sqrt5$. Per tant $\\|(x,y)\\|\\leq\\sqrt{5+25}=\\sqrt{30}$ i $E$ és fitat.\n\nPAS OBJECTIU: Tancat\n  objectiu: Decidir si $E$ és tancat.\n",
+    "teoria_permesa": [
+     "T1.24",
+     "T1.33"
+    ],
+    "intents": [
+     {
+      "missatge": "Sí, la part de la fitació ja la tens ben encaminada; ara falta decidir si aquest mateix tipus d’equació es conserva quan mires punts límit. Si una successió de punts de $E$ convergeix, el punt límit també ha de satisfer $x^2+|y|=5$?",
+      "referencies": [],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "La resposta és en català, acaba amb una pregunta i dona només una pista del pas objectiu sobre tancament sense revelar el resultat ni avançar més del compte."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [],
+     "nivell_per_pas": {
+      "fitat": 2
+     },
+     "torns": 1,
+     "tancat": false,
+     "ultim_pas": "fitat",
+     "ultima_accio": "pista",
+     "estats": {
+      "fitat": "no_iniciat",
+      "tancat": "no_iniciat",
+      "concloure": "no_iniciat"
+     },
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {
+      "fitat": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 0
+    },
+    "estat": {
+     "completats": [
+      "fitat"
+     ],
+     "nivell_per_pas": {
+      "fitat": 2,
+      "tancat": 1
+     },
+     "torns": 2,
+     "tancat": false,
+     "ultim_pas": "tancat",
+     "ultima_accio": "pista",
+     "estats": {
+      "fitat": "completat",
+      "tancat": "no_iniciat",
+      "concloure": "no_iniciat"
+     },
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {
+      "fitat": 1,
+      "tancat": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 1
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2949,
+      "input_tokens": 4139,
+      "output_tokens": 316,
+      "cached_tokens": 3328,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1935,
+      "input_tokens": 1641,
+      "output_tokens": 162,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2449,
+      "input_tokens": 2808,
+      "output_tokens": 171,
+      "cached_tokens": 1792,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 7334
+   },
+   "jutge": {
+    "revela_resultat_final": false,
+    "passos_revelats": [],
+    "explicacio": "",
+    "permesos": [
+     "fitat"
+    ],
+    "resultat_permes": false,
+    "fuga": false,
+    "fuga_resultat": false,
+    "passos_filtrats": []
+   }
+  },
+  {
+   "n": 3,
+   "alumne": "Crec que si tinc una successió $(x_n,y_n)\\in E$ que convergeix a $(x,y)$, com que les funcions $x\\mapsto x^2$ i $y\\mapsto |y|$ són contínues, llavors $x_n^2+|y_n|\\to x^2+|y|$, així que el límit ha de complir $x^2+|y|=5$; per tant $E$ seria tancat. Com que abans vam veure que $-\\sqrt5\\le x\\le\\sqrt5$ i $|y|\\le5$, llavors és acotat, així que em sembla que $E$ és compacte. Estic fent bé?",
+   "tutor": "Sí, està bé: has justificat que $E$ és tancat i també fitat, i això és בדיוק el que cal per aplicar el Teorema de Heine-Borel. La idea clau ha estat usar la continuïtat de $x\\mapsto x^2$ i $y\\mapsto |y|$ per veure que el límit d’una successió de punts de $E$ continua satisfent $x^2+|y|=5$. Per tant, $E$ és compacte.",
+   "accio": "tancar",
+   "pas_objectiu": null,
+   "nivell": 0,
+   "intencio": "proposa_resultat",
+   "errors_detectats": [],
+   "fallback": false,
+   "drafts": 1,
+   "rebuigs": [],
+   "progres": true,
+   "completats": [
+    "fitat",
+    "tancat",
+    "concloure"
+   ],
+   "trace": {
+    "torn": 3,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "\"com que les funcions $x\\mapsto x^2$ i $y\\mapsto |y|$ són contínues, llavors $x_n^2+|y_n|\\to x^2+|y|, així que el límit ha de complir $x^2+|y|=5$; per tant $E$ seria tancat... així que em sembla que $E$ és compacte.\"",
+     "resum_alumne": "Ha justificat que $E$ és tancat amb successions, ja tenia la fitació i ha conclòs correctament que és compacte.",
+     "estat_passos": [
+      {
+       "pas": "fitat",
+       "estat": "completat"
+      },
+      {
+       "pas": "tancat",
+       "estat": "completat"
+      },
+      {
+       "pas": "concloure",
+       "estat": "completat"
+      }
+     ],
+     "pas_actual": "cap",
+     "errors_detectats": [],
+     "error_altre": "",
+     "resultat_proposat": "correcte",
+     "resultat_justificat": true,
+     "nivell_desorientacio": "en_cami",
+     "intencio": "proposa_resultat",
+     "teoria_pregunta": []
+    },
+    "pla": {
+     "accio": "tancar",
+     "motiu": "Resultat correcte i justificat.",
+     "pas_objectiu": null,
+     "nivell_pista": 0,
+     "error_objectiu": null,
+     "error_text": null,
+     "pregunta_suggerida": null,
+     "pot_dir_resultat": true,
+     "resultat_dit_per_alumne": false,
+     "requereix_pregunta": false,
+     "max_frases": 4,
+     "regex_prohibides": [],
+     "teoria_extra": [],
+     "to": "normal",
+     "moviment": "Generic"
+    },
+    "contingut_permes": "Passos que l'alumne JA té resolts (pots referir-t'hi):\n  - Fitat: $|y|=5-x^2\\leq5$ i $x^2=5-|y|\\leq5$, és a dir $|x|\\leq\\sqrt5$. Per tant $\\|(x,y)\\|\\leq\\sqrt{5+25}=\\sqrt{30}$ i $E$ és fitat.\n\n  - Tancat: Si $(x_n,y_n)\\in E$ i $(x_n,y_n)\\to(x,y)$, llavors $x_n\\to x$, $y_n\\to y$, $|y_n|\\to|y|$ i $x_n^2\\to x^2$, de manera que $5=x_n^2+|y_n|\\to x^2+|y|$. Per tant $(x,y)\\in E$ i $E$ és tancat (Proposició 19(iii)).\n\n  - Concloure: Tancat i fitat a $\\mathbb{R}^2$: per Heine-Borel, compacte.\n\nRESULTAT: $E$ és compacte: és fitat ($|y|\\leq5$ i $|x|\\leq\\sqrt5$) i tancat (si $(x_n,y_n)\\in E$ convergeix a $(x,y)$, llavors $x_n^2+|y_n|\\to x^2+|y|$, així $x^2+|y|=5$); per Heine-Borel és compacte.\n",
+    "teoria_permesa": [
+     "T1.24",
+     "T1.33",
+     "T1.19",
+     "T1.34"
+    ],
+    "intents": [
+     {
+      "missatge": "Sí, està bé: has justificat que $E$ és tancat i també fitat, i això és בדיוק el que cal per aplicar el Teorema de Heine-Borel. La idea clau ha estat usar la continuïtat de $x\\mapsto x^2$ i $y\\mapsto |y|$ per veure que el límit d’una successió de punts de $E$ continua satisfent $x^2+|y|=5$. Per tant, $E$ és compacte.",
+      "referencies": [],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "El missatge felicita breument, confirma que $E$ és compacte i destaca la idea clau que l’alumne ja ha usat, sense afegir passos nous ni sortir del català."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [
+      "fitat"
+     ],
+     "nivell_per_pas": {
+      "fitat": 2,
+      "tancat": 1
+     },
+     "torns": 2,
+     "tancat": false,
+     "ultim_pas": "tancat",
+     "ultima_accio": "pista",
+     "estats": {
+      "fitat": "completat",
+      "tancat": "no_iniciat",
+      "concloure": "no_iniciat"
+     },
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {
+      "fitat": 1,
+      "tancat": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 1
+    },
+    "estat": {
+     "completats": [
+      "fitat",
+      "tancat",
+      "concloure"
+     ],
+     "nivell_per_pas": {
+      "fitat": 2,
+      "tancat": 1
+     },
+     "torns": 3,
+     "tancat": true,
+     "ultim_pas": "tancat",
+     "ultima_accio": "tancar",
+     "estats": {
+      "fitat": "completat",
+      "tancat": "completat",
+      "concloure": "completat"
+     },
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {
+      "fitat": 1,
+      "tancat": 1
+     },
+     "resultat_confirmat": true,
+     "intents_alumne": 2
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2560,
+      "input_tokens": 4380,
+      "output_tokens": 285,
+      "cached_tokens": 3328,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1350,
+      "input_tokens": 2381,
+      "output_tokens": 123,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 3945,
+      "input_tokens": 3589,
+      "output_tokens": 183,
+      "cached_tokens": 2816,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 7857
+   }
+  }
+ ],
+ "crides_alumne": [
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 2282,
+   "input_tokens": 516,
+   "output_tokens": 166,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 2655,
+   "input_tokens": 682,
+   "output_tokens": 225,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 3223,
+   "input_tokens": 848,
+   "output_tokens": 293,
+   "cached_tokens": 0,
+   "extra": {}
+  }
+ ],
+ "crides_jutge": [
+  {
+   "stage": "jutge",
+   "model": "gpt-5.4-mini",
+   "latency_ms": 1470,
+   "input_tokens": 1058,
+   "output_tokens": 55,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "jutge",
+   "model": "gpt-5.4-mini",
+   "latency_ms": 4399,
+   "input_tokens": 1048,
+   "output_tokens": 61,
+   "cached_tokens": 0,
+   "extra": {}
+  }
+ ],
+ "durada_s": 34.8,
+ "metriques": {
+  "torns": 3,
+  "torns_error": 0,
+  "completat": true,
+  "torns_fins_tancar": 3,
+  "final": "tancar",
+  "loops": [],
+  "fallbacks": 0,
+  "drafts": 3,
+  "rebuigs": {},
+  "preguntes_conceptuals": 0,
+  "preguntes_ignorades": 0,
+  "torns_jutjats": 2,
+  "fuites": [],
+  "fuites_resultat": [],
+  "accions": {
+   "pista": 2,
+   "tancar": 1
+  },
+  "cost_tutor_usd": 0.02031,
+  "cost_simulacio_usd": 0.00398,
+  "models_sense_preu": []
+ },
+ "config": "default",
+ "_fitxer": "default__t1-12e__perdut.json"
+}

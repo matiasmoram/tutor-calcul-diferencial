@@ -1,0 +1,58 @@
+{
+  "id": "36e4ebe97b12",
+  "exercici": "t3-16",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Les derivades parcials de $f$ són $\\dfrac{\\partial f}{\\partial x}=y\\cos x$ i $\\dfrac{\\partial f}{\\partial y}=1-\\sin x+3y^2$, contínues a tot $\\mathbb{R}^2$. Per tant $f$ és diferenciable a tot arreu i la seva gràfica té pla tangent a cada punt.",
+    "El pla tangent a la gràfica en $(a,f(a))$ és $z=f(a)+\\frac{\\partial f}{\\partial x}(a)(x-a_1)+\\frac{\\partial f}{\\partial y}(a)(y-a_2)$, i és paral·lel al pla $XY$ si i només si $\\nabla f(a)=(0,0)$.",
+    "Cal resoldre $y\\cos x=0$ i $1-\\sin x+3y^2=0$. A la segona equació, $1-\\sin x\\geq0$ i $3y^2\\geq0$, i la suma només s'anul·la si tots dos termes són zero: $y=0$ i $\\sin x=1$.",
+    "De $\\sin x=1$ obtenim $x=\\frac{\\pi}{2}$, i amb $y=0$ la primera equació també es compleix. L'únic punt és, doncs, $\\left(\\frac{\\pi}{2},\\ 0\\right)$.",
+    "En aquest punt $f\\left(\\frac{\\pi}{2},0\\right)=(1-1)\\cdot0+0=0$ i el gradient s'anul·la, de manera que el pla tangent és $z=0$, el mateix pla $XY$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "$\\dfrac{\\partial f}{\\partial x}=y\\cos x$",
+      "inici": 34,
+      "fi": 74,
+      "tipus": "calcul",
+      "explicacio": "La derivada de $1-\\sin x$ respecte de $x$ és $-\\cos x$, així que la parcial té signe negatiu.",
+      "correccio": "$\\dfrac{\\partial f}{\\partial x}=-y\\cos x$ (els zeros són els mateixos, però la fórmula ha de ser correcta).",
+      "pista": "Quina és la derivada de $1-\\sin x$ respecte de $x$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "De $\\sin x=1$ obtenim $x=\\frac{\\pi}{2}$",
+      "inici": 0,
+      "fi": 39,
+      "tipus": "logica",
+      "explicacio": "$\\sin x=1$ té infinites solucions, $x=\\frac{\\pi}{2}+2k\\pi$ amb $k\\in\\mathbb{Z}$; s'han perdut tots els punts menys un.",
+      "correccio": "$x=\\frac{\\pi}{2}+2k\\pi$, $k\\in\\mathbb{Z}$: els punts són $\\left(\\frac{\\pi}{2}+2k\\pi,\\ 0\\right)$, i en tots ells el pla tangent és $z=0$.",
+      "pista": "Quants valors de $x\\in\\mathbb{R}$ compleixen $\\sin x=1$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t34.json",
+    "valoracio": "Plantejament correcte, però amb un signe malament a $\\partial_xf$ i perdent tots els punts $\\left(\\frac{\\pi}{2}+2k\\pi,0\\right)$ excepte un.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "$\\dfrac{\\partial f}{\\partial x}=y\\cos x$",
+        "gravetat": "error",
+        "explicacio": "$\\partial_x[(1-\\sin x)y]=-y\\cos x$: falta el signe (el sistema resultant és equivalent, així que no afecta les solucions)."
+      },
+      {
+        "fragment": 4,
+        "cita": "De $\\sin x=1$ obtenim $x=\\frac{\\pi}{2}$",
+        "gravetat": "error",
+        "explicacio": "Oblida la periodicitat: $\\sin x=1\\iff x=\\frac{\\pi}{2}+2k\\pi$, $k\\in\\mathbb{Z}$; hi ha infinits punts, no un únic."
+      }
+    ]
+  },
+  "creat": 1791295851.9292276
+}

@@ -1,0 +1,66 @@
+{
+  "id": "9b34c6a935eb",
+  "exercici": "t5-4",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Escrivim $F=L+G$, amb $L(x,y)=\\log(1+x^2+xy+y^2)$ i $G(x,y)=\\int_0^{g(x,y)}f(t)\\,dt$. Al punt $(0,1)$ l'argument del logaritme val $1+0+0+1=2$ i la integral va de $0$ a $g(0,1)=0$, de manera que $F(0,1)=\\log2$.",
+    "Per a $L$ posem $v=y-1$: $1+x^2+x(1+v)+(1+v)^2=2+w$ amb $w=x+2v+x^2+xv+v^2$, i $\\log(2+w)=\\log2+\\log\\left(1+\\frac{w}{2}\\right)=\\log2+\\frac{w}{2}-\\frac{w^2}{8}+O_3$.",
+    "Com que $\\frac{w}{2}=\\frac{x}{2}+v+\\frac{x^2+xv+v^2}{2}$ i $\\frac{w^2}{8}=\\frac{x^2+4xv+4v^2}{8}+O_3$, els termes en $xv$ i en $v^2$ es cancel·len i el de $x^2$ queda $\\left(\\frac12+\\frac18\\right)x^2=\\frac58x^2$. Així $L=\\log2+\\frac{x}{2}+(y-1)+\\frac58x^2+O_3$.",
+    "Per a $G$, pel teorema fonamental del càlcul i la regla de la cadena, $D_iG=f(g)\\,D_ig$; derivant de nou amb la regla del producte, $D_{ij}G=f'(g)\\,D_ig\\,D_jg+f(g)\\,D_{ij}g$.",
+    "A $(0,1)$ tenim $g=0$, $f(0)=1$ i $f'(0)=-\\frac18$, així que $JG(0,1)=(2\\ \\ -3)$ i $HG(0,1)=-\\frac18\\begin{pmatrix}4&-6\\\\-6&9\\end{pmatrix}+\\begin{pmatrix}3/4&5/4\\\\5/4&5/4\\end{pmatrix}=\\begin{pmatrix}1/4&2\\\\2&1/8\\end{pmatrix}$.",
+    "El polinomi de grau 2 de $G$ és doncs $2x-3(y-1)+\\frac12\\left(\\frac14x^2+2x(y-1)+\\frac18(y-1)^2\\right)=2x-3(y-1)+\\frac18x^2+x(y-1)+\\frac{1}{16}(y-1)^2$.",
+    "Sumant les dues parts: $P_2(x,y)=\\log2+\\left(\\frac12+2\\right)x+(1-3)(y-1)+\\left(\\frac58+\\frac18\\right)x^2+x(y-1)+\\frac{1}{16}(y-1)^2=\\log2+\\frac52x-2(y-1)+\\frac34x^2+x(y-1)+\\frac{1}{16}(y-1)^2$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "el de $x^2$ queda $\\left(\\frac12+\\frac18\\right)x^2=\\frac58x^2$",
+      "inici": 149,
+      "fi": 211,
+      "tipus": "calcul",
+      "explicacio": "El terme $\\frac{w^2}{8}$ es resta, de manera que el coeficient de $x^2$ és $\\frac12-\\frac18=\\frac38$, no $\\frac12+\\frac18$.",
+      "correccio": "El de $x^2$ queda $\\left(\\frac12-\\frac18\\right)x^2=\\frac38x^2$, i $L=\\log2+\\frac{x}{2}+(y-1)+\\frac38x^2+O_3$.",
+      "pista": "Amb quin signe apareix $\\frac{w^2}{8}$ al desenvolupament del logaritme?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "$2x-3(y-1)+\\frac12\\left(\\frac14x^2+2x(y-1)+\\frac18(y-1)^2\\right)=2x-3(y-1)+\\frac18x^2+x(y-1)+\\frac{1}{16}(y-1)^2$",
+      "inici": 38,
+      "fi": 151,
+      "tipus": "calcul",
+      "explicacio": "A la forma quadràtica de la hessiana el terme creuat és $2\\,D_{12}G\\,x(y-1)=4x(y-1)$, no $2x(y-1)$; després de multiplicar per $\\frac12$ el coeficient de $x(y-1)$ ha de ser $2$.",
+      "correccio": "$2x-3(y-1)+\\frac12\\left(\\frac14x^2+4x(y-1)+\\frac18(y-1)^2\\right)=2x-3(y-1)+\\frac18x^2+2x(y-1)+\\frac{1}{16}(y-1)^2$.",
+      "pista": "Si la hessiana té $2$ fora de la diagonal, quantes vegades hi apareix aquest $2$ quan escrius $(x,\\,y-1)\\,HG\\,(x,\\,y-1)^T$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t56.json",
+    "valoracio": "Dos errors de càlcul (signe del terme x^2 del logaritme i factor 2 del terme creuat de G) que fan incorrecte el polinomi final.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$\\left(\\frac12+\\frac18\\right)x^2=\\frac58x^2$",
+        "gravetat": "error",
+        "explicacio": "El terme $-\\frac{w^2}{8}$ aporta $-\\frac{x^2}{8}$: el coeficient és $\\frac12-\\frac18=\\frac38$, no $\\frac58$ (signe canviat)."
+      },
+      {
+        "fragment": 6,
+        "cita": "\\frac12\\left(\\frac14x^2+2x(y-1)+\\frac18(y-1)^2\\right)",
+        "gravetat": "error",
+        "explicacio": "La forma quadràtica és $H_{11}x^2+2H_{12}x(y-1)+H_{22}(y-1)^2=\\frac14x^2+4x(y-1)+\\frac18(y-1)^2$; el terme creuat ha perdut el factor 2 i el resultat correcte és $2x(y-1)$, no $x(y-1)$."
+      },
+      {
+        "fragment": 7,
+        "cita": "\\frac34x^2+x(y-1)",
+        "gravetat": "consequencia",
+        "explicacio": "Hereta el $\\frac58$ del fragment 3 i el $x(y-1)$ del fragment 6; el correcte és $\\frac12x^2+2x(y-1)$."
+      }
+    ]
+  },
+  "creat": 1791295916.9957678
+}

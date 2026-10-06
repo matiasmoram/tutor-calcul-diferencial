@@ -1,0 +1,1201 @@
+problemes:
+  - num: 4
+    font: null
+    preambul: |
+      Determineu els extrems absoluts de les funcions $f$ següents sobre els recintes $K$ que s'especifiquen:
+    indicacio: null
+    exercicis:
+      - id: "t6-4a"
+        apartat: "a"
+        tipus: calcul
+        enunciat: |
+          $f(x,y,z)=\sin x\sin y\sin z$, $\quad K=\{(x,y,z)\in\mathbb{R}^3\mid x,y,z\geqslant0,\ x+y+z\leqslant\frac{\pi}{2}\}$;
+        teoria: ["T1.24"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Màxim absolut $\frac18$, assolit només en $\left(\frac{\pi}{6},\frac{\pi}{6},\frac{\pi}{6}\right)$.
+            Mínim absolut $0$, assolit en tots els punts de $K$ amb alguna coordenada nul·la (les tres cares $x=0$, $y=0$, $z=0$ de $K$).
+          fuites: ['\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*8\b', '\b1\s*/\s*8\b', 'm[àa]xim\s+(absolut\s+)?(s.assoleix\s+)?(en|a)\s*\$?\s*(\\left)?\(\s*\\[dt]?frac\s*\{?\s*\\pi', 'x\s*=\s*y\s*=\s*z\s*=\s*(\\[dt]?frac\s*\{?\s*\\pi\s*\}?\s*\{?\s*6|\\pi\s*/\s*6)', '\\[dt]?frac\s*\{?\s*\\pi\s*\}?\s*\{?\s*6\s*\}?\s*,\s*\\[dt]?frac\s*\{?\s*\\pi\s*\}?\s*\{?\s*6']
+        passos:
+          - id: existencia
+            titol: "Existència dels extrems"
+            objectiu: |
+              Justificar que $f$ assoleix màxim i mínim absoluts sobre $K$.
+            idea: |
+              Mirar si $K$ és tancat i fitat i si $f$ és contínua, i aplicar el teorema que garanteix l'existència d'extrems absoluts.
+            detall: |
+              $K$ és la intersecció de quatre semiespais tancats (definits per desigualtats no estrictes entre funcions contínues), per tant és tancat; i $0\le x,y,z\le\frac{\pi}{2}$, per tant és fitat. Per Heine-Borel és compacte, i $f$ és contínua: pel teorema de Weierstrass té màxim i mínim absoluts a $K$.
+            fuites: []
+            teoria: ["T2.18", "T1.13", "T1.34", "T2.23"]
+          - id: minim
+            titol: "El mínim"
+            objectiu: |
+              Trobar el mínim absolut de $f$ sobre $K$ i on s'assoleix.
+            idea: |
+              Mirar el signe de cada factor $\sin$ sobre $K$ i quan s'anul·la el producte.
+            detall: |
+              A $K$ tenim $0\le x,y,z\le\frac{\pi}{2}$, de manera que $\sin x,\sin y,\sin z\ge 0$ i $f\ge0$. A més $f=0$ exactament quan alguna coordenada és $0$. Per tant el mínim absolut és $0$ i s'assoleix a les cares $x=0$, $y=0$ i $z=0$ de $K$.
+            fuites: ['f\s*(\\geq?|≥)\s*0', 'm[íi]nim\s+(absolut\s+)?(és|val|=)\s*\$?\s*0\b']
+            teoria: []
+          - id: interior
+            titol: "Punts crítics a l'interior"
+            objectiu: |
+              Decidir si el màxim es pot assolir a l'interior de $K$.
+            idea: |
+              Un extrem a l'interior (obert) ha de ser punt crític. Mirar el signe de les derivades parcials a l'interior.
+            detall: |
+              A $\mathrm{int}\,K$ es té $x,y,z>0$ i $x+y+z<\frac{\pi}{2}$, per tant $0<x,y,z<\frac{\pi}{2}$ i tots els sinus i cosinus són positius: $f_x=\cos x\sin y\sin z>0$. No hi ha punts crítics a l'interior, i el màxim (que és $>0$) ha d'estar a la frontera, en un punt amb $x,y,z>0$, és a dir, a la cara $x+y+z=\frac{\pi}{2}$.
+            fuites: ['f_x\s*=\s*\\cos\s*x\s*\\sin\s*y\s*\\sin\s*z\s*>\s*0', 'no\s+hi\s+ha\s+(cap\s+)?punts?\s+cr[íi]tics?\s+a\s+l.interior']
+            teoria: ["T5.23", "T5.22"]
+          - id: cara_obliqua
+            titol: "La cara $x+y+z=\\pi/2$"
+            objectiu: |
+              Trobar el màxim de $f$ sobre la cara $x+y+z=\frac{\pi}{2}$ amb $x,y,z>0$.
+            idea: |
+              És un problema d'extrems condicionats a un pla: aplicar multiplicadors de Lagrange (o substituir $z=\frac{\pi}{2}-x-y$).
+            detall: |
+              Amb $\Phi=x+y+z-\frac{\pi}{2}$, Lagrange dona $\cos x\sin y\sin z=\sin x\cos y\sin z=\sin x\sin y\cos z=\lambda$. Com que els sinus són positius, dividint obtenim $\cot x=\cot y=\cot z$, i com que $\cot$ és injectiva a $(0,\frac{\pi}{2})$, $x=y=z=\frac{\pi}{6}$. Allà $f=\left(\frac12\right)^3=\frac18$. A les arestes d'aquesta cara (alguna coordenada nul·la) $f=0$, així que el màxim absolut és $\frac18$ en $\left(\frac{\pi}{6},\frac{\pi}{6},\frac{\pi}{6}\right)$.
+            fuites: ['\\cot\s*x\s*=\s*\\cot\s*y', 'x\s*=\s*y\s*=\s*z\s*=\s*(\\[dt]?frac\s*\{?\s*\\pi|\\pi\s*/)', '\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*8\b', '\b1\s*/\s*8\b']
+            teoria: ["T6.17"]
+        errors_comuns:
+          - id: oblida_frontera
+            descripcio: |
+              Busca només punts crítics de $f$ (que a l'interior no n'hi ha) i conclou que no hi ha extrems, oblidant la frontera de $K$.
+            pregunta: |
+              Si $f$ no té punts crítics a l'interior de $K$ però $K$ és compacte, on han d'estar els extrems que Weierstrass garanteix?
+          - id: punts_critics_fora
+            descripcio: |
+              Resol $\nabla f=0$ a tot $\mathbb{R}^3$ (per exemple punts amb $\cos x=0$ i $\sin y=0$) sense comprovar si són de $K$.
+            pregunta: |
+              Els punts on s'anul·la el gradient que has trobat, compleixen les desigualtats que defineixen $K$?
+          - id: minim_un_punt
+            descripcio: |
+              Dona el mínim com un únic punt (per exemple l'origen) quan s'assoleix en tota una part de la frontera.
+            pregunta: |
+              Quins altres punts de $K$ donen el mateix valor que l'origen?
+        nota_professor: |
+          Alternativa elegant per al màxim: $\log\sin$ és còncava a $(0,\pi)$, i per Jensen $\sum\log\sin x_i\le3\log\sin\frac{x+y+z}{3}\le3\log\sin\frac{\pi}{6}$.
+
+      - id: "t6-4b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=x^4+2x^2y-x^3+3y^2$, $\quad K=\{(x,y)\in\mathbb{R}^2\mid|x|\leqslant1,\ |y|\leqslant1\}$;
+        teoria: ["T1.24"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Màxim absolut $7$, assolit en $(-1,1)$.
+            Mínim absolut $-\frac13$, assolit en $\left(1,-\frac13\right)$.
+          fuites: ['m[àa]xim\s+(absolut\s+)?(és|val|=)\s*\$?\s*7\b', 'm[íi]nim\s+(absolut\s+)?(és|val|=)\s*\$?\s*-\s*(\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*3|1\s*/\s*3)', 'm[àa]xim\s+(absolut\s+)?(s.assoleix\s+)?(en|a)\s*\$?\s*(\\left)?\(\s*-\s*1\s*,\s*1\s*(\\right)?\)', '\(\s*1\s*,\s*-\s*\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*3']
+        passos:
+          - id: existencia
+            titol: "Existència"
+            objectiu: |
+              Justificar que existeixen el màxim i el mínim absoluts de $f$ a $K$.
+            idea: |
+              Compacitat de $K$ i continuïtat de $f$.
+            detall: |
+              $K=[-1,1]^2$ és tancat i fitat, per tant compacte, i $f$ és polinòmica, per tant contínua: pel teorema de Weierstrass hi ha màxim i mínim absoluts.
+            fuites: []
+            teoria: ["T1.34", "T2.23"]
+          - id: interior
+            titol: "Punts crítics interiors"
+            objectiu: |
+              Trobar els punts crítics de $f$ que són a l'interior de $K$ i el valor de $f$ en ells.
+            idea: |
+              Resoldre $\nabla f=0$: aïllar $y$ de l'equació $f_y=0$ i substituir a $f_x=0$.
+            detall: |
+              $f_y=2x^2+6y=0\Rightarrow y=-\frac{x^2}{3}$; $f_x=4x^3+4xy-3x^2=0$ i substituint, $\frac{8}{3}x^3-3x^2=x^2\left(\frac83x-3\right)=0$, d'on $x=0$ o $x=\frac98$. Els punts crítics són $(0,0)$ i $\left(\frac98,-\frac{27}{64}\right)$; el segon no és de $K$ ($x>1$). Candidat interior: $(0,0)$ amb $f(0,0)=0$.
+            fuites: ['\\[dt]?frac\s*\{?\s*9\s*\}?\s*\{?\s*8\b', 'y\s*=\s*-\s*\\[dt]?frac\s*\{?\s*x\^\{?2\}?']
+            teoria: ["T5.23", "T5.22"]
+          - id: costats
+            titol: "Els quatre costats"
+            objectiu: |
+              Trobar els candidats a extrem sobre cadascun dels quatre costats del quadrat.
+            idea: |
+              A cada costat una variable és constant: restringir $f$ i estudiar una funció d'una variable en un interval tancat (punts crítics interiors de l'interval i extrems de l'interval).
+            detall: |
+              $x=1$: $f=3y^2+2y$, crític $y=-\frac13$, $f\left(1,-\frac13\right)=-\frac13$.
+              $x=-1$: $f=3y^2+2y+2$, crític $y=-\frac13$, valor $\frac53$.
+              $y=1$: $f=x^4-x^3+2x^2+3$, derivada $x(4x^2-3x+4)$, només $x=0$, valor $3$.
+              $y=-1$: $f=x^4-x^3-2x^2+3$, derivada $x(4x^2-3x-4)$: $x=0$ (valor $3$) i $x=\frac{3-\sqrt{73}}{8}\approx-0.69$ (valor $\frac{709+73\sqrt{73}}{512}\approx2.60$); l'altra arrel és $>1$.
+              Vèrtexs: $f(1,1)=5$, $f(1,-1)=1$, $f(-1,1)=7$, $f(-1,-1)=3$.
+            fuites: ['3\s*y\^\{?2\}?\s*\+\s*2\s*y', 'f\s*\(\s*-\s*1\s*,\s*1\s*\)\s*=\s*7']
+            teoria: ["T6.1"]
+          - id: comparar
+            titol: "Comparar valors"
+            objectiu: |
+              Decidir el màxim i el mínim absoluts.
+            idea: |
+              Comparar tots els valors obtinguts (punt interior, punts crítics dels costats i vèrtexs).
+            detall: |
+              Els valors són $0,-\frac13,\frac53,3,\approx2.60,5,1,7,3$. El màxim absolut és $7$ en $(-1,1)$ i el mínim absolut és $-\frac13$ en $\left(1,-\frac13\right)$.
+            fuites: ['m[àa]xim\s+absolut\s+(és|val)\s*\$?\s*7', 'm[íi]nim\s+absolut\s+(és|val)\s*\$?\s*-']
+            teoria: ["T2.23"]
+        errors_comuns:
+          - id: critic_fora
+            descripcio: |
+              Inclou el punt crític $\left(\frac98,-\frac{27}{64}\right)$ entre els candidats tot i que és fora de $K$.
+            pregunta: |
+              Tots els punts crítics que has trobat compleixen $|x|\le1$ i $|y|\le1$?
+          - id: oblida_vertexs
+            descripcio: |
+              Estudia els costats només amb la derivada i oblida avaluar els vèrtexs (extrems dels intervals).
+            pregunta: |
+              Una funció d'una variable en un interval tancat, on pot tenir els extrems a més dels punts on s'anul·la la derivada?
+          - id: classifica_innecessari
+            descripcio: |
+              Intenta classificar $(0,0)$ amb la hessiana (que és semidefinida) i s'encalla, quan per a extrems absoluts n'hi ha prou de comparar valors.
+            pregunta: |
+              Per trobar extrems absoluts en un compacte, necessites saber el caràcter local de cada candidat o només el valor de $f$?
+        nota_professor: |
+          $Hf(0,0)=\begin{pmatrix}0&0\\0&6\end{pmatrix}$ és semidefinida, però no cal classificar-lo. El candidat del costat $y=-1$ té valor irracional però és irrellevant.
+
+      - id: "t6-4c"
+        apartat: "c"
+        tipus: calcul
+        enunciat: |
+          $f(x,y)=x^2+y^2-xy+y+x$, $\quad K=\{(x,y)\in\mathbb{R}^2\mid x+y\geqslant-3,\ x\leqslant y,\ y\leqslant0\}$.
+        teoria: ["T1.24"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Màxim absolut $6$, assolit en $(-3,0)$.
+            Mínim absolut $-1$, assolit en $(-1,-1)$.
+          fuites: ['m[àa]xim\s+(absolut\s+)?(és|val|=)\s*\$?\s*6\b', 'm[àa]xim\s+(absolut\s+)?(s.assoleix\s+)?(en|a)\s*\$?\s*(\\left)?\(\s*-\s*3\s*,\s*0', 'm[íi]nim\s+(absolut\s+)?(és|val|=)\s*\$?\s*-\s*1\b', 'm[íi]nim\s+(absolut\s+)?(s.assoleix\s+)?(en|a)\s*\$?\s*\(\s*-\s*1\s*,\s*-\s*1']
+        passos:
+          - id: recinte
+            titol: "Descriure el recinte"
+            objectiu: |
+              Descriure $K$ (quina figura és, els seus vèrtexs) i justificar que hi ha extrems absoluts.
+            idea: |
+              Intersecar dos a dos les rectes que el delimiten; un conjunt definit per desigualtats no estrictes de funcions contínues és tancat.
+            detall: |
+              $K$ és el triangle de vèrtexs $(0,0)$ (de $x=y$, $y=0$), $(-3,0)$ (de $x+y=-3$, $y=0$) i $\left(-\frac32,-\frac32\right)$ (de $x+y=-3$, $x=y$). És tancat i fitat, per tant compacte, i $f$ és contínua: Weierstrass garanteix màxim i mínim absoluts.
+            fuites: ['\(\s*-\s*3\s*,\s*0\s*\)']
+            teoria: ["T2.18", "T1.34", "T2.23"]
+          - id: interior
+            titol: "Punts crítics"
+            objectiu: |
+              Trobar els punts crítics de $f$ i situar-los respecte de $K$.
+            idea: |
+              Resoldre el sistema lineal $\nabla f=0$ i comprovar a quina part de $K$ (interior o frontera) cau.
+            detall: |
+              $f_x=2x-y+1=0$, $f_y=2y-x+1=0$ donen $x=y=-1$. El punt $(-1,-1)$ és de $K$ però és a la frontera (compleix $x=y$), no a l'interior: a l'interior no hi ha punts crítics. Igualment és candidat, amb $f(-1,-1)=-1$.
+            fuites: ['x\s*=\s*y\s*=\s*-\s*1', 'f\s*\(\s*-\s*1\s*,\s*-\s*1\s*\)\s*=\s*-\s*1']
+            teoria: ["T5.23", "T5.22"]
+          - id: costats
+            titol: "Els tres costats"
+            objectiu: |
+              Trobar els candidats a extrem sobre cadascun dels tres costats del triangle.
+            idea: |
+              Parametritzar cada costat amb una variable (substituint l'equació de la recta) i estudiar la funció d'una variable a l'interval corresponent.
+            detall: |
+              $y=0$, $x\in[-3,0]$: $f=x^2+x$, crític $x=-\frac12$ amb valor $-\frac14$; extrems $f(0,0)=0$, $f(-3,0)=6$.
+              $y=x$, $x\in[-\frac32,0]$: $f=x^2+2x$, crític $x=-1$ amb valor $-1$; extrem $f\left(-\frac32,-\frac32\right)=-\frac34$.
+              $y=-3-x$, $x\in[-3,-\frac32]$: $f=3x^2+9x+6$, amb $f'=6x+9=0$ només a $x=-\frac32$, que és l'extrem de l'interval (vèrtex $\left(-\frac32,-\frac32\right)$, valor $-\frac34$); a l'altre extrem, $f(-3,0)=6$.
+            fuites: ['f\s*\(\s*-\s*3\s*,\s*0\s*\)\s*=\s*6', '3\s*x\^\{?2\}?\s*\+\s*9\s*x']
+            teoria: ["T6.1"]
+          - id: comparar
+            titol: "Comparar valors"
+            objectiu: |
+              Decidir el màxim i el mínim absoluts.
+            idea: |
+              Comparar tots els valors dels candidats.
+            detall: |
+              Valors: $0,6,-\frac14,-1,-\frac34$. Màxim absolut $6$ en $(-3,0)$; mínim absolut $-1$ en $(-1,-1)$.
+            fuites: ['m[àa]xim\s+absolut\s+\$?\s*6']
+            teoria: ["T2.23"]
+        errors_comuns:
+          - id: critic_interior
+            descripcio: |
+              Afirma que $(-1,-1)$ és un punt interior de $K$, o el descarta per ser a la frontera.
+            pregunta: |
+              El punt crític que has trobat, compleix alguna de les desigualtats de $K$ amb igualtat? I si és així, deixa de ser candidat?
+          - id: triangle_malament
+            descripcio: |
+              Identifica malament el triangle (per exemple pren el costat $x\ge y$) i treballa amb vèrtexs equivocats.
+            pregunta: |
+              Has comprovat amb un punt concret quin costat de cada recta correspon a la desigualtat?
+          - id: oblida_vertexs
+            descripcio: |
+              Oblida avaluar els vèrtexs del triangle.
+            pregunta: |
+              Quins punts de cada costat no poden aparèixer com a zeros de la derivada però també són candidats?
+        nota_professor: |
+          El punt crític lliure $(-1,-1)$ és un mínim lliure ($Hf$ definida positiva, $f$ convexa), i és mínim absolut fins i tot a $\mathbb{R}^2$.
+
+  - num: 5
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t6-5"
+        apartat: null
+        tipus: calcul
+        enunciat: |
+          Trobeu la distància entre el punt $(0,b)$ i la paràbola $x^2-4y=0$. Resoleu el problema emprant dos mètodes diferents.
+        teoria: ["T1.5"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $d=|b|$ si $b\le2$ (punt més proper $(0,0)$), i $d=2\sqrt{b-1}$ si $b\ge2$ (punts més propers $\left(\pm2\sqrt{b-2},\,b-2\right)$). Per $b=2$ les dues expressions donen $2$.
+          fuites: ['2\s*\\sqrt\s*\{?\s*b\s*-\s*1', 'dist[àa]ncia\s+(és|val|=)\s*\$?\s*(2\s*\\sqrt|\|)', 'd\s*=\s*\|\s*b\s*\|', '\\pm\s*2\s*\\sqrt\s*\{?\s*b\s*-\s*2']
+        passos:
+          - id: plantejament
+            titol: "Plantejar el problema"
+            objectiu: |
+              Escriure la distància com un problema d'extrems i justificar que el mínim existeix.
+            idea: |
+              Minimitzar el quadrat de la distància (mateixos minimitzadors). El conjunt no és compacte: cal un argument perquè el mínim existeixi (lluny, la funció es fa gran).
+            detall: |
+              Minimitzem $D(x,y)=x^2+(y-b)^2$ sobre la paràbola $P=\{x^2=4y\}$. Com que $D\to+\infty$ quan $\|(x,y)\|\to\infty$, el mínim sobre $P$ coincideix amb el mínim sobre $P\cap\overline{B}(0,R)$ per $R$ gran, que és compacte; per Weierstrass existeix.
+            fuites: []
+            teoria: ["T1.34", "T2.23"]
+          - id: substitucio
+            titol: "Mètode 1: substitució"
+            objectiu: |
+              Reduir el problema a una variable i trobar el mínim.
+            idea: |
+              Sobre la paràbola, $x^2$ s'expressa en funció de $y$; el problema queda en una variable amb una restricció de signe sobre $y$.
+            detall: |
+              Amb $x^2=4y$, $y\ge0$: $g(y)=4y+(y-b)^2=y^2+(4-2b)y+b^2$. És una paràbola en $y$ amb vèrtex a $y=b-2$.
+              Si $b\ge2$, el vèrtex és admissible: $g(b-2)=4(b-2)+4=4b-4$, als punts $\left(\pm2\sqrt{b-2},b-2\right)$.
+              Si $b<2$, $g$ és creixent a $[0,\infty)$ i el mínim és $g(0)=b^2$, al punt $(0,0)$.
+            fuites: ['y\s*=\s*b\s*-\s*2', '4\s*b\s*-\s*4', 'y\^\{?2\}?\s*\+\s*\(\s*4\s*-\s*2\s*b\s*\)']
+            teoria: ["T6.1"]
+          - id: lagrange
+            titol: "Mètode 2: multiplicadors de Lagrange"
+            objectiu: |
+              Obtenir els mateixos candidats amb el mètode de Lagrange.
+            idea: |
+              Comprovar que la paràbola és una 1-varietat ($\nabla\Phi\ne0$) i resoldre $\nabla D=\lambda\nabla\Phi$, $\Phi=0$, separant casos segons quin factor s'anul·la.
+            detall: |
+              $\Phi=x^2-4y$, $\nabla\Phi=(2x,-4)\neq0$. Sistema: $2x=2\lambda x$, $2(y-b)=-4\lambda$, $x^2=4y$.
+              De la primera, $x=0$ o $\lambda=1$. Si $x=0$: $y=0$, $D=b^2$. Si $\lambda=1$: $y=b-2$, i cal $x^2=4(b-2)\ge0$, és a dir $b\ge2$; llavors $D=4b-4$.
+              Per $b\ge2$, $b^2-(4b-4)=(b-2)^2\ge0$, de manera que el mínim és $4b-4$; per $b<2$ només hi ha el candidat $(0,0)$.
+            fuites: ['\\lambda\s*=\s*1', '\(\s*b\s*-\s*2\s*\)\^\{?2\}?']
+            teoria: ["T6.2", "T6.17"]
+          - id: conclusio
+            titol: "Concloure"
+            objectiu: |
+              Donar la distància en funció de $b$.
+            idea: |
+              Prendre l'arrel del mínim de $D$ en cada cas.
+            detall: |
+              $d=|b|$ si $b\le2$ i $d=2\sqrt{b-1}$ si $b\ge2$ (les dues coincideixen a $b=2$).
+            fuites: ['2\s*\\sqrt\s*\{?\s*b\s*-\s*1', 'd\s*=\s*\|\s*b\s*\|']
+            teoria: []
+        errors_comuns:
+          - id: oblida_cas
+            descripcio: |
+              Dona només $d=2\sqrt{b-1}$ per a tot $b$, sense veure que per $b<2$ el punt $y=b-2$ no és de la paràbola (o surt una arrel negativa).
+            pregunta: |
+              El punt que t'ha sortit, té sentit per a qualsevol valor de $b$? Què passa si $b=0$?
+          - id: oblida_x0
+            descripcio: |
+              A Lagrange divideix per $x$ a la primera equació i perd el cas $x=0$.
+            pregunta: |
+              Quan simplifiques l'equació $2x=2\lambda x$, quina possibilitat estàs descartant?
+          - id: sense_existencia
+            descripcio: |
+              Pren el candidat de Lagrange com a mínim sense justificar que el mínim existeix (la paràbola no és compacta).
+            pregunta: |
+              Lagrange dona condicions necessàries. Per què saps que hi ha d'haver un punt de la paràbola a distància mínima?
+        nota_professor: |
+          Per $b>2$ hi ha dos punts més propers simètrics i $(0,0)$ és un màxim local de la distància restringida. Altres mètodes: parametritzar $(2t,t^2)$, o geometria (la normal a la paràbola per $(0,b)$).
+
+  - num: 6
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t6-6"
+        apartat: null
+        tipus: calcul
+        enunciat: |
+          Trobeu la distància entre les corbes d'equació $x+y=4$ i $x^2+4y^2=4$.
+        teoria: ["T1.5"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $d=\dfrac{4-\sqrt5}{\sqrt2}=\dfrac{4\sqrt2-\sqrt{10}}{2}\approx1.25$, assolida entre el punt $\left(\frac{4}{\sqrt5},\frac{1}{\sqrt5}\right)$ de l'el·lipse i el punt $\left(\frac{4}{\sqrt5}+\frac{4-\sqrt5}{2},\frac{1}{\sqrt5}+\frac{4-\sqrt5}{2}\right)$ de la recta.
+          fuites: ['d\s*=\s*\\[dt]?frac\s*\{?\s*4\s*-\s*\\sqrt', 'dist[àa]ncia\s+(és|val|=)\s*\$?\s*\\[dt]?frac', '\\[dt]?frac\s*\{?\s*4\s*-\s*\\sqrt\s*\{?5\}?\s*\}?\s*\{?\s*\\sqrt\s*\{?2', '\(\s*4\s*-\s*\\sqrt\s*\{?5\}?\s*\)\s*/\s*\\sqrt', '4\s*\\sqrt\s*\{?2\}?\s*-\s*\\sqrt\s*\{?10', '\b1[.,]25\b']
+        passos:
+          - id: no_es_tallen
+            titol: "Les corbes no es tallen"
+            objectiu: |
+              Comprovar si les dues corbes es tallen i escollir una funció a minimitzar.
+            idea: |
+              Si es tallessin la distància seria $0$. Per a un punt fix de l'el·lipse, la distància a la recta té una fórmula tancada.
+            detall: |
+              La distància d'un punt $(x,y)$ a la recta $x+y=4$ és $\frac{|x+y-4|}{\sqrt2}$. La distància entre les corbes és el mínim d'aquesta funció sobre l'el·lipse $E$, que és compacta (tancada i fitada), així que el mínim existeix. Veurem que $x+y<4$ a tota $E$, de manera que les corbes no es tallen i cal maximitzar $x+y$ sobre $E$.
+            fuites: ['\\frac\{?\s*\|\s*x\s*\+\s*y\s*-\s*4\s*\|']
+            teoria: ["T1.34", "T2.23"]
+          - id: maxim_suma
+            titol: "Extrems de $x+y$ sobre l'el·lipse"
+            objectiu: |
+              Trobar el màxim de $x+y$ sobre l'el·lipse.
+            idea: |
+              Extrems condicionats d'una funció lineal sobre una corba compacta: Lagrange (o parametritzar l'el·lipse).
+            detall: |
+              L'el·lipse és una 1-varietat compacta: $\nabla\Phi=(2x,8y)\neq0$ a $E$. Lagrange: $\nabla(x+y)=(1,1)=\lambda(2x,8y)$ dona $x=4y$; amb $x^2+4y^2=4$: $20y^2=4$, $y=\pm\frac{1}{\sqrt5}$, $x=\pm\frac{4}{\sqrt5}$. Valors $x+y=\pm\sqrt5$. Màxim $\sqrt5<4$, en $\left(\frac{4}{\sqrt5},\frac{1}{\sqrt5}\right)$.
+              (Parametritzant $(2\cos t,\sin t)$: $2\cos t+\sin t\le\sqrt5$.)
+            fuites: ['x\s*=\s*4\s*y', '\\[dt]?frac\s*\{?\s*4\s*\}?\s*\{?\s*\\sqrt\s*\{?5', '\\pm\s*\\sqrt\s*\{?5', 'x\s*\+\s*y\s*(\\leq?|≤)\s*\\sqrt\s*\{?5']
+            teoria: ["T6.2", "T6.17", "T2.23"]
+          - id: distancia
+            titol: "Calcular la distància"
+            objectiu: |
+              Obtenir la distància i els punts on s'assoleix.
+            idea: |
+              Substituir el màxim trobat a la fórmula de distància punt-recta; el punt de la recta és el peu de la perpendicular.
+            detall: |
+              $d=\frac{4-\sqrt5}{\sqrt2}=\frac{4\sqrt2-\sqrt{10}}{2}\approx1.25$. El punt de la recta és $\left(\frac{4}{\sqrt5},\frac{1}{\sqrt5}\right)+\frac{4-\sqrt5}{2}(1,1)$.
+            fuites: ['4\s*-\s*\\sqrt\{?5']
+            teoria: []
+        errors_comuns:
+          - id: interseccio
+            descripcio: |
+              No comprova si les corbes es tallen (o creu que es tallen) i dona distància $0$ o un resultat sense sentit.
+            pregunta: |
+              Com pots saber si algun punt de l'el·lipse compleix $x+y=4$?
+          - id: lagrange_una_sola
+            descripcio: |
+              Aplica Lagrange a la distància de l'origen a la recta o al centre de l'el·lipse, en lloc de la distància entre punts de les dues corbes.
+            pregunta: |
+              La funció que minimitzes, depèn d'un punt de cada corba?
+          - id: valor_absolut
+            descripcio: |
+              Agafa el mínim de $x+y$ en comptes del màxim (perd el valor absolut de la fórmula punt-recta).
+            pregunta: |
+              Quin dels dos punts de tangència de l'el·lipse està més a prop de la recta? Com es reflecteix en $|x+y-4|$?
+        nota_professor: |
+          Alternativa: Lagrange a $\mathbb{R}^4$ minimitzant $(x-u)^2+(y-v)^2$ amb $x^2+4y^2=4$, $u+v=4$; dona que el segment que uneix els punts és normal a les dues corbes. La fórmula punt-recta no és cap ítem dels apunts.
+
+  - num: 7
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t6-7"
+        apartat: null
+        tipus: calcul
+        enunciat: |
+          Trobeu els vèrtexs i semieixos de l'el·lipse obtinguda intersecant el pla d'equació $x+y+z=0$ amb l'el·lipsoide d'equació $x^2/4+y^2+z^2=1$.
+        teoria: ["T6.2"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Semieix major $\sqrt2$, amb vèrtexs $\pm\left(-\frac{2}{\sqrt3},\frac{1}{\sqrt3},\frac{1}{\sqrt3}\right)$.
+            Semieix menor $1$, amb vèrtexs $\pm\left(0,\frac{1}{\sqrt2},-\frac{1}{\sqrt2}\right)$.
+          fuites: ['semieix\w*\s+(major\s+)?(és|val|=|de)?\s*\$?\s*\\sqrt\s*\{?2', 'semieix\w*\s+menor\s+(és|val|=|de)?\s*\$?\s*1\b', '-\s*\\[dt]?frac\s*\{?\s*2\s*\}?\s*\{?\s*\\sqrt\s*\{?3\}?\s*\}?\s*,\s*\\[dt]?frac\s*\{?\s*1', '\(\s*0\s*,\s*\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*\\sqrt\s*\{?2']
+        passos:
+          - id: plantejament
+            titol: "Plantejar com a extrems condicionats"
+            objectiu: |
+              Traduir "vèrtexs i semieixos" a un problema d'extrems condicionats.
+            idea: |
+              Trobar el centre de l'el·lipse per simetria; els vèrtexs són els punts de la corba a distància màxima i mínima del centre. Cal comprovar que la corba és una 1-varietat compacta.
+            detall: |
+              La corba $C$ és simètrica respecte de l'origen ($\mathbf{x}\in C\Rightarrow-\mathbf{x}\in C$), així que el centre és $(0,0,0)$. Maximitzem i minimitzem $f=x^2+y^2+z^2$ sobre $C=\{\Phi_1=\frac{x^2}{4}+y^2+z^2-1=0,\ \Phi_2=x+y+z=0\}$.
+              $\nabla\Phi_1=(\frac x2,2y,2z)$ i $\nabla\Phi_2=(1,1,1)$ només són paral·lels si $\frac x2=2y=2z$, i amb $x+y+z=0$ això dona l'origen, que no és de $C$: rang $2$ a tot $C$. $C$ és compacta, així que hi ha màxim i mínim.
+            fuites: []
+            teoria: ["T6.2", "T1.34", "T2.23"]
+          - id: sistema
+            titol: "Sistema de Lagrange"
+            objectiu: |
+              Escriure el sistema de Lagrange i reduir-lo a casos.
+            idea: |
+              Restar les equacions corresponents a $y$ i a $z$ per eliminar el segon multiplicador.
+            detall: |
+              $2x=\lambda\frac{x}{2}+\mu$, $2y=2\lambda y+\mu$, $2z=2\lambda z+\mu$. Restant les dues últimes: $2(1-\lambda)(y-z)=0$, és a dir, $y=z$ o $\lambda=1$.
+            fuites: ['\(\s*1\s*-\s*\\lambda\s*\)\s*\(\s*y\s*-\s*z\s*\)']
+            teoria: ["T6.17"]
+          - id: casos
+            titol: "Resoldre els casos"
+            objectiu: |
+              Trobar tots els punts crítics condicionats i el valor de $f$ en ells.
+            idea: |
+              En cada cas, usar les dues equacions de lligam per determinar el punt.
+            detall: |
+              Si $y=z$: $x=-2y$ i $\frac{4y^2}{4}+2y^2=3y^2=1$, $y=\pm\frac{1}{\sqrt3}$: punts $\pm\left(-\frac{2}{\sqrt3},\frac{1}{\sqrt3},\frac{1}{\sqrt3}\right)$ amb $f=2$.
+              Si $\lambda=1$: la segona equació dona $\mu=0$, la primera $2x=\frac x2$, és a dir $x=0$; llavors $z=-y$ i $2y^2=1$: punts $\pm\left(0,\frac{1}{\sqrt2},-\frac{1}{\sqrt2}\right)$ amb $f=1$.
+            fuites: ['3\s*y\^\{?2\}?\s*=\s*1', '\\[dt]?frac\s*\{?\s*2\s*\}?\s*\{?\s*\\sqrt\s*\{?3', '\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*\\sqrt\s*\{?2']
+            teoria: ["T6.17"]
+          - id: conclusio
+            titol: "Vèrtexs i semieixos"
+            objectiu: |
+              Donar els semieixos i els vèrtexs de l'el·lipse.
+            idea: |
+              Els semieixos són les arrels dels valors màxim i mínim de $f$.
+            detall: |
+              Semieix major $\sqrt2$, vèrtexs $\pm\left(-\frac{2}{\sqrt3},\frac{1}{\sqrt3},\frac{1}{\sqrt3}\right)$; semieix menor $1$, vèrtexs $\pm\left(0,\frac{1}{\sqrt2},-\frac{1}{\sqrt2}\right)$. (Les dues direccions són ortogonals, com ha de ser.)
+            fuites: ['semieix\s+major\s+(és\s+|val\s+|=\s*)?\$?\s*\\sqrt\s*\{?2']
+            teoria: []
+        errors_comuns:
+          - id: un_sol_lligam
+            descripcio: |
+              Fa Lagrange amb una sola restricció (només l'el·lipsoide o només el pla).
+            pregunta: |
+              La corba sobre la qual busques extrems, quantes equacions la defineixen? Quants multiplicadors necessites?
+          - id: centre
+            descripcio: |
+              Busca extrems de la distància sense saber quin és el centre de l'el·lipse, o pren com a semieixos els de l'el·lipsoide.
+            pregunta: |
+              Si $(x,y,z)$ és de la corba, $(-x,-y,-z)$ també? Què et diu això sobre el centre?
+          - id: perd_cas
+            descripcio: |
+              Divideix per $1-\lambda$ o per $y-z$ i perd una família de solucions.
+            pregunta: |
+              Un producte és zero quan... quants casos t'han de sortir?
+        nota_professor: |
+          Camí sense Lagrange: a $C$, $y^2+z^2=1-\frac{x^2}{4}$, així $f=1+\frac34x^2$; el mínim és amb $x=0$ i el màxim amb $|x|$ màxim. Com que $y^2+z^2\ge\frac{(y+z)^2}{2}=\frac{x^2}{2}$, s'obté $|x|\le\frac{2}{\sqrt3}$ i $f\le2$.
+
+  - num: 8
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t6-8"
+        apartat: null
+        tipus: calcul
+        enunciat: |
+          Trobeu els extrems absoluts de $f(x,y)=x-x^2-y^2$ en el disc $\{(x,y)\mid x^2+y^2<1\}$.
+        teoria: ["T1.11"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Màxim absolut $\frac14$, assolit en $\left(\frac12,0\right)$.
+            No hi ha mínim absolut: $f>-2$ al disc obert i $\inf f=-2$ (quan $(x,y)\to(-1,0)$), però no s'assoleix.
+          fuites: ['no\s+(t[ée]\s+|hi\s+ha\s+)?m[íi]nim', '\\inf\s*f?\s*=\s*-\s*2', 'm[àa]xim\s+(absolut\s+)?(és|val|=)\s*\$?\s*(\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*4|1\s*/\s*4)', 'm[íi]nim\s+(absolut\s+)?no\s+(existeix|s.assoleix)']
+        passos:
+          - id: critics
+            titol: "Punts crítics"
+            objectiu: |
+              Trobar els punts crítics de $f$ al disc obert.
+            idea: |
+              El disc és obert: un extrem absolut hi ha de ser extrem local, per tant punt crític.
+            detall: |
+              $f_x=1-2x=0$, $f_y=-2y=0$: únic punt crític $\left(\frac12,0\right)$, que és del disc, amb $f=\frac14$.
+            fuites: ['(\\left)?\(\s*\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*2\s*\}?\s*,\s*0', '\(\s*1\s*/\s*2\s*,\s*0']
+            teoria: ["T5.23", "T5.22"]
+          - id: maxim
+            titol: "És màxim absolut"
+            objectiu: |
+              Decidir si el punt crític és un extrem absolut.
+            idea: |
+              Completar quadrats per escriure $f$ com una constant menys una suma de quadrats (o mirar la hessiana i la concavitat).
+            detall: |
+              $f=\frac14-\left(x-\frac12\right)^2-y^2\le\frac14$, amb igualtat només a $\left(\frac12,0\right)$: és el màxim absolut, de valor $\frac14$. (La hessiana $\begin{pmatrix}-2&0\\0&-2\end{pmatrix}$ és definida negativa.)
+            fuites: ['\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*4\s*\}?\s*-\s*(\\left)?\(\s*x\s*-\s*\\[dt]?frac']
+            teoria: ["T5.33"]
+          - id: minim
+            titol: "El mínim"
+            objectiu: |
+              Decidir si $f$ té mínim absolut al disc obert.
+            idea: |
+              Recordar quina condició ha de complir un extrem absolut d'una funció diferenciable en un obert i contrastar-la amb els punts crítics trobats. Per descriure bé la situació, estudiar els valors de $f$ prop de la circumferència: quin és l'ínfim i si s'assoleix.
+            detall: |
+              Un mínim absolut al disc obert seria un mínim local i, per tant, un punt crític; l'únic punt crític és $\left(\frac12,0\right)$, que és el màxim estricte, de manera que $f$ no té mínim absolut. Per entendre-ho: a la circumferència $x^2+y^2=1$ seria $f=x-1$, amb mínim $-2$ a $(-1,0)$, que no és del disc. Al disc, $f=x-(x^2+y^2)>x-1>-2$ (perquè $x^2+y^2<1$ i $x>-1$), i $f(x,0)\to-2$ quan $x\to-1^+$. Per tant $\inf f=-2$ però no s'assoleix: no hi ha mínim absolut.
+            fuites: ['f\s*=\s*x\s*-\s*1', '\\inf\s*f\s*=\s*-\s*2', '>\s*-\s*2']
+            teoria: ["T5.23", "T5.22"]
+        errors_comuns:
+          - id: weierstrass_obert
+            descripcio: |
+              Aplica Weierstrass al disc obert com si fos compacte i busca el mínim a la frontera.
+            pregunta: |
+              El disc $x^2+y^2<1$ és compacte? Els punts de la circumferència formen part del domini?
+          - id: minim_a_frontera
+            descripcio: |
+              Dona com a mínim $-2$ en $(-1,0)$.
+            pregunta: |
+              El punt on t'ha sortit aquest valor, compleix la desigualtat estricta del disc?
+          - id: local_vs_absolut
+            descripcio: |
+              Classifica $\left(\frac12,0\right)$ com a màxim local i no justifica que sigui absolut.
+            pregunta: |
+              La hessiana et dona informació local. Com pots comparar el valor de $f$ al punt crític amb el valor de $f$ en qualsevol altre punt del disc?
+        nota_professor: |
+          Exercici per veure que sense compacitat el teorema de Weierstrass no s'aplica: el suprem s'assoleix i l'ínfim no.
+
+  - num: 9
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t6-9"
+        apartat: null
+        tipus: calcul
+        enunciat: |
+          Calculeu els extrems absoluts de $f(x,y)=\log\left(8xy-x^2+1\right)$ sobre el compacte
+          $$K=\{(x,y)\in\mathbb{R}^2\mid x>0,\ xy\leqslant8,\ 1\leqslant y\leqslant x^2\}.$$
+        teoria: ["T1.24"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Màxim absolut $\log61$, assolit en $(2,4)$.
+            Mínim absolut $\log1=0$, assolit en $(8,1)$.
+          fuites: ['\\(log|ln)\s*\{?\s*\(?\s*61', 'm[àa]xim\s+(absolut\s+)?(s.assoleix\s+)?(en|a)\s*\$?\s*\(\s*2\s*,\s*4', 'm[íi]nim\s+(absolut\s+)?(és|val|=)\s*\$?\s*(\\log\s*1|0)\b']
+        passos:
+          - id: recinte
+            titol: "Descriure $K$"
+            objectiu: |
+              Descriure el recinte $K$: vèrtexs i corbes que el delimiten.
+            idea: |
+              Intersecar dos a dos les corbes $y=1$, $y=x^2$, $xy=8$; observar quins valors pot prendre $x$.
+            detall: |
+              De $1\le y\le x^2$ i $x>0$ surt $x\ge1$, i de $xy\le8$, $y\ge1$ surt $x\le8$. Vèrtexs: $(1,1)$ ($y=1$, $y=x^2$), $(2,4)$ ($y=x^2$, $xy=8$) i $(8,1)$ ($xy=8$, $y=1$). La frontera és formada pel segment $y=1$, $x\in[1,8]$, l'arc de paràbola $y=x^2$, $x\in[1,2]$, i l'arc d'hipèrbola $y=\frac8x$, $x\in[2,8]$.
+            fuites: ['\(\s*2\s*,\s*4\s*\)', '\(\s*8\s*,\s*1\s*\)']
+            teoria: ["T1.34"]
+          - id: reduir
+            titol: "Eliminar el logaritme"
+            objectiu: |
+              Simplificar la funció a estudiar i comprovar que $f$ està ben definida a $K$.
+            idea: |
+              El logaritme és estrictament creixent: els extrems de $f$ són als mateixos punts que els de l'argument, sempre que aquest sigui positiu a $K$.
+            detall: |
+              Sigui $g=8xy-x^2+1$. A $K$: $8xy\ge8x\ge x^2$ (perquè $1\le x\le8$), per tant $g\ge1>0$ i $f=\log g$ és contínua a $K$. Per Weierstrass hi ha extrems, i són als mateixos punts que els de $g$.
+            fuites: []
+            teoria: ["T2.23"]
+          - id: interior
+            titol: "Interior"
+            objectiu: |
+              Trobar els punts crítics de $g$ a l'interior de $K$.
+            idea: |
+              Mirar si les dues derivades parcials poden anul·lar-se simultàniament a $K$.
+            detall: |
+              $g_y=8x\neq0$ a $K$ ($x\ge1$): no hi ha punts crítics a l'interior.
+            fuites: ['g_y\s*=\s*8\s*x']
+            teoria: ["T5.23"]
+          - id: frontera
+            titol: "Els tres trossos de frontera"
+            objectiu: |
+              Estudiar $g$ sobre cadascun dels tres trossos de la frontera.
+            idea: |
+              Substituir l'equació de cada corba i estudiar una funció d'una variable a l'interval corresponent (monotonia o punts crítics).
+            detall: |
+              $y=1$, $x\in[1,8]$: $g=8x-x^2+1$, crític $x=4$ amb $g=17$; $g(1)=8$, $g(8)=1$.
+              $y=x^2$, $x\in[1,2]$: $g=8x^3-x^2+1$, $g'=24x^2-2x>0$: creixent, de $8$ a $61$.
+              $y=\frac8x$, $x\in[2,8]$: $g=65-x^2$, decreixent, de $61$ a $1$.
+            fuites: ['65\s*-\s*x\^\{?2\}?', '\b61\b']
+            teoria: ["T6.1"]
+          - id: comparar
+            titol: "Concloure"
+            objectiu: |
+              Donar el màxim i el mínim absoluts de $f$.
+            idea: |
+              Comparar els valors de $g$ i aplicar el logaritme.
+            detall: |
+              $\max g=61$ en $(2,4)$ i $\min g=1$ en $(8,1)$. Per tant $\max f=\log61$ i $\min f=\log1=0$.
+            fuites: ['\\(log|ln)\s*\{?\s*\(?\s*61']
+            teoria: []
+        errors_comuns:
+          - id: log_sense_justificar
+            descripcio: |
+              Treu el logaritme sense comprovar que l'argument és positiu, o creu que canvia la posició dels extrems.
+            pregunta: |
+              Si $h$ és creixent, on assoleix $h\circ g$ els extrems respecte de $g$? I què cal saber de $g$ per poder aplicar $\log$?
+          - id: vertexs_malament
+            descripcio: |
+              Calcula malament on es tallen les corbes (per exemple no troba $(2,4)$) o oblida que $x\ge1$.
+            pregunta: |
+              Has resolt $x^2=\frac8x$? Quin punt dona, i quins valors de $x$ hi ha a $K$?
+          - id: oblida_extrems_interval
+            descripcio: |
+              Als trossos de frontera només busca on s'anul·la la derivada i oblida els vèrtexs, que són precisament on hi ha el màxim i el mínim.
+            pregunta: |
+              Si en un tros de frontera la funció és monòtona, on assoleix els extrems?
+        nota_professor: |
+          La condició $x>0$ no fa que $K$ deixi de ser tancat perquè les altres condicions ja impliquen $x\ge1$. El punt $(4,1)$ ($g=17$) és un candidat del segment que no guanya.
+
+  - num: 10
+    font: null
+    preambul: |
+      Considereu la funció $f\colon\mathbb{R}^2\to\mathbb{R}$ definida per $f(x,y)=\sin(x+y)+\cos(x-y)$.
+    indicacio: null
+    exercicis:
+      - id: "t6-10a"
+        apartat: "a"
+        tipus: calcul
+        enunciat: |
+          Trobeu i classifiqueu tots els seus punts crítics.
+        teoria: ["T5.22", "T5.21", "T5.25"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Els punts crítics són els punts amb $x+y=\frac{\pi}{2}+k\pi$ i $x-y=m\pi$ ($k,m\in\mathbb{Z}$), és a dir, $(x,y)=\left(\frac{\pi}{4}+\frac{(k+m)\pi}{2},\ \frac{\pi}{4}+\frac{(k-m)\pi}{2}\right)$.
+            - $k$ i $m$ parells: màxims locals estrictes, amb $f=2$ (de fet màxims absoluts).
+            - $k$ i $m$ senars: mínims locals estrictes, amb $f=-2$ (mínims absoluts).
+            - $k$ i $m$ de paritat diferent: punts de sella, amb $f=0$.
+          fuites: ['k\s*(i|,)\s*m\s+(són\s+)?parells', 'k\s*(i|,)\s*m\s+(són\s+)?senars', 'paritat\s+diferent']
+        passos:
+          - id: critics
+            titol: "Trobar els punts crítics"
+            objectiu: |
+              Resoldre el sistema $\nabla f=0$.
+            idea: |
+              Sumar i restar les dues equacions per separar-les en una condició sobre $x+y$ i una sobre $x-y$.
+            detall: |
+              $f_x=\cos(x+y)-\sin(x-y)$, $f_y=\cos(x+y)+\sin(x-y)$. Sumant i restant: $\cos(x+y)=0$ i $\sin(x-y)=0$, és a dir, $x+y=\frac{\pi}{2}+k\pi$, $x-y=m\pi$, amb $k,m\in\mathbb{Z}$. Equivalentment $(x,y)=\left(\frac{\pi}{4}+\frac{(k+m)\pi}{2},\frac{\pi}{4}+\frac{(k-m)\pi}{2}\right)$.
+            fuites: ['\\cos\s*\(\s*x\s*\+\s*y\s*\)\s*=\s*0', '\\sin\s*\(\s*x\s*-\s*y\s*\)\s*=\s*0']
+            teoria: ["T5.22"]
+          - id: hessiana
+            titol: "La hessiana als punts crítics"
+            objectiu: |
+              Calcular la matriu hessiana en un punt crític genèric, el seu determinant i la seva traça.
+            idea: |
+              Expressar les derivades segones en termes de $s=\sin(x+y)$ i $c=\cos(x-y)$, que als punts crítics valen $\pm1$.
+            detall: |
+              $f_{xx}=f_{yy}=-\sin(x+y)-\cos(x-y)=-s-c$, $f_{xy}=-\sin(x+y)+\cos(x-y)=c-s$. Als punts crítics $s=(-1)^k$, $c=(-1)^m$.
+              $\det Hf=(s+c)^2-(c-s)^2=4sc$, $\ \mathrm{tr}\,Hf=-2(s+c)$.
+            fuites: ['=\s*4\s*s\s*c', '\(\s*s\s*\+\s*c\s*\)\^\{?2\}?\s*-\s*\(\s*c\s*-\s*s\s*\)']
+            teoria: ["T5.32"]
+          - id: classificar
+            titol: "Classificar"
+            objectiu: |
+              Classificar cada punt crític segons els valors de $k$ i $m$.
+            idea: |
+              En dues variables, el signe del determinant i de la traça decideixen el signe de la forma quadràtica; aplicar les condicions suficients de segon ordre.
+            detall: |
+              Si $s=c=1$ ($k,m$ parells): $\det=4>0$, $\mathrm{tr}=-4<0$, definida negativa: màxim local estricte, $f=2$.
+              Si $s=c=-1$ ($k,m$ senars): $\det=4$, $\mathrm{tr}=4$, definida positiva: mínim local estricte, $f=-2$.
+              Si $sc=-1$: $\det=-4<0$, indefinida: punt de sella, $f=0$.
+              Com que $-2\le f\le2$ a tot $\mathbb{R}^2$, els màxims i mínims són de fet absoluts.
+            fuites: ['definida\s+negativa', 'punts?\s+de\s+sella', 'k\s*,\s*m\s+parells']
+            teoria: ["T5.30", "T5.33"]
+        errors_comuns:
+          - id: perd_solucions
+            descripcio: |
+              Resol $\cos(x+y)=0$ i $\sin(x-y)=0$ només en un període (per exemple només $(\frac{\pi}{4},\frac{\pi}{4})$) i oblida la periodicitat.
+            pregunta: |
+              Quines són totes les solucions de $\cos u=0$ a $\mathbb{R}$? I de $\sin v=0$?
+          - id: punts_malament
+            descripcio: |
+              Passa de $(x+y,x-y)$ a $(x,y)$ amb índexs independents per a $x$ i $y$, obtenint punts que no són crítics.
+            pregunta: |
+              Si $x+y$ i $x-y$ estan determinats, com recuperes $x$ i $y$? Qualsevol parella de múltiples de $\frac{\pi}{2}$ serveix?
+          - id: signe_hessiana
+            descripcio: |
+              Classifica amb un sol element diagonal sense mirar el determinant, o s'equivoca de signe en $f_{xy}$.
+            pregunta: |
+              El signe d'un element de la diagonal és suficient per decidir si la forma quadràtica és definida?
+        nota_professor: |
+          Amb el canvi lineal $u=x+y$, $v=x-y$, $f=\sin u+\cos v$, i la classificació és immediata: màxim quan $\sin u=\cos v=1$, mínim quan $\sin u=\cos v=-1$, sella si no.
+
+      - id: "t6-10b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          Calculeu els extrems absoluts de $f$ en el quadrat $[\pi/2,\pi]\times[\pi/2,\pi]$.
+        teoria: ["T1.24"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Màxim absolut $1$, assolit en $\left(\frac{\pi}{2},\frac{\pi}{2}\right)$ i en $(\pi,\pi)$.
+            Mínim absolut $-1$, assolit en $\left(\frac{\pi}{2},\pi\right)$ i en $\left(\pi,\frac{\pi}{2}\right)$.
+          fuites: ['m[àa]xim\s+(absolut\s+)?(és|val|=)\s*\$?\s*1\b', 'm[íi]nim\s+(absolut\s+)?(és|val|=)\s*\$?\s*-\s*1\b']
+        passos:
+          - id: interior
+            titol: "Punts crítics a l'interior"
+            objectiu: |
+              Usant l'apartat (a), trobar els punts crítics de $f$ a l'interior del quadrat i el valor de $f$ en ells.
+            idea: |
+              Mirar quins valors poden prendre $x+y$ i $x-y$ dins el quadrat i quins punts crítics de (a) hi cauen.
+            detall: |
+              Al quadrat, $x+y\in[\pi,2\pi]$ i $x-y\in[-\frac{\pi}{2},\frac{\pi}{2}]$. L'únic punt crític interior és $x+y=\frac{3\pi}{2}$, $x-y=0$: $\left(\frac{3\pi}{4},\frac{3\pi}{4}\right)$, un punt de sella amb $f=0$. Com que el quadrat és compacte, els extrems absoluts existeixen (Weierstrass) i han de ser a la frontera.
+            fuites: ['\\[dt]?frac\s*\{?\s*3\s*\\pi\s*\}?\s*\{?\s*4', '3\s*\\pi\s*/\s*4']
+            teoria: ["T5.23", "T2.23"]
+          - id: costats
+            titol: "Els quatre costats"
+            objectiu: |
+              Estudiar $f$ sobre cadascun dels quatre costats del quadrat.
+            idea: |
+              A cada costat una variable és constant: simplificar amb fórmules trigonomètriques i estudiar la monotonia de la funció d'una variable resultant.
+            detall: |
+              $x=\frac{\pi}{2}$: $f=\cos y+\sin y$, derivada $\cos y-\sin y<0$ a $(\frac{\pi}{2},\pi)$: decreix de $1$ a $-1$.
+              $x=\pi$: $f=-\sin y-\cos y$: creix de $-1$ (a $y=\frac{\pi}{2}$) a $1$ (a $y=\pi$).
+              $y=\frac{\pi}{2}$: $f=\cos x+\sin x$: decreix de $1$ a $-1$.
+              $y=\pi$: $f=-\sin x-\cos x$: creix de $-1$ a $1$.
+              Els extrems de cada costat són als vèrtexs: $f\left(\frac{\pi}{2},\frac{\pi}{2}\right)=f(\pi,\pi)=1$ i $f\left(\frac{\pi}{2},\pi\right)=f\left(\pi,\frac{\pi}{2}\right)=-1$.
+            fuites: ['f\s*\(\s*\\pi\s*,\s*\\pi\s*\)\s*=\s*1', 'decreix\s+de\s+\$?1']
+            teoria: ["T6.1"]
+          - id: concloure
+            titol: "Concloure"
+            objectiu: |
+              Donar el màxim i el mínim absoluts i on s'assoleixen.
+            idea: |
+              Comparar els valors de tots els candidats.
+            detall: |
+              Candidats: $0$ (punt de sella interior), $1$ i $-1$ als vèrtexs. Màxim absolut $1$ en $\left(\frac{\pi}{2},\frac{\pi}{2}\right)$ i $(\pi,\pi)$; mínim absolut $-1$ en $\left(\frac{\pi}{2},\pi\right)$ i $\left(\pi,\frac{\pi}{2}\right)$.
+            fuites: []
+            teoria: []
+        errors_comuns:
+          - id: critics_fora
+            descripcio: |
+              Pren com a candidats punts crítics de (a) que no són dins el quadrat, com $\left(\frac{\pi}{4},\frac{\pi}{4}\right)$.
+            pregunta: |
+              Quins valors pot prendre $x+y$ quan $x,y\in[\frac{\pi}{2},\pi]$?
+          - id: sella_com_extrem
+            descripcio: |
+              Inclou el punt interior com a extrem, o creu que l'absència de màxims locals interiors vol dir que no hi ha màxim absolut.
+            pregunta: |
+              Un punt de sella pot ser extrem absolut? I on poden ser els extrems d'una funció contínua en un compacte si no són a l'interior?
+          - id: un_sol_vertex
+            descripcio: |
+              Troba només un dels dos punts on s'assoleix cada extrem.
+            pregunta: |
+              Has avaluat $f$ als quatre vèrtexs?
+        nota_professor: |
+          Argument directe: amb $u=x+y\in[\pi,2\pi]$ i $v=x-y\in[-\frac{\pi}{2},\frac{\pi}{2}]$, $\sin u\le0$ i $0\le\cos v\le1$, així $-1\le f\le1$, amb igualtats exactament als vèrtexs indicats.
+
+  - num: 11
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t6-11"
+        apartat: null
+        tipus: calcul
+        enunciat: |
+          Trobeu els extrems absoluts de la funció $f(x,y)=x^3-3xy^2$ sobre la circumferència de radi 1 centrada a l'origen (la superfície $z=f(x,y)$ s'anomena *cadira del mico*).
+        teoria: ["T6.12"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Màxim absolut $1$, assolit en $(1,0)$, $\left(-\frac12,\frac{\sqrt3}{2}\right)$ i $\left(-\frac12,-\frac{\sqrt3}{2}\right)$.
+            Mínim absolut $-1$, assolit en $(-1,0)$, $\left(\frac12,\frac{\sqrt3}{2}\right)$ i $\left(\frac12,-\frac{\sqrt3}{2}\right)$.
+          fuites: ['m[àa]xim\s+(absolut\s+)?(és|val|=)\s*\$?\s*1\b', 'm[íi]nim\s+(absolut\s+)?(és|val|=)\s*\$?\s*-\s*1\b', '(\\left)?\(\s*-\s*\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*2\s*\}?\s*,\s*(\\pm|-)?\s*\\[dt]?frac\s*\{?\s*\\sqrt', '(\\left)?\(\s*\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*2\s*\}?\s*,\s*(\\pm|-)?\s*\\[dt]?frac\s*\{?\s*\\sqrt']
+        passos:
+          - id: existencia_param
+            titol: "Existència i parametrització"
+            objectiu: |
+              Justificar que hi ha extrems absoluts i reduir el problema a una variable.
+            idea: |
+              La circumferència és compacta. Parametritzar-la amb l'angle i simplificar $f$ amb fórmules trigonomètriques (angle triple).
+            detall: |
+              La circumferència és tancada i fitada i $f$ és contínua: hi ha extrems absoluts. Amb $(x,y)=(\cos t,\sin t)$, $t\in[0,2\pi]$:
+              $f=\cos^3t-3\cos t\sin^2t=\cos3t$.
+            fuites: ['\\cos\s*\(?\s*3\s*t']
+            teoria: ["T1.34", "T2.23", "T6.1"]
+          - id: extrems
+            titol: "Extrems de la funció d'una variable"
+            objectiu: |
+              Trobar el màxim i el mínim de la funció d'una variable i els angles on s'assoleixen.
+            idea: |
+              Els valors extrems de la funció trigonomètrica obtinguda són coneguts; buscar tots els angles de $[0,2\pi)$ on s'assoleixen.
+            detall: |
+              $\cos3t=1\iff t\in\{0,\frac{2\pi}{3},\frac{4\pi}{3}\}$ i $\cos3t=-1\iff t\in\{\frac{\pi}{3},\pi,\frac{5\pi}{3}\}$.
+            fuites: ['\\[dt]?frac\s*\{?\s*2\s*\\pi\s*\}?\s*\{?\s*3', '\\[dt]?frac\s*\{?\s*5\s*\\pi', '2\s*\\pi\s*/\s*3']
+            teoria: []
+          - id: punts
+            titol: "Tornar als punts del pla"
+            objectiu: |
+              Escriure els punts de la circumferència on s'assoleixen els extrems.
+            idea: |
+              Substituir els angles a la parametrització.
+            detall: |
+              Màxim $1$ en $(1,0)$, $\left(-\frac12,\pm\frac{\sqrt3}{2}\right)$; mínim $-1$ en $(-1,0)$, $\left(\frac12,\pm\frac{\sqrt3}{2}\right)$.
+            fuites: ['(\\left)?\(\s*-?\s*\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*2\s*\}?\s*,\s*(\\pm|-)?\s*\\[dt]?frac\s*\{?\s*\\sqrt']
+            teoria: []
+        errors_comuns:
+          - id: nomes_eixos
+            descripcio: |
+              Troba només $(1,0)$ i $(-1,0)$ i oblida els altres quatre punts.
+            pregunta: |
+              Quantes vegades arriba al seu màxim la funció trigonomètrica que t'ha sortit quan $t$ recorre $[0,2\pi)$?
+          - id: lagrange_casos
+            descripcio: |
+              Amb Lagrange, divideix per $x$ o per $y$ i perd solucions del sistema $3x^2-3y^2=2\lambda x$, $-6xy=2\lambda y$.
+            pregunta: |
+              A l'equació $-6xy=2\lambda y$, què passa si $y=0$? Has considerat aquest cas a part?
+          - id: punts_critics_lliures
+            descripcio: |
+              Busca els punts crítics lliures de $f$ (només l'origen) i conclou que no hi ha extrems.
+            pregunta: |
+              L'origen és de la circumferència? Quin problema estàs resolent: extrems a $\mathbb{R}^2$ o sobre la corba?
+        nota_professor: |
+          Alternativa amb Lagrange: $3x^2-3y^2=2\lambda x$, $-6xy=2\lambda y$, $x^2+y^2=1$. Si $y=0$: $(\pm1,0)$. Si $y\neq0$: $\lambda=-3x$ i $3x^2-3y^2=-6x^2$, $y^2=3x^2$, $x=\pm\frac12$. En polars, $f=r^3\cos3\theta$: la cadira del mico té tres "valls" i tres "carenes".
+
+  - num: 12
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t6-12"
+        apartat: null
+        tipus: teoric
+        enunciat: |
+          Considerem la funció $f(x,y,z)=x^4+y^2/4+z^2-x^2y-2z+1$ i el conjunt $M=\{(x,y,z)\in\mathbb{R}^3\mid2x^2+y^2+z^3-5xz-2=0\}$. Proveu que en el punt $p=(1,2,1)$ s'assoleix un mínim local de la restricció de $f$ a $M$. Es tracta d'un mínim absolut de la restricció de $f$ a $M$?
+        teoria: ["T6.12", "T6.2"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $p$ és un mínim local estricte de $f|_M$: $\nabla f(p)=\mathbf{0}$ (multiplicador $\lambda=0$) i la forma hessiana $q_{Hf(p)}$, que a $\mathbb{R}^3$ és només semidefinida positiva, és definida positiva sobre $T_M(p)=\{v_1-4v_2+2v_3=0\}$.
+            Sí, és un mínim absolut: $f=\left(x^2-\frac y2\right)^2+(z-1)^2\ge0=f(p)$ a tot $\mathbb{R}^3$, i en particular a $M$.
+          fuites: ['s[íi]\s*,?\s*(és|es\s+tracta\s+d.un)\s+(un\s+)?m[íi]nim\s+absolut', '\(\s*x\^\{?2\}?\s*-\s*(\\[dt]?frac\s*\{?\s*y|y\s*/\s*2)', 'f\s*(\\geq?|≥)\s*0', '\(\s*z\s*-\s*1\s*\)\^\{?2']
+        passos:
+          - id: varietat
+            titol: "$M$ és varietat prop de $p$"
+            objectiu: |
+              Comprovar que $p\in M$ i que $M$ és una varietat diferenciable en un entorn de $p$.
+            idea: |
+              Calcular $\Phi(p)$ i el gradient de l'equació definidora $\Phi$ en $p$; si no s'anul·la, per continuïtat té rang màxim en un entorn.
+            detall: |
+              $\Phi(p)=2+4+1-5-2=0$. $\nabla\Phi=(4x-5z,\ 2y,\ 3z^2-5x)$, $\nabla\Phi(p)=(-1,4,-2)\neq0$. Per continuïtat $\nabla\Phi\neq0$ en un obert $G\ni p$, i $M\cap G$ és una 2-varietat $\mathcal{C}^\infty$.
+            fuites: ['\(\s*-\s*1\s*,\s*4\s*,\s*-\s*2\s*\)']
+            teoria: ["T6.2"]
+          - id: lagrange
+            titol: "Punt crític de la funció de Lagrange"
+            objectiu: |
+              Comprovar que $p$ satisfà la condició necessària de Lagrange i trobar el multiplicador.
+            idea: |
+              Calcular $\nabla f(p)$ i comparar-lo amb $\nabla\Phi(p)$.
+            detall: |
+              $\nabla f=(4x^3-2xy,\ \frac y2-x^2,\ 2z-2)$, $\nabla f(p)=(0,0,0)=0\cdot\nabla\Phi(p)$. Per tant $(p,\lambda)$ amb $\lambda=0$ és punt crític de $L=f-\lambda\Phi$, i $F=L(\cdot,0)=f$.
+            fuites: ['\\lambda\s*=\s*0', '\\nabla\s*f\s*\(\s*p\s*\)\s*=\s*\(\s*0\s*,\s*0']
+            teoria: ["T6.16", "T6.17"]
+          - id: hessiana
+            titol: "Hessiana de $F$"
+            objectiu: |
+              Calcular la matriu hessiana de la funció $F$ del criteri de segon ordre en $p$ i veure què diu el criteri lliure.
+            idea: |
+              Amb el multiplicador trobat, $F$ coincideix amb $f$. Calcular les derivades segones i mirar el signe de la forma a tot $\mathbb{R}^3$.
+            detall: |
+              $HF(p)=Hf(p)=\begin{pmatrix}8&-2&0\\-2&\frac12&0\\0&0&2\end{pmatrix}$. El menor $2\times2$ té determinant $4-4=0$: la forma és semidefinida positiva (s'anul·la en la direcció $(1,4,0)$), així que el criteri d'extrems lliures no decideix.
+            fuites: ['pmatrix\}\s*8\s*&\s*-\s*2', '\(\s*1\s*,\s*4\s*,\s*0\s*\)']
+            teoria: ["T5.32", "T5.33"]
+          - id: tangent
+            titol: "Restringir a l'espai tangent"
+            objectiu: |
+              Estudiar el signe de la forma quadràtica hessiana sobre $T_M(p)$ i concloure el caràcter local de $p$.
+            idea: |
+              L'espai tangent és el nucli de $D\Phi(p)$. Escriure la forma com a suma de quadrats i veure si pot anul·lar-se en un vector tangent no nul.
+            detall: |
+              $T_M(p)=\ker D\Phi(p)=\{v\mid -v_1+4v_2-2v_3=0\}$. $q(v)=8v_1^2-4v_1v_2+\frac12v_2^2+2v_3^2=\frac12(4v_1-v_2)^2+2v_3^2\ge0$, i $q(v)=0$ només si $v_3=0$, $v_2=4v_1$; llavors la condició tangent dona $-v_1+16v_1=0$, $v=0$. Per tant $q$ és definida positiva sobre $T_M(p)$ i, pel teorema de condicions suficients, $p$ és un mínim local estricte de $f|_M$.
+            fuites: ['\(\s*4\s*v_\{?1\}?\s*-\s*v_\{?2\}?\s*\)\^\{?2\}?', 'definida\s+positiva\s+sobre']
+            teoria: ["T6.10", "T6.19"]
+          - id: absolut
+            titol: "És mínim absolut?"
+            objectiu: |
+              Decidir si $p$ és un mínim absolut de $f|_M$.
+            idea: |
+              Calcular $f(p)$ i intentar reescriure $f$ completant quadrats (fixeu-vos en els termes $x^4$, $-x^2y$, $\frac{y^2}{4}$).
+            detall: |
+              $f(p)=1+1+1-2-2+1=0$ i $f=\left(x^2-\frac y2\right)^2+(z-1)^2\ge0$ a tot $\mathbb{R}^3$. Per tant $f(q)\ge f(p)$ per a tot $q\in M$: sí, és un mínim absolut de $f|_M$.
+            fuites: ['\(\s*x\^\{?2\}?\s*-\s*(\\[dt]?frac\s*\{?\s*y|y\s*/\s*2)', 'f\s*(\\geq?|≥)\s*0', '\(\s*z\s*-\s*1\s*\)\^\{?2']
+            teoria: []
+        errors_comuns:
+          - id: criteri_lliure
+            descripcio: |
+              Usa la hessiana a tot $\mathbb{R}^3$, veu que és semidefinida i conclou que no es pot decidir (o que no és mínim).
+            pregunta: |
+              En extrems condicionats, en quin conjunt de vectors cal estudiar el signe de la forma hessiana?
+          - id: tangent_malament
+            descripcio: |
+              Pren com a espai tangent el generat per $\nabla\Phi(p)$ en lloc del seu ortogonal.
+            pregunta: |
+              El gradient de $\Phi$ és tangent o normal a $M$? Quina dimensió ha de tenir $T_M(p)$?
+          - id: oblida_varietat
+            descripcio: |
+              No comprova que $p\in M$ ni que $\nabla\Phi(p)\neq0$, condicions necessàries per aplicar els teoremes.
+            pregunta: |
+              Quines hipòtesis sobre $\Phi$ demanen els teoremes de Lagrange i de condicions suficients, i es compleixen en $p$?
+          - id: local_implica_absolut
+            descripcio: |
+              Afirma que és absolut perquè és l'únic punt crític trobat, o que no ho és perquè $M$ no és compacte, sense cap argument.
+            pregunta: |
+              Saps calcular el valor de $f$ en $p$? Hi ha alguna manera de comparar-lo amb el valor de $f$ en qualsevol altre punt?
+        nota_professor: |
+          Observació: $p$ és un punt crític lliure de $f$, i el criteri lliure falla perquè $f$ té mínim (no estricte) a tota la corba $\{y=2x^2,\ z=1\}$. Aquesta corba talla $M$ transversalment a $p$, per això la restricció té mínim estricte. L'absolut es pot veure també sense haver fet la part local.
+
+  - num: 13
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t6-13"
+        apartat: null
+        tipus: calcul
+        enunciat: |
+          Calculeu el màxim volum d'un paral·lelepípede de cares paral·leles als plans coordenats, inscrit dins l'el·lipsoide d'equació $\frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c^2}=1$, amb $a,b,c\in\mathbb{R}^+$.
+        teoria: ["T6.12"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $V_{\max}=\dfrac{8abc}{3\sqrt3}=\dfrac{8\sqrt3}{9}abc$, per al paral·lelepípede de vèrtexs $\left(\pm\frac{a}{\sqrt3},\pm\frac{b}{\sqrt3},\pm\frac{c}{\sqrt3}\right)$.
+          fuites: ['\\[dt]?frac\s*\{?\s*8\s*a\s*b\s*c\s*\}?\s*\{?\s*3\s*\\sqrt\s*\{?3', '\\[dt]?frac\s*\{?\s*8\s*\\sqrt\s*\{?3\}?\s*\}?\s*\{?\s*9', '8\s*a\s*b\s*c\s*/\s*\(?\s*3\s*\\sqrt', '\\[dt]?frac\s*\{?\s*a\s*\}?\s*\{?\s*\\sqrt\s*\{?3', 'a\s*/\s*\\sqrt\s*\{?3']
+        passos:
+          - id: plantejament
+            titol: "Plantejar el problema"
+            objectiu: |
+              Escriure el volum com una funció a maximitzar sobre l'el·lipsoide i justificar que el màxim existeix.
+            idea: |
+              Per simetria, el paral·lelepípede està centrat a l'origen i queda determinat pel vèrtex del primer octant. Restringir-se a la part de l'el·lipsoide amb coordenades no negatives, que és compacta.
+            detall: |
+              Si els vuit vèrtexs són a l'el·lipsoide, dos vèrtexs que només difereixen en $x$ compleixen $x_1^2=x_2^2$, així que el paral·lelepípede és $[-x,x]\times[-y,y]\times[-z,z]$ i $V=8xyz$ amb $(x,y,z)$ a l'el·lipsoide, $x,y,z\ge0$. Aquest conjunt $S^+$ és compacte i $V$ és contínua: hi ha màxim. Com que $V=0$ quan alguna coordenada és $0$ i $V>0$ en altres punts, el màxim és en un punt amb $x,y,z>0$; com que aquests punts formen un obert de l'el·lipsoide, és un màxim local de $V$ condicionat a l'el·lipsoide, que és una 2-varietat ($\nabla\Phi=\left(\frac{2x}{a^2},\frac{2y}{b^2},\frac{2z}{c^2}\right)\neq0$ sobre ell).
+            fuites: ['V\s*=\s*8\s*x\s*y\s*z']
+            teoria: ["T1.34", "T2.23", "T6.2", "T6.12"]
+          - id: lagrange
+            titol: "Sistema de Lagrange"
+            objectiu: |
+              Escriure les equacions de Lagrange i obtenir una relació entre les coordenades.
+            idea: |
+              Multiplicar cada equació per la variable corresponent: els tres membres esquerres es tornen iguals.
+            detall: |
+              $8yz=\lambda\frac{2x}{a^2}$, $8xz=\lambda\frac{2y}{b^2}$, $8xy=\lambda\frac{2z}{c^2}$. Multiplicant per $x$, $y$, $z$ respectivament: $8xyz=2\lambda\frac{x^2}{a^2}=2\lambda\frac{y^2}{b^2}=2\lambda\frac{z^2}{c^2}$. Com que $xyz>0$, $\lambda\neq0$ i $\frac{x^2}{a^2}=\frac{y^2}{b^2}=\frac{z^2}{c^2}$.
+            fuites: ['\\[dt]?frac\s*\{?\s*x\^\{?2\}?\s*\}?\s*\{?\s*a\^\{?2\}?\s*\}?\s*=\s*\\[dt]?frac\s*\{?\s*y\^\{?2\}?\s*\}?\s*\{?\s*b\^\{?2', 'x\^\{?2\}?\s*/\s*a\^\{?2\}?\s*=\s*y\^\{?2\}?\s*/\s*b']
+            teoria: ["T6.17"]
+          - id: resoldre
+            titol: "Resoldre i calcular el volum"
+            objectiu: |
+              Trobar el vèrtex òptim i el volum màxim.
+            idea: |
+              Substituir la relació obtinguda a l'equació de l'el·lipsoide.
+            detall: |
+              Cada quocient val $\frac13$: $x=\frac{a}{\sqrt3}$, $y=\frac{b}{\sqrt3}$, $z=\frac{c}{\sqrt3}$. És l'únic candidat amb $x,y,z>0$, per tant és el màxim: $V=8\frac{abc}{3\sqrt3}=\frac{8abc}{3\sqrt3}=\frac{8\sqrt3}{9}abc$.
+            fuites: ['\\[dt]?frac\s*\{?\s*a\s*\}?\s*\{?\s*\\sqrt\s*\{?3', 'a\s*/\s*\\sqrt\s*\{?3', '\\[dt]?frac\s*\{?\s*8\s*a\s*b\s*c\s*\}?\s*\{?\s*3\s*\\sqrt\s*\{?3']
+            teoria: []
+        errors_comuns:
+          - id: volum_xyz
+            descripcio: |
+              Pren com a volum $xyz$ en lloc de $8xyz$ (confon el vèrtex amb les arestes).
+            pregunta: |
+              Si un vèrtex és $(x,y,z)$ i la caixa està centrada a l'origen, quant mesura cada aresta?
+          - id: sense_existencia
+            descripcio: |
+              Troba el punt crític de Lagrange i afirma que és el màxim sense cap argument d'existència.
+            pregunta: |
+              Lagrange dona candidats. Per què ha d'existir un paral·lelepípede de volum màxim, i per què no pot ser un amb alguna aresta nul·la?
+          - id: dividir_lambda
+            descripcio: |
+              Divideix les equacions sense justificar que $x,y,z,\lambda\neq0$.
+            pregunta: |
+              Abans de dividir per $x$ o per $\lambda$, què saps del signe de $x$, $y$, $z$ en el punt òptim?
+        nota_professor: |
+          Alternativa sense Lagrange: per la desigualtat entre mitjanes aritmètica i geomètrica, $\left(\frac{x^2}{a^2}\frac{y^2}{b^2}\frac{z^2}{c^2}\right)^{1/3}\le\frac13$, d'on $xyz\le\frac{abc}{3\sqrt3}$. Per a l'esfera ($a=b=c=R$) el màxim és el cub d'aresta $\frac{2R}{\sqrt3}$.
+
+  - num: 14
+    font: null
+    preambul: ""
+    indicacio: null
+    exercicis:
+      - id: "t6-14"
+        apartat: null
+        tipus: calcul
+        enunciat: |
+          Considerem el conjunt $D=\{(x,y)\in\mathbb{R}^2\mid x^2+y^2-2x\leqslant0,\ x\geqslant1\}$ i la funció $f\colon\mathbb{R}^2\to\mathbb{R}$ definida per $f(x,y)=x^4+x^2y^2+2xy^2+12y^2$. Trobeu, si existeixen, els punts de $D$ on $f$ assoleix valors màxim i mínim.
+        teoria: ["T1.24"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Existeixen (D és compacte). Mínim $1$, assolit només en $(1,0)$. Màxim $18$, assolit en $\left(\frac32,\frac{\sqrt3}{2}\right)$ i $\left(\frac32,-\frac{\sqrt3}{2}\right)$.
+          fuites: ['m[àa]xim\s+(absolut\s+)?(és|val|=|\$)?\s*\$?\s*18', 'm[íi]nim\s+(absolut\s+)?(és|val|=|\$)?\s*\$?\s*1\b', '(\\left)?\(\s*\\[dt]?frac\s*\{?\s*3\s*\}?\s*\{?\s*2\s*\}?\s*,\s*(\\pm|-)?\s*\\[dt]?frac\s*\{?\s*\\sqrt\s*\{?\s*3']
+        passos:
+          - id: recinte
+            titol: "El recinte"
+            objectiu: |
+              Descriure $D$ i justificar l'existència d'extrems.
+            idea: |
+              Completar quadrats a la primera desigualtat; un conjunt definit per desigualtats no estrictes de funcions contínues és tancat.
+            detall: |
+              $x^2+y^2-2x\le0\iff(x-1)^2+y^2\le1$: $D$ és el semidisc dret del disc de centre $(1,0)$ i radi $1$, amb $x\in[1,2]$. És tancat i fitat, per tant compacte, i $f$ és contínua: pel teorema de Weierstrass hi ha màxim i mínim.
+            fuites: []
+            teoria: ["T2.18", "T1.34", "T2.23"]
+          - id: interior
+            titol: "Punts crítics interiors"
+            objectiu: |
+              Trobar els punts crítics de $f$ a l'interior de $D$.
+            idea: |
+              Factoritzar $f_y$; usar la informació que en surt a $f_x=0$.
+            detall: |
+              $f_y=2y(x^2+2x+12)$, i $x^2+2x+12>0$, per tant $y=0$; llavors $f_x=4x^3+2xy^2+2y^2=4x^3=0$ dona $x=0\notin D$. No hi ha punts crítics a $D$.
+            fuites: ['f_y\s*=\s*2\s*y\s*\(\s*x\^\{?2\}?\s*\+\s*2\s*x\s*\+\s*12']
+            teoria: ["T5.23"]
+          - id: minim
+            titol: "El mínim"
+            objectiu: |
+              Trobar el mínim de $f$ a $D$.
+            idea: |
+              Agrupar els termes amb $y^2$ i observar el signe del seu coeficient a $D$.
+            detall: |
+              $f=x^4+y^2(x^2+2x+12)\ge x^4\ge1$ a $D$ (on $x\ge1$), amb igualtat només si $y=0$ i $x=1$. Mínim $f(1,0)=1$.
+            fuites: ['f\s*\(\s*1\s*,\s*0\s*\)\s*=\s*1', 'y\^\{?2\}?\s*\(\s*x\^\{?2\}?\s*\+\s*2\s*x\s*\+\s*12\s*\)']
+            teoria: []
+          - id: frontera
+            titol: "La frontera"
+            objectiu: |
+              Estudiar $f$ sobre el segment $x=1$ i sobre l'arc de circumferència.
+            idea: |
+              Sobre l'arc, substituir $y^2$ en funció de $x$ (només hi apareix $y^2$) i estudiar una funció d'una variable a $[1,2]$.
+            detall: |
+              Segment $x=1$, $y\in[-1,1]$: $f=1+15y^2$, entre $1$ i $16$.
+              Arc $y^2=2x-x^2$, $x\in[1,2]$: $f=x^4+(2x-x^2)(x^2+2x+12)=-8x^2+24x$. Derivada $-16x+24=0$ a $x=\frac32$, valor $18$; als extrems, $16$ (en $(1,\pm1)$) i $16$ (en $(2,0)$). Per $x=\frac32$, $y^2=\frac34$.
+            fuites: ['-\s*8\s*x\^\{?2\}?\s*\+\s*24\s*x', 'y\^\{?2\}?\s*=\s*\\[dt]?frac\s*\{?\s*3\s*\}?\s*\{?\s*4', 'x\s*=\s*\\[dt]?frac\s*\{?\s*3\s*\}?\s*\{?\s*2']
+            teoria: ["T6.1"]
+          - id: concloure
+            titol: "Concloure"
+            objectiu: |
+              Donar els punts de màxim i de mínim.
+            idea: |
+              Comparar tots els valors.
+            detall: |
+              Mínim $1$ en $(1,0)$; màxim $18$ en $\left(\frac32,\pm\frac{\sqrt3}{2}\right)$.
+            fuites: ['(\\left)?\(\s*\\[dt]?frac\s*\{?\s*3\s*\}?\s*\{?\s*2\s*\}?\s*,\s*(\\pm|-)?\s*\\[dt]?frac\s*\{?\s*\\sqrt\s*\{?\s*3']
+            teoria: []
+        errors_comuns:
+          - id: disc_sencer
+            descripcio: |
+              Treballa amb tot el disc oblidant la condició $x\ge1$, o confon el centre del disc.
+            pregunta: |
+              Quina part del disc queda després d'imposar $x\ge1$? Quin és el centre del disc?
+          - id: substitucio_arrel
+            descripcio: |
+              Aïlla $y=\sqrt{2x-x^2}$ i oblida la meitat inferior de l'arc, perdent un dels punts de màxim.
+            pregunta: |
+              La funció depèn del signe de $y$? Quants punts de l'arc corresponen a cada $x$?
+          - id: oblida_segment
+            descripcio: |
+              Estudia només l'arc i oblida el segment $x=1$ (o al revés).
+            pregunta: |
+              De quines corbes està formada la frontera de $D$?
+        nota_professor: |
+          Com que per a $x$ fix $f$ és creixent en $y^2$, el màxim és necessàriament sobre l'arc; el segment només aporta el mínim $(1,0)$ i valors $\le16$. També es pot fer l'arc amb Lagrange: $\nabla f=\lambda(2x-2,2y)$.
+
+  - num: 15
+    font: null
+    preambul: |
+      Considerem la funció donada per $f(x,y,z)=(x+1)^2+(y-1)^2+2z$ i el conjunt $A=\{(x,y,z)\in\mathbb{R}^3\mid z\geqslant x^2+y^2,\ z\leqslant2y-2x+1\}$.
+    indicacio: null
+    exercicis:
+      - id: "t6-15a"
+        apartat: "a"
+        tipus: teoric
+        enunciat: |
+          Demostreu que el conjunt $A$ és tancat.
+        teoria: ["T1.11"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            $A=\{g_1\ge0\}\cap\{g_2\ge0\}$ amb $g_1=z-x^2-y^2$ i $g_2=2y-2x+1-z$ contínues; cada conjunt és tancat (antiimatge d'un tancat per una funció contínua) i la intersecció de tancats és tancada. Per tant $A$ és tancat.
+          fuites: []
+        passos:
+          - id: escriure
+            titol: "Escriure $A$ amb funcions contínues"
+            objectiu: |
+              Escriure $A$ com a intersecció de conjunts definits cadascun per una sola desigualtat.
+            idea: |
+              Passar-ho tot a un costat de cada desigualtat i identificar les funcions que hi apareixen.
+            detall: |
+              $A=A_1\cap A_2$ amb $A_1=\{g_1(x,y,z)\ge0\}$, $g_1=z-x^2-y^2$, i $A_2=\{g_2(x,y,z)\ge0\}$, $g_2=2y-2x+1-z$. Les dues funcions són polinòmiques, per tant contínues a $\mathbb{R}^3$.
+            fuites: []
+            teoria: []
+          - id: tancat
+            titol: "Concloure"
+            objectiu: |
+              Deduir que $A$ és tancat.
+            idea: |
+              Usar el resultat sobre conjunts definits per desigualtats no estrictes de funcions contínues, i com es comporten els tancats per interseccions.
+            detall: |
+              $A_i=g_i^{-1}([0,+\infty))$ és l'antiimatge d'un tancat de $\mathbb{R}$ per una funció contínua, per tant és tancat. La intersecció de tancats és tancada: $A$ és tancat.
+            fuites: []
+            teoria: ["T2.18", "T2.17", "T1.13"]
+        errors_comuns:
+          - id: sense_continuitat
+            descripcio: |
+              Diu que és tancat "perquè està definit amb $\le$" sense esmentar la continuïtat de les funcions.
+            pregunta: |
+              Un conjunt $\{h\ge0\}$ és sempre tancat, sigui quina sigui $h$? Què li has de demanar a $h$?
+          - id: tancat_compacte
+            descripcio: |
+              Confon tancat amb compacte, o intenta demostrar-ho calculant la frontera.
+            pregunta: |
+              Què et demana l'enunciat exactament, i quin resultat dels apunts relaciona desigualtats i conjunts tancats?
+        nota_professor: |
+          Es pot fer també amb successions: si $(x_n,y_n,z_n)\in A$ convergeix, les desigualtats passen al límit per continuïtat.
+
+      - id: "t6-15b"
+        apartat: "b"
+        tipus: calcul
+        enunciat: |
+          Justifiqueu l'existència d'extrems absoluts de $f$ en $A$ i calculeu-los.
+        teoria: ["T1.24"]
+        teoria_reservada: []
+        resultat:
+          valor: |
+            Existeixen perquè $A$ és compacte (tancat per (a) i fitat) i $f$ és contínua.
+            Mínim absolut $\frac43$, en $\left(-\frac13,\frac13,\frac29\right)$.
+            Màxim absolut $13+4\sqrt6$, en $\left(-1-\frac{\sqrt6}{2},\ 1+\frac{\sqrt6}{2},\ 5+2\sqrt6\right)$.
+          fuites: ['13\s*\+\s*4\s*\\sqrt\{?6', 'm[íi]nim\s+(absolut\s+)?(és|val|=)\s*\$?\s*(\\[dt]?frac\s*\{?\s*4\s*\}?\s*\{?\s*3|4\s*/\s*3)', '\(\s*-\s*\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*3\s*\}?\s*,\s*\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*3\s*\}?\s*,\s*\\[dt]?frac\s*\{?\s*2']
+        passos:
+          - id: existencia
+            titol: "Existència"
+            objectiu: |
+              Usant l'apartat (a), justificar que $f$ té extrems absoluts a $A$.
+            idea: |
+              Falta veure que $A$ és fitat: combinar les dues desigualtats per eliminar $z$ i obtenir una fita per a $(x,y)$, i després per a $z$.
+            detall: |
+              De $x^2+y^2\le z\le2y-2x+1$ surt $x^2+2x+y^2-2y\le1$, és a dir, $(x+1)^2+(y-1)^2\le3$: $(x,y)$ és al disc $\Delta$ de centre $(-1,1)$ i radi $\sqrt3$. Llavors $0\le z\le2y-2x+1$, que és fitat sobre $\Delta$. $A$ és tancat i fitat, per tant compacte (i no buit: $(0,0,0)\in A$); $f$ és contínua, i per Weierstrass hi ha extrems absoluts.
+            fuites: ['\(\s*x\s*\+\s*1\s*\)\^\{?2\}?\s*\+\s*\(\s*y\s*-\s*1\s*\)\^\{?2\}?\s*(\\le|\\leq|≤)\s*3']
+            teoria: ["T1.34", "T2.23"]
+          - id: interior
+            titol: "Interior"
+            objectiu: |
+              Decidir si hi pot haver extrems a l'interior de $A$.
+            idea: |
+              A l'interior (obert) un extrem hauria de ser punt crític de $f$.
+            detall: |
+              $\nabla f=(2(x+1),\ 2(y-1),\ 2)\neq0$: no hi ha punts crítics, i els extrems són a la frontera (al paraboloide $z=x^2+y^2$ o al pla $z=2y-2x+1$).
+            fuites: []
+            teoria: ["T5.23"]
+          - id: reduir
+            titol: "Reduir a dues variables"
+            objectiu: |
+              Per a cada $(x,y)$ fix, decidir a quin $z$ de $A$ la funció és mínima i a quin és màxima, i reduir el problema a funcions de $(x,y)$ sobre un disc.
+            idea: |
+              $f$ depèn de $z$ de manera creixent. (Alternativament: estudiar cada tros de frontera amb Lagrange, inclosa la corba intersecció.)
+            detall: |
+              Com que $f$ és creixent en $z$, per a $(x,y)\in\Delta$ el mínim és al paraboloide i el màxim al pla:
+              $\min_A f=\min_\Delta g$, $g=f(x,y,x^2+y^2)=3x^2+2x+3y^2-2y+2$;
+              $\max_A f=\max_\Delta h$, $h=f(x,y,2y-2x+1)=(x-1)^2+(y+1)^2+2$.
+            fuites: ['3\s*x\^\{?2\}?\s*\+\s*2\s*x', '\(\s*x\s*-\s*1\s*\)\^\{?2\}?\s*\+\s*\(\s*y\s*\+\s*1\s*\)\^\{?2\}?']
+            teoria: []
+          - id: minim
+            titol: "El mínim"
+            objectiu: |
+              Trobar el mínim absolut de $f$ a $A$ i on s'assoleix.
+            idea: |
+              Completar quadrats a la funció de dues variables obtinguda i comprovar que el punt on s'anul·len els quadrats és del disc.
+            detall: |
+              $g=3\left(x+\frac13\right)^2+3\left(y-\frac13\right)^2+\frac43$, mínim $\frac43$ en $\left(-\frac13,\frac13\right)$, que és de $\Delta$ ($\frac49+\frac49\le3$). El punt de $A$ és $\left(-\frac13,\frac13,\frac29\right)$, amb $f=\frac49+\frac49+\frac49=\frac43$.
+            fuites: ['\(\s*-\s*\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*3\s*\}?\s*,\s*\\[dt]?frac\s*\{?\s*1\s*\}?\s*\{?\s*3', '\\[dt]?frac\s*\{?\s*4\s*\}?\s*\{?\s*3\b']
+            teoria: []
+          - id: maxim
+            titol: "El màxim"
+            objectiu: |
+              Trobar el màxim absolut de $f$ a $A$ i on s'assoleix.
+            idea: |
+              La funció de dues variables per al màxim és una distància al quadrat a un punt fix (més una constant): el seu màxim sobre el disc és al punt del disc més allunyat d'aquest punt fix.
+            detall: |
+              $h-2$ és el quadrat de la distància a $(1,-1)$. La distància de $(1,-1)$ al centre $(-1,1)$ és $2\sqrt2$, i el punt més llunyà del disc és $(-1,1)+\sqrt3\frac{(-1,1)}{\sqrt2}=\left(-1-\frac{\sqrt6}{2},1+\frac{\sqrt6}{2}\right)$, a distància $2\sqrt2+\sqrt3$. Màxim: $(2\sqrt2+\sqrt3)^2+2=13+4\sqrt6$, amb $z=2y-2x+1=5+2\sqrt6$ (que també és $x^2+y^2$: el punt és a la corba intersecció).
+            fuites: ['13\s*\+\s*4\s*\\sqrt\{?6', '2\s*\\sqrt\{?2\}?\s*\+\s*\\sqrt\{?3', '1\s*\+\s*\\[dt]?frac\s*\{?\s*\\sqrt\s*\{?6']
+            teoria: []
+        errors_comuns:
+          - id: no_fitat
+            descripcio: |
+              Afirma que $A$ és compacte sense demostrar que és fitat (o creu que un paraboloide sempre dona un conjunt no fitat).
+            pregunta: |
+              Tancat no és suficient per a compacte. Combinant les dues desigualtats, què pots dir de $x$ i $y$?
+          - id: oblida_corba
+            descripcio: |
+              Estudiant trossos de frontera per separat, oblida la corba intersecció del paraboloide i el pla, on hi ha el màxim.
+            pregunta: |
+              Els trossos de frontera que has estudiat, inclouen la seva pròpia vora? On es troben les dues superfícies?
+          - id: critic_fora
+            descripcio: |
+              Al pla, troba el punt crític $(1,-1)$ de la funció restringida i el pren com a candidat sense comprovar que és fora del disc.
+            pregunta: |
+              El punt que t'ha sortit, compleix les dues desigualtats que defineixen $A$?
+        nota_professor: |
+          Resolució estàndard alternativa: interior sense punts crítics; paraboloide $z=x^2+y^2$ (substituint) amb candidat $\left(-\frac13,\frac13,\frac29\right)$; pla (substituint) sense candidats interiors, ja que $(1,-1)$ és fora de $\Delta$; corba intersecció $(x+1)^2+(y-1)^2=3$ on $f=13-4(u-v)$ amb $u=x+1$, $v=y-1$, d'extrems $13\pm4\sqrt6$. El mínim sobre la corba, $13-4\sqrt6\approx3.2$, no guanya.

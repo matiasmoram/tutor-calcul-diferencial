@@ -1,0 +1,61 @@
+{
+  "id": "a5fc12e21868",
+  "exercici": "T3.25",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "(Teorema del valor mitjà). Sigui $f:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}^m$ diferenciable en un obert $\\Omega\\subseteq\\mathbb{R}^n$ i sigui $u\\in\\mathbb{R}^m$.",
+    "Aleshores, per a tots $a,b\\in\\Omega$ tals que $[a,b]\\subseteq\\Omega$ i per a tot $\\xi\\in(a,b)$, es té $\\langle u,f(b)-f(a)\\rangle=\\langle u,Jf(\\xi)\\,(b-a)\\rangle$.",
+    "Siguin $a,b\\in\\Omega$ amb $[a,b]\\subseteq\\Omega$. Considerem les funcions $h:[0,1]\\to\\Omega$, $h(t)=(1-t)a+tb$, i $g_u:\\mathbb{R}^m\\to\\mathbb{R}$, $g_u(y)=\\langle u,y\\rangle$.",
+    "La funció $\\varphi=g_u\\circ f\\circ h$, $\\varphi(t)=\\langle u,f((1-t)a+tb)\\rangle$, és derivable a $[0,1]$ per composició de funcions diferenciables; en particular, és contínua a $[0,1]$ i derivable a $(0,1)$.",
+    "Pel teorema del valor mitjà clàssic, existeix $\\eta\\in(0,1)$ tal que $\\langle u,f(b)-f(a)\\rangle=\\varphi(1)-\\varphi(0)=\\varphi'(\\eta)\\,(1-0)$.",
+    "Per la regla de la cadena, $\\varphi'(t)=\\nabla g_u(f(h(t)))\\cdot Jf(h(t))\\cdot Jh(t)$, on $\\nabla g_u(y)=(u_1\\ \\cdots\\ u_m)$ per a tot $y$ i $Jh(t)=a-b$, vist com a vector columna.",
+    "Per tant, $\\varphi'(\\eta)=(u_1\\ \\cdots\\ u_m)\\,Jf(h(\\eta))\\,(b-a)=\\langle u,Jf(h(\\eta))\\,(b-a)\\rangle$.",
+    "Prenent $\\xi=h(\\eta)$, que pertany a $(a,b)$ perquè $\\eta\\in(0,1)$, obtenim $\\langle u,f(b)-f(a)\\rangle=\\langle u,Jf(\\xi)\\,(b-a)\\rangle$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "per a tot $\\xi\\in(a,b)$",
+      "inici": 71,
+      "fi": 94,
+      "tipus": "quantificador",
+      "explicacio": "El teorema garanteix l'existència d'algun $\\xi$, no que la igualtat valgui per a tots. Contraexemple: $n=m=1$, $f(x)=x^2$, $u=1$, $a=0$, $b=1$: $f(1)-f(0)=1$, però amb $\\xi=\\frac14$ s'obté $f'(\\xi)\\cdot1=\\frac12$.",
+      "correccio": "Existeix $\\xi\\in(a,b)$ tal que $\\langle u,f(b)-f(a)\\rangle=\\langle u,Jf(\\xi)\\,(b-a)\\rangle$.",
+      "pista": "Al teorema del valor mitjà d'una variable, el punt intermedi és qualsevol o n'hi ha algun?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "$Jh(t)=a-b$",
+      "inici": 141,
+      "fi": 152,
+      "tipus": "calcul",
+      "explicacio": "$h(t)=(1-t)a+tb=a+t(b-a)$, de manera que $h'(t)=b-a$, no $a-b$.",
+      "correccio": "$Jh(t)=b-a$ (com a vector columna).",
+      "pista": "Deriva $h(t)=a+t(b-a)$ respecte de $t$."
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t3.json",
+    "valoracio": "Quantificador de $\\xi$ canviat a universal i derivada de $h$ amb el signe canviat.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "per a tot $\\xi\\in(a,b)$",
+        "gravetat": "error",
+        "explicacio": "Els apunts diuen 'existeix $\\xi\\in(a,b)$'; per a tot $\\xi$ és fals en general."
+      },
+      {
+        "fragment": 6,
+        "cita": "$Jh(t)=a-b$",
+        "gravetat": "error",
+        "explicacio": "$h(t)=(1-t)a+tb$ té derivada $b-a$, no $a-b$ (el mateix [7] usa $b-a$)."
+      }
+    ]
+  },
+  "creat": 1791296233.7680926
+}

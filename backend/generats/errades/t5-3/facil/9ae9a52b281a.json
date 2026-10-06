@@ -1,0 +1,42 @@
+{
+  "id": "9ae9a52b281a",
+  "exercici": "t5-3",
+  "font": "problema",
+  "dificultat": "facil",
+  "fragments": [
+    "Calculem les derivades de $f(x,y)=e^x+e^y$ a l'origen: $f(0,0)=2$, $D_1f=e^x$ i $D_2f=e^y$ hi valen $1$, $D_{11}f=e^x$ i $D_{22}f=e^y$ també hi valen $1$, i $D_{12}f=0$ perquè cada sumand depèn d'una sola variable.",
+    "Per tant el polinomi de Taylor de grau 2 a l'origen és $P_2(x,y)=2+x+y+\\frac{x^2}{2}+\\frac{y^2}{2}$.",
+    "Avaluant al punt: $P_2(0.2,-0.1)=2+0.2-0.1+\\frac{0.04+0.01}{2}=2.1+0.05=2.15$, que és el valor aproximat de $f(0.2,-0.1)$.",
+    "Per al residu calen les derivades terceres: les úniques no nul·les són $D_{111}f=e^x$ i $D_{222}f=e^y$. Per la fórmula de Taylor amb residu de Lagrange, $R_3=\\frac{1}{3!}\\left(e^{\\xi_1}(0.2)^3+e^{\\xi_2}(-0.1)^3\\right)$, on $(\\xi_1,\\xi_2)=\\tau(0.2,-0.1)$ per a algun $\\tau\\in(0,1)$.",
+    "Així $0<\\xi_1<0.2$ i $-0.1<\\xi_2<0$. Fitem les exponencials: $e^{\\xi_1}<e^{0.2}<1.25$, perquè $1.25^5\\approx3.05>e$, i $e^{\\xi_2}<1$.",
+    "Per la desigualtat triangular, $|R_3|\\leq\\frac{1}{6}\\left(1.25\\cdot0.008+0.001\\right)=\\frac{0.011}{6}\\approx1.83\\cdot10^{-3}<2\\cdot10^{-3}$, que és una fita superior de l'error comès."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "$P_2(0.2,-0.1)=2+0.2-0.1+\\frac{0.04+0.01}{2}=2.1+0.05=2.15$, que és",
+      "inici": 18,
+      "fi": 85,
+      "tipus": "calcul",
+      "explicacio": "La fracció $\\frac{0.04+0.01}{2}$ val $0.025$, no $0.05$: s'ha oblidat de dividir per $2$. El valor aproximat correcte és $2.125$.",
+      "correccio": "$P_2(0.2,-0.1)=2+0.2-0.1+\\frac{0.04+0.01}{2}=2.1+0.025=2.125$.",
+      "pista": "Quant val exactament $\\frac{0.05}{2}$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t56.json",
+    "valoracio": "Polinomi i fita de l'error correctes, però el valor aproximat està mal calculat (2.15 en lloc de 2.125).",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$P_2(0.2,-0.1)=2+0.2-0.1+\\frac{0.04+0.01}{2}=2.1+0.05=2.15$",
+        "gravetat": "error",
+        "explicacio": "$\\frac{0.04+0.01}{2}=0.025$, no $0.05$: el valor aproximat és $2.125$, no $2.15$."
+      }
+    ]
+  },
+  "creat": 1791295916.990889
+}

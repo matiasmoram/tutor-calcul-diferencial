@@ -1,0 +1,80 @@
+{
+  "id": "a43b4870a521",
+  "exercici": "T5.14",
+  "font": "teoria",
+  "dificultat": "dificil",
+  "fragments": [
+    "Sigui $\\Omega\\subseteq\\mathbb{R}^n$ obert, $f:\\Omega\\to\\mathbb{R}$ de classe $\\mathcal{C}^{r+1}(\\Omega)$ i $\\mathbf{a}\\in\\Omega$. Per a tot $\\mathbf{x}\\in\\Omega$ amb $[\\mathbf{a},\\mathbf{x}]\\subseteq\\Omega$, per a tot $\\xi_\\mathbf{x}\\in(\\mathbf{a},\\mathbf{x})$ es té $f(\\mathbf{x})=P_r(\\mathbf{x})+R_{r+1}(\\mathbf{x})$, on $P_r(\\mathbf{x})=f(\\mathbf{a})+\\sum_{i=1}^{n}D_if(\\mathbf{a})(x_i-a_i)+\\cdots+\\frac{1}{r!}\\sum_{i_1,\\ldots,i_r=1}^{n}D_{i_1,\\ldots,i_r}f(\\mathbf{a})(x_{i_1}-a_{i_1})\\cdots(x_{i_r}-a_{i_r})$ és el polinomi de Taylor de grau $r$ de $f$ en $\\mathbf{a}$.",
+    "El residu és $R_{r+1}(\\mathbf{x})=\\frac{1}{(r+1)!}\\sum_{i_1,\\ldots,i_{r+1}=1}^{n}D_{i_1,\\ldots,i_{r+1}}f(\\xi_\\mathbf{x})(x_{i_1}-a_{i_1})\\cdots(x_{i_{r+1}}-a_{i_{r+1}})$.",
+    "A més, $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{a}}\\frac{R_{r+1}(\\mathbf{x})}{\\|\\mathbf{x}-\\mathbf{a}\\|^r}=0$.",
+    "Sigui $h(t)=\\mathbf{a}+t(\\mathbf{x}-\\mathbf{a})$ i $F(t)=f(h(t))$. Com que $[\\mathbf{a},\\mathbf{x}]\\subseteq\\Omega$ i $\\Omega$ és obert, $F$ està definida i és de classe $\\mathcal{C}^{r+1}$ en un obert $U\\supseteq[0,1]$ (composició de $f$ amb $h$, que és afí), i $F(0)=f(\\mathbf{a})$, $F(1)=f(\\mathbf{x})$.",
+    "Per la fórmula de Taylor en una variable aplicada a $F$ en $[0,1]$, existeix $\\tau\\in(0,1)$ tal que $F(1)=\\sum_{k=0}^{r}\\frac{F^{(k)}(0)}{k!}+\\frac{F^{(r+1)}(\\tau)}{(r+1)!}$.",
+    "Veurem que, per a $k\\leq r+1$, $F^{(k)}(t)=\\sum_{i_1,\\ldots,i_k=1}^{n}D_{i_1,\\ldots,i_k}f(h(t))(x_{i_1}-a_{i_1})\\cdots(x_{i_k}-a_{i_k})$ (3). Per a $k=1$ és la regla de la cadena: $F'(t)=\\sum_{i=1}^{n}D_if(h(t))\\,h_i'(t)=\\sum_{i=1}^{n}D_if(h(t))(x_i-a_i)$.",
+    "Si (3) és cert per a $k=m$, derivant amb la regla de la cadena cada terme $D_{i_1,\\ldots,i_m}f(h(t))$ obtenim $\\sum_{j=1}^{n}D_{i_1,\\ldots,i_m,j}f(h(t))(x_j-a_j)$; prenent $j=i_{m+1}$, resulta (3) per a $k=m+1$. Per inducció, (3) val per a tot $k\\in\\mathbb{N}$.",
+    "En $t=0$, $\\frac{F^{(k)}(0)}{k!}$ és exactament el terme d'ordre $k$ de $P_r$, de manera que $\\sum_{k=0}^{r}\\frac{F^{(k)}(0)}{k!}=P_r(\\mathbf{x})$; i $\\frac{F^{(r+1)}(\\tau)}{(r+1)!}=R_{r+1}(\\mathbf{x})$ prenent $\\xi_\\mathbf{x}=h(\\tau)\\in(\\mathbf{a},\\mathbf{x})$. Això demostra que $f(\\mathbf{x})=P_r(\\mathbf{x})+R_{r+1}(\\mathbf{x})$.",
+    "Finalment, si $B(\\mathbf{a},\\rho)\\subseteq\\Omega$, per a $\\mathbf{x}\\in B(\\mathbf{a},\\rho)$ el segment $[\\mathbf{a},\\mathbf{x}]$ és dins de $\\Omega$ i, per la desigualtat triangular, $\\frac{|R_{r+1}(\\mathbf{x})|}{\\|\\mathbf{x}-\\mathbf{a}\\|^r}\\leq\\frac{1}{(r+1)!}\\sum_{i_1,\\ldots,i_{r+1}=1}^{n}|D_{i_1,\\ldots,i_{r+1}}f(\\xi_\\mathbf{x})|\\frac{|x_{i_1}-a_{i_1}|}{\\|\\mathbf{x}-\\mathbf{a}\\|}\\cdots\\frac{|x_{i_r}-a_{i_r}|}{\\|\\mathbf{x}-\\mathbf{a}\\|}|x_{i_{r+1}}-a_{i_{r+1}}|$.",
+    "Quan $\\mathbf{x}\\to\\mathbf{a}$, $|D_{i_1,\\ldots,i_{r+1}}f(\\xi_\\mathbf{x})|\\to|D_{i_1,\\ldots,i_{r+1}}f(\\mathbf{a})|$, perquè $\\xi_\\mathbf{x}\\to\\mathbf{a}$ i les derivades d'ordre $r$ de $f$ són contínues; cada quocient $\\frac{|x_i-a_i|}{\\|\\mathbf{x}-\\mathbf{a}\\|}$ és $\\leq1$, i $|x_{i_{r+1}}-a_{i_{r+1}}|\\to0$. Per tant, $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{a}}\\frac{R_{r+1}(\\mathbf{x})}{\\|\\mathbf{x}-\\mathbf{a}\\|^r}=0$."
+  ],
+  "n_enunciat": 3,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "per a tot $\\xi_\\mathbf{x}\\in(\\mathbf{a},\\mathbf{x})$ es té",
+      "inici": 208,
+      "fi": 266,
+      "tipus": "quantificador",
+      "explicacio": "El punt intermedi només existeix; la igualtat no val per a tots els punts del segment: per a $n=1$, $r=0$, $f(x)=x^2$, $a=0$, $x=1$, $f(1)-f(0)=1=f'(\\xi)=2\\xi$ només per a $\\xi=1/2$.",
+      "correccio": "Els apunts diuen que existeix $\\xi_\\mathbf{x}\\in(\\mathbf{a},\\mathbf{x})$ tal que $f(\\mathbf{x})=P_r(\\mathbf{x})+R_{r+1}(\\mathbf{x})$.",
+      "pista": "En el cas $n=1$, $r=0$, l'enunciat es redueix al teorema del valor mitjà: quin quantificador hi apareix?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "Per inducció, (3) val per a tot $k\\in\\mathbb{N}$.",
+      "inici": 212,
+      "fi": 261,
+      "tipus": "quantificador",
+      "explicacio": "Com que $f$ només és de classe $\\mathcal{C}^{r+1}$, el pas d'inducció de $m$ a $m+1$ (derivar $D_{i_1,\\ldots,i_m}f$) només es pot fer per a $m\\leq r$; les derivades d'ordre superior a $r+1$ poden no existir.",
+      "correccio": "El pas d'inducció es fa per a $m\\leq r$, i per tant (3) val per a $k\\leq r+1$, que és tot el que cal.",
+      "pista": "Fins a quin ordre existeixen les derivades parcials de $f$? Fins on pot arribar, doncs, la inducció?"
+    },
+    {
+      "id": "e3",
+      "fragment": 10,
+      "cita": "les derivades d'ordre $r$ de $f$ són contínues",
+      "inici": 156,
+      "fi": 202,
+      "tipus": "hipotesi",
+      "explicacio": "Les derivades que s'avaluen en $\\xi_\\mathbf{x}$ són d'ordre $r+1$; la continuïtat de les d'ordre $r$ no en dona la convergència. Cal la continuïtat de les derivades d'ordre $r+1$, que dona $f\\in\\mathcal{C}^{r+1}(\\Omega)$.",
+      "correccio": "$|D_{i_1,\\ldots,i_{r+1}}f(\\xi_\\mathbf{x})|\\to|D_{i_1,\\ldots,i_{r+1}}f(\\mathbf{a})|$ perquè les derivades d'ordre $r+1$ de $f$ són contínues ($f\\in\\mathcal{C}^{r+1}(\\Omega)$).",
+      "pista": "De quin ordre són les derivades $D_{i_1,\\ldots,i_{r+1}}f$? La continuïtat de quines derivades necessites?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t5.json",
+    "valoracio": "Quantificador universal sobre $\\xi_\\mathbf{x}$, inducció estesa més enllà de la regularitat de $f$ i continuïtat de l'ordre equivocat.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "per a tot $\\xi_\\mathbf{x}\\in(\\mathbf{a},\\mathbf{x})$ es té",
+        "gravetat": "error",
+        "explicacio": "Quantificador canviat: la fórmula amb residu de Lagrange val per a algun $\\xi_\\mathbf{x}$, no per a tots (p. ex. $f(x)=x^3$, $r=0$)."
+      },
+      {
+        "fragment": 7,
+        "cita": "Per inducció, (3) val per a tot $k\\in\\mathbb{N}$.",
+        "gravetat": "error",
+        "explicacio": "$f$ només és $\\mathcal{C}^{r+1}$: les derivades d'ordre $>r+1$ poden no existir, i el pas d'inducció només es pot fer per a $m\\leq r$ (restricció eliminada). (3) val només per a $k\\leq r+1$."
+      },
+      {
+        "fragment": 10,
+        "cita": "les derivades d'ordre $r$ de $f$ són contínues",
+        "gravetat": "error",
+        "explicacio": "Per tenir $D_{i_1,\\ldots,i_{r+1}}f(\\xi_\\mathbf{x})\\to D_{i_1,\\ldots,i_{r+1}}f(\\mathbf{a})$ cal la continuïtat de les derivades d'ordre $r+1$, no d'ordre $r$."
+      }
+    ]
+  },
+  "creat": 1791296162.099711
+}

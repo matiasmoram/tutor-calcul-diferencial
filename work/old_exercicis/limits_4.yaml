@@ -1,0 +1,275 @@
+# Llista 4 — Càlcul de límits en diverses variables.
+# Cada fitxa és la "solució de referència" oculta a l'alumne.
+#
+# Camps:
+#   enunciat       LaTeX (sense $), es mostra a l'alumne.
+#   resultat       valor final + regex que el delaten (guardia determinista).
+#   passos         camí de resolució ordenat. El tutor només veu el contingut
+#                  del pas objectiu, i només fins al nivell de pista permès:
+#                    objectiu -> nivell 1, idea -> nivell 2, detall -> nivells 3-4.
+#                  `fuites`: regex que, si apareixen abans d'hora, delaten el pas.
+#   errors_comuns  errors típics que el mòdul de diagnosi pot identificar.
+#   nota_professor visible només al panell del professor.
+
+llista:
+  id: limits-4
+  etiqueta: "Llista 4"
+  titol: "Càlcul de límits"
+  descripcio: "Calculeu els límits següents. Límits en diverses variables: continuïtat, camins, fites i sandvitx."
+  tipus: calcul
+  format: latex
+
+exercicis:
+  - id: "4a"
+    etiqueta: "(a)"
+    enunciat: '\lim_{(x,y)\to(0,0)} \frac{2+3x+4y^2}{x+1}'
+    resultat:
+      valor: "2"
+      fuites: ['l[íi]mit\s+(és|val|dona|=)\s*\$?\s*2\b']
+    passos:
+      - id: continuitat
+        titol: "Reconèixer la continuïtat"
+        objectiu: "Adonar-se que no hi ha cap indeterminació: el denominador no s'anul·la a (0,0)."
+        idea: "Un quocient de funcions contínues és continu on el denominador no és zero; aleshores el límit és el valor de la funció al punt."
+        detall: "Al punt (0,0) el denominador val $x+1 = 1 \\neq 0$, i numerador i denominador són polinomis."
+        fuites: ['x\s*\+\s*1\s*=\s*1', '\\neq\s*0']
+      - id: avaluar
+        titol: "Avaluar al punt"
+        objectiu: "Calcular el valor de la funció a (0,0)."
+        idea: "Per continuïtat, n'hi ha prou de substituir $x=0$, $y=0$."
+        detall: "$f(0,0) = \\frac{2+0+0}{0+1} = 2$."
+        fuites: ['\\frac\{2\}\{1\}', 'f\(0,\s*0\)\s*=\s*2', '\\frac\{2[^}]*\}\{[^}]*\}\s*=\s*2']
+    errors_comuns:
+      - id: fals_indeterminacio
+        descripcio: "Tracta el límit com una indeterminació (fa camins, polars…) quan la funció és contínua al punt."
+        pregunta: "Abans de buscar camins: què val el denominador exactament al punt (0,0)?"
+      - id: camins_com_a_prova
+        descripcio: "Creu que comprovar uns quants camins demostra que el límit existeix."
+        pregunta: "Si dos camins donen el mateix valor, això garanteix que tots els camins el donaran?"
+      - id: error_aritmetic
+        descripcio: "Error de càlcul en substituir."
+        pregunta: "Pots tornar a substituir $x=0$ i $y=0$ terme per terme?"
+
+  - id: "4b"
+    etiqueta: "(b)"
+    enunciat: '\lim_{(x,y)\to(0,0)} \frac{x^4y^4}{\sqrt{x^2+y^2}}'
+    resultat:
+      valor: "0"
+      fuites: ['l[íi]mit\s+(és|val|dona|=)\s*\$?\s*0\b']
+    passos:
+      - id: indeterminacio
+        titol: "Detectar la indeterminació"
+        objectiu: "Veure que numerador i denominador tendeixen a 0 (indeterminació 0/0)."
+        idea: "Substituir directament dona $0/0$; cal una estratègia que controli el quocient a prop de l'origen."
+        detall: "$x^4y^4 \\to 0$ i $\\sqrt{x^2+y^2} \\to 0$."
+        fuites: []
+      - id: acotar
+        titol: "Acotar amb la norma"
+        objectiu: "Trobar una fita del mòdul del quocient que només depengui de la distància a l'origen."
+        idea: "Cada coordenada està fitada per la norma: $|x| \\le \\sqrt{x^2+y^2}$ i $|y| \\le \\sqrt{x^2+y^2}$ (o, equivalentment, passar a polars)."
+        detall: "Amb $r=\\sqrt{x^2+y^2}$: $|x^4y^4| \\le r^8$, per tant $\\left|\\frac{x^4y^4}{r}\\right| \\le r^7$. En polars: $r^7\\cos^4\\theta\\sin^4\\theta$, i $|\\cos^4\\theta\\sin^4\\theta|\\le 1$."
+        fuites: ['r\^\{?7\}?', 'r\^\{?8\}?']
+      - id: concloure
+        titol: "Concloure amb el sandvitx"
+        objectiu: "Aplicar el criteri del sandvitx per obtenir el límit."
+        idea: "Si $|f(x,y)| \\le g(r)$ i $g(r)\\to 0$, aleshores $f \\to 0$."
+        detall: "$0 \\le |f| \\le r^7 \\to 0$, per tant el límit és $0$."
+        fuites: []
+    errors_comuns:
+      - id: camins_com_a_prova
+        descripcio: "Conclou que el límit és 0 només perquè alguns camins donen 0."
+        pregunta: "Els camins et donen un candidat. Què caldria per assegurar que tots els camins, fins i tot els més retorçats, donen el mateix?"
+      - id: fita_incorrecta
+        descripcio: "Fa una desigualtat falsa o en sentit contrari (p. ex. fita el denominador per dalt quan necessita fitar-lo per baix)."
+        pregunta: "Revisa el sentit de la desigualtat: si fas el denominador més gran, el quocient es fa més gran o més petit?"
+      - id: polars_sense_uniformitat
+        descripcio: "Passa a polars i fa tendir r a 0 sense controlar la dependència en θ."
+        pregunta: "En polars, la part que depèn de θ està fitada independentment de θ?"
+
+  - id: "4c"
+    etiqueta: "(c)"
+    enunciat: '\lim_{(x,y)\to(0,0)} \frac{x^5}{x^4+y^2}'
+    resultat:
+      valor: "0"
+      fuites: ['l[íi]mit\s+(és|val|dona|=)\s*\$?\s*0\b']
+    passos:
+      - id: candidat
+        titol: "Trobar un candidat"
+        objectiu: "Detectar la indeterminació 0/0 i obtenir un candidat a límit amb algun camí."
+        idea: "Provar camins, especialment els adaptats a l'estructura del denominador: camins on $x^4$ i $y^2$ tinguin el mateix ordre de magnitud."
+        detall: "Per $y=kx$ i per $y=kx^2$ el quocient tendeix a $0$: el candidat és $0$, però això encara no demostra res."
+        fuites: ['y\s*=\s*k\s*x\^\{?2\}?']
+      - id: acotar
+        titol: "Acotar el quocient"
+        objectiu: "Trobar una fita del mòdul del quocient que tendeixi a 0."
+        idea: "Comparar el denominador amb un dels seus sumands (tots dos són no negatius) per fitar el quocient per dalt."
+        detall: "$\\frac{|x|^5}{x^4+y^2} \\le \\frac{|x|^5}{x^4} = |x|$ (per $x\\neq 0$; si $x=0$ la funció val 0)."
+        fuites: ['(\\le|\\leq|≤|=)\s*\|x\|','x\^\{?4\}?\s*(\\le|\\leq|≤)\s*x\^\{?4\}?\s*\+\s*y\^\{?2\}?']
+      - id: concloure
+        titol: "Concloure amb el sandvitx"
+        objectiu: "Aplicar el criteri del sandvitx."
+        idea: "Si $|f| \\le g$ amb $g \\to 0$, llavors $f \\to 0$."
+        detall: "$0 \\le |f(x,y)| \\le |x| \\to 0$, per tant el límit és $0$."
+        fuites: []
+    errors_comuns:
+      - id: camins_com_a_prova
+        descripcio: "Conclou que el límit existeix perquè uns quants camins (rectes, paràboles) donen 0."
+        pregunta: "Has provat alguns camins i tots donen el mateix. Això demostra que el límit existeix, o només et dona un candidat?"
+      - id: polars_sense_uniformitat
+        descripcio: "Passa a polars i conclou sense una fita independent de θ (el denominador en polars pot fer-se petit per alguns θ)."
+        pregunta: "En polars, el denominador pot fer-se molt petit per a algun angle concret? Com afecta això la teva conclusió?"
+      - id: fita_incorrecta
+        descripcio: "Fa una desigualtat falsa o en sentit contrari."
+        pregunta: "Si treus un sumand positiu del denominador, el quocient creix o decreix?"
+      - id: conclou_no_existeix
+        descripcio: "Creu erròniament que el límit no existeix (p. ex. per un càlcul de camí mal fet)."
+        pregunta: "Pots refer el càlcul pel camí que t'ha donat un valor diferent, pas a pas?"
+    nota_professor: "Exercici clàssic per veure que els camins només donen candidat. Les polars són incòmodes aquí; la fita $x^4 \\le x^4+y^2$ és el camí net."
+
+  - id: "4d"
+    etiqueta: "(d)"
+    enunciat: '\lim_{(x,y)\to(0,0)} \frac{3\sin xy}{xy}'
+    resultat:
+      valor: "3"
+      fuites: ['l[íi]mit\s+(és|val|dona|=)\s*\$?\s*3\b']
+    passos:
+      - id: domini
+        titol: "Entendre el domini"
+        objectiu: "Veure que la funció no està definida als eixos ($xy = 0$) i que el límit es pren sobre el domini."
+        idea: "El límit només considera punts del domini; que la funció no estigui definida als eixos no impedeix que el límit existeixi."
+        detall: "Domini: $\\{(x,y): xy \\neq 0\\}$; l'origen és punt d'acumulació del domini."
+        fuites: []
+      - id: canvi_variable
+        titol: "Canvi de variable"
+        objectiu: "Reduir el problema a un límit d'una variable."
+        idea: "L'expressió només depèn del producte $xy$, que tendeix a 0."
+        detall: "Amb $t = xy$, quan $(x,y)\\to(0,0)$ tenim $t \\to 0$ (amb $t\\neq 0$ al domini)."
+        fuites: ['t\s*=\s*xy', 'u\s*=\s*xy']
+      - id: limit_fonamental
+        titol: "Límit fonamental"
+        objectiu: "Aplicar el límit conegut d'una variable."
+        idea: "El límit $\\lim_{t\\to 0} \\frac{\\sin t}{t}$ és un límit fonamental."
+        detall: "$\\lim_{t\\to 0} \\frac{\\sin t}{t} = 1$, per tant el límit és $3\\cdot 1 = 3$."
+        fuites: ['\\frac\{\\sin\s*t\}\{t\}\s*(\\to|=)\s*1']
+    errors_comuns:
+      - id: no_definida_no_existeix
+        descripcio: "Diu que el límit no existeix perquè la funció no està definida als eixos."
+        pregunta: "Per calcular un límit, cal que la funció estigui definida al punt, o només a prop del punt (dins del domini)?"
+      - id: lhopital_dues_variables
+        descripcio: "Intenta aplicar L'Hôpital directament en dues variables."
+        pregunta: "L'Hôpital és un resultat d'una variable. Hi ha alguna manera de convertir aquest límit en un d'una sola variable?"
+      - id: oblida_constant
+        descripcio: "Oblida el factor 3 i dona 1 com a resultat."
+        pregunta: "Revisa el numerador: quin factor multiplica el sinus?"
+
+  - id: "4e"
+    etiqueta: "(e)"
+    enunciat: '\lim_{(x,y)\to(0,0)} \left(\frac{e^{x(y-1)}-x-1}{x^2+y^2},\ \sin(x-y)\right)'
+    resultat:
+      valor: "No existeix (la primera component no té límit finit)"
+      fuites: ['no\s+existeix', 'diverge(ix)?', '\\pm\s*\\infty']
+    passos:
+      - id: components
+        titol: "Separar per components"
+        objectiu: "Recordar que el límit d'una funció vectorial existeix si i només si existeix el de cada component."
+        idea: "Estudiar per separat cada component de la funció vectorial."
+        detall: "Cal $\\lim f_1$ i $\\lim f_2$; si una no existeix, el límit vectorial no existeix."
+        fuites: []
+      - id: segona_component
+        titol: "Segona component"
+        objectiu: "Calcular el límit de $\\sin(x-y)$."
+        idea: "És una composició de funcions contínues."
+        detall: "$\\sin(x-y) \\to \\sin 0 = 0$."
+        fuites: ['\\sin\s*0\s*=\s*0']
+      - id: cami_eix_x
+        titol: "Restringir la primera component a un camí"
+        objectiu: "Estudiar la primera component sobre un camí senzill."
+        idea: "Sobre l'eix $x$ ($y = 0$) la primera component esdevé una funció d'una variable."
+        detall: "Amb $y=0$: $f_1(x,0) = \\frac{e^{-x}-x-1}{x^2}$."
+        fuites: ['e\^\{-x\}\s*-\s*x\s*-\s*1']
+      - id: taylor
+        titol: "Desenvolupament de Taylor"
+        objectiu: "Determinar el comportament de $f_1(x,0)$ quan $x\\to 0$."
+        idea: "Desenvolupar $e^{-x}$ per Taylor fins a ordre 2 i mirar quin terme domina al numerador."
+        detall: "$e^{-x} = 1 - x + \\frac{x^2}{2} + o(x^2)$, per tant el numerador és $-2x + \\frac{x^2}{2} + o(x^2)$ i $f_1(x,0) \\approx -\\frac{2}{x} + \\frac12 \\to \\mp\\infty$. La primera component no té límit, i el límit vectorial no existeix."
+        fuites: ['-\s*2x', '-\s*\\frac\{2\}\{x\}', '-2/x']
+    errors_comuns:
+      - id: taylor_malament
+        descripcio: "Desenvolupa l'exponencial i cancel·la termes incorrectament (p. ex. suposa que $e^{x(y-1)} - x - 1$ comença a ordre 2)."
+        pregunta: "Escriu el terme d'ordre 1 de $e^{x(y-1)}$ i resta-li $x$: realment es cancel·la tot l'ordre 1?"
+      - id: nomes_una_component
+        descripcio: "Calcula només una component i en dedueix el límit vectorial."
+        pregunta: "Quina condició han de complir les components perquè existeixi el límit d'una funció vectorial?"
+      - id: camins_com_a_prova
+        descripcio: "Dona un valor al límit a partir de camins que coincideixen."
+        pregunta: "Els camins et poden demostrar que un límit existeix, o només que no existeix?"
+    nota_professor: "Tal com està escrit (exponent $x(y-1)$), sobre $y=0$ la primera component es comporta com $-2/x$: el límit no existeix. Si l'enunciat original fos $e^{x(y+1)}$, tampoc existeix (camí $y=0$ dona 1/2 i $y=x$ dona 3/4). Convé confirmar l'enunciat amb el professorat."
+
+  - id: "4f"
+    etiqueta: "(f)"
+    enunciat: '\lim_{(x,y,z)\to(0,0,0)} \frac{x^3+z^5}{\sqrt{x^2+2y^2+4z^2}}'
+    resultat:
+      valor: "0"
+      fuites: ['l[íi]mit\s+(és|val|dona|=)\s*\$?\s*0\b']
+    passos:
+      - id: fita_denominador
+        titol: "Fitar el denominador per baix"
+        objectiu: "Comparar el denominador amb la norma euclidiana."
+        idea: "Com que els coeficients són $\\ge 1$, el radicand és més gran o igual que $x^2+y^2+z^2$."
+        detall: "$\\sqrt{x^2+2y^2+4z^2} \\ge \\sqrt{x^2+y^2+z^2} = \\rho$."
+        fuites: ['(\\ge|\\geq|≥)\s*\\sqrt\{x\^2\s*\+\s*y\^2\s*\+\s*z\^2\}']
+      - id: fita_numerador
+        titol: "Fitar el numerador"
+        objectiu: "Fitar el numerador en funció de $\\rho$."
+        idea: "Cada coordenada està fitada per la norma: $|x|\\le\\rho$, $|z|\\le\\rho$."
+        detall: "$|x^3+z^5| \\le \\rho^3 + \\rho^5$, per tant $|f| \\le \\frac{\\rho^3+\\rho^5}{\\rho} = \\rho^2+\\rho^4$."
+        fuites: ['\\rho\^\{?2\}?\s*\+\s*\\rho\^\{?4\}?']
+      - id: concloure
+        titol: "Concloure amb el sandvitx"
+        objectiu: "Aplicar el criteri del sandvitx."
+        idea: "Una fita que tendeix a 0 força el límit a 0."
+        detall: "$0\\le|f|\\le\\rho^2+\\rho^4\\to 0$, per tant el límit és $0$."
+        fuites: []
+    errors_comuns:
+      - id: fita_incorrecta
+        descripcio: "Fita el denominador en el sentit equivocat (per dalt) o fa una desigualtat falsa."
+        pregunta: "Per fitar un quocient per dalt, el denominador l'has de fer més gran o més petit?"
+      - id: esferiques_embolic
+        descripcio: "Passa a coordenades esfèriques i s'embolica amb el denominador no esfèric."
+        pregunta: "Cal canviar de coordenades, o n'hi ha prou de comparar el denominador amb la norma?"
+      - id: camins_com_a_prova
+        descripcio: "Conclou només amb camins."
+        pregunta: "Els camins et donen un candidat; què et falta per demostrar-lo?"
+
+  - id: "4g"
+    etiqueta: "(g)"
+    enunciat: '\lim_{(x,y,z)\to(0,0,0)} e^{-1/(x^2+y^2+z^2)}'
+    resultat:
+      valor: "0"
+      fuites: ['l[íi]mit\s+(és|val|dona|=)\s*\$?\s*0\b']
+    passos:
+      - id: canvi_variable
+        titol: "Canvi de variable"
+        objectiu: "Reduir-ho a un límit d'una variable."
+        idea: "La funció només depèn de $x^2+y^2+z^2$, que tendeix a 0 per valors positius."
+        detall: "Amb $t = x^2+y^2+z^2$, tenim $t \\to 0^+$."
+        fuites: ['t\s*\\to\s*0\^\{?\+\}?']
+      - id: exponent
+        titol: "Comportament de l'exponent"
+        objectiu: "Veure cap a on va l'exponent."
+        idea: "Quan $t\\to 0^+$, què fa $1/t$? I $-1/t$?"
+        detall: "$-\\frac{1}{t} \\to -\\infty$."
+        fuites: ['-\s*\\frac\{1\}\{t\}\s*\\to\s*-\s*\\infty', '\\to\s*-\s*\\infty']
+      - id: exponencial
+        titol: "Límit de l'exponencial"
+        objectiu: "Concloure amb el límit de l'exponencial."
+        idea: "Comportament de $e^s$ quan $s \\to -\\infty$."
+        detall: "$e^{s} \\to 0$ quan $s\\to-\\infty$, per tant el límit és $0$."
+        fuites: []
+    errors_comuns:
+      - id: indeterminat
+        descripcio: "Diu que $-1/0$ és indeterminat i conclou que el límit no existeix."
+        pregunta: "El denominador $x^2+y^2+z^2$ pot ser negatiu? Què fa $1/t$ quan $t$ és petit i positiu?"
+      - id: signe_exponent
+        descripcio: "Oblida el signe menys i creu que tendeix a $+\\infty$."
+        pregunta: "Fixa't en el signe de l'exponent: cap on tendeix $-1/t$?"

@@ -1,0 +1,231 @@
+{
+ "exercici": "t1-12e",
+ "tema": 1,
+ "persona": "competent",
+ "arquetip": "competent",
+ "persona_descripcio": "Ets un alumne competent i constant. Resols l'exercici pas a pas i mostres el raonament i els càlculs (un o dos passos per missatge, no tot de cop). Respons amb cura les preguntes del tutor. Pots tenir algun petit descuit, però el corregeixes quan t'ho fan notar.",
+ "final": "fi_alumne",
+ "torns": [
+  {
+   "n": 1,
+   "alumne": "Si $(x,y)\\in E$ tenim $x^2+|y|=5$, d'aquí $x^2\\le5$ i $|y|\\le5$, per tant $|x|\\le\\sqrt5$ i $|y|\\le5$, així $E$ és acotat.",
+   "tutor": "Bé: has justificat correctament que $E$ és fitat. Ara el pas que falta és mirar si també és tancat. Què passa amb els punts que compleixen l’equació $x^2+|y|=5$ quan els veus com a preimatge d’un valor fix?",
+   "accio": "validar_i_avancar",
+   "pas_objectiu": "tancat",
+   "nivell": 1,
+   "intencio": "mostra_treball",
+   "errors_detectats": [],
+   "fallback": false,
+   "drafts": 1,
+   "rebuigs": [],
+   "progres": true,
+   "completats": [
+    "fitat"
+   ],
+   "trace": {
+    "torn": 1,
+    "origen": "text",
+    "diagnosi": {
+     "evidencia": "\"x^2+|y|=5, d'aquí x^2\\le5 i |y|\\le5, per tant |x|\\le\\sqrt5 i |y|\\le5, així E és acotat\"",
+     "resum_alumne": "Ha demostrat correctament que el conjunt és fitat, però encara no ha argumentat si és tancat ni ha conclòs la compacitat.",
+     "estat_passos": [
+      {
+       "pas": "fitat",
+       "estat": "completat"
+      },
+      {
+       "pas": "tancat",
+       "estat": "no_iniciat"
+      },
+      {
+       "pas": "concloure",
+       "estat": "no_iniciat"
+      }
+     ],
+     "pas_actual": "tancat",
+     "errors_detectats": [],
+     "error_altre": "",
+     "resultat_proposat": "cap",
+     "resultat_justificat": false,
+     "nivell_desorientacio": "en_cami",
+     "intencio": "mostra_treball",
+     "teoria_pregunta": []
+    },
+    "pla": {
+     "accio": "validar_i_avancar",
+     "motiu": "Ha completat: fitat.",
+     "pas_objectiu": "tancat",
+     "nivell_pista": 1,
+     "error_objectiu": null,
+     "error_text": null,
+     "pregunta_suggerida": null,
+     "pot_dir_resultat": false,
+     "resultat_dit_per_alumne": false,
+     "requereix_pregunta": true,
+     "max_frases": 4,
+     "regex_prohibides": [
+      "\\bE\\$?\\s+(sí\\s+)?és\\s+(un\\s+)?(conjunt\\s+)?compacte",
+      "\\bE\\$?\\s+és\\s+tancat\\s+i\\s+fitat"
+     ],
+     "teoria_extra": [],
+     "to": "normal",
+     "moviment": "Focus"
+    },
+    "contingut_permes": "Passos que l'alumne JA té resolts (pots referir-t'hi):\n  - Fitat: $|y|=5-x^2\\leq5$ i $x^2=5-|y|\\leq5$, és a dir $|x|\\leq\\sqrt5$. Per tant $\\|(x,y)\\|\\leq\\sqrt{5+25}=\\sqrt{30}$ i $E$ és fitat.\n\nPAS OBJECTIU: Tancat\n  objectiu: Decidir si $E$ és tancat.\n",
+    "teoria_permesa": [
+     "T1.24",
+     "T1.33"
+    ],
+    "intents": [
+     {
+      "missatge": "Bé: has justificat correctament que $E$ és fitat. Ara el pas que falta és mirar si també és tancat. Què passa amb els punts que compleixen l’equació $x^2+|y|=5$ quan els veus com a preimatge d’un valor fix?",
+      "referencies": [],
+      "determinista": [],
+      "llm": {
+       "veredicte": "ok",
+       "infraccions": [],
+       "explicacio": "Valida correctament la fitació i orienta cap a comprovar si el conjunt és tancat amb una pregunta, sense revelar el resultat ni avançar la demostració."
+      }
+     }
+    ],
+    "fallback": false,
+    "estat_previ": {
+     "completats": [],
+     "nivell_per_pas": {},
+     "torns": 0,
+     "tancat": false,
+     "ultim_pas": null,
+     "ultima_accio": null,
+     "estats": {},
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {},
+     "resultat_confirmat": false,
+     "intents_alumne": 0
+    },
+    "estat": {
+     "completats": [
+      "fitat"
+     ],
+     "nivell_per_pas": {
+      "tancat": 1
+     },
+     "torns": 1,
+     "tancat": false,
+     "ultim_pas": "tancat",
+     "ultima_accio": "validar_i_avancar",
+     "estats": {
+      "fitat": "completat",
+      "tancat": "no_iniciat",
+      "concloure": "no_iniciat"
+     },
+     "mostrats": [],
+     "errors_vistos": {},
+     "repeticions": {
+      "tancat": 1
+     },
+     "resultat_confirmat": false,
+     "intents_alumne": 1
+    },
+    "crides": [
+     {
+      "stage": "diagnosi",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 2047,
+      "input_tokens": 3935,
+      "output_tokens": 238,
+      "cached_tokens": 2816,
+      "extra": {}
+     },
+     {
+      "stage": "resposta",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 1566,
+      "input_tokens": 1467,
+      "output_tokens": 120,
+      "cached_tokens": 0,
+      "extra": {}
+     },
+     {
+      "stage": "guardia",
+      "model": "gpt-5.4-mini",
+      "latency_ms": 3107,
+      "input_tokens": 2633,
+      "output_tokens": 166,
+      "cached_tokens": 1792,
+      "extra": {}
+     }
+    ],
+    "latencia_ms": 6722
+   },
+   "jutge": {
+    "revela_resultat_final": false,
+    "passos_revelats": [],
+    "explicacio": "",
+    "permesos": [
+     "fitat"
+    ],
+    "resultat_permes": false,
+    "fuga": false,
+    "fuga_resultat": false,
+    "passos_filtrats": []
+   }
+  }
+ ],
+ "crides_alumne": [
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 2956,
+   "input_tokens": 493,
+   "output_tokens": 268,
+   "cached_tokens": 0,
+   "extra": {}
+  },
+  {
+   "stage": "alumne",
+   "model": "gpt-5-mini",
+   "latency_ms": 2851,
+   "input_tokens": 622,
+   "output_tokens": 268,
+   "cached_tokens": 0,
+   "extra": {}
+  }
+ ],
+ "crides_jutge": [
+  {
+   "stage": "jutge",
+   "model": "gpt-5.4-mini",
+   "latency_ms": 1237,
+   "input_tokens": 1047,
+   "output_tokens": 67,
+   "cached_tokens": 0,
+   "extra": {}
+  }
+ ],
+ "durada_s": 13.8,
+ "metriques": {
+  "torns": 1,
+  "torns_error": 0,
+  "completat": false,
+  "torns_fins_tancar": null,
+  "final": "fi_alumne",
+  "loops": [],
+  "fallbacks": 0,
+  "drafts": 1,
+  "rebuigs": {},
+  "preguntes_conceptuals": 0,
+  "preguntes_ignorades": 0,
+  "torns_jutjats": 1,
+  "fuites": [],
+  "fuites_resultat": [],
+  "accions": {
+   "validar_i_avancar": 1
+  },
+  "cost_tutor_usd": 0.00527,
+  "cost_simulacio_usd": 0.00244,
+  "models_sense_preu": []
+ },
+ "config": "default",
+ "_fitxer": "default__t1-12e__competent.json"
+}

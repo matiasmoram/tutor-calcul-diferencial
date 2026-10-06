@@ -1,0 +1,45 @@
+{
+  "id": "587810751e6c",
+  "exercici": "T4.20",
+  "font": "teoria",
+  "dificultat": "facil",
+  "fragments": [
+    "Sigui $G\\subseteq\\mathbb{R}^m$ obert, $\\Phi:G\\to\\mathbb{R}^{n+m}$ una funció $\\mathcal{C}^r(G)$, i $b\\in G$ tal que $\\mathrm{rang}\\big(D\\Phi(b)\\big)=m$.",
+    "Llavors existeixen oberts $U,V\\subseteq\\mathbb{R}^{n+m}$, amb $\\Phi(b)\\in V$, un $\\mathcal{C}^r$-difeomorfisme $h:V\\to U$ i un obert $U'\\subseteq G$ amb $b\\in U'$, tals que $(h\\circ\\Phi)(y)=(0,y)$ per a tot $y\\in G$.",
+    "Escrivim $\\Phi=(\\Phi_1,\\Phi_2)$, amb $\\Phi_1:G\\to\\mathbb{R}^n$ i $\\Phi_2:G\\to\\mathbb{R}^m$. Suposem que $\\det\\big(\\partial\\Phi_2/\\partial y\\big)(b)\\neq 0$; si el menor d'ordre $m$ no nul de $D\\Phi(b)$ correspon a unes altres $m$ components de $\\Phi$, aplicarem una permutació al final.",
+    "Considerem $f:\\mathbb{R}^n\\times G\\to\\mathbb{R}^{n+m}$, $f(x,y)=(x+\\Phi_1(y),\\Phi_2(y))$, que és de classe $\\mathcal{C}^r$ i compleix $f(0,b)=\\Phi(b)$. La seva jacobiana és $\\begin{pmatrix}\\mathrm{Id}_n&D\\Phi_1(y)\\\\ 0&D\\Phi_2(y)\\end{pmatrix}$, i per tant $\\det Df(0,b)=\\det\\big(\\partial\\Phi_2/\\partial y\\big)(b)\\neq 0$.",
+    "Pel teorema de la funció inversa, existeixen oberts $U\\subseteq\\mathbb{R}^n\\times G$, amb $(0,b)\\in U$, i $V=f(U)\\subseteq\\mathbb{R}^{n+m}$, amb $\\Phi(b)=f(0,b)\\in V$, tals que $f:U\\to V$ és bijectiva i la seva inversa és de classe $\\mathcal{C}^r$. Definim $h=f^{-1}:V\\to U$, que és un $\\mathcal{C}^r$-difeomorfisme.",
+    "Prenem $U'=\\{y\\in\\mathbb{R}^m\\mid(0,y)\\in U\\}$. Com que $U\\subseteq\\mathbb{R}^n\\times G$, tenim $U'\\subseteq G$, i $b\\in U'$ perquè $(0,b)\\in U$. Com a l'apartat (ii) del teorema de la funció implícita, $U'$ és obert.",
+    "Si $y\\in U'$, aleshores $(0,y)\\in U$ i, per definició de $f$, $f(0,y)=(\\Phi_1(y),\\Phi_2(y))=\\Phi(y)\\in V$; per tant, $h\\circ\\Phi$ està ben definida en $U'$.",
+    "A més, per a tot $y\\in U'$, $(h\\circ\\Phi)(y)=f^{-1}(f(0,y))=(0,y)$.",
+    "Si el menor no nul correspon a unes altres components, prenem una permutació $p$ de les coordenades de $\\mathbb{R}^{n+m}$ tal que $p\\circ\\Phi$ compleix la suposició anterior; obtenim un $\\mathcal{C}^r$-difeomorfisme $h$ amb $(h\\circ p\\circ\\Phi)(y)=(0,y)$, i aleshores $h\\circ p$ és el $\\mathcal{C}^r$-difeomorfisme buscat."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "per a tot $y\\in G$",
+      "inici": 197,
+      "fi": 215,
+      "tipus": "conclusio",
+      "explicacio": "La conclusió només val en un entorn $U'$ de $b$, no a tot $G$: $h\\circ\\Phi(y)=(0,y)$ obligaria $\\Phi$ a ser injectiva a tot $G$. Contraexemple ($n=m=1$): $\\Phi(t)=(\\cos t,\\sin t)$ a $G=\\mathbb{R}$ té rang $1$ arreu però no és injectiva.",
+      "correccio": "$(h\\circ\\Phi)(y)=(0,y)$ per a tot $y\\in U'$, un obert de $G$ que conté $b$.",
+      "pista": "Per a quins $y$ té sentit la igualtat? Per què l'enunciat introdueix l'obert $U'$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t4.json",
+    "valoracio": "Demostració correcta; l'enunciat estén la conclusió de $U'$ a tot $G$.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$(h\\circ\\Phi)(y)=(0,y)$ per a tot $y\\in G$",
+        "gravetat": "error",
+        "explicacio": "La igualtat només val a l'entorn $U'$ de $b$; a tot $G$, $\\Phi(y)$ pot no pertànyer a $V$ (domini de $h$) i la igualtat no té sentit ni és certa en general. El $U'$ de l'enunciat queda sense paper."
+      }
+    ]
+  },
+  "creat": 1791296058.5376778
+}

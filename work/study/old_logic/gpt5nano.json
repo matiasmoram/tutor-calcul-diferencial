@@ -1,0 +1,804 @@
+{
+ "config": "gpt5nano",
+ "stages": {
+  "diagnosi": [
+   "openai",
+   "gpt-5-nano",
+   "low"
+  ],
+  "resposta": [
+   "openai",
+   "gpt-5-nano",
+   "low"
+  ],
+  "guardia": [
+   "openai",
+   "gpt-5-nano",
+   "low"
+  ]
+ },
+ "sessions": [
+  {
+   "exercici": "t2-4c",
+   "torns": [
+    {
+     "alumne": "He provat les rectes $y=kx$ i sempre dona $0$, per tant el límit és $0$.",
+     "tutor": "Veig que els camins rectes i paràboles que has considerat donen 0.  \nAixò et dóna un candidat, però encara no és suficient per concloure el límit.  \nPensa: hi ha algun camí que no sigui de la forma y = f(x) o que no passi per l’origen i que et porti a un resultat diferent?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [
+      "camins_com_a_prova"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": "camins_com_a_prova",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5-nano",
+       "latency_ms": 11198,
+       "input_tokens": 3884,
+       "output_tokens": 1007,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5-nano",
+       "latency_ms": 6995,
+       "input_tokens": 1543,
+       "output_tokens": 605,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5-nano",
+       "latency_ms": 4032,
+       "input_tokens": 2914,
+       "output_tokens": 295,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 22227
+    },
+    {
+     "alumne": "Què vol dir exactament que un límit existeixi?",
+     "tutor": "Has trobat un candidat 0 utilitzant camins rectes i parabòliques, però encara cal demostrar que el límit existeix i és aquest valor. \nLa desigualtat 0 ≤ |f(x,y)| ≤ |x| ≤ ||(x,y)|| (amb x ≠ 0; si x=0 la funció val 0) és la base del sandvitx per aplicar la Definició 6 del Tema 2. \nAquesta és la idea per concloure, però encara no t’ho demano. \nQuina és la formulació final de la conclusió que vols atribuir al límit segons la Definició 6?",
+     "referencies": [
+      "T2.6"
+     ],
+     "accio": "demanar_conclusio",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "pregunta_conceptual",
+     "errors": [],
+     "want_intent": "pregunta_conceptual",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5-nano",
+       "latency_ms": 9861,
+       "input_tokens": 3993,
+       "output_tokens": 930,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5-nano",
+       "latency_ms": 10399,
+       "input_tokens": 1669,
+       "output_tokens": 918,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5-nano",
+       "latency_ms": 4935,
+       "input_tokens": 3100,
+       "output_tokens": 355,
+       "cached_tokens": 1664,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 25197
+    },
+    {
+     "alumne": "No sé com fitar-ho. Digues-me la solució, si us plau.",
+     "tutor": "És bo que has triangulat un candidat 0 i hagis utilitzat el sandwich amb la desigualtat 0 ≤ |f(x,y)| ≤ ||(x,y)||.  \nLa formulació final segons la Definició 6 és: ∀ ε>0 ∃ δ>0 tal que, si 0<||(x,y)||<δ, llavors |f(x,y)|<ε.  \nAmb aquesta desigualtat, ho pots convertir en la conclusió formal del límit segons la Definició 6.  \nQuina és la formulació final de la conclusió segons la Definició 6 que vols atribuir al límit?",
+     "referencies": [
+      "T2.6"
+     ],
+     "accio": "demanar_conclusio",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [],
+     "want_intent": "demana_solucio",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5-nano",
+       "latency_ms": 6164,
+       "input_tokens": 4166,
+       "output_tokens": 479,
+       "cached_tokens": 3712,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5-nano",
+       "latency_ms": 11827,
+       "input_tokens": 1836,
+       "output_tokens": 977,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5-nano",
+       "latency_ms": 15798,
+       "input_tokens": 3262,
+       "output_tokens": 1190,
+       "cached_tokens": 2816,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 33791
+    },
+    {
+     "alumne": "Com que $x^4\\le x^4+y^2$, tinc $|f|\\le\\frac{|x|^5}{x^4}=|x|\\to0$, i pel sandvitx el límit és $0$.",
+     "tutor": "Bon treball, has estat capaç de confirmar el valor i obtenir la justificació correcta. El límit és 0. L’idea clau és utilitzar el sandvitx: 0 ≤ |f(x,y)| ≤ ||(x,y)||, i amb això aplicar la Definició 6 (Tema 2) per obtenir un δ depenent de ε. En aquest risc, es pot prendre δ = ε per demostrar l’existència del límit.",
+     "referencies": [
+      "T2.6"
+     ],
+     "accio": "tancar",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [],
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5-nano",
+       "latency_ms": 9433,
+       "input_tokens": 4361,
+       "output_tokens": 786,
+       "cached_tokens": 3968,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5-nano",
+       "latency_ms": 6149,
+       "input_tokens": 2042,
+       "output_tokens": 428,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5-nano",
+       "latency_ms": 7319,
+       "input_tokens": 3430,
+       "output_tokens": 511,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 22903
+    }
+   ]
+  },
+  {
+   "exercici": "t4-8",
+   "torns": [
+    {
+     "alumne": "Calculo el jacobià: $\\det JG=3+6z$, que a $(1,-1,2)$ val $15$.",
+     "tutor": "Quina és la imatge de (1,-1,2) segons G que ens permeti relacionar aquest punt amb (4,4,-1)?",
+     "referencies": [],
+     "accio": "pista",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5-nano",
+       "latency_ms": 10904,
+       "input_tokens": 4825,
+       "output_tokens": 779,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5-nano",
+       "latency_ms": 11783,
+       "input_tokens": 1159,
+       "output_tokens": 873,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5-nano",
+       "latency_ms": 4899,
+       "input_tokens": 3842,
+       "output_tokens": 352,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 27587
+    },
+    {
+     "alumne": "Llavors $DG^{-1}(4,4,-1)$ és la jacobiana de $G$ al punt $(4,4,-1)$ invertida, no?",
+     "tutor": "Precís: has encertat que cal mirar la jacobiana, però encara no has connectat com relacionar el punt (1,-1,2) amb la imatge (4,4,-1).  \nEl PAS OBJECTIU exigeix situar el punt i la seva imatge abans d’avaluar la diferencial de la inversa.  \nEl punt (4,4,-1) pertany al domini de G o al de la seva inversa? En quin punt s’ha d’avaluar JG?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "pregunta_conceptual",
+     "errors": [
+      "punt_equivocat"
+     ],
+     "want_intent": "mostra_treball",
+     "want_error": "punt_equivocat",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5-nano",
+       "latency_ms": 15664,
+       "input_tokens": 4908,
+       "output_tokens": 1063,
+       "cached_tokens": 4608,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5-nano",
+       "latency_ms": 11845,
+       "input_tokens": 1360,
+       "output_tokens": 886,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5-nano",
+       "latency_ms": 6161,
+       "input_tokens": 4119,
+       "output_tokens": 418,
+       "cached_tokens": 3072,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 33671
+    },
+    {
+     "alumne": "Què diu exactament el teorema de la funció inversa?",
+     "tutor": "El Teorema de la funció inversa ens diu que, si una funció f és diferenciable a un punt a i det(Jf(a)) ≠ 0, aleshores existeix un entorno on f és invertible i la inversa és de la mateixa classe de regularitat; a més, la diferencial de la inversa en y0 = f(a) és el camp (Df(a))^{-1}. Aquesta relació és exactament el que ens permet calcular DG^{-1}(y0) a partir de DG(a) invertint la matriu Jacobiana en el punt a. Cal, doncs, identificar clarament el punt a i la seva imatge y0 = G(a) per aplicar-ho correctament (i veure que G és difeomorfisme en un entorn adequat). Segons això, com aplicaríem aquest resultats per obtenir DG^{-1}(4,4,-1) a partir de G?",
+     "referencies": [],
+     "accio": "explicar_concepte",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "pregunta_conceptual",
+     "errors": [],
+     "want_intent": "pregunta_conceptual",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5-nano",
+       "latency_ms": 11557,
+       "input_tokens": 5039,
+       "output_tokens": 830,
+       "cached_tokens": 4736,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5-nano",
+       "latency_ms": 6559,
+       "input_tokens": 2385,
+       "output_tokens": 525,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5-nano",
+       "latency_ms": 6210,
+       "input_tokens": 5232,
+       "output_tokens": 321,
+       "cached_tokens": 3072,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 24328
+    },
+    {
+     "alumne": "Com que té inversa local a tot arreu on $3+6z\\neq0$, $G$ té inversa global.",
+     "tutor": "Segons el Teorema de la funció inversa (Teorema 5 del Tema 4), quines condicions addicionals, a més de det JG ≠ 0, caldria verificar perquè G sigui difeomorfisme i tingui inversa global?",
+     "referencies": [
+      "T4.5"
+     ],
+     "accio": "questionar_error",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "pregunta_conceptual",
+     "errors": [
+      "local_implica_global",
+      "punt_equivocat"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": "local_implica_global",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5-nano",
+       "latency_ms": 10198,
+       "input_tokens": 5287,
+       "output_tokens": 931,
+       "cached_tokens": 4608,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5-nano",
+       "latency_ms": 7762,
+       "input_tokens": 2685,
+       "output_tokens": 582,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5-nano",
+       "latency_ms": 3445,
+       "input_tokens": 5400,
+       "output_tokens": 242,
+       "cached_tokens": 3200,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 21407
+    }
+   ]
+  },
+  {
+   "exercici": "t6-3a",
+   "torns": [
+    {
+     "alumne": "No sé per on començar.",
+     "tutor": "El conjunt del lligam és tancat i fitat (compacte) per Teorema 34 (Tema 1) i, com que f és contínua, per Teorema 23 (Tema 2) existeixen màxim i mínim de f subjecte al lligam. Aquest pas utilitza només la propietat d’extrems garantits per la compacitat i la continuïtat, sense càlculs. Vols que confirmem aquesta estratègia i després passem a obtenir els valors dels extrems sense multiplicadors?",
+     "referencies": [
+      "T1.34",
+      "T2.23"
+     ],
+     "accio": "pista",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "demana_pista",
+     "errors": [],
+     "want_intent": "demana_pista",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5-nano",
+       "latency_ms": 4976,
+       "input_tokens": 3355,
+       "output_tokens": 398,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5-nano",
+       "latency_ms": 10407,
+       "input_tokens": 1355,
+       "output_tokens": 835,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5-nano",
+       "latency_ms": 6186,
+       "input_tokens": 2713,
+       "output_tokens": 426,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 21571
+    },
+    {
+     "alumne": "Sobre l'el·lipse $x^2=3-2y^2\\le3$, així que $|x|\\le\\sqrt3$.",
+     "tutor": "Bona direcció; per poder identificar possibles punts on s’assoleixen extrems, prova a mirar on la pendent de la el·lipse és infinita, ja que això pot indicar que x pren valors extrems. Diferencia la restricció implícita x^2+2y^2=3 per obtenir la pendent: 2x+4yy'=0, així y' = -x/(2y). Per una pendent infinita cal que y=0, i llavors x^2=3. Quins són els punts (x,y) que compleixen això?",
+     "referencies": [],
+     "accio": "pista",
+     "nivell": 3,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5-nano",
+       "latency_ms": 13933,
+       "input_tokens": 3522,
+       "output_tokens": 1034,
+       "cached_tokens": 3200,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5-nano",
+       "latency_ms": 20632,
+       "input_tokens": 1619,
+       "output_tokens": 1033,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5-nano",
+       "latency_ms": 7112,
+       "input_tokens": 2973,
+       "output_tokens": 540,
+       "cached_tokens": 1792,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 41678
+    },
+    {
+     "alumne": "Per tant el màxim és $\\sqrt3$ i el mínim $-\\sqrt3$.",
+     "tutor": "Correcte: l’existència de màxim i mínim segueix del Teorema de Heine-Borel (Teorema 34, Tema 1) i del Teorema de Weierstrass (Teorema 23, Tema 2). Per completar la justificació, cal mostrar on s’assoleixen aquests extrems restringint la corba M i mirant quan la pendent és infinita. Aquestes condicions et guien a identificar punts candidats en la intersecció de la restricció amb els valors de y que fan infinita la pendent; en aquest cas, correspondrien a un conjunt on la pendent es presenta de manera particular i, segons la geometria de l’el·lipse, donen punts candidats. Com faries aquest pas de demostració rigorosa per determinar quins punts realment ofereixen màxim i mínim subjectes al lligam?",
+     "referencies": [],
+     "accio": "demanar_justificacio",
+     "nivell": 3,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [],
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5-nano",
+       "latency_ms": 12051,
+       "input_tokens": 3674,
+       "output_tokens": 1022,
+       "cached_tokens": 3200,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5-nano",
+       "latency_ms": 12150,
+       "input_tokens": 1795,
+       "output_tokens": 903,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5-nano",
+       "latency_ms": 5816,
+       "input_tokens": 3213,
+       "output_tokens": 380,
+       "cached_tokens": 1664,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 30018
+    },
+    {
+     "alumne": "S'assoleixen a $(\\sqrt3,0)$ i $(-\\sqrt3,0)$, perquè quan $y=0$ tenim $x^2=3$, i l'el·lipse és compacta.",
+     "tutor": "Bona feina: has establert l'existència d'extrems i identificat els punts candidats (√3,0) i (-√3,0).  \nConfirmes el resultat: màxim absolut √3 en (√3,0) i mínim absolut -√3 en (-√3,0).  \nLa idea clau és que, dins el lligam x^2+2y^2=3, els extrems de f(x,y)=x es Troben quan y=0, d’on neixen els punts de màxim i mínim; aquesta estratègia és coherent amb Teorema 34 (Tema 1) i Teorema 23 (Tema 2).  \nSi vols, podem comentar com parlar-ne amb rigor a partir de la definició de màxims i mínims condicionats.",
+     "referencies": [
+      "T1.34",
+      "T2.23"
+     ],
+     "accio": "tancar",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [],
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5-nano",
+       "latency_ms": 14386,
+       "input_tokens": 3918,
+       "output_tokens": 1122,
+       "cached_tokens": 3584,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5-nano",
+       "latency_ms": 16550,
+       "input_tokens": 2151,
+       "output_tokens": 1211,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5-nano",
+       "latency_ms": 6192,
+       "input_tokens": 3565,
+       "output_tokens": 368,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 37130
+    }
+   ]
+  },
+  {
+   "exercici": "t3-5",
+   "torns": [
+    {
+     "alumne": "Sobre les rectes $y=mx$ el límit a l'origen és $0$, per tant $f$ és contínua a l'origen.",
+     "tutor": "Has considerat camins cap a l'origen que no siguin rectes, per veure si el límit és el mateix? Segons la Definició 14 del Tema 2, la continuitat en x0 depèn de l'existència del límit quan x→x0, sense dependre de la ruta? En aquesta funció, una ruta no lineal podria portar a un comportament diferent del límit?",
+     "referencies": [
+      "T2.14"
+     ],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [
+      "nomes_rectes"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": "nomes_rectes",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5-nano",
+       "latency_ms": 10946,
+       "input_tokens": 5994,
+       "output_tokens": 831,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5-nano",
+       "latency_ms": 10042,
+       "input_tokens": 1221,
+       "output_tokens": 677,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5-nano",
+       "latency_ms": 3879,
+       "input_tokens": 4747,
+       "output_tokens": 292,
+       "cached_tokens": 0,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 24870
+    },
+    {
+     "alumne": "A l'origen, $D_vf(0,0)=\\lim_{t\\to0}\\frac{f(tv)}{t}=\\frac{v_1^2}{v_2}$ si $v_2\\neq0$. Com que existeixen totes, $f$ és contínua a l'origen.",
+     "tutor": "Què et diu exactament una derivada direccional: el comportament de $f$ en tot un entorn, o només sobre una recta? Segons la Definició 1 (Tema 3), la derivada direccional és un límit al llarg de la recta $a+tu$, no una afirmació sobre l’existència d’un límit en tot l’entorn. En aquest cas, com s’interpreta aquest límit quan et mouen en direccions diferents? Pensem-hi: què et diu això sobre la continuïtat en l’origen?",
+     "referencies": [
+      "T3.1"
+     ],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [
+      "direccionals_implica_continuitat"
+     ],
+     "want_intent": "mostra_treball",
+     "want_error": "direccionals_implica_continuitat",
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5-nano",
+       "latency_ms": 13346,
+       "input_tokens": 6170,
+       "output_tokens": 1018,
+       "cached_tokens": 5760,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5-nano",
+       "latency_ms": 4580,
+       "input_tokens": 1390,
+       "output_tokens": 328,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5-nano",
+       "latency_ms": 4261,
+       "input_tokens": 4949,
+       "output_tokens": 296,
+       "cached_tokens": 4096,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 22188
+    },
+    {
+     "alumne": "Dona'm una pista per estudiar la continuïtat a l'origen.",
+     "tutor": "La pista és: centra’t primer en els punts amb y≠0, on la fórmula és una expressió continua en les dues variables i per tant és contínua en aquest conjunt. Recorda que, segons Definició 14 del Tema 2, la continuitat en un punt requereix que existeixi el límit quan x→x0 i sigui igual a f(x0). A continuació, observa l’origen i pregunta què diu la definició de continuitat en aquest punt segons la mateixa definició. En quin punt et sembla més clar començar: l’origen o un punt amb y≠0?",
+     "referencies": [
+      "T2.14"
+     ],
+     "accio": "pista",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 2,
+     "draft_errors": 0,
+     "intencio": "demana_pista",
+     "errors": [],
+     "want_intent": "demana_pista",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5-nano",
+       "latency_ms": 13462,
+       "input_tokens": 6317,
+       "output_tokens": 544,
+       "cached_tokens": 6016,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5-nano",
+       "latency_ms": 11830,
+       "input_tokens": 1782,
+       "output_tokens": 912,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5-nano",
+       "latency_ms": 7921,
+       "input_tokens": 1884,
+       "output_tokens": 652,
+       "cached_tokens": 1664,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5-nano",
+       "latency_ms": 3463,
+       "input_tokens": 5347,
+       "output_tokens": 173,
+       "cached_tokens": 3968,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 36679
+    },
+    {
+     "alumne": "Fora de l'eix $y=0$ és un quocient de polinomis amb denominador no nul, així que és contínua.",
+     "tutor": "Perfecte: has identificat que fora de l’eix y≠0 la funció és contínua perquè és el quotient de polinomis amb denominador no nul, i això es justifica per Definició 14 del Tema 2. Aquesta és una bona base per estudiar la continuïtat en l’eix. En quina mesura aplicaries ara la mateixa definició en un punt de l’eix: quina és la condició per a la continuïtat en un punt (x0,0) amb x0≠0 segons Definició 14 del Tema 2?",
+     "referencies": [
+      "T2.14"
+     ],
+     "accio": "validar_i_avancar",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosi",
+       "model": "gpt-5-nano",
+       "latency_ms": 12016,
+       "input_tokens": 6486,
+       "output_tokens": 888,
+       "cached_tokens": 5760,
+       "extra": {}
+      },
+      {
+       "stage": "resposta",
+       "model": "gpt-5-nano",
+       "latency_ms": 6676,
+       "input_tokens": 2038,
+       "output_tokens": 455,
+       "cached_tokens": 0,
+       "extra": {}
+      },
+      {
+       "stage": "guardia",
+       "model": "gpt-5-nano",
+       "latency_ms": 2910,
+       "input_tokens": 5598,
+       "output_tokens": 167,
+       "cached_tokens": 3968,
+       "extra": {}
+      }
+     ],
+     "latencia_ms": 21604
+    }
+   ]
+  }
+ ],
+ "metrics": {
+  "turns": 16,
+  "failed_turns": 0,
+  "fallback": 0,
+  "drafts_per_turn": 1.06,
+  "draft_errors": 0,
+  "latex_broken": 0,
+  "intent_match": 14,
+  "error_match": 16,
+  "cost_usd": 0.018,
+  "cost_per_turn_usd": 0.00113,
+  "latency_s": 27.9,
+  "input_tokens": 170217,
+  "cached_tokens": 80128,
+  "output_tokens": 32788
+ }
+}

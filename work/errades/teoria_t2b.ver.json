@@ -1,0 +1,299 @@
+{
+ "T2.23:facil": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "existeixen únics $x_0,x_1\\in K$",
+    "gravetat": "error",
+    "explicacio": "Els apunts només afirmen l'existència; la unicitat és falsa (p. ex. $f$ constant: tot punt de $K$ és mínim i màxim)."
+   }
+  ],
+  "valoracio": "Un sol error: s'afegeix unicitat dels extrems a l'enunciat; la demostració és la dels apunts i correcta."
+ },
+ "T2.23:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "$f(K)$ és un interval tancat i fitat",
+    "gravetat": "error",
+    "explicacio": "Conclusió més forta que la dels apunts: $K$ compacte no és necessàriament connex, i $f(K)$ és compacte però no necessàriament un interval (p. ex. $K=\\{0,1\\}$, $f(x)=x$)."
+   },
+   {
+    "fragment": 7,
+    "cita": "com que $f(x_{n_k})\\leq f_M$ per a tota $k$, deduïm que $f(x^*)=f_M$",
+    "gravetat": "error",
+    "explicacio": "De $f(x_{n_k})\\le f_M$ només es dedueix $f(x^*)\\le f_M$; cal usar $f(x_{n_k})\\to f_M$ i la unicitat del límit."
+   }
+  ],
+  "valoracio": "Dos errors: conclusió més forta a l'enunciat (interval) i pas final de la demostració que no se segueix."
+ },
+ "T2.23:dificil": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "Llavors $f(\\Omega)$ és fitat",
+    "gravetat": "error",
+    "explicacio": "Els apunts diuen $f(K)$ fitat; $f(\\Omega)$ no ho és en general (p. ex. $f(x)=1/x$ a $\\Omega=(0,1)$)."
+   },
+   {
+    "fragment": 4,
+    "cita": "aplicant el resultat a la funció $1/f$",
+    "gravetat": "error",
+    "explicacio": "$1/f$ no està definida si $f$ s'anul·la, i el màxim de $1/f$ no correspon al mínim de $f$ si $f$ canvia de signe; cal aplicar-ho a $-f$ (o fer la demostració anàloga)."
+   },
+   {
+    "fragment": 6,
+    "cita": "la successió $(x_n)_n$ és convergent",
+    "gravetat": "error",
+    "explicacio": "La compacitat només garanteix una parcial convergent, no que tota la successió convergeixi."
+   },
+   {
+    "fragment": 7,
+    "cita": "tenim que $f(x_n)\\to f(x^*)$",
+    "gravetat": "consequencia",
+    "explicacio": "Pas correcte només si $x_n\\to x^*$, que s'ha afirmat erròniament al fragment 6; caldria treballar amb la parcial $(x_{n_k})$."
+   }
+  ],
+  "valoracio": "Tres errors (conjunt $f(\\Omega)$ a l'enunciat, reducció via $1/f$, convergència de tota la successió) i una conseqüència."
+ },
+ "T2.24:facil": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "per a tota $c\\in\\mathbb{R}$ tal que $c<f(y)$",
+    "gravetat": "error",
+    "explicacio": "S'ha eliminat la condició $f(x)<c$: l'enunciat és fals (p. ex. $K=[0,1]$, $f(t)=t$, $c=-1<f(1)$ no és imatge)."
+   }
+  ],
+  "valoracio": "Un sol error a l'enunciat (hipòtesi $f(x)<c$ eliminada); la demostració és correcta i fidel."
+ },
+ "T2.24:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "existeix $\\xi\\in\\mathring{K}$",
+    "gravetat": "error",
+    "explicacio": "Conclusió més forta: l'interior de $K$ pot ser buit (p. ex. $K$ un segment de $\\mathbb{R}^2$, $f$ la primera coordenada), i aleshores no hi ha cap $\\xi$ interior."
+   },
+   {
+    "fragment": 5,
+    "cita": "$V_1:=(-\\infty,c_0]$",
+    "gravetat": "error",
+    "explicacio": "$(-\\infty,c_0]$ no és un obert de $\\mathbb{R}$, de manera que $V_1,V_2$ no serveixen per desconnectar $f(K)$; cal $(-\\infty,c_0)$."
+   },
+   {
+    "fragment": 7,
+    "cita": "Per tant, $f(K)$ és disconnex",
+    "gravetat": "consequencia",
+    "explicacio": "La conclusió és la dels apunts però només és vàlida amb $V_1$ obert, que el fragment 5 ha perdut."
+   }
+  ],
+  "valoracio": "Dos errors: $\\xi$ a l'interior de $K$ a l'enunciat i un $V_1$ que no és obert a la demostració."
+ },
+ "T2.24:dificil": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "existeix $\\xi\\in K$ tal que, per a tota $c\\in\\mathbb{R}$ amb $f(x)<c<f(y)$, $f(\\xi)=c$",
+    "gravetat": "error",
+    "explicacio": "Ordre dels quantificadors invertit: un sol $\\xi$ hauria de tenir com a imatge tots els $c$ de l'interval, cosa impossible (n'hi ha infinits)."
+   },
+   {
+    "fragment": 4,
+    "cita": "algun $\\xi\\in K$ tal que $f(\\xi)\\neq c_0$",
+    "gravetat": "error",
+    "explicacio": "La negació de la tesi és que $f(\\xi)\\neq c_0$ per a TOT $\\xi\\in K$ (és a dir, $c_0\\notin f(K)$), no per a algun."
+   },
+   {
+    "fragment": 5,
+    "cita": "ja que $V_1\\cup V_2=\\mathbb{R}$",
+    "gravetat": "error",
+    "explicacio": "$V_1\\cup V_2=\\mathbb{R}\\setminus\\{c_0\\}$; la inclusió $f(K)\\subseteq V_1\\cup V_2$ ve de $c_0\\notin f(K)$, no del que s'afirma."
+   }
+  ],
+  "valoracio": "Tres errors: quantificadors invertits a l'enunciat, negació incorrecta i justificació falsa de $f(K)\\subseteq V_1\\cup V_2$."
+ },
+ "T2.29:facil": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "llavors $f$ és de Lipschitz en $K$",
+    "gravetat": "error",
+    "explicacio": "Conclusió més forta i falsa: $f(x)=\\sqrt{x}$ a $[0,1]$ és contínua en un compacte però no Lipschitz; els apunts diuen uniformement contínua."
+   }
+  ],
+  "valoracio": "Un sol error a l'enunciat (Lipschitz en lloc d'uniformement contínua); la demostració és correcta."
+ },
+ "T2.29:normal": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "$K\\subseteq M$ un conjunt tancat i fitat",
+    "gravetat": "error",
+    "explicacio": "En un espai mètric general tancat i fitat no implica compacte: p. ex. $M=K=(0,1)$ i $f(x)=1/x$ és contínua però no uniformement contínua."
+   },
+   {
+    "fragment": 5,
+    "cita": "Com que $K$ és compacte",
+    "gravetat": "consequencia",
+    "explicacio": "Pas dels apunts, però usa la compacitat que l'enunciat erroni ha substituït per «tancat i fitat»."
+   },
+   {
+    "fragment": 6,
+    "cita": "perquè, per la compacitat de $K$, la successió $(y_{n_k})_k$ també admet una parcial convergent",
+    "gravetat": "error",
+    "explicacio": "Que $(y_{n_k})$ tingui una parcial convergent no diu res sobre el seu límit; $y_{n_k}\\to x^*$ cal deduir-ho de $d(x_{n_k},y_{n_k})<1/n_k\\to0$ i la desigualtat triangular."
+   }
+  ],
+  "valoracio": "Dos errors: hipòtesi de compacitat afeblida a tancat i fitat, i justificació incorrecta de $y_{n_k}\to x^*$."
+ },
+ "T2.29:dificil": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "existeix $\\delta>0$ tal que per a tot $\\epsilon>0$",
+    "gravetat": "error",
+    "explicacio": "Ordre de quantificadors invertit: obligaria $f(x)=f(y)$ quan $d(x,y)<\\delta$ (p. ex. $f(x)=x$ a $[0,1]$ no ho compleix); ha de ser per a tot $\\epsilon$ existeix $\\delta$."
+   },
+   {
+    "fragment": 6,
+    "cita": "$d(y_{n_k},x^*)\\geq\\big|d(y_{n_k},x_{n_k})-d(x_{n_k},x^*)\\big|$",
+    "gravetat": "error",
+    "explicacio": "Una fita inferior que tendeix a 0 no implica $d(y_{n_k},x^*)\\to0$; cal la fita superior $d(y_{n_k},x^*)\\le d(y_{n_k},x_{n_k})+d(x_{n_k},x^*)$."
+   },
+   {
+    "fragment": 7,
+    "cita": "simplement perquè $d(x_{n_k},y_{n_k})\\to0$",
+    "gravetat": "error",
+    "explicacio": "Deduir $d'(f(x_{n_k}),f(y_{n_k}))\\to0$ de $d(x_{n_k},y_{n_k})\\to0$ és justament la continuïtat uniforme (raonament circular); cal usar la continuïtat en $x^*$ i que totes dues successions hi convergeixen."
+   }
+  ],
+  "valoracio": "Tres errors: definició de continuïtat uniforme amb quantificadors invertits, desigualtat triangular girada i pas circular."
+ },
+ "T2.31:facil": {
+  "problemes": [
+   {
+    "fragment": 3,
+    "cita": "arriba a $x^*$ en un nombre finit de passos, és a dir, $x_n=x^*$ per a algun $n$",
+    "gravetat": "error",
+    "explicacio": "Conclusió falsa: p. ex. $f(x)=x/2$ a $\\mathbb{R}$ i $x_0=1$ dona $x_n=2^{-n}\\neq0$ per a tot $n$; la successió només convergeix a $x^*$."
+   }
+  ],
+  "valoracio": "Un sol error a l'enunciat (b) (convergència en un nombre finit de passos); la demostració és correcta."
+ },
+ "T2.31:normal": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "Sigui $(M,d)$ un espai mètric, i",
+    "gravetat": "error",
+    "explicacio": "S'ha eliminat la completesa: p. ex. $M=(0,1]$, $f(x)=x/2$ és contractiva i no té punt fix."
+   },
+   {
+    "fragment": 7,
+    "cita": "els termes consecutius de la successió s'acosten tant com vulguem i, per tant, $(x_n)_n$ és de Cauchy",
+    "gravetat": "error",
+    "explicacio": "$d(x_{n+1},x_n)\\to0$ no implica Cauchy (p. ex. sumes parcials de la sèrie harmònica); cal fitar $d(x_m,x_n)$ amb la cua de la sèrie geomètrica, com al fragment 6."
+   },
+   {
+    "fragment": 8,
+    "cita": "Com que $M$ és complet",
+    "gravetat": "consequencia",
+    "explicacio": "Pas dels apunts, però usa la completesa que l'enunciat erroni ha eliminat."
+   }
+  ],
+  "valoracio": "Dos errors: completesa eliminada de l'enunciat i un argument de Cauchy que no se segueix."
+ },
+ "T2.31:dificil": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "per a tot $x,y\\in M$ existeix $0<k<1$",
+    "gravetat": "error",
+    "explicacio": "La constant $k$ ha de ser uniforme; si depèn de $x,y$ el resultat és fals (p. ex. $f(x)=x+1/x$ a $[1,\\infty)$ compleix $|f(x)-f(y)|<|x-y|$ i no té punt fix)."
+   },
+   {
+    "fragment": 5,
+    "cita": "$d(x_{n+1},x_n)\\leq k^n\\,d(x_1,x_0)$",
+    "gravetat": "consequencia",
+    "explicacio": "Iterar la desigualtat requereix una constant $k$ fixa, que l'enunciat erroni ha perdut."
+   },
+   {
+    "fragment": 6,
+    "cita": "aquesta suma és com a molt $\\dfrac{k^m}{1-k}$",
+    "gravetat": "error",
+    "explicacio": "$\\sum_{i=n}^{m-1}k^i\\le\\frac{k^n}{1-k}$, no $\\frac{k^m}{1-k}$: el primer terme de la suma ja és $k^n>\\frac{k^m}{1-k}$ per a $m$ gran."
+   },
+   {
+    "fragment": 7,
+    "cita": "$k^m\\to0$",
+    "gravetat": "consequencia",
+    "explicacio": "Raonament correcte però hereta la fita errònia del fragment 6; cal usar $k^n\\to0$."
+   },
+   {
+    "fragment": 10,
+    "cita": "com que $k>0$",
+    "gravetat": "error",
+    "explicacio": "De $d\\le k\\,d$ es dedueix $d=0$ perquè $k<1$, no perquè $k>0$ (amb $k\\ge1$ no es dedueix res)."
+   }
+  ],
+  "valoracio": "Tres errors: constant de contracció dependent del punt, fita de la cua geomètrica incorrecta i justificació errònia de la unicitat."
+ },
+ "T2.33:facil": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "existeix $\\mu>0$ tal que $\\|x\\|_a=\\mu\\,\\|x\\|_b$",
+    "gravetat": "error",
+    "explicacio": "L'equivalència és $\\lambda\\|x\\|_b\\le\\|x\\|_a\\le\\mu\\|x\\|_b$; la proporcionalitat és falsa (p. ex. $\\|\\cdot\\|_1$ i $\\|\\cdot\\|_\\infty$ a $\\mathbb{R}^2$)."
+   }
+  ],
+  "valoracio": "Un sol error a l'enunciat (normes proporcionals en lloc d'equivalents); la demostració és correcta."
+ },
+ "T2.33:normal": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "En tot espai vectorial real",
+    "gravetat": "error",
+    "explicacio": "Fals en dimensió infinita (p. ex. $\\|\\cdot\\|_1$ i $\\|\\cdot\\|_\\infty$ a les successions amb suport finit); els apunts diuen $\\mathbb{R}^n$."
+   },
+   {
+    "fragment": 3,
+    "cita": "Sigui $\\{e_i\\}$ una base de $\\mathbb{R}^n$",
+    "gravetat": "consequencia",
+    "explicacio": "La demostració dels apunts usa una base finita i la compacitat de l'esfera unitat, hipòtesi de dimensió finita que l'enunciat erroni ha eliminat."
+   },
+   {
+    "fragment": 4,
+    "cita": "$\\frac{\\lambda'}{\\lambda}\\|x\\|_a\\leq\\|x\\|_b\\leq\\frac{\\mu'}{\\mu}\\|x\\|_a$",
+    "gravetat": "error",
+    "explicacio": "Constants incorrectes: $\\|x\\|_b\\ge\\lambda'\\|x\\|_1\\ge\\frac{\\lambda'}{\\mu}\\|x\\|_a$ i $\\|x\\|_b\\le\\mu'\\|x\\|_1\\le\\frac{\\mu'}{\\lambda}\\|x\\|_a$."
+   }
+  ],
+  "valoracio": "Dos errors: generalització falsa a qualsevol espai vectorial i constants de la reducció mal combinades."
+ },
+ "T2.33:dificil": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "totes les distàncies són equivalents",
+    "gravetat": "error",
+    "explicacio": "Fals per a distàncies: p. ex. la distància discreta i l'euclidiana a $\\mathbb{R}^n$ no són equivalents; el teorema és per a normes."
+   },
+   {
+    "fragment": 4,
+    "cita": "que compleix $\\|u\\|_a=1$",
+    "gravetat": "error",
+    "explicacio": "$u=x/\\|x\\|_1$ compleix $\\|u\\|_1=1$, no $\\|u\\|_a=1$."
+   },
+   {
+    "fragment": 9,
+    "cita": "$C_1:=\\inf_{\\|u\\|_1=1}\\|u\\|_a>0$, ja que $\\|u\\|_a>0$ per a tot $u\\neq0$",
+    "gravetat": "error",
+    "explicacio": "L'ínfim de valors positius pot ser 0; cal que el mínim s'assoleixi (Weierstrass) en un $u_0\\neq0$."
+   }
+  ],
+  "valoracio": "Tres errors: distàncies en lloc de normes, normalització errònia i positivitat de l'ínfim no justificada."
+ }
+}

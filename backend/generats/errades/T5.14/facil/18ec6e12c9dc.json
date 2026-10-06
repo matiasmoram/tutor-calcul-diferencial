@@ -1,0 +1,46 @@
+{
+  "id": "18ec6e12c9dc",
+  "exercici": "T5.14",
+  "font": "teoria",
+  "dificultat": "facil",
+  "fragments": [
+    "Sigui $\\Omega\\subseteq\\mathbb{R}^n$ obert, $f:\\Omega\\to\\mathbb{R}$ de classe $\\mathcal{C}^{r+1}(\\Omega)$ i $\\mathbf{a}\\in\\Omega$. Per a tot $\\mathbf{x}\\in\\Omega$ amb $[\\mathbf{a},\\mathbf{x}]\\subseteq\\Omega$, prenent el punt mitjà $\\xi_\\mathbf{x}=\\frac{\\mathbf{a}+\\mathbf{x}}{2}$ es té $f(\\mathbf{x})=P_r(\\mathbf{x})+R_{r+1}(\\mathbf{x})$, on $P_r(\\mathbf{x})=f(\\mathbf{a})+\\sum_{i=1}^{n}D_if(\\mathbf{a})(x_i-a_i)+\\cdots+\\frac{1}{r!}\\sum_{i_1,\\ldots,i_r=1}^{n}D_{i_1,\\ldots,i_r}f(\\mathbf{a})(x_{i_1}-a_{i_1})\\cdots(x_{i_r}-a_{i_r})$ és el polinomi de Taylor de grau $r$ de $f$ en $\\mathbf{a}$.",
+    "El residu és $R_{r+1}(\\mathbf{x})=\\frac{1}{(r+1)!}\\sum_{i_1,\\ldots,i_{r+1}=1}^{n}D_{i_1,\\ldots,i_{r+1}}f(\\xi_\\mathbf{x})(x_{i_1}-a_{i_1})\\cdots(x_{i_{r+1}}-a_{i_{r+1}})$.",
+    "A més, $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{a}}\\frac{R_{r+1}(\\mathbf{x})}{\\|\\mathbf{x}-\\mathbf{a}\\|^r}=0$.",
+    "Sigui $h(t)=\\mathbf{a}+t(\\mathbf{x}-\\mathbf{a})$ i $F(t)=f(h(t))$. Com que $[\\mathbf{a},\\mathbf{x}]\\subseteq\\Omega$ i $\\Omega$ és obert, $F$ està definida i és de classe $\\mathcal{C}^{r+1}$ en un obert $U\\supseteq[0,1]$ (composició de $f$ amb $h$, que és afí), i $F(0)=f(\\mathbf{a})$, $F(1)=f(\\mathbf{x})$.",
+    "Per la fórmula de Taylor en una variable aplicada a $F$ en $[0,1]$, existeix $\\tau\\in(0,1)$ tal que $F(1)=\\sum_{k=0}^{r}\\frac{F^{(k)}(0)}{k!}+\\frac{F^{(r+1)}(\\tau)}{(r+1)!}$.",
+    "Veurem que, per a $k\\leq r+1$, $F^{(k)}(t)=\\sum_{i_1,\\ldots,i_k=1}^{n}D_{i_1,\\ldots,i_k}f(h(t))(x_{i_1}-a_{i_1})\\cdots(x_{i_k}-a_{i_k})$ (3). Per a $k=1$ és la regla de la cadena: $F'(t)=\\sum_{i=1}^{n}D_if(h(t))\\,h_i'(t)=\\sum_{i=1}^{n}D_if(h(t))(x_i-a_i)$.",
+    "Si (3) és cert per a $k=m\\leq r$, derivant amb la regla de la cadena cada terme $D_{i_1,\\ldots,i_m}f(h(t))$ obtenim $\\sum_{j=1}^{n}D_{i_1,\\ldots,i_m,j}f(h(t))(x_j-a_j)$; prenent $j=i_{m+1}$, resulta (3) per a $k=m+1$. Per inducció, (3) val per a tot $k\\leq r+1$.",
+    "En $t=0$, $\\frac{F^{(k)}(0)}{k!}$ és exactament el terme d'ordre $k$ de $P_r$, de manera que $\\sum_{k=0}^{r}\\frac{F^{(k)}(0)}{k!}=P_r(\\mathbf{x})$; i $\\frac{F^{(r+1)}(\\tau)}{(r+1)!}=R_{r+1}(\\mathbf{x})$ prenent $\\xi_\\mathbf{x}=h(\\tau)\\in(\\mathbf{a},\\mathbf{x})$. Això demostra que $f(\\mathbf{x})=P_r(\\mathbf{x})+R_{r+1}(\\mathbf{x})$.",
+    "Finalment, si $B(\\mathbf{a},\\rho)\\subseteq\\Omega$, per a $\\mathbf{x}\\in B(\\mathbf{a},\\rho)$ el segment $[\\mathbf{a},\\mathbf{x}]$ és dins de $\\Omega$ i, per la desigualtat triangular, $\\frac{|R_{r+1}(\\mathbf{x})|}{\\|\\mathbf{x}-\\mathbf{a}\\|^r}\\leq\\frac{1}{(r+1)!}\\sum_{i_1,\\ldots,i_{r+1}=1}^{n}|D_{i_1,\\ldots,i_{r+1}}f(\\xi_\\mathbf{x})|\\frac{|x_{i_1}-a_{i_1}|}{\\|\\mathbf{x}-\\mathbf{a}\\|}\\cdots\\frac{|x_{i_r}-a_{i_r}|}{\\|\\mathbf{x}-\\mathbf{a}\\|}|x_{i_{r+1}}-a_{i_{r+1}}|$.",
+    "Quan $\\mathbf{x}\\to\\mathbf{a}$, $|D_{i_1,\\ldots,i_{r+1}}f(\\xi_\\mathbf{x})|\\to|D_{i_1,\\ldots,i_{r+1}}f(\\mathbf{a})|$, perquè $\\xi_\\mathbf{x}\\to\\mathbf{a}$ i les derivades d'ordre $r+1$ de $f$ són contínues; cada quocient $\\frac{|x_i-a_i|}{\\|\\mathbf{x}-\\mathbf{a}\\|}$ és $\\leq1$, i $|x_{i_{r+1}}-a_{i_{r+1}}|\\to0$. Per tant, $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{a}}\\frac{R_{r+1}(\\mathbf{x})}{\\|\\mathbf{x}-\\mathbf{a}\\|^r}=0$."
+  ],
+  "n_enunciat": 3,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "prenent el punt mitjà $\\xi_\\mathbf{x}=\\frac{\\mathbf{a}+\\mathbf{x}}{2}$ es té",
+      "inici": 208,
+      "fi": 284,
+      "tipus": "conclusio",
+      "explicacio": "El punt $\\xi_\\mathbf{x}$ només se sap que existeix en el segment obert, i en general no és el punt mitjà: per a $n=1$, $r=0$, $f(x)=x^3$, $a=0$, $x=1$, caldria $1=f'(1/2)\\cdot1=3/4$.",
+      "correccio": "Els apunts diuen que existeix algun $\\xi_\\mathbf{x}\\in(\\mathbf{a},\\mathbf{x})$ (que depèn de $\\mathbf{x}$ i no es coneix) tal que $f(\\mathbf{x})=P_r(\\mathbf{x})+R_{r+1}(\\mathbf{x})$.",
+      "pista": "En el cas $n=1$, $r=0$ l'enunciat és el teorema del valor mitjà: aquest teorema diu quin és el punt intermedi?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t5.json",
+    "valoracio": "Demostració correcta, però l'enunciat fixa arbitràriament el punt intermedi al punt mitjà, cosa falsa.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "prenent el punt mitjà $\\xi_\\mathbf{x}=\\frac{\\mathbf{a}+\\mathbf{x}}{2}$ es té",
+        "gravetat": "error",
+        "explicacio": "Els apunts afirmen l'existència d'algun $\\xi_\\mathbf{x}\\in(\\mathbf{a},\\mathbf{x})$; el punt mitjà no serveix en general (p. ex. $n=1$, $r=0$, $f(x)=x^3$, $a=0$, $x=1$: $f(1)-f(0)=1\\neq f'(1/2)=3/4$). La demostració dona $\\xi_\\mathbf{x}=h(\\tau)$ amb $\\tau$ desconegut."
+      }
+    ]
+  },
+  "creat": 1791296162.0938728
+}

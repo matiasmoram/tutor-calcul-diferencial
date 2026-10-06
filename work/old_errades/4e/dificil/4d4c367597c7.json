@@ -1,0 +1,113 @@
+{
+  "id": "4d4c367597c7",
+  "exercici": "4e",
+  "dificultat": "dificil",
+  "fragments": [
+    "Per estudiar el límit vectorial, separo les components: $f_1(x,y)=\\frac{e^{x(y-1)}-x-1}{x^2+y^2}$ i $f_2(x,y)=\\sin(x-y)$. El límit vectorial existeix exactament quan existeixen tots dos límits escalars i, si aquests existeixen, la norma euclidiana de les diferències és menor que la norma màxim de les diferències.",
+    "La segona component és immediata, perquè quan $(x,y)\\to(0,0)$ tenim $x-y\\to0$. Com que el sinus és continu, $\\sin(x-y)\\to \\sin 0=0$.",
+    "Ara n’hi ha prou amb descartar un límit finit per a la primera component. Per fer-ho, podem restringir-nos al camí $y=0$, ja que si $f_1$ tingués límit en dues variables, qualsevol restricció que arribés a l’origen hauria de donar el mateix límit.",
+    "Sobre aquest camí, per a $x\\neq0$, queda $f_1(x,0)=\\frac{e^{-x}-x-1}{x^2}$. Això converteix el problema en un límit d’una variable quan $x\\to0$.",
+    "Fem servir el desenvolupament de Taylor a l’origen: $e^{-x}=1-x+\\frac{x^2}{2}+o(x^3)$. En particular, al numerador queda $e^{-x}-x-1=-2x+\\frac{x^2}{2}+O(x^3)$.",
+    "Dividint per $x^2$, obtenim $f_1(x,0)=-\\frac{2}{x}+\\frac12+O(x)$. El terme dominant és $-\\frac{2}{x}$, mentre que $\\frac12+O(x)$ resta fitat prop de zero.",
+    "Quan $x\\to0^-$, el terme principal tendeix a $+\\infty$, i quan $x\\to0^+$ tendeix a $-\\infty$. Aquesta estimació és prou forta perquè el terme d’error és uniforme respecte de tots els camins que arriben a l’origen.",
+    "Per tant la primera component, restringida a l’eix $x$, no té límit finit. Com que una component ja falla, el límit vectorial proposat no existeix."
+  ],
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "la norma euclidiana de les diferències és menor que la norma màxim de les diferències",
+      "inici": 228,
+      "fi": 313,
+      "tipus": "desigualtat",
+      "explicacio": "Aquesta comparació entre normes està invertida: en general $\\|v\\|_2\\ge \\|v\\|_\\infty$. El criteri per components és cert, però no per aquesta desigualtat tal com està escrita.",
+      "correccio": "Caldria dir, per exemple, que $\\|v\\|_2\\le \\sqrt{2}\\,\\|v\\|_\\infty$, i això sí que permet deduir la convergència vectorial a partir de la convergència de les components.",
+      "pista": "Per al vector $(1,1)$, quina norma és més gran: l’euclidiana o la del màxim?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$e^{-x}=1-x+\\frac{x^2}{2}+o(x^3)$",
+      "inici": 52,
+      "fi": 85,
+      "tipus": "calcul",
+      "explicacio": "Després de tallar el Taylor al terme de grau 2, el residu no és $o(x^3)$; de fet el terme cúbic és $-x^3/6$. Per tant, el residu és $O(x^3)$, o bé cal incloure el terme cúbic per escriure $o(x^3)$.",
+      "correccio": "Una forma correcta és $e^{-x}=1-x+\\frac{x^2}{2}+O(x^3)$, o bé $e^{-x}=1-x+\\frac{x^2}{2}-\\frac{x^3}{6}+o(x^3)$.",
+      "pista": "Quin és el primer terme que falta després de $x^2/2$ en el Taylor de $e^{-x}$?"
+    },
+    {
+      "id": "e3",
+      "fragment": 7,
+      "cita": "el terme d’error és uniforme respecte de tots els camins",
+      "inici": 133,
+      "fi": 189,
+      "tipus": "conclusio",
+      "explicacio": "L’estimació amb $O(x)$ s’ha obtingut només després d’imposar $y=0$, és a dir, sobre un camí concret. No se’n pot deduir cap uniformitat respecte de tots els camins cap a l’origen.",
+      "correccio": "Només cal afirmar que, sobre el camí $y=0$, la restricció $f_1(x,0)$ no té límit finit; això ja descarta el límit de la primera component.",
+      "pista": "L’expansió feta depèn només de $x$ perquè encara estem estudiant la funció completa o ja hem fixat $y=0$?"
+    }
+  ],
+  "verificacio": {
+    "valoracio": "La resolució arriba correctament a la conclusió que el límit vectorial no existeix, i l'argument principal pel camí \\(y=0\\) és vàlid. Tanmateix, conté una desigualtat falsa entre normes, una resta de Taylor mal escrita i una afirmació injustificada sobre uniformitat respecte de tots els camins.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "si aquests existeixen, la norma euclidiana de les diferències és menor que la norma màxim de les diferències",
+        "gravetat": "error",
+        "explicacio": "La desigualtat entre normes està invertida. En \\(\\mathbb{R}^2\\), si \\(v=(v_1,v_2)\\), es té \\(\\|v\\|_\\infty \\le \\|v\\|_2 \\le \\sqrt2\\,\\|v\\|_\\infty\\), no pas \\(\\|v\\|_2 \\le \\|v\\|_\\infty\\). La caracterització per components sí que és correcta, però aquesta justificació concreta conté una desigualtat falsa."
+      },
+      {
+        "fragment": 5,
+        "cita": "Fem servir el desenvolupament de Taylor a l’origen: $e^{-x}=1-x+\\frac{x^2}{2}+o(x^3)$.",
+        "gravetat": "error",
+        "explicacio": "Aquest desenvolupament amb resta \\(o(x^3)\\) és incorrecte si s'aturen els termes a ordre 2. En realitat, \\(e^{-x}=1-x+\\frac{x^2}{2}-\\frac{x^3}{6}+o(x^3)\\), o bé \\(e^{-x}=1-x+\\frac{x^2}{2}+O(x^3)\\). El resultat posterior del numerador amb \\(O(x^3)\\) és correcte, però la igualtat escrita amb \\(o(x^3)\\) no ho és."
+      },
+      {
+        "fragment": 7,
+        "cita": "Aquesta estimació és prou forta perquè el terme d’error és uniforme respecte de tots els camins que arriben a l’origen.",
+        "gravetat": "error",
+        "explicacio": "L'estimació obtinguda és només sobre el camí \\(y=0\\), és a dir, per a la funció d'una variable \\(f_1(x,0)\\). No s'ha demostrat cap estimació uniforme respecte de tots els camins que arriben a l'origen. A més, aquesta uniformitat no és necessària: per descartar el límit finit n'hi ha prou amb veure que la restricció a l'eix \\(x\\) divergeix."
+      }
+    ],
+    "intents": [
+      {
+        "intent": 1,
+        "generacio": {
+          "model": "gpt-5.5",
+          "latency_ms": 95688,
+          "input_tokens": 1377,
+          "output_tokens": 7774
+        },
+        "validacio": [],
+        "verificacio": {
+          "model": "gpt-5.5",
+          "latency_ms": 13643,
+          "input_tokens": 1492,
+          "output_tokens": 1115
+        },
+        "problemes_verificador": [
+          {
+            "fragment": 1,
+            "cita": "si aquests existeixen, la norma euclidiana de les diferències és menor que la norma màxim de les diferències",
+            "gravetat": "error",
+            "explicacio": "La desigualtat entre normes està invertida. En \\(\\mathbb{R}^2\\), si \\(v=(v_1,v_2)\\), es té \\(\\|v\\|_\\infty \\le \\|v\\|_2 \\le \\sqrt2\\,\\|v\\|_\\infty\\), no pas \\(\\|v\\|_2 \\le \\|v\\|_\\infty\\). La caracterització per components sí que és correcta, però aquesta justificació concreta conté una desigualtat falsa."
+          },
+          {
+            "fragment": 5,
+            "cita": "Fem servir el desenvolupament de Taylor a l’origen: $e^{-x}=1-x+\\frac{x^2}{2}+o(x^3)$.",
+            "gravetat": "error",
+            "explicacio": "Aquest desenvolupament amb resta \\(o(x^3)\\) és incorrecte si s'aturen els termes a ordre 2. En realitat, \\(e^{-x}=1-x+\\frac{x^2}{2}-\\frac{x^3}{6}+o(x^3)\\), o bé \\(e^{-x}=1-x+\\frac{x^2}{2}+O(x^3)\\). El resultat posterior del numerador amb \\(O(x^3)\\) és correcte, però la igualtat escrita amb \\(o(x^3)\\) no ho és."
+          },
+          {
+            "fragment": 7,
+            "cita": "Aquesta estimació és prou forta perquè el terme d’error és uniforme respecte de tots els camins que arriben a l’origen.",
+            "gravetat": "error",
+            "explicacio": "L'estimació obtinguda és només sobre el camí \\(y=0\\), és a dir, per a la funció d'una variable \\(f_1(x,0)\\). No s'ha demostrat cap estimació uniforme respecte de tots els camins que arriben a l'origen. A més, aquesta uniformitat no és necessària: per descartar el límit finit n'hi ha prou amb veure que la restricció a l'eix \\(x\\) divergeix."
+          }
+        ],
+        "discrepancies": []
+      }
+    ]
+  },
+  "creat": 1790752709.6395159
+}

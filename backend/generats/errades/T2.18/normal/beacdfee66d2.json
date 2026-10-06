@@ -1,0 +1,59 @@
+{
+  "id": "beacdfee66d2",
+  "exercici": "T2.18",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Siguin $f,g:\\mathbb{R}^n\\longrightarrow\\mathbb{R}$ funcions contínues. Llavors: (i) $A=\\{x\\in\\mathbb{R}^n:f(x)>g(x)\\}$ és un conjunt obert;",
+    "(ii) $B=\\{x\\in\\mathbb{R}^n:f(x)\\geq g(x)\\}$ és un conjunt tancat, i és l'adherència de $A$.",
+    "(i) Considerem la funció $h(x)=f(x)-g(x)$. Per la proposició 20(i), $h$ és contínua en tot $\\mathbb{R}^n$.",
+    "Prenem $V=(0,+\\infty)$, que és un obert de $\\mathbb{R}$. Per la continuïtat de $h$ (teorema 17(c)), existeix $U\\subseteq\\mathbb{R}^n$ obert tal que $h(U)=V$ i, per tant, $h^{-1}(V)=U$.",
+    "A més, $h^{-1}(V)=\\{x\\in\\mathbb{R}^n:h(x)>0\\}=\\{x\\in\\mathbb{R}^n:f(x)>g(x)\\}=A$, de manera que $A=U$ és obert.",
+    "(ii) Per (i), intercanviant els papers de $f$ i $g$, el conjunt $\\{x\\in\\mathbb{R}^n:f(x)<g(x)\\}$ és obert, i $B=\\mathbb{R}^n\\setminus\\{x\\in\\mathbb{R}^n:f(x)<g(x)\\}$. És a dir, $B$ és el complementari d'un obert i, per tant, és tancat."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "és l'adherència de $A$",
+      "inici": 68,
+      "fi": 90,
+      "tipus": "conclusio",
+      "explicacio": "$\\overline{A}\\subseteq B$ perquè $B$ és un tancat que conté $A$, però no tenen per què coincidir. Contraexemple: $f=g=0$ dona $A=\\emptyset$ i $B=\\mathbb{R}^n$.",
+      "correccio": "(ii) només afirma que $B=\\{x\\in\\mathbb{R}^n:f(x)\\geq g(x)\\}$ és un conjunt tancat.",
+      "pista": "Què val $A$ i què val $B$ si $f=g$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "existeix $U\\subseteq\\mathbb{R}^n$ obert tal que $h(U)=V$",
+      "inici": 100,
+      "fi": 156,
+      "tipus": "pas_injustificat",
+      "explicacio": "La caracterització (c) del teorema 17 parla d'antiimatges: dona $U$ obert amb $h^{-1}(V)=U\\cap\\mathbb{R}^n$, no un $U$ amb $h(U)=V$ (que d'altra banda no implicaria $h^{-1}(V)=U$, i pot no existir si $h$ no pren tots els valors positius).",
+      "correccio": "Per la continuïtat de $h$, existeix $U\\subseteq\\mathbb{R}^n$ obert tal que $h^{-1}(V)=U\\cap\\mathbb{R}^n=U$.",
+      "pista": "La caracterització topològica de la continuïtat parla d'imatges o d'antiimatges d'oberts?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t2a.json",
+    "valoracio": "Afegeix a (ii) una afirmació falsa i aplica malament la caracterització per oberts de la continuïtat.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "i és l'adherència de $A$",
+        "gravetat": "error",
+        "explicacio": "Fals en general: si $f=g$, $A=\\emptyset$ i $B=\\mathbb{R}^n$. Els apunts només afirmen que $B$ és tancat."
+      },
+      {
+        "fragment": 4,
+        "cita": "existeix $U\\subseteq\\mathbb{R}^n$ obert tal que $h(U)=V$ i, per tant, $h^{-1}(V)=U$",
+        "gravetat": "error",
+        "explicacio": "El teorema 17(c) dona $h^{-1}(V)=U\\cap\\mathbb{R}^n=U$, no $h(U)=V$; a més, $h(U)=V$ no implica $h^{-1}(V)=U$."
+      }
+    ]
+  },
+  "creat": 1791295999.5597565
+}

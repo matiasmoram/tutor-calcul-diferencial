@@ -1,0 +1,63 @@
+{
+  "id": "2b3e48eba23d",
+  "exercici": "T5.33",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $\\Omega\\subseteq\\mathbb{R}^n$ un obert, $f:\\Omega\\to\\mathbb{R}$ una funció $\\mathcal{C}^2(\\Omega)$ i $\\mathbf{a}\\in\\Omega$ un punt crític de $f$. Aleshores: (i) si $q_{Hf(\\mathbf{a})}$ és definida positiva, $\\mathbf{a}$ és un mínim absolut estricte de $f$ en $\\Omega$; (ii) si $q_{Hf(\\mathbf{a})}$ és definida negativa, $\\mathbf{a}$ és un màxim local estricte de $f$; (iii) si $q_{Hf(\\mathbf{a})}$ és indefinida, $\\mathbf{a}$ és un punt de sella de $f$.",
+    "(iv) Si $\\mathbf{a}$ és un mínim local de $f$, $q_{Hf(\\mathbf{a})}$ és semidefinida positiva; (v) si $\\mathbf{a}$ és un màxim local de $f$, $q_{Hf(\\mathbf{a})}$ és semidefinida negativa.",
+    "(i) Pel corol·lari 15 amb $r=2$ i com que $Df(\\mathbf{a})=0$ (punt crític), $\\displaystyle\\lim_{\\mathbf{x}\\to\\mathbf{a}}\\frac{f(\\mathbf{x})-f(\\mathbf{a})-\\frac12(\\mathbf{x}-\\mathbf{a})^THf(\\mathbf{a})(\\mathbf{x}-\\mathbf{a})}{\\|\\mathbf{x}-\\mathbf{a}\\|^2}=0$.",
+    "Per la definició de límit, per a tot $\\epsilon>0$ existeix $\\delta>0$ tal que, si $\\mathbf{x}\\in\\Omega$ i $0<\\|\\mathbf{x}-\\mathbf{a}\\|<\\delta$, aleshores, posant $\\mathbf{u}_\\mathbf{x}=\\frac{\\mathbf{x}-\\mathbf{a}}{\\|\\mathbf{x}-\\mathbf{a}\\|}$, es té $\\left|\\frac{f(\\mathbf{x})-f(\\mathbf{a})}{\\|\\mathbf{x}-\\mathbf{a}\\|^2}-\\frac12\\mathbf{u}_\\mathbf{x}^THf(\\mathbf{a})\\mathbf{u}_\\mathbf{x}\\right|<\\epsilon$.",
+    "Pel lema 28, existeixen $0<c\\leq C$ tals que $c\\|\\mathbf{u}\\|^2\\leq\\mathbf{u}^THf(\\mathbf{a})\\mathbf{u}\\leq C\\|\\mathbf{u}\\|^2$ per a tot $\\mathbf{u}$. Com que $\\|\\mathbf{u}_\\mathbf{x}\\|=1$, obtenim $-\\epsilon+\\frac c2<\\frac{f(\\mathbf{x})-f(\\mathbf{a})}{\\|\\mathbf{x}-\\mathbf{a}\\|^2}<\\epsilon+\\frac C2$.",
+    "Prenent $\\epsilon<C/2$, el membre de l'esquerra és positiu i, per tant, $f(\\mathbf{x})>f(\\mathbf{a})$ per a tot $\\mathbf{x}\\in B(\\mathbf{a},\\delta)\\cap\\Omega\\setminus\\{\\mathbf{a}\\}$: $\\mathbf{a}$ és un mínim local estricte.",
+    "(ii) Si $Hf(\\mathbf{a})$ és definida negativa, sigui $g=-f$: $\\mathbf{a}$ és punt crític de $g$ i $Hg(\\mathbf{a})=-Hf(\\mathbf{a})$ és definida positiva. Per (i), $\\mathbf{a}$ és un mínim local estricte de $g$, és a dir, un màxim local estricte de $f$.",
+    "(iii) Si $Hf(\\mathbf{a})$ és indefinida, existeixen $\\mathbf{u},\\mathbf{v}$ de norma $1$ amb $\\mathbf{u}^THf(\\mathbf{a})\\mathbf{u}>0$ i $\\mathbf{v}^THf(\\mathbf{a})\\mathbf{v}<0$. Restringint el límit del principi de (i) a la recta $\\mathbf{x}=\\mathbf{a}+t\\mathbf{u}$, on $\\|\\mathbf{x}-\\mathbf{a}\\|=|t|$, obtenim $\\displaystyle\\lim_{t\\to0}\\frac{f(\\mathbf{a}+t\\mathbf{u})-f(\\mathbf{a})}{t^2}=\\frac12\\mathbf{u}^THf(\\mathbf{a})\\mathbf{u}>0$.",
+    "Per tant, existeix $\\delta>0$ tal que $f(\\mathbf{a}+t\\mathbf{u})>f(\\mathbf{a})$ si $0<|t|<\\delta$: restringida a la recta $\\mathbf{a}+t\\mathbf{u}$, $f$ té un mínim local estricte en $\\mathbf{a}$. Anàlogament, restringida a la recta $\\mathbf{a}+t\\mathbf{v}$, té un màxim local estricte en $\\mathbf{a}$; així, $\\mathbf{a}$ no és extrem local i és un punt de sella.",
+    "(iv) Si $Hf(\\mathbf{a})$ no fos semidefinida positiva, existiria $\\mathbf{v}$ amb $\\mathbf{v}^THf(\\mathbf{a})\\mathbf{v}<0$. Pel raonament de (iii), $f(\\mathbf{a}+t\\mathbf{v})<f(\\mathbf{a})$ per a $t\\neq0$ prou petit, en contradicció amb que $\\mathbf{a}$ sigui un mínim local. (v) És anàleg a (iv), aplicat a $-f$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "$\\mathbf{a}$ és un mínim absolut estricte de $f$ en $\\Omega$",
+      "inici": 213,
+      "fi": 273,
+      "tipus": "conclusio",
+      "explicacio": "La informació de la hessiana és local i només dona un mínim local estricte: $f(x)=x^2-x^4$ en $\\mathbb{R}$ té $f'(0)=0$, $f''(0)=2>0$, però $f(2)=-12<f(0)$.",
+      "correccio": "Els apunts diuen: si $q_{Hf(\\mathbf{a})}$ és definida positiva, $\\mathbf{a}$ és un mínim local estricte de $f$.",
+      "pista": "La demostració compara $f(\\mathbf{x})$ amb $f(\\mathbf{a})$ per a quins $\\mathbf{x}$? Què passa lluny d'$\\mathbf{a}$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "Prenent $\\epsilon<C/2$",
+      "inici": 0,
+      "fi": 22,
+      "tipus": "desigualtat",
+      "explicacio": "Amb $\\epsilon<C/2$ el membre de l'esquerra, $-\\epsilon+\\frac c2$, pot ser negatiu (si $c<C$), i no es pot concloure $f(\\mathbf{x})>f(\\mathbf{a})$; cal comparar $\\epsilon$ amb la constant inferior $c$.",
+      "correccio": "Prenent $\\epsilon<c/2$, es té $-\\epsilon+\\frac c2>0$ i, per tant, $f(\\mathbf{x})>f(\\mathbf{a})$ a prop d'$\\mathbf{a}$.",
+      "pista": "Quin dels dos membres de la cadena de desigualtats vols que sigui positiu, i de quina constant depèn?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t5.json",
+    "valoracio": "Conclusió de (i) reforçada a mínim absolut (falsa) i elecció d'$\\epsilon$ incorrecta.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "mínim absolut estricte de $f$ en $\\Omega$",
+        "gravetat": "error",
+        "explicacio": "Les condicions de segon ordre només donen informació local: el resultat és mínim local estricte. Contraexemple: $f(x)=x^2-x^4$ en $\\mathbb{R}$ té $f''(0)>0$ però $f(2)<f(0)$. La demostració [6] conclou mínim local."
+      },
+      {
+        "fragment": 6,
+        "cita": "Prenent $\\epsilon<C/2$",
+        "gravetat": "error",
+        "explicacio": "Per fer positiu el membre de l'esquerra $-\\epsilon+c/2$ cal $\\epsilon<c/2$; amb $\\epsilon<C/2$ (i $c<C$) el membre esquerre pot ser negatiu."
+      }
+    ]
+  },
+  "creat": 1791296162.1057858
+}

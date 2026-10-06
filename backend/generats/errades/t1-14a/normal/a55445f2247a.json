@@ -1,0 +1,65 @@
+{
+  "id": "a55445f2247a",
+  "exercici": "t1-14a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Pel teorema de Bolzano-Weierstrass, un subconjunt de $\\mathbb{R}^n$ és compacte si i només si tota successió del conjunt té una parcial convergent a un punt del conjunt. Ho comprovarem per a $K_1\\times K_2$.",
+    "Sigui $((a_k,b_k))_k$ una successió de $K_1\\times K_2$, és a dir, amb $a_k\\in K_1$ i $b_k\\in K_2$ per a tot $k$.",
+    "La successió $(a_k)_k$ és fitada, perquè $K_1$ és fitat, i per Bolzano-Weierstrass té una parcial convergent $a_{k_j}\\to a$. Com que $K_1$ és obert, el límit $a$ és de $K_1$.",
+    "Igualment, la successió $(b_{k_j})_j$ és fitada, perquè $K_2$ és fitat, i com que $K_2$ és tancat convergeix a un punt $b\\in K_2$.",
+    "Aleshores $\\|(a_{k_j},b_{k_j})-(a,b)\\|^2=\\|a_{k_j}-a\\|^2+\\|b_{k_j}-b\\|^2\\to0$, és a dir, la parcial $((a_{k_j},b_{k_j}))_j$ convergeix a $(a,b)$.",
+    "Com que $(a,b)\\in K_1\\times K_2$, tota successió de $K_1\\times K_2$ té una parcial convergent a un punt de $K_1\\times K_2$, i per tant $K_1\\times K_2$ és compacte."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "Com que $K_1$ és obert",
+      "inici": 125,
+      "fi": 147,
+      "tipus": "hipotesi",
+      "explicacio": "Un compacte de $\\mathbb{R}^n$ és tancat, no obert; i ser obert no garantiria que el límit d'una successió del conjunt hi pertanyi.",
+      "correccio": "Com que $K_1$ és compacte, és tancat, i per tant el límit $a$ de la parcial pertany a $K_1$.",
+      "pista": "Quina propietat d'un conjunt garanteix que els límits de successions del conjunt hi pertanyen? La té $K_1$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "com que $K_2$ és tancat convergeix a un punt $b\\in K_2$",
+      "inici": 74,
+      "fi": 129,
+      "tipus": "logica",
+      "explicacio": "Una successió fitada en un tancat no té per què convergir; Bolzano-Weierstrass només dona una parcial convergent. Cal extreure una nova parcial de $(b_{k_j})_j$.",
+      "correccio": "$(b_{k_j})_j$ té una parcial $b_{k_{j_s}}\\to b\\in K_2$, i aleshores també $a_{k_{j_s}}\\to a$ (parcial d'una successió convergent); es treballa amb els índexs $k_{j_s}$.",
+      "pista": "Tota successió fitada és convergent? Què et garanteix exactament Bolzano-Weierstrass?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t12.json",
+    "valoracio": "Estratègia correcta, però invoca que K_1 és obert i fa convergir tota la successió (b_{k_j}) en lloc d'extreure'n una parcial.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "Com que $K_1$ és obert",
+        "gravetat": "error",
+        "explicacio": "$K_1$ és compacte, per tant tancat (no obert); és el tancament el que garanteix que el límit és de $K_1$."
+      },
+      {
+        "fragment": 4,
+        "cita": "com que $K_2$ és tancat convergeix a un punt $b\\in K_2$",
+        "gravetat": "error",
+        "explicacio": "Una successió fitada no cal que convergeixi; cal extreure'n una parcial $b_{k_{j_s}}\\to b$, i passar també a la parcial $a_{k_{j_s}}$."
+      },
+      {
+        "fragment": 5,
+        "cita": "la parcial $((a_{k_j},b_{k_j}))_j$ convergeix a $(a,b)$",
+        "gravetat": "consequencia",
+        "explicacio": "Usa que $b_{k_j}\\to b$, que no està justificat; s'hauria de treballar amb la parcial encaixada $k_{j_s}$."
+      }
+    ]
+  },
+  "creat": 1791295812.8932247
+}

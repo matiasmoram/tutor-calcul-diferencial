@@ -1,0 +1,48 @@
+{
+  "id": "05facc658db9",
+  "exercici": "t6-4c",
+  "font": "problema",
+  "dificultat": "facil",
+  "fragments": [
+    "El recinte $K$ és el triangle de vèrtexs $(0,0)$ (intersecció de $x=y$ i $y=0$), $(-3,0)$ (de $x+y=-3$ i $y=0$) i $\\left(-\\frac32,-\\frac32\\right)$ (de $x+y=-3$ i $x=y$). És tancat i fitat, per tant compacte, i $f$ és contínua: pel teorema de Weierstrass, $f$ té màxim i mínim absoluts a $K$.",
+    "Punts crítics: $f_x=2x-y+1=0$ i $f_y=2y-x+1=0$ donen $x=y=-1$. El punt $(-1,-1)$ compleix $x=y$, de manera que és a la frontera de $K$ i no a l'interior; igualment el guardem com a candidat, amb $f(-1,-1)=-1$.",
+    "Costat $y=0$, $x\\in[-3,0]$: $f=x^2+x$, amb derivada nul·la a $x=-\\frac12$ i valor $f\\left(-\\frac12,0\\right)=-\\frac34$; als extrems, $f(0,0)=0$ i $f(-3,0)=6$.",
+    "Costat $y=x$, $x\\in\\left[-\\frac32,0\\right]$: $f=x^2+2x$, amb derivada nul·la a $x=-1$ (el punt $(-1,-1)$ d'abans) i valor $-1$; al vèrtex, $f\\left(-\\frac32,-\\frac32\\right)=-\\frac34$.",
+    "Costat $y=-3-x$, $x\\in\\left[-3,-\\frac32\\right]$: $f=3x^2+9x+6$, amb $f'=6x+9$, que només s'anul·la a $x=-\\frac32$, extrem de l'interval; els valors als extrems ja els tenim: $-\\frac34$ i $6$.",
+    "Comparant tots els valors obtinguts ($0$, $6$, $-\\frac34$, $-1$ i $-\\frac34$), el màxim absolut és $6$, assolit a $(-3,0)$, i el mínim absolut és $-1$, assolit a $(-1,-1)$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "valor $f\\left(-\\frac12,0\\right)=-\\frac34$",
+      "inici": 76,
+      "fi": 117,
+      "tipus": "calcul",
+      "explicacio": "$f\\left(-\\frac12,0\\right)=\\frac14-\\frac12=-\\frac14$, no $-\\frac34$.",
+      "correccio": "Valor $f\\left(-\\frac12,0\\right)=-\\frac14$.",
+      "pista": "Què dona $x^2+x$ per a $x=-\\frac12$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "problemes_t56.json",
+    "valoracio": "Resolució correcta excepte un error de càlcul al costat y=0 que no afecta el resultat final.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$f\\left(-\\frac12,0\\right)=-\\frac34$",
+        "gravetat": "error",
+        "explicacio": "$f\\left(-\\frac12,0\\right)=\\frac14-\\frac12=-\\frac14$, no $-\\frac34$."
+      },
+      {
+        "fragment": 6,
+        "cita": "$0$, $6$, $-\\frac34$",
+        "gravetat": "consequencia",
+        "explicacio": "Hereta el valor erroni $-\\frac34$ del fragment 3 (ha de ser $-\\frac14$); la conclusió final no canvia."
+      }
+    ]
+  },
+  "creat": 1791295917.006513
+}

@@ -1,0 +1,59 @@
+{
+  "id": "0c501cb1dde2",
+  "exercici": "T1.34",
+  "font": "teoria",
+  "dificultat": "facil",
+  "fragments": [
+    "(Heine-Borel.) Sigui $A\\subseteq\\mathbb{R}^n$.",
+    "Aleshores, $A$ és compacte $\\Leftrightarrow$ $A$ és fitat.",
+    "$\\Rightarrow$) Si $A$ és compacte, pel Teorema de Bolzano-Weierstrass és seqüencialment compacte i podem aplicar el Lema 30 amb $\\varepsilon=1$: existeixen $y_1,\\ldots,y_r\\in A$ tals que $A\\subseteq\\bigcup_{i=1}^r B(y_i,1)$.",
+    "Sigui $L=\\max\\{d(y_1,y_2),\\ldots,d(y_1,y_r)\\}$, ben definit perquè el conjunt $\\{y_1,\\ldots,y_r\\}$ és finit. Donat $a\\in A$, existeix $i$ amb $d(a,y_i)<1$ i aleshores $d(a,y_1)\\leq d(a,y_i)+d(y_i,y_1)<1+L$. Per tant, $A\\subseteq B(y_1,L+1)$ i $A$ és fitat.",
+    "D'altra banda, pel Lema 27, com que $A$ és compacte també és tancat.",
+    "$\\Leftarrow$) Suposem ara que $A\\subseteq\\mathbb{R}^n$ és tancat i fitat. Si $n=1$, ja és conegut: tota successió $(a_m)_m\\subseteq A$ és fitada i, per tant, admet una parcial $(a_{m_k})_k$ convergent a un $a^*\\in\\overline{A}=A$, perquè $A$ és tancat; així $A$ és seqüencialment compacte i, pel Teorema 26, compacte.",
+    "Per a $n>1$ fem l'argument per a $n=2$ (per a $n\\geq 3$ és anàleg). Com que $A$ és fitat, existeix $L>0$ tal que $A\\subseteq B(0,L)$; en particular, les projeccions $\\pi_i(x_1,x_2)=x_i$ satisfan $\\pi_i(A)\\subseteq[-L,L]$, i per tant $A\\subseteq[-L,L]\\times[-L,L]$.",
+    "Com que $A$ és tancat i està contingut en $[-L,L]\\times[-L,L]$, pel Lema 28 n'hi ha prou de veure que $[-L,L]\\times[-L,L]$ és compacte i, pel Teorema 26 (Bolzano-Weierstrass), que és seqüencialment compacte.",
+    "Sigui $(a_m,b_m)_m$ una successió de punts de $[-L,L]\\times[-L,L]$. La successió $(a_m)_m\\subseteq[-L,L]$ és fitada i, per tant, admet una parcial $(a_{m_k})_k$ convergent a un punt $a^*\\in[-L,L]$.",
+    "La successió $(b_{m_k})_k\\subseteq[-L,L]$ també és fitada i admet una parcial $(b_{m_{k_s}})_s$ convergent a un punt $b^*\\in[-L,L]$; com que $(a_{m_{k_s}})_s$ és una parcial de $(a_{m_k})_k$, també convergeix a $a^*$.",
+    "Per tant, la parcial $(a_{m_{k_s}},b_{m_{k_s}})_s$ convergeix a $(a^*,b^*)\\in[-L,L]\\times[-L,L]$, i $[-L,L]\\times[-L,L]$ és seqüencialment compacte. En conclusió, $A$ és compacte."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$A$ és compacte $\\Leftrightarrow$ $A$ és fitat",
+      "inici": 11,
+      "fi": 57,
+      "tipus": "hipotesi",
+      "explicacio": "Falta la condició de ser tancat: un fitat no tancat no és compacte. Contraexemple: $A=(0,1)\\subseteq\\mathbb{R}$ és fitat però no és compacte.",
+      "correccio": "$A$ és compacte $\\Leftrightarrow$ $A$ és tancat i fitat.",
+      "pista": "L'interval $(0,1)$ és fitat; és compacte?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t1b.json",
+    "valoracio": "L'enunciat omet 'tancat' i la recíproca depèn d'aquesta hipòtesi eliminada.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$A$ és compacte $\\Leftrightarrow$ $A$ és fitat",
+        "gravetat": "error",
+        "explicacio": "S'ha eliminat 'tancat': un fitat no tancat (p. ex. $(0,1)$) no és compacte."
+      },
+      {
+        "fragment": 6,
+        "cita": "Suposem ara que $A\\subseteq\\mathbb{R}^n$ és tancat i fitat",
+        "gravetat": "consequencia",
+        "explicacio": "Usa la hipòtesi de tancat, que l'enunciat modificat ha tret."
+      },
+      {
+        "fragment": 8,
+        "cita": "Com que $A$ és tancat",
+        "gravetat": "consequencia",
+        "explicacio": "Torna a usar que $A$ és tancat (necessari per al Lema 28), hipòtesi absent de l'enunciat."
+      }
+    ]
+  },
+  "creat": 1791295842.2536442
+}

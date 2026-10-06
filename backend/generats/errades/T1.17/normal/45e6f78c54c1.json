@@ -1,0 +1,63 @@
+{
+  "id": "45e6f78c54c1",
+  "exercici": "T1.17",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $(M,d)$ un espai mètric i siguin $A,B\\subseteq M$. Aleshores: i) $A\\subseteq B\\Leftrightarrow\\overline{A}\\subseteq\\overline{B}$; ii) $A$ és tancat $\\Leftrightarrow\\overline{A}=A$;",
+    "iii) $\\overline{A\\cup B}=\\overline{A}\\cup\\overline{B}$; iv) $\\overline{A\\cap B}\\subseteq\\overline{A}\\cap\\overline{B}$, i la inclusió pot ser estricta.",
+    "i) Suposem $A\\subseteq B$ i sigui $x\\in\\overline{A}$: per a tot $r>0$, $B_r(x)\\cap A\\neq\\varnothing$. Com que $A\\subseteq B$, també $B_r(x)\\cap B\\neq\\varnothing$ per a tot $r>0$, és a dir, $x\\in\\overline{B}$.",
+    "ii) $\\Rightarrow$) Sempre $A\\subseteq\\overline{A}$. Suposem, per reducció a l'absurd, que existeix $x\\in\\overline{A}$ amb $x\\notin A$. Com que $A$ és tancat, $A^c$ és un obert que conté $x$, i existeix $r_0>0$ tal que $B_{r_0}(x)\\subseteq A^c$, és a dir, $B_{r_0}(x)\\cap A=\\varnothing$, en contradicció amb $x\\in\\overline{A}$. Per tant, $\\overline{A}=A$.",
+    "$\\Leftarrow$) Vegem que $A^c$ és obert. Sigui $x\\in A^c$; aleshores $x\\notin A=\\overline{A}$, i per tant per a tot $r>0$ es té $B_r(x)\\cap A=\\varnothing$. En particular, $B_1(x)\\cap A=\\varnothing$, és a dir, $B_1(x)\\subseteq A^c$, i $A^c$ és obert.",
+    "iii) Per i), de $A\\subseteq A\\cup B$ i $B\\subseteq A\\cup B$ obtenim $\\overline{A}\\subseteq\\overline{A\\cup B}$ i $\\overline{B}\\subseteq\\overline{A\\cup B}$; per tant, $\\overline{A}\\cup\\overline{B}\\subseteq\\overline{A\\cup B}$.",
+    "Per a la inclusió contrària, suposem per reducció a l'absurd que existeix $x\\in\\overline{A\\cup B}$ amb $x\\notin\\overline{A}\\cup\\overline{B}$. Aleshores $x\\notin\\overline{A}$ i $x\\notin\\overline{B}$, de manera que existeixen $r_1>0$ i $r_2>0$ tals que $B_{r_1}(x)\\cap A=\\varnothing$ i $B_{r_2}(x)\\cap B=\\varnothing$.",
+    "Prenent $r_0=\\min\\{r_1,r_2\\}$, tenim $B_{r_0}(x)\\cap A=\\varnothing$ i $B_{r_0}(x)\\cap B=\\varnothing$, d'on $B_{r_0}(x)\\cap(A\\cup B)=\\varnothing$, en contradicció amb $x\\in\\overline{A\\cup B}$. Així, $\\overline{A\\cup B}=\\overline{A}\\cup\\overline{B}$.",
+    "iv) Si $x\\in\\overline{A\\cap B}$, per a tot $r>0$ es té $B_r(x)\\cap A\\cap B\\neq\\varnothing$, i per tant $B_r(x)\\cap A\\neq\\varnothing$ i $B_r(x)\\cap B\\neq\\varnothing$; és a dir, $x\\in\\overline{A}\\cap\\overline{B}$.",
+    "La inclusió pot ser estricta: a $M=\\mathbb{R}$, amb $A=[0,1]$ i $B=(1,2]$, tenim $A\\cap B=\\varnothing$ i $\\overline{A\\cap B}=\\varnothing$, mentre que $\\overline{A}\\cap\\overline{B}=[0,1]\\cap[1,2]=\\{1\\}$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "$A\\subseteq B\\Leftrightarrow\\overline{A}\\subseteq\\overline{B}$",
+      "inici": 71,
+      "fi": 133,
+      "tipus": "implicacio",
+      "explicacio": "Només és certa la implicació $\\Rightarrow$ (l'única que es demostra): amb $A=[0,1]$ i $B=(0,1)$ a $\\mathbb{R}$, $\\overline{A}=\\overline{B}=[0,1]$ però $A\\not\\subseteq B$.",
+      "correccio": "$A\\subseteq B\\Rightarrow\\overline{A}\\subseteq\\overline{B}$.",
+      "pista": "Si dos conjunts tenen la mateixa clausura, han de ser iguals?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "per a tot $r>0$ es té $B_r(x)\\cap A=\\varnothing$",
+      "inici": 105,
+      "fi": 153,
+      "tipus": "quantificador",
+      "explicacio": "Negació mal feta: $x\\notin\\overline{A}$ vol dir que EXISTEIX $r_0>0$ amb $B_{r_0}(x)\\cap A=\\varnothing$, no que passi per a tot $r$ (per a $r$ gran la bola pot tallar $A$).",
+      "correccio": "Existeix $r_0>0$ tal que $B_{r_0}(x)\\cap A=\\varnothing$, és a dir, $B_{r_0}(x)\\subseteq A^c$.",
+      "pista": "Quina és la negació exacta de «per a tot $r>0$, $B_r(x)\\cap A\\neq\\varnothing$»?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t1a.json",
+    "valoracio": "Enunciat i) amb equivalència falsa i quantificador canviat a la prova de ii) $\\Leftarrow$; prendre $r_0=\\min\\{r_1,r_2\\}$ és vàlid.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "$A\\subseteq B\\Leftrightarrow\\overline{A}\\subseteq\\overline{B}$",
+        "gravetat": "error",
+        "explicacio": "Només és certa la implicació $\\Rightarrow$: amb $A=[0,1]$, $B=(0,1)$ es té $\\overline{A}\\subseteq\\overline{B}$ però $A\\not\\subseteq B$. La demostració només prova $\\Rightarrow$."
+      },
+      {
+        "fragment": 5,
+        "cita": "per a tot $r>0$ es té $B_r(x)\\cap A=\\varnothing$",
+        "gravetat": "error",
+        "explicacio": "$x\\notin\\overline{A}$ només dona que EXISTEIX $r_0>0$ amb $B_{r_0}(x)\\cap A=\\varnothing$, no per a tot $r$; per tant no es pot triar $r=1$ (cal usar aquest $r_0$)."
+      }
+    ]
+  },
+  "creat": 1791295858.022233
+}

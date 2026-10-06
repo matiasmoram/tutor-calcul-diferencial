@@ -1,0 +1,45 @@
+{
+  "id": "74ee9780c7a0",
+  "exercici": "T6.10",
+  "font": "teoria",
+  "dificultat": "facil",
+  "fragments": [
+    "Siguin $M\\subseteq\\mathbb{R}^n$ una $m$-varietat de classe $r\\geqslant1$ i $\\mathbf{a}\\in M$. Suposem que existeixen oberts $G\\subseteq\\mathbb{R}^n$ i $\\Omega\\subseteq\\mathbb{R}^m$, amb $\\mathbf{a}\\in G$, i una funció $\\Phi\\colon G\\longrightarrow\\mathbb{R}^{n-m}$, $\\Phi\\in\\mathcal{C}^r(G)$, amb $\\mathrm{rang}\\,D\\Phi(\\mathbf{x})=n-m$ per a tot $\\mathbf{x}\\in G$, tal que $M\\cap G=\\{\\mathbf{x}\\in G\\mid\\Phi(\\mathbf{x})=\\mathbf{0}\\}$.",
+    "Suposem també que existeix una funció $\\rho\\colon\\Omega\\longrightarrow\\mathbb{R}^n$, $\\rho\\in\\mathcal{C}^r(\\Omega)$, amb $\\mathrm{rang}\\,D\\rho(\\mathbf{u})=m$ per a tot $\\mathbf{u}\\in\\Omega$, tal que $\\rho\\colon\\Omega\\longrightarrow M\\cap G$ és bijectiva; en particular, existeix un únic $\\mathbf{b}\\in\\Omega$ tal que $\\rho(\\mathbf{b})=\\mathbf{a}$.",
+    "Aleshores, (i) $T_M(\\mathbf{a})=\\ker\\left(D\\Phi(\\mathbf{a})\\right)=\\langle\\text{columnes de }D\\rho(\\mathbf{b})\\rangle$; (ii) $N_M(\\mathbf{a})=\\langle\\text{files de }D\\Phi(\\mathbf{a})\\rangle=\\langle\\nabla\\Phi_1(\\mathbf{a}),\\ldots,\\nabla\\Phi_{n-m}(\\mathbf{a})\\rangle$. En particular, $T_M(\\mathbf{a})$ i $N_M(\\mathbf{a})$ són subespais vectorials de $\\mathbb{R}^n$ de dimensions $\\dim T_M(\\mathbf{a})=n-m$ i $\\dim N_M(\\mathbf{a})=m$, respectivament.",
+    "(i) Veurem que $\\mathrm{Im}\\,D\\rho(\\mathbf{b})\\subseteq T_M(\\mathbf{a})\\subseteq\\ker D\\Phi(\\mathbf{a})$ (1). Prenem $\\mathbf{v}\\in\\mathrm{Im}\\,D\\rho(\\mathbf{b})$; és a dir, existeix $\\mathbf{w}\\in\\mathbb{R}^m$ tal que $\\mathbf{v}=D\\rho(\\mathbf{b})\\,\\mathbf{w}$.",
+    "Com que $\\Omega$ és obert, existeix $\\delta>0$ tal que $\\tilde\\alpha(t)=\\mathbf{b}+t\\,\\mathbf{w}\\in\\Omega$ per a $|t|<\\delta$. Considerem $\\alpha=\\rho\\circ\\tilde\\alpha\\colon(-\\delta,\\delta)\\to M\\cap G$, $\\alpha(t)=\\rho(\\mathbf{b}+t\\,\\mathbf{w})$. Per la regla de la cadena, $\\alpha'(0)=D\\rho(\\mathbf{b})\\,\\mathbf{w}=\\mathbf{v}$ i, com que $\\alpha(0)=\\mathbf{a}$, $\\mathbf{v}\\in T_M(\\mathbf{a})$.",
+    "D'altra banda, si $\\mathbf{v}\\in T_M(\\mathbf{a})$, és $\\mathbf{v}=\\alpha'(0)$ per a una corba $\\alpha$ de $M$ amb $\\alpha(0)=\\mathbf{a}$, definida en un interval prou petit perquè prengui valors a $M\\cap G$. Aleshores $\\Phi\\circ\\alpha\\equiv\\mathbf{0}$ i, per la regla de la cadena, $D\\Phi(\\alpha(0))\\,\\alpha'(0)=D\\Phi(\\mathbf{a})\\,\\mathbf{v}=\\mathbf{0}$, és a dir, $\\mathbf{v}\\in\\ker D\\Phi(\\mathbf{a})$.",
+    "Finalment, $\\dim\\mathrm{Im}\\,D\\rho(\\mathbf{b})=\\mathrm{rang}\\,D\\rho(\\mathbf{b})=m$ i, pel teorema de la dimensió, $\\dim\\ker D\\Phi(\\mathbf{a})=n-\\mathrm{rang}\\,D\\Phi(\\mathbf{a})=n-(n-m)=m$. Un subespai contingut en un altre de la mateixa dimensió hi coincideix; per tant, les inclusions de (1) són igualtats.",
+    "(ii) Com que $\\Phi(\\rho(\\mathbf{u}))=\\mathbf{0}$ per a tot $\\mathbf{u}\\in\\Omega$, la regla de la cadena dona $D(\\Phi\\circ\\rho)(\\mathbf{b})=D\\Phi(\\mathbf{a})\\,D\\rho(\\mathbf{b})=0$: cada fila de $D\\Phi(\\mathbf{a})$ és ortogonal a totes les columnes de $D\\rho(\\mathbf{b})$, que generen $T_M(\\mathbf{a})$ per (i). Per tant, les $n-m$ files de $D\\Phi(\\mathbf{a})$, és a dir, $\\nabla\\Phi_1(\\mathbf{a}),\\ldots,\\nabla\\Phi_{n-m}(\\mathbf{a})$, pertanyen a $N_M(\\mathbf{a})$.",
+    "Com que $\\mathrm{rang}\\,D\\Phi(\\mathbf{a})=n-m$, aquestes $n-m$ files són linealment independents; com que, a més, $\\dim N_M(\\mathbf{a})=n-\\dim T_M(\\mathbf{a})=n-m$, aquestes files generen $N_M(\\mathbf{a})$."
+  ],
+  "n_enunciat": 3,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "$\\dim T_M(\\mathbf{a})=n-m$ i $\\dim N_M(\\mathbf{a})=m$",
+      "inici": 377,
+      "fi": 430,
+      "tipus": "conclusio",
+      "explicacio": "Les dimensions estan intercanviades: l'espai tangent a una $m$-varietat té dimensió $m$. Per exemple, l'esfera de $\\mathbb{R}^3$ ($m=2$) té plans tangents, no rectes.",
+      "correccio": "$\\dim T_M(\\mathbf{a})=m$ i $\\dim N_M(\\mathbf{a})=n-m$.",
+      "pista": "Quina dimensió té el pla tangent a una superfície de $\\mathbb{R}^3$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t6.json",
+    "valoracio": "Un error a l'enunciat (dimensions intercanviades); la demostració és correcta.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$\\dim T_M(\\mathbf{a})=n-m$ i $\\dim N_M(\\mathbf{a})=m$",
+        "gravetat": "error",
+        "explicacio": "Dimensions intercanviades: $\\dim T_M(\\mathbf{a})=m$ i $\\dim N_M(\\mathbf{a})=n-m$ (contradiu el mateix (i), ja que $\\dim\\ker D\\Phi(\\mathbf{a})=m$)."
+      }
+    ]
+  },
+  "creat": 1791296017.2402039
+}

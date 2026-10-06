@@ -1,0 +1,697 @@
+tema: 4
+titol: "Teoremes de les funcions diferenciables"
+seccions:
+  - id: "4.1"
+    titol: "Teorema de la funció inversa"
+  - id: "4.2"
+    titol: "Teorema de la funció implícita"
+  - id: "4.3"
+    titol: "Teoremes del rang"
+items:
+  - id: "T4.x1"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "4.1"
+    pagina: 2
+    nom: "Motivació: problema de la inversa"
+    enunciat: |
+      Considerem el problema de trobar una funció inversa $f^{-1}$ d'una funció $f:\Omega\subseteq\mathbb{R}^n\to\mathbb{R}^n$, $f\in\mathcal{C}^r(\Omega)$, amb $\Omega\subseteq\mathbb{R}^n$ obert.
+
+      Un cas particular seria que $f$ fos una funció lineal, que ja coneixem prou bé. En efecte, si $A$ és la matriu de $f$ en una base qualsevol de $\mathbb{R}^n$, tenim que:
+
+      - Si $\det A\neq 0$, aleshores, l'equació $f(x)=b$ té solució única per a qualsevol $b\in\mathbb{R}^n$. Per tant, existeix $f^{-1}$ tal que $f^{-1}\circ f=\mathrm{Id}$ i podem expressar la solució del sistema com $x=A^{-1}b$, essent $A^{-1}$ la matriu de $f^{-1}$ en la mateixa base escollida.
+      - Si $\det A=0$, aleshores $\mathrm{Im}\,f\neq\mathbb{R}^n$, la inversa de $f$ no està definida globalment i, a més, les antiimatges d'un valor $b\in\mathrm{Im}\,f$ no són úniques ja que $f^{-1}(b)=x_b+\mathrm{Nuc}\,f$, on $x_b$ és qualsevol element que satisfaci $f(x_b)=b$.
+
+      D'aquesta observació sobre els sistemes lineals, se'n desprèn una conclusió clara: sabem determinar quan existeix la funció inversa i, a més, quan existeix està definida a tot $\mathbb{R}^n$, és a dir, és *global*.
+
+      En el món no lineal, no obstant, la situació ja no és tan diàfana. En una variable, per exemple tenim els següents resultats:
+    problemes: []
+  - id: "T4.1"
+    tipus: proposicio
+    num: 1
+    resum: 84
+    seccio: "4.1"
+    pagina: 2
+    nom: "Inversió global (una variable)"
+    enunciat: |
+      (inversió global). Sigui $f:I=(a,b)\to\mathbb{R}$ una funció $\mathcal{C}^r$, $r\geqslant 1$, i tal que $f'(c)\neq 0$, $\forall c\in(a,b)$. Llavors $f:I\to f(I)$ és bijectiva, $f^{-1}:f(I)\to I$ també és $\mathcal{C}^r$. A més,
+      $$(f^{-1})'(y_0)=\frac{1}{f'(f^{-1}(y_0))},\qquad \text{per a } y_0\in f(I).$$
+    problemes: []
+  - id: "T4.2"
+    tipus: proposicio
+    num: 2
+    resum: 85
+    seccio: "4.1"
+    pagina: 2
+    nom: "Inversió local (una variable)"
+    enunciat: |
+      (inversió local). Sigui $f:(a,b)\to\mathbb{R}$ una funció $\mathcal{C}^r$, $r\geqslant 1$. Si $f'(c)\neq 0$ per a un determinat $c\in(a,b)$, llavors existeixen $\varepsilon_1,\varepsilon_2,\delta>0$ tals que $f:(c-\delta,c+\delta)\to(f(c)-\varepsilon_1,f(c)+\varepsilon_2)$ és bijectiva i $f'(x)\neq 0$ $\forall x\in(c-\delta,c+\delta)$. A més, la inversa local també és $\mathcal{C}^r$.
+    problemes: []
+  - id: "T4.x2"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "4.1"
+    pagina: 2
+    nom: "Transició: tanmateix, però"
+    enunciat: |
+      Tanmateix, però...
+    problemes: []
+  - id: "T4.3"
+    tipus: exemple
+    num: 3
+    resum: 86
+    seccio: "4.1"
+    pagina: 2
+    nom: "Inversió global falla en dimensió superior"
+    enunciat: |
+      El teorema d'inversió global no és cert en dimensió superior.
+
+      Se'n poden construir molts exemples, però aquest és paradigmàtic: considerem el camp vectorial polinòmic
+      $$f(x,y)=(x^3-3xy^2,\,3x^2y-y^3),$$
+      que clarament està definit a tot $\mathbb{R}^2$.
+
+      La seva matriu jacobiana, que seria el concepte que millor generalitza tant la derivada d'una funció d'una variable com la matriu d'una aplicació lineal, és
+      $$Jf(x,y)=\begin{pmatrix}3x^2-3y^2 & -6xy\\ 6xy & 3x^2-3y^2\end{pmatrix}.$$
+
+      Observem que $\det Jf(x,y)=(3x^2-3y^2)^2+(6xy)^2=9(x^2+y^2)^2\neq 0$ excepte en $(x,y)=(0,0)$. En canvi, $f$ no és injectiva (de fet, es pot pensar com la part real i imaginària de $f(z)=z^3$, amb $z\in\mathbb{C}$), i sabem que $z^3=w$, $w\neq 0\in\mathbb{C}$, sempre té 3 arrels diferents.
+
+      Relacionat amb aquest problema, val la pena esmentar la conjectura jacobiana real, que estableix que si el determinant de la matriu jacobiana és 1 arreu, aleshores $F$ és invertible, que s'ha demostrat que no es compleix ni per a $n=2$.
+    problemes: []
+  - id: "T4.4"
+    tipus: proposicio
+    num: 4
+    resum: 87
+    seccio: "4.1"
+    pagina: 3
+    nom: "Fitacions de f i injectivitat local"
+    enunciat: |
+      Sigui $\Omega\subseteq\mathbb{R}^n$ obert, $f:\Omega\to\mathbb{R}^m$ una funció, i $a\in\Omega$.
+
+      (i) Si $f$ és diferenciable en $a$, llavors per a tot $\varepsilon>0$, existeix $\delta>0$ tal que per a tot $x\in B(a,\delta)\subseteq\Omega$, es compleix que $\|f(x)-f(a)\|\leqslant\big(\|Df(a)\|+\varepsilon\big)\|x-a\|$.
+
+      (ii) Si $f\in\mathcal{C}^1(\Omega)$, llavors per a tot $\varepsilon>0$ existeix $\delta>0$ tal que per a tot $x,y\in B(a,\delta)\subseteq\Omega$, es compleix que $\|f(x)-f(y)\|\leqslant\big(\|Df(a)\|+\varepsilon\big)\|x-y\|$.
+
+      (iii) Si $n=m$, $f\in\mathcal{C}^1(\Omega)$, i $\det Jf(a)\neq 0$, llavors per a tot $\varepsilon>0$ existeix $\delta>0$ tal que per a tot $x,y\in B(a,\delta)\subseteq\Omega$, es compleix que $\|f(x)-f(y)\|\geqslant(c-\varepsilon)\|x-y\|$, on $c=1/\|(Df(a))^{-1}\|$. (En particular, $f$ és localment injectiva.)
+    demostracio: |
+      (i) Com que $f$ és diferenciable en $a$, per a tot $\varepsilon>0$, existeix $\delta>0$ de manera que per a qualsevol $x\in B(a,\delta)\subseteq\Omega$ es compleix que
+      $$\|f(x)-f(a)-Df(a)(x-a)\|\leq\varepsilon\,\|x-a\|.$$
+      Aleshores,
+      $$\begin{aligned}\|f(x)-f(a)\|&=\|f(x)-f(a)-Df(a)(x-a)+Df(a)(x-a)\|\\ &\leq\|f(x)-f(a)-Df(a)(x-a)\|+\|Df(a)(x-a)\|\\ &\leq(\varepsilon+\|Df(a)\|)\,\|x-a\|,\end{aligned}$$
+      on, al darrer pas, hem fet servir la definició de normes de matrius i vectors consistents.
+
+      (ii) Com que $f$ és de classe $\mathcal{C}^1$, sabem que totes les derivades parcials són contínues i, per tant, la diferencial $Df:\Omega\subseteq\mathbb{R}^n\longrightarrow\mathcal{L}(\mathbb{R}^n;\mathbb{R}^m)$ i la seva norma (matricial) $\|Df\|:\Omega\subseteq\mathbb{R}^n\longrightarrow\mathbb{R}$ també són contínues.
+      Aleshores, per a tot $\varepsilon>0$, existeix $\delta>0$ tal que $z\in B(a,\delta)\subseteq\Omega$ es compleix que
+      $$\|Df(z)\|-\|Df(a)\|<\varepsilon;\ \text{ és a dir, }\ \|Df(z)\|<\|Df(a)\|+\varepsilon.$$
+      Considerem ara dos punts $x,y\in B(a,\delta)$. En virtut del teorema del valor mitjà per a camps vectorials diferenciables (resultat 76 del resum de teoria), prenent $u=f(x)-f(y)$, sabem que existeix $z\in[x,y]$ tal que
+      $$\langle f(x)-f(y),f(x)-f(y)\rangle=\langle f(x)-f(y),Df(z)\,(x-y)\rangle;$$
+      Ara bé, per una banda,
+      $$\langle f(x)-f(y),f(x)-f(y)\rangle=\|f(x)-f(y)\|^2,$$
+      i, per l'altra, aplicant primer la desigualtat de Cauchy-Schwarz i després la consistència entre norma de matrius i vectors,
+      $$\begin{aligned}\langle f(x)-f(y),Df(z)\,(x-y)\rangle&\leq\|f(x)-f(y)\|\,\|Df(z)\,(x-y)\|\\ &\leq\|f(x)-f(y)\|\,\|Df(z)\|\,\|x-y\|.\end{aligned}$$
+      Ajuntant-ho tot, tenim que
+      $$\|f(x)-f(y)\|^2\leq\|f(x)-f(y)\|\,\|Df(z)\|\,\|(x-y)\|\leq\|f(x)-f(y)\|\,(\|Df(a)\|+\varepsilon)\,\|x-y\|,$$
+      i, per tant,
+      $$\|f(x)-f(y)\|\leq(\|Df(a)\|+\varepsilon)\,\|x-y\|.$$
+
+      (iii) Considerem la funció $h:\Omega\subseteq\mathbb{R}^n\longrightarrow\mathbb{R}^n$ definida per $h(x)=f(x)-Df(a)(x-a)$. Observem que és de classe $\mathcal{C}^1$ per ser composició de funcions de classe $\mathcal{C}^1$ i, a més, $Dh(x)=Df(x)-Df(a)$; en particular, $Dh(a)=0$.
+
+      Com que és de classe $\mathcal{C}^1$, per l'apartat (ii) sabem que per a tot $\varepsilon>0$ existeix $\delta>0$ tal que per a tot $x,y\in B(a,\delta)\subseteq\Omega$, es compleix que $\|h(x)-h(y)\|\leqslant\big(\|Dh(a)\|+\varepsilon\big)\|x-y\|=\varepsilon\,\|x-y\|$.
+
+      D'altra banda, per definició de $h$,
+      $$\|h(x)-h(y)\|=\|f(x)-Df(a)(x-a)-f(y)+Df(a)(y-a)\|=\|f(x)-f(y)-Df(a)(x-y)\|;$$
+      és a dir, obtenim la desigualtat
+      $$\|f(x)-f(y)-Df(a)(x-y)\|\leq\varepsilon\,\|x-y\|.$$
+
+      Ara usarem que $\|A-B\|\geq\|A\|-\|B\|$ (Nota: A l'exercici 5(b) de la llista de problemes del tema 1 es demostra una propietat equivalent per a distàncies.) per tal de fitar inferiorment $\|f(x)-f(y)\|$:
+      $$\begin{aligned}\|f(x)-f(y)\|&=\|f(x)-f(y)-Df(a)(x-y)+Df(a)(x-y)\|\\ &\geq\|Df(a)(x-y)\|-\|f(x)-f(y)-Df(a)(x-y)\|\\ &\geq(c-\varepsilon)\,\|x-y\|,\end{aligned}$$
+      si demostrem que $\|Df(a)(x-y)\|\geq c\|x-y\|$, on $c:=\dfrac{1}{\|(Df(a))^{-1}\|}$. Per demostrar aquesta desigualtat usarem la hipòtesi que $\det Jf(a)\neq 0$, que ens asssegura que
+      $$(Df(a))^{-1}\,Df(a)=\mathrm{Id}.$$
+      Llavors,
+      $$\|x-y\|=\|(Df(a))^{-1}\,Df(a)\,(x-y)\|\leq\|(Df(a))^{-1}\|\,\|Df(a)\,(x-y)\|,$$
+      i, en conseqüència,
+      $$\frac{1}{\|(Df(a))^{-1}\|}\|x-y\|\leq\|Df(a)\,(x-y)\|.$$
+    problemes: ["T1.5"]
+  - id: "T4.x3"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "4.1"
+    pagina: 4
+    nom: "Anunci del teorema de la funció inversa"
+    enunciat: |
+      Enunciem ara el teorema de la funció inversa.
+    problemes: []
+  - id: "T4.5"
+    tipus: teorema
+    num: 5
+    resum: 88
+    seccio: "4.1"
+    pagina: 5
+    nom: "Teorema de la funció inversa"
+    enunciat: |
+      (de la funció inversa). Sigui $\Omega\subseteq\mathbb{R}^n$ obert, $f:\Omega\to\mathbb{R}^n$ una funció $\mathcal{C}^r(\Omega)$, i $a\in\Omega$ tal que $\det\big(Jf(a)\big)\neq 0$. Llavors existeix $U\in\mathcal{E}_a$, $U\subseteq\Omega$, tal que
+
+      (i) $f|_U:U\to\mathbb{R}^n$ és injectiva, i $\det\big(Jf(z)\big)\neq 0$ $\forall z\in U$;
+
+      (ii) $V=f(U)\subseteq\mathbb{R}^n$ és obert;
+
+      (iii) la inversa $f^{-1}:V\to U$ és $\mathcal{C}^r(V)$ i, a més, $Df^{-1}(y_0)=\big(Df(f^{-1}(y_0))\big)^{-1}$.
+    demostracio: |
+      Sabem que $f\in\mathcal{C}^1$ (de fet, és $\mathcal{C}^r$). Així doncs, la funció *determinant*,
+      $$\begin{array}{ccccc}\Omega\subseteq\mathbb{R}^n&\longrightarrow&\mathbb{R}^{n^2}&\longrightarrow&\mathbb{R}\\ x&\longmapsto&Df(x)&\longmapsto&\det Df(x),\end{array}$$
+      és contínua. Per tant, existeix $\delta_1>0$ tal que per a tot $z\in B(a,\delta_1)$, $\det Df(z)\neq 0$. Aplicant l'apartat iii de la proposició 4, sabem que per a tot $\varepsilon>0$, existeix $\delta_2>0$ tal que per a tot $x,y\in B(a,\delta_2)\subseteq\Omega$, $\|f(x)-f(y)\|\geq(c-\varepsilon)\|x-y\|$. En particular, si prenem $\varepsilon=c/2$, llavors
+      $$\|f(x)-f(y)\|\geq c/2\,\|x-y\|.$$
+      Finalment, considerem $\delta=\min\{\delta_1,\delta_2\}$ i $U=B(a,\delta)\subseteq\Omega$.
+
+      (i) Per a tot $z\in U$, $\det Df(z)\neq 0$ ja que $z\in U=B(a,\delta)\subseteq B(a,\delta_1)$.
+      De l'anterior desigualtat, se'n desprèn que si, donats $x,y\in U$, tenim que $f(x)=f(y)$, aleshores $x=y$. Per tant, $f|_U:U\longrightarrow\mathbb{R}^n$ és injectiva.
+
+      (ii) Volem veure ara que $V=f(U)$ és un obert de $\mathbb{R}^n$. Per tant, donat $y_0\in V$, hem de trobar $\delta$ tal que $B(y_0,\delta)\subseteq V$.
+
+      Com que ja hem vist que $f|_U$ és injectiva, aleshores existeix un únic $x_0\in U$ tal que $f(x_0)=y_0$. Prenem ara $\eta>0$ tal que $B(x_0,\eta)=:U_0\subseteq U$ i que $\overline{U_0}\subseteq U$.
+
+      La frontera de $U_0$ ($\mathrm{Fr}(U_0)$) és tancada i fitada i, per tant, compacta. Com que $f$ és contínua, $f(\mathrm{Fr}(U_0))$ també és compacte i, a més, no conté $y_0$ (per injectivitat).
+
+      Definim ara $\sigma=\min_{x\in\mathrm{Fr}(U_0)}||y_0-f(x)||>0$ i considerem l'obert $V_0=B(y_0,\sigma/2)$. Si veiem que $V_0\subseteq V$, ja haurem demostrat el que volíem. Així, doncs, prenem $y\in V_0$ i volem trobar $z\in U$ tal que $f(z)=y$ (fixem-nos que amb això, haurem provat que $y\in f(U)=V$ i, en conseqüència, que $V_0\subseteq V$).
+
+      Fixat $y\in V_0$, considerem la funció
+      $$\begin{array}{rcl}\varphi:\Omega&\longrightarrow&\mathbb{R}\\ x&\longmapsto&\|f(x)-y\|,\end{array}$$
+      que és contínua, i $z:=\arg\min\{\varphi(x)\mid x\in\overline{U_0}\}$, que existeix pel teorema de Weiertrass atès que $\varphi$ és contínua i $\overline{U_0}$ és compacte.
+
+      Tenim que $\varphi(x_0)=\|f(x_0)-y\|=\|y_0-y\|<\sigma/2$ ja que $y\in V_0=B(y_0,\sigma/2)$. Per tant, com que $z=\arg\min\{\varphi(x)\mid x\in\overline{U_0}\}$, aleshores, $\varphi(z)\leq\varphi(x)<\sigma/2$. En canvi, per a tot $x\in\mathrm{Fr}(U_0)$, $\varphi(x)=\|f(x)-y\|\geq\|f(x)-y_0\|-\|y_0-y\|>\sigma/2$ perquè $\|f(x)-y\|\geq\sigma$ i $\|y_0-y\|<\sigma/2$. Per tant, el mínim no està a $\mathrm{Fr}(U_0)$ sinó en un punt $z\in U_0$.
+
+      Vegem ara que $f(z)=y$.
+      Com que $\varphi(z)$ és el valor mínim de $\varphi$ sobre $\overline{U_0}$, aleshores $\varphi(z)^2$ també serà el valor mínim de $\varphi(x)^2$ que es podrà atènyer a $\overline{U_0}$, on
+      $$\varphi(z)^2=\|f(z)-y\|^2=\sum_{k=1}^{n}(f_k(z)-y_k)^2.$$
+      Llavors, per a tot $i=1,\ldots,n$, i donat que hem vist que $z\in U_0$ (obert),
+      $$0=\frac{\partial(\varphi^2)}{\partial x_i}(z)=2\sum_{k=1}^{n}(f_k(z)-y_k)\frac{\partial f_k}{\partial x_i}(z)=2\,(f_1(z)-y_1,\ldots,f_n(z)-y_n)\begin{pmatrix}\dfrac{\partial f_1}{\partial x_i}\\ \vdots\\ \dfrac{\partial f_n}{\partial x_i}\end{pmatrix}_{(z)}.$$
+      Agrupant per a tot $i=1,\ldots,n$, tenim que
+      $$(f_1(x)-y_1,\ldots,f_n(x)-y_n)\,Jf(z)=(0,\ldots,0).$$
+      Com que $\det Jf(z)\neq 0$, deduïm que $(f_1(x)-y_1,\ldots,f_n(x)-y_n)=(0,\ldots,0)$ (de fet, és la solució única d'una sistema lineal compatible homogeni) i, per tant, que $f(z)=y$.
+      En conclusió, $y\in V$ perquè és imatge de $z\in U$ i hem demostrat que $V_0\subseteq V$ perquè $y$ era un punt qualsevol de l'obert $V_0$.
+
+      (iii) Comencem veient que $f^{-1}\in\mathcal{C}^1$ i que $Df^{-1}(y_0)=\big(Df(f^{-1}(y_0))\big)^{-1}$. Prenem $y_0\in V$ i ens proposem de demostrar que, donat $\varepsilon>0$, existeix $\delta>0$ tal que per a tot $y$ que satisfaci $\|y-y_0\|<\delta$ es compleix que
+      $$\|f^{-1}(y)-f^{-1}(y_0)-\big(Df(f^{-1}(y_0))\big)^{-1}(y-y_0)\|<\varepsilon\,\|y-y_0\|.$$
+      Considerem
+      $$c=\frac{1}{\|(Df(a))^{-1}\|},\qquad c_1=\frac{1}{\|(Df(f^{-1}(y_0)))^{-1}\|}=\frac{1}{\|(Df(x_0))^{-1}\|},\quad\text{amb }y_0=f(x_0).$$
+      En aquest punt, fem una sèrie d'observacions:
+
+      (a) El terme que volem fitar es pot escriure com
+      $$f^{-1}(y)-f^{-1}(y_0)-\big(Df(f^{-1}(y_0))\big)^{-1}(y-y_0)=x-x_0-\big(Df(x_0)\big)^{-1}(f(x)-f(x_0)).$$
+      Per tant, si multipliquem ambdues bandes de la igualtat per $Df(x_0)$, tenim que
+      $$\begin{aligned}&Df(x_0)\Big(f^{-1}(y)-f^{-1}(y_0)-\big(Df(f^{-1}(y_0))\big)^{-1}(y-y_0)\Big)\\ &\qquad=Df(x_0)(x-x_0)-(f(x)-f(x_0)).\end{aligned}\tag{1}$$
+
+      (b) Per a tot vector $u\in\mathbb{R}^n$ es té que
+      $$\|u\|=\|\big(Df(x_0)\big)^{-1}Df(x_0)u\|\leq\|\big(Df(x_0)\big)^{-1}\|\,\|Df(x_0)u\|,$$
+      i per tant,
+      $$c_1\,\|u\|=\frac{1}{\|(Df(x_0))^{-1}\|}\|u\|\leq\|Df(x_0)u\|.$$
+      Si ho apliquem a la igualtat (1), tenim que
+      $$\begin{aligned}&c_1\,\|f^{-1}(y)-f^{-1}(y_0)-\big(Df(f^{-1}(y_0))\big)^{-1}(y-y_0)\|\\ &\qquad\leq\|Df(x_0)(x-x_0)-(f(x)-f(x_0))\|.\end{aligned}\tag{2}$$
+
+      (c) Com que $f$ és diferenciable en $x_0$, per a tot $\varepsilon>0$, existeix un obert $U_3$, amb $x_0\in U_3\subseteq U$, tal que per a tot $x\in U_3$,
+      $$\|f(x)-f(x_0)-Df(x_0)\,(x-x_0)\|<\frac{\varepsilon\,c\,c_1}{2}\|x-x_0\|.$$
+
+      (d) Tal com hem deduït a la demostració de l'apartat (i), per a tot $x\in U$ (en particular, $x\in U_3$),
+      $$\|f(x)-f(x_0)\|\geq c/2\,\|x-x_0\|,$$
+      és a dir, per a tot $y\in V_3=f(U_3)\subseteq f(U)=V$,
+      $$\|y-y_0\|\geq c/2\,\|f^{-1}(y)-f^{-1}(y_0)\|=c/2\,\|x-x_0\|.$$
+
+      Tornem ara a l'expressió que volíem fitar i li apliquem els punts anteriors (observació (b) al primer pas, observació (c) al segon pas, observació (d) al tercer pas):
+      $$\begin{aligned}\|f^{-1}(y)-f^{-1}(y_0)-\big(Df(x_0)\big)^{-1}(y-y_0)\|&\leq\frac{1}{c_1}\|Df(x_0)(x-x_0)-(f(x)-f(x_0))\|\\ &\leq\frac{1}{c_1}\frac{\varepsilon\,c\,c_1}{2}\,\|x-x_0\|\\ &\leq\frac{1}{c_1}\frac{\varepsilon\,c\,c_1}{2}\frac{2}{c}\|y-y_0\|=\varepsilon\,\|y-y_0\|.\end{aligned}$$
+      Per tant, hem demostrat que $f^{-1}$ és diferenciable i que per a tot $y\in V$,
+      $$Df^{-1}(y)=\big(Df(f^{-1}(y))\big)^{-1}.$$
+      Notem que, estrictament, hauríem de redefinir $U:=U_3$ i $V:=V_3$ perquè és en aquests conjunts que hem acabat demostrant totes les propietats.
+
+      Ara ens queda veure que si $f\in\mathcal{C}^r(\Omega)$, aleshores $f^{-1}\in\mathcal{C}^r(V)$.
+
+      En primer lloc, hem de veure que $f^{-1}\in\mathcal{C}^1(V)$. En efecte, observem d'una banda que, per ser diferenciable, $f^{-1}$ també és contínua, i, de l'altra, que, donat que $f\in\mathcal{C}^1(U)$, $Df$ (vista com una funció de $\mathbb{R}^n$ a $\mathbb{R}^{nm}$ que té per components les derivades parcials de $f$) és contínua en $U$. Per tant, $Df(f^{-1}(y))$ és contínua. La seva matriu inversa existeix gràcies a l'apartat (i) i, a més, les seves components són combinacions lineals de les components de $Df(f^{-1}(y))$. En conclusió, les components de $Df^{-1}(y)=\big(Df(f^{-1}(y))\big)^{-1}$ són totes contínues i, per tant, $f^{-1}\in\mathcal{C}^1(V)$.
+
+      Finalment, demostrem que aquest raonament s'estén fins a classe $\mathcal{C}^r$. En efecte, si $f\in\mathcal{C}^r$, aleshores $f^{-1}\in\mathcal{C}^{r-1}$ i $Df\in\mathcal{C}^{r-1}$. Per tant, $Df(f^{-1}(y))$ és de classe $\mathcal{C}^{r-1}$. La seva matriu inversa existeix gràcies a l'apartat (i) i, a més, les seves components són combinacions lineals de les components de $Df(f^{-1}(y))$. En conclusió, les components de $Df^{-1}(y)=\big(Df(f^{-1}(y))\big)^{-1}$ són de classe $\mathcal{C}^{r-1}$ i, per tant, $f^{-1}\in\mathcal{C}^r(V)$.
+    problemes: []
+  - id: "T4.6"
+    tipus: exemple
+    num: 6
+    resum: 89
+    seccio: "4.1"
+    pagina: 8
+    nom: "Exemples d'ús del TFI"
+    enunciat: |
+      Exemples d'ús del teorema de la funció inversa.
+
+      1. Considerem la funció
+      $$\begin{aligned}f:\mathbb{R}^2&\longrightarrow\mathbb{R}^2\\ (x,y)&\longmapsto e^x\,(\cos y,\sin y).\end{aligned}$$
+      Fixem-nos que per la periodicitat d'ambdues components respecte $y$, $f$ és clarament no injectiva. Addicionalment, observem que les dues components de $f$ són les parts real i imaginària, respectivament, de la funció de variable complexa $e^z$, amb $z=x+i\,y$.
+
+      D'altra banda,
+      $$\det Jf(x,y)=\begin{vmatrix}e^x\cos y&-e^x\sin y\\ e^x\sin y&e^x\cos y\end{vmatrix}=e^{2x}\neq 0\qquad\forall(x,y)\in\mathbb{R}^2.$$
+      D'entrada, doncs, veiem que, malgrat que el determinant de la matriu jacobiana no s'anul·la mai, $f$ no té una inversa global.
+
+      Ara bé, pel teorema de la funció inversa, com que $f$ és de classe $C^\infty$, en qualsevol punt $(x_0,y_0)\in\mathbb{R}^2$ podrem definir localment una funció inversa que serà també de classe $C^\infty$. Ho veurem per a un cas concret, prenent $(x_0,y_0)=(0,\pi/3)$.
+
+      Un càlcul directe ens dona que $f(0,\pi/3)=(\frac12,\frac{\sqrt3}{2})$. Llavors, $f^{-1}$ existeix en un entorn de $(\frac12,\frac{\sqrt3}{2})$ i, a més,
+      $$Df^{-1}\big(\tfrac12,\tfrac{\sqrt3}{2}\big)=\big(Df(0,\pi/3)\big)^{-1}=\begin{pmatrix}\frac12&-\frac{\sqrt3}{2}\\ \frac{\sqrt3}{2}&\frac12\end{pmatrix}^{-1}=\begin{pmatrix}\frac12&\frac{\sqrt3}{2}\\ -\frac{\sqrt3}{2}&\frac12\end{pmatrix}.$$
+      Observem que en aquest cas també es pot calcular $f^{-1}$ explícitament i, per tant, fer el càlcul de la seva matriu jacobiana sense aplicar el TFI. En efecte, si ens plantegem el sistema
+      $$\begin{cases}e^x\cos y=u,\\ e^x\sin y=v,\end{cases}$$
+      podem expressar
+      $$\begin{cases}u^2+v^2=e^{2x},\\ \dfrac{v}{u}=\tan y;\end{cases}\qquad\Leftrightarrow\qquad\begin{cases}x=x(u,v)=\frac12\ln(u^2+v^2),\\ y=y(u,v)=\arctan v/u.\end{cases}$$
+      Lligat amb el fet que $f$ és periòdica (i, per tant, no injectiva en $y$), constatem que $y(u,v)$ ni tan sols és contínua per a $u=0$. Però localment, podem considerar la seva diferencial per a $u\neq 0$:
+      $$\begin{aligned}Df^{-1}\big(\tfrac12,\tfrac{\sqrt3}{2}\big)=\frac{\partial(x,y)}{\partial(u,v)}\big(\tfrac12,\tfrac{\sqrt3}{2}\big)&=\begin{pmatrix}\dfrac{u}{u^2+v^2}&\dfrac{v}{u^2+v^2}\\ \dfrac{-v/u^2}{1+v^2/u^2}&\dfrac{1/u}{1+v^2/u^2}\end{pmatrix}_{(\frac12,\frac{\sqrt3}{2})}\\ &=\begin{pmatrix}\dfrac{u}{u^2+v^2}&\dfrac{v}{u^2+v^2}\\ \dfrac{-v}{u^2+v^2}&\dfrac{u}{u^2+v^2}\end{pmatrix}_{(\frac12,\frac{\sqrt3}{2})}=\begin{pmatrix}\frac12&\frac{\sqrt3}{2}\\ -\frac{\sqrt3}{2}&\frac12\end{pmatrix}.\end{aligned}$$
+
+      2. Una aplicació rellevant del teorema de la funció inversa és el càlcul de solucions aproximades de sistemes no lineals. Suposem que volem resoldre $f(x)=y$ i que coneixem que $f(p)=q$ per a un valor $q$ proper a $y$. Si $f$ és diferenciable en un obert que contingui $p$, i $\det Df(p)\neq 0$, aleshores, $f^{-1}$ és diferenciable en un entorn de $q$, i
+      $$\lim_{y\to q}\frac{\|f^{-1}(y)-f^{-1}(q)-Df(p)^{-1}(y-q)\|}{\|y-q\|}=0.$$
+      Per tant, podem aproximar $f^{-1}(y)$ per $f^{-1}(q)+Df(p)^{-1}(y-q)$, és a dir,
+      $$x\approx p+Df(p)^{-1}(y-q),$$
+      que equival a trobar l'aproximació resolent el sistema
+      $$Df(p)\,(x-p)=y-q.$$
+      Apliquem-ho, per exemple, al sistema
+      $$\begin{cases}x_1^3x_2^2x_3+x_1^2x_2^3x_3^2+x_1&=3.1,\\ x_1^2x_2^3+x_2^3x_3^2+x_3&=2.9,\\ x_2^3x_3^3+x_1x_3+x_1&=3.2,\end{cases}$$
+      que podem escriure de manera abreujada com $f(x_1,x_2,x_3)=(3.1,2.9,3.2)=:y$. Observem que el sistema $f(x_1,x_2,x_3)=(3,3,3)=:q$ té la solució $p=(1,1,1)$, i que
+      $$Df(p)=\begin{pmatrix}6&5&3\\ 2&6&3\\ 2&3&4\end{pmatrix},\ \text{ amb }\det Df(p)=62\neq 0.$$
+      Per tant, una solució aproximada de $f(x_1,x_2,x_3)=y$ és $x^*$ tal que
+      $$\begin{pmatrix}6&5&3\\ 2&6&3\\ 2&3&4\end{pmatrix}\begin{pmatrix}x_1^*-1\\ x_2^*-1\\ x_3^*-1\end{pmatrix}=\begin{pmatrix}0.1\\ -0.1\\ 0.2\end{pmatrix};\ \text{ és a dir, }\ \begin{pmatrix}6&5&3\\ 2&6&3\\ 2&3&4\end{pmatrix}\begin{pmatrix}x_1^*\\ x_2^*\\ x_3^*\end{pmatrix}=\begin{pmatrix}14.1\\ 10.9\\ 9.2\end{pmatrix}.$$
+      La solució del sistema és $x^*\approx(1.0323,0.9290,1.0871)$. A partir d'aquest punt, podríem calcular una nova aproximació prenent $p=x^*$, $q=f(x^*)\approx(3.0740,2.8891,3.1846)$ i, igual que abans, $y=(3.1,2.9,3.2)$. Observem com $\|y-q\|$ s'ha reduït: de $\sqrt{0.1^2+0.1^2+0.2^2}=\sqrt{0.06}\approx 0.2449$, hem passat a $\sqrt{(3.1-3.0740)^2+(2.9-2.8891)^2+(3.2-3.1846)^2}\approx 0.0321$.
+
+      A https://atenea.upc.edu/mod/resource/view.php?id=5449143 podeu trobar els càlculs de dos iterats més d'aquesta aproximació a la solució del sistema $f(x_1,x_2,x_3)=(3.1,2.9,3.2)$,
+    problemes: []
+  - id: "T4.7"
+    tipus: definicio
+    num: 7
+    resum: null
+    seccio: "4.1"
+    pagina: 10
+    nom: "Funció oberta"
+    enunciat: |
+      Una funció $f:U\subseteq\mathbb{R}^n\to V\subseteq\mathbb{R}^n$ es diu que és oberta si la imatge de tot obert és un obert.
+    problemes: []
+  - id: "T4.8"
+    tipus: corollari
+    num: 8
+    resum: 90
+    seccio: "4.1"
+    pagina: 10
+    nom: "Teorema de l'aplicació oberta"
+    enunciat: |
+      Teorema de l'aplicació oberta. Sigui $f:U\subseteq\mathbb{R}^n\to V\subseteq\mathbb{R}^n$ una funció $\mathcal{C}^1(U)$ tal que $\det Jf(a)\neq 0$ per a tot $a\in U$. Aleshores, per a tot obert $B\subseteq U$, $f(B)$ és també un obert.
+    demostracio: |
+      Pel teorema de la funció inversa, $f^{-1}:V\longrightarrow U$ està ben definida i és contínua. Considerem ara un obert $B\subseteq U$. Per la continuïtat de $f^{-1}$, existeix un obert $B'$ tal que $(f^{-1})^{-1}(B)=B'\cap V$. Ara bé, d'una banda, com que $B\subseteq U$, aleshores $B'\subseteq V$, i, de l'altra, $(f^{-1})^{-1}(B)=f(B)$. Per tant, hem vist que $f(B)=B'\subseteq V$. (Nota: Una demostració alternativa: Prenem $x_0\in B$. Per demostrar que $f(B)$ és obert, és suficient provar que existeix un entorn obert de $f(x_0)$ contingut en $f(B)$. Com que $\det Jf(a)\neq 0$, el TFI ens garanteix que existeixen entorns prou petits $U'\in\mathcal{E}_{\mathbf{x_0}}$ i $V'\in\mathcal{E}_{\mathbf{f(x_0)}}$ tals que $f|_{U'}$ és bijectiva, diferenciable i amb inversa diferenciable. Això implica que $V'$ és obert.)
+    problemes: []
+  - id: "T4.9"
+    tipus: definicio
+    num: 9
+    resum: 91
+    seccio: "4.1"
+    pagina: 10
+    nom: "Homeomorfisme i difeomorfisme"
+    enunciat: |
+      1. Una funció $f:\Omega\subseteq\mathbb{R}^n\longrightarrow\mathbb{R}^n$ és un homeomorfisme si $f$ és bijectiva, contínua i la seva inversa $f^{-1}$ també és contínua.
+
+      2. Una funció $f:U\longrightarrow V$ entre dos oberts $U,V$ de $\mathbb{R}^n$ és un difeomorfisme (o una transformació regular) de classe $C^r$, amb $r\geq 1$, si $f$ és bijectiva, de classe $C^r$ i la seva inversa $f^{-1}$ també és de classe $C^r$.
+
+      Els homeomorfisme preserven la forma topològica, mentre que els difeomorfisme també preserven l'estructura diferenciable.
+
+      [Resum 91'] Una definició alternativa de difeomorfisme és: Una funció $f:U\subseteq\mathbb{R}^n\longrightarrow\mathbb{R}^n$, amb $U$ obert de $\mathbb{R}^n$, és un difeomorfisme si $f\in\mathcal{C}^1(U)$, $f$ és injectiva, i $\det\big(Jf(x)\big)\neq 0$ per a tot $x\in U$.
+    problemes: []
+  - id: "T4.10"
+    tipus: observacio
+    num: 10
+    resum: 92
+    seccio: "4.1"
+    pagina: 10
+    nom: "Inversa i composició de difeomorfismes"
+    enunciat: |
+      - L'invers d'un difeomorfisme és un difeomorfisme.
+      - La composició de difeomorfismes és un difeomorfisme.
+    problemes: []
+  - id: "T4.11"
+    tipus: exemple
+    num: 11
+    resum: 93
+    seccio: "4.1"
+    pagina: 10
+    nom: "Canvis de variables"
+    enunciat: |
+      (Canvis de variables). Exemples de difeomorfismes.
+
+      Sovint ens trobem els difeomorfismes en el context de canvis de variables. En repassarem els més habituals.
+
+      1. Coordenades polars. Considerem $f:\Omega\subset\mathbb{R}^2\longrightarrow\mathbb{R}^2$, amb $\Omega=\{(r,\theta)\in\mathbb{R}^2\mid r>0,\ \theta\in(0,2\pi)\}$, tal que $f(r,\theta)=(r\cos\theta,r\sin\theta)$. Fixem-nos en la tria del domini $\Omega$, que no comprèn l'origen ni les "rectes" $\{\theta=0\}$ i $\{\theta=2\pi\}$.
+
+      La funció $f$ és injectiva i de classe $\mathcal{C}^\infty$. A més,
+      $$\det Jf(r,\theta)=\begin{vmatrix}\cos\theta&-r\sin\theta\\ \sin\theta&r\cos\theta\end{vmatrix}=r\neq 0\ \text{ en }\Omega.$$
+      Per tant, és un difeomorfisme. Una manera d'expressar (parcialment) la seva funció inversa és
+      $$\begin{aligned}f^{-1}:V\subset\mathbb{R}^2&\longrightarrow\mathbb{R}^2\\ (x,y)&\longmapsto\Big(\sqrt{x^2+y^2},\arccos\frac{x}{\sqrt{x^2+y^2}}\Big).\end{aligned}$$
+      Fixem-nos que, amb aquesta elecció, el domini de $f^{-1}$ és $V=\{(x,y)\in\mathbb{R}^2:\ y\geq 0\}\setminus\{(0,0)\}$. En canvi, la imatge de $\Omega$ per $f$ és el conjunt $W=\mathbb{R}^2\setminus\{(x,0),\ x\geq 0\}$. A més, com a inversa tenim diverses opcions, com ara $\arctan(y/x)$ o $\arcsin(y/\sqrt{x^2+y^2})$, els dominis de les quals tampoc coincideixen amb $V$. Podríem dir que la inversa existeix en el domini $V$, però cap de les funcions inverses proposades es pot aplicar en tot el domini.
+
+      Finalment, observem que si consideréssim $\Omega=\{(r,\theta)\in\mathbb{R}^2\mid r>0,\ \theta\in[0,2\pi)\}$, aleshores el conjunt imatge seria $W=\mathbb{R}^2\setminus\{(0,0)\}$, però el domini no seria obert en $\mathbb{R}^2$.
+
+      Aquesta discordància entre dominis i l'arbitrarietat en considerar funcions inverses desapareix si ens mirem les funcions com a funcions de variable complexa, però això va més enllà dels objectius d'aquesta assignatura.
+
+      2. Coordenades cilíndriques. Considerem $f:U\subset\mathbb{R}^3\longrightarrow V\subset\mathbb{R}^3$, definida com $f(r,\theta,z)=(r\cos\theta,r\sin\theta,z)$, amb $U=\{(r,\theta,z)\in\mathbb{R}^3\mid r>0,\ \theta\in(0,2\pi),\ z\in\mathbb{R}\}$ i $V=\mathbb{R}^3\setminus\{(x,0,z)\in\mathbb{R}^3\mid x\geq 0\}$.
+
+      Observem que el determinant de la matriu jacobiana tampoc s'anul·la en $U$:
+      $$|Jf(r,\theta)|=\begin{vmatrix}\cos\theta&-r\sin\theta&0\\ \sin\theta&r\cos\theta&0\\ 0&0&1\end{vmatrix}=r\neq 0.$$
+      En aquest cas, el conjunt imatge és
+      $$V=\mathbb{R}^3\setminus\{(x,y,z):x\geq 0,\ y=0\}.$$
+
+      3. Coordenades esfèriques. Considerem $f:U\subset\mathbb{R}^3\longrightarrow V\subset\mathbb{R}^3$, definida com $f(r,\theta,\varphi)=(r\sin\varphi\cos\theta,r\sin\varphi\sin\theta,r\cos\varphi)$, amb $U=\{(r,\theta,\varphi)\in\mathbb{R}^3\mid r>0,\ \theta\in(0,2\pi),\ \varphi\in(0,\pi)\}$ i $V=\mathbb{R}^3\setminus\big(\{(x,0,z)\in\mathbb{R}^3\mid x\geq 0\}\cup\{z=\pm1\}\big)$.
+
+      Les variables $\theta$ i $\varphi$ representen, en coordenades geogràfiques, la longitud i la colatitud, respectivament.
+
+      Observem que el determinant de la matriu jacobiana tampoc s'anul·la en $U$:
+      $$|Jf(r,\theta)|=\begin{vmatrix}\sin\varphi\cos\theta&-r\sin\theta\sin\varphi&r\cos\varphi\cos\theta\\ \sin\varphi\sin\theta&r\cos\theta\sin\varphi&r\cos\varphi\sin\theta\\ \cos\varphi&0&-r\sin\varphi\end{vmatrix}=-r^2\sin\varphi\neq 0.$$
+    problemes: []
+  - id: "T4.12"
+    tipus: nota
+    num: 12
+    resum: 94
+    seccio: "4.2"
+    pagina: 12
+    nom: "Motivació del teorema de la implícita"
+    enunciat: |
+      Explicació 12 (motivació del teorema de la funció implícita). El teorema de la funció implícita es pot interpretar des de dos punts de vista diferents, l'analític i el geomètric.
+
+      Per il·lustrar la versió analítica, prenem una funció de dues variables $f(x,y)$ definida en un domini $U\subset\mathbb{R}^2$. Aleshores, diem que l'equació $f(x,y)=0$ defineix implícitament $y=\varphi(x)$ en $\Omega$ si $f(x,y)=0$ i $y=\varphi(x)$ són equivalents per a tot $(x,y)\in\Omega$.
+
+      Geomètricament, equival a dir que el conjunt $M=\{(x,y)\in\Omega:f(x,y)=0\}$ és la gràfica d'alguna funció $\varphi$, és a dir, que per a cada $x_0$ del domini, $M$ talla $\{x=x_0\}$ exactament una vegada.
+
+      El teorema de la funció implícita s'enuncia per al cas general en què $x\in\mathbb{R}^n$ i $y\in\mathbb{R}^m$ i $f:\Omega\subseteq\mathbb{R}^{n+m}\to\mathbb{R}^m$, però, per prendre consciència del problema, igual que vam fer amb el teorema de la funció inversa, començarem fixant-nos en dues situacions que ens són familiars: les funcions de la dimensió més baixa possible ($n=1$, $m=1$) i les funcions lineals amb $n+m$ variables i $m$ components.
+
+      1. Considerem l'equació d'una recta al pla $ax+by+c=0$. Sabem que si $a\neq 0$, podem posar $x$ en funció de $y$, i que si $b\neq 0$, podem posar $y$ en funció de $x$:
+      $$x=-(by+c)/a;\qquad y=-(ax+c)/b.$$
+      En aquest exemple, $f(x,y)=ax+by+c$, mentre que en un cas tindríem $\varphi(y):=-(by+c)/a$ i en l'altre, $\varphi(x):=-(ax+c)/b$. En tots dos casos, observem que si el coeficient que acompanya una variable és diferent de zero, aleshores podem posar aquella variable en funció de l'altra. Observem que
+      $$a=\frac{\partial f}{\partial x};\qquad b=\frac{\partial f}{\partial y}.$$
+      En aquest exemple, hem pogut calcular $\varphi$ de manera explícita, però veurem més endavant que no és el més habitual... i d'aquí el terme *implícita* que acompanya els resultats d'aquesta secció.
+
+      2. Considerem ara una funció no lineal senzilla: $f(x,y)=x^2+y^2-1$. Clarament, $f(x,y)=0$ és un cercle de radi 1 centrat a l'origen.
+
+      Si volem escriure una variable en funció de l'altra, per exemple, $y$ en funció de $x$ (per simetria, l'altre cas és idèntic), tenim que
+      $$y=\pm\sqrt{1-x^2}=:\pm\varphi(x),\ \text{ amb }x\in[-1,1].$$
+      D'entrada, si bé es pot escriure explícitament, ja veiem que tenim dues funcions per a cada $x$. Però si ens situem a $(-1,0)$ o a $(1,0)$ ja veiem que $\varphi(x)$ no està definida en un entorn del punt. En canvi, en qualsevol punt de la forma $(x_0,\sqrt{1-x_0^2})$, amb $x_0\in(-1,1)$, sí que, localment, podem definir $y=\varphi(x)$ tal que $\varphi(x_0)=\sqrt{1-x_0^2}$ (anàlogament per a punts de la forma $(x_0,-\sqrt{1-x_0^2})$, amb $x_0\in(-1,1)$).
+
+      Acabem observant, amb tota la intenció, que $\dfrac{\partial f}{\partial y}=2\,y$ i, per tant, que
+      $$\frac{\partial f}{\partial y}(\pm1,0)=0;\qquad\frac{\partial f}{\partial y}\Big(x_0,\sqrt{1-x_0^2}\Big)\neq 0,\ \text{ si }x_0\in(-1,1).$$
+
+      3. El significat del terme "implícit", el veurem plenament en funcions com
+      $$f(x,y)=y+x^2y+e^xy^3+x^4y^5+\sin x=0$$
+      en què es pot definir localment $y=\varphi(x)$ per a tot $x\in\mathbb{R}$ perquè
+      $$\frac{\partial f}{\partial y}(x,y)=1+x^2+3e^xy^2+5x^4y^4>0,$$
+      però que $y$ no es pot aïllar explícitament.
+
+      4. Considerem, per exemple, el sistema
+      $$\begin{cases}3x_1+x_2+x_3+x_4&=0,\\ x_1+x_2+x_3+x_4&=0.\end{cases}$$
+      Té rang 2 i 4 variables; per tant, és un sistema compatible indeterminat amb dos graus de llibertat, que es pot interpretar com $f(x)=0$, on $x=(x_1,x_2,x_3,x_4)$ i $f:\mathbb{R}^4\to\mathbb{R}^2$, amb $f(x)=(3x_1+x_2+x_3+x_4,\,x_1+x_2+x_3+x_4)$.
+
+      La solució del sistema és $x_1=0$ i $x_2+x_3+x_4=0$. Per tant, podem expressar $(x_1,x_j)$, per a $j=2,3,4$, en funció de les altres dues variables, però, en canvi, no podem expressar $(x_j,x_k)$ amb $j,k\in\{2,3,4\}$ en funció de $x_1$ i la variable restant. "Casualment", es dona la circumstància que
+      $$\left|\frac{\partial f}{\partial(x_1,x_j)}\right|=\begin{vmatrix}3&1\\ 1&1\end{vmatrix}=2\neq 0,\qquad\forall j\in\{2,3,4\},$$
+      $$\left|\frac{\partial f}{\partial(x_j,x_k)}\right|=\begin{vmatrix}1&1\\ 1&1\end{vmatrix}=0,\qquad\forall j,k\in\{2,3,4\}.$$
+      Es pot veure fàcilment que, si consideréssim, per exemple, el sistema
+      $$\begin{cases}3x_1+\mathbf{2}x_2+x_3+x_4&=0,\\ x_1+x_2+x_3+x_4&=0,\end{cases}$$
+      aleshores $(x_3,x_4)$ és l'únic parell de variables que no podríem posar simultàniament en funció de les altres dues variables.
+
+      El teorema de la funció implícita generalitza aquestes situacions. En el cas de les funcions lineals, ens dirà (cosa que ja sabem d'àlgebra lineal) que per al sistema
+      $$\begin{cases}a_{11}x_1+\cdots+a_{1n}x_n+b_{11}y_1+\cdots+b_{1m}y_m&=0,\\ \vdots&\vdots\\ a_{m1}x_1+\cdots+a_{mn}x_n+b_{m1}y_1+\cdots+b_{mm}y_m&=0,\end{cases}$$
+      si tenim que
+      $$\det\begin{pmatrix}b_{11}&\ldots&b_{1m}\\ \vdots&\vdots&\vdots\\ b_{m1}&\ldots&b_{mm}\end{pmatrix}\neq 0,$$
+      aleshores $(y_1,\ldots,y_m)$ es poden posar en funció de $(x_1,\ldots,x_n)$.
+    problemes: []
+  - id: "T4.13"
+    tipus: teorema
+    num: 13
+    resum: 95
+    seccio: "4.2"
+    pagina: 14
+    nom: "Teorema de la funció implícita"
+    enunciat: |
+      (de la funció implícita). Sigui $G\subseteq\mathbb{R}^{n+m}$ obert, $\Phi:G\to\mathbb{R}^m$, $(x,y)\mapsto\Phi(x,y)$, una funció $\mathcal{C}^r(G)$, $r\geq 1$, i $(a,b)\in G$ tal que $\Phi(a,b)=0$ i $\det\big(\partial\Phi_i/\partial y_j(a,b)\big)_{i,j=1,\ldots,m}\neq 0$. Aleshores, existeixen dos oberts $U$ i $\Omega$, tals que $a\in\Omega\subseteq\mathbb{R}^n$ i $(a,b)\in U\subseteq G\subseteq\mathbb{R}^{n+m}$, i una funció $\varphi:\Omega\to\mathbb{R}^m$, tals que
+
+      (i) $\det\big(\partial\Phi_i/\partial y_j(z)\big)_{i,j=1,\ldots,m}\neq 0$ $\forall z\in U$;
+
+      (ii) $\varphi\in\mathcal{C}^r(\Omega)$ i $\varphi(a)=b$;
+
+      (iii) $\{(x,y)\in U\mid\Phi(x,y)=0\}=\{(u,\varphi(u))\mid u\in\Omega\}$; en particular, $\Phi(x,\varphi(x))=0$ per a tot $x\in\Omega$.
+
+      [Figura: Dibuix amb eixos $x$, $y$; un domini $G$ (corba de punts) que conté la corba blava $\Phi(x,y)=0$ (una el·lipse); a l'entorn del punt $(a,b)$ la corba és la gràfica $y=\varphi(x)$ (traç lila) sobre l'entorn $\Omega$ de $a$ a l'eix $x$; als dos extrems de l'el·lipse (línies vermelles verticals) $\det\big(\partial\Phi_i/\partial y_j\big)_{i,j=1,\ldots,m}=0$.]
+    demostracio: |
+      (i) Considerem la funció
+      $$\begin{aligned}f:G\subseteq\mathbb{R}^{n+m}&\longrightarrow\mathbb{R}^{n+m}\\ (x,y)&\longmapsto(x,\Phi(x,y)),\quad(x,y)=(x_1,\ldots,x_n,y_1,\ldots,y_m).\end{aligned}$$
+      Clarament, $f\in\mathcal{C}^r(G)$ i $f(a,b)=(a,0)$, i el determinant de la seva matriu jacobiana en $(a,b)$ no s'anul·la; en efecte,
+      $$\det(Jf(a,b))=\begin{vmatrix}1&0&\ldots&0&0&\ldots&0\\ 0&\ddots&\ddots&\vdots&\vdots&\ldots&0\\ \vdots&\ddots&\ddots&0&\vdots&\ldots&0\\ 0&\ddots&0&1&0&\ldots&0\\ \frac{\partial\Phi_1}{\partial x_1}&\ldots&\ldots&\frac{\partial\Phi_1}{\partial x_n}&\frac{\partial\Phi_1}{\partial y_1}&\ldots&\frac{\partial\Phi_1}{\partial y_m}\\ \vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots\\ \frac{\partial\Phi_m}{\partial x_1}&\ldots&\ldots&\frac{\partial\Phi_m}{\partial x_n}&\frac{\partial\Phi_m}{\partial y_1}&\ldots&\frac{\partial\Phi_m}{\partial y_m}\end{vmatrix}=\begin{vmatrix}\frac{\partial\Phi_1}{\partial y_1}&\ldots&\frac{\partial\Phi_1}{\partial y_m}\\ \vdots&\vdots&\vdots\\ \frac{\partial\Phi_m}{\partial y_1}&\ldots&\frac{\partial\Phi_m}{\partial y_m}\end{vmatrix}\neq 0.$$
+      Per tant, hi podem aplicar el teorema de la funció inversa, que ens assegura que existeix un obert $U\subseteq G$ tal que $(a,b)\in U$ i:
+
+      (a) $f|_U:U\to\mathbb{R}^{n+m}$ és injectiva, $\det\big(Jf(z)\big)\neq 0$ $\forall z\in U$ i, a més, com que $\det Jf(z)=1\cdot\det\big(\partial\Phi_i/\partial y_j(z)\big)_{i,j=1,\ldots,m}$, tenim que $\det\Big(\dfrac{\partial\Phi_i}{\partial y_j}(z)\Big)_{i,j=1,\ldots,m}\neq 0$ per a tot $z\in U$;
+
+      (b) $V=f(U)\subseteq\mathbb{R}^{n+m}$ és obert;
+
+      (c) existeix la inversa $f^{-1}:V\to U$, $f^{-1}\in\mathcal{C}^r(V)$;
+
+      A més, observem que $f^{-1}$ és de la forma $f^{-1}(u,v)=(u,h(u,v))\in U$, on $(u,v)\in V$.
+
+      (ii) Definim l'obert $\Omega\subset\mathbb{R}^n$ i la funció $\varphi:\Omega\longrightarrow\mathbb{R}^m$ de la següent manera:
+      $$\Omega=\{x\in\mathbb{R}^n:(x,0,\overset{(m)}{\ldots},0)\in V\};\qquad\begin{aligned}\varphi:\Omega\subset\mathbb{R}^n&\longrightarrow\mathbb{R}^m\\ u&\longmapsto h(u,0).\end{aligned}$$
+      Vegem que el conjunt $\Omega$ és obert. Prenem $x_0\in\Omega$, és a dir, $(x_0,0)\in V$, que és obert. Per tant, existeix $\varepsilon>0$ tal que $B((x_0,0),\varepsilon)\subseteq V\subseteq\mathbb{R}^{n+m}$. Demostrarem que $B(x_0,\varepsilon)\subseteq\Omega\subseteq\mathbb{R}^n$: si prenem $x\in B(x_0,\varepsilon)$, tenim que $d(x,x_0)<\varepsilon$ i, per tant, $d((x,0,\ldots,0)),(x_0,0,\ldots,0))=d(x,x_0)<\varepsilon$. Això ens diu que $(x,0)\in B((x_0,0),\varepsilon)\subset V$, que implica que $x\in\Omega$ per construcció de $\Omega$.
+
+      D'altra banda, $\varphi$ està ben definida i és de classe $\mathcal{C}^r$. En efecte, donat $u\in\Omega$, $(u,0)\in V$ i, per tant, $\varphi(u)=h(u,0)$ està ben definit. De manera similar, $f^{-1}(u,0)=(u,h(u,0))=(u,\varphi(u))$; és a dir, $\varphi$ és una component de $f^{-1}$, i per tant també és de classe $\mathcal{C}^r$.
+
+      En aquest punt, fem una observació que ens serà útil en les demostracions dels passos restants del teorema, així com en els teoremes del rang.
+
+      [Aquí les notes intercalen l'Observació 14, que és l'ítem T4.14 i la seva demostració.]
+
+      Per acabar la demostració de l'apartat (ii) del teorema de la funció implícita, ho apliquem a $(a,b)\in U$ tal que $\Phi(a,b)=0$. Per l'observació i usant la definició de $\varphi$, obtenim
+      $$b=h(a,\Phi(a,b))=h(a,0)=\varphi(a).$$
+
+      (iii) Hem de veure que $\{(x,y)\in U\mid\Phi(x,y)=0\}=\{(u,\varphi(u))\mid u\in\Omega\}$.
+
+      $\subseteq$ Prenem $(x,y)\in U$ amb $\Phi(x,y)=0$.
+      Primer de tot, ens assegurem que $x\in\Omega$: en efecte, com que $f(x,y)=(x,\Phi(x,y))=(x,0)\in V$, aleshores $x\in\Omega$ per definició d'$\Omega$, justament.
+      D'altra banda, per la primera igualtat de l'observació 14 i la definició de $\varphi$,
+      $$y=h(x,\Phi(x,y))=h(x,0)=\varphi(x);$$
+      per tant $(x,y)=(x,\varphi(x))\in\{(u,\varphi(u))\mid u\in\Omega\}$.
+
+      $\supseteq$ Prenem $(u,\varphi(u))$ amb $u\in\Omega$. Primer de tot, ens assegurem que $(u,\varphi(u))\in U$: en efecte, per definició d'$\Omega$, $(u,0)\in V$, com que $f^{-1}(u,0)=(u,h(u,0))=(u,\varphi(u))$ i $f^{-1}:V\to U$, llavors $(u,\varphi(u))\in U$.
+      D'altra banda, usant la definició de $\varphi$ i la segona igualtat de l'observació 14,
+      $$\Phi(u,\varphi(u))=\Phi(u,h(u,0))=0.$$
+    problemes: []
+  - id: "T4.14"
+    tipus: observacio
+    num: 14
+    resum: null
+    seccio: "4.2"
+    pagina: 15
+    nom: "Igualtats entre h i Φ"
+    enunciat: |
+      Siguin $(x,y)\in U$ i $(u,v)\in V$, amb $x,u\in\mathbb{R}^n$ i $y,v\in\mathbb{R}^m$. Llavors, es compleixen les igualtats
+      $$y=h(x,\Phi(x,y));\qquad\Phi(u,h(u,v))=v.$$
+    demostracio: |
+      Ho demostrem gràcies a la bijectivitat de $f$ i $f^{-1}$ entre $U$ i $V$ i viceversa, i les definicions de $f$ i $f^{-1}$. Així,
+      $$(x,y)=f^{-1}(f(x,y))=f^{-1}(x,\Phi(x,y))=(x,h(x,\Phi(x,y)));$$
+      per tant, igualant les segones coordenades: $y=h(x,\Phi(x,y))$.
+      De manera similar,
+      $$(u,v)=f(f^{-1}(u,v))=f(u,h(u,v))=(u,\Phi(u,h(u,v))),$$
+      d'on deduïm que $v=\Phi(u,h(u,v))$.
+    problemes: []
+  - id: "T4.15"
+    tipus: observacio
+    num: 15
+    resum: 96
+    seccio: "4.2"
+    pagina: 16
+    nom: "Diferencial de la funció implícita"
+    enunciat: |
+      $D\varphi(a)$ es pot calcular aplicant la regla de la cadena a l'equació $\Phi(x,\varphi(x))=0$ en un entorn de $(a,b)$:
+      $$\frac{\partial\Phi}{\partial x}(a,b)+\frac{\partial\Phi}{\partial y}(a,b)\cdot\frac{\partial\varphi}{\partial x}(a)=0.$$
+
+      A l'enunciat de l'observació hem mantingut la notació en derivades parcials, però cal tenir en compte que $\dfrac{\partial\varphi}{\partial x}(a)$ és simplement $D\varphi(a)$.
+    demostracio: |
+      $$\begin{array}{ccccc}\Omega\subseteq\mathbb{R}^n&\xrightarrow{\ I\times\varphi\ }&U\subseteq\mathbb{R}^{n+m}&\xrightarrow{\ \Phi\ }&\mathbb{R}^m\\ x&\longmapsto&(x,\varphi(x))&\longmapsto&\Phi(x,\varphi(x))=0\\ a&\longmapsto&(a,b)&\longmapsto&0\end{array}$$
+      Per la regla de la cadena:
+      $$\underset{m\times n}{(0)}=J(\Phi\circ(I\times\varphi))(a)=\underset{m\times(m+n)}{J\Phi(a,b)}\ \underset{(n+m)\times n}{J(I\times\varphi)(a)}.$$
+      En coordenades,
+      $$(0)=\left(\left(\frac{\partial\Phi_i}{\partial x_j}\right)\Bigg|\left(\frac{\partial\Phi_i}{\partial y_j}\right)\right)_{(a,b)}\begin{pmatrix}\mathrm{Id}_n\\ \hline\left(\dfrac{\partial\varphi_i}{\partial x_j}\right)\end{pmatrix}_a$$
+      $$\underset{m\times n}{(0)}=\underset{m\times n}{\left(\frac{\partial\Phi_i}{\partial x_j}\right)_{(a,b)}}+\underset{m\times m}{\left(\frac{\partial\Phi_i}{\partial y_j}\right)_{(a,b)}}\underset{m\times n}{\left(\frac{\partial\varphi_i}{\partial x_j}\right)_a}$$
+      Per tant,
+      $$\left(\frac{\partial\varphi_i}{\partial x_j}\right)_a=-\left(\frac{\partial\Phi_i}{\partial y_j}\right)^{-1}_{(a,b)}\left(\frac{\partial\Phi_i}{\partial x_j}\right)_{(a,b)}$$
+      o, equivalentment,
+      $$\left(\frac{\partial\Phi_i}{\partial y_j}\right)_{(a,b)}\left(\frac{\partial\varphi_i}{\partial x_j}\right)_a=-\left(\frac{\partial\Phi_i}{\partial x_j}\right)_{(a,b)}$$
+      que és un sistema amb $m\times n$ equacions i $m\times n$ incògnites.
+    problemes: []
+  - id: "T4.16"
+    tipus: exemple
+    num: 16
+    resum: 97
+    seccio: "4.2"
+    pagina: 17
+    nom: "Aplicació del teorema de la implícita"
+    enunciat: |
+      (aplicació del teorema funció implícita). Considerem el sistema no lineal
+      $$\begin{cases}x-3y^2+z&=0,\\ 4y+yz-z+w&=0,\end{cases}$$
+      i ens plantegem expressar $(x,y)$ en funció de $(z,w)$.
+
+      En el llenguatge del teorema de la funció implícita,
+      $$\Phi(x,y,z,w)=\big(x-3y^2+z,\,4y+yz-z+w\big),\ \Phi(0,0,0,0)=(0,0),$$
+      i volem trobar $U,\Omega$ entorns oberts de $(0,0,0,0)$ i $(0,0)$, respectivament, i una funció $\varphi:\Omega\longrightarrow\mathbb{R}^2$ tal que $(x,y)=\varphi(z,w)$. Recordem, d'altra banda, que això equival a $\Phi(x,y,z,w)=0$.
+
+      Ens plantegem, a més, calcular la diferencial de $\varphi$, en la línia de l'observació 15.
+
+      Primer de tot, calculem la jacobiana de $\Phi$:
+      $$D\Phi(x,y,z,w)=\begin{pmatrix}1&-6y&1&0\\ 0&4+z&y-1&1\end{pmatrix};\qquad D\Phi(0,0,0,0)=\begin{pmatrix}1&0&1&0\\ 0&4&-1&1\end{pmatrix}.$$
+      En particular,
+      $$\frac{\partial\Phi}{\partial(x,y)}=\begin{pmatrix}1&-6y\\ 0&4+z\end{pmatrix};\qquad\left|\frac{\partial\Phi}{\partial(x,y)}\right|=4+z\neq 0\ \text{ si }z\neq-4;\qquad\frac{\partial\Phi}{\partial(x,y)}(0,0,0,0)=\begin{pmatrix}1&0\\ 0&4\end{pmatrix}.$$
+      Per tant, podem aplicar el teorema de la implícita en $a=(0,0)$ i $\varphi$ està ben definida i és $\mathcal{C}^\infty$ en un entorn obert $\Omega$ del punt $a$. D'altra banda, seguint l'esquema
+      $$\begin{array}{ccccc}\Omega\subseteq\mathbb{R}^2&\xrightarrow{\ I\times\varphi\ }&U\subseteq\mathbb{R}^4&\xrightarrow{\ \Phi\ }&\mathbb{R}^2\\ (z,t)&\longmapsto&(z,t,\varphi(z,t))&\longmapsto&\Phi(z,t,\varphi(z,t))=0\\ (0,0)&\longmapsto&(0,0,0,0)&\longmapsto&0\end{array}$$
+      estudiat a l'observació 15, podem calcular la diferencial de $\varphi$ a partir de la igualtat
+      $$0=D\Phi(0,0,0,0)\,D(\varphi\times I)(0,0),$$
+      és a dir,
+      $$\begin{pmatrix}0&0\\ 0&0\end{pmatrix}=\begin{pmatrix}1&0&1&0\\ 0&4&-1&1\end{pmatrix}\begin{pmatrix}\frac{\partial x}{\partial z}&\frac{\partial x}{\partial w}\\ \frac{\partial y}{\partial z}&\frac{\partial y}{\partial w}\\ 1&0\\ 0&1\end{pmatrix}_{(0,0)}=\begin{pmatrix}1&0\\ 0&4\end{pmatrix}\begin{pmatrix}\frac{\partial x}{\partial z}&\frac{\partial x}{\partial w}\\ \frac{\partial y}{\partial z}&\frac{\partial y}{\partial w}\end{pmatrix}_{(0,0)}+\begin{pmatrix}1&0\\ -1&1\end{pmatrix}.$$
+      Per tant,
+      $$D\varphi(0,0)=\begin{pmatrix}\frac{\partial x}{\partial z}&\frac{\partial x}{\partial w}\\ \frac{\partial y}{\partial z}&\frac{\partial y}{\partial w}\end{pmatrix}_{(0,0)}=-\begin{pmatrix}1&0\\ 0&1/4\end{pmatrix}\begin{pmatrix}1&0\\ -1&1\end{pmatrix}=\begin{pmatrix}-1&0\\ 1/4&-1/4\end{pmatrix}.$$
+      Com a exercici de consolidació, us podeu plantejar de calcular-la en un altre punt, o de plantejar-vos quins parells de variables poden posar-se en funció de les altres dues a l'origen.
+
+      Malgrat que ja hem calculat el que volíem, fixem-nos que en aquest cas, el sistema es pot resoldre explícitament. De la segona equació tenim que $y=\dfrac{z-w}{4+z}=:\varphi_2(z,w)$ i, substituint a la primera equació, $x=3\left(\dfrac{z-w}{4+z}\right)^2-z=:\varphi_1(z,w)$. Aleshores,
+      $$\frac{\partial y}{\partial z}=\frac{4+w}{(4+z)^2},\ \frac{\partial y}{\partial w}=\frac{-1}{4+z};\qquad\frac{\partial x}{\partial z}=6\frac{4+w}{(4+z)^2}\frac{\partial y}{\partial z}-1,\ \frac{\partial x}{\partial w}=6\frac{4+w}{(4+z)^2}\frac{\partial y}{\partial z},$$
+      i, avaluant en $(z,t)=(0,0)$:
+      $$D\varphi(0,0)=\begin{pmatrix}-1&0\\ 1/4&-1/4\end{pmatrix}.$$
+    problemes: []
+  - id: "T4.17"
+    tipus: nota
+    num: 17
+    resum: 98
+    seccio: "4.3"
+    pagina: 18
+    nom: "Motivació del redreçament del domini"
+    enunciat: |
+      Explicació 17. Motivació i interpretació del teorema de redreçament del domini.
+
+      Les funcions més simples entre $\mathbb{R}^{n+m}$ i $\mathbb{R}^m$ són les projeccions, és a dir, funcions $\tilde\Phi$ tals que $\tilde\Phi(u,v)=v$. En principi, la funció $\Phi$ que hem considerat al teorema de la funció implícita no té perquè ser tan simple, però si trobem un canvi de variables (és a dir, un difeomorfisme) entre oberts $V$ i $U$, $g:V\subset\mathbb{R}^{n+m}\longrightarrow U\subset\mathbb{R}^{n+m}$ tal que $\tilde\Phi(u,v):=\Phi(g(u,v))=v$, estarem "deformant" el domini de manera que ara la nova aplicació $\tilde\Phi$ es comporti com una projecció.
+
+      Geomètricament, estem dient que les corbes de nivell de $\Phi$,
+      $$\mathcal{C}_v=\{(u,v)\in U:\ \Phi(u,v)=v\},\ v\in\mathbb{R}^m,$$
+      que en principi són superfícies qualssevol de dimensió $n$ en $\mathbb{R}^{n+m}$, passarien (mitjançant $g^{-1}$) a ser hiperplans de dimensió $n$ en $\mathbb{R}^{n+m}$, horitzontals a l'hiperplà coordenat $(v_1,\ldots,v_m)=v$. Ho podem veure il·lustrat a la següent figura.
+
+      [Figura: tres panells: un domini $V\subset\mathbb{R}^{n+m}$ amb línies de nivell horitzontals (vermelles) a l'esquerra; una fletxa $g$ cap a un domini deformat $U$ amb les línies corbes; una fletxa $\Phi$ cap a un segment vertical a $\mathbb{R}^m$ amb marques.]
+      Idea gràfica del teorema de redreçament del domini: les corbes de nivell de $\Phi$ són superfícies regulars (ja entrarem en detall en la regularitat) qualssevol de dimensió $n$ en $\mathbb{R}^{n+m}$; gràcies al redreçament, les corbes de nivell de $\Phi\circ g$ són varietats lineals de dimensió $n$ en $\mathbb{R}^{n+m}$.
+
+      Una condició necessària per poder fer aquest redreçament és que $\mathrm{rang}\big(D\Phi\big)=m$ allà on ho vulguem aplicar. Per veure-ho, fixem-nos que, per ser $\tilde\Phi$ una projecció sobre $\mathbb{R}^m$
+      $$D\tilde\Phi=D(\Phi\circ g)=\left(\begin{array}{ccc|cccc}0&\ldots&0&1&0&\ldots&0\\ \vdots&\vdots&\vdots&0&1&\ddots&0\\ \vdots&\vdots&\vdots&0&\ddots&\ddots&0\\ 0&\ldots&0&0&\ddots&0&1\end{array}\right)=(0_{m,n}\mid Id_m);$$
+      hem posat les dimensions com a subíndexs per fer-ho més entenedor. Llavors, per la regla de la cadena:
+      $$D\Phi\,Dg=(0_{m,n}\mid Id_m),$$
+      i com que $Dg$ és una matriu $(n+m)\times(n+m)$ invertible, aleshores cal que $\mathrm{rang}\big(D\Phi\big)=m$.
+
+      A partir d'aquesta explicació, doncs, el següent enunciat emergeix de manera natural:
+    problemes: []
+  - id: "T4.18"
+    tipus: teorema
+    num: 18
+    resum: 99
+    seccio: "4.3"
+    pagina: 19
+    nom: "Teorema de redreçament del domini"
+    enunciat: |
+      (de redreçament del domini). Sigui $G\subseteq\mathbb{R}^{n+m}$ obert, $\Phi$ una funció $\mathcal{C}^r(G)$, $\Phi:G\subset\mathbb{R}^{n+m}\to\mathbb{R}^m$, i $(a,b)\in G$ tals que $\mathrm{rang}\big(D\Phi(a,b)\big)=m$. Llavors, existeixen oberts $U,V\subset\mathbb{R}^{n+m}$, amb $(a,b)\in U\subseteq G$, i un $\mathcal{C}^r$-difeomorfisme $g:V\to U$ tals que $\Phi\circ g:V\to U\to\mathbb{R}^k$ és la projecció $\tilde\Phi(u,v)=v$.
+    demostracio: |
+      Seguint la notació habitual del teorema de la funció implícita, suposem que
+      $$\det\left(\frac{\partial\Phi_j}{\partial y_j}\right)_{i,j=1,\ldots,m}(a,b)\neq 0.$$
+      Fixem-nos que $\mathrm{rang}\big(D\Phi(a,b)\big)=m$ ens diu que hi ha *algun* menor amb aquesta propietat, però no té perquè ser aquest. Nosaltres farem aquesta suposició i al final de la demostració veurem que, si en realitat són unes altres variables que ho satisfan, aplicant una matriu de permutacions s'aconsegueix igualment el resultat.
+
+      A partir d'aquí, apliquem arguments idèntics als de la demostració del teorema de la funció implícita. Construïm la mateixa funció $f(x,y)=(x,\Phi(x,y))$ i, per tant, existeixen $U$ i $V$ oberts, i una correspondència bijectiva entre ells. De fet, el $\mathcal{C}^r$-difeomorfisme $g$ que busquem és precisament $g(u,v)=f^{-1}(u,v)=(u,h(u,v))$, calcant la notació de la demostració del teorema de la funció implícita. Llavors, aplicant la composició i la segona igualtat de l'observació 14, tenim
+      $$(\Phi\circ g)(u,v)=\Phi(u,h(u,v))=v,$$
+      tal com volíem demostrar.
+
+      Si, en lloc de
+      $$\det\left(\frac{\partial\Phi_j}{\partial z_j}\right)_{i,j}(a,b)\neq 0,\ \text{ amb }i=1,\ldots,m;\ j=n+1,\ldots,n+m,$$
+      adoptant la notació $z=(x,y)$, tenim que
+      $$\det\left(\frac{\partial\Phi_j}{\partial z_{k_j}}\right)_{i,j}(a,b)\neq 0,$$
+      amb $i=1,\ldots,m$, $k_j\in\{1,\ldots,n+m\}$ per a $j=1,\ldots,m$, amb $k_j\neq k_{j'}$ si $j\neq j'$, aleshores considerem la matriu de permutació $p$ que passa el conjunt $\{k_1,\ldots,k_m\}$ al conjunt al conjunt $\{n+1,\ldots,n+m\}$ (Nota: Per exemple, si $n=2$, $m=3$ i les variable tals que el menor corresponent té rang 3 són $z_1$, $z_2$ i $z_4$, aleshores la matriu diferencial de la permutació $p$ seria
+      $$Dp=\begin{pmatrix}0&0&1&0&0\\ 0&0&0&1&0\\ 1&0&0&0&0\\ 0&0&0&0&1\\ 0&1&0&0&0\end{pmatrix},$$
+      de manera que $D\Phi\,Dp$ tindria com a darreres 3 columnes les columnes 1, 2 i 4 de $D\Phi$.), llavors podem aplicar l'anterior demostració a $\Phi\circ p$ i trobem un difeomorfisme $g$ tal que $((\Phi\circ p)\circ g)(u,v)=v$. Per tant, la funció $p\circ g$ és el $\mathcal{C}^r$-difeomorfisme que cerquem per a aconseguir que $(\Phi\circ(p\circ g))(u,v)=v$.
+    problemes: []
+  - id: "T4.19"
+    tipus: nota
+    num: 19
+    resum: 100
+    seccio: "4.3"
+    pagina: 20
+    nom: "Motivació del redreçament de la imatge"
+    enunciat: |
+      Explicació 19. Motivació i interpretació del teorema de redreçament de la imatge.
+
+      El teorema de redreçament de la imatge és una mena de dual del teorema de redreçament del domini, però en lloc de considerar les funcions més senzilles de $\mathbb{R}^{n+m}$ a $\mathbb{R}^m$ (les projeccions), ara tindrem en compte les funcions més senzilles de $\mathbb{R}^m$ a $\mathbb{R}^{n+m}$, és a dir, les inclusions:
+      $$h(y)=(\mathbf{0},y),\ y\in\mathbb{R}^m,\ \mathbf{0}\in\mathbb{R}^n,$$
+      o altres reordenacions de les variables, però sempre de manera que $n$ valors de la imatge siguin idènticament 0 per a tota $y$ del domini.
+
+      Si amb el teorema de redreçament del domini hem vist que, sota la condició de rang màxim de $\Phi$, podem pensar aquesta funció com una projecció via un canvi de variable $g$, ara veurem que sota condicions similars, podem trobar una funció $h$ tal que
+      $$D(h\circ\Phi)=Dh\,D\Phi=\begin{pmatrix}0&\ldots&\ldots&0\\ \vdots&\vdots&\vdots&\vdots\\ 0&\ldots&\ldots&0\\ \hline 1&0&\ldots&0\\ 0&1&\ddots&\vdots\\ \vdots&\ddots&\ddots&0\\ 0&\ldots&0&1\end{pmatrix}=\begin{pmatrix}0_{n\times m}\\ \hline Id_m\end{pmatrix}.$$
+      Com que $h$ és invertible, de manera similar al teorema del redreçament del domini, ja veiem que una condició necessària serà que $\mathrm{rang}\big(D\Phi\big)=m$ allà on ho vulguem aplicar.
+
+      [Figura: tres panells: un domini pla $G\subset\mathbb{R}^m$ (disc lila); una fletxa $\Phi$ cap a una superfície corba a $\mathbb{R}^{n+m}$; una fletxa $h$ cap a un disc pla a $\mathbb{R}^m$ dins l'espai.]
+      Idea gràfica del teorema de redreçament de la imatge. Per entendre la imatge en tres dimensions, pensem que $m=2$ i $n=1$. El domini pla ($m=2$) inicial es converteix en una superfície $S$ a $\mathbb{R}^{1+2}$ (interpertem $\Phi$ com la parametrització d'una superfície); finalment, projectant sobre $\mathbb{R}^2$, la superfícies $S$ es converteix en un domini del tipus $(y,\mathbf{0})$, amb $y\in\mathbb{R}^m$ i $\mathbf{0}\in\mathbb{R}^n$ (és a dir, si $n=1$ i $m=2$, un domini en el pla $z=0$).
+    problemes: []
+  - id: "T4.20"
+    tipus: teorema
+    num: 20
+    resum: 101
+    seccio: "4.3"
+    pagina: 21
+    nom: "Teorema de redreçament de la imatge"
+    enunciat: |
+      (de redreçament de la imatge). Sigui $G\subset\mathbb{R}^m$ obert, $\Phi:G\subset\mathbb{R}^m\to\mathbb{R}^{n+m}$ una funció $\mathcal{C}^r(G)$, i $b\in G$ tal que $\mathrm{rang}\big(D\Phi(b)\big)=m$. Llavors, existeixen oberts $U,V\subset\mathbb{R}^{n+m}$, amb $\Phi(b)\in V$, un $\mathcal{C}^r$-difeomorfisme $h:V\to U$, i un obert $U'\subset G\subseteq\mathbb{R}^m$ amb $b\in U'$, tals que $h\circ\Phi:U'\to V\to\mathbb{R}^{n+m}$ és $y\mapsto(0,y)$.
+    demostracio: |
+      Dividim la funció $\Phi$ en dues components $\Phi_1$ i $\Phi_2$, $\Phi_1:G\subseteq\mathbb{R}^m\longrightarrow\mathbb{R}^n$ i $\Phi_2:G\subseteq\mathbb{R}^m\longrightarrow\mathbb{R}^m$, de manera que
+      $$\begin{array}{rcl}\Phi\quad G\subseteq\mathbb{R}^m&\longrightarrow&\mathbb{R}^n\times\mathbb{R}^m=\mathbb{R}^{n+m}\\ y&\longmapsto&(\Phi_1(y),\Phi_2(y))\,.\end{array}$$
+      Com en el teorema 20, suposem que
+      $$\det\left(\frac{\partial\Phi_2}{\partial y}\right)(b)\neq 0,$$
+      i ja aplicarem una permutació al final si aquesta condició es compleix per a un altre subconjunt de $m$ variables en lloc de $(y_1,\ldots,y_m)$.
+
+      Considerem ara la funció
+      $$\begin{array}{rcl}f\quad\mathbb{R}^n\times G\subseteq\mathbb{R}^{n+m}&\longrightarrow&\mathbb{R}^{n+m}\\ (x,y)&\longmapsto&(x+\Phi_1(y),\Phi_2(y))\,.\end{array}$$
+      En particular, $f(0,b)=\Phi(b)$.
+      Clarament, $f\in\mathcal{C}^r(\mathbb{R}^n\times G)$ perquè és la suma de la identitat en $\mathbb{R}^n$ amb $\Phi\in\mathcal{C}^r(G)$, i es pot veure que
+      $$\det Df(0,b)=\det\left(\frac{\partial\Phi_2}{\partial y}\right)(b)\neq 0,$$
+      de manera anàloga al pas (i) de la demostració del teorema de la funció implícita. Per tant, continuant amb l'analogia, podem aplicar el teorema de la funció inversa a $f$: existeixen uns oberts $U,V\subseteq\mathbb{R}^n\times G$ tals que $f:U\to V$ és bijectiva i la inversa $f^{-1}=V\to U$ és bijectiva i de classe $\mathcal{C}^r$. Com en el cas del teorema de redreçament del domini, $f^{-1}$ serà el $\mathcal{C}^r$-difeomorfisme que cerquem, és a dir, definim
+      $$h=f^{-1}.$$
+      Prenem ara
+      $$U'=\{y\in\mathbb{R}^m\mid(0,y)\in U\}.$$
+      Com que $U\subseteq\mathbb{R}^n\times G$, és evident que $U\subseteq G$. Amàlogament a la demostració de l'apartat (ii) del teorema de la funció implícita, podem veure que $U'$ és obert.
+
+      Considerem ara $(h\circ\Phi)(y)$, amb $y\in U'$. Volem veure que està ben definit per a tot $y\in U'$ i, d'altra banda, que compleix la conclusió del teorema, és a dir, que $(h\circ\Phi)(y)=(0,y)$.
+
+      - Si $y\in U'$, aleshores per definició $(0,y)\in U$ i $f(0,y)\in V$ està ben definit. Ara bé, per definició de $f$, $f(0,y)=(\Phi_1(y),\Phi_2(y))=\Phi(y)\in V$ i podem composar doncs, amb $h$.
+      - D'altra banda, per definició de $h=f^{-1}$ i tornant a fer servir la definició de $f$, obtenim
+      $$(0,y)=f^{-1}(f(0,y))=h(\Phi(y)).$$
+
+      Com en el teorema del redreçament, si la condició del rang la complissin altres variables, podríem considerar una permutació $p$ de manera que $p\circ h\circ\Phi(y)=(0,y)$ i, per tant, $p\circ h$ seria el $\mathcal{C}^r$-difeomorfisme que buscàvem.
+    problemes: []
+  - id: "T4.x4"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "4.3"
+    pagina: 22
+    nom: "Fusió dels dos teoremes de redreçament"
+    enunciat: |
+      Finalment, podem fusionar els dos teoremes de redreçament i afirmar que si tenim una funció $\Phi:G\subset\mathbb{R}^N\to\mathbb{R}^P$, de manera, que $\mathrm{rang}\big(D\Phi(a)\big)=m$, on $m$ és menor o igual que $N$ i que $P$, aleshores, podem redreçar $N-m$ coordenades del domini i $P-m$ coordenades de la imatge, i aconseguir dos difeomorfismes ($g$ de $\mathbb{R}^N$ i $h$ de $\mathbb{R}^P$) tals que
+      $$h\circ\Phi\circ g(x_1,\ldots,x_N)=(x_1,\ldots,x_m,0,\overset{(P-m)}{\ldots},0).$$
+
+      Ho enunciem formalment:
+    problemes: []
+  - id: "T4.21"
+    tipus: teorema
+    num: 21
+    resum: 102
+    seccio: "4.3"
+    pagina: 22
+    nom: "Teorema del rang"
+    enunciat: |
+      (del rang). Siguin $G\subset\mathbb{R}^n$ obert, $\Phi:G\subset\mathbb{R}^N\to\mathbb{R}^P$ una funció $\mathcal{C}^r(G)$ i $a\in G$ tals que $\mathrm{rang}\big(D\Phi(a)\big)=m\leqslant N,P$. Llavors, existeixen dos oberts $U_1,V_1\subseteq\mathbb{R}^N$ amb $a\in U_1$, dos oberts $U_2,V_2\subseteq\mathbb{R}^P$ amb $\Phi(a)\in V_2$, i dos $\mathcal{C}^r$-difeomorfismes $g:V_1\to U_1$ i $h:V_2\to U_2$, tals que $(h\circ\Phi\circ g)(x_1,\ldots,x_N)=(x_1,\ldots,x_m,0,\ldots,0)$.
+    problemes: []
+  - id: "T4.x5"
+    tipus: text
+    num: null
+    resum: null
+    seccio: "4.3"
+    pagina: 22
+    nom: "Teorema del rang des dels redreçaments"
+    enunciat: |
+      El teorema del rang es pot demostrar a partir dels dos teoremes de redreçament, prenent $n+m=N$ en el teorema 18 i $n+m=P$ en el teorema 20. La funció $\Phi$ del teorema 21, de fet, és la composició $\Phi=\Phi_I\circ\Phi_D$, si denotem per $\Phi_D$ i $\Phi_I$ les funcions $\Phi$ emprades als teoremes de redreçament del domini i de la imatge, respectivament.
+    problemes: []

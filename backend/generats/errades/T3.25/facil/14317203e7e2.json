@@ -1,0 +1,44 @@
+{
+  "id": "14317203e7e2",
+  "exercici": "T3.25",
+  "font": "teoria",
+  "dificultat": "facil",
+  "fragments": [
+    "(Teorema del valor mitjà). Sigui $f:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}^m$ diferenciable en un obert $\\Omega\\subseteq\\mathbb{R}^n$.",
+    "Aleshores, per a tots $a,b\\in\\Omega$ tals que $[a,b]\\subseteq\\Omega$, existeix $\\xi\\in(a,b)$ tal que $f(b)-f(a)=Jf(\\xi)\\,(b-a)$.",
+    "Siguin $a,b\\in\\Omega$ amb $[a,b]\\subseteq\\Omega$ i sigui $u\\in\\mathbb{R}^m$. Considerem les funcions $h:[0,1]\\to\\Omega$, $h(t)=(1-t)a+tb$, i $g_u:\\mathbb{R}^m\\to\\mathbb{R}$, $g_u(y)=\\langle u,y\\rangle$.",
+    "La funció $\\varphi=g_u\\circ f\\circ h$, $\\varphi(t)=\\langle u,f((1-t)a+tb)\\rangle$, és derivable a $[0,1]$ per composició de funcions diferenciables; en particular, és contínua a $[0,1]$ i derivable a $(0,1)$.",
+    "Pel teorema del valor mitjà clàssic, existeix $\\eta\\in(0,1)$ tal que $\\langle u,f(b)-f(a)\\rangle=\\varphi(1)-\\varphi(0)=\\varphi'(\\eta)\\,(1-0)$.",
+    "Per la regla de la cadena, $\\varphi'(t)=\\nabla g_u(f(h(t)))\\cdot Jf(h(t))\\cdot Jh(t)$, on $\\nabla g_u(y)=(u_1\\ \\cdots\\ u_m)$ per a tot $y$ i $Jh(t)=b-a$, vist com a vector columna.",
+    "Per tant, $\\varphi'(\\eta)=(u_1\\ \\cdots\\ u_m)\\,Jf(h(\\eta))\\,(b-a)=\\langle u,Jf(h(\\eta))\\,(b-a)\\rangle$.",
+    "Prenent $\\xi=h(\\eta)$, que pertany a $(a,b)$ perquè $\\eta\\in(0,1)$, obtenim $\\langle u,f(b)-f(a)\\rangle=\\langle u,Jf(\\xi)\\,(b-a)\\rangle$."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$f(b)-f(a)=Jf(\\xi)\\,(b-a)$",
+      "inici": 101,
+      "fi": 127,
+      "tipus": "conclusio",
+      "explicacio": "Per a $m\\geq2$ la igualtat vectorial és falsa en general: només es té la igualtat projectada sobre un vector $u$ fixat (i $\\xi$ depèn de $u$). Contraexemple: $f(t)=(t^2,t^3)$, $a=0$, $b=1$: caldria $(1,1)=(2\\xi,3\\xi^2)$, que no té solució.",
+      "correccio": "Per a cada $u\\in\\mathbb{R}^m$ fixat: existeix $\\xi\\in(a,b)$ tal que $\\langle u,f(b)-f(a)\\rangle=\\langle u,Jf(\\xi)\\,(b-a)\\rangle$.",
+      "pista": "La demostració aplica el TVM d'una variable a quina funció? Prova la fórmula amb $f(t)=(t^2,t^3)$ entre $0$ i $1$."
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "teoria_t3.json",
+    "valoracio": "L'enunciat elimina $u$ i esdevé fals per a $m>1$; la demostració és la dels apunts.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$f(b)-f(a)=Jf(\\xi)\\,(b-a)$",
+        "gravetat": "error",
+        "explicacio": "Sense el vector $u$ l'enunciat és fals per a $m>1$ (p. ex. $f(t)=(\\cos t,\\sin t)$ a $[0,2\\pi]$). Els apunts afirmen $\\langle u,f(b)-f(a)\\rangle=\\langle u,Jf(\\xi)(b-a)\\rangle$, amb $\\xi$ depenent de $u$, que és el que prova la demostració."
+      }
+    ]
+  },
+  "creat": 1791296233.7656872
+}

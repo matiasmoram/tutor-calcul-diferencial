@@ -1,20 +1,11 @@
-from collections.abc import Mapping
-
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 
-from apps.tutor_api.dependencies import get_config, is_professor
+from apps.tutor_api.dependencies import KEY_VARIABLES, get_config, is_professor
 from core.shared.llm.infra.stage_configs import stage_configs
 from settings import Config
 
 router = APIRouter()
-
-KEY_VARIABLES: Mapping[str, str] = {
-    "anthropic": "ANTHROPIC_API_KEY",
-    "gemini": "GEMINI_API_KEY",
-    "openai": "OPENAI_API_KEY",
-    "openrouter": "OPENROUTER_API_KEY",
-}
 
 
 class StageResponse(BaseModel):

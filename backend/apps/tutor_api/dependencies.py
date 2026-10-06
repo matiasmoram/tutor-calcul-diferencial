@@ -1,4 +1,4 @@
-from collections.abc import Iterator
+from collections.abc import Iterator, Mapping
 from contextlib import contextmanager
 from dataclasses import dataclass
 
@@ -50,6 +50,21 @@ def is_professor(request: Request, config: Config = Depends(get_config)) -> bool
 def require_professor(professor: bool = Depends(is_professor)) -> None:
     if not professor:
         raise HTTPException(403, "Només per al professorat")
+
+
+KEY_VARIABLES: Mapping[str, str] = {
+    "anthropic": "ANTHROPIC_API_KEY",
+    "gemini": "GEMINI_API_KEY",
+    "openai": "OPENAI_API_KEY",
+    "openrouter": "OPENROUTER_API_KEY",
+}
+
+
+def ensure_api_key(config: Config) -> None:
+    """Before an action that calls the model: a missing key is a clear 503, not a provider error mid-way."""
+    variable = KEY_VARIABLES.get(config.LLM_PROVIDER, "ANTHROPIC_API_KEY")
+    if not config.api_key(variable):
+        raise HTTPException(503, f"Falta la clau d'API: posa {variable} al fitxer .env i reinicia el servidor.")
 
 
 @contextmanager

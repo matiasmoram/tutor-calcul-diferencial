@@ -28,9 +28,38 @@ def legacy(tmp_path_factory: pytest.TempPathFactory) -> TestClient:
         "/api/teoria/T3.12",
         "/api/teoria/T2.6",
         "/api/llistes/nope",
+        "/api/errades/teoria",
+        "/api/errades/disponibles",
     ],
 )
 def test_same_json(legacy: TestClient, api: TestClient, path: str) -> None:
     old, new = legacy.get(path), api.get(path)
     assert new.status_code == old.status_code
     assert new.json() == old.json()
+
+
+def _without_session_id(out: dict[str, object]) -> dict[str, object]:
+    return {k: v for k, v in out.items() if k != "session_id"}
+
+
+@pytest.mark.parametrize(
+    "body",
+    [
+        {"exercici_id": "t1-10b", "dificultat": "normal"},
+        {"teoria_id": "T2.12", "dificultat": "normal"},
+        {"exercici_id": "t9-1"},
+        {"teoria_id": "T2.1"},
+        {"exercici_id": "t1-10b", "teoria_id": "T2.12"},
+    ],
+)
+def test_same_mistake_sessions_from_ready_documents(legacy: TestClient, api: TestClient, body: dict[str, str]) -> None:
+    old, new = legacy.post("/api/errades/sessions", json=body), api.post("/api/errades/sessions", json=body)
+    assert new.status_code == old.status_code, (old.json(), new.json())
+    if old.status_code == 200:
+        assert set(new.json()) == set(old.json())
+        assert new.json()["solucio"]["fragments"] and new.json()["font"] == old.json()["font"]
+        assert {k: v for k, v in _without_session_id(new.json()).items() if k != "solucio"} == {
+            k: v for k, v in _without_session_id(old.json()).items() if k != "solucio"
+        }
+    else:
+        assert new.json() == old.json()

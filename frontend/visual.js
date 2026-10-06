@@ -1,29 +1,24 @@
 "use strict";
 
-/* Laboratori visual: interactive figures for the course theory (surfaces, level curves,
-   gradients, Taylor, critical points, Lagrange multipliers, manifolds, inverse/implicit maps…).
-   Plotly.js draws (WebGL 3D + 2D), math.js parses the student's formulas and differentiates
-   them symbolically. Both load lazily from cdnjs the first time a lab opens.
+/* Visualitzador: three working tools for the exercises of the course.
+   - Explorador: a function f(x,y) as a surface and a contour map; click a point for f, ∇f, tangent plane and
+     Hessian; critical points; constraints and regions with the candidates for absolute extrema.
+   - Punt: local analysis at a point (limit along paths, directional derivatives, differentiability).
+   - Canvis: a map F: R² → R² deforming a grid, det JF, local invertibility.
+   Exercises open them with the functions of their statement (visual-latex.js reads the LaTeX).
+   Plotly.js draws, math.js parses and differentiates; both load lazily from cdnjs.
    Shares el(), math(), tex(), api(), crumbs(), show(), theoryPopup(), linkCitations() with app.js.
-   The labs themselves live in visual-labs*.js and register with lab({...}). */
+   The tools live in visual-eines.js and register with eina({...}). */
 
 const VIS_LIBS = [
   "https://cdnjs.cloudflare.com/ajax/libs/mathjs/14.0.1/math.min.js",
   "https://cdnjs.cloudflare.com/ajax/libs/plotly.js/3.1.1/plotly.min.js",
 ];
-const LABS = [];
-const TEMES_VIS = {
-  1: "Topologia a $\\mathbb{R}^n$",
-  2: "Límits i continuïtat",
-  3: "Diferenciabilitat",
-  4: "Funció inversa i implícita",
-  5: "Taylor i extrems locals",
-  6: "Varietats i extrems condicionats",
-};
+const EINES = [];
 let M = null;          // math.js instance with real-valued results (sqrt(-1) = NaN, not a complex)
 let visLibs = null;    // Promise of the loaded libraries
 
-function lab(def) { LABS.push(def); }
+function eina(def) { EINES.push(def); }
 
 function loadScript(src) {
   return new Promise((resolve, reject) => {
@@ -54,10 +49,11 @@ const NUM_H = 1e-4;
 
 class Fn {
   // A real function of `vars` given as text. Partial derivatives are symbolic (math.js) when
-  // possible, with a central finite difference as fallback (e.g. functions math.js cannot derive).
+  // possible, with a central finite difference as fallback.
   constructor(src, vars = ["x", "y"]) {
-    this.src = src.trim();
+    this.src = String(src).trim();
     this.vars = vars;
+    if (!this.src) throw new Error("Escriu una fórmula");
     this.node = M.parse(this.src);
     const unknown = new Set();
     this.node.traverse((n, path, parent) => {
@@ -65,13 +61,13 @@ class Fn {
       if (parent?.isFunctionNode && path === "fn") return;
       if (!vars.includes(n.name) && !(n.name in M)) unknown.add(n.name);
     });
-    if (unknown.size) throw new Error(`Variable desconeguda: ${[...unknown].join(", ")} (fes servir ${vars.join(", ")})`);
+    if (unknown.size) throw new Error(`Variable desconeguda: ${[...unknown].join(", ")} (fes servir ${vars.join(", ")}; escriu 2*x, no 2x)`);
     this.f = compileNode(this.node, vars);
     this.derivs = new Map([["", { node: this.node, f: this.f }]]);
   }
 
-  // d("x", "y") = ∂²f/∂y∂x as { node (null if numeric), f }.
   d(...seq) {
+    // d("x", "y") = ∂²f/∂y∂x as { node (null if numeric), f }.
     const key = seq.join(",");
     if (this.derivs.has(key)) return this.derivs.get(key);
     const parent = this.d(...seq.slice(0, -1));
@@ -116,11 +112,16 @@ function compileNode(node, vars) {
   };
 }
 
+function texOf(src) {
+  try { return M.parse(src).toTex({ parenthesis: "auto", implicit: "hide" }); } catch { return src; }
+}
+
 /* ---------- numerics ---------- */
 
 const linspace = (a, b, n) => Array.from({ length: n }, (_, i) => a + (b - a) * i / (n - 1));
 const fmt = (v, d = 3) => !Number.isFinite(v) ? "—" : Math.abs(v) < 10 ** -d / 2 ? "0" : (+v.toFixed(d)).toString();
-const vfmt = (a, d = 3) => `(${a.map((v) => fmt(v, d)).join(", ")})`;
+const tfmt = (v, d = 3) => (Number.isFinite(v) ? fmt(v, d) : "\\text{—}");  // for LaTeX
+const vfmt = (a, d = 3) => `(${a.map((v) => tfmt(v, d)).join(",\\,")})`;
 const norm = (a) => Math.hypot(...a);
 const dot = (a, b) => a.reduce((s, v, i) => s + v * b[i], 0);
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
@@ -136,7 +137,7 @@ function robustRange(z, q = 0.02) {
   const v = z.flat().filter(Number.isFinite).sort((a, b) => a - b);
   if (!v.length) return [-1, 1];
   const lo = v[Math.floor(q * (v.length - 1))], hi = v[Math.ceil((1 - q) * (v.length - 1))];
-  const pad = (hi - lo) * 0.35 || 1;
+  const pad = (hi - lo) * 0.25 || 1;
   return [lo - pad, hi + pad];
 }
 
@@ -188,12 +189,11 @@ function contourLines(g, level) {
     }
     return line;
   };
-  // Open curves first (start at an end), then closed loops.
   for (const k of adj.keys()) if (!seen.has(k) && adj.get(k).length === 1) lines.push(walk(k));
   for (const k of adj.keys()) {
     if (seen.has(k)) continue;
     const line = walk(k);
-    if ((adj.get(line[line.length - 1]) || []).includes(k)) line.push(k);  // close the loop
+    if ((adj.get(line[line.length - 1]) || []).includes(k)) line.push(k);
     lines.push(line);
   }
   return lines.map((l) => l.map((k) => pts.get(k))).filter((l) => l.length > 1);
@@ -247,38 +247,17 @@ function solve(A, b) {
   return m.map((r, i) => r[n] / r[i]);
 }
 
-function dedupe(points, eps = 1e-4) {
+function dedupe(points, eps = 1e-4, key = (p) => p) {
   const out = [];
-  for (const p of points) if (!out.some((q) => norm(p.map((v, i) => v - q[i])) < eps)) out.push(p);
+  for (const p of points) if (!out.some((q) => norm(key(p).map((v, i) => v - key(q)[i])) < eps)) out.push(p);
   return out;
 }
 
 function eig2(H) {
-  // Eigenvalues of a symmetric 2×2 matrix (T5.30).
+  // Eigenvalues of a symmetric 2×2 matrix.
   const [[a, b], [, d]] = H;
   const m = (a + d) / 2, r = Math.hypot((a - d) / 2, b);
   return [m - r, m + r];
-}
-
-function arcParam(lines) {
-  // Cumulative arc length over several polylines, to move a point along a curve with one slider.
-  const segs = [];
-  let total = 0;
-  lines.forEach((l, li) => {
-    for (let k = 0; k < l.length - 1; k++) {
-      const len = Math.hypot(l[k + 1][0] - l[k][0], l[k + 1][1] - l[k][1]);
-      segs.push({ li, k, a: l[k], b: l[k + 1], s0: total, len });
-      total += len;
-    }
-  });
-  const at = (t) => {
-    const s = clamp(t, 0, 1) * total;
-    const seg = segs.find((g) => s <= g.s0 + g.len) || segs[segs.length - 1];
-    if (!seg) return null;
-    const u = seg.len ? (s - seg.s0) / seg.len : 0;
-    return { p: [seg.a[0] + u * (seg.b[0] - seg.a[0]), seg.a[1] + u * (seg.b[1] - seg.a[1])], seg };
-  };
-  return { segs, total, at };
 }
 
 /* ---------- theme: colors come from the app's CSS tokens, so light and dark both work ---------- */
@@ -319,9 +298,9 @@ function layout2d(extra = {}) {
   return {
     paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",
     font: { color: c.ink, family: "system-ui, -apple-system, Segoe UI, sans-serif", size: 12 },
-    margin: { l: 44, r: 14, t: 12, b: 40 },
+    margin: { l: 46, r: 12, t: 8, b: 40 },
     xaxis: axis2d(), yaxis: axis2d(),
-    showlegend: true, legend: { orientation: "h", y: -0.14, font: { size: 11 } },
+    showlegend: true, legend: { orientation: "h", y: -0.12, font: { size: 11 } },
     hovermode: "closest", hoverlabel: { bgcolor: c.panel, bordercolor: c.line, font: { color: c.ink } },
     uirevision: "keep",
     ...extra,
@@ -332,26 +311,26 @@ function layout3d(extra = {}, scene = {}) {
     margin: { l: 0, r: 0, t: 0, b: 0 },
     scene: {
       xaxis: axis3d("x"), yaxis: axis3d("y"), zaxis: axis3d("z"),
-      aspectmode: "cube", camera: { eye: { x: 1.55, y: -1.55, z: 1.1 } }, ...scene,
+      aspectmode: "manual", aspectratio: { x: 1, y: 1, z: 0.75 }, camera: { eye: { x: 1.5, y: -1.5, z: 1.05 } }, ...scene,
     },
     ...extra,
   });
 }
 
-const PLOT_CFG = { responsive: true, displaylogo: false, modeBarButtonsToRemove: ["toImage", "sendDataToCloud", "select2d", "lasso2d"] };
+const PLOT_CFG = { responsive: true, displaylogo: false, modeBarButtonsToRemove: ["toImage", "sendDataToCloud", "select2d", "lasso2d", "autoScale2d"] };
 function draw(div, traces, lay) { return Plotly.react(div, traces, lay, PLOT_CFG); }
 
 function surface(g, extra = {}) {
   return {
     type: "surface", x: g.xs, y: g.ys, z: g.z, colorscale: seqScale(), showscale: false, opacity: 0.95,
     contours: { z: { show: true, usecolormap: true, project: { z: false }, width: 1 } },
-    hovertemplate: "x=%{x:.3f}<br>y=%{y:.3f}<br>z=%{z:.3f}<extra></extra>",
+    hovertemplate: "x=%{x:.3f}<br>y=%{y:.3f}<br>f=%{z:.4f}<extra></extra>",
     lighting: { ambient: 0.75, diffuse: 0.6, specular: 0.15, roughness: 0.9 },
-    ...extra,
+    name: "f", ...extra,
   };
 }
 function flatSurface(xs, ys, fz, color, extra = {}) {
-  // A surface of one color (tangent planes, Taylor polynomials, level planes).
+  // A one-color surface (tangent planes, Taylor polynomials).
   return {
     type: "surface", x: xs, y: ys, z: ys.map((y) => xs.map((x) => fz(x, y))),
     colorscale: [[0, color], [1, color]], showscale: false, opacity: 0.55, hoverinfo: "skip", ...extra,
@@ -359,29 +338,17 @@ function flatSurface(xs, ys, fz, color, extra = {}) {
 }
 function contour2d(g, extra = {}) {
   return {
-    type: "contour", x: g.xs, y: g.ys, z: g.z, colorscale: seqScale(), showscale: false, ncontours: 18,
+    type: "contour", x: g.xs, y: g.ys, z: g.z, colorscale: seqScale(), showscale: false, ncontours: 20,
     contours: { coloring: "heatmap", showlabels: true, labelfont: { size: 10, color: pal().ink } },
-    line: { width: 0.6, color: pal().panel }, opacity: 0.8, name: "f", showlegend: false,
-    hovertemplate: "x=%{x:.3f}<br>y=%{y:.3f}<br>f=%{z:.3f}<extra></extra>",
+    line: { width: 0.6, color: pal().panel }, opacity: 0.85, name: "f", showlegend: false,
+    hovertemplate: "x=%{x:.3f}<br>y=%{y:.3f}<br>f=%{z:.4f}<extra></extra>",
     ...extra,
   };
 }
-function arrow3d(p, v, color, name, scale = 1) {
-  // Shaft + cone head. Returns two traces.
-  const q = p.map((c, i) => c + v[i] * scale);
-  return [
-    { type: "scatter3d", mode: "lines", x: [p[0], q[0]], y: [p[1], q[1]], z: [p[2], q[2]],
-      line: { color, width: 7 }, name, hoverinfo: "name" },
-    { type: "cone", x: [q[0]], y: [q[1]], z: [q[2]], u: [v[0]], v: [v[1]], w: [v[2]], anchor: "tip",
-      sizemode: "absolute", sizeref: 0.18 * norm(v) * scale || 0.1, colorscale: [[0, color], [1, color]],
-      showscale: false, hoverinfo: "skip", showlegend: false },
-  ];
-}
 function arrow2d(p, v, color, text = "") {
-  // A layout annotation: arrow from p to p + v in data coordinates.
   return {
     x: p[0] + v[0], y: p[1] + v[1], ax: p[0], ay: p[1], xref: "x", yref: "y", axref: "x", ayref: "y",
-    showarrow: true, arrowhead: 2, arrowsize: 1.2, arrowwidth: 2.4, arrowcolor: color, text,
+    showarrow: true, arrowhead: 2, arrowsize: 1.2, arrowwidth: 2.6, arrowcolor: color, text,
     font: { color, size: 13 }, standoff: 0, startstandoff: 0,
   };
 }
@@ -389,36 +356,22 @@ function marker(p, color, name, extra = {}) {
   const is3 = p.length === 3;
   return {
     type: is3 ? "scatter3d" : "scatter", mode: "markers", x: [p[0]], y: [p[1]], ...(is3 ? { z: [p[2]] } : {}),
-    marker: { color, size: is3 ? 6 : 11, line: { color: pal().panel, width: 2 } }, name, ...extra,
+    marker: { color, size: is3 ? 6 : 12, line: { color: pal().panel, width: 2 } }, name, ...extra,
   };
 }
 
 /* ---------- controls ---------- */
 
-function slider({ label, min, max, step = 0.01, value, unit = "", format = (v) => fmt(v, 2) }, onInput) {
-  const out = el("output", { class: "vl-out" });
-  const input = el("input", { type: "range", min, max, step, value });
-  const sync = () => { out.textContent = format(+input.value) + unit; };
-  input.addEventListener("input", () => { sync(); onInput(+input.value); });
-  sync();
-  const node = el("label", { class: "vl-slider" }, el("span", { class: "vl-label" }, math(el("span", { text: label })), out), input);
-  return {
-    node, input,
-    get value() { return +input.value; },
-    set(v, { min: lo, max: hi } = {}) {
-      if (lo != null) input.min = lo;
-      if (hi != null) input.max = hi;
-      input.value = v; sync();
-    },
-  };
+function field(label, input, extra = null) {
+  return el("label", { class: "vt-field" }, math(el("span", { class: "vt-label", text: label })), input, extra);
 }
 
-function formulaField({ label, value, vars = ["x", "y"] }, onChange) {
-  // Text input for a formula, with a live KaTeX preview and parse errors shown in place.
-  const input = el("input", { type: "text", value, spellcheck: "false", autocomplete: "off" });
-  const prev = el("div", { class: "vl-preview" });
-  const err = el("div", { class: "vl-error small" });
-  const node = el("label", { class: "vl-formula" }, math(el("span", { class: "vl-label", text: label })), input, prev, err);
+function formulaInput({ label, value = "", vars = ["x", "y"], placeholder = "" }, onChange) {
+  // Text input for a formula: KaTeX preview, parse errors in place, onChange(fn) when it parses.
+  const input = el("input", { type: "text", value, spellcheck: "false", autocomplete: "off", placeholder });
+  const prev = el("div", { class: "vt-preview" });
+  const err = el("div", { class: "vt-error" });
+  const node = el("label", { class: "vt-field vt-formula" }, math(el("span", { class: "vt-label", text: label })), input, prev, err);
   let fn = null;
   const parse = (fire) => {
     try {
@@ -428,68 +381,116 @@ function formulaField({ label, value, vars = ["x", "y"] }, onChange) {
       input.classList.remove("bad");
       if (fire) onChange(fn);
     } catch (e) {
+      fn = null;
       err.textContent = e.message.replace(/^Error: /, "");
       input.classList.add("bad");
     }
   };
   let t = null;
-  input.addEventListener("input", () => { clearTimeout(t); t = setTimeout(() => parse(true), 450); });
+  input.addEventListener("input", () => { clearTimeout(t); t = setTimeout(() => parse(true), 500); });
   input.addEventListener("keydown", (e) => { if (e.key === "Enter") { clearTimeout(t); parse(true); } });
   parse(false);
-  return {
-    node,
-    get fn() { return fn; },
-    set(v) { input.value = v; parse(false); },
-  };
+  return { node, input, get fn() { return fn; }, set(v) { input.value = v; parse(false); } };
 }
 
-function chips(label, presets, onPick, current) {
-  // Example buttons; each label is LaTeX. The one matching `current` (default: the first) starts selected.
-  const wrap = el("div", { class: "vl-chips" });
-  for (const p of presets) {
-    const b = el("button", { type: "button", class: "vl-chip", title: p.title || "" }, tex(p.tex));
-    b.addEventListener("click", () => {
-      wrap.querySelectorAll(".vl-chip").forEach((c) => c.classList.toggle("on", c === b));
-      onPick(p);
-    });
-    wrap.append(b);
-  }
-  const i = current === undefined ? 0 : presets.findIndex((p) => (p.src ?? p.f) === current);
-  if (i >= 0) wrap.children[i].classList.add("on");
-  return el("div", { class: "vl-group" }, el("span", { class: "vl-label", text: label }), wrap);
+function rangeInput(label, [a, b], onChange) {
+  // "−2, 2" style interval.
+  const input = el("input", { type: "text", value: `${a}, ${b}`, spellcheck: "false", class: "vt-range" });
+  const read = () => {
+    const v = input.value.split(/[,;]\s*|\s+/).filter(Boolean).map((s) => { try { return M.evaluate(s); } catch { return NaN; } });
+    const ok = v.length === 2 && v.every(Number.isFinite) && v[0] < v[1];
+    input.classList.toggle("bad", !ok);
+    return ok ? v : null;
+  };
+  input.addEventListener("change", () => { const v = read(); if (v) onChange(v); });
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter") { const v = read(); if (v) onChange(v); } });
+  return { node: field(label, input), set([x, y]) { input.value = `${+x.toFixed(4)}, ${+y.toFixed(4)}`; input.classList.remove("bad"); } };
+}
+
+function numberInput(label, value, onChange, { placeholder = "" } = {}) {
+  const input = el("input", { type: "text", value: value ?? "", spellcheck: "false", class: "vt-num", placeholder });
+  const read = () => {
+    if (!input.value.trim()) return null;
+    try { const v = M.evaluate(input.value); return Number.isFinite(v) ? v : NaN; } catch { return NaN; }
+  };
+  const fire = () => { const v = read(); input.classList.toggle("bad", Number.isNaN(v)); if (!Number.isNaN(v)) onChange(v); };
+  input.addEventListener("change", fire);
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter") fire(); });
+  return { node: field(label, input), set(v) { input.value = v ?? ""; input.classList.remove("bad"); } };
+}
+
+function slider({ label, min, max, step = 0.01, value, format = (v) => fmt(v, 2) }, onInput) {
+  const out = el("output", { class: "vt-out" });
+  const input = el("input", { type: "range", min, max, step, value });
+  const sync = () => { out.textContent = format(+input.value); };
+  input.addEventListener("input", () => { sync(); onInput(+input.value); });
+  sync();
+  const node = el("label", { class: "vt-field vt-slider" }, el("span", { class: "vt-label" }, math(el("span", { text: label })), out), input);
+  return { node, input, set(v) { input.value = v; sync(); } };
+}
+
+function examples(presets, onPick) {
+  // A compact <select> of worked examples (plain-text labels).
+  const sel = el("select", { class: "vt-select" }, el("option", { value: "", text: "Exemples…" }),
+    ...presets.map((p, i) => el("option", { value: String(i), text: p.label })));
+  sel.addEventListener("change", () => { if (sel.value !== "") onPick(presets[+sel.value]); sel.value = ""; });
+  return field("Exemple", sel);
 }
 
 function toggle(label, checked, onChange) {
   const input = el("input", { type: "checkbox" });
   input.checked = checked;
   input.addEventListener("change", () => onChange(input.checked));
-  return { node: el("label", { class: "vl-check" }, input, math(el("span", { text: label }))), get value() { return input.checked; } };
+  return { node: el("label", { class: "vt-check" }, input, math(el("span", { text: label }))), input };
 }
 
-function readout() {
-  // A block of live text with math; set() re-renders it.
-  const node = el("div", { class: "vl-readout" });
-  return {
-    node,
-    set(...children) { node.replaceChildren(...children.filter(Boolean)); math(node); linkCitations(node, null); },
-  };
+function segmented(options, value, onChange) {
+  // Buttons for a small choice (e.g. rectes / paràboles).
+  const wrap = el("div", { class: "vt-seg", role: "group" });
+  const set = (v) => wrap.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.v === v));
+  for (const [v, label] of options) {
+    const b = el("button", { type: "button", "data-v": v, text: label });
+    b.addEventListener("click", () => { set(v); onChange(v); });
+    wrap.append(b);
+  }
+  math(wrap); set(value);
+  return { node: wrap, set };
 }
 
-function para(text, cls = "") { return el("p", { class: cls, text }); }
-function verdict(text, kind = "") { return el("div", { class: `vl-verdict ${kind}`, text }); }
+function card(title, ...body) {
+  return el("section", { class: "vt-card" }, math(el("h3", { text: title })), ...body);
+}
 
-function rafThrottle(fn) {
-  let pending = false;
-  return () => {
-    if (pending) return;
-    pending = true;
-    requestAnimationFrame(() => { pending = false; fn(); });
+function box() {
+  // Live content with math and citation links; set() re-renders it.
+  const node = el("div", { class: "vt-box" });
+  return { node, set(...children) { node.replaceChildren(...children.filter(Boolean)); math(node); linkCitations(node, null); } };
+}
+
+function row(label, value) { return el("div", { class: "vt-kv" }, el("span", { class: "vt-k", text: label }), math(el("span", { class: "vt-v", text: value }))); }
+function note(text, cls = "") { return math(el("p", { class: `vt-note ${cls}`, text })); }
+function verdict(text, kind = "") { return math(el("div", { class: `vt-verdict ${kind}`, text })); }
+
+function reveal(label, build) {
+  // Results that would give an exercise away stay behind a click.
+  const wrap = el("div", { class: "vt-reveal" });
+  let open = false;
+  const btn = el("button", { type: "button", class: "btn ghost vt-reveal-btn", text: label });
+  const body = el("div");
+  btn.addEventListener("click", () => { open = true; refresh(); });
+  const refresh = () => {
+    if (!open) { wrap.replaceChildren(btn); return; }
+    body.replaceChildren(...[].concat(build()).filter(Boolean));
+    math(body); linkCitations(body, null);
+    wrap.replaceChildren(body);
   };
+  refresh();
+  return { node: wrap, refresh, get open() { return open; }, close() { open = false; refresh(); } };
 }
 
 function plotBox(title, cls = "") {
-  const div = el("div", { class: "vl-plot" });
-  return { node: el("figure", { class: `vl-figure ${cls}` }, title ? math(el("figcaption", { text: title })) : null, div), div };
+  const div = el("div", { class: "vt-plot" });
+  return { node: el("figure", { class: `vt-figure ${cls}` }, title ? math(el("figcaption", { text: title })) : null, div), div };
 }
 
 /* ---------- views ---------- */
@@ -500,68 +501,85 @@ function purgePlots(root) {
   root.querySelectorAll(".js-plotly-plot").forEach((d) => Plotly.purge(d));
 }
 
-async function viewVisual(id) {
+function visualParams(part) {
+  // "explorador?f=...&a=0,0" -> ["explorador", URLSearchParams]
+  const [id, q = ""] = (part || "").split("?");
+  return [id, new URLSearchParams(q)];
+}
+
+function visualLink(id, params) {
+  const q = new URLSearchParams(Object.entries(params).filter(([, v]) => v != null && v !== "").map(([k, v]) => [k, Array.isArray(v) ? v.join(k === "g" ? ";" : ",") : String(v)]));
+  return `#/visual/${id}${q.toString() ? `?${q}` : ""}`;
+}
+
+async function viewVisual(part) {
   show("visual");
   const root = $("#view-visual");
   purgePlots(root);
-  const def = LABS.find((l) => l.id === id);
-  if (!def) return viewVisualGaleria(id);
-  crumbs([["Inici", "#/"], ["Laboratori visual", "#/visual"], [def.titol, null]]);
-  const loading = el("p", { class: "muted center", text: "Carregant les eines de visualització…" });
-  root.replaceChildren(loading);
+  const [id, params] = visualParams(part);
+  const def = EINES.find((t) => t.id === id);
+  if (!def) return viewVisualInici();
+  crumbs([["Inici", "#/"], ["Visualitzador", "#/visual"], [def.titol, null]]);
+  root.replaceChildren(el("p", { class: "muted center", text: "Carregant les eines de visualització…" }));
   await loadVisLibs();
-  await getTeoria().then((t) => t.byKey || indexTeoria(t)).catch(() => null);  // citation links in the texts
+  await getTeoria().then((t) => t.byKey || indexTeoria(t)).catch(() => null);
 
-  const side = el("aside", { class: "vl-side" });
-  const main = el("div", { class: "vl-main" });
-  const teoria = el("button", { type: "button", class: "btn ghost vl-teoria", text: "Teoria relacionada" });
+  const teoria = el("button", { type: "button", class: "btn ghost vt-teoria", text: "Teoria" });
   teoria.addEventListener("click", async () => {
     const items = await Promise.all(def.refs.map((r) => api(`/api/teoria/${r}`).catch(() => null)));
     theoryPopup(def.titol, items.filter(Boolean));
   });
-  const idx = LABS.indexOf(def);
-  const nav = el("div", { class: "vl-nav small" },
-    idx > 0 ? el("a", { href: `#/visual/${LABS[idx - 1].id}`, text: `← ${LABS[idx - 1].titol}` }) : el("span"),
-    idx < LABS.length - 1 ? el("a", { href: `#/visual/${LABS[idx + 1].id}`, text: `${LABS[idx + 1].titol} →` }) : el("span"));
-  const head = el("section", { class: "vl-head" },
+  const ex = params.get("ex");
+  const tabs = el("nav", { class: "vt-tabs" }, ...EINES.map((t) =>
+    el("a", { href: `#/visual/${t.id}`, class: t.id === id ? "on" : "", text: t.titol })));
+  const head = el("header", { class: "vt-head" },
     el("div", {},
-      el("div", { class: "eyebrow", text: `Tema ${def.tema} · ${def.seccio || ""}` }),
-      el("h2", { text: def.titol }),
-      linkCitations(math(el("p", { class: "muted vl-idea", text: def.idea })), def.tema)),
+      tabs,
+      math(el("p", { class: "vt-sub", text: def.resum })),
+      ex ? el("p", { class: "vt-from" }, el("span", { text: "Funcions llegides de l'enunciat de l'exercici " }), el("strong", { text: ex }),
+        el("span", { text: ". Comprova que són correctes." })) : null),
     teoria);
-  root.replaceChildren(head, el("div", { class: "vl-layout" }, side, main), nav);
-  math(head);
+  const body = el("div", { class: "vt-body" });
+  root.replaceChildren(head, body);
   try {
-    def.mount({ side, main, tema: def.tema });
+    def.mount(body, params);
   } catch (err) {
-    main.replaceChildren(verdict(`Error dibuixant: ${err.message}`, "bad"));
+    body.replaceChildren(verdict(`Error dibuixant: ${err.message}`, "bad"));
     console.error(err);
   }
 }
 
-function viewVisualGaleria(focus) {
-  crumbs([["Inici", "#/"], ["Laboratori visual", null]]);
+function viewVisualInici() {
+  crumbs([["Inici", "#/"], ["Visualitzador", null]]);
   const root = $("#view-visual");
-  const temes = [...new Set(LABS.map((l) => l.tema))].sort();
   root.replaceChildren(
     el("section", { class: "hero left" },
-      el("div", { class: "eyebrow", text: "Laboratori visual" }),
-      el("h2", { text: "Mira la teoria" }),
-      math(el("p", { class: "muted", text: "Figures interactives dels resultats del curs: gràfiques i corbes de nivell, límits per camins, gradient i pla tangent, Taylor, hessiana, multiplicadors de Lagrange, varietats, funció inversa i implícita. Escriu la teva pròpia funció o tria un exemple dels apunts; mou els controls i observa." }))),
-    ...temes.map((t) => el("section", { class: "vl-tema", id: `vis-tema-${t}` },
-      math(el("h3", { class: "section-heading", text: `Tema ${t} · ${TEMES_VIS[t]}` })),
-      el("div", { class: "vl-cards" }, ...LABS.filter((l) => l.tema === t).map((l) =>
-        el("a", { class: "mode vl-card", href: `#/visual/${l.id}` },
-          el("span", { class: "mode-icon", text: l.icon }),
-          el("h3", { text: l.titol }),
-          math(el("p", { text: l.resum })),
-          el("span", { class: "mode-cta", text: "Obre →" })))))));
+      el("div", { class: "eyebrow", text: "Visualitzador" }),
+      el("h2", { text: "Mira la funció abans de calcular" }),
+      math(el("p", { class: "muted", text: "Tres eines per als exercicis. Escriu la funció o obre-la des d'un exercici amb el botó «Visualitza» de l'enunciat: les fórmules es llegeixen soles." }))),
+    el("div", { class: "vt-home" }, ...EINES.map((t) =>
+      el("a", { class: "mode vt-home-card", href: `#/visual/${t.id}` },
+        el("span", { class: "mode-icon", text: t.icon }),
+        el("h3", { text: t.titol }),
+        math(el("p", { text: t.resum })),
+        el("ul", { class: "vt-uses" }, ...t.usos.map((u) => math(el("li", { text: u })))),
+        el("span", { class: "mode-cta", text: "Obre →" })))));
   math(root);
-  const m = /^tema-(\d)$/.exec(focus || "");
-  if (m) requestAnimationFrame(() => $(`#vis-tema-${m[1]}`)?.scrollIntoView({ behavior: "smooth" }));
+}
+
+function visualitzaExercici(ex) {
+  // "Visualitza" button for an exercise statement, or null if no function can be read from it.
+  if (typeof extractVisual !== "function") return null;
+  const r = extractVisual(`${ex.preambul || ""}\n${ex.enunciat || ""}`);
+  let href = null;
+  if (r.map) href = visualLink("canvis", { F1: r.map[0], F2: r.map[1], ex: ex.id });
+  else if (r.f && r.a && !r.constraints.length) href = visualLink("punt", { f: r.f, a: r.a, fa: r.fa, ex: ex.id });
+  else if (r.f) href = visualLink("explorador", { f: r.f, g: r.constraints, ex: ex.id });
+  if (!href) return null;
+  return el("a", { class: "hint-btn vt-open", href, target: "_blank", rel: "noopener", title: "Obre la funció de l'enunciat al visualitzador (pestanya nova)", text: "📈 Visualitza" });
 }
 
 // Re-draw with the new palette when the system switches between light and dark.
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
-  if (location.hash.startsWith("#/visual/") && window.Plotly) viewVisual(location.hash.split("/")[2]);
+  if (location.hash.startsWith("#/visual/") && window.Plotly) viewVisual(location.hash.replace(/^#\/visual\//, ""));
 });

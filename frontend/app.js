@@ -152,8 +152,7 @@ async function viewTeoria() {
       el("summary", {}, el("strong", { text: `Tema ${t.tema}` }), math(el("span", { text: ` · ${t.titol}` }))),
       el("div", { class: "teoria-actions" },
         el("a", { class: "btn ghost", href: t.pdf, target: "_blank", rel: "noopener", text: "Obre els apunts (PDF) ↗" }),
-        el("a", { class: "btn ghost", href: `#/exercicis/tema-${t.tema}`, text: "Problemes del tema →" }),
-        el("a", { class: "btn ghost", href: `#/visual/tema-${t.tema}`, text: "Visualitzacions →" })),
+        el("a", { class: "btn ghost", href: `#/exercicis/tema-${t.tema}`, text: "Problemes del tema →" })),
       body);
   });
   root.replaceChildren(
@@ -364,9 +363,11 @@ async function startSession(id) {
   $("#statement").replaceChildren(
     el("div", { class: "label", text: `${data.llista.etiqueta} · Problema ${ex.etiqueta}${ex.font ? ` · ${ex.font}` : ""}` }),
     el("div", { class: `statement-body ${ex.format}` }, statement(ex, true, true)),
-    data.teoria.length
-      ? theoryButton(`💡 Teoria útil (${data.teoria.length})`, "Teoria útil per a aquest problema", data.teoria)
-      : null);
+    el("div", { class: "statement-tools" },
+      data.teoria.length
+        ? theoryButton(`💡 Teoria útil (${data.teoria.length})`, "Teoria útil per a aquest problema", data.teoria)
+        : null,
+      visualitzaExercici(ex)));
   $("#messages").replaceChildren(
     math(el("div", { class: "msg tutor", text: "Hola! Explica'm què has provat fins ara amb aquest problema i on t'has encallat. Si encara no has començat, digues-me què et sembla que caldria fer primer." })));
   renderProf();

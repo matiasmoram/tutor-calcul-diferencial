@@ -114,9 +114,13 @@ $xy/(x^2+y^2)$). 6 / 8 / 10 statements for fàcil / normal / difícil. `backend/
    audit sees the solutions and checks proofs, counterexamples, theory and hints. Code keeps a statement only if the
    blind verdict matches with confidence and the audit accepts it. Rejected statements are replaced with the
    reasons (not the whole quiz), up to 3 extra rounds.
-4. **Grading (LLM + CAS + code):** the verdict is graded by code. The LLM judges the justification against the
-   rubric (another valid counterexample counts) and transcribes the student's own computations as sympy checks;
-   a failing one lowers the grade. Score: 30% verdict + 70% justification, ×0.85 if the hint was used.
+4. **Grading (2 LLMs + CAS + code):** the verdict is graded by code. A grader judges the justification and quotes
+   the student's words as evidence for each key idea of the rubric (another valid counterexample counts); code
+   credits only quotes really in the answer, one idea per quote, and caps "correcta" at "parcial" below half the
+   ideas. In parallel, a transcriber that never sees the solutions writes the student's computations as sympy
+   checks; code keeps those whose quote is in the answer and whose value the quote states (so a grader cannot
+   silently "fix" a wrong value), and a failing one lowers the grade. Score: 30% verdict + 70% justification,
+   ×0.85 if the hint was used.
 
 Quizzes are cached in `backend/generats/afirmacions/<font>/<difficulty>/`. Pre-generate with
 `python scripts/pregenerate_afirmacions.py tema-2:normal T2.12:facil ...`. Stages `afirmacions_generacio`,
@@ -161,38 +165,26 @@ Sheet tests check that (1) each step's leak regexes catch that step's own worked
 Override any stage with `TUTOR_MODEL_<STAGE>` (see `.env.example`). `scripts/live_demo.py` runs a scripted 4-turn conversation against the real API and prints the trace.
 
 
-## Visual lab (`#/visual`)
+## Visualitzador (`#/visual`)
 
-Interactive figures of the theory, frontend only (`frontend/visual.js` core, `visual-labs-a.js` temes 1–3,
-`visual-labs-b.js` temes 4–6). Students type their own function or pick an example from the notes; every lab
-cites its items (links to the PDF) and has a "Teoria relacionada" button with the statements.
+Three tools for the exercises, frontend only (`frontend/visual.js` core, `visual-eines.js` tools,
+`visual-latex.js` statement reader):
 
-| Lab | Tema | What it shows |
+| Tool | Route | For |
 |---|---|---|
-| `normes` | 1 | Unit balls of the p-norms, equivalence constants |
-| `punt-fix` | 2 | Cobweb of $x_{n+1}=g(x_n)$, contraction constant, $k^n$ rate |
-| `grafica` | 2 | Surface + level sets $C_k(f)$ in 3D and as a contour map |
-| `limits` | 2 | Limits along $y=mx$ / $y=mx^2$, plus $\sup_{\|x\|=r}\|f-L\|$ to tell candidate from proof |
-| `gradient` | 3 | Directional derivative as a slice, tangent plane, $
-abla f$ ⟂ level curve, $D_uf$ vs angle |
-| `diferenciabilitat` | 3 | Zoom to the tangent plane, remainder $E(r)$; classic counterexamples |
-| `inversa` | 4 | Grid deformation by $F$, sign of $\det JF$, fold curve, $DF(a)$ vs $F$ on a small square |
-| `implicita` | 4 | Curve $F=0$, local graph $y=g(x)$, $g'=-F_x/F_y$, vertical tangents and singular points |
-| `taylor` | 5 | Taylor polynomial of order 1–3 over $f$, error slope $ho^{r+1}$ |
-| `extrems` | 5 | Critical points (Newton), Hessian, Sylvester, eigenvalues, quadratic approximation |
-| `lagrange` | 6 | Point moving on $g=0$ with $
-abla f$, $
-abla g$; candidates of $
-abla f=\lambda
-abla g$ and singular points |
-| `varietats` | 6 | Surfaces $\Phi=0$ in $\mathbb{R}^3$, tangent plane, normal, tangent projection of $
-abla f$, level surface tangency |
+| Explorador f(x,y) | `#/visual/explorador` | Surface + contour map; click a point for f, ∇f, tangent plane, Hessian; critical points (classified); constraints/regions (`x^2+y^2 <= 1`, one per line, `<` = open boundary) with candidates for absolute extrema: interior points, Lagrange points on each boundary, corners, singular points; max/min, or sup/inf not attained on open boundaries; compactness check |
+| Anàlisi en un punt | `#/visual/punt` | Limit along y−b = m(x−a)^k as a function of m, sup of \|f−L\| on circles, directional derivatives by the definition vs ∇f·u, tangent-plane remainder E(r); value f(a) settable for piecewise functions |
+| Canvis de variables | `#/visual/canvis` | Grid deformation by F, sign of det JF, fold curve, F vs DF(a) on a small square |
 
-Libraries (lazy-loaded from cdnjs only when a lab opens): **Plotly.js 3** (WebGL surfaces, contours, isosurfaces)
-and **math.js 14** (parsing + symbolic derivatives; numeric central differences as fallback). math.js installs a
-global `math`, which would shadow app.js's KaTeX `math()`: `loadVisLibs()` takes its instance and restores it.
-Colors come from the CSS tokens (light/dark); surfaces use a single-hue sequential scale, signed values
-($\det JF$) a diverging one. Numerical verdicts (differentiable, limit exists, …) are labelled as numerical.
+**From an exercise:** the statement gets a "📈 Visualitza" button when `extractVisual()` can read a function
+from its LaTeX (f(x,y)=…, `\lim_{(x,y)\to(a,b)}`, `cases` with the special point, maps F=(F1,F2), regions
+`\{(x,y)\mid …\}`, bare constraints). It opens the right tool in a new tab with the functions filled in; 121 of
+the 333 statements are readable (the rest are proofs or have no concrete function). Results that would give the
+exercise away (critical points, candidates, conclusions) stay behind a click.
+
+Libraries, lazy-loaded from cdnjs: **Plotly.js 3** and **math.js 14** (parsing, symbolic derivatives; numeric
+central differences as fallback). math.js installs a global `math`, which would shadow app.js's KaTeX `math()`:
+`loadVisLibs()` takes its instance and restores it. Verdicts are numerical and say so.
 
 ## Hardening (2026-10)
 

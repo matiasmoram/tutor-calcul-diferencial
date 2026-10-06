@@ -169,7 +169,10 @@ def _engine(database_url: str) -> Engine:
         meta.create_all(engine)  # local: the schema is created on first use
         return engine
     # Hosted Postgres (Supabase): the schema comes from supabase/migrations; pre-ping survives pooler restarts.
-    return create_engine(database_url, pool_pre_ping=True, pool_size=5, max_overflow=5)
+    # The transaction pooler (port 6543) hands each transaction a different server connection, so psycopg's
+    # automatic prepared statements (after 5 runs of a query) collide: "prepared statement _pg3_0 already exists".
+    return create_engine(database_url, pool_pre_ping=True, pool_size=5, max_overflow=5,
+                         connect_args={"prepare_threshold": None})
 
 
 def engine() -> Engine:

@@ -103,6 +103,7 @@ GEMINI_STAGE_MODELS = {
     "afirmacions_verificacio": "gemini-3-flash-preview",
     "afirmacions_auditoria": "gemini-3.5-flash-lite",
     "afirmacions_correccio": "gemini-3-flash-preview",
+    "afirmacions_extraccio": "gemini-3.5-flash-lite",
 }
 # Diagnosis needs the strongest judgment; phrasing and checking run on a faster model.
 OPENAI_STAGE_MODELS = {
@@ -117,6 +118,7 @@ OPENAI_STAGE_MODELS = {
     "afirmacions_verificacio": "gpt-5.5",
     "afirmacions_auditoria": "gpt-5.5",
     "afirmacions_correccio": "gpt-5.5",
+    "afirmacions_extraccio": "gpt-5.4-mini",
 }
 STAGE_MODELS = {"gemini": GEMINI_STAGE_MODELS, "openai": OPENAI_STAGE_MODELS}
 
@@ -155,6 +157,10 @@ def default_stage_configs() -> dict[str, StageConfig]:
         ),
         "afirmacions_correccio": StageConfig(
             model("afirmacions_correccio"), os.getenv("TUTOR_EFFORT_AFIRMACIONS_CORRECCIO", "low"), max_tokens=20000
+        ),
+        # Transcribes the student's computations for sympy: no judgment, never sees the solutions.
+        "afirmacions_extraccio": StageConfig(
+            model("afirmacions_extraccio"), os.getenv("TUTOR_EFFORT_AFIRMACIONS_EXTRACCIO", "low")
         ),
     }
 

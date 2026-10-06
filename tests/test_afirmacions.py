@@ -193,22 +193,35 @@ def quiz():
     return af.Questionari(id="q", font="tema-2", tema=2, dificultat="facil", afirmacions=afs)
 
 
+def idea(num, cita):
+    return {"num": num, "cita": cita}
+
+
+def grader(*avaluacions, resum="r"):
+    return {"avaluacions": list(avaluacions), "resum": resum}
+
+
+def transcriber(**per_id):
+    return {"respostes": [{"id": k, "comprovacions": v} for k, v in per_id.items()]}
+
+
 def test_grading_is_decided_by_code_and_sympy():
-    llm = ScriptedLLM({"afirmacions_correccio": [{
-        "avaluacions": [
-            # Right verdict, "correcta", but the student's claimed limit is false: downgraded to parcial.
-            {"id": "a1", "justificacio": "correcta", "feedback": "f1",
-             "comprovacions": [check("limit", "x*(m*x)/(x**2+(m*x)**2)", "0")]},
+    llm = ScriptedLLM({
+        "afirmacions_correccio": [grader(
+            {"id": "a1", "idees": [idea(1, "sobre $y=mx$")], "justificacio": "correcta", "feedback": "f1"},
             # Wrong verdict: whatever the LLM says, no points.
-            {"id": "a2", "justificacio": "correcta", "feedback": "f2", "comprovacions": []},
-            {"id": "a3", "justificacio": "correcta", "feedback": "f3", "comprovacions": [ITERATS]},
-        ],
-        "resum": "r",
-    }]})
+            {"id": "a2", "idees": [idea(1, "no")], "justificacio": "correcta", "feedback": "f2"},
+            {"id": "a3", "idees": [idea(1, "Està bé")], "justificacio": "correcta", "feedback": "f3"},
+        )],
+        # Right verdict, "correcta", but the student's claimed limit is false: downgraded to parcial.
+        "afirmacions_extraccio": [transcriber(
+            a1=[check("limit", "x*(m*x)/(x**2+(m*x)**2)", "0") | {"cita_alumne": "sobre $y=mx$ dona $0$"}],
+        )],
+    })
     respostes = [
-        af.Resposta(id="a1", veredicte="fals", justificacio="sobre y=mx dona 0"),
+        af.Resposta(id="a1", veredicte="fals", justificacio="sobre $y=mx$ dona $0$"),
         af.Resposta(id="a2", veredicte="fals", justificacio="no"),
-        af.Resposta(id="a3", veredicte="fals", justificacio="bé"),
+        af.Resposta(id="a3", veredicte="fals", justificacio="Està bé."),
         af.Resposta(id="a4", veredicte="", justificacio=""),
     ]
     r = af.grade(llm, FONT, quiz(), respostes, pistes={"a3"}, en_proces=True)
@@ -218,8 +231,70 @@ def test_grading_is_decided_by_code_and_sympy():
     assert it["a3"]["justificacio"] == "correcta" and it["a3"]["punts"] == 0.85  # hint used
     assert it["a4"]["punts"] == 0 and it["a4"]["resposta"] == ""
     assert r["nota"] == round(100 * (0.65 + 0 + 0.85 + 0) / 4) and r["encerts"] == 2
-    # Unanswered statements are not sent to the grader.
-    assert "[a4]" not in llm.seen[0][1]
+    seen = dict(llm.seen)
+    # Unanswered statements are not sent; key ideas go numbered to the grader.
+    assert "[a4]" not in seen["afirmacions_correccio"] and "idees clau: (1) i" in seen["afirmacions_correccio"]
+    # The transcriber never sees verdicts or solutions.
+    ext = seen["afirmacions_extraccio"]
+    assert "veredicte correcte" not in ext and "resolució de referència" not in ext and "sobre $y=mx$ dona $0$" in ext
+
+
+def test_transcribed_value_must_be_the_one_the_student_wrote():
+    # The student wrote that the limit on the parabola is 1 (it is 1/2).
+    llm = ScriptedLLM({
+        "afirmacions_correccio": [grader(
+            {"id": "a1", "idees": [idea(1, "sobre $y = x^2$")], "justificacio": "correcta", "feedback": ""},
+            {"id": "a3", "idees": [idea(1, "Sobre les rectes")], "justificacio": "correcta", "feedback": ""},
+        )],
+        "afirmacions_extraccio": [transcriber(
+            a1=[
+                # faithful: value 1 is in the quote -> run -> false -> downgrade
+                check("limit", "x**2*(x**2)/(x**4+(x**2)**2)", "1") | {"cita_alumne": "sobre $y = x^2$ el límit és $1$"},
+                # "corrected" by the transcriber: 1/2 is not what the quote says -> dropped
+                check("limit", "x**2*(x**2)/(x**4+(x**2)**2)", "1/2") | {"cita_alumne": "sobre $y = x^2$ el límit és $1$"},
+            ],
+            a3=[check("limit", "x", "0") | {"cita_alumne": "sobre y=x^2 el límit és 1"}],  # quote not in a3's answer
+        )],
+    })
+    respostes = [
+        af.Resposta(id="a1", veredicte="fals", justificacio=r"$\frac{x^2y}{x^4+y^2}$: sobre $y = x^2$ el límit és $1$."),
+        af.Resposta(id="a3", veredicte="fals", justificacio="Sobre les rectes dona 0."),
+    ]
+    it = {i["id"]: i for i in af.grade(llm, FONT, quiz(), respostes, set(), en_proces=True)["afirmacions"]}
+    assert [c["valor"] for c in it["a1"]["comprovacions_alumne"]] == ["1"]
+    assert it["a1"]["comprovacions_alumne"][0]["estat"] == "falla" and it["a1"]["justificacio"] == "parcial"
+    assert it["a3"]["justificacio"] == "correcta" and it["a3"]["comprovacions_alumne"] == []
+
+
+@pytest.mark.parametrize(
+    "valor,cita,ok",
+    [
+        ("1", "el límit és $1$", True),
+        ("1/2", "el límit és $1$", False),
+        ("1/2", r"val $\frac{1}{2}$", True),
+        ("m/(1+m**2)", r"dona $\frac{m}{1+m^2}$, que depèn de m", True),
+        ("0", "sobre y=mx dona 0", True),
+        ("0", "sobre y=mx dona zero", False),
+    ],
+)
+def test_fidelity_of_transcribed_values(valor, cita, ok):
+    assert af._fidel(check("limit", "x", valor) | {"cita_alumne": cita}) is ok
+
+
+def test_rubric_needs_real_evidence_for_each_idea():
+    q = quiz()
+    q.afirmacions[1].idees_clau = ["contrarecíproc", "els dos iterats valdrien L", "contradicció"]
+    answer = "Per la proposició 12."
+    llm = ScriptedLLM({
+        # A lenient grader credits all three ideas, but with one quote (and one made-up quote).
+        "afirmacions_correccio": [grader({"id": "a2", "idees": [
+            idea(1, "Per la proposició 12"), idea(2, "Per la proposició 12"), idea(3, "per tant contradicció"),
+        ], "justificacio": "correcta", "feedback": ""})],
+        "afirmacions_extraccio": [transcriber(a2=[])],
+    })
+    r = af.grade(llm, FONT, q, [af.Resposta(id="a2", veredicte="cert", justificacio=answer)], set(), en_proces=True)
+    a2 = next(i for i in r["afirmacions"] if i["id"] == "a2")
+    assert a2["idees_presents"] == [1] and a2["justificacio"] == "parcial" and a2["punts"] == 0.65
 
 
 def test_grading_without_answers_makes_no_call():

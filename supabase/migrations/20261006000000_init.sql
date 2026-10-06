@@ -30,8 +30,8 @@ CREATE TABLE crides_llm (
 	prompt TEXT, 
 	PRIMARY KEY (id)
 );
-CREATE INDEX ix_crides_llm_sessio_id ON crides_llm (sessio_id);
 CREATE INDEX ix_crides_llm_creat ON crides_llm (creat);
+CREATE INDEX ix_crides_llm_sessio_id ON crides_llm (sessio_id);
 ALTER TABLE crides_llm ENABLE ROW LEVEL SECURITY;
 
 CREATE TABLE items_teoria (
@@ -63,8 +63,8 @@ CREATE TABLE sessions (
 	historial JSONB NOT NULL, 
 	PRIMARY KEY (id)
 );
-CREATE INDEX ix_sessions_font_id ON sessions (font_id);
 CREATE INDEX ix_sessions_actualitzat ON sessions (actualitzat);
+CREATE INDEX ix_sessions_font_id ON sessions (font_id);
 ALTER TABLE sessions ENABLE ROW LEVEL SECURITY;
 
 CREATE TABLE temes (

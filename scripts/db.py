@@ -33,7 +33,7 @@ def schema() -> str:
     dialect = postgresql.dialect()
     for table in db.meta.sorted_tables:
         out.append(str(CreateTable(table).compile(dialect=dialect)).strip() + ";")
-        for ix in table.indexes:
+        for ix in sorted(table.indexes, key=lambda i: i.name):  # a set: sort for a stable migration
             out.append(str(CreateIndex(ix).compile(dialect=dialect)).strip() + ";")
         # Supabase exposes tables through its public API: enable RLS with no policies, so only the server
         # (direct Postgres connection, owner role) can read or write. The anon/public key sees nothing.

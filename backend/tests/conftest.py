@@ -4,8 +4,10 @@ import pytest
 from sqlmodel import SQLModel
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-import core.shared.llm_calls.infra.sqlmodel_repository  # noqa: F401  (registers its table)
 from core.shared.storage.session_provider import SQLModelSessionProvider, make_engine
+from core.shared.storage.table_registry import register_all_tables
+
+register_all_tables()
 
 
 @pytest.fixture

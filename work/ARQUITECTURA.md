@@ -118,4 +118,4 @@ Phases 3, 4, 5 run in parallel (disjoint directories). At most 4 agents at a tim
 
 ## Progress
 
-- [x] 0 · [x] 1 · [ ] 2 · [ ] 3 · [ ] 4 · [ ] 5 · [ ] 6 · [ ] 7
+- [x] 0 · [x] 1 · [x] 2 · [ ] 3 · [ ] 4 · [ ] 5 · [ ] 6 · [ ] 7

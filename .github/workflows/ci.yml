@@ -9,17 +9,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: astral-sh/setup-uv@v6
         with:
           python-version: "3.13"
-          cache: pip
-      - run: pip install -r requirements.txt
+          enable-cache: true
+      - run: uv sync --locked
       # No API keys: the suite uses scripted LLMs; storage tests use a throwaway SQLite database.
-      - run: python -m pytest tests -q
-      - run: python scripts/check_fitxes.py
+      - run: uv run pytest -q
+      - run: uv run ruff check backend/core backend/apps backend/settings
+      - run: uv run python scripts/check_fitxes.py
       - name: Supabase migration matches the code
         run: |
-          python scripts/db.py schema > /tmp/schema.sql
+          uv run python scripts/db.py schema > /tmp/schema.sql
           diff -u supabase/migrations/20261006000000_init.sql /tmp/schema.sql
 
   docker:

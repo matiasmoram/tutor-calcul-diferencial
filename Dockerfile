@@ -1,16 +1,13 @@
 # Tutor socràtic · Càlcul Diferencial — production image.
 # Secrets are NOT baked in: pass them as environment variables at run time (see DEPLOY.md).
-FROM python:3.13-slim
+FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1 \
-    PORT=8000
+ENV PYTHONDONTWRITEBYTECODE=1     PYTHONUNBUFFERED=1     UV_COMPILE_BYTECODE=1     UV_LINK_MODE=copy     UV_PROJECT_ENVIRONMENT=/opt/venv     PATH=/opt/venv/bin:$PATH     PORT=8000
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+COPY pyproject.toml uv.lock ./
+RUN uv sync --locked --no-dev
 
 # Code, course content (sheets, theory) and the course PDFs served under /pdf.
 COPY backend/ backend/

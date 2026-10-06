@@ -1,3 +1,5 @@
+import asyncio
+
 from pydantic import BaseModel
 
 from core.course.domain.citations import cited_items
@@ -9,7 +11,7 @@ from core.shared.domain.ids import SessionId, TheoryItemId
 from core.shared.llm.call_scope import call_scope
 from core.tutoring.domain.entities.tutor_session import TutorSession
 from core.tutoring.domain.entities.tutor_turn import TutorTurn
-from core.tutoring.domain.exceptions import ModelOutputException
+from core.tutoring.domain.exceptions import ConcurrentTurnException, ModelOutputException
 from core.tutoring.domain.fallback import fallback_message
 from core.tutoring.domain.guard import deterministic_check
 from core.tutoring.domain.policy import allowed_content, allowed_theory, decide
@@ -22,6 +24,8 @@ from core.tutoring.domain.values.plan import Plan
 from core.tutoring.domain.values.turn_trace import CheckedDraft, DraftAttempt, FailedDraft, ModelCall, TurnTrace
 
 MAX_ATTEMPTS = 3  # first draft + 2 rewrites
+# A turn claim older than this belongs to a turn that died without releasing it (provider timeouts are 180 s).
+TURN_CLAIM_TIMEOUT_S = 600.0
 
 
 class TurnInput(BaseModel):
@@ -65,6 +69,16 @@ class TurnHandler:
 
     async def handle(self, request: TurnInput) -> TurnResult:
         session = await self._sessions.get(request.session_id)
+        now = self._clock.now()
+        # A second message while one is being answered is refused before any model is called (two tabs, a retry).
+        if not await self._sessions.claim_turn(session.id, now, now - TURN_CLAIM_TIMEOUT_S):
+            raise ConcurrentTurnException(session.id)
+        try:
+            return await self._handle(session, request)
+        finally:
+            await self._sessions.release_turn(session.id)
+
+    async def _handle(self, session: TutorSession, request: TurnInput) -> TurnResult:
         ex = self._course.exercise(session.exercise_id)
         text = request.text.strip()
         with call_scope(session.id, session.next_turn):
@@ -155,7 +169,8 @@ class TurnHandler:
         calls.append(call)
         # References are the allowed items the message actually cites ("Teorema 12 del Tema 3").
         references = cited_items(message, theory, ex.topic)
-        problems = deterministic_check(message, plan, permitted)
+        # sympy work (the CAS provenance check): off the event loop, other students' turns keep running.
+        problems = await asyncio.to_thread(deterministic_check, message, plan, permitted)
         verdict: GuardVerdict | None = None
         if not problems:
             # Only pay for the LLM judge once the cheap checks pass.

@@ -225,8 +225,9 @@ async def test_turns_are_persisted_logged_and_survive_a_restart(session_provider
 
 
 async def test_a_concurrent_turn_on_the_same_session_is_rejected(session_provider: SQLModelSessionProvider) -> None:
-    """Two turns of one session in flight (two tabs): the first to save wins, the other gets a 409 and leaves
-    nothing behind."""
+    """Two turns of one session in flight (two tabs): the second is refused with a 409 before any model call,
+    and the first one completes."""
+    refused: list[ConcurrentTurnException] = []
 
     class InterleavingLLM(ScriptedLLMClient):
         inner_turn: TurnInput | None = None
@@ -234,25 +235,35 @@ async def test_a_concurrent_turn_on_the_same_session_is_rejected(session_provide
         async def structured(self, stage: Stage, request: LLMRequest) -> tuple[JsonObject, CallMeta]:
             pending, self.inner_turn = self.inner_turn, None
             if pending is not None:
-                # While the first turn waits for its diagnosis, a second turn of the same session completes.
+                # While the first turn waits for its diagnosis, the second tab sends a message.
                 assert current_scope().turn == 1
-                await t.turns.handle(pending)
+                with pytest.raises(ConcurrentTurnException) as e:
+                    await t.turns.handle(pending)
+                refused.append(e.value)
             return await super().structured(stage, request)
 
     llm = InterleavingLLM(
-        {
-            Stage.DIAGNOSIS: [diagnosis_json(), diagnosis_json()],
-            Stage.REPLY: [{"text": "Què has provat?"}] * 2,
-            Stage.GUARD: [OK, OK],
-        }
+        {Stage.DIAGNOSIS: [diagnosis_json()], Stage.REPLY: [{"text": "Què has provat?"}], Stage.GUARD: [OK]}
     )
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
     llm.inner_turn = TurnInput(session_id=sid, text="segona pestanya")
-    with pytest.raises(ConcurrentTurnException) as e:
-        await t.turns.handle(TurnInput(session_id=sid, text="primera pestanya"))
-    assert e.value.error_code == 409
+    await t.turns.handle(TurnInput(session_id=sid, text="primera pestanya"))
+    assert [e.error_code for e in refused] == [409] and llm.calls(Stage.DIAGNOSIS) == 1
     [turn] = await t.sessions.turns(sid)
-    assert turn.student_text == "segona pestanya"
+    assert turn.student_text == "primera pestanya"
     stored = await t.sessions.get(sid)
-    assert [m.text for m in stored.history] == ["segona pestanya", "Què has provat?"] and stored.version == 1
+    assert [m.text for m in stored.history] == ["primera pestanya", "Què has provat?"] and stored.version == 1
+    # The claim is released: the next message goes through.
+    llm.then(Stage.DIAGNOSIS, diagnosis_json()).then(Stage.REPLY, {"text": "I ara?"}).then(Stage.GUARD, OK)
+    assert (await t.turns.handle(TurnInput(session_id=sid, text="segona"))).trace.turn == 2
+
+
+async def test_a_failed_turn_releases_its_claim(session_provider: SQLModelSessionProvider) -> None:
+    llm = ScriptedLLMClient({Stage.DIAGNOSIS: [LLMError("boom")]})
+    t = tutoring(llm, session_provider)
+    sid = (await t.starter.start(EX4C.id)).session.id
+    with pytest.raises(ModelOutputException):
+        await t.turns.handle(TurnInput(session_id=sid, text="hola"))
+    llm.then(Stage.DIAGNOSIS, diagnosis_json()).then(Stage.REPLY, {"text": "Què has provat?"}).then(Stage.GUARD, OK)
+    assert (await t.turns.handle(TurnInput(session_id=sid, text="hola"))).trace.turn == 1

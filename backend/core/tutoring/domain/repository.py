@@ -15,9 +15,18 @@ class TutorSessionRepository(ABC):
         """Raises TutorSessionNotFoundException."""
 
     @abstractmethod
+    async def claim_turn(self, session_id: SessionId, now: float, stale_before: float) -> bool:
+        """Marks a turn as in progress unless another one is (a claim older than `stale_before` is taken over).
+        False when another turn holds it: a second message must be refused before any model is called."""
+
+    @abstractmethod
+    async def release_turn(self, session_id: SessionId) -> None: ...
+
+    @abstractmethod
     async def save_turn(self, session: TutorSession, turn: TutorTurn) -> TutorSession:
         """Stores the session after `turn` together with the turn, in one transaction, if the stored session is
-        still at ``session.version``; raises ConcurrentTurnException otherwise. Returns it at its new version."""
+        still at ``session.version``; raises ConcurrentTurnException otherwise. Releases the turn claim.
+        Returns the session at its new version."""
 
     @abstractmethod
     async def turns(self, session_id: SessionId) -> list[TutorTurn]:

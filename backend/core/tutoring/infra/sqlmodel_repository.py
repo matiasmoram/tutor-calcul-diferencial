@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Index, update
+from sqlalchemy import Column, Index, or_, update
 from sqlalchemy.engine import CursorResult
 from sqlmodel import Field, SQLModel, col, select
 from sqlmodel.ext.asyncio.session import AsyncSession
@@ -28,6 +28,7 @@ class TutorSessionRecord(SQLModel, table=True):
     updated_at: float
     closed: bool = False
     version: int = 0
+    turn_started_at: float | None = None  # a turn in progress (see claim_turn)
     state: dict[str, object] = Field(sa_column=Column(JsonColumn, nullable=False))
     history: list[dict[str, object]] = Field(sa_column=Column(JsonColumn, nullable=False))
 
@@ -128,6 +129,29 @@ class SQLModelTutorSessionRepository(TutorSessionRepository, BaseSQLModelReposit
         return _session(record)
 
     @with_session
+    async def claim_turn(self, db: AsyncSession, session_id: SessionId, now: float, stale_before: float) -> bool:
+        result = await db.exec(
+            update(TutorSessionRecord)  # type: ignore[call-overload]
+            .where(col(TutorSessionRecord.id) == session_id)
+            .where(
+                or_(
+                    col(TutorSessionRecord.turn_started_at).is_(None),
+                    col(TutorSessionRecord.turn_started_at) < stale_before,
+                )
+            )
+            .values(turn_started_at=now)
+        )
+        return isinstance(result, CursorResult) and result.rowcount == 1
+
+    @with_session
+    async def release_turn(self, db: AsyncSession, session_id: SessionId) -> None:
+        await db.exec(
+            update(TutorSessionRecord)  # type: ignore[call-overload]
+            .where(col(TutorSessionRecord.id) == session_id)
+            .values(turn_started_at=None)
+        )
+
+    @with_session
     async def save_turn(self, db: AsyncSession, session: TutorSession, turn: TutorTurn) -> TutorSession:
         result = await db.exec(
             update(TutorSessionRecord)  # type: ignore[call-overload]
@@ -139,6 +163,7 @@ class SQLModelTutorSessionRepository(TutorSessionRepository, BaseSQLModelReposit
                 closed=session.closed,
                 updated_at=session.updated_at,
                 version=session.version + 1,
+                turn_started_at=None,
             )
         )
         if not isinstance(result, CursorResult) or result.rowcount != 1:

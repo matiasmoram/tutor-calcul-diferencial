@@ -1,0 +1,298 @@
+{
+  "t2-2i:normal": {
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$C_0(f)=\\{(0,y)\\mid y\\neq0\\}$",
+        "gravetat": "error",
+        "explicacio": "Oblida la segona línia de la definició: sobre la paràbola $x=-y^2$ (origen inclòs) $f=0$, de manera que $C_0(f)=\\{x=0\\}\\cup\\{x=-y^2\\}$."
+      },
+      {
+        "fragment": 5,
+        "cita": "$C_k(f)$ és tota la paràbola $x=\\frac{k}{1-k}y^2$, vèrtex inclòs",
+        "gravetat": "error",
+        "explicacio": "L'origen és de la paràbola $x=-y^2$, on $f=0\\neq k$; satisfer l'equació $x(1-k)=ky^2$ no basta. Cal treure el vèrtex."
+      }
+    ],
+    "valoracio": "Dos errors: $C_0$ sense la paràbola $x=-y^2$ i $C_k$ amb el vèrtex inclòs."
+  },
+  "t2-3b:normal": {
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "té radi $k$",
+        "gravetat": "error",
+        "explicacio": "La secció a $z=0$ és $x^2+y^2=k$, de radi $\\sqrt{k}$, no $k$."
+      },
+      {
+        "fragment": 5,
+        "cita": "la superfície és un hiperboloide d'una fulla d'eix $Oz$",
+        "gravetat": "error",
+        "explicacio": "Per a $k<0$ hi ha una franja $|z|<\\sqrt{-k}$ sense punts: és un hiperboloide de dues fulles."
+      }
+    ],
+    "valoracio": "Radi de la secció mínima incorrecte i confusió d'una/dues fulles per a $k<0$."
+  },
+  "t2-5b:normal": {
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "sobre $y=0$ tenim $f(x,0)=\\frac{0}{x+0}=0$",
+        "gravetat": "error",
+        "explicacio": "L'eix $y=0$ és fora del domini ($xy(x+y)=0$); la restricció no està definida i s'usa la forma simplificada fora del domini."
+      },
+      {
+        "fragment": 3,
+        "cita": "=\\frac{m}{1+m^2}$",
+        "gravetat": "error",
+        "explicacio": "$\\frac{m^2x^3}{mx^3+m^2x^3}=\\frac{m}{1+m}$, no $\\frac{m}{1+m^2}$."
+      }
+    ],
+    "valoracio": "Restricció a un eix fora del domini i càlcul erroni del límit sobre $y=mx$."
+  },
+  "t2-6:normal": {
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "les de la forma $y=mx$ amb $m\\in\\mathbb{R}$",
+        "gravetat": "error",
+        "explicacio": "Oblida la recta vertical $x=0$, que no és de la forma $y=mx$ i també cal estudiar (hi $f\\equiv1$)."
+      },
+      {
+        "fragment": 5,
+        "cita": "$0<c\\leq1$",
+        "gravetat": "error",
+        "explicacio": "Per a $c=1$ la paràbola és $y=x^2$, que no és dins de $A$ (cal $y<x^2$ estricte): ha de ser $0<c<1$."
+      }
+    ],
+    "valoracio": "Oblida la recta $x=0$ i inclou incorrectament $c=1$."
+  },
+  "t2-8e:normal": {
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "els punts $(0,t)$ amb $t\\neq0$ hi pertanyen",
+        "gravetat": "error",
+        "explicacio": "Els punts de l'eix $y$ tenen $\\cos\\varphi=0<\\delta$: no són de $D_\\delta$. Són els punts $(t,0)$ els que hi pertanyen."
+      },
+      {
+        "fragment": 5,
+        "cita": "$|x|\\leq r$, tenim $\\frac{y^2}{|x|}\\leq\\frac{r^2}{r}=r$",
+        "gravetat": "error",
+        "explicacio": "Una fita superior de $|x|$ al denominador dona una fita inferior del quocient; cal usar $|x|>\\delta r$ (condició de $D_\\delta$), que dona $\\frac{y^2}{|x|}<\\frac{r}{\\delta}$."
+      },
+      {
+        "fragment": 6,
+        "cita": "el límit de $g|_{D_\\delta}$ quan $(x,y)\\to(0,0)$ és $0=g(0,0)$",
+        "gravetat": "consequencia",
+        "explicacio": "La conclusió és certa però es basa en la fita $|g|\\leq r$ de [5], que no està justificada."
+      }
+    ],
+    "valoracio": "Punts d'acumulació mal triats i fita amb la desigualtat en sentit contrari, sense usar $\\delta$."
+  },
+  "t2-11:normal": {
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$(u^2+y^2)^2\\geq0$",
+        "gravetat": "error",
+        "explicacio": "D'aquesta desigualtat no surt $u^2y^2\\leq\\frac{u^4+y^4}{2}$; cal partir de $(u^2-y^2)^2\\geq0$."
+      },
+      {
+        "fragment": 5,
+        "cita": "$|x-1|\\leq\\|(x,y)\\|$, tenim $0\\leq|f(x,y)|\\leq\\frac{\\|(x,y)\\|}{2}\\to0$",
+        "gravetat": "error",
+        "explicacio": "Quan $(x,y)\\to(1,0)$, $\\|(x,y)\\|\\to1$, no $0$; la fita correcta és amb $\\|(x,y)-(1,0)\\|$ o directament $\\frac{|x-1|}{2}\\to0$."
+      }
+    ],
+    "valoracio": "Justificació errònia de la desigualtat clau i fita final que no tendeix a $0$."
+  },
+  "t2-12b:normal": {
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "radi $2$",
+        "gravetat": "error",
+        "explicacio": "$(x-1)^2+(y-1)^2=2$ té radi $\\sqrt2$."
+      },
+      {
+        "fragment": 5,
+        "cita": "Tots els seus punts compleixen aquesta equació, així que $C_{-2}$ és tota la circumferència.",
+        "gravetat": "error",
+        "explicacio": "La circumferència passa per l'origen, on $x+y=0$ i $f=0\\neq-2$: cal treure l'origen de $C_{-2}$."
+      }
+    ],
+    "valoracio": "Radi erroni a $C_2$ i oblit del forat a l'origen a $C_{-2}$."
+  },
+  "t2-13b:normal": {
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "tota la bola de centre $(x_0,y_0)$ i radi $d$ està continguda a $\\Omega$",
+        "gravetat": "error",
+        "explicacio": "La distància de $(x_0,y_0)$ a la recta $x=y$ és $d/\\sqrt2<d$; amb radi $d$ la bola surt de $\\Omega$ (p. ex. $(1,0)$, $d=1$, punt $(0.4,0.6)$). Cal radi $d/\\sqrt2$."
+      },
+      {
+        "fragment": 4,
+        "cita": "sigui quin sigui el domini de $f$",
+        "gravetat": "error",
+        "explicacio": "La caracterització només dona $f^{-1}(V)=U\\cap\\Omega$ amb $U$ obert; cal que $\\Omega$ sigui obert per concloure que és obert de $\\mathbb{R}^2$."
+      },
+      {
+        "fragment": 5,
+        "cita": "Per tant $B$ és un subconjunt obert de $\\mathbb{R}^2$.",
+        "gravetat": "consequencia",
+        "explicacio": "La conclusió és certa però es dedueix de l'argument erroni de [4]."
+      }
+    ],
+    "valoracio": "Radi de la bola incorrecte i ús de la caracterització ignorant el domini."
+  },
+  "t2-14b:normal": {
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "de semieixos $\\sqrt{2n}$ i $\\sqrt{3n}$",
+        "gravetat": "error",
+        "explicacio": "De $\\frac{x^2}{n/2}+\\frac{y^2}{n/3}=1$ els semieixos són $\\sqrt{n/2}$ i $\\sqrt{n/3}$."
+      },
+      {
+        "fragment": 4,
+        "cita": "la unió de qualsevol família de tancats és tancada",
+        "gravetat": "error",
+        "explicacio": "Només la unió finita de tancats és tancada; la unió infinita d'el·lipses no permet concloure res per si sola."
+      }
+    ],
+    "valoracio": "Semieixos incorrectes i ús d'una propietat falsa (unió arbitrària de tancats)."
+  },
+  "t2-16a:normal": {
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$(b_k)$ té una parcial $b_{k_j}\\to b_0\\in B$",
+        "gravetat": "error",
+        "explicacio": "Les parcials s'extreuen independentment: cal extreure-la de $(b_{k_j})_j$ (parcial d'una parcial) perquè els índexs coincideixin."
+      },
+      {
+        "fragment": 4,
+        "cita": "$|d(a,b)-d(a',b')|\\leq d(a,a')\\,d(b,b')$",
+        "gravetat": "error",
+        "explicacio": "La desigualtat triangular dona la suma $d(a,a')+d(b,b')$, no el producte (la del producte és falsa)."
+      }
+    ],
+    "valoracio": "Parcials amb índexs incompatibles i desigualtat triangular amb producte en lloc de suma."
+  },
+  "t2-17a:normal": {
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$\\|(x-p)-p\\|=\\|x\\|<r$",
+        "gravetat": "error",
+        "explicacio": "$\\|(x-p)-p\\|=\\|x-2p\\|$, no $\\|x\\|$; el punt correcte és $p+x$, amb $\\|(p+x)-p\\|=\\|x\\|$."
+      },
+      {
+        "fragment": 4,
+        "cita": "multiplicant per l'escalar $-1$ obtenim $x\\in E$",
+        "gravetat": "error",
+        "explicacio": "$-(x-p)=p-x$, no $x$; cal sumar $p\\in E$ (o restar-lo de $p+x$)."
+      },
+      {
+        "fragment": 5,
+        "cita": "la bola oberta $B(0,r)$, centrada a l'origen i amb el mateix radi $r$, està continguda a $E$",
+        "gravetat": "consequencia",
+        "explicacio": "La conclusió és certa però es basa en [3] i [4], que són erronis."
+      }
+    ],
+    "valoracio": "Translació mal feta i ús erroni de l'estructura de subespai."
+  },
+  "t2-19a:normal": {
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "d'on $\\det A=1$",
+        "gravetat": "error",
+        "explicacio": "$(\\det A)^2=1$ dona $\\det A=\\pm1$ (les simetries tenen determinant $-1$); n'hi ha prou amb $\\det A\\neq0$."
+      },
+      {
+        "fragment": 4,
+        "cita": "\\begin{pmatrix}a^2+c^2&ac+bd\\\\ac+bd&b^2+d^2\\end{pmatrix}",
+        "gravetat": "error",
+        "explicacio": "Amb $A=\\begin{pmatrix}a&c\\\\b&d\\end{pmatrix}$, l'entrada fora de la diagonal de $AA^T$ és $ab+cd$, no $ac+bd$ (aquesta és la de $A^TA$)."
+      }
+    ],
+    "valoracio": "Determinant incorrecte i càlcul erroni de $AA^T$; la continuïtat i la conclusió no se'n ressenten."
+  },
+  "t2-20:normal": {
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "n'hi ha prou que alguna de les dues funcions no sigui fitada",
+        "gravetat": "error",
+        "explicacio": "[1] mostra que és necessari que alguna no sigui fitada, no que sigui suficient (p. ex. $f(x)=x$, $g=1$ dona producte uniformement continu)."
+      },
+      {
+        "fragment": 5,
+        "cita": "=1+\\frac{\\delta^2}{2}\\geq1",
+        "gravetat": "error",
+        "explicacio": "$\\frac\\delta2\\left(\\frac2\\delta+\\frac\\delta2\\right)=1+\\frac{\\delta^2}{4}$, no $1+\\frac{\\delta^2}{2}$ (la conclusió $\\geq1$ es manté)."
+      }
+    ],
+    "valoracio": "Confon condició necessària amb suficient i error aritmètic menor al càlcul final."
+  },
+  "t2-21a:normal": {
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "també $\\overline A\\subseteq B(x,L)$",
+        "gravetat": "error",
+        "explicacio": "L'adherència pot sortir de la bola oberta; el correcte és $\\overline A\\subseteq\\overline B(x,L)$ (tancada), que també dona fitació."
+      },
+      {
+        "fragment": 6,
+        "cita": "la inclusió $\\overline{F(A)}\\subseteq F(\\overline A)$ és vàlida per a qualsevol $A\\subseteq\\mathbb{R}^m$",
+        "gravetat": "error",
+        "explicacio": "Fals: sense fitació $\\overline A$ no és compacte i $F(\\overline A)$ pot no ser tancat (p. ex. $F(x)=e^x$, $A=\\mathbb{R}$: $\\overline{F(A)}=[0,\\infty)\\not\\subseteq(0,\\infty)$)."
+      }
+    ],
+    "valoracio": "Inclusió en la bola oberta injustificada i afirmació final falsa sobre la necessitat de la fitació."
+  },
+  "t2-22:normal": {
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "per ser obert ja no pot ser tancat",
+        "gravetat": "error",
+        "explicacio": "Ser obert no impedeix ser tancat en general (p. ex. $\\varnothing$, $\\mathbb{R}^2$); no és una justificació vàlida."
+      },
+      {
+        "fragment": 5,
+        "cita": "$p_n=\\left(\\frac1n,0\\right)$ són de $f^{-1}(\\{0\\})$",
+        "gravetat": "error",
+        "explicacio": "Aquests punts són de l'eix $OX$, on $f=1+x^2\\neq0$: no són de $f^{-1}(\\{0\\})$. Cal prendre p. ex. $(0,\\frac1n)$."
+      },
+      {
+        "fragment": 6,
+        "cita": "Per tant $f^{-1}(\\{0\\})$ no és tancat i $f$ no és contínua.",
+        "gravetat": "consequencia",
+        "explicacio": "La conclusió és certa, però es basa en la successió errònia de [5]."
+      }
+    ],
+    "valoracio": "Argument obert$\\Rightarrow$no tancat invàlid i successió fora del conjunt."
+  },
+  "t2-23a:normal": {
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "si existeix el límit doble, aleshores existeixen els dos límits iterats i hi coincideixen",
+        "gravetat": "error",
+        "explicacio": "La proposició exigeix com a hipòtesi que existeixin els límits interiors; l'existència del límit doble no garanteix l'existència dels iterats."
+      },
+      {
+        "fragment": 5,
+        "cita": "=\\frac{m}{1+m}$",
+        "gravetat": "error",
+        "explicacio": "$\\frac{mx^2}{x^2+m^2x^2}=\\frac{m}{1+m^2}$, no $\\frac{m}{1+m}$."
+      }
+    ],
+    "valoracio": "Enunciat de la teoria mal citat i càlcul erroni sobre $y=mx$ (la conclusió final és correcta)."
+  }
+}

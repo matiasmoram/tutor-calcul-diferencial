@@ -1,0 +1,66 @@
+[
+ {
+  "font": "problema",
+  "id": "t1-5a",
+  "dificultat": "normal",
+  "fragments": [
+   "Una equivalència són dues implicacions; les estudiem per separat. Suposem primer $A\\cap B\\neq\\emptyset$ i sigui $c\\in A\\cap B$.",
+   "Prenent $a=b=c$, el valor $d(c,c)=0$ pertany al conjunt $\\{d(a,b)\\mid a\\in A,\\ b\\in B\\}$. Com que l'ínfim és una fita superior del conjunt, $d(A,B)\\leq d(c,c)=0$; i com que totes les distàncies són $\\geq 0$, també $d(A,B)\\geq 0$. Per tant $d(A,B)=0$.",
+   "Recíprocament, suposem $d(A,B)=0$. Per la caracterització de l'ínfim, per a tot $\\varepsilon>0$ existeixen $a\\in A$ i $b\\in B$ amb $d(a,b)<\\varepsilon$.",
+   "Això no garanteix que l'ínfim s'assoleixi: hi ha parelles a distància tan petita com vulguem, però potser cap a distància exactament $0$. Busquem, doncs, un contraexemple.",
+   "Prenem $A=\\{0\\}$ i $B=B(0,1)\\setminus\\{0\\}=\\{x\\in\\mathbb{R}^m\\mid 0<\\|x\\|<1\\}$. Tots dos són no buits i $A\\cap B=\\emptyset$, perquè $0\\notin B$.",
+   "Per a tot $k\\geq 2$, el punt $\\frac1k e_1$ és de $B$ (té norma $\\frac1k\\in(0,1)$) i $d(0,\\frac1k e_1)=\\frac1k$. Com que $\\frac1k\\to 0$, existeix un punt $b\\in B$ amb $d(0,b)=0$, i per tant $d(A,B)=0$.",
+   "En conclusió, la implicació $A\\cap B\\neq\\emptyset\\Rightarrow d(A,B)=0$ és certa, però la recíproca és falsa: l'equivalència no és certa en general."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "l'ínfim és una fita superior del conjunt",
+    "tipus": "logica",
+    "explicacio": "L'ínfim és la més gran de les fites inferiors, no una fita superior. És precisament perquè és fita inferior que $d(A,B)\\leq d(c,c)$.",
+    "correccio": "Com que l'ínfim és una fita inferior del conjunt, $d(A,B)\\leq d(c,c)=0$.",
+    "pista": "L'ínfim d'un conjunt de nombres és més petit o més gran que cadascun dels seus elements?"
+   },
+   {
+    "fragment": 6,
+    "cita": "existeix un punt $b\\in B$ amb $d(0,b)=0$",
+    "tipus": "logica",
+    "explicacio": "Que les distàncies $\\frac1k$ tendeixin a $0$ no vol dir que l'ínfim s'assoleixi. De fet $d(0,b)=0$ vol dir $b=0$, i $0\\notin B$: aquest punt no existeix (contradiu $A\\cap B=\\emptyset$). El que es dedueix és $0\\leq d(A,B)\\leq\\frac1k$ per a tot $k\\geq 2$, i per tant $d(A,B)=0$ sense que cap parella estigui a distància $0$.",
+    "correccio": "Com que $d(A,B)\\leq d(0,\\frac1k e_1)=\\frac1k$ per a tot $k\\geq 2$ i $d(A,B)\\geq 0$, fent $k\\to\\infty$ obtenim $d(A,B)=0$.",
+    "pista": "Si existís $b\\in B$ amb $d(0,b)=0$, quin punt seria $b$? Pertany a $B$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-9a",
+  "dificultat": "normal",
+  "fragments": [
+   "($\\Rightarrow$) Suposem $x\\in Fr(A)$. Per definició, per a tot $r>0$ les interseccions $B_r(x)\\cap A$ i $B_r(x)\\cap A^c$ són no buides.",
+   "Per a cada $n\\geq 1$ ho apliquem amb $r=1/n$: triem $x_n\\in B_{1/n}(x)\\cap A$ i $y_n\\in B_{1/n}(x)\\cap A^c$. Així $x_n\\in A$, $y_n\\notin A$, $d(x_n,x)<1/n$ i $d(y_n,x)<1/n$.",
+   "Vegem que $x_n\\to x$. Donat $\\varepsilon>0$, prenem $n_0\\in\\mathbb{N}$ amb $n_0>\\varepsilon$; per a $n\\geq n_0$ tenim $d(x_n,x)<1/n\\leq 1/n_0<\\varepsilon$.",
+   "Exactament igual, de $d(y_n,x)<1/n$ es dedueix $y_n\\to x$. Per tant tenim dues successions amb límit $x$, una de punts d'$A$ i l'altra de punts que no són d'$A$.",
+   "($\\Leftarrow$) Suposem ara que existeixen successions $(x_n)$ i $(y_n)$, ambdues amb límit $x$, amb $x_n\\in A$ i $y_n\\notin A$ per a tot $n$.",
+   "Sigui $r>0$ qualsevol. Com que $x_n\\to x$, tenim $d(x_n,x)<r$ per a tot $n\\in\\mathbb{N}$; en particular $x_1\\in B_r(x)\\cap A$. Anàlogament, com que $y_n\\to x$, existeix $m$ amb $d(y_m,x)<r$, és a dir, $y_m\\in B_r(x)\\cap A^c$. Com que $r>0$ és arbitrari, les dues interseccions són no buides per a tot $r>0$, i per tant $x\\in Fr(A)$.",
+   "Hem demostrat les dues implicacions, i per tant l'equivalència."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "prenem $n_0\\in\\mathbb{N}$ amb $n_0>\\varepsilon$",
+    "tipus": "desigualtat",
+    "explicacio": "De $n_0>\\varepsilon$ no se segueix $1/n_0<\\varepsilon$: amb $\\varepsilon=\\frac12$ i $n_0=1$ es té $n_0>\\varepsilon$ però $1/n_0=1>\\varepsilon$. Cal $n_0>1/\\varepsilon$.",
+    "correccio": "Prenem $n_0\\in\\mathbb{N}$ amb $n_0>1/\\varepsilon$, de manera que $1/n_0<\\varepsilon$.",
+    "pista": "Si $\\varepsilon=\\frac12$ i $n_0=1$, és cert que $1/n_0<\\varepsilon$? Quina condició sobre $n_0$ garanteix aquesta desigualtat?"
+   },
+   {
+    "fragment": 6,
+    "cita": "tenim $d(x_n,x)<r$ per a tot $n\\in\\mathbb{N}$",
+    "tipus": "logica",
+    "explicacio": "La convergència $x_n\\to x$ només garanteix $d(x_n,x)<r$ a partir d'un cert índex $n_0$, no per a tot $n$. En particular és fals que $x_1\\in B_r(x)$ per a tot $r>0$: això obligaria $x_1=x$. Per exemple, a $\\mathbb{R}$ amb $x=0$ i $x_n=1/n$, per a $r=\\frac12$ tenim $d(x_1,0)=1\\geq r$.",
+    "correccio": "Com que $x_n\\to x$, existeix $n_0$ tal que $d(x_n,x)<r$ per a tot $n\\geq n_0$; en particular $x_{n_0}\\in B_r(x)\\cap A$.",
+    "pista": "Què diu exactament la definició de $x_n\\to x$: que tots els termes són a prop de $x$, o que ho són a partir d'un cert índex?"
+   }
+  ]
+ }
+]

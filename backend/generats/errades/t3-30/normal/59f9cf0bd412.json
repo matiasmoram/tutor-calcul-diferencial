@@ -1,0 +1,60 @@
+{
+  "id": "59f9cf0bd412",
+  "exercici": "t3-30",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Escrivim $\\varphi(x)=\\displaystyle\\int_0^x g(\\xi,x)\\,d\\xi$ amb $g(\\xi,x)=f(\\xi)\\sin(x-\\xi)$. Com que $f$ és contínua, $g$ és de classe $\\mathcal{C}^1$ a $\\mathbb{R}^2$, i per tant es pot aplicar la regla de Leibniz.",
+    "Per Leibniz, $\\varphi'(x)=g(x,x)\\cdot1+\\displaystyle\\int_0^x\\frac{\\partial g}{\\partial x}(\\xi,x)\\,d\\xi=f(x)\\sin0+\\int_0^xf(\\xi)\\cos(x-\\xi)\\,d\\xi=\\int_0^xf(\\xi)\\cos(x-\\xi)\\,d\\xi$.",
+    "Per a la segona derivada apliquem el mateix a $h(\\xi,x)=f(\\xi)\\cos(x-\\xi)$, amb $\\dfrac{\\partial h}{\\partial x}(\\xi,x)=-f(\\xi)\\sin(x-\\xi)$.",
+    "Així $\\varphi''(x)=f(x)\\cos0+\\displaystyle\\int_0^xf(\\xi)\\big(-\\sin(x-\\xi)\\big)\\,d\\xi=f(x)-\\varphi(x)$.",
+    "Ho comprovem de manera elemental: com que $\\sin(x-\\xi)=\\sin x\\cos\\xi-\\cos x\\sin\\xi$, $\\varphi(x)=\\sin x\\,A(x)-\\cos x\\,B(x)$ amb $A(x)=\\displaystyle\\int_0^xf(\\xi)\\cos\\xi\\,d\\xi$ i $B(x)=\\displaystyle\\int_0^xf(\\xi)\\sin\\xi\\,d\\xi$, que pel teorema fonamental del càlcul ($f$ contínua) compleixen $A'(x)=f(x)\\cos x$ i $B'(x)=f(x)\\sin x$.",
+    "Llavors $\\varphi'=\\cos x\\,A+\\sin x\\,B+f(x)(\\sin x\\cos x-\\cos x\\sin x)=\\cos x\\,A+\\sin x\\,B$ i $\\varphi''=-\\sin x\\,A+\\cos x\\,B+f(x)(\\cos^2x+\\sin^2x)=f(x)-\\varphi(x)$, com abans.",
+    "Per tant $\\varphi''(x)+\\varphi(x)=f(x)$ per a tot $x\\in\\mathbb{R}$, i $\\varphi$ és l'única funció dues vegades derivable que satisfà aquesta equació."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "Com que $f$ és contínua, $g$ és de classe $\\mathcal{C}^1$ a $\\mathbb{R}^2$",
+      "inici": 93,
+      "fi": 167,
+      "tipus": "hipotesi",
+      "explicacio": "Si $f$ només és contínua, $g(\\xi,x)=f(\\xi)\\sin(x-\\xi)$ pot no tenir derivada respecte de $\\xi$ (hi apareixeria $f'$), així que no té per què ser $\\mathcal{C}^1$.",
+      "correccio": "$g$ no és necessàriament $\\mathcal{C}^1$, però $g$ i $\\dfrac{\\partial g}{\\partial x}=f(\\xi)\\cos(x-\\xi)$ són contínues, que és el que fa servir la demostració de Leibniz (o bé es fa la comprovació elemental amb el teorema fonamental del càlcul).",
+      "pista": "Per ser $\\mathcal{C}^1$, $g$ ha de tenir parcials contínues respecte de les dues variables. Existeix sempre la parcial respecte de $\\xi$ si $f$ només és contínua?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "$\\varphi$ és l'única funció dues vegades derivable que satisfà aquesta equació",
+      "inici": 70,
+      "fi": 148,
+      "tipus": "conclusio",
+      "explicacio": "L'equació no té solució única: $\\varphi+c_1\\cos x+c_2\\sin x$ també la satisfà per a qualssevol $c_1,c_2$. El que s'ha provat és només que $\\varphi$ n'és una solució.",
+      "correccio": "$\\varphi''+\\varphi=f$ per a tot $x\\in\\mathbb{R}$; $\\varphi$ és una solució (la que compleix $\\varphi(0)=\\varphi'(0)=0$), no l'única.",
+      "pista": "Si a $\\varphi$ li sumes $\\cos x$, continua complint l'equació?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3b.json",
+    "valoracio": "Els càlculs de $\\varphi'$ i $\\varphi''$ són correctes, però la justificació $\\mathcal{C}^1$ és falsa i s'afirma una unicitat falsa.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "Com que $f$ és contínua, $g$ és de classe $\\mathcal{C}^1$ a $\\mathbb{R}^2$",
+        "gravetat": "error",
+        "explicacio": "$f$ contínua no fa $g(\\xi,x)=f(\\xi)\\sin(x-\\xi)$ de classe $\\mathcal{C}^1$ ($\\partial g/\\partial\\xi$ pot no existir); només $g$ i $\\partial g/\\partial x$ són contínues."
+      },
+      {
+        "fragment": 7,
+        "cita": "$\\varphi$ és l'única funció dues vegades derivable que satisfà aquesta equació",
+        "gravetat": "error",
+        "explicacio": "Fals: $\\varphi+c_1\\cos x+c_2\\sin x$ també la satisfà; no hi ha unicitat sense condicions inicials."
+      }
+    ]
+  },
+  "creat": 1791299348.7130253
+}

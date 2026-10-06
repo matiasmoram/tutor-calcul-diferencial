@@ -1,0 +1,60 @@
+{
+  "id": "c3e225dff6b7",
+  "exercici": "t3-20",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Les funcions $g(u,v)=uv^2+\\sin(uv)$, $u(x,y,z)=xe^y$ i $v(x,y,z)=xy-z$ tenen derivades parcials contínues a tot l'espai, per tant són diferenciables, i per la regla de la cadena $f=g\\circ(u,v)$ també ho és.",
+    "Les parcials de $g$ són $\\dfrac{\\partial g}{\\partial u}=v^2+\\cos(uv)$ i $\\dfrac{\\partial g}{\\partial v}=2uv+u\\cos(uv)$.",
+    "Les parcials de les funcions interiors són $u_x=e^y$, $u_y=xe^y$, $u_z=0$ i $v_x=y$, $v_y=x$, $v_z=-1$.",
+    "Per la regla de la cadena, $\\dfrac{\\partial f}{\\partial x}=\\dfrac{\\partial g}{\\partial u}\\,u_x+\\dfrac{\\partial g}{\\partial v}\\,v_x=\\dfrac{\\partial g}{\\partial u}\\,e^y+\\dfrac{\\partial g}{\\partial v}\\,y$.",
+    "Respecte de $y$: $\\dfrac{\\partial f}{\\partial y}=\\dfrac{\\partial g}{\\partial u}\\,xe^y+\\dfrac{\\partial g}{\\partial v}\\,y$.",
+    "Respecte de $z$: $\\dfrac{\\partial f}{\\partial z}=\\dfrac{\\partial g}{\\partial u}\\cdot0+\\dfrac{\\partial g}{\\partial v}\\cdot(-1)=-\\dfrac{\\partial g}{\\partial v}$.",
+    "En les tres fórmules, les parcials de $g$ s'avaluen al punt $(u,v)=(xe^y,xy-z)$. Per exemple, $\\dfrac{\\partial f}{\\partial z}=-2xe^y(xy-z)-xe^y\\cos\\big(xe^y(xy-z)\\big)$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$\\dfrac{\\partial g}{\\partial u}=v^2+\\cos(uv)$",
+      "inici": 24,
+      "fi": 69,
+      "tipus": "calcul",
+      "explicacio": "En derivar $\\sin(uv)$ respecte de $u$ falta el factor $v$ de la derivada interior: $\\dfrac{\\partial}{\\partial u}\\sin(uv)=v\\cos(uv)$.",
+      "correccio": "$\\dfrac{\\partial g}{\\partial u}=v^2+v\\cos(uv)$.",
+      "pista": "Quina és la derivada de $uv$ respecte de $u$, amb $v$ fixa?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "Respecte de $y$: $\\dfrac{\\partial f}{\\partial y}=\\dfrac{\\partial g}{\\partial u}\\,xe^y+\\dfrac{\\partial g}{\\partial v}\\,y$",
+      "inici": 0,
+      "fi": 120,
+      "tipus": "calcul",
+      "explicacio": "El segon terme ha de portar $v_y=x$, no $y$ (que és $v_x$): $\\dfrac{\\partial}{\\partial y}(xy-z)=x$.",
+      "correccio": "$\\dfrac{\\partial f}{\\partial y}=\\dfrac{\\partial g}{\\partial u}\\,xe^y+\\dfrac{\\partial g}{\\partial v}\\,x$.",
+      "pista": "Quant val la derivada de $v=xy-z$ respecte de $y$? És el factor que acompanya $\\dfrac{\\partial g}{\\partial v}$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3b.json",
+    "valoracio": "Estructura correcta, però $g_u$ està mal calculada i a $\\partial f/\\partial y$ s'usa $v_y=y$ en lloc de $x$.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$\\dfrac{\\partial g}{\\partial u}=v^2+\\cos(uv)$",
+        "gravetat": "error",
+        "explicacio": "La derivada de $\\sin(uv)$ respecte de $u$ és $v\\cos(uv)$: $g_u=v^2+v\\cos(uv)$."
+      },
+      {
+        "fragment": 5,
+        "cita": "\\dfrac{\\partial g}{\\partial v}\\,y$",
+        "gravetat": "error",
+        "explicacio": "$v_y=x$ (calculat al fragment 3), així que el segon terme ha de ser $\\frac{\\partial g}{\\partial v}\\,x$, no $\\frac{\\partial g}{\\partial v}\\,y$."
+      }
+    ]
+  },
+  "creat": 1791299348.7055993
+}

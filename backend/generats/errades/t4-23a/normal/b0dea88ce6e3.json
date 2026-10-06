@@ -1,0 +1,58 @@
+{
+  "id": "b0dea88ce6e3",
+  "exercici": "t4-23a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $p=(p_1,p_2,p_3)$ amb $F(p)=0$. Per hipòtesi, $F$ és de classe $\\mathcal{C}^1$ i les tres derivades parcials de $F$ són no nul·les en $p$.",
+    "Com que $\\frac{\\partial F}{\\partial z}(p)\\neq0$ (és el determinant $1\\times1$ que demana el teorema), el teorema de la funció implícita dona una funció $Z$ de classe $\\mathcal{C}^1$ definida a tot $\\mathbb{R}^2$, amb $Z(p_1,p_2)=p_3$ i $F(x,y,Z(x,y))=0$.",
+    "Per aïllar $x$, considerem $\\tilde F(y,z,x)=F(x,y,z)$, que també és de classe $\\mathcal{C}^1$, i apliquem el teorema prenent $x$ com a variable a aïllar. Com que $\\frac{\\partial F}{\\partial y}(p)\\neq0$, existeix $X$ de classe $\\mathcal{C}^1$ en un entorn de $(p_2,p_3)$ amb $X(p_2,p_3)=p_1$ i $F(X(y,z),y,z)=0$.",
+    "Anàlogament, com que $\\frac{\\partial F}{\\partial y}(p)\\neq0$, existeix $Y$ de classe $\\mathcal{C}^1$ en un entorn de $(p_1,p_3)$ amb $Y(p_1,p_3)=p_2$ i $F(x,Y(x,z),z)=0$.",
+    "Les funcions $X,Y,Z$ són de classe $\\mathcal{C}^1$ i, per tant, diferenciables. Així, en un entorn de $p$ cadascuna de les variables $x,y,z$ s'escriu en funció de les altres dues."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$Z$ de classe $\\mathcal{C}^1$ definida a tot $\\mathbb{R}^2$",
+      "inici": 152,
+      "fi": 211,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "El teorema de la funció implícita és local: dona $Z$ definida només en un entorn de $(p_1,p_2)$, no a tot el pla.",
+      "correccio": "Una funció $Z$ de classe $\\mathcal{C}^1$ definida en un entorn de $(p_1,p_2)$.",
+      "pista": "El teorema de la funció implícita assegura l'existència de $Z$ a tot arreu o només a prop d'un punt?"
+    },
+    {
+      "id": "e2",
+      "fragment": 3,
+      "cita": "Com que $\\frac{\\partial F}{\\partial y}(p)\\neq0$, existeix $X$",
+      "inici": 154,
+      "fi": 215,
+      "tipus": "hipotesi",
+      "explicacio": "Per aïllar $x$ cal que la derivada respecte de la variable aïllada sigui no nul·la: $\\frac{\\partial\\tilde F}{\\partial x}=\\frac{\\partial F}{\\partial x}(p)\\neq0$. La derivada respecte de $y$ no és la hipòtesi pertinent.",
+      "correccio": "Com que $\\frac{\\partial F}{\\partial x}(p)\\neq0$, existeix $X$ de classe $\\mathcal{C}^1$ en un entorn de $(p_2,p_3)$.",
+      "pista": "Respecte de quina variable ha de ser no nul·la la derivada quan vols aïllar $x$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4b.json",
+    "valoracio": "L'esquema és correcte però el domini de $Z$ s'exagera a tot $\\mathbb{R}^2$ i per aïllar $x$ s'invoca la derivada parcial equivocada.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "definida a tot $\\mathbb{R}^2$",
+        "gravetat": "error",
+        "explicacio": "El TFI només dona $Z$ en un entorn de $(p_1,p_2)$, no a tot $\\mathbb{R}^2$."
+      },
+      {
+        "fragment": 3,
+        "cita": "Com que $\\frac{\\partial F}{\\partial y}(p)\\neq0$, existeix $X$",
+        "gravetat": "error",
+        "explicacio": "Per aïllar $x$ la hipòtesi necessària és $\\frac{\\partial F}{\\partial x}(p)\\neq0$, no la derivada respecte de $y$."
+      }
+    ]
+  },
+  "creat": 1791299408.5615556
+}

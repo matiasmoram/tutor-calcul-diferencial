@@ -1,0 +1,59 @@
+{
+  "id": "fa6f1daf5e51",
+  "exercici": "t5-12b",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Per l'apartat anterior, $f_x=3xy^2(xy-2)$ i $f_y=3x^2y(xy-2)$, i els punts crítics de $f$ són els dels eixos ($xy=0$) i els de la hipèrbola $xy=2$.",
+    "Si $xy=2$, aleshores $|x|\\geq2$ o $|y|\\geq2$, de manera que $x^2+y^2\\geq4>1$ i cap punt de la hipèrbola és a la bola. Els punts crítics de $B(\\mathbf{0},1)$ són, doncs, $(x,0)$ amb $|x|<1$ i $(0,y)$ amb $|y|<1$, on $f$ val $0$.",
+    "Escrivim $f$ en funció de $t=xy$: $f(x,y)=-3t^2+t^3=t^2(t-3)$.",
+    "A la bola, $|xy|\\leq\\frac12(x^2+y^2)<\\frac12$, així que $t-3<0$ i $f=t^2(t-3)\\leq0$, amb igualtat si i només si $t=xy=0$.",
+    "Sigui $p$ un punt d'un eix dins la bola, on $f(p)=0$. Com que la bola és oberta, existeix $\\epsilon>0$ amb $B(p,\\epsilon)\\subseteq B(\\mathbf{0},1)$, i es té $f(x,y)\\leq0=f(p)$ per a tot $(x,y)\\in B(p,\\epsilon)$: $p$ és un màxim local.",
+    "Aquests màxims no són estrictes, perquè $f=0$ en tots els punts de l'eix propers a $p$; l'única excepció és l'origen, que és un màxim local estricte."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "aleshores $|x|\\geq2$ o $|y|\\geq2$",
+      "inici": 11,
+      "fi": 44,
+      "tipus": "desigualtat",
+      "explicacio": "És fals: $(\\sqrt2,\\sqrt2)$ és de la hipèrbola i té les dues coordenades menors que $2$. El que sí que és cert és $x^2+y^2\\geq2|xy|=4$.",
+      "correccio": "Si $xy=2$, aleshores $x^2+y^2\\geq2|xy|=4>1$.",
+      "pista": "El punt $(\\sqrt2,\\sqrt2)$, és de la hipèrbola? Quines coordenades té?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "l'única excepció és l'origen, que és un màxim local estricte",
+      "inici": 88,
+      "fi": 148,
+      "tipus": "conclusio",
+      "explicacio": "L'origen també és dels eixos: $f(x,0)=0=f(0,0)$ per a tot $x$, així que en tot entorn de l'origen hi ha altres punts amb el mateix valor i el màxim no és estricte.",
+      "correccio": "Cap d'aquests màxims és estricte, tampoc el de l'origen, perquè $f$ és constantment $0$ sobre els eixos.",
+      "pista": "Quant val $f$ als punts $(x,0)$ propers a l'origen?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t56.json",
+    "valoracio": "Justificació falsa per descartar la hipèrbola i afirmació falsa que l'origen és màxim estricte.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "Si $xy=2$, aleshores $|x|\\geq2$ o $|y|\\geq2$",
+        "gravetat": "error",
+        "explicacio": "Fals: $(\\sqrt2,\\sqrt2)$ compleix $xy=2$ amb $|x|,|y|<2$. La justificació correcta és $x^2+y^2\\geq2|xy|=4$."
+      },
+      {
+        "fragment": 6,
+        "cita": "l'única excepció és l'origen, que és un màxim local estricte",
+        "gravetat": "error",
+        "explicacio": "L'origen és als dos eixos i $f=0$ en tots ells: tota bola centrada a l'origen conté punts amb $f=f(0,0)$, de manera que tampoc és estricte."
+      }
+    ]
+  },
+  "creat": 1791299721.5565007
+}

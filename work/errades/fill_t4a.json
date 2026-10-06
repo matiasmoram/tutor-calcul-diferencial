@@ -1,0 +1,353 @@
+[
+ {
+  "font": "problema",
+  "id": "t4-2",
+  "dificultat": "normal",
+  "fragments": [
+   "Per $y\\neq 0$ la funció és $f(x,y)=xy^2\\sin(1/y)$ i, derivant, $f_x(x,y)=y^2\\sin(1/y)$ i $f_y(x,y)=2xy\\sin(1/y)-x\\cos(1/y)$.",
+   "Sobre l'eix $y=0$ la fórmula anterior no val i cal anar a la definició. Com que $f(x+h,0)=0$ per a tot $h$, tenim $f_x(x,0)=0$.",
+   "També $f_y(x,0)=\\lim_{k\\to 0}\\frac{f(x,k)-f(x,0)}{k}=\\lim_{k\\to 0}\\frac{xk^2\\sin(1/k)}{k}=\\lim_{k\\to 0}xk\\sin(1/k)=0$, ja que $\\sin(1/k)\\to 0$ quan $k\\to 0$.",
+   "Derivada creuada $\\frac{\\partial}{\\partial y}(f_x)$ a l'origen: $\\lim_{k\\to 0}\\frac{f_x(0,k)-f_x(0,0)}{k}=\\lim_{k\\to 0}\\frac{k^2\\sin(1/k)}{k}=\\lim_{k\\to 0}k\\sin(1/k)=0$, perquè $|k\\sin(1/k)|\\le|k|$.",
+   "Derivada creuada $\\frac{\\partial}{\\partial x}(f_y)$ a l'origen: $\\lim_{h\\to 0}\\frac{f_y(h,0)-f_y(0,0)}{h}=\\lim_{h\\to 0}\\frac{0-0}{h}=0$. Per tant les dues derivades creuades coincideixen a $(0,0)$ i hi valen $0$.",
+   "Per veure si se satisfà la hipòtesi de Schwarz, calculem les creuades fora de l'eix: per $y\\neq 0$, $\\frac{\\partial}{\\partial y}(f_x)=2y\\sin(1/y)-\\cos(1/y)$ i $\\frac{\\partial}{\\partial x}(f_y)=2y\\sin(1/y)-\\cos(1/y)$.",
+   "Sobre els punts $(0,1/(n\\pi))\\to(0,0)$ aquestes derivades valen $-\\cos(n\\pi)=(-1)^{n+1}$, que no té límit. Per tant cap de les dues creuades és contínua a $(0,0)$, l'únic punt del pla on deixen de ser contínues, i la hipòtesi del teorema de Schwarz no se satisfà."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "ja que $\\sin(1/k)\\to 0$ quan $k\\to 0$",
+    "tipus": "logica",
+    "explicacio": "$\\sin(1/k)$ no té límit quan $k\\to 0$ (oscil·la entre $-1$ i $1$). El límit és $0$ per una altra raó: és el producte d'una funció fitada per $xk\\to 0$.",
+    "correccio": "$\\lim_{k\\to 0}xk\\sin(1/k)=0$ perquè $|xk\\sin(1/k)|\\le|x|\\,|k|\\to 0$ (fitada per una que tendeix a $0$).",
+    "pista": "Què fa $\\sin(1/k)$ quan $k$ s'acosta a $0$? Quin és realment el motiu que el producte tendeixi a $0$?"
+   },
+   {
+    "fragment": 7,
+    "cita": "l'únic punt del pla on deixen de ser contínues",
+    "tipus": "conclusio",
+    "explicacio": "Les creuades no són contínues en cap punt de l'eix $y=0$: a prop de $(x_0,0)$ valen $2y\\sin(1/y)-\\cos(1/y)$ (que no depèn de $x$), i sobre $(x_0,1/(n\\pi))$ valen $(-1)^{n+1}$, sense límit.",
+    "correccio": "Cap de les dues creuades és contínua a $(0,0)$ (de fet, en cap punt de l'eix $y=0$), i la hipòtesi del teorema de Schwarz no se satisfà.",
+    "pista": "Si en comptes d'acostar-te a $(0,0)$ t'acostes a $(x_0,0)$ per punts $(x_0,1/(n\\pi))$, què valen les creuades?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-3",
+  "dificultat": "normal",
+  "fragments": [
+   "Com que $G$ és de classe $\\mathcal{C}^\\infty$ i $f$ és de classe $\\mathcal{C}^2$, la composició $F=f\\circ G$ és de classe $\\mathcal{C}^\\infty$ i podem aplicar la regla de la cadena tantes vegades com calgui.",
+   "La jacobiana del canvi és $JG=\\begin{pmatrix}\\cos\\varphi&-r\\sin\\varphi\\\\ \\sin\\varphi&r\\cos\\varphi\\end{pmatrix}$, de manera que, amb $f_x,f_y$ avaluades en $G(r,\\varphi)$, $F_r=\\cos\\varphi\\,f_x+\\sin\\varphi\\,f_y$ i $F_\\varphi=-r\\sin\\varphi\\,f_x+r\\cos\\varphi\\,f_y$.",
+   "Per tornar a derivar cal tenir en compte que $f_x$ i $f_y$ també estan avaluades en $G(r,\\varphi)$: per la regla de la cadena, $\\partial_r(f_x\\circ G)=\\cos\\varphi\\,f_{xx}+\\sin\\varphi\\,f_{xy}$, $\\partial_r(f_y\\circ G)=\\cos\\varphi\\,f_{yx}+\\sin\\varphi\\,f_{yy}$, $\\partial_\\varphi(f_x\\circ G)=-r\\sin\\varphi\\,f_{xx}+r\\cos\\varphi\\,f_{xy}$ i $\\partial_\\varphi(f_y\\circ G)=-r\\sin\\varphi\\,f_{yx}+r\\cos\\varphi\\,f_{yy}$.",
+   "Com que existeixen totes les derivades segones de $f$, el teorema de Schwarz dona $f_{xy}=f_{yx}$, i llavors $F_{rr}=\\cos^2\\varphi\\,f_{xx}+2\\sin\\varphi\\cos\\varphi\\,f_{xy}+\\sin^2\\varphi\\,f_{yy}$.",
+   "Derivant $F_\\varphi$ respecte de $\\varphi$ amb la regla del producte, $F_{\\varphi\\varphi}=-r\\cos\\varphi\\,f_x-r\\sin\\varphi\\,f_y-r\\sin\\varphi\\,\\partial_\\varphi(f_x\\circ G)+r\\cos\\varphi\\,\\partial_\\varphi(f_y\\circ G)$, és a dir, $F_{\\varphi\\varphi}=r^2\\sin^2\\varphi\\,f_{xx}-2r^2\\sin\\varphi\\cos\\varphi\\,f_{xy}+r^2\\cos^2\\varphi\\,f_{yy}-rF_r$.",
+   "Per $r\\neq 0$, dividint per $r^2$: $\\frac{1}{r^2}F_{\\varphi\\varphi}=\\sin^2\\varphi\\,f_{xx}-2\\sin\\varphi\\cos\\varphi\\,f_{xy}+\\cos^2\\varphi\\,f_{yy}-\\frac{1}{r}F_r$.",
+   "Sumant $F_{rr}+\\frac{1}{r^2}F_{\\varphi\\varphi}+\\frac{1}{r}F_r$, els termes en $f_{xy}$ i els termes en $F_r$ es cancel·len i queda $(\\cos^2\\varphi+\\sin^2\\varphi)(f_{xx}+f_{yy})=(f_{xx}+f_{yy})\\circ G$, per a $r\\neq 0$, que és l'expressió del laplacià en polars."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "la composició $F=f\\circ G$ és de classe $\\mathcal{C}^\\infty$",
+    "tipus": "conclusio",
+    "explicacio": "La composició només hereta la regularitat menor: $F$ és de classe $\\mathcal{C}^2$, no $\\mathcal{C}^\\infty$ (p. ex. $f(x,y)=|x|^3$ és $\\mathcal{C}^2$ i $F(r,0)=|r|^3$ no és $\\mathcal{C}^3$).",
+    "correccio": "$F=f\\circ G$ és de classe $\\mathcal{C}^2$, que és suficient per derivar-la dues vegades amb la regla de la cadena.",
+    "pista": "Si $f$ només és $\\mathcal{C}^2$, quantes derivades contínues pot tenir garantides $f\\circ G$?"
+   },
+   {
+    "fragment": 4,
+    "cita": "Com que existeixen totes les derivades segones de $f$, el teorema de Schwarz dona $f_{xy}=f_{yx}$",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "L'existència de les derivades segones no basta per a la igualtat de les creuades; el teorema de Schwarz demana que siguin contínues.",
+    "correccio": "Com que $f$ és de classe $\\mathcal{C}^2$ (derivades segones contínues), el teorema de Schwarz dona $f_{xy}=f_{yx}$.",
+    "pista": "Quina hipòtesi sobre les derivades segones demana el teorema de Schwarz? N'hi ha prou que existeixin?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-4",
+  "dificultat": "normal",
+  "fragments": [
+   "Escrivim $\\varphi(x,t)=f(u)+g(w)$ amb $u=x-ct$ i $w=x+ct$. Per poder aplicar la regla de la cadena dues vegades cal que $f$ i $g$ siguin de classe $\\mathcal{C}^2$, i això ja ho tenim perquè són dues vegades diferenciables.",
+   "Derivant respecte de $t$, com que $\\frac{\\partial u}{\\partial t}=-c$ i $\\frac{\\partial w}{\\partial t}=c$, obtenim $\\varphi_t=-c\\,f'(x-ct)+c\\,g'(x+ct)$.",
+   "Com que $f'$ i $g'$ són derivables, tornant a derivar respecte de $t$: $\\varphi_{tt}=(-c)^2f''(x-ct)+c^2g''(x+ct)=c^2f''(x-ct)+c^2g''(x+ct)$.",
+   "Derivant respecte de $x$, amb $\\frac{\\partial u}{\\partial x}=\\frac{\\partial w}{\\partial x}=1$: $\\varphi_x=f'(x-ct)+g'(x+ct)$ i $\\varphi_{xx}=f''(x-ct)+g''(x+ct)$.",
+   "Per tant $\\frac{1}{c^2}\\varphi_{tt}-\\varphi_{xx}=f''(x-ct)+g''(x+ct)-f''(x-ct)-g''(x+ct)=0$ per a tot $(x,t)\\in\\mathbb{R}^2$.",
+   "Observem que aquí és imprescindible que $c>0$: si fos $c<0$, la funció $\\varphi$ ja no satisfaria l'equació d'ones."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "cal que $f$ i $g$ siguin de classe $\\mathcal{C}^2$, i això ja ho tenim perquè són dues vegades diferenciables",
+    "tipus": "hipotesi",
+    "explicacio": "Dues vegades diferenciable no implica $\\mathcal{C}^2$ ($f''$ pot no ser contínua, p. ex. $x^4\\sin(1/x)$). A més, la regla de la cadena només demana diferenciabilitat, no continuïtat de les derivades.",
+    "correccio": "La regla de la cadena només necessita que les funcions siguin diferenciables: com que $f,g$ i $f',g'$ són derivables, es pot aplicar dues vegades.",
+    "pista": "Ser dues vegades derivable garanteix que $f''$ sigui contínua? I la regla de la cadena, què demana realment?"
+   },
+   {
+    "fragment": 6,
+    "cita": "si fos $c<0$, la funció $\\varphi$ ja no satisfaria l'equació d'ones",
+    "tipus": "conclusio",
+    "explicacio": "El càlcul només ha usat $c\\neq 0$ (perquè $\\frac{1}{c^2}$ tingui sentit) i que $(-c)^2=c^2$; per a $c<0$ val exactament igual.",
+    "correccio": "El resultat només necessita $c\\neq 0$; la condició $c>0$ no intervé en el càlcul.",
+    "pista": "En quin pas del càlcul has fet servir que $c$ és positiu i no només que és diferent de $0$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-5c",
+  "dificultat": "normal",
+  "fragments": [
+   "El domini $\\mathbb{R}^2\\setminus\\{(0,0)\\}$ és obert i $G(x,y)=(x^2-y^2,xy)$ té components polinòmiques, per tant $G$ és de classe $\\mathcal{C}^\\infty$.",
+   "La jacobiana és $JG(x,y)=\\begin{pmatrix}2x&-2y\\\\ y&x\\end{pmatrix}$, amb $\\det JG(x,y)=2x^2+2y^2$, que només s'anul·la a $(0,0)$, punt que no és del domini. Per tant $G$ satisfà les hipòtesis del teorema de la funció inversa a tot punt del domini.",
+   "Tanmateix, $G(-x,-y)=\\big((-x)^2-(-y)^2,(-x)(-y)\\big)=G(x,y)$, i $(-x,-y)\\neq(x,y)$ perquè $(x,y)\\neq(0,0)$. Així $G$ no és injectiva i no té inversa global; el teorema només en dona inverses locals.",
+   "Imatge. Si $G(x,y)=(0,0)$, aleshores $xy=0$ i $x^2=y^2$; de $xy=0$ obtenim $x=0$, i llavors $y^2=0$, és a dir $y=0$. Com que $(0,0)$ no és del domini, l'origen no és a la imatge.",
+   "En polars, $G(\\rho\\cos\\theta,\\rho\\sin\\theta)=\\big(\\rho^2(\\cos^2\\theta-\\sin^2\\theta),\\rho^2\\sin\\theta\\cos\\theta\\big)$, és a dir, $G(\\rho\\cos\\theta,\\rho\\sin\\theta)=\\rho^2(\\cos 2\\theta,\\sin 2\\theta)$, que, en variar $\\rho>0$ i $\\theta$, recorre tot el pla menys l'origen.",
+   "Rigorosament: donat $(u,v)\\neq(0,0)$, el nombre complex $w=u+2iv$ és no nul i té una arrel quadrada $z=x+iy\\neq 0$; de $z^2=w$ surt $x^2-y^2=u$ i $2xy=2v$, és a dir, $G(x,y)=(u,v)$ amb $(x,y)\\neq(0,0)$.",
+   "Per tant la imatge de $G$ és $\\mathbb{R}^2\\setminus\\{(0,0)\\}$. Com que $G$ no és injectiva (cada punt de la imatge té almenys les dues antiimatges $(x,y)$ i $(-x,-y)$), no existeix $G^{-1}$."
+  ],
+  "errors": [
+   {
+    "fragment": 4,
+    "cita": "de $xy=0$ obtenim $x=0$",
+    "tipus": "logica",
+    "explicacio": "$xy=0$ vol dir $x=0$ o $y=0$; s'ha oblidat el cas $y=0$ (que, amb $x^2=y^2$, també dona $x=0$).",
+    "correccio": "De $xy=0$, $x=0$ o $y=0$; en tots dos casos $x^2=y^2$ obliga l'altra coordenada a ser $0$, així que $x=y=0$.",
+    "pista": "Quan un producte de dos nombres és $0$, quines possibilitats hi ha?"
+   },
+   {
+    "fragment": 5,
+    "cita": "$G(\\rho\\cos\\theta,\\rho\\sin\\theta)=\\rho^2(\\cos 2\\theta,\\sin 2\\theta)$",
+    "tipus": "calcul",
+    "explicacio": "$\\sin\\theta\\cos\\theta=\\tfrac12\\sin 2\\theta$, no $\\sin 2\\theta$: la segona component és $\\tfrac12\\rho^2\\sin 2\\theta$.",
+    "correccio": "$G(\\rho\\cos\\theta,\\rho\\sin\\theta)=\\rho^2\\big(\\cos 2\\theta,\\tfrac12\\sin 2\\theta\\big)$, que també recorre tot el pla menys l'origen.",
+    "pista": "Quina és la fórmula de l'angle doble per al sinus? Quant val exactament $\\sin\\theta\\cos\\theta$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-6c",
+  "dificultat": "normal",
+  "fragments": [
+   "Sigui $B=\\{(s,t)\\in\\mathbb{R}^2\\mid s>0,\\ 0<t<2\\pi\\}$, que és obert. Sabem que $G\\in\\mathcal{C}^\\infty(\\mathbb{R}^2)$ i, per l'apartat (a), $\\det JG(s,t)=\\sinh^2s+\\sin^2t>0$ a tot $B$. Falta veure que $G|_B$ és injectiva.",
+   "Sigui $(x,y)=G(s,t)$ amb $(s,t)\\in B$. Com que $\\cosh s>0$ i $\\sinh s>0$, tenim $\\cos t=\\frac{x}{\\cosh s}$ i $\\sin t=\\frac{y}{\\sinh s}$, i per tant $\\frac{x^2}{\\cosh^2s}+\\frac{y^2}{\\sinh^2s}=1$.",
+   "A més, $(x,y)\\neq(0,0)$: si $x=0$, aleshores $\\cos t=0$, $|\\sin t|=1$ i $|y|=\\sinh s>0$.",
+   "Considerem $\\phi(\\sigma)=\\frac{x^2}{\\cosh^2\\sigma}+\\frac{y^2}{\\sinh^2\\sigma}$ per a $\\sigma>0$. Com que $\\cosh$ i $\\sinh$ són positives i estrictament creixents a $(0,\\infty)$, i $x$ o $y$ és no nul, $\\phi$ és estrictament creixent a $(0,\\infty)$.",
+   "Per tant l'equació $\\phi(\\sigma)=1$ té com a única solució $\\sigma=s$: el punt $(x,y)$ determina $s$.",
+   "Un cop fixat $s$, la igualtat $\\cos t=\\frac{x}{\\cosh s}$ determina $t$ de manera única a l'interval $(0,2\\pi)$. Així, si $G(s,t)=G(s',t')$ amb $(s,t),(s',t')\\in B$, aleshores $s=s'$ i $t=t'$: $G|_B$ és injectiva.",
+   "Per tant $G:B\\to G(B)$ és bijectiva; $G(B)$ és obert pel teorema de l'aplicació oberta, i la inversa és de classe $\\mathcal{C}^\\infty$ perquè, entorn de cada punt de $G(B)$, coincideix amb la inversa local que dona el teorema de la funció inversa. Així $G|_B$ té inversa global de classe $\\mathcal{C}^\\infty$."
+  ],
+  "errors": [
+   {
+    "fragment": 4,
+    "cita": "$\\phi$ és estrictament creixent a $(0,\\infty)$",
+    "tipus": "desigualtat",
+    "explicacio": "Si els denominadors $\\cosh^2\\sigma$ i $\\sinh^2\\sigma$ creixen, els quocients decreixen: $\\phi$ és estrictament decreixent, no creixent.",
+    "correccio": "Cada terme és no creixent i almenys un és estrictament decreixent, per tant $\\phi$ és estrictament decreixent a $(0,\\infty)$.",
+    "pista": "Si el denominador d'una fracció amb numerador fix augmenta, què fa la fracció?"
+   },
+   {
+    "fragment": 6,
+    "cita": "la igualtat $\\cos t=\\frac{x}{\\cosh s}$ determina $t$ de manera única a l'interval $(0,2\\pi)$",
+    "tipus": "logica",
+    "explicacio": "El cosinus no és injectiu a $(0,2\\pi)$: $t$ i $2\\pi-t$ tenen el mateix cosinus. Cal fer servir també $\\sin t=\\frac{y}{\\sinh s}$.",
+    "correccio": "El parell $(\\cos t,\\sin t)=\\big(\\frac{x}{\\cosh s},\\frac{y}{\\sinh s}\\big)$ determina $t$ mòdul $2\\pi$, i per tant de manera única a $(0,2\\pi)$.",
+    "pista": "Quants valors de $t\\in(0,2\\pi)$ tenen un mateix cosinus? Quina altra informació tens de $t$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-7d",
+  "dificultat": "normal",
+  "fragments": [
+   "De l'apartat (a) sabem que $\\det JF(x,y)=3x^2y^2\\neq 0$ a tot $A$, de manera que $F|_A$ és injectiva. Tot i així, ho comprovem directament, perquè així obtenim la inversa.",
+   "Sigui $(x,y)\\in A$ i $F(x,y)=(u,v)$, és a dir $u=x^2y$ i $v=xy^2$, tots dos no nuls. Aleshores $\\frac{u^2}{v}=\\frac{x^4y^2}{xy^2}=x^3$ i $\\frac{v^2}{u}=\\frac{x^2y^4}{x^2y}=y^3$.",
+   "Com que $t\\mapsto t^3$ és injectiva a $\\mathbb{R}$ (amb inversa l'arrel cúbica real), $x=\\sqrt[3]{u^2/v}$ i $y=\\sqrt[3]{v^2/u}$ queden determinats per $(u,v)$, i $F|_A$ és injectiva.",
+   "Recíprocament, per a $(u,v)\\in A$ el punt $(x,y)=\\big(\\sqrt[3]{u^2/v},\\sqrt[3]{v^2/u}\\big)$ és de $A$ i $x^2y=\\sqrt[3]{u^4/v^2}\\,\\sqrt[3]{v^2/u}=\\sqrt[3]{u^3}=u$, $xy^2=\\sqrt[3]{u^2/v}\\,\\sqrt[3]{v^4/u^2}=\\sqrt[3]{v^3}=v$. Per tant $F(A)=A$ i $F^{-1}(u,v)=\\big(\\sqrt[3]{u^2/v},\\sqrt[3]{v^2/u}\\big)$.",
+   "Avaluant, $F^{-1}(4.1,1.9)=\\big(\\sqrt[3]{16.81/1.9},\\sqrt[3]{3.61/4.1}\\big)=\\big(\\sqrt[3]{8.8474},\\sqrt[3]{0.8805}\\big)\\approx(2.0683,\\ 0.9585)$.",
+   "L'aproximació lineal de l'apartat anterior era $(2.0667,\\ 0.9583)$: les diferències són $\\approx 1.6\\cdot 10^{-2}$ i $\\approx 1.3\\cdot 10^{-4}$, molt més petites que l'increment $\\|(0.1,-0.1)\\|\\approx 0.14$, coherent amb que l'error de l'aproximació de primer ordre és $o(\\|(0.1,-0.1)\\|)$."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "$\\det JF(x,y)=3x^2y^2\\neq 0$ a tot $A$, de manera que $F|_A$ és injectiva",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "Que el determinant jacobià no s'anul·li només dona injectivitat local (teorema de la funció inversa), no injectivitat a tot $A$; p. ex. les polars tenen $\\det\\neq 0$ i no són injectives.",
+    "correccio": "$\\det JF\\neq 0$ a $A$ només garanteix que $F$ és localment invertible; la injectivitat de $F|_A$ s'ha de provar directament.",
+    "pista": "El teorema de la funció inversa dona una conclusió local o global?"
+   },
+   {
+    "fragment": 6,
+    "cita": "les diferències són $\\approx 1.6\\cdot 10^{-2}$",
+    "tipus": "calcul",
+    "explicacio": "$2.0683-2.0667=0.0016\\approx 1.6\\cdot 10^{-3}$, no $1.6\\cdot 10^{-2}$.",
+    "correccio": "Les diferències són $\\approx 1.6\\cdot 10^{-3}$ i $\\approx 1.3\\cdot 10^{-4}$.",
+    "pista": "Resta de nou $2.0683-2.0667$: en quina xifra decimal comença la diferència?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-9a",
+  "dificultat": "normal",
+  "fragments": [
+   "$F$ té components de classe $\\mathcal{C}^\\infty$ i $JF(r,\\varphi)=\\begin{pmatrix}\\cos\\varphi&-r\\sin\\varphi\\\\ \\sin\\varphi&r\\cos\\varphi\\end{pmatrix}$, amb $\\det JF(r,\\varphi)=r\\cos^2\\varphi+r\\sin^2\\varphi=r>0$ a tot el domini $(0,\\infty)\\times\\mathbb{R}$.",
+   "Pel teorema de la funció inversa, per a cada punt $p$ del domini hi ha un entorn obert $U_p$ tal que $F|_{U_p}:U_p\\to F(U_p)$ és bijectiva, $F(U_p)$ és obert i la inversa és de classe $\\mathcal{C}^k$ per a tot $k$, és a dir $\\mathcal{C}^\\infty$. Així $F$ és un difeomorfisme local $\\mathcal{C}^\\infty$ en tot punt.",
+   "$F$ no és injectiva al domini sencer: si $F(r,\\varphi)=F(r',\\varphi')$, prenent normes $r=r'$ i llavors $(\\cos\\varphi,\\sin\\varphi)=(\\cos\\varphi',\\sin\\varphi')$, que equival a $\\varphi-\\varphi'\\in 2\\pi\\mathbb{Z}$; per exemple, $F(r,\\varphi+2\\pi)=F(r,\\varphi)$.",
+   "Per a cada $\\alpha\\in\\mathbb{R}$, sigui $U_\\alpha=(0,\\infty)\\times(\\alpha,\\alpha+2\\pi)$. Dos angles d'aquest interval difereixen en menys de $2\\pi$, així que $F|_{U_\\alpha}$ és injectiva i, com que és $\\mathcal{C}^\\infty$ amb $\\det JF\\neq 0$, és un difeomorfisme sobre la seva imatge.",
+   "La imatge és $F(U_\\alpha)=\\mathbb{R}^2\\setminus\\{(t\\cos\\alpha,t\\sin\\alpha)\\mid t>0\\}$, és a dir, el pla menys la semirecta oberta d'angle $\\alpha$.",
+   "Maximalitat: sigui $W\\supsetneq U_\\alpha$ un obert del domini i $(r_0,\\varphi_0)\\in W\\setminus U_\\alpha$. Si $\\varphi_0\\not\\equiv\\alpha\\pmod{2\\pi}$, hi ha un únic $\\varphi_1\\in(\\alpha,\\alpha+2\\pi)$ amb $\\varphi_1\\equiv\\varphi_0$, i $\\varphi_1\\neq\\varphi_0$ perquè $\\varphi_0\\notin(\\alpha,\\alpha+2\\pi)$; els punts $(r_0,\\varphi_0)$ i $(r_0,\\varphi_1)$ són de $W$, són diferents i tenen la mateixa imatge.",
+   "Si $\\varphi_0\\equiv\\alpha\\pmod{2\\pi}$, aleshores $F(r_0,\\varphi_0)=(r_0\\cos\\alpha,r_0\\sin\\alpha)$ és de la semirecta que no és a $F(U_\\alpha)$, i per tant $F|_W$ tampoc no és injectiva.",
+   "En tots els casos $F|_W$ no és injectiva, de manera que cada $U_\\alpha$ és un obert màxim on la restricció de $F$ és un difeomorfisme; per a $\\alpha=0$ és el cas de la indicació. Hi ha, doncs, infinits oberts màxims (per exemple, tots els $U_\\alpha$)."
+  ],
+  "errors": [
+   {
+    "fragment": 5,
+    "cita": "$F(U_\\alpha)=\\mathbb{R}^2\\setminus\\{(t\\cos\\alpha,t\\sin\\alpha)\\mid t>0\\}$, és a dir, el pla menys la semirecta oberta",
+    "tipus": "conclusio",
+    "explicacio": "Com que $r>0$, $F$ mai no val $(0,0)$: l'origen tampoc no és a la imatge. Cal treure la semirecta tancada ($t\\geq 0$).",
+    "correccio": "$F(U_\\alpha)=\\mathbb{R}^2\\setminus\\{(t\\cos\\alpha,t\\sin\\alpha)\\mid t\\geq 0\\}$, el pla menys la semirecta tancada d'angle $\\alpha$.",
+    "pista": "Hi ha algun punt $(r,\\varphi)$ del domini amb $F(r,\\varphi)=(0,0)$?"
+   },
+   {
+    "fragment": 7,
+    "cita": "és de la semirecta que no és a $F(U_\\alpha)$, i per tant $F|_W$ tampoc no és injectiva",
+    "tipus": "logica",
+    "explicacio": "Que un punt de $W$ tingui la imatge fora de $F(U_\\alpha)$ no dona cap parell de punts amb la mateixa imatge; no se segueix la no-injectivitat.",
+    "correccio": "Com que $W$ és obert, conté $(r_0,\\varphi_0\\pm\\varepsilon)$ per a $\\varepsilon>0$ petit, i un d'aquests punts és de $W\\setminus U_\\alpha$ amb angle no congruent amb $\\alpha$: es redueix al cas anterior.",
+    "pista": "Per refutar la injectivitat, quins dos punts diferents de $W$ amb la mateixa imatge has trobat en aquest cas?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-11a",
+  "dificultat": "normal",
+  "fragments": [
+   "$G(x,y)=(x^2-y^2,2xy)$ té components polinòmiques, per tant és de classe $\\mathcal{C}^\\infty$ a $U=\\mathbb{R}^2$.",
+   "La jacobiana és $JG(x,y)=\\begin{pmatrix}2x&-2y\\\\ 2y&2x\\end{pmatrix}$, amb $\\det JG(x,y)=4x^2+4y^2=4(x^2+y^2)$, que només s'anul·la a l'origen.",
+   "Per tant, a cada punt de $\\mathbb{R}^2\\setminus\\{(0,0)\\}$ el teorema de la funció inversa dona una inversa local, però això no diu res sobre la injectivitat global de $G$.",
+   "De fet, $G(-x,-y)=\\big((-x)^2-(-y)^2,2(-x)(-y)\\big)=G(x,y)$, i $(-x,-y)\\neq(x,y)$ si $(x,y)\\neq(0,0)$; per exemple, $G(1,0)=G(0,1)=(1,0)$. Així $G$ no és injectiva a $U$.",
+   "A més, $\\det JG(0,0)=0$ i, pel teorema de la funció inversa, això implica que $G$ no és injectiva en cap entorn de l'origen.",
+   "Com que $G$ no és injectiva, $G:U\\to G(U)$ no és bijectiva i, per tant, no és un canvi de variables (difeomorfisme)."
+  ],
+  "errors": [
+   {
+    "fragment": 4,
+    "cita": "$G(1,0)=G(0,1)=(1,0)$",
+    "tipus": "calcul",
+    "explicacio": "$G(0,1)=(0-1,0)=(-1,0)\\neq(1,0)$. L'exemple ha de ser un parell de punts oposats.",
+    "correccio": "Per exemple, $G(1,0)=G(-1,0)=(1,0)$.",
+    "pista": "Calcula $G(0,1)$ directament. És $(0,1)$ l'oposat de $(1,0)$?"
+   },
+   {
+    "fragment": 5,
+    "cita": "pel teorema de la funció inversa, això implica que $G$ no és injectiva en cap entorn de l'origen",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "El teorema de la funció inversa només dona una condició suficient; si $\\det JG=0$ no diu res de la injectivitat (p. ex. $x\\mapsto x^3$ és injectiva amb derivada nul·la a $0$).",
+    "correccio": "Com que $\\det JG(0,0)=0$, cap inversa local podria ser diferenciable en $G(0,0)=(0,0)$: si $H\\circ G=\\mathrm{Id}$ amb $H$ diferenciable, $DH(0,0)\\,DG(0,0)=I$, impossible.",
+    "pista": "Què diu el teorema de la funció inversa quan el determinant jacobià és $0$? Coneixes alguna funció injectiva amb derivada nul·la en un punt?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-12a",
+  "dificultat": "normal",
+  "fragments": [
+   "Hipòtesis: $f(x)=x^3$ és polinòmica, per tant de classe $\\mathcal{C}^\\infty(\\mathbb{R})$, i $f'(a)=3a^2$, que és no nul si i només si $a\\neq 0$.",
+   "En un punt $a\\neq 0$ es compleixen totes les hipòtesis i el teorema dona totes les tesis: hi ha entorns oberts $U\\ni a$ i $V\\ni f(a)$ amb $f|_U:U\\to V$ bijectiva i inversa de classe $\\mathcal{C}^\\infty$, amb $(f^{-1})'(f(a))=\\frac{1}{3a^2}$. L'interès és, doncs, el punt $a=0$, on falla la hipòtesi $f'(0)\\neq 0$.",
+   "Tesi (i) en $0$: com que $f'(x)=3x^2>0$ per a tot $x\\in\\mathbb{R}$, $f$ és estrictament creixent, i per tant injectiva en qualsevol entorn de $0$.",
+   "En canvi, la segona part de (i), que $f'(z)\\neq 0$ per a tot $z$ de l'entorn, falla, perquè $f'(0)=0$.",
+   "Tesi (ii): $f$ porta $(-\\delta,\\delta)$ a $(-\\delta^3,\\delta^3)$, que és obert.",
+   "Tesi (iii): la inversa és $f^{-1}(y)=\\sqrt[3]{y}$, que és contínua. En $0$, $\\frac{f^{-1}(h)-f^{-1}(0)}{h}=\\frac{\\sqrt[3]{h}}{h}$, és a dir $h^{-1/3}$, que no té límit finit quan $h\\to 0$; per tant $f^{-1}$ no és derivable en $0$.",
+   "Així, en $0$ es compleixen la injectivitat de (i) i la tesi (ii), però falla (iii): $f^{-1}$ no és de classe $\\mathcal{C}^1$ en cap entorn de $0$, coherent amb que la fórmula $(f^{-1})'(0)=\\frac{1}{f'(0)}$ no té sentit."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "$f'(x)=3x^2>0$ per a tot $x\\in\\mathbb{R}$",
+    "tipus": "desigualtat",
+    "explicacio": "$f'(0)=0$, de manera que $f'(x)>0$ no és cert a tot $\\mathbb{R}$, sinó només per a $x\\neq 0$.",
+    "correccio": "$f'(x)=3x^2\\geq 0$ i només s'anul·la a $x=0$, així que $f$ és estrictament creixent (o directament: $x<y\\Rightarrow x^3<y^3$).",
+    "pista": "Quant val $f'$ precisament en el punt que estàs estudiant?"
+   },
+   {
+    "fragment": 6,
+    "cita": "és a dir $h^{-1/3}$",
+    "tipus": "calcul",
+    "explicacio": "$\\frac{h^{1/3}}{h}=h^{1/3-1}=h^{-2/3}$, no $h^{-1/3}$.",
+    "correccio": "$\\frac{\\sqrt[3]{h}}{h}=h^{-2/3}\\to+\\infty$ quan $h\\to 0$, per tant $f^{-1}$ no és derivable en $0$.",
+    "pista": "Quan divideixes $h^{1/3}$ per $h^1$, quin exponent queda?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-13a",
+  "dificultat": "normal",
+  "fragments": [
+   "Com que $g$ és de classe $\\mathcal{C}^1$, $g'$ és contínua, i $I$ és un interval, per tant connex. Aleshores $g'(I)$ és un connex de $\\mathbb{R}$, és a dir un interval, que no conté el $0$; per tant $g'>0$ a tot $I$ o bé $g'<0$ a tot $I$.",
+   "Siguin $x_1<x_2$ de $I$. Com que $I$ és un interval, $[x_1,x_2]\\subseteq I$, i pel teorema del valor mitjà existeix $\\xi\\in(x_1,x_2)$ amb $g(x_2)-g(x_1)=g'(\\xi)(x_2-x_1)$, que té el signe (constant i no nul) de $g'$.",
+   "Per tant $g$ és estrictament monòtona a $I$, i en particular injectiva; així $g:I\\to\\mathbb{R}$ és bijectiva i té inversa $g^{-1}:\\mathbb{R}\\to I$.",
+   "La imatge $g(I)$ és connexa, per ser imatge contínua d'un connex, i per tant és un interval. A més, és oberta perquè $g$ és contínua i $I$ és obert.",
+   "Sigui $y_0=g(x_0)\\in g(I)$. Com que $g$ és $\\mathcal{C}^1$ i $g'(x_0)\\neq 0$, el teorema de la funció inversa dona entorns oberts $U\\ni x_0$ i $V\\ni y_0$ amb $g|_U:U\\to V$ bijectiva i inversa $h:V\\to U$ de classe $\\mathcal{C}^1$, amb $h'(y)=\\frac{1}{g'(h(y))}$.",
+   "Per la injectivitat de $g$ a tot $I$, $h$ coincideix amb $g^{-1}$ a $V$. Per tant $g^{-1}$ és derivable a tot $g(I)$, amb $(g^{-1})'(y)=\\frac{1}{g'(g^{-1}(y))}$.",
+   "Aquesta derivada és contínua: $g^{-1}$ és contínua (localment coincideix amb $h$), $g'$ és contínua i el denominador no s'anul·la. Així $g^{-1}$ és una inversa global de $g$ de classe $\\mathcal{C}^1$ a $g(I)$."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "així $g:I\\to\\mathbb{R}$ és bijectiva i té inversa $g^{-1}:\\mathbb{R}\\to I$",
+    "tipus": "conclusio",
+    "explicacio": "La injectivitat no dona exhaustivitat sobre $\\mathbb{R}$: per exemple $g=\\arctan$ a $I=\\mathbb{R}$ té imatge $(-\\pi/2,\\pi/2)$. Només és bijectiva sobre la seva imatge.",
+    "correccio": "$g:I\\to g(I)$ és bijectiva i té inversa $g^{-1}:g(I)\\to I$.",
+    "pista": "Una funció estrictament monòtona d'un interval obert, ha d'assolir tots els nombres reals?"
+   },
+   {
+    "fragment": 4,
+    "cita": "és oberta perquè $g$ és contínua i $I$ és obert",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "Una funció contínua no porta oberts a oberts en general (p. ex. $x^2$ porta $(-1,1)$ a $[0,1)$).",
+    "correccio": "És oberta pel teorema de l'aplicació oberta ($g\\in\\mathcal{C}^1$ i $g'\\neq 0$ a $I$), o bé perquè, sent estrictament monòtona, $g$ no assoleix ni màxim ni mínim a l'interval obert $I$.",
+    "pista": "Quina és la imatge de $(-1,1)$ per $x\\mapsto x^2$? Què et diu això de les funcions contínues i els oberts?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-14a",
+  "dificultat": "normal",
+  "fragments": [
+   "Les components $x+f(y)$ i $y+f(x)$ són sumes de funcions de classe $\\mathcal{C}^1$, així que $F\\in\\mathcal{C}^1(\\mathbb{R}^2)$, amb $JF(x,y)=\\begin{pmatrix}1&f'(y)\\\\ f'(x)&1\\end{pmatrix}$.",
+   "El determinant és $\\det JF(x,y)=1+f'(x)f'(y)\\geq 1-|f'(x)|\\,|f'(y)|\\geq 1-k^2>0$, de manera que $JF$ és invertible a tot punt.",
+   "Pel teorema del valor mitjà, per a tot $s,t\\in\\mathbb{R}$ hi ha $\\xi$ entre $s$ i $t$ amb $f(s)-f(t)=f'(\\xi)(s-t)$, i per tant $|f(s)-f(t)|\\le k|s-t|$.",
+   "Injectivitat: si $F(x,y)=F(x',y')$, aleshores $x-x'=f(y')-f(y)$ i $y-y'=f(x')-f(x)$. Llavors $|x-x'|\\le k|y-y'|=k|f(x')-f(x)|\\le k^2|x-x'|$, i com que $k^2<1$, $x=x'$; aleshores $y-y'=f(x')-f(x)=0$.",
+   "Exhaustivitat: donat $(u,v)$, $F(x,y)=(u,v)$ equival a $y=v-f(x)$ i $x=u-f(v-f(x))=:\\varphi(x)$. Per la regla de la cadena, $|\\varphi'(x)|=|f'(v-f(x))|\\,|f'(x)|<1$ per a tot $x$, i per tant $\\varphi$ és contractiva a $\\mathbb{R}$.",
+   "Com que $\\mathbb{R}$ és complet, pel teorema del punt fix existeix $x^*$ amb $\\varphi(x^*)=x^*$, i $(x^*,v-f(x^*))$ és una antiimatge de $(u,v)$. Per tant $F:\\mathbb{R}^2\\to\\mathbb{R}^2$ és bijectiva.",
+   "Donat $(u_0,v_0)=F(a)$, com que $F\\in\\mathcal{C}^1$ i $\\det JF(a)\\neq 0$, el teorema de la funció inversa dona oberts $U\\ni a$ i $V=F(U)\\ni(u_0,v_0)$ i una inversa local de classe $\\mathcal{C}^1$ de $F|_U$ definida a $V$. Per la injectivitat global, aquesta inversa local és la restricció de $F^{-1}$ a $V$.",
+   "Per tant $F^{-1}$ és de classe $\\mathcal{C}^1$ en un entorn de cada punt, és a dir $F^{-1}\\in\\mathcal{C}^1(\\mathbb{R}^2)$: $F$ admet inversa global de classe $\\mathcal{C}^1$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "$\\det JF(x,y)=1+f'(x)f'(y)\\geq 1-|f'(x)|\\,|f'(y)|\\geq 1-k^2>0$",
+    "tipus": "calcul",
+    "explicacio": "El determinant de $\\begin{pmatrix}1&f'(y)\\\\ f'(x)&1\\end{pmatrix}$ és $1\\cdot 1-f'(y)f'(x)$: el signe del producte és negatiu.",
+    "correccio": "$\\det JF(x,y)=1-f'(x)f'(y)\\geq 1-|f'(x)|\\,|f'(y)|\\geq 1-k^2>0$.",
+    "pista": "Com es calcula el determinant d'una matriu $2\\times 2$? Quin signe porta el producte dels elements de fora de la diagonal?"
+   },
+   {
+    "fragment": 5,
+    "cita": "$|\\varphi'(x)|=|f'(v-f(x))|\\,|f'(x)|<1$ per a tot $x$, i per tant $\\varphi$ és contractiva",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "$|\\varphi'(x)|<1$ punt a punt no fa $\\varphi$ contractiva: cal una constant uniforme $L<1$ (p. ex. $\\sqrt{1+x^2}$ té $|\\varphi'|<1$ i no té punt fix).",
+    "correccio": "$|\\varphi'(x)|\\le k^2<1$ per a tot $x$, i pel teorema del valor mitjà $\\varphi$ és Lipschitz amb constant $k^2<1$ (si $k=0$, amb qualsevol constant de $(0,1)$): és contractiva.",
+    "pista": "Per ser contractiva, n'hi ha prou que la derivada sigui menor que $1$ a cada punt, o cal una fita comuna menor que $1$?"
+   }
+  ]
+ }
+]

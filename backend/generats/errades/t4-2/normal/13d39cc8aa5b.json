@@ -1,0 +1,60 @@
+{
+  "id": "13d39cc8aa5b",
+  "exercici": "t4-2",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Per $y\\neq 0$ la funció és $f(x,y)=xy^2\\sin(1/y)$ i, derivant, $f_x(x,y)=y^2\\sin(1/y)$ i $f_y(x,y)=2xy\\sin(1/y)-x\\cos(1/y)$.",
+    "Sobre l'eix $y=0$ la fórmula anterior no val i cal anar a la definició. Com que $f(x+h,0)=0$ per a tot $h$, tenim $f_x(x,0)=0$.",
+    "També $f_y(x,0)=\\lim_{k\\to 0}\\frac{f(x,k)-f(x,0)}{k}=\\lim_{k\\to 0}\\frac{xk^2\\sin(1/k)}{k}=\\lim_{k\\to 0}xk\\sin(1/k)=0$, ja que $\\sin(1/k)\\to 0$ quan $k\\to 0$.",
+    "Derivada creuada $\\frac{\\partial}{\\partial y}(f_x)$ a l'origen: $\\lim_{k\\to 0}\\frac{f_x(0,k)-f_x(0,0)}{k}=\\lim_{k\\to 0}\\frac{k^2\\sin(1/k)}{k}=\\lim_{k\\to 0}k\\sin(1/k)=0$, perquè $|k\\sin(1/k)|\\le|k|$.",
+    "Derivada creuada $\\frac{\\partial}{\\partial x}(f_y)$ a l'origen: $\\lim_{h\\to 0}\\frac{f_y(h,0)-f_y(0,0)}{h}=\\lim_{h\\to 0}\\frac{0-0}{h}=0$. Per tant les dues derivades creuades coincideixen a $(0,0)$ i hi valen $0$.",
+    "Per veure si se satisfà la hipòtesi de Schwarz, calculem les creuades fora de l'eix: per $y\\neq 0$, $\\frac{\\partial}{\\partial y}(f_x)=2y\\sin(1/y)-\\cos(1/y)$ i $\\frac{\\partial}{\\partial x}(f_y)=2y\\sin(1/y)-\\cos(1/y)$.",
+    "Sobre els punts $(0,1/(n\\pi))\\to(0,0)$ aquestes derivades valen $-\\cos(n\\pi)=(-1)^{n+1}$, que no té límit. Per tant cap de les dues creuades és contínua a $(0,0)$, l'únic punt del pla on deixen de ser contínues, i la hipòtesi del teorema de Schwarz no se satisfà."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "ja que $\\sin(1/k)\\to 0$ quan $k\\to 0$",
+      "inici": 119,
+      "fi": 156,
+      "tipus": "logica",
+      "explicacio": "$\\sin(1/k)$ no té límit quan $k\\to 0$ (oscil·la entre $-1$ i $1$). El límit és $0$ per una altra raó: és el producte d'una funció fitada per $xk\\to 0$.",
+      "correccio": "$\\lim_{k\\to 0}xk\\sin(1/k)=0$ perquè $|xk\\sin(1/k)|\\le|x|\\,|k|\\to 0$ (fitada per una que tendeix a $0$).",
+      "pista": "Què fa $\\sin(1/k)$ quan $k$ s'acosta a $0$? Quin és realment el motiu que el producte tendeixi a $0$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "l'únic punt del pla on deixen de ser contínues",
+      "inici": 164,
+      "fi": 210,
+      "tipus": "conclusio",
+      "explicacio": "Les creuades no són contínues en cap punt de l'eix $y=0$: a prop de $(x_0,0)$ valen $2y\\sin(1/y)-\\cos(1/y)$ (que no depèn de $x$), i sobre $(x_0,1/(n\\pi))$ valen $(-1)^{n+1}$, sense límit.",
+      "correccio": "Cap de les dues creuades és contínua a $(0,0)$ (de fet, en cap punt de l'eix $y=0$), i la hipòtesi del teorema de Schwarz no se satisfà.",
+      "pista": "Si en comptes d'acostar-te a $(0,0)$ t'acostes a $(x_0,0)$ per punts $(x_0,1/(n\\pi))$, què valen les creuades?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4a.json",
+    "valoracio": "Càlculs correctes, però la justificació del límit de f_y(x,0) és falsa i s'afirma erròniament que l'origen és l'únic punt de discontinuïtat.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "ja que $\\sin(1/k)\\to 0$ quan $k\\to 0$",
+        "gravetat": "error",
+        "explicacio": "$\\sin(1/k)$ no té límit quan $k\\to0$; el límit val 0 perquè $|k\\sin(1/k)|\\le|k|$ (funció fitada per una que tendeix a 0)."
+      },
+      {
+        "fragment": 7,
+        "cita": "l'únic punt del pla on deixen de ser contínues",
+        "gravetat": "error",
+        "explicacio": "Les creuades valen $2y\\sin(1/y)-\\cos(1/y)$ per $y\\neq0$, independent de $x$: són discontínues a tots els punts de l'eix $y=0$, no només a l'origen."
+      }
+    ]
+  },
+  "creat": 1791299402.9594147
+}

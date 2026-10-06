@@ -1,0 +1,61 @@
+{
+  "id": "c692a6b10c77",
+  "exercici": "t3-26a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "A l'origen, $\\dfrac{f(t,0)-f(0,0)}{t}=\\dfrac{2t^2\\sin(1/|t|)}{t}=2t\\sin\\dfrac{1}{|t|}$, que tendeix a $0$ quan $t\\to0$ perquè $\\sin\\dfrac{1}{|t|}\\to0$. Per tant $\\dfrac{\\partial f}{\\partial x}(0,0)=0$.",
+    "Com que $f(x,y)=f(y,x)$, el mateix càlcul dona $\\dfrac{\\partial f}{\\partial y}(0,0)=0$.",
+    "Fora de l'origen, amb $\\rho=\\sqrt{x^2+y^2}$ i $\\dfrac{\\partial\\rho}{\\partial x}=\\dfrac{x}{\\rho}$: $\\dfrac{\\partial f}{\\partial x}=4x\\sin\\dfrac1\\rho+2\\rho^2\\cos\\dfrac1\\rho\\cdot\\left(-\\dfrac{1}{\\rho^2}\\right)\\dfrac{x}{\\rho}=4x\\sin\\dfrac1\\rho-\\dfrac{2x}{\\rho}\\cos\\dfrac1\\rho$.",
+    "Anàlogament $\\dfrac{\\partial f}{\\partial y}=4y\\sin\\dfrac1\\rho-\\dfrac{2y}{\\rho}\\cos\\dfrac1\\rho$ fora de l'origen. Així, les dues derivades parcials existeixen a tot $\\mathbb{R}^2$.",
+    "Sobre el semieix $y=0$, $x>0$, tenim $\\rho=x$ i $\\dfrac{\\partial f}{\\partial x}(x,0)=4x\\sin\\dfrac1x-2\\cos\\dfrac1x$. El primer terme tendeix a $0$, perquè $\\left|4x\\sin\\dfrac1x\\right|\\le4x$.",
+    "Les successions $p_n=\\left(\\dfrac{1}{2n\\pi},0\\right)$ i $q_n=\\left(\\dfrac{1}{(2n+1)\\pi},0\\right)$ tendeixen a l'origen, i $\\dfrac{\\partial f}{\\partial x}(p_n)=-2$, $\\dfrac{\\partial f}{\\partial x}(q_n)=2$ per a tot $n$.",
+    "Per la caracterització del límit amb successions, no existeix $\\lim_{(x,y)\\to(0,0)}\\dfrac{\\partial f}{\\partial x}(x,y)$, i $\\dfrac{\\partial f}{\\partial x}$ no és contínua a l'origen; per la simetria $f(x,y)=f(y,x)$, tampoc ho és $\\dfrac{\\partial f}{\\partial y}$.",
+    "En particular, com que les derivades parcials no són contínues a l'origen, $f$ no és diferenciable a $(0,0)$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "perquè $\\sin\\dfrac{1}{|t|}\\to0$",
+      "inici": 119,
+      "fi": 150,
+      "tipus": "calcul",
+      "explicacio": "$\\sin\\frac{1}{|t|}$ no té límit quan $t\\to0$ (oscil·la entre $-1$ i $1$). El límit és $0$ perquè aquest factor està fitat i $2t\\to0$.",
+      "correccio": "Com que $\\left|2t\\sin\\frac1{|t|}\\right|\\le2|t|\\to0$, el quocient tendeix a $0$.",
+      "pista": "Quan $t\\to0$, $\\frac{1}{|t|}\\to+\\infty$: què fa el sinus d'un argument que creix indefinidament? Quin factor fa que el producte tendeixi a $0$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 8,
+      "cita": "com que les derivades parcials no són contínues a l'origen, $f$ no és diferenciable a $(0,0)$",
+      "inici": 15,
+      "fi": 108,
+      "tipus": "conclusio",
+      "explicacio": "La continuïtat de les parcials és una condició suficient, no necessària. De fet $f$ sí que és diferenciable a l'origen: $\\dfrac{|f(x,y)|}{\\rho}\\le2\\rho\\to0$.",
+      "correccio": "La discontinuïtat de les parcials no decideix res; $f$ és diferenciable a $(0,0)$ amb $Df(0,0)=0$, ja que $\\dfrac{|f(x,y)-0|}{\\|(x,y)\\|}\\le2\\sqrt{x^2+y^2}\\to0$.",
+      "pista": "La continuïtat de les derivades parcials, és necessària per a la diferenciabilitat o només suficient?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3b.json",
+    "valoracio": "Els càlculs de les parcials i la discontinuïtat són correctes, però la justificació a l'origen és falsa i la conclusió final de no diferenciabilitat també.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "perquè $\\sin\\dfrac{1}{|t|}\\to0$",
+        "gravetat": "error",
+        "explicacio": "$\\sin(1/|t|)$ no té límit quan $t\\to0$; el quocient tendeix a $0$ perquè $|2t\\sin(1/|t|)|\\le2|t|$."
+      },
+      {
+        "fragment": 8,
+        "cita": "com que les derivades parcials no són contínues a l'origen, $f$ no és diferenciable a $(0,0)$",
+        "gravetat": "error",
+        "explicacio": "La continuïtat de les parcials és només condició suficient; de fet $f$ és diferenciable a l'origen ($|f|\\le2\\rho^2$)."
+      }
+    ]
+  },
+  "creat": 1791299348.7090743
+}

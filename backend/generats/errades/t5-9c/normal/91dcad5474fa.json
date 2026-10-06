@@ -1,0 +1,59 @@
+{
+  "id": "91dcad5474fa",
+  "exercici": "t5-9c",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Tenim $f(0,0)=0$. Per l'apartat anterior, $f>0$ al semiplà $x>0$; a l'interior del disc $(x+1)^2+y^2<1$ els dos factors $x^2+y^2+2x$ i $x^3$ són negatius, de manera que $f<0$; i als punts amb $x<0$ exteriors al disc, $f<0$.",
+    "Els punts $(t,0)$ amb $t>0$ són del semiplà $x>0$ i s'acosten a l'origen quan $t\\to0^+$; per exemple, $f(t,0)=(t^2+2t)\\,t^3=t^5+2t^4>0=f(0,0)$.",
+    "La circumferència $(x+1)^2+y^2=1$ és tangent a l'eix vertical a l'origen, així que hi ha punts amb $x<0$ exteriors al disc arbitràriament a prop de l'origen. Per a $s>0$ petit, prenem $(-s,\\sqrt{2s})$: $x^2+y^2+2x=s^2+2s-2s=s^2>0$ i $x=-s<0$.",
+    "En aquest punt, $f(-s,\\sqrt{2s})=s^2\\cdot(-s)^3=-s^5<0=f(0,0)$, i la seva distància a l'origen és $\\sqrt{s^2+2s}\\leq\\sqrt{4s^2}=2s$, que tendeix a $0$ quan $s\\to0^+$.",
+    "Per tant, tota bola $B((0,0),\\epsilon)$ conté punts amb $f>f(0,0)$ i punts amb $f<f(0,0)$, i l'origen no és ni màxim ni mínim local de $f$.",
+    "De fet, $f=2x^4+x^5+x^3y^2$ només té termes de grau $\\geq4$, de manera que $Df(0,0)=0$: l'origen és un punt crític que no és extrem, és a dir, un punt de sella."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "els dos factors $x^2+y^2+2x$ i $x^3$ són negatius, de manera que $f<0$",
+      "inici": 104,
+      "fi": 174,
+      "tipus": "logica",
+      "explicacio": "El producte de dos factors negatius és positiu: a l'interior del disc $f>0$. Només als punts amb $x<0$ exteriors al disc els factors tenen signes oposats i $f<0$.",
+      "correccio": "A l'interior del disc els dos factors són negatius, de manera que $f>0$.",
+      "pista": "Quin signe té el producte de dos nombres negatius?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "$\\sqrt{s^2+2s}\\leq\\sqrt{4s^2}=2s$",
+      "inici": 98,
+      "fi": 131,
+      "tipus": "desigualtat",
+      "explicacio": "$s^2+2s\\leq4s^2$ equival a $s\\geq\\frac23$, i per tant és fals per a $s$ petit (per exemple, amb $s=0.01$, $\\sqrt{s^2+2s}\\approx0.14>0.02$). Que la distància tendeix a $0$ és cert, però no per aquesta fita.",
+      "correccio": "La distància $\\sqrt{s^2+2s}$ tendeix a $0$ quan $s\\to0^+$, per continuïtat de l'arrel (o bé $\\sqrt{s^2+2s}\\leq\\sqrt{3s}$ per a $s\\leq1$).",
+      "pista": "Per a $s=0.01$, quin dels dos costats de la desigualtat és més gran?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t56.json",
+    "valoracio": "Signe de $f$ a l'interior del disc mal deduït i fita de la distància falsa per a $s$ petit.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "a l'interior del disc $(x+1)^2+y^2<1$ els dos factors $x^2+y^2+2x$ i $x^3$ són negatius, de manera que $f<0$",
+        "gravetat": "error",
+        "explicacio": "Si els dos factors són negatius el producte és positiu: a l'interior del disc (on $x<0$) $f>0$. La regió $f<0$ és només la de $x<0$ fora del disc."
+      },
+      {
+        "fragment": 4,
+        "cita": "$\\sqrt{s^2+2s}\\leq\\sqrt{4s^2}=2s$",
+        "gravetat": "error",
+        "explicacio": "Fals per a $s$ petit: $s^2+2s\\leq4s^2$ equival a $s\\geq\\frac23$. Cal una altra fita, p. ex. $\\sqrt{s^2+2s}\\leq\\sqrt{3s}$ per a $s\\leq1$, que també tendeix a 0."
+      }
+    ]
+  },
+  "creat": 1791299721.5548024
+}

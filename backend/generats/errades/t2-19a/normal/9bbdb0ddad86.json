@@ -1,0 +1,59 @@
+{
+  "id": "9bbdb0ddad86",
+  "exercici": "t2-19a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "La definició de $O_2(\\mathbb{R})$ usa $A^TA=I$, mentre que $g(A)=AA^T$; per escriure $O_2(\\mathbb{R})$ com una antiimatge de $g$, primer cal veure que totes dues condicions són equivalents.",
+    "Si $A^TA=I$, prenent determinants, $(\\det A)^2=\\det(A^T)\\det A=\\det I=1$, d'on $\\det A=1$. Per tant $A$ és invertible i $A^T=A^T(AA^{-1})=(A^TA)A^{-1}=A^{-1}$, de manera que també $AA^T=I$.",
+    "Recíprocament, si $AA^T=I$, el mateix argument (intercanviant els papers de $A$ i $A^T$) dona $A^T=A^{-1}$ i $A^TA=I$. Per tant $O_2(\\mathbb{R})=\\{A\\mid g(A)=I\\}=g^{-1}(\\{I\\})$.",
+    "Amb $A=\\begin{pmatrix}a&c\\\\b&d\\end{pmatrix}$, tenim $g(A)=AA^T=\\begin{pmatrix}a^2+c^2&ac+bd\\\\ac+bd&b^2+d^2\\end{pmatrix}$.",
+    "Identificant $M_2(\\mathbb{R})\\cong\\mathbb{R}^4$, cada component de $g$ és una suma de productes de les coordenades $a,b,c,d$, que són funcions lineals i per tant contínues; per tant cada component és contínua i $g$ és contínua.",
+    "El conjunt $\\{I\\}$, un sol punt, és tancat a $M_2(\\mathbb{R})\\cong\\mathbb{R}^4$. Per la caracterització topològica de la continuïtat (amb domini tot $M_2(\\mathbb{R})$), $g^{-1}(\\{I\\})$ és tancat. Per tant $O_2(\\mathbb{R})$ és tancat."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$(\\det A)^2=\\det(A^T)\\det A=\\det I=1$, d'on $\\det A=1$",
+      "inici": 35,
+      "fi": 89,
+      "tipus": "calcul",
+      "explicacio": "De $(\\det A)^2=1$ només es dedueix $\\det A=\\pm1$ (les simetries tenen determinant $-1$). Per a l'argument n'hi ha prou amb $\\det A\\neq0$.",
+      "correccio": "$(\\det A)^2=1$, d'on $\\det A=\\pm1\\neq0$ i $A$ és invertible.",
+      "pista": "Quines solucions té l'equació $t^2=1$? Quin determinant té la matriu d'una simetria?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "$g(A)=AA^T=\\begin{pmatrix}a^2+c^2&ac+bd\\\\ac+bd&b^2+d^2\\end{pmatrix}$",
+      "inici": 52,
+      "fi": 120,
+      "tipus": "calcul",
+      "explicacio": "L'entrada $(1,2)$ de $AA^T$ és el producte de la primera fila de $A$, $(a,c)$, per la segona fila, $(b,d)$: $ab+cd$. L'expressió $ac+bd$ correspon a $A^TA$.",
+      "correccio": "$g(A)=\\begin{pmatrix}a^2+c^2&ab+cd\\\\ab+cd&b^2+d^2\\end{pmatrix}$.",
+      "pista": "Quines files de $A$ es multipliquen per obtenir l'entrada $(1,2)$ de $AA^T$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t2.json",
+    "valoracio": "Determinant incorrecte i càlcul erroni de $AA^T$; la continuïtat i la conclusió no se'n ressenten.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "d'on $\\det A=1$",
+        "gravetat": "error",
+        "explicacio": "$(\\det A)^2=1$ dona $\\det A=\\pm1$ (les simetries tenen determinant $-1$); n'hi ha prou amb $\\det A\\neq0$."
+      },
+      {
+        "fragment": 4,
+        "cita": "\\begin{pmatrix}a^2+c^2&ac+bd\\\\ac+bd&b^2+d^2\\end{pmatrix}",
+        "gravetat": "error",
+        "explicacio": "Amb $A=\\begin{pmatrix}a&c\\\\b&d\\end{pmatrix}$, l'entrada fora de la diagonal de $AA^T$ és $ab+cd$, no $ac+bd$ (aquesta és la de $A^TA$)."
+      }
+    ]
+  },
+  "creat": 1791299452.0572453
+}

@@ -1,0 +1,320 @@
+{
+ "t5-1a:normal": {
+  "problemes": [
+   {
+    "fragment": 5,
+    "cita": "$P_2=-(x-1)z+(y+1)z$",
+    "gravetat": "error",
+    "explicacio": "Falta el terme de grau 1: el polinomi de grau $\\leq2$ és la suma de les parts de grau 0, 1 i 2, $P_2=-z-(x-1)z+(y+1)z$."
+   },
+   {
+    "fragment": 6,
+    "cita": "totes les seves derivades d'ordre $\\geq3$ són nul·les",
+    "gravetat": "error",
+    "explicacio": "Fals: $D_{123}f=1\\neq0$ és d'ordre 3. Són nul·les les derivades d'ordre $\\geq4$, i és per això que el residu de grau $k\\geq3$ és 0."
+   }
+  ],
+  "valoracio": "Dos errors: $P_2$ sense el terme lineal $-z$ i l'afirmació falsa que les derivades d'ordre 3 s'anul·len."
+ },
+ "t5-2:normal": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "per tant $f$ és de classe $\\mathcal{C}^\\infty$",
+    "gravetat": "error",
+    "explicacio": "Si $\\varphi$ només és $\\mathcal{C}^3$, $g$ i $f$ només són $\\mathcal{C}^3$; no es pot concloure $\\mathcal{C}^\\infty$."
+   },
+   {
+    "fragment": 6,
+    "cita": "2e^{2as}\\varphi''(e^{as})",
+    "gravetat": "error",
+    "explicacio": "Derivant $g''$ el terme en $\\varphi''$ surt de dues contribucions ($a^3e^{2as}\\varphi''$ i $2a^3e^{2as}\\varphi''$): el coeficient és 3, i $g'''(0)=a^3(\\varphi'(1)+3\\varphi''(1)+\\varphi'''(1))$."
+   },
+   {
+    "fragment": 7,
+    "cita": "\\frac{a^3\\left(\\varphi'(1)+2\\varphi''(1)+\\varphi'''(1)\\right)}{6}S^3",
+    "gravetat": "consequencia",
+    "explicacio": "Hereta el coeficient 2 erroni de $g'''(0)$; hauria de ser 3."
+   }
+  ],
+  "valoracio": "Regularitat de $f$ sobrevalorada i error a $g'''$ que es propaga al terme cúbic de $P_3$."
+ },
+ "t5-7a:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "$f_x=4x(3x^2-2x^2)=4x^3=0$",
+    "gravetat": "error",
+    "explicacio": "Substituint $y=2x^2$ a $4x(3x^2-2y)$ s'obté $4x(3x^2-4x^2)=-4x^3$, no $4x(3x^2-2x^2)=4x^3$ (la conclusió $x=0$ coincideix per casualitat)."
+   },
+   {
+    "fragment": 5,
+    "cita": "es té $y-3x^2>0$ i $y-x^2<0$",
+    "gravetat": "error",
+    "explicacio": "Signes intercanviats: si $x^2<y<3x^2$, aleshores $y-3x^2<0$ i $y-x^2>0$ (el producte continua sent negatiu)."
+   }
+  ],
+  "valoracio": "Error de substitució en resoldre el sistema i signes dels factors intercanviats entre les paràboles."
+ },
+ "t5-8a:normal": {
+  "problemes": [
+   {
+    "fragment": 3,
+    "cita": "$f_{yy}=-6(x-y)+2$",
+    "gravetat": "error",
+    "explicacio": "Derivant $f_y=-3(x-y)^2+2(x+y)$ respecte de $y$: $f_{yy}=6(x-y)+2$ (a l'origen el valor 2 coincideix)."
+   },
+   {
+    "fragment": 4,
+    "cita": "tot i que ja descarta que l'origen sigui un mínim local",
+    "gravetat": "error",
+    "explicacio": "Una hessiana semidefinida positiva és compatible amb un mínim; el que descarta (T5.33 (v)) és que sigui un màxim local."
+   }
+  ],
+  "valoracio": "Derivada segona $f_{yy}$ incorrecta i lectura errònia de la condició necessària (descarta màxim, no mínim)."
+ },
+ "t5-9c:normal": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "a l'interior del disc $(x+1)^2+y^2<1$ els dos factors $x^2+y^2+2x$ i $x^3$ són negatius, de manera que $f<0$",
+    "gravetat": "error",
+    "explicacio": "Si els dos factors són negatius el producte és positiu: a l'interior del disc (on $x<0$) $f>0$. La regió $f<0$ és només la de $x<0$ fora del disc."
+   },
+   {
+    "fragment": 4,
+    "cita": "$\\sqrt{s^2+2s}\\leq\\sqrt{4s^2}=2s$",
+    "gravetat": "error",
+    "explicacio": "Fals per a $s$ petit: $s^2+2s\\leq4s^2$ equival a $s\\geq\\frac23$. Cal una altra fita, p. ex. $\\sqrt{s^2+2s}\\leq\\sqrt{3s}$ per a $s\\leq1$, que també tendeix a 0."
+   }
+  ],
+  "valoracio": "Signe de $f$ a l'interior del disc mal deduït i fita de la distància falsa per a $s$ petit."
+ },
+ "t5-10b:normal": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "Com que $g(x)>1$ per a tot $x$",
+    "gravetat": "error",
+    "explicacio": "Fals: $g(-1)=2e^{-1}<1$ i $g(x)\\to0$ quan $x\\to-\\infty$. El que és cert (i suficient) és $g(x)>0$."
+   },
+   {
+    "fragment": 4,
+    "cita": "és a dir, $y=\\sqrt[4]{g(x)}$",
+    "gravetat": "error",
+    "explicacio": "$y^2=\\sqrt{g(x)}$ equival a $y=\\pm\\sqrt[4]{g(x)}$; es perd la branca negativa."
+   }
+  ],
+  "valoracio": "Fita falsa de $g$ i pèrdua de l'arrel negativa en resoldre $f_y=0$."
+ },
+ "t5-12b:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "Si $xy=2$, aleshores $|x|\\geq2$ o $|y|\\geq2$",
+    "gravetat": "error",
+    "explicacio": "Fals: $(\\sqrt2,\\sqrt2)$ compleix $xy=2$ amb $|x|,|y|<2$. La justificació correcta és $x^2+y^2\\geq2|xy|=4$."
+   },
+   {
+    "fragment": 6,
+    "cita": "l'única excepció és l'origen, que és un màxim local estricte",
+    "gravetat": "error",
+    "explicacio": "L'origen és als dos eixos i $f=0$ en tots ells: tota bola centrada a l'origen conté punts amb $f=f(0,0)$, de manera que tampoc és estricte."
+   }
+  ],
+  "valoracio": "Justificació falsa per descartar la hipèrbola i afirmació falsa que l'origen és màxim estricte."
+ },
+ "t5-13a:normal": {
+  "problemes": [
+   {
+    "fragment": 3,
+    "cita": "$-\\frac12u^2+(u-v)(-v)=-\\frac12u^2-uv-v^2$",
+    "gravetat": "error",
+    "explicacio": "$(u-v)(-v)=-uv+v^2$: el terme de grau 2 és $-\\frac12u^2-uv+v^2$."
+   },
+   {
+    "fragment": 4,
+    "cita": "+(u-v)^2(-v)=\\frac16v^3",
+    "gravetat": "error",
+    "explicacio": "Falta el factor $\\frac12$ del terme $\\frac12(u-v)^2$ de l'exponencial; el grau 3 correcte és $-\\frac12u^3+uv^2-\\frac13v^3$."
+   },
+   {
+    "fragment": 5,
+    "cita": "$P_3=-v-\\frac12u^2-uv-v^2-\\frac12u^3-\\frac12u^2v+2uv^2-\\frac56v^3$",
+    "gravetat": "consequencia",
+    "explicacio": "Recull els termes de grau 2 i 3 erronis; el correcte és $-v-\\frac12u^2-uv+v^2-\\frac12u^3+uv^2-\\frac13v^3$."
+   }
+  ],
+  "valoracio": "Errors en el producte als graus 2 i 3 que donen un $P_3$ incorrecte."
+ },
+ "t5-15a:normal": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "Com que existeixen les derivades parcials en tot punt, $f$ és diferenciable.",
+    "gravetat": "error",
+    "explicacio": "L'existència de les parcials no implica diferenciabilitat; cal que siguin contínues (T3.18), cosa que aquí es té perquè $\\varphi$ és contínua."
+   },
+   {
+    "fragment": 6,
+    "cita": "$f(a,y)-f(a,a)=\\Phi(y)-\\Phi(a)>0$",
+    "gravetat": "error",
+    "explicacio": "Com que $a$ és màxim local estricte de $\\Phi$, $\\Phi(y)-\\Phi(a)<0$ i $\\Phi(a)-\\Phi(x)>0$: els dos signes estan intercanviats (la conclusió de sella es manté)."
+   }
+  ],
+  "valoracio": "Diferenciabilitat deduïda només de l'existència de parcials i signes intercanviats a l'estudi de $(a,a)$."
+ },
+ "t6-1a:normal": {
+  "problemes": [
+   {
+    "fragment": 3,
+    "cita": "$(a\\cos 2t,\\,-b\\sin 2t)$ amb $t\\in[0,\\pi]$",
+    "gravetat": "error",
+    "explicacio": "Amb $t\\in[0,\\pi]$ l'argument $2t$ recorre $[0,2\\pi]$: només una volta. Cal $t\\in[0,2\\pi]$."
+   },
+   {
+    "fragment": 4,
+    "cita": "$\\gamma'(t)=(a\\sin t,\\,-b\\cos t)$",
+    "gravetat": "error",
+    "explicacio": "La derivada de $a\\cos t$ és $-a\\sin t$: $\\gamma'(t)=(-a\\sin t,\\,-b\\cos t)$."
+   }
+  ],
+  "valoracio": "Variant amb $2t$ que només dona una volta i signe erroni a $\\gamma'$."
+ },
+ "t6-2e:normal": {
+  "problemes": [
+   {
+    "fragment": 3,
+    "cita": "és injectiva en tot el domini",
+    "gravetat": "error",
+    "explicacio": "No és injectiva: $u=0$ i $u=2\\pi$ donen el mateix punt, i per a $v=\\pm\\pi/2$ tots els $u$ van al mateix pol."
+   },
+   {
+    "fragment": 4,
+    "cita": "$\\partial_v\\varphi=(-a\\cos u\\sin v,\\ b\\sin u\\sin v,\\ c\\cos v)$",
+    "gravetat": "error",
+    "explicacio": "La segona component és $-b\\sin u\\sin v$ (derivada de $b\\sin u\\cos v$ respecte de $v$)."
+   }
+  ],
+  "valoracio": "Afirmació falsa d'injectivitat i error de signe a $\\partial_v\\varphi$."
+ },
+ "t6-5:normal": {
+  "problemes": [
+   {
+    "fragment": 1,
+    "cita": "Com que $P$ és un tancat de $\\mathbb{R}^2$, és compacte",
+    "gravetat": "error",
+    "explicacio": "La paràbola és tancada però no fitada, per tant no és compacta; cal l'argument de coercivitat ($D\\to\\infty$) per reduir-se a un compacte."
+   },
+   {
+    "fragment": 7,
+    "cita": "$d=b$ si $b\\leq2$",
+    "gravetat": "error",
+    "explicacio": "La distància és $\\sqrt{b^2}=|b|$; per a $b<0$, $d=b$ seria negativa."
+   }
+  ],
+  "valoracio": "Existència justificada amb una compacitat falsa i distància sense valor absolut."
+ },
+ "t6-7:normal": {
+  "problemes": [
+   {
+    "fragment": 2,
+    "cita": "$C$ és tancada, perquè és intersecció de dos tancats, i per tant compacta",
+    "gravetat": "error",
+    "explicacio": "Tancat no implica compacte; cal també que sigui fitada (ho és perquè és dins l'el·lipsoide)."
+   },
+   {
+    "fragment": 6,
+    "cita": "el semieix major és $2$",
+    "gravetat": "error",
+    "explicacio": "$f$ és la distància al quadrat: el semieix major és $\\sqrt2$, no 2 (incoherent amb el menor, $\\sqrt1=1$)."
+   }
+  ],
+  "valoracio": "Compacitat sense fitació i semieix major sense treure l'arrel."
+ },
+ "t6-9:normal": {
+  "problemes": [
+   {
+    "fragment": 3,
+    "cita": "$8x\\geq x^2$ (perquè $x\\geq1$)",
+    "gravetat": "error",
+    "explicacio": "$8x\\geq x^2$ per a $x>0$ equival a $x\\leq8$; la justificació correcta és $x\\leq8$, no $x\\geq1$."
+   },
+   {
+    "fragment": 5,
+    "cita": "$g(4)=25$",
+    "gravetat": "error",
+    "explicacio": "$g(4)=32-16+1=17$ (no afecta el màxim, que és 61)."
+   }
+  ],
+  "valoracio": "Justificació incorrecta de la positivitat de $g$ i valor de $g(4)$ mal calculat."
+ },
+ "t6-11:normal": {
+  "problemes": [
+   {
+    "fragment": 4,
+    "cita": "\\left(\\cos\\frac{2\\pi}{3},\\sin\\frac{2\\pi}{3}\\right)=\\left(-\\frac{\\sqrt3}{2},\\frac12\\right)",
+    "gravetat": "error",
+    "explicacio": "$\\cos\\frac{2\\pi}{3}=-\\frac12$ i $\\sin\\frac{2\\pi}{3}=\\frac{\\sqrt3}{2}$: el punt és $\\left(-\\frac12,\\frac{\\sqrt3}{2}\\right)$."
+   },
+   {
+    "fragment": 6,
+    "cita": "A més, $(1,0)$ és també un màxim local de $f$ a $\\mathbb{R}^2$.",
+    "gravetat": "error",
+    "explicacio": "Fals: $\\nabla f(1,0)=(3,0)\\neq0$, no és punt crític i $f(1+t,0)>f(1,0)$ per a $t>0$."
+   }
+  ],
+  "valoracio": "Punt de màxim mal avaluat i afirmació falsa d'extrem lliure a $(1,0)$."
+ },
+ "t6-12:normal": {
+  "problemes": [
+   {
+    "fragment": 3,
+    "cita": "s'anul·la en la direcció $(4,1,0)$",
+    "gravetat": "error",
+    "explicacio": "$Hf(p)(4,1,0)^T=(30,-7.5,0)\\neq0$; la direcció del nucli és $(1,4,0)$."
+   },
+   {
+    "fragment": 6,
+    "cita": "Com que $q$ és semidefinida positiva a tot $\\mathbb{R}^3$, la seva restricció a $T_M(p)$ és definida positiva",
+    "gravetat": "error",
+    "explicacio": "No se segueix: cal comprovar que el vector nul $(1,4,0)$ no és tangent ($-1+16=15\\neq0$). Una forma semidefinida pot anul·lar-se sobre $T_M(p)$."
+   }
+  ],
+  "valoracio": "Direcció del nucli incorrecta i conclusió de definida positiva sobre el tangent sense justificar."
+ },
+ "t6-14:normal": {
+  "problemes": [
+   {
+    "fragment": 4,
+    "cita": "$f=1+y^2+2y^2+12y^2=1+14y^2$",
+    "gravetat": "error",
+    "explicacio": "$1+y^2+2y^2+12y^2=1+15y^2$, amb valors entre 1 i 16."
+   },
+   {
+    "fragment": 7,
+    "cita": "assolit a $\\left(\\frac32,\\frac{\\sqrt3}{2}\\right)$",
+    "gravetat": "error",
+    "explicacio": "Oblida el punt simètric: el màxim 18 s'assoleix també a $\\left(\\frac32,-\\frac{\\sqrt3}{2}\\right)$, com ja indica el pas 5."
+   }
+  ],
+  "valoracio": "Error aritmètic al segment i pèrdua d'un dels dos punts de màxim."
+ },
+ "t6-15b:normal": {
+  "problemes": [
+   {
+    "fragment": 5,
+    "cita": "$\\left(-\\frac13,\\frac13,\\frac23\\right)$",
+    "gravetat": "error",
+    "explicacio": "El punt és al paraboloide: $z=x^2+y^2=\\frac29$, no $\\frac23$."
+   },
+   {
+    "fragment": 7,
+    "cita": "=11+2\\sqrt6+2=13+2\\sqrt6",
+    "gravetat": "error",
+    "explicacio": "$(2\\sqrt2+\\sqrt3)^2=11+4\\sqrt6$, i el màxim és $13+4\\sqrt6$."
+   }
+  ],
+  "valoracio": "Coordenada $z$ del mínim incorrecta i error en desenvolupar el quadrat del màxim."
+ }
+}

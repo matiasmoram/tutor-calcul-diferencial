@@ -1,0 +1,66 @@
+{
+  "id": "088285ba29fa",
+  "exercici": "t5-2",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $g(s)=\\varphi(e^{as})$, de manera que $f(\\mathbf{x})=g(x_1+\\cdots+x_m)$. Com que $\\varphi$ és de classe $\\mathcal{C}^3$ i $s\\mapsto e^{as}$ és de classe $\\mathcal{C}^\\infty$, $g$ és de classe $\\mathcal{C}^3$, i per tant $f$ és de classe $\\mathcal{C}^\\infty$.",
+    "Per la regla de la cadena, com que $\\partial(x_1+\\cdots+x_m)/\\partial x_i=1$, es té $D_if(\\mathbf{x})=g'(x_1+\\cdots+x_m)$, i iterant, $D_{i_1\\cdots i_k}f(\\mathbf{x})=g^{(k)}(x_1+\\cdots+x_m)$ per a qualsevol tria d'índexs $i_1,\\dots,i_k$ i $k\\leq3$.",
+    "Amb $S=x_1+\\cdots+x_m$, el terme d'ordre $k$ de la fórmula de Taylor a l'origen és $\\frac{1}{k!}\\sum_{i_1,\\dots,i_k}D_{i_1\\cdots i_k}f(\\mathbf{0})\\,x_{i_1}\\cdots x_{i_k}=\\frac{g^{(k)}(0)}{k!}S^k$, perquè la suma de tots els productes $x_{i_1}\\cdots x_{i_k}$ és $S^k$. Així, $P_3=\\sum_{k=0}^{3}\\frac{g^{(k)}(0)}{k!}S^k$.",
+    "Derivem $g$: $g'(s)=ae^{as}\\varphi'(e^{as})$ i $g''(s)=a^2e^{as}\\varphi'(e^{as})+a^2e^{2as}\\varphi''(e^{as})$.",
+    "A $s=0$, com que $e^0=1$: $g(0)=\\varphi(1)$, $g'(0)=a\\varphi'(1)$ i $g''(0)=a^2\\left(\\varphi'(1)+\\varphi''(1)\\right)$.",
+    "Derivant un cop més, $g'''(s)=a^3\\left(e^{as}\\varphi'(e^{as})+2e^{2as}\\varphi''(e^{as})+e^{3as}\\varphi'''(e^{as})\\right)$, i per tant $g'''(0)=a^3\\left(\\varphi'(1)+2\\varphi''(1)+\\varphi'''(1)\\right)$.",
+    "Per tant, amb $S=x_1+\\cdots+x_m$, $P_3(\\mathbf{x})=\\varphi(1)+a\\varphi'(1)\\,S+\\frac{a^2\\left(\\varphi'(1)+\\varphi''(1)\\right)}{2}S^2+\\frac{a^3\\left(\\varphi'(1)+2\\varphi''(1)+\\varphi'''(1)\\right)}{6}S^3$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "per tant $f$ és de classe $\\mathcal{C}^\\infty$",
+      "inici": 217,
+      "fi": 263,
+      "tipus": "conclusio",
+      "explicacio": "Si $\\varphi$ només és $\\mathcal{C}^3$, $g$ i $f$ només són $\\mathcal{C}^3$ en general (per exemple, si $\\varphi'''$ no és derivable a $1$); la regularitat de l'exponencial no la millora.",
+      "correccio": "$g$ és de classe $\\mathcal{C}^3$, i per tant $f=g\\circ(x_1+\\cdots+x_m)$ és de classe $\\mathcal{C}^3$, que és el que cal per al polinomi de grau $3$.",
+      "pista": "Pot una composició ser més regular que la menys regular de les funcions que hi intervenen?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "$g'''(s)=a^3\\left(e^{as}\\varphi'(e^{as})+2e^{2as}\\varphi''(e^{as})+e^{3as}\\varphi'''(e^{as})\\right)$",
+      "inici": 21,
+      "fi": 121,
+      "tipus": "calcul",
+      "explicacio": "En derivar $a^2e^{2as}\\varphi''(e^{as})$, la derivada de $e^{2as}$ aporta $2a^3e^{2as}\\varphi''$, que s'afegeix al terme $a^3e^{2as}\\varphi''$ que ve de derivar $a^2e^{as}\\varphi'(e^{as})$: el coeficient de $\\varphi''$ és $3$, no $2$.",
+      "correccio": "$g'''(s)=a^3\\left(e^{as}\\varphi'(e^{as})+3e^{2as}\\varphi''(e^{as})+e^{3as}\\varphi'''(e^{as})\\right)$ i $g'''(0)=a^3\\left(\\varphi'(1)+3\\varphi''(1)+\\varphi'''(1)\\right)$.",
+      "pista": "Quants termes amb $e^{2as}\\varphi''(e^{as})$ surten en derivar cadascun dels dos sumands de $g''$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t56.json",
+    "valoracio": "Regularitat de $f$ sobrevalorada i error a $g'''$ que es propaga al terme cúbic de $P_3$.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "per tant $f$ és de classe $\\mathcal{C}^\\infty$",
+        "gravetat": "error",
+        "explicacio": "Si $\\varphi$ només és $\\mathcal{C}^3$, $g$ i $f$ només són $\\mathcal{C}^3$; no es pot concloure $\\mathcal{C}^\\infty$."
+      },
+      {
+        "fragment": 6,
+        "cita": "2e^{2as}\\varphi''(e^{as})",
+        "gravetat": "error",
+        "explicacio": "Derivant $g''$ el terme en $\\varphi''$ surt de dues contribucions ($a^3e^{2as}\\varphi''$ i $2a^3e^{2as}\\varphi''$): el coeficient és 3, i $g'''(0)=a^3(\\varphi'(1)+3\\varphi''(1)+\\varphi'''(1))$."
+      },
+      {
+        "fragment": 7,
+        "cita": "\\frac{a^3\\left(\\varphi'(1)+2\\varphi''(1)+\\varphi'''(1)\\right)}{6}S^3",
+        "gravetat": "consequencia",
+        "explicacio": "Hereta el coeficient 2 erroni de $g'''(0)$; hauria de ser 3."
+      }
+    ]
+  },
+  "creat": 1791299721.5507267
+}

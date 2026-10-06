@@ -1,0 +1,60 @@
+{
+  "id": "5c8fcdd58e1a",
+  "exercici": "t3-7",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Fora de l'origen, les funcions $x$, $|y|$ i $\\sqrt{x^2+y^2}$ són contínues i el denominador no s'anul·la a $\\mathbb{R}^2\\setminus\\{(0,0)\\}$, de manera que $f$ hi és contínua.",
+    "A l'origen, com que $\\sqrt{x^2+y^2}\\le|x|$, tenim $|f(x,y)|=\\dfrac{|x|\\,|y|}{\\sqrt{x^2+y^2}}\\le|y|\\to0$. Pel criteri del sandvitx, el límit a l'origen és $0=f(0,0)$, i $f$ és contínua a tot $\\mathbb{R}^2$.",
+    "A l'obert $\\{y>0\\}$ tenim $f=\\dfrac{xy}{\\sqrt{x^2+y^2}}$, i a l'obert $\\{y<0\\}$ també $f=\\dfrac{xy}{\\sqrt{x^2+y^2}}$. En cadascun d'aquests oberts les parcials són quocients de funcions de classe $\\mathcal{C}^1$ amb denominador no nul, i per tant contínues; per la condició suficient, $f$ és diferenciable a tot punt amb $y\\neq0$.",
+    "En un punt $(x_0,0)$ amb $x_0\\neq0$: $\\dfrac{f(x_0,t)-f(x_0,0)}{t}=\\dfrac{x_0|t|}{t\\sqrt{x_0^2+t^2}}$, que tendeix a $\\dfrac{x_0}{|x_0|}$ quan $t\\to0^+$ i a $-\\dfrac{x_0}{|x_0|}$ quan $t\\to0^-$. Els límits laterals són diferents, no existeix $\\dfrac{\\partial f}{\\partial y}(x_0,0)$ i, per tant, $f$ no és diferenciable en aquests punts.",
+    "A l'origen, $f(t,0)=0$ i $f(0,t)=0$ per a tot $t$, així que $\\nabla f(0,0)=(0,0)$ i l'única candidata a diferencial és l'aplicació lineal nul·la.",
+    "Cal doncs que $\\dfrac{f(x,y)}{\\sqrt{x^2+y^2}}=\\dfrac{x|y|}{x^2+y^2}$ tendeixi a $0$ quan $(x,y)\\to(0,0)$. Però sobre la recta $y=x$, amb $x>0$, val $\\dfrac{x^2}{2x^2}=\\dfrac12$, de manera que $f$ no és diferenciable a l'origen.",
+    "En resum, $f$ és contínua a tot $\\mathbb{R}^2$ i és diferenciable exactament als punts amb $y\\neq0$: no ho és en cap punt de l'eix $y=0$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "com que $\\sqrt{x^2+y^2}\\le|x|$",
+      "inici": 12,
+      "fi": 42,
+      "tipus": "desigualtat",
+      "explicacio": "La desigualtat està girada: el cert és $|x|\\le\\sqrt{x^2+y^2}$, i és aquesta la que dona $\\dfrac{|x|}{\\sqrt{x^2+y^2}}\\le1$ i per tant $|f|\\le|y|$.",
+      "correccio": "Com que $|x|\\le\\sqrt{x^2+y^2}$, tenim $|f(x,y)|\\le|y|\\to0$.",
+      "pista": "Entre $|x|$ i $\\sqrt{x^2+y^2}$, quin és el més gran? Quina de les dues desigualtats necessites per fitar $|f|$ per $|y|$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 3,
+      "cita": "a l'obert $\\{y<0\\}$ també $f=\\dfrac{xy}{\\sqrt{x^2+y^2}}$",
+      "inici": 60,
+      "fi": 116,
+      "tipus": "calcul",
+      "explicacio": "Si $y<0$, $|y|=-y$, de manera que $f=-\\dfrac{xy}{\\sqrt{x^2+y^2}}$, no la mateixa expressió que a $\\{y>0\\}$.",
+      "correccio": "A l'obert $\\{y<0\\}$, $f=-\\dfrac{xy}{\\sqrt{x^2+y^2}}$ (la conclusió sobre la diferenciabilitat no canvia).",
+      "pista": "Quant val $|y|$ quan $y$ és negatiu?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3a.json",
+    "valoracio": "Conclusions correctes, però amb una desigualtat girada a la continuïtat i un signe oblidat a la regió y<0.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$\\sqrt{x^2+y^2}\\le|x|$",
+        "gravetat": "error",
+        "explicacio": "La desigualtat és al revés: $|x|\\le\\sqrt{x^2+y^2}$, que és la que permet fitar $|f|\\le|y|$."
+      },
+      {
+        "fragment": 3,
+        "cita": "a l'obert $\\{y<0\\}$ també $f=\\dfrac{xy}{\\sqrt{x^2+y^2}}$",
+        "gravetat": "error",
+        "explicacio": "Si $y<0$, $|y|=-y$ i $f=-\\dfrac{xy}{\\sqrt{x^2+y^2}}$ (la conclusió de diferenciabilitat no canvia)."
+      }
+    ]
+  },
+  "creat": 1791299309.4744554
+}

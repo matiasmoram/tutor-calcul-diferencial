@@ -1,0 +1,59 @@
+{
+  "id": "69b92ca31052",
+  "exercici": "t5-8a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Les derivades parcials són $f_x=3(x-y)^2+2(x+y)$ i $f_y=-3(x-y)^2+2(x+y)$.",
+    "Sumant les equacions $f_x=0$ i $f_y=0$ obtenim $4(x+y)=0$, i restant-les, $6(x-y)^2=0$. Per tant $x=-y$ i $x=y$, i l'únic punt crític és $(0,0)$.",
+    "Derivades segones: $f_{xx}=6(x-y)+2$, $f_{xy}=-6(x-y)+2$ i $f_{yy}=-6(x-y)+2$. A l'origen, $Hf(0,0)=\\begin{pmatrix}2&2\\\\2&2\\end{pmatrix}$.",
+    "Com que $\\det Hf(0,0)=0$ i $\\mathrm{tr}\\,Hf(0,0)=4$, els valors propis són $0$ i $4$: la hessiana és semidefinida positiva però no definida. El criteri no decideix, tot i que ja descarta que l'origen sigui un mínim local.",
+    "Estudiem $f$ en la direcció del nucli de la hessiana, la recta $y=-x$: allà $x-y=2x$ i $x+y=0$, de manera que $f(x,-x)=(2x)^3=8x^3$.",
+    "Com que $f(0,0)=0$ i $8x^3$ és positiu per a $x>0$ i negatiu per a $x<0$, tota bola centrada a l'origen conté punts amb $f>0$ i punts amb $f<0$: l'origen és un punt de sella."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "$f_{yy}=-6(x-y)+2$",
+      "inici": 59,
+      "fi": 77,
+      "tipus": "calcul",
+      "explicacio": "Derivant $f_y=-3(x-y)^2+2(x+y)$ respecte de $y$: $-3\\cdot2(x-y)\\cdot(-1)+2=6(x-y)+2$. El signe està malament (a l'origen el valor $2$ coincideix, però l'expressió és incorrecta).",
+      "correccio": "$f_{yy}=6(x-y)+2$.",
+      "pista": "Quin factor aporta la regla de la cadena en derivar $(x-y)^2$ respecte de $y$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "ja descarta que l'origen sigui un mínim local",
+      "inici": 175,
+      "fi": 220,
+      "tipus": "logica",
+      "explicacio": "Una hessiana semidefinida positiva és compatible amb un mínim; el que descarta (condició necessària) és que el punt sigui un màxim local, que exigiria una hessiana semidefinida negativa.",
+      "correccio": "El criteri no decideix, tot i que descarta que l'origen sigui un màxim local.",
+      "pista": "Quina condició necessària compleix la hessiana en un màxim local? I en un mínim local?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t56.json",
+    "valoracio": "Derivada segona $f_{yy}$ incorrecta i lectura errònia de la condició necessària (descarta màxim, no mínim).",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$f_{yy}=-6(x-y)+2$",
+        "gravetat": "error",
+        "explicacio": "Derivant $f_y=-3(x-y)^2+2(x+y)$ respecte de $y$: $f_{yy}=6(x-y)+2$ (a l'origen el valor 2 coincideix)."
+      },
+      {
+        "fragment": 4,
+        "cita": "tot i que ja descarta que l'origen sigui un mínim local",
+        "gravetat": "error",
+        "explicacio": "Una hessiana semidefinida positiva és compatible amb un mínim; el que descarta (T5.33 (v)) és que sigui un màxim local."
+      }
+    ]
+  },
+  "creat": 1791299721.553959
+}

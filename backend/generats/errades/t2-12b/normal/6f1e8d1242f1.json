@@ -1,0 +1,59 @@
+{
+  "id": "6f1e8d1242f1",
+  "exercici": "t2-12b",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Nivell $0$: si $x+y\\neq0$, $f(x,y)=0$ exigeix $x^2+y^2=0$, és a dir $(x,y)=(0,0)$, que no compleix $x+y\\neq0$; per tant no hi ha cap punt fora de la recta. Sobre la recta $x+y=0$, $f=0$ per definició.",
+    "Així $C_0=\\{(x,y)\\mid x+y=0\\}$: és tota la recta $y=-x$, l'origen inclòs.",
+    "Nivell $2$: si $x+y\\neq0$, $\\frac{x^2+y^2}{x+y}=2\\iff x^2+y^2=2(x+y)\\iff(x-1)^2+(y-1)^2=2$, la circumferència de centre $(1,1)$ i radi $2$.",
+    "Aquesta circumferència talla la recta $x+y=0$ on $(x-1)^2+(-x-1)^2=2$, és a dir, $2x^2+2=2$, $x=0$: només a l'origen. Allà $f=0\\neq2$, de manera que $C_2$ és la circumferència sense l'origen.",
+    "Nivell $-2$: $x^2+y^2=-2(x+y)\\iff(x+1)^2+(y+1)^2=2$, la circumferència de centre $(-1,-1)$ i radi $\\sqrt2$. Tots els seus punts compleixen aquesta equació, així que $C_{-2}$ és tota la circumferència.",
+    "Per al dibuix: les dues circumferències són simètriques respecte de l'origen, hi passen totes dues i en aquest punt són tangents a la recta $x+y=0$, perquè el radi que va de $(1,1)$ a $(0,0)$ té la direcció $(1,1)$, perpendicular a la recta."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "la circumferència de centre $(1,1)$ i radi $2$",
+      "inici": 92,
+      "fi": 138,
+      "tipus": "calcul",
+      "explicacio": "L'equació $(x-1)^2+(y-1)^2=2$ correspon a radi $\\sqrt2$, no $2$ (el membre dret és el quadrat del radi).",
+      "correccio": "Circumferència de centre $(1,1)$ i radi $\\sqrt2$.",
+      "pista": "A l'equació $(x-a)^2+(y-b)^2=R^2$, el membre dret és el radi o el seu quadrat?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "així que $C_{-2}$ és tota la circumferència",
+      "inici": 156,
+      "fi": 199,
+      "tipus": "logica",
+      "explicacio": "La circumferència passa per l'origen, que és de la recta $x+y=0$, on $f$ val $0$ per definició i no $-2$; l'equació només és equivalent a $f=-2$ quan $x+y\\neq0$.",
+      "correccio": "$C_{-2}$ és la circumferència de centre $(-1,-1)$ i radi $\\sqrt2$ sense l'origen.",
+      "pista": "Quant val $f$ a l'origen? Hi és, l'origen, a la circumferència $(x+1)^2+(y+1)^2=2$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t2.json",
+    "valoracio": "Radi erroni a $C_2$ i oblit del forat a l'origen a $C_{-2}$.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "radi $2$",
+        "gravetat": "error",
+        "explicacio": "$(x-1)^2+(y-1)^2=2$ té radi $\\sqrt2$."
+      },
+      {
+        "fragment": 5,
+        "cita": "Tots els seus punts compleixen aquesta equació, així que $C_{-2}$ és tota la circumferència.",
+        "gravetat": "error",
+        "explicacio": "La circumferència passa per l'origen, on $x+y=0$ i $f=0\\neq-2$: cal treure l'origen de $C_{-2}$."
+      }
+    ]
+  },
+  "creat": 1791299452.045321
+}

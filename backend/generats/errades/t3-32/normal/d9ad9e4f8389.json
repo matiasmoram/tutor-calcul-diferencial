@@ -1,0 +1,59 @@
+{
+  "id": "d9ad9e4f8389",
+  "exercici": "t3-32",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Com que existeixen les derivades parcials de $f$ a $(0,0)$, la derivada direccional en una direcció unitària $\\mathbf{v}$ és $D_{\\mathbf{v}}f(0,0)=\\langle\\nabla f(0,0),\\mathbf{v}\\rangle$.",
+    "Sigui $g(t)=f(t,t)$, que és idènticament $0$. Com que $f\\in\\mathcal{C}^1$, per la regla de la cadena $0=g'(0)=\\dfrac{\\partial f}{\\partial x}(0,0)\\cdot1+\\dfrac{\\partial f}{\\partial y}(0,0)\\cdot1$.",
+    "Per tant $\\dfrac{\\partial f}{\\partial y}(0,0)=-\\dfrac{\\partial f}{\\partial x}(0,0)=-1$ i $\\nabla f(0,0)=(1,-1)$.",
+    "Per Cauchy-Schwarz, $\\langle\\nabla f(0,0),\\mathbf{v}\\rangle\\le\\|\\nabla f(0,0)\\|\\,\\|\\mathbf{v}\\|=\\sqrt2$, amb igualtat si i només si $\\mathbf{v}$ és un múltiple positiu de $\\nabla f(0,0)$.",
+    "Per tant el vector unitari buscat és $\\mathbf{v}=\\dfrac{\\nabla f(0,0)}{\\|\\nabla f(0,0)\\|}=\\dfrac12(1,-1)$.",
+    "El valor màxim de la derivada direccional és $\\|\\nabla f(0,0)\\|=\\sqrt2$. En canvi, en la direcció de la diagonal, $\\frac{1}{\\sqrt2}(1,1)$, la derivada direccional és $0$, d'acord amb el fet que $f$ hi és constant."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "Com que existeixen les derivades parcials de $f$ a $(0,0)$",
+      "inici": 0,
+      "fi": 58,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "L'existència de les parcials no garanteix que $D_{\\mathbf v}f=\\langle\\nabla f,\\mathbf v\\rangle$; aquesta fórmula val quan $f$ és diferenciable al punt.",
+      "correccio": "Com que $f\\in\\mathcal{C}^1$, $f$ és diferenciable a $(0,0)$ i, per tant, $D_{\\mathbf{v}}f(0,0)=\\langle\\nabla f(0,0),\\mathbf{v}\\rangle$.",
+      "pista": "Quina propietat de $f$ al punt fa que la derivada direccional es pugui calcular amb el gradient?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$\\mathbf{v}=\\dfrac{\\nabla f(0,0)}{\\|\\nabla f(0,0)\\|}=\\dfrac12(1,-1)$",
+      "inici": 37,
+      "fi": 105,
+      "tipus": "calcul",
+      "explicacio": "$\\|(1,-1)\\|=\\sqrt2$, no $2$: el vector $\\frac12(1,-1)$ té norma $\\frac{1}{\\sqrt2}$, no és unitari.",
+      "correccio": "$\\mathbf{v}=\\dfrac{(1,-1)}{\\sqrt2}=\\dfrac{1}{\\sqrt2}(1,-1)$.",
+      "pista": "Quina norma té el vector que proposes? Quant val $\\|(1,-1)\\|$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3b.json",
+    "valoracio": "Gradient correcte, però la fórmula de la derivada direccional es justifica amb una hipòtesi insuficient i el vector final està mal normalitzat.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "Com que existeixen les derivades parcials de $f$ a $(0,0)$, la derivada direccional",
+        "gravetat": "error",
+        "explicacio": "$D_vf=\\langle\\nabla f,v\\rangle$ requereix diferenciabilitat (aquí garantida per $f\\in\\mathcal{C}^1$), no només l'existència de parcials."
+      },
+      {
+        "fragment": 5,
+        "cita": "\\dfrac12(1,-1)",
+        "gravetat": "error",
+        "explicacio": "$\\|(1,-1)\\|=\\sqrt2$, per tant $\\mathbf{v}=\\frac{1}{\\sqrt2}(1,-1)$; $\\frac12(1,-1)$ no és unitari."
+      }
+    ]
+  },
+  "creat": 1791299348.7139122
+}

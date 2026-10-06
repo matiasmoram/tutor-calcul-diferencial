@@ -1,0 +1,60 @@
+{
+  "id": "ca6e0b9d3214",
+  "exercici": "t3-4",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Comencem per $f$. Sigui $u=(u_1,u_2)\\neq(0,0)$. Per a $t\\neq0$, $f(tu)=\\dfrac{2t^2u_1u_2}{t^2(u_1^2+u_2^2)}=\\dfrac{2u_1u_2}{u_1^2+u_2^2}$, que no depèn de $t$.",
+    "Com que $f(0,0)=1$, el quocient incremental és $\\dfrac{f(tu)-f(0,0)}{t}=\\dfrac{1}{t}\\left(\\dfrac{2u_1u_2}{u_1^2+u_2^2}-1\\right)=\\dfrac{1}{t}\\cdot\\dfrac{(u_1-u_2)^2}{u_1^2+u_2^2}$.",
+    "Aquest quocient té límit quan $t\\to0$ si i només si $(u_1-u_2)^2=0$, és a dir, $u_1=u_2$: en aquest cas és idènticament $0$ i $D_uf(0,0)=0$. Si $u_1\\neq u_2$, el quocient tendeix a $+\\infty$ per un costat i a $-\\infty$ per l'altre, i no hi ha derivada direccional.",
+    "Per tant, $f$ té derivada direccional a l'origen només en la direcció $u=\\dfrac{1}{\\sqrt2}(1,1)$, i hi val $0$.",
+    "En particular, no existeixen les derivades parcials de $f$ a l'origen, ja que $(1,0)$ i $(0,1)$ no compleixen $u_1=u_2$.",
+    "Per a $g$, si $t\\neq0$, $\\dfrac{g(tu)-g(0,0)}{t}=\\dfrac{t^3u_1^3}{t\\cdot t^2(u_1^2+u_2^2)}=\\dfrac{u_1^3}{u_1^2+u_2^2}$, que no depèn de $t$.",
+    "Així, el límit existeix per a tota $u\\neq(0,0)$: $g$ té derivada direccional a l'origen en totes les direccions, amb $D_ug(0,0)=\\dfrac{u_1^3}{u_1^2+u_2^2}$, que per a $u$ unitari és $u_1^3$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$\\dfrac{f(tu)-f(0,0)}{t}=\\dfrac{1}{t}\\left(\\dfrac{2u_1u_2}{u_1^2+u_2^2}-1\\right)=\\dfrac{1}{t}\\cdot\\dfrac{(u_1-u_2)^2}{u_1^2+u_2^2}$",
+      "inici": 47,
+      "fi": 178,
+      "tipus": "calcul",
+      "explicacio": "$2u_1u_2-(u_1^2+u_2^2)=-(u_1-u_2)^2$: falta un signe menys (la condició d'existència no canvia, però l'expressió és falsa).",
+      "correccio": "$\\dfrac{f(tu)-f(0,0)}{t}=-\\dfrac{1}{t}\\cdot\\dfrac{(u_1-u_2)^2}{u_1^2+u_2^2}$.",
+      "pista": "Si $u_1=1$, $u_2=0$, quin signe té $\\dfrac{2u_1u_2}{u_1^2+u_2^2}-1$? I la teva expressió?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "només en la direcció $u=\\dfrac{1}{\\sqrt2}(1,1)$",
+      "inici": 49,
+      "fi": 96,
+      "tipus": "conclusio",
+      "explicacio": "La condició trobada és $u_1=u_2$, que compleixen tots els vectors $(a,a)$ amb $a\\neq0$, inclòs el sentit oposat $(-1,-1)/\\sqrt2$; no només aquell vector unitari.",
+      "correccio": "$f$ té derivada direccional a l'origen exactament per als vectors $u=(a,a)$, $a\\neq0$ (la bisectriu $y=x$ en tots dos sentits), i hi val $0$.",
+      "pista": "Quins vectors compleixen $u_1=u_2$? Què passa amb $(-1,-1)$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3a.json",
+    "valoracio": "Error de signe al quocient i conclusió per a f que omet el sentit oposat i els múltiples de la bisectriu.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "=\\dfrac{1}{t}\\cdot\\dfrac{(u_1-u_2)^2}{u_1^2+u_2^2}",
+        "gravetat": "error",
+        "explicacio": "$\\frac{2u_1u_2}{u_1^2+u_2^2}-1=-\\frac{(u_1-u_2)^2}{u_1^2+u_2^2}$: falta el signe menys (no afecta la conclusió)."
+      },
+      {
+        "fragment": 4,
+        "cita": "només en la direcció $u=\\dfrac{1}{\\sqrt2}(1,1)$",
+        "gravetat": "error",
+        "explicacio": "Del pas anterior surt $u_1=u_2$, és a dir tots els $u=(a,a)$, $a\\neq0$, inclòs el sentit oposat $(-1,-1)$; no només el vector unitari $(1,1)/\\sqrt2$."
+      }
+    ]
+  },
+  "creat": 1791299309.467196
+}

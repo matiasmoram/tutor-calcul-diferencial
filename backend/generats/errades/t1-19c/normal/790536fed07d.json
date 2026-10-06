@@ -1,0 +1,60 @@
+{
+  "id": "790536fed07d",
+  "exercici": "t1-19c",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Prenem $\\mathbb{N}=\\{1,2,\\dots\\}$. Si $a\\neq b$, el conjunt $\\{k\\mid a_k\\neq b_k\\}$ és un subconjunt no buit de $\\mathbb{N}$ i té mínim, que denotem $k(a,b)$; així $d(a,b)=1/k(a,b)$ està ben definida.",
+    "Si $a\\neq b$, $d(a,b)=1/k(a,b)>0$, i si $a=b$, $d(a,b)=0$; per tant $d\\geq 0$ i $d(a,b)=0\\iff a=b$. A més $a_k\\neq b_k\\iff b_k\\neq a_k$, així que $k(a,b)=k(b,a)$ i $d(a,b)=d(b,a)$.",
+    "Desigualtat triangular: si dos dels tres punts $a,b,c$ coincideixen, és immediata. Altrament, $a_j=c_j$ per a $j<k(a,c)$ i $c_j=b_j$ per a $j<k(c,b)$, d'on $a_j=b_j$ per a tot $j<\\min\\{k(a,c),k(c,b)\\}$.",
+    "Per tant $k(a,b)\\geq\\min\\{k(a,c),k(c,b)\\}$ i, prenent inversos, $d(a,b)\\leq\\min\\{d(a,c),d(c,b)\\}$, que és $\\leq d(a,c)+d(c,b)$. Així $d$ és una distància i $(\\{0,1\\}^{\\mathbb{N}},d)$ és un espai mètric.",
+    "Bola: sigui $\\mathbf 0$ la successió nul·la i $\\epsilon>0$. Per a $b\\neq\\mathbf 0$, $d(\\mathbf 0,b)<\\epsilon\\iff 1/k(\\mathbf 0,b)<\\epsilon\\iff k(\\mathbf 0,b)>1/\\epsilon$, és a dir, el primer índex on $b$ val $1$ és més gran que $1/\\epsilon$.",
+    "Equivalentment, $b_k=0$ per a tot $k<1/\\epsilon$: la bola $B(\\mathbf 0,\\epsilon)$ està formada per $\\mathbf 0$ i les successions que s'anul·len en tots aquests índexs.",
+    "En particular, si $\\epsilon>1$, aleshores $1/\\epsilon<1$ i no hi ha cap condició: la bola és tot l'espai $\\{0,1\\}^{\\mathbb{N}}$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "prenent inversos, $d(a,b)\\leq\\min\\{d(a,c),d(c,b)\\}$",
+      "inici": 46,
+      "fi": 97,
+      "tipus": "desigualtat",
+      "explicacio": "En prendre inversos el mínim dels índexs es converteix en el màxim de les distàncies: $1/\\min\\{k(a,c),k(c,b)\\}=\\max\\{d(a,c),d(c,b)\\}$. La fita amb el mínim és falsa: per a $a=000\\dots$, $c=100\\dots$, $b=110\\dots$, $d(a,b)=1>\\frac12=\\min$.",
+      "correccio": "Prenent inversos, $d(a,b)\\leq\\max\\{d(a,c),d(c,b)\\}\\leq d(a,c)+d(c,b)$.",
+      "pista": "Si $k_1\\geq\\min\\{k_2,k_3\\}$, què pots dir de $1/k_1$ respecte de $1/k_2$ i $1/k_3$? Quin dels dos inversos és el gran?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "Equivalentment, $b_k=0$ per a tot $k<1/\\epsilon$",
+      "inici": 0,
+      "fi": 48,
+      "tipus": "desigualtat",
+      "explicacio": "La condició $k(\\mathbf 0,b)>1/\\epsilon$ vol dir que $b_k=0$ per a tot $k\\leq 1/\\epsilon$, amb desigualtat no estricta. Per a $\\epsilon=\\frac13$, la successió amb $b_1=b_2=0$, $b_3=1$ compleix la condició escrita però $d(\\mathbf 0,b)=\\frac13\\not<\\epsilon$.",
+      "correccio": "$b_k=0$ per a tot $k\\leq 1/\\epsilon$; amb $N=\\lfloor 1/\\epsilon\\rfloor$, $B(\\mathbf 0,\\epsilon)=\\{b\\mid b_1=\\dots=b_N=0\\}$.",
+      "pista": "Si $\\epsilon=\\frac13$, la successió $b=(0,0,1,0,\\dots)$ és a la bola? Compleix la teva condició?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t1.json",
+    "valoracio": "Positivitat, simetria i el cas $\\epsilon>1$ són correctes, però la desigualtat ultramètrica usa min en lloc de max i la bola té la condició de frontera errònia.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "$d(a,b)\\leq\\min\\{d(a,c),d(c,b)\\}$",
+        "gravetat": "error",
+        "explicacio": "Prendre inversos de $k(a,b)\\geq\\min\\{k(a,c),k(c,b)\\}$ dona $d(a,b)\\leq\\max\\{d(a,c),d(c,b)\\}$, no el mínim (que és fals en general)."
+      },
+      {
+        "fragment": 6,
+        "cita": "$b_k=0$ per a tot $k<1/\\epsilon$",
+        "gravetat": "error",
+        "explicacio": "$k(\\mathbf 0,b)>1/\\epsilon$ equival a $b_k=0$ per a tot $k\\leq 1/\\epsilon$; amb $<$ s'hi inclouen erròniament successions amb $b_k=1$ per a $k=1/\\epsilon$ enter."
+      }
+    ]
+  },
+  "creat": 1791299422.5393887
+}

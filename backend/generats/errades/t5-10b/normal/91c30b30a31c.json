@@ -1,0 +1,60 @@
+{
+  "id": "91c30b30a31c",
+  "exercici": "t5-10b",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $g(x)=e^x+e^{-x^2}$. Com que $g(x)>1$ per a tot $x$, l'arrel $\\sqrt{g(x)}$ està ben definida i és diferenciable, i $f(x,y)=-y^4-e^{-x^2}+2y^2\\sqrt{g(x)}$.",
+    "Derivant respecte de $y$: $f_y=-4y^3+4y\\sqrt{g(x)}=4y\\big(\\sqrt{g(x)}-y^2\\big)$.",
+    "Derivant respecte de $x$, amb $g'(x)=e^x-2xe^{-x^2}$: $f_x=2xe^{-x^2}+2y^2\\frac{g'(x)}{2\\sqrt{g(x)}}=2xe^{-x^2}+y^2\\frac{e^x-2xe^{-x^2}}{\\sqrt{g(x)}}$.",
+    "Per tant $f_y=0$ si i només si $y=0$ o $y^2=\\sqrt{g(x)}$, és a dir, $y=\\sqrt[4]{g(x)}$.",
+    "Cas $y=0$: $f_x(x,0)=2xe^{-x^2}=0$ si i només si $x=0$, perquè $e^{-x^2}>0$. Obtenim el punt crític $(0,0)$.",
+    "Cas $y^2=\\sqrt{g(x)}$: substituint, $f_x=2xe^{-x^2}+\\sqrt{g(x)}\\,\\frac{e^x-2xe^{-x^2}}{\\sqrt{g(x)}}=2xe^{-x^2}+e^x-2xe^{-x^2}=e^x>0$, que no s'anul·la mai: en aquest cas no hi ha punts crítics.",
+    "Per tant, l'únic punt crític de $f$ és $(0,0)$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "$g(x)>1$ per a tot $x$",
+      "inici": 35,
+      "fi": 57,
+      "tipus": "desigualtat",
+      "explicacio": "És fals: per exemple $g(-1)=e^{-1}+e^{-1}\\approx0.74<1$. El que és cert (i és tot el que cal) és $g(x)>0$, perquè és suma d'exponencials.",
+      "correccio": "Com que $g(x)>0$ per a tot $x$ (suma de dues exponencials), l'arrel està ben definida i és diferenciable.",
+      "pista": "Quant val $g(-1)$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "és a dir, $y=\\sqrt[4]{g(x)}$",
+      "inici": 58,
+      "fi": 86,
+      "tipus": "logica",
+      "explicacio": "L'equació $y^2=\\sqrt{g(x)}$ té dues solucions, $y=\\pm\\sqrt[4]{g(x)}$; quedar-se només amb l'arrel positiva oblida la meitat dels punts on s'anul·la $f_y$.",
+      "correccio": "És a dir, $y=\\pm\\sqrt[4]{g(x)}$.",
+      "pista": "Quantes solucions té l'equació $y^2=c$ quan $c>0$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t56.json",
+    "valoracio": "Fita falsa de $g$ i pèrdua de l'arrel negativa en resoldre $f_y=0$.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "Com que $g(x)>1$ per a tot $x$",
+        "gravetat": "error",
+        "explicacio": "Fals: $g(-1)=2e^{-1}<1$ i $g(x)\\to0$ quan $x\\to-\\infty$. El que és cert (i suficient) és $g(x)>0$."
+      },
+      {
+        "fragment": 4,
+        "cita": "és a dir, $y=\\sqrt[4]{g(x)}$",
+        "gravetat": "error",
+        "explicacio": "$y^2=\\sqrt{g(x)}$ equival a $y=\\pm\\sqrt[4]{g(x)}$; es perd la branca negativa."
+      }
+    ]
+  },
+  "creat": 1791299721.5556872
+}

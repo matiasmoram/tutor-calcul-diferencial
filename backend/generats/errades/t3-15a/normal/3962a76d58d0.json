@@ -1,0 +1,59 @@
+{
+  "id": "3962a76d58d0",
+  "exercici": "t3-15a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Les funcions $\\log y$ i $x/y$ són de classe $\\mathcal{C}^1$ per a $y>0$, i $\\arcsin$ és derivable, amb derivada contínua, a l'interval tancat $[-1,1]$. Per tant, a l'obert $U=\\{(x,y,z): y>0,\\ |x\\log y|<1\\}$, que conté $a$ (allà $x\\log y=0$), totes les parcials de $f$ existeixen i són contínues, i $f$ és diferenciable a $a$: existeix l'hiperplà tangent a la gràfica.",
+    "El valor al punt és $f(0,1,2)=1\\cdot\\arcsin(0\\cdot\\log1)+2^{0}=0+1=1$.",
+    "Derivant respecte de $x$, $\\dfrac{\\partial f}{\\partial x}=\\dfrac{y\\log y}{\\sqrt{1-x^2\\log^2y}}+\\dfrac{\\log2}{y}\\,2^{x/y}$, que a $a$ val $0+\\log2=\\log2$.",
+    "Respecte de $y$, $\\dfrac{\\partial f}{\\partial y}=\\arcsin(x\\log y)+\\dfrac{x}{\\sqrt{1-x^2\\log^2y}}-\\dfrac{x\\log2}{y}\\,2^{x/y}$, que a $a$ val $0$ perquè $x=0$. A més, $f$ no depèn de $z$, així que $\\dfrac{\\partial f}{\\partial z}=0$ i $\\nabla f(a)=(\\log2,0,0)$.",
+    "La gràfica de $f$ és a $\\mathbb{R}^4$; amb coordenades $(x,y,z,w)$, l'hiperplà tangent és $w=f(a)+\\nabla f(a)\\cdot(x-0,y-1,z-2)$.",
+    "Substituint, $w=1+\\log2\\,(x-0)+0\\,(y-1)+0\\,(z-2)$, és a dir, $w=1+(\\log2)\\,x$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "derivable, amb derivada contínua, a l'interval tancat $[-1,1]$",
+      "inici": 88,
+      "fi": 150,
+      "tipus": "hipotesi",
+      "explicacio": "$\\arcsin'(s)=\\dfrac{1}{\\sqrt{1-s^2}}$ no està definida a $s=\\pm1$: $\\arcsin$ només és derivable amb derivada contínua a l'obert $(-1,1)$ (per això cal $|x\\log y|<1$).",
+      "correccio": "$\\arcsin$ és derivable, amb derivada contínua, a l'interval obert $(-1,1)$.",
+      "pista": "Quant val la derivada d'$\\arcsin$ a $s=1$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "$\\dfrac{\\partial f}{\\partial y}=\\arcsin(x\\log y)+\\dfrac{x}{\\sqrt{1-x^2\\log^2y}}-\\dfrac{x\\log2}{y}\\,2^{x/y}$",
+      "inici": 17,
+      "fi": 124,
+      "tipus": "calcul",
+      "explicacio": "La derivada de $x/y$ respecte de $y$ és $-x/y^2$, així que el terme correcte és $-\\dfrac{x\\log2}{y^2}2^{x/y}$ (a $a$ s'anul·la igualment perquè $x=0$).",
+      "correccio": "$\\dfrac{\\partial f}{\\partial y}=\\arcsin(x\\log y)+\\dfrac{x}{\\sqrt{1-x^2\\log^2y}}-\\dfrac{x\\log2}{y^2}\\,2^{x/y}$.",
+      "pista": "Quina és la derivada de $x/y$ respecte de $y$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3a.json",
+    "valoracio": "Hiperplà correcte, però domini de derivabilitat de l'arcsinus mal enunciat i una derivada parcial mal calculada.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "a l'interval tancat $[-1,1]$",
+        "gravetat": "error",
+        "explicacio": "$\\arcsin$ no és derivable a $\\pm1$ (la derivada $1/\\sqrt{1-s^2}$ hi explota); només ho és a l'obert $(-1,1)$."
+      },
+      {
+        "fragment": 4,
+        "cita": "-\\dfrac{x\\log2}{y}\\,2^{x/y}",
+        "gravetat": "error",
+        "explicacio": "$\\partial_y2^{x/y}=2^{x/y}\\log2\\cdot(-x/y^2)$: falta el quadrat a $y$ (a $a$ el valor és 0 igualment perquè $x=0$)."
+      }
+    ]
+  },
+  "creat": 1791299309.4920428
+}

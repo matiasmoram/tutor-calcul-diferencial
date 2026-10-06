@@ -1,0 +1,61 @@
+{
+  "id": "9115cd1a7a50",
+  "exercici": "t1-10b",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Hem de veure tres coses: que $A\\subseteq\\overline{A}$, que $\\overline{A}$ és tancat i que tot tancat $C\\supseteq A$ conté $\\overline{A}$. Recordem que $x\\in\\overline{A}$ si i només si $B_r(x)\\cap A\\neq\\varnothing$ per a tot $r>0$.",
+    "Si $x\\in A$, per a tot $r>0$ tenim $x\\in B_r(x)\\cap A$, que per tant és no buit. Així $A\\subseteq\\overline{A}$.",
+    "Per veure que $\\overline{A}$ és tancat, veurem que el seu complementari és obert. Sigui $x\\notin\\overline{A}$: existeix $r>0$ amb $B_r(x)\\cap A=\\varnothing$.",
+    "Per a $y\\in B_r(x)$, amb $s=r+d(x,y)>0$ es té $B_s(y)\\subseteq B_r(x)$, i per tant $B_s(y)\\cap A=\\varnothing$, és a dir, $y\\notin\\overline{A}$.",
+    "Així $B_r(x)\\subseteq(\\overline{A})^c$ per a cada $x\\in(\\overline{A})^c$, de manera que $(\\overline{A})^c$ és obert i $\\overline{A}$ és tancat.",
+    "Minimalitat: sigui $C$ un tancat amb $A\\subseteq C$, i sigui $x\\notin C$. Com que $C^c$ és obert, existeix $r>0$ amb $B_r(x)\\subseteq C^c$.",
+    "Com que $A\\subseteq C$, tenim $A^c\\subseteq C^c$, i per tant $B_r(x)\\subseteq A^c$.",
+    "És a dir, $B_r(x)\\cap A=\\varnothing$ i $x\\notin\\overline{A}$. Hem vist $C^c\\subseteq(\\overline{A})^c$, o sigui, $\\overline{A}\\subseteq C$: $\\overline{A}$ és el tancat més petit que conté $A$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "amb $s=r+d(x,y)>0$ es té $B_s(y)\\subseteq B_r(x)$",
+      "inici": 21,
+      "fi": 70,
+      "tipus": "calcul",
+      "explicacio": "Amb $s=r+d(x,y)$ la bola $B_s(y)$ és més gran que $B_r(x)$ (de fet la conté), i la inclusió és falsa si $y\\neq x$. El radi que funciona és $s=r-d(x,y)$, positiu perquè $y\\in B_r(x)$.",
+      "correccio": "Amb $s=r-d(x,y)>0$, la desigualtat triangular dona $B_s(y)\\subseteq B_r(x)$.",
+      "pista": "Si $z\\in B_s(y)$, quina fita tens per a $d(z,x)$? Quin valor de $s$ la fa més petita que $r$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "Com que $A\\subseteq C$, tenim $A^c\\subseteq C^c$, i per tant $B_r(x)\\subseteq A^c$",
+      "inici": 0,
+      "fi": 82,
+      "tipus": "logica",
+      "explicacio": "Passar al complementari inverteix la inclusió: de $A\\subseteq C$ se segueix $C^c\\subseteq A^c$, no $A^c\\subseteq C^c$. A més, amb $A^c\\subseteq C^c$ no es podria deduir $B_r(x)\\subseteq A^c$ a partir de $B_r(x)\\subseteq C^c$.",
+      "correccio": "Com que $A\\subseteq C$, tenim $C^c\\subseteq A^c$, i per tant $B_r(x)\\subseteq C^c\\subseteq A^c$.",
+      "pista": "Si un conjunt està dins d'un altre, com es relacionen els seus complementaris? Fes un dibuix amb dos discos encaixats."
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t1.json",
+    "valoracio": "Estructura correcta, però el radi de la bola interior i el pas al complementari estan invertits.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "$s=r+d(x,y)>0$",
+        "gravetat": "error",
+        "explicacio": "Amb $s=r+d(x,y)$ la bola $B_s(y)$ no està continguda a $B_r(x)$; cal $s=r-d(x,y)$."
+      },
+      {
+        "fragment": 7,
+        "cita": "tenim $A^c\\subseteq C^c$",
+        "gravetat": "error",
+        "explicacio": "La inclusió és la contrària: $A\\subseteq C\\Rightarrow C^c\\subseteq A^c$; i de $A^c\\subseteq C^c$ no se seguiria $B_r(x)\\subseteq A^c$."
+      }
+    ]
+  },
+  "creat": 1791299422.5220256
+}

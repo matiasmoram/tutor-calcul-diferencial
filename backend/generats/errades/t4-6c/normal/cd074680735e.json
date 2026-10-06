@@ -1,0 +1,60 @@
+{
+  "id": "cd074680735e",
+  "exercici": "t4-6c",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $B=\\{(s,t)\\in\\mathbb{R}^2\\mid s>0,\\ 0<t<2\\pi\\}$, que és obert. Sabem que $G\\in\\mathcal{C}^\\infty(\\mathbb{R}^2)$ i, per l'apartat (a), $\\det JG(s,t)=\\sinh^2s+\\sin^2t>0$ a tot $B$. Falta veure que $G|_B$ és injectiva.",
+    "Sigui $(x,y)=G(s,t)$ amb $(s,t)\\in B$. Com que $\\cosh s>0$ i $\\sinh s>0$, tenim $\\cos t=\\frac{x}{\\cosh s}$ i $\\sin t=\\frac{y}{\\sinh s}$, i per tant $\\frac{x^2}{\\cosh^2s}+\\frac{y^2}{\\sinh^2s}=1$.",
+    "A més, $(x,y)\\neq(0,0)$: si $x=0$, aleshores $\\cos t=0$, $|\\sin t|=1$ i $|y|=\\sinh s>0$.",
+    "Considerem $\\phi(\\sigma)=\\frac{x^2}{\\cosh^2\\sigma}+\\frac{y^2}{\\sinh^2\\sigma}$ per a $\\sigma>0$. Com que $\\cosh$ i $\\sinh$ són positives i estrictament creixents a $(0,\\infty)$, i $x$ o $y$ és no nul, $\\phi$ és estrictament creixent a $(0,\\infty)$.",
+    "Per tant l'equació $\\phi(\\sigma)=1$ té com a única solució $\\sigma=s$: el punt $(x,y)$ determina $s$.",
+    "Un cop fixat $s$, la igualtat $\\cos t=\\frac{x}{\\cosh s}$ determina $t$ de manera única a l'interval $(0,2\\pi)$. Així, si $G(s,t)=G(s',t')$ amb $(s,t),(s',t')\\in B$, aleshores $s=s'$ i $t=t'$: $G|_B$ és injectiva.",
+    "Per tant $G:B\\to G(B)$ és bijectiva; $G(B)$ és obert pel teorema de l'aplicació oberta, i la inversa és de classe $\\mathcal{C}^\\infty$ perquè, entorn de cada punt de $G(B)$, coincideix amb la inversa local que dona el teorema de la funció inversa. Així $G|_B$ té inversa global de classe $\\mathcal{C}^\\infty$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "$\\phi$ és estrictament creixent a $(0,\\infty)$",
+      "inici": 200,
+      "fi": 246,
+      "tipus": "desigualtat",
+      "explicacio": "Si els denominadors $\\cosh^2\\sigma$ i $\\sinh^2\\sigma$ creixen, els quocients decreixen: $\\phi$ és estrictament decreixent, no creixent.",
+      "correccio": "Cada terme és no creixent i almenys un és estrictament decreixent, per tant $\\phi$ és estrictament decreixent a $(0,\\infty)$.",
+      "pista": "Si el denominador d'una fracció amb numerador fix augmenta, què fa la fracció?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "la igualtat $\\cos t=\\frac{x}{\\cosh s}$ determina $t$ de manera única a l'interval $(0,2\\pi)$",
+      "inici": 18,
+      "fi": 110,
+      "tipus": "logica",
+      "explicacio": "El cosinus no és injectiu a $(0,2\\pi)$: $t$ i $2\\pi-t$ tenen el mateix cosinus. Cal fer servir també $\\sin t=\\frac{y}{\\sinh s}$.",
+      "correccio": "El parell $(\\cos t,\\sin t)=\\big(\\frac{x}{\\cosh s},\\frac{y}{\\sinh s}\\big)$ determina $t$ mòdul $2\\pi$, i per tant de manera única a $(0,2\\pi)$.",
+      "pista": "Quants valors de $t\\in(0,2\\pi)$ tenen un mateix cosinus? Quina altra informació tens de $t$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4a.json",
+    "valoracio": "Estructura correcta, però la monotonia de phi està invertida i la determinació de t amb només el cosinus és falsa.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "$\\phi$ és estrictament creixent a $(0,\\infty)$",
+        "gravetat": "error",
+        "explicacio": "Com que $\\cosh$ i $\\sinh$ creixen, els termes $x^2/\\cosh^2\\sigma$ i $y^2/\\sinh^2\\sigma$ decreixen: $\\phi$ és estrictament decreixent."
+      },
+      {
+        "fragment": 6,
+        "cita": "la igualtat $\\cos t=\\frac{x}{\\cosh s}$ determina $t$ de manera única a l'interval $(0,2\\pi)$",
+        "gravetat": "error",
+        "explicacio": "El cosinus sol no determina $t$ a $(0,2\\pi)$ ($t$ i $2\\pi-t$ tenen el mateix cosinus); cal usar també $\\sin t=y/\\sinh s$."
+      }
+    ]
+  },
+  "creat": 1791299402.9659448
+}

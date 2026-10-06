@@ -1,0 +1,61 @@
+{
+  "id": "cd30e75ce2fe",
+  "exercici": "t3-11a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "El logaritme demana $x+y+1>0$, i la integral $\\displaystyle\\int_0^x y\\cos t^2\\,dt$ està definida per a tot $(x,y)$ perquè l'integrand és continu en $t$. El domini és el semiplà $\\{(x,y): x+y+1>0\\}$, que és obert.",
+    "Escrivim $f(x,y)=\\log(x+y+1)+y\\,G(x)$, amb $G(x)=\\displaystyle\\int_0^x\\cos t^2\\,dt$, ja que $y$ no depèn de la variable d'integració $t$.",
+    "Pel teorema fonamental del càlcul, $G'(x)=2x\\cos x^2$, i per tant $\\dfrac{\\partial f}{\\partial x}=\\dfrac{1}{x+y+1}+2xy\\cos x^2$.",
+    "Respecte de $y$, $G(x)$ és constant i $\\dfrac{\\partial f}{\\partial y}=\\dfrac{1}{x+y+1}+G(x)$.",
+    "Les dues parcials són contínues a l'obert $\\{x+y+1>0\\}$ ($G$ és contínua, i la resta són composicions, productes i quocients de funcions contínues amb denominador no nul). Per la condició suficient de diferenciabilitat, $f$ és diferenciable (de fet, de classe $\\mathcal{C}^1$) a tot el domini.",
+    "A l'origen, $\\dfrac{\\partial f}{\\partial x}(0,0)=1+0=1$ i $\\dfrac{\\partial f}{\\partial y}(0,0)=1+G(0)=1$. Així $Jf(0,0)=(1\\ \\ 1)$, és a dir, $Df(0,0)(h,k)=h+k$.",
+    "Com que $f(0,0)=\\log1+0=0$, l'aproximació lineal dona $f(0.03,0.02)\\approx f(0,0)+Df(0,0)(0.03,0.02)=0+0.03+0.02=0.05$.",
+    "A més, com que $\\log(1+s)\\ge s$ per a tot $s>-1$, el valor exacte $f(0.03,0.02)=\\log(1.05)+0.02\\,G(0.03)$ és una mica més gran que $0.05$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "$G'(x)=2x\\cos x^2$, i per tant $\\dfrac{\\partial f}{\\partial x}=\\dfrac{1}{x+y+1}+2xy\\cos x^2$",
+      "inici": 35,
+      "fi": 127,
+      "tipus": "calcul",
+      "explicacio": "El límit superior de la integral és $x$, no $x^2$: pel teorema fonamental del càlcul $G'(x)=\\cos x^2$, sense el factor $2x$ de la regla de la cadena.",
+      "correccio": "$G'(x)=\\cos x^2$, i $\\dfrac{\\partial f}{\\partial x}=\\dfrac{1}{x+y+1}+y\\cos x^2$ (a l'origen el valor, $1$, no canvia).",
+      "pista": "Quin és el límit superior de la integral que defineix $G$? Cal aplicar-hi la regla de la cadena?"
+    },
+    {
+      "id": "e2",
+      "fragment": 8,
+      "cita": "$\\log(1+s)\\ge s$ per a tot $s>-1$, el valor exacte $f(0.03,0.02)=\\log(1.05)+0.02\\,G(0.03)$ és una mica més gran que $0.05$",
+      "inici": 15,
+      "fi": 137,
+      "tipus": "desigualtat",
+      "explicacio": "La desigualtat està girada: $\\log(1+s)\\le s$ (el logaritme és còncau). De fet $\\log1.05\\approx0.0488$ i $0.02\\,G(0.03)\\approx0.0006$, i el valor exacte és $\\approx0.0494$, inferior a $0.05$.",
+      "correccio": "Com que $\\log(1+s)\\le s$, $\\log1.05<0.05$; numèricament $f(0.03,0.02)\\approx0.0488+0.0006\\approx0.0494$, una mica per sota de l'aproximació $0.05$.",
+      "pista": "La gràfica de $\\log(1+s)$, queda per sobre o per sota de la seva recta tangent a $s=0$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3a.json",
+    "valoracio": "Diferencial i aproximació correctes, però derivada de la integral mal calculada i comentari final sobre el valor exacte fals.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$G'(x)=2x\\cos x^2$",
+        "gravetat": "error",
+        "explicacio": "Pel teorema fonamental del càlcul, $G'(x)=\\cos x^2$ (l'extrem superior és $x$, sense regla de la cadena); per tant $\\partial_xf=\\frac{1}{x+y+1}+y\\cos x^2$."
+      },
+      {
+        "fragment": 8,
+        "cita": "$\\log(1+s)\\ge s$",
+        "gravetat": "error",
+        "explicacio": "La desigualtat és $\\log(1+s)\\le s$; de fet $f(0.03,0.02)\\approx0.0494$, una mica més petit que $0.05$."
+      }
+    ]
+  },
+  "creat": 1791299309.4852521
+}

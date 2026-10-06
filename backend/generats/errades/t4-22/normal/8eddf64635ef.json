@@ -1,0 +1,65 @@
+{
+  "id": "8eddf64635ef",
+  "exercici": "t4-22",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $G(x,y,z)=2x^2+y^2+z^3-5xz-2$. Com que és polinòmica, és de classe $\\mathcal{C}^1$, i $G(1,2,1)=2+4+1-5-2=0$.",
+    "$\\frac{\\partial G}{\\partial z}=3z^2-5x$, que en $p=(1,2,1)$ val $3-5=-2\\neq0$.",
+    "Pel teorema de la funció implícita aplicat a $G\\in\\mathcal{C}^1$, existeixen un obert $\\Omega\\ni(1,2)$ i $g:\\Omega\\to\\mathbb{R}$ de classe $\\mathcal{C}^\\infty$ amb $g(1,2)=1$ i $G(x,y,g(x,y))=0$ per a tot $(x,y)\\in\\Omega$.",
+    "Derivant aquesta identitat respecte de $x$ i de $y$ amb la regla de la cadena: $G_x+G_z\\,g_x=0$ i $G_y+G_z\\,g_y=0$, amb $G_x,G_y,G_z$ avaluades a $(x,y,g(x,y))$. Al punt, com que $G_z(p)\\neq0$, $g_x(1,2)=-\\frac{G_x(p)}{G_z(p)}$ i $g_y(1,2)=-\\frac{G_y(p)}{G_z(p)}$.",
+    "$\\frac{\\partial G}{\\partial x}=4x-5$, que en $p$ val $-1$, i $\\frac{\\partial G}{\\partial y}=2y$, que en $p$ val $4$.",
+    "Per tant $g_x(1,2)=-\\frac{-1}{-2}=-\\frac12$ i $g_y(1,2)=-\\frac{4}{-2}=2$, és a dir, $\\nabla g(1,2)=(-1/2,2)$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "aplicat a $G\\in\\mathcal{C}^1$, existeixen un obert $\\Omega\\ni(1,2)$ i $g:\\Omega\\to\\mathbb{R}$ de classe $\\mathcal{C}^\\infty$",
+      "inici": 35,
+      "fi": 159,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "Aplicat a una funció de classe $\\mathcal{C}^1$, el teorema de la funció implícita només dona $g$ de classe $\\mathcal{C}^1$. Per obtenir $g\\in\\mathcal{C}^\\infty$ cal usar que $G$, polinòmica, és $\\mathcal{C}^r$ per a tot $r$ (o un argument d'inducció).",
+      "correccio": "Com que $G$ és polinòmica, és de classe $\\mathcal{C}^r$ per a tot $r$, i el teorema de la funció implícita aplicat amb $r$ arbitrari dona $g\\in\\mathcal{C}^\\infty(\\Omega)$.",
+      "pista": "Quina regularitat té la funció implícita segons el teorema, en funció de la de $G$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$\\frac{\\partial G}{\\partial x}=4x-5$",
+      "inici": 0,
+      "fi": 36,
+      "tipus": "calcul",
+      "explicacio": "El terme $-5xz$ derivat respecte de $x$ dona $-5z$, no $-5$: $\\frac{\\partial G}{\\partial x}=4x-5z$. En $p$ el valor coincideix ($z=1$), però la derivada és incorrecta.",
+      "correccio": "$\\frac{\\partial G}{\\partial x}=4x-5z$, que en $p$ val $-1$.",
+      "pista": "Què val la derivada de $-5xz$ respecte de $x$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4b.json",
+    "valoracio": "Valors del gradient correctes, però la regularitat $\\mathcal{C}^\\infty$ no se segueix del TFI aplicat a $\\mathcal{C}^1$ i l'expressió de $G_x$ és incorrecta.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "és de classe $\\mathcal{C}^1$",
+        "gravetat": "imprecisio",
+        "explicacio": "Com a polinomi, $G$ és de classe $\\mathcal{C}^\\infty$; dir només $\\mathcal{C}^1$ és insuficient per obtenir $g\\in\\mathcal{C}^\\infty$ (vegeu fragment 3)."
+      },
+      {
+        "fragment": 3,
+        "cita": "$g:\\Omega\\to\\mathbb{R}$ de classe $\\mathcal{C}^\\infty$",
+        "gravetat": "error",
+        "explicacio": "Aplicant el TFI a $G\\in\\mathcal{C}^1$ només s'obté $g\\in\\mathcal{C}^1$; per concloure $g\\in\\mathcal{C}^\\infty$ cal usar que $G\\in\\mathcal{C}^\\infty$ (TFI amb $r$ arbitrari)."
+      },
+      {
+        "fragment": 5,
+        "cita": "$\\frac{\\partial G}{\\partial x}=4x-5$",
+        "gravetat": "error",
+        "explicacio": "$\\frac{\\partial G}{\\partial x}=4x-5z$; el valor $-1$ al punt surt bé només perquè $z=1$."
+      }
+    ]
+  },
+  "creat": 1791299408.5605385
+}

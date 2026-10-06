@@ -1,0 +1,58 @@
+{
+  "id": "ae5fa05615c0",
+  "exercici": "t1-13a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $\\{K_i\\}_{i\\in I}$ una família no buida ($I\\neq\\varnothing$) de compactes de $\\mathbb{R}^n$ i $K=\\bigcap_{i\\in I}K_i$.",
+    "Cada $K_i$ és compacte i, per tant, tancat, ja que tot compacte d'un espai mètric és tancat.",
+    "La intersecció d'una família arbitrària de tancats és tancada: el seu complementari és $\\bigcap_{i\\in I}K_i^c$, una intersecció d'oberts, i tota intersecció d'oberts és oberta. Per tant $K$ és tancat.",
+    "Fixem $i_0\\in I$, que existeix perquè $I\\neq\\varnothing$. Aleshores $K\\subseteq K_{i_0}$.",
+    "Tot subconjunt d'un compacte és compacte. Com que $K\\subseteq K_{i_0}$ i $K_{i_0}$ és compacte, $K$ és compacte."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "el seu complementari és $\\bigcap_{i\\in I}K_i^c$, una intersecció d'oberts, i tota intersecció d'oberts és oberta",
+      "inici": 63,
+      "fi": 175,
+      "tipus": "logica",
+      "explicacio": "Per De Morgan, el complementari d'una intersecció és la unió dels complementaris, $\\bigcup_i K_i^c$. A més, una intersecció infinita d'oberts no és oberta en general ($\\bigcap_n(-\\frac1n,\\frac1n)=\\{0\\}$).",
+      "correccio": "El complementari és $\\bigcup_{i\\in I}K_i^c$, una unió d'oberts, que és oberta; per tant $K$ és tancat.",
+      "pista": "Quin és el complementari d'una intersecció? I una intersecció infinita d'oberts, és sempre oberta?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "Tot subconjunt d'un compacte és compacte",
+      "inici": 0,
+      "fi": 40,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "És fals: $(0,1)\\subseteq[0,1]$ no és compacte. El resultat correcte és que un subconjunt TANCAT d'un compacte és compacte, i aquí cal fer servir que $K$ és tancat.",
+      "correccio": "Un tancat contingut en un compacte és compacte. Com que $K$ és tancat i $K\\subseteq K_{i_0}$, $K$ és compacte.",
+      "pista": "L'interval $(0,1)$ està dins del compacte $[0,1]$. És compacte? Quina hipòtesi li falta?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t1.json",
+    "valoracio": "Estructura correcta, però la justificació que la intersecció és tancada i el lema final són falsos.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "el seu complementari és $\\bigcap_{i\\in I}K_i^c$, una intersecció d'oberts, i tota intersecció d'oberts és oberta",
+        "gravetat": "error",
+        "explicacio": "Per De Morgan el complementari és $\\bigcup_i K_i^c$, una unió d'oberts (oberta); a més, una intersecció arbitrària d'oberts no és oberta en general."
+      },
+      {
+        "fragment": 5,
+        "cita": "Tot subconjunt d'un compacte és compacte",
+        "gravetat": "error",
+        "explicacio": "Fals (p. ex. $(0,1)\\subseteq[0,1]$); cal que el subconjunt sigui tancat (Lema 28), i el fet que $K$ és tancat no s'usa."
+      }
+    ]
+  },
+  "creat": 1791299422.5290282
+}

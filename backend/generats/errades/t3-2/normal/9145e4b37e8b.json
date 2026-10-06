@@ -1,0 +1,59 @@
+{
+  "id": "9145e4b37e8b",
+  "exercici": "t3-2",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Per definició, $\\dfrac{\\partial f}{\\partial y}(1,1)$ és la derivada en $y=1$ de la funció d'una variable $y\\mapsto f(1,y)$, de manera que podem fixar $x=1$ abans de derivar.",
+    "La potència $x^{(\\log x)(\\arctan(\\sin(\\cos xy)))}$ està definida per a $x>0$, i el semiplà obert $\\{x>0\\}$ conté tota la recta $x=1$; per tant $f(1,y)$ està definida per a tot $y$.",
+    "Amb $x=1$, l'exponent és $(\\log 1)\\,\\arctan(\\sin(\\cos y))=0$, perquè $\\log1=0$.",
+    "Per tant, $f(1,y)=y+1^{0}=y$ per a tot $y\\in\\mathbb{R}$.",
+    "Derivant aquesta funció d'una variable, $\\dfrac{d}{dy}f(1,y)=1$ per a tot $y$, i en particular $\\dfrac{\\partial f}{\\partial y}(1,1)=1$.",
+    "Com a comprovació, derivem directament: si $g(x,y)=(\\log x)\\arctan(\\sin(\\cos xy))$, aleshores $\\dfrac{\\partial}{\\partial y}x^{g}=g\\,x^{g-1}\\dfrac{\\partial g}{\\partial y}$, que a $(1,1)$ val $0$ perquè $g(1,1)=0$; així torna a sortir $\\dfrac{\\partial f}{\\partial y}(1,1)=1+0=1$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "$f(1,y)=y+1^{0}=y$",
+      "inici": 10,
+      "fi": 28,
+      "tipus": "calcul",
+      "explicacio": "$1^0=1$, no $0$: la funció restringida és $f(1,y)=y+1$ (el resultat de la derivada no canvia, però la funció és incorrecta).",
+      "correccio": "$f(1,y)=y+1^{0}=y+1$.",
+      "pista": "Quant val $1^0$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "$\\dfrac{\\partial}{\\partial y}x^{g}=g\\,x^{g-1}\\dfrac{\\partial g}{\\partial y}$",
+      "inici": 94,
+      "fi": 170,
+      "tipus": "calcul",
+      "explicacio": "Respecte de $y$ la base $x$ és constant i l'exponent varia, així que no s'aplica la regla de la potència: $x^g=e^{g\\log x}$ i la derivada és $x^{g}\\log x\\,\\dfrac{\\partial g}{\\partial y}$.",
+      "correccio": "$\\dfrac{\\partial}{\\partial y}x^{g}=x^{g}\\,(\\log x)\\,\\dfrac{\\partial g}{\\partial y}$, que a $(1,1)$ val $0$ perquè $\\log1=0$.",
+      "pista": "Si la base és constant i l'exponent depèn de $y$, quina regla de derivació correspon? Com reescriuries $x^g$ amb l'exponencial?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3a.json",
+    "valoracio": "Resultat final correcte, però amb un valor de f(1,y) erroni i una derivada de potència mal feta a la comprovació.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "$f(1,y)=y+1^{0}=y$",
+        "gravetat": "error",
+        "explicacio": "$1^0=1$, per tant $f(1,y)=y+1$, no $y$ (la derivada continua valent 1)."
+      },
+      {
+        "fragment": 6,
+        "cita": "$\\dfrac{\\partial}{\\partial y}x^{g}=g\\,x^{g-1}\\dfrac{\\partial g}{\\partial y}$",
+        "gravetat": "error",
+        "explicacio": "Amb $x$ fix, $x^g=e^{g\\log x}$ i $\\partial_y x^g=x^g\\log x\\,\\partial_y g$; la fórmula de la potència no s'aplica quan la variable és a l'exponent."
+      }
+    ]
+  },
+  "creat": 1791299309.459668
+}

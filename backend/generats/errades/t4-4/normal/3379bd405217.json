@@ -1,0 +1,59 @@
+{
+  "id": "3379bd405217",
+  "exercici": "t4-4",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Escrivim $\\varphi(x,t)=f(u)+g(w)$ amb $u=x-ct$ i $w=x+ct$. Per poder aplicar la regla de la cadena dues vegades cal que $f$ i $g$ siguin de classe $\\mathcal{C}^2$, i això ja ho tenim perquè són dues vegades diferenciables.",
+    "Derivant respecte de $t$, com que $\\frac{\\partial u}{\\partial t}=-c$ i $\\frac{\\partial w}{\\partial t}=c$, obtenim $\\varphi_t=-c\\,f'(x-ct)+c\\,g'(x+ct)$.",
+    "Com que $f'$ i $g'$ són derivables, tornant a derivar respecte de $t$: $\\varphi_{tt}=(-c)^2f''(x-ct)+c^2g''(x+ct)=c^2f''(x-ct)+c^2g''(x+ct)$.",
+    "Derivant respecte de $x$, amb $\\frac{\\partial u}{\\partial x}=\\frac{\\partial w}{\\partial x}=1$: $\\varphi_x=f'(x-ct)+g'(x+ct)$ i $\\varphi_{xx}=f''(x-ct)+g''(x+ct)$.",
+    "Per tant $\\frac{1}{c^2}\\varphi_{tt}-\\varphi_{xx}=f''(x-ct)+g''(x+ct)-f''(x-ct)-g''(x+ct)=0$ per a tot $(x,t)\\in\\mathbb{R}^2$.",
+    "Observem que aquí és imprescindible que $c>0$: si fos $c<0$, la funció $\\varphi$ ja no satisfaria l'equació d'ones."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "cal que $f$ i $g$ siguin de classe $\\mathcal{C}^2$, i això ja ho tenim perquè són dues vegades diferenciables",
+      "inici": 112,
+      "fi": 221,
+      "tipus": "hipotesi",
+      "explicacio": "Dues vegades diferenciable no implica $\\mathcal{C}^2$ ($f''$ pot no ser contínua, p. ex. $x^4\\sin(1/x)$). A més, la regla de la cadena només demana diferenciabilitat, no continuïtat de les derivades.",
+      "correccio": "La regla de la cadena només necessita que les funcions siguin diferenciables: com que $f,g$ i $f',g'$ són derivables, es pot aplicar dues vegades.",
+      "pista": "Ser dues vegades derivable garanteix que $f''$ sigui contínua? I la regla de la cadena, què demana realment?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "si fos $c<0$, la funció $\\varphi$ ja no satisfaria l'equació d'ones",
+      "inici": 47,
+      "fi": 114,
+      "tipus": "conclusio",
+      "explicacio": "El càlcul només ha usat $c\\neq 0$ (perquè $\\frac{1}{c^2}$ tingui sentit) i que $(-c)^2=c^2$; per a $c<0$ val exactament igual.",
+      "correccio": "El resultat només necessita $c\\neq 0$; la condició $c>0$ no intervé en el càlcul.",
+      "pista": "En quin pas del càlcul has fet servir que $c$ és positiu i no només que és diferent de $0$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4a.json",
+    "valoracio": "Les derivades i la verificació són correctes, però hi ha una justificació falsa de regularitat i una observació final falsa sobre el signe de c.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "i això ja ho tenim perquè són dues vegades diferenciables",
+        "gravetat": "error",
+        "explicacio": "Dues vegades diferenciable no implica $\\mathcal{C}^2$ ($f''$ pot no ser contínua); a més, per a la regla de la cadena en una variable n'hi ha prou amb la derivabilitat."
+      },
+      {
+        "fragment": 6,
+        "cita": "si fos $c<0$, la funció $\\varphi$ ja no satisfaria l'equació d'ones",
+        "gravetat": "error",
+        "explicacio": "El càlcul només usa $c^2$ i $1/c^2$: l'equació es compleix per a qualsevol $c\\neq0$."
+      }
+    ]
+  },
+  "creat": 1791299402.961658
+}

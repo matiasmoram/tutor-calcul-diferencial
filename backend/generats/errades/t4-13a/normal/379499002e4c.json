@@ -1,0 +1,60 @@
+{
+  "id": "379499002e4c",
+  "exercici": "t4-13a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Com que $g$ és de classe $\\mathcal{C}^1$, $g'$ és contínua, i $I$ és un interval, per tant connex. Aleshores $g'(I)$ és un connex de $\\mathbb{R}$, és a dir un interval, que no conté el $0$; per tant $g'>0$ a tot $I$ o bé $g'<0$ a tot $I$.",
+    "Siguin $x_1<x_2$ de $I$. Com que $I$ és un interval, $[x_1,x_2]\\subseteq I$, i pel teorema del valor mitjà existeix $\\xi\\in(x_1,x_2)$ amb $g(x_2)-g(x_1)=g'(\\xi)(x_2-x_1)$, que té el signe (constant i no nul) de $g'$.",
+    "Per tant $g$ és estrictament monòtona a $I$, i en particular injectiva; així $g:I\\to\\mathbb{R}$ és bijectiva i té inversa $g^{-1}:\\mathbb{R}\\to I$.",
+    "La imatge $g(I)$ és connexa, per ser imatge contínua d'un connex, i per tant és un interval. A més, és oberta perquè $g$ és contínua i $I$ és obert.",
+    "Sigui $y_0=g(x_0)\\in g(I)$. Com que $g$ és $\\mathcal{C}^1$ i $g'(x_0)\\neq 0$, el teorema de la funció inversa dona entorns oberts $U\\ni x_0$ i $V\\ni y_0$ amb $g|_U:U\\to V$ bijectiva i inversa $h:V\\to U$ de classe $\\mathcal{C}^1$, amb $h'(y)=\\frac{1}{g'(h(y))}$.",
+    "Per la injectivitat de $g$ a tot $I$, $h$ coincideix amb $g^{-1}$ a $V$. Per tant $g^{-1}$ és derivable a tot $g(I)$, amb $(g^{-1})'(y)=\\frac{1}{g'(g^{-1}(y))}$.",
+    "Aquesta derivada és contínua: $g^{-1}$ és contínua (localment coincideix amb $h$), $g'$ és contínua i el denominador no s'anul·la. Així $g^{-1}$ és una inversa global de $g$ de classe $\\mathcal{C}^1$ a $g(I)$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "així $g:I\\to\\mathbb{R}$ és bijectiva i té inversa $g^{-1}:\\mathbb{R}\\to I$",
+      "inici": 72,
+      "fi": 146,
+      "tipus": "conclusio",
+      "explicacio": "La injectivitat no dona exhaustivitat sobre $\\mathbb{R}$: per exemple $g=\\arctan$ a $I=\\mathbb{R}$ té imatge $(-\\pi/2,\\pi/2)$. Només és bijectiva sobre la seva imatge.",
+      "correccio": "$g:I\\to g(I)$ és bijectiva i té inversa $g^{-1}:g(I)\\to I$.",
+      "pista": "Una funció estrictament monòtona d'un interval obert, ha d'assolir tots els nombres reals?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "és oberta perquè $g$ és contínua i $I$ és obert",
+      "inici": 100,
+      "fi": 147,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "Una funció contínua no porta oberts a oberts en general (p. ex. $x^2$ porta $(-1,1)$ a $[0,1)$).",
+      "correccio": "És oberta pel teorema de l'aplicació oberta ($g\\in\\mathcal{C}^1$ i $g'\\neq 0$ a $I$), o bé perquè, sent estrictament monòtona, $g$ no assoleix ni màxim ni mínim a l'interval obert $I$.",
+      "pista": "Quina és la imatge de $(-1,1)$ per $x\\mapsto x^2$? Què et diu això de les funcions contínues i els oberts?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4a.json",
+    "valoracio": "Signe constant, injectivitat i regularitat de la inversa correctes, però el codomini de la bijecció és erroni i l'obertura de g(I) està mal justificada.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "així $g:I\\to\\mathbb{R}$ és bijectiva i té inversa $g^{-1}:\\mathbb{R}\\to I$",
+        "gravetat": "error",
+        "explicacio": "$g$ no és exhaustiva sobre $\\mathbb{R}$ en general (p. ex. $\\arctan$); és bijectiva sobre $g(I)$ i la inversa és $g^{-1}:g(I)\\to I$."
+      },
+      {
+        "fragment": 4,
+        "cita": "és oberta perquè $g$ és contínua i $I$ és obert",
+        "gravetat": "error",
+        "explicacio": "Una funció contínua no porta oberts a oberts ($x^2$ porta $(-1,1)$ a $[0,1)$); cal la monotonia estricta o el teorema de l'aplicació oberta ($g'\\neq0$)."
+      }
+    ]
+  },
+  "creat": 1791299402.972157
+}

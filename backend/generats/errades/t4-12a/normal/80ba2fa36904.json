@@ -1,0 +1,60 @@
+{
+  "id": "80ba2fa36904",
+  "exercici": "t4-12a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Hipòtesis: $f(x)=x^3$ és polinòmica, per tant de classe $\\mathcal{C}^\\infty(\\mathbb{R})$, i $f'(a)=3a^2$, que és no nul si i només si $a\\neq 0$.",
+    "En un punt $a\\neq 0$ es compleixen totes les hipòtesis i el teorema dona totes les tesis: hi ha entorns oberts $U\\ni a$ i $V\\ni f(a)$ amb $f|_U:U\\to V$ bijectiva i inversa de classe $\\mathcal{C}^\\infty$, amb $(f^{-1})'(f(a))=\\frac{1}{3a^2}$. L'interès és, doncs, el punt $a=0$, on falla la hipòtesi $f'(0)\\neq 0$.",
+    "Tesi (i) en $0$: com que $f'(x)=3x^2>0$ per a tot $x\\in\\mathbb{R}$, $f$ és estrictament creixent, i per tant injectiva en qualsevol entorn de $0$.",
+    "En canvi, la segona part de (i), que $f'(z)\\neq 0$ per a tot $z$ de l'entorn, falla, perquè $f'(0)=0$.",
+    "Tesi (ii): $f$ porta $(-\\delta,\\delta)$ a $(-\\delta^3,\\delta^3)$, que és obert.",
+    "Tesi (iii): la inversa és $f^{-1}(y)=\\sqrt[3]{y}$, que és contínua. En $0$, $\\frac{f^{-1}(h)-f^{-1}(0)}{h}=\\frac{\\sqrt[3]{h}}{h}$, és a dir $h^{-1/3}$, que no té límit finit quan $h\\to 0$; per tant $f^{-1}$ no és derivable en $0$.",
+    "Així, en $0$ es compleixen la injectivitat de (i) i la tesi (ii), però falla (iii): $f^{-1}$ no és de classe $\\mathcal{C}^1$ en cap entorn de $0$, coherent amb que la fórmula $(f^{-1})'(0)=\\frac{1}{f'(0)}$ no té sentit."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "$f'(x)=3x^2>0$ per a tot $x\\in\\mathbb{R}$",
+      "inici": 25,
+      "fi": 66,
+      "tipus": "desigualtat",
+      "explicacio": "$f'(0)=0$, de manera que $f'(x)>0$ no és cert a tot $\\mathbb{R}$, sinó només per a $x\\neq 0$.",
+      "correccio": "$f'(x)=3x^2\\geq 0$ i només s'anul·la a $x=0$, així que $f$ és estrictament creixent (o directament: $x<y\\Rightarrow x^3<y^3$).",
+      "pista": "Quant val $f'$ precisament en el punt que estàs estudiant?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "és a dir $h^{-1/3}$",
+      "inici": 131,
+      "fi": 150,
+      "tipus": "calcul",
+      "explicacio": "$\\frac{h^{1/3}}{h}=h^{1/3-1}=h^{-2/3}$, no $h^{-1/3}$.",
+      "correccio": "$\\frac{\\sqrt[3]{h}}{h}=h^{-2/3}\\to+\\infty$ quan $h\\to 0$, per tant $f^{-1}$ no és derivable en $0$.",
+      "pista": "Quan divideixes $h^{1/3}$ per $h^1$, quin exponent queda?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4a.json",
+    "valoracio": "Anàlisi de les tesis correcta en conjunt, però amb una desigualtat falsa a x=0 i un exponent mal calculat.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$f'(x)=3x^2>0$ per a tot $x\\in\\mathbb{R}$",
+        "gravetat": "error",
+        "explicacio": "$f'(0)=0$; la monotonia estricta es manté perquè $f'\\ge0$ i només s'anul·la en un punt, però la desigualtat escrita és falsa."
+      },
+      {
+        "fragment": 6,
+        "cita": "és a dir $h^{-1/3}$",
+        "gravetat": "error",
+        "explicacio": "$\\sqrt[3]{h}/h=h^{-2/3}$, no $h^{-1/3}$."
+      }
+    ]
+  },
+  "creat": 1791299402.9703631
+}

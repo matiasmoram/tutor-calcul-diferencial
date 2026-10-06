@@ -1,0 +1,59 @@
+{
+  "id": "fb41a863bcad",
+  "exercici": "t5-1a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Fem el canvi $u=x-1$, $v=y+1$, $w=z$, que mesura el desplaçament respecte de $p=(1,-1,0)$: així $x=1+u$, $y=-1+v$ i $z=w$.",
+    "Com que $f$ és un polinomi, desenvolupem el producte: $xyz=(1+u)(-1+v)\\,w=(-1+v-u+uv)\\,w=-w-uw+vw+uvw$. Per la unicitat del polinomi de Taylor, n'hi ha prou d'agrupar aquesta expressió per graus en $(u,v,w)$.",
+    "Com a comprovació, amb derivades: $D_3f(p)=xy|_p=-1$, $D_{13}f(p)=y|_p=-1$, $D_{23}f(p)=x|_p=1$ i $D_{123}f(p)=1$, i totes les altres derivades de $f$ a $p$ (llevat de les obtingudes permutant aquests índexs) són nul·les, d'acord amb els coeficients obtinguts.",
+    "Separant per graus: grau $0$: $0$ (perquè $f(p)=0$); grau $1$: $-z$; grau $2$: $-(x-1)z+(y+1)z$; grau $3$: $(x-1)(y+1)z$. No hi ha termes de grau $\\geq4$.",
+    "Per tant $P_0=0$, $P_1=-z$ i el polinomi de Taylor de grau $\\leq2$ és $P_2=-(x-1)z+(y+1)z$.",
+    "Per a $k\\geq3$, el polinomi de Taylor és tot el polinomi: $P_k=-z-(x-1)z+(y+1)z+(x-1)(y+1)z=xyz$, ja que $f$ té grau $3$ i, per tant, totes les seves derivades d'ordre $\\geq3$ són nul·les i el residu és $0$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 5,
+      "cita": "$P_2=-(x-1)z+(y+1)z$",
+      "inici": 70,
+      "fi": 90,
+      "tipus": "calcul",
+      "explicacio": "$P_2$ és la suma de les parts homogènies de grau $0$, $1$ i $2$, no només la de grau $2$: falta el terme de grau $1$, $-z$.",
+      "correccio": "$P_2=-z-(x-1)z+(y+1)z$.",
+      "pista": "El polinomi de Taylor de grau $\\leq2$ conté només els termes de grau exactament $2$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "totes les seves derivades d'ordre $\\geq3$ són nul·les",
+      "inici": 134,
+      "fi": 187,
+      "tipus": "logica",
+      "explicacio": "Una derivada d'ordre $3$ no és nul·la: $D_{123}f=1$. El que és cert és que les derivades d'ordre $\\geq4$ són nul·les, i per això el residu d'ordre $k\\geq3$ és $0$.",
+      "correccio": "Totes les derivades d'ordre $\\geq4$ són nul·les (les d'ordre $3$ no: $D_{123}f=1$), i per tant el residu és $0$.",
+      "pista": "Quant val $D_{123}f$? Quines derivades s'anul·len realment per a un polinomi de grau $3$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t56.json",
+    "valoracio": "Dos errors: $P_2$ sense el terme lineal $-z$ i l'afirmació falsa que les derivades d'ordre 3 s'anul·len.",
+    "problemes": [
+      {
+        "fragment": 5,
+        "cita": "$P_2=-(x-1)z+(y+1)z$",
+        "gravetat": "error",
+        "explicacio": "Falta el terme de grau 1: el polinomi de grau $\\leq2$ és la suma de les parts de grau 0, 1 i 2, $P_2=-z-(x-1)z+(y+1)z$."
+      },
+      {
+        "fragment": 6,
+        "cita": "totes les seves derivades d'ordre $\\geq3$ són nul·les",
+        "gravetat": "error",
+        "explicacio": "Fals: $D_{123}f=1\\neq0$ és d'ordre 3. Són nul·les les derivades d'ordre $\\geq4$, i és per això que el residu de grau $k\\geq3$ és 0."
+      }
+    ]
+  },
+  "creat": 1791299721.5494652
+}

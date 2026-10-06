@@ -1,0 +1,383 @@
+[
+ {
+  "font": "problema",
+  "id": "t3-1a",
+  "dificultat": "normal",
+  "fragments": [
+   "La funció $u$ és un quocient de polinomis, de manera que està definida exactament on el denominador no s'anul·la: cal $x^2-y^2\\neq0$, és a dir, $y\\neq x$ i $y\\neq-x$.",
+   "El domini és, doncs, el complementari de les rectes $y=x$ i $y=-x$. Com que la unió d'aquestes dues rectes és un conjunt tancat, el domini és obert i té sentit calcular les derivades parcials a qualsevol punt seu.",
+   "Per calcular $\\dfrac{\\partial u}{\\partial x}$ fixem $y$ i derivem el quocient respecte de $x$: la derivada del numerador $x^2+y^2$ és $2x$, i la del denominador $x^2-y^2$ també és $2x$.",
+   "Aplicant la regla del quocient, $\\dfrac{\\partial u}{\\partial x}=\\dfrac{2x(x^2-y^2)-(x^2+y^2)\\,2x}{(x^2-y^2)^2}=\\dfrac{4xy^2}{(x^2-y^2)^2}$.",
+   "Per calcular $\\dfrac{\\partial u}{\\partial y}$ fixem $x$. Com que la derivada de $x^2-y^2$ respecte de $y$ és $2y$, la regla del quocient dona $\\dfrac{\\partial u}{\\partial y}=\\dfrac{2y(x^2-y^2)-(x^2+y^2)\\,2y}{(x^2-y^2)^2}=\\dfrac{-4y^3}{(x^2-y^2)^2}$.",
+   "Aquestes fórmules són vàlides a tot punt del domini, ja que el denominador $(x^2-y^2)^2$ hi és estrictament positiu."
+  ],
+  "errors": [
+   {
+    "fragment": 4,
+    "cita": "$\\dfrac{\\partial u}{\\partial x}=\\dfrac{2x(x^2-y^2)-(x^2+y^2)\\,2x}{(x^2-y^2)^2}=\\dfrac{4xy^2}{(x^2-y^2)^2}$",
+    "tipus": "calcul",
+    "explicacio": "El numerador és $2x(x^2-y^2)-2x(x^2+y^2)=2x\\cdot(-2y^2)=-4xy^2$: el resultat té el signe canviat.",
+    "correccio": "$\\dfrac{\\partial u}{\\partial x}=\\dfrac{-4xy^2}{(x^2-y^2)^2}$.",
+    "pista": "Quan restes $(x^2+y^2)$ de $(x^2-y^2)$, quin signe té el terme en $y^2$ que queda?"
+   },
+   {
+    "fragment": 5,
+    "cita": "la derivada de $x^2-y^2$ respecte de $y$ és $2y$, la regla del quocient dona $\\dfrac{\\partial u}{\\partial y}=\\dfrac{2y(x^2-y^2)-(x^2+y^2)\\,2y}{(x^2-y^2)^2}=\\dfrac{-4y^3}{(x^2-y^2)^2}$",
+    "tipus": "calcul",
+    "explicacio": "La derivada de $x^2-y^2$ respecte de $y$ és $-2y$, no $2y$; per això el numerador no surt bé.",
+    "correccio": "Amb $-2y$: $\\dfrac{\\partial u}{\\partial y}=\\dfrac{2y(x^2-y^2)-(x^2+y^2)(-2y)}{(x^2-y^2)^2}=\\dfrac{4x^2y}{(x^2-y^2)^2}$.",
+    "pista": "Quin signe té el terme $-y^2$ del denominador, i què li passa en derivar-lo?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t3-2",
+  "dificultat": "normal",
+  "fragments": [
+   "Per definició, $\\dfrac{\\partial f}{\\partial y}(1,1)$ és la derivada en $y=1$ de la funció d'una variable $y\\mapsto f(1,y)$, de manera que podem fixar $x=1$ abans de derivar.",
+   "La potència $x^{(\\log x)(\\arctan(\\sin(\\cos xy)))}$ està definida per a $x>0$, i el semiplà obert $\\{x>0\\}$ conté tota la recta $x=1$; per tant $f(1,y)$ està definida per a tot $y$.",
+   "Amb $x=1$, l'exponent és $(\\log 1)\\,\\arctan(\\sin(\\cos y))=0$, perquè $\\log1=0$.",
+   "Per tant, $f(1,y)=y+1^{0}=y$ per a tot $y\\in\\mathbb{R}$.",
+   "Derivant aquesta funció d'una variable, $\\dfrac{d}{dy}f(1,y)=1$ per a tot $y$, i en particular $\\dfrac{\\partial f}{\\partial y}(1,1)=1$.",
+   "Com a comprovació, derivem directament: si $g(x,y)=(\\log x)\\arctan(\\sin(\\cos xy))$, aleshores $\\dfrac{\\partial}{\\partial y}x^{g}=g\\,x^{g-1}\\dfrac{\\partial g}{\\partial y}$, que a $(1,1)$ val $0$ perquè $g(1,1)=0$; així torna a sortir $\\dfrac{\\partial f}{\\partial y}(1,1)=1+0=1$."
+  ],
+  "errors": [
+   {
+    "fragment": 4,
+    "cita": "$f(1,y)=y+1^{0}=y$",
+    "tipus": "calcul",
+    "explicacio": "$1^0=1$, no $0$: la funció restringida és $f(1,y)=y+1$ (el resultat de la derivada no canvia, però la funció és incorrecta).",
+    "correccio": "$f(1,y)=y+1^{0}=y+1$.",
+    "pista": "Quant val $1^0$?"
+   },
+   {
+    "fragment": 6,
+    "cita": "$\\dfrac{\\partial}{\\partial y}x^{g}=g\\,x^{g-1}\\dfrac{\\partial g}{\\partial y}$",
+    "tipus": "calcul",
+    "explicacio": "Respecte de $y$ la base $x$ és constant i l'exponent varia, així que no s'aplica la regla de la potència: $x^g=e^{g\\log x}$ i la derivada és $x^{g}\\log x\\,\\dfrac{\\partial g}{\\partial y}$.",
+    "correccio": "$\\dfrac{\\partial}{\\partial y}x^{g}=x^{g}\\,(\\log x)\\,\\dfrac{\\partial g}{\\partial y}$, que a $(1,1)$ val $0$ perquè $\\log1=0$.",
+    "pista": "Si la base és constant i l'exponent depèn de $y$, quina regla de derivació correspon? Com reescriuries $x^g$ amb l'exponencial?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t3-3",
+  "dificultat": "normal",
+  "fragments": [
+   "Sigui $u=(u_1,u_2)\\neq(0,0)$. Per definició, $D_uf(0,0)=\\displaystyle\\lim_{t\\to0}\\frac{f(tu_1,tu_2)-f(0,0)}{t}$, si aquest límit existeix.",
+   "Per a $t\\neq0$ el punt $(tu_1,tu_2)$ no és l'origen, i $f(tu_1,tu_2)=\\dfrac{t^3u_1^2u_2}{t^2(u_1^2+u_2^2)}=\\dfrac{t\\,u_1^2u_2}{u_1^2+u_2^2}$.",
+   "Com que $f(0,0)=0$, el quocient incremental val $\\dfrac{1}{t}\\cdot\\dfrac{t\\,u_1^2u_2}{u_1^2+u_2^2}=\\dfrac{u_1^2u_2}{u_1^2+u_2^2}$ per a tot $t\\neq0$, que no depèn de $t$.",
+   "Per tant el límit existeix per a tota $u\\neq(0,0)$ i $D_uf(0,0)=\\dfrac{u_1^2u_2}{u_1^2+u_2^2}$; si $u$ és unitari, $D_uf(0,0)=u_1u_2^2$.",
+   "Prenent $u=(1,0)$ i $u=(0,1)$ a la fórmula general, obtenim $\\dfrac{\\partial f}{\\partial x}(0,0)=\\dfrac{\\partial f}{\\partial y}(0,0)=0$, és a dir, $\\nabla f(0,0)=(0,0)$.",
+   "Si $f$ fos diferenciable a l'origen, tindríem $D_uf(0,0)=\\nabla f(0,0)\\cdot u=0$ per a tota $u$.",
+   "Però per a $u=(1,1)$ la fórmula dona $D_uf(0,0)=\\dfrac{1\\cdot1}{1+1}=\\dfrac12\\neq0$, de manera que $u\\mapsto D_uf(0,0)$ no és lineal.",
+   "Per tant $f$ no és diferenciable a l'origen i, en particular, tampoc no hi és contínua."
+  ],
+  "errors": [
+   {
+    "fragment": 4,
+    "cita": "si $u$ és unitari, $D_uf(0,0)=u_1u_2^2$",
+    "tipus": "calcul",
+    "explicacio": "Si $u_1^2+u_2^2=1$, la fórmula $\\dfrac{u_1^2u_2}{u_1^2+u_2^2}$ dona $u_1^2u_2$: s'han intercanviat els exponents.",
+    "correccio": "Si $u$ és unitari, $D_uf(0,0)=u_1^2u_2$.",
+    "pista": "Què queda de $\\dfrac{u_1^2u_2}{u_1^2+u_2^2}$ quan el denominador val $1$? Quina component va al quadrat?"
+   },
+   {
+    "fragment": 8,
+    "cita": "en particular, tampoc no hi és contínua",
+    "tipus": "conclusio",
+    "explicacio": "No ser diferenciable no implica no ser contínua (és el recíproc el que és cert). De fet $f$ és contínua a l'origen: $|f(x,y)|\\le|y|\\to0$.",
+    "correccio": "Per tant $f$ no és diferenciable a l'origen (tot i que hi és contínua, ja que $|f(x,y)|\\le|y|$, i hi té totes les derivades direccionals).",
+    "pista": "La implicació «diferenciable $\\Rightarrow$ contínua», en quin sentit funciona? Pots fitar $|f(x,y)|$ prop de l'origen?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t3-4",
+  "dificultat": "normal",
+  "fragments": [
+   "Comencem per $f$. Sigui $u=(u_1,u_2)\\neq(0,0)$. Per a $t\\neq0$, $f(tu)=\\dfrac{2t^2u_1u_2}{t^2(u_1^2+u_2^2)}=\\dfrac{2u_1u_2}{u_1^2+u_2^2}$, que no depèn de $t$.",
+   "Com que $f(0,0)=1$, el quocient incremental és $\\dfrac{f(tu)-f(0,0)}{t}=\\dfrac{1}{t}\\left(\\dfrac{2u_1u_2}{u_1^2+u_2^2}-1\\right)=\\dfrac{1}{t}\\cdot\\dfrac{(u_1-u_2)^2}{u_1^2+u_2^2}$.",
+   "Aquest quocient té límit quan $t\\to0$ si i només si $(u_1-u_2)^2=0$, és a dir, $u_1=u_2$: en aquest cas és idènticament $0$ i $D_uf(0,0)=0$. Si $u_1\\neq u_2$, el quocient tendeix a $+\\infty$ per un costat i a $-\\infty$ per l'altre, i no hi ha derivada direccional.",
+   "Per tant, $f$ té derivada direccional a l'origen només en la direcció $u=\\dfrac{1}{\\sqrt2}(1,1)$, i hi val $0$.",
+   "En particular, no existeixen les derivades parcials de $f$ a l'origen, ja que $(1,0)$ i $(0,1)$ no compleixen $u_1=u_2$.",
+   "Per a $g$, si $t\\neq0$, $\\dfrac{g(tu)-g(0,0)}{t}=\\dfrac{t^3u_1^3}{t\\cdot t^2(u_1^2+u_2^2)}=\\dfrac{u_1^3}{u_1^2+u_2^2}$, que no depèn de $t$.",
+   "Així, el límit existeix per a tota $u\\neq(0,0)$: $g$ té derivada direccional a l'origen en totes les direccions, amb $D_ug(0,0)=\\dfrac{u_1^3}{u_1^2+u_2^2}$, que per a $u$ unitari és $u_1^3$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "$\\dfrac{f(tu)-f(0,0)}{t}=\\dfrac{1}{t}\\left(\\dfrac{2u_1u_2}{u_1^2+u_2^2}-1\\right)=\\dfrac{1}{t}\\cdot\\dfrac{(u_1-u_2)^2}{u_1^2+u_2^2}$",
+    "tipus": "calcul",
+    "explicacio": "$2u_1u_2-(u_1^2+u_2^2)=-(u_1-u_2)^2$: falta un signe menys (la condició d'existència no canvia, però l'expressió és falsa).",
+    "correccio": "$\\dfrac{f(tu)-f(0,0)}{t}=-\\dfrac{1}{t}\\cdot\\dfrac{(u_1-u_2)^2}{u_1^2+u_2^2}$.",
+    "pista": "Si $u_1=1$, $u_2=0$, quin signe té $\\dfrac{2u_1u_2}{u_1^2+u_2^2}-1$? I la teva expressió?"
+   },
+   {
+    "fragment": 4,
+    "cita": "només en la direcció $u=\\dfrac{1}{\\sqrt2}(1,1)$",
+    "tipus": "conclusio",
+    "explicacio": "La condició trobada és $u_1=u_2$, que compleixen tots els vectors $(a,a)$ amb $a\\neq0$, inclòs el sentit oposat $(-1,-1)/\\sqrt2$; no només aquell vector unitari.",
+    "correccio": "$f$ té derivada direccional a l'origen exactament per als vectors $u=(a,a)$, $a\\neq0$ (la bisectriu $y=x$ en tots dos sentits), i hi val $0$.",
+    "pista": "Quins vectors compleixen $u_1=u_2$? Què passa amb $(-1,-1)$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t3-6",
+  "dificultat": "normal",
+  "fragments": [
+   "Siguin $a=\\dfrac{\\partial f}{\\partial x}(0,0)$ i $b=\\dfrac{\\partial f}{\\partial y}(0,0)$, que existeixen perquè $f$ és diferenciable a l'origen.",
+   "Per la simetria, $f(0,t)=f(t,0)$ per a tot $t$, i per tant $b=\\displaystyle\\lim_{t\\to0}\\frac{f(0,t)-f(0,0)}{t}=\\lim_{t\\to0}\\frac{f(t,0)-f(0,0)}{t}=a$.",
+   "Més en general, el mateix argument mostra que $\\dfrac{\\partial f}{\\partial x}(x,y)=\\dfrac{\\partial f}{\\partial y}(x,y)$ a tot punt $(x,y)$ on existeixin les parcials.",
+   "Com que $f$ és diferenciable a $(0,0)$, la seva diferencial és l'aplicació lineal de matriu $Jf(0,0)=(a\\ \\ a)$, és a dir, $Df(0,0)(h,k)=a(h+k)$.",
+   "A més, $a\\neq0$: si fos $a=0$, tindríem $Df(0,0)=0$, en contra de la hipòtesi.",
+   "Per tant, $Df(0,0)(h,k)=0\\iff h+k=0$, i $\\ker Df(0,0)=\\{(h,k)\\in\\mathbb{R}^2: h+k=0\\}$, que és la recta generada pel vector $(1,1)$."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "$\\dfrac{\\partial f}{\\partial x}(x,y)=\\dfrac{\\partial f}{\\partial y}(x,y)$ a tot punt $(x,y)$",
+    "tipus": "logica",
+    "explicacio": "L'argument només funciona a la diagonal: en general la simetria dona $\\partial_xf(x,y)=\\partial_yf(y,x)$. Per exemple, $f=x^2+y^2$ és simètrica i a $(1,0)$ té $\\partial_xf=2\\neq0=\\partial_yf$.",
+    "correccio": "La simetria dona $\\dfrac{\\partial f}{\\partial x}(x,y)=\\dfrac{\\partial f}{\\partial y}(y,x)$; en particular les dues parcials coincideixen als punts de la diagonal, com l'origen.",
+    "pista": "Prova l'afirmació amb $f(x,y)=x^2+y^2$ al punt $(1,0)$. A quin punt s'avalua cada parcial quan intercanvies les variables?"
+   },
+   {
+    "fragment": 6,
+    "cita": "la recta generada pel vector $(1,1)$",
+    "tipus": "calcul",
+    "explicacio": "El vector $(1,1)$ compleix $h+k=2\\neq0$, no és del nucli. Les solucions de $h+k=0$ són $(h,-h)$.",
+    "correccio": "$\\ker Df(0,0)=\\{(h,-h):h\\in\\mathbb{R}\\}=\\langle(1,-1)\\rangle$, la recta $y=-x$.",
+    "pista": "Comprova si $(1,1)$ satisfà l'equació $h+k=0$. Quina és la solució general?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t3-7",
+  "dificultat": "normal",
+  "fragments": [
+   "Fora de l'origen, les funcions $x$, $|y|$ i $\\sqrt{x^2+y^2}$ són contínues i el denominador no s'anul·la a $\\mathbb{R}^2\\setminus\\{(0,0)\\}$, de manera que $f$ hi és contínua.",
+   "A l'origen, com que $\\sqrt{x^2+y^2}\\le|x|$, tenim $|f(x,y)|=\\dfrac{|x|\\,|y|}{\\sqrt{x^2+y^2}}\\le|y|\\to0$. Pel criteri del sandvitx, el límit a l'origen és $0=f(0,0)$, i $f$ és contínua a tot $\\mathbb{R}^2$.",
+   "A l'obert $\\{y>0\\}$ tenim $f=\\dfrac{xy}{\\sqrt{x^2+y^2}}$, i a l'obert $\\{y<0\\}$ també $f=\\dfrac{xy}{\\sqrt{x^2+y^2}}$. En cadascun d'aquests oberts les parcials són quocients de funcions de classe $\\mathcal{C}^1$ amb denominador no nul, i per tant contínues; per la condició suficient, $f$ és diferenciable a tot punt amb $y\\neq0$.",
+   "En un punt $(x_0,0)$ amb $x_0\\neq0$: $\\dfrac{f(x_0,t)-f(x_0,0)}{t}=\\dfrac{x_0|t|}{t\\sqrt{x_0^2+t^2}}$, que tendeix a $\\dfrac{x_0}{|x_0|}$ quan $t\\to0^+$ i a $-\\dfrac{x_0}{|x_0|}$ quan $t\\to0^-$. Els límits laterals són diferents, no existeix $\\dfrac{\\partial f}{\\partial y}(x_0,0)$ i, per tant, $f$ no és diferenciable en aquests punts.",
+   "A l'origen, $f(t,0)=0$ i $f(0,t)=0$ per a tot $t$, així que $\\nabla f(0,0)=(0,0)$ i l'única candidata a diferencial és l'aplicació lineal nul·la.",
+   "Cal doncs que $\\dfrac{f(x,y)}{\\sqrt{x^2+y^2}}=\\dfrac{x|y|}{x^2+y^2}$ tendeixi a $0$ quan $(x,y)\\to(0,0)$. Però sobre la recta $y=x$, amb $x>0$, val $\\dfrac{x^2}{2x^2}=\\dfrac12$, de manera que $f$ no és diferenciable a l'origen.",
+   "En resum, $f$ és contínua a tot $\\mathbb{R}^2$ i és diferenciable exactament als punts amb $y\\neq0$: no ho és en cap punt de l'eix $y=0$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "com que $\\sqrt{x^2+y^2}\\le|x|$",
+    "tipus": "desigualtat",
+    "explicacio": "La desigualtat està girada: el cert és $|x|\\le\\sqrt{x^2+y^2}$, i és aquesta la que dona $\\dfrac{|x|}{\\sqrt{x^2+y^2}}\\le1$ i per tant $|f|\\le|y|$.",
+    "correccio": "Com que $|x|\\le\\sqrt{x^2+y^2}$, tenim $|f(x,y)|\\le|y|\\to0$.",
+    "pista": "Entre $|x|$ i $\\sqrt{x^2+y^2}$, quin és el més gran? Quina de les dues desigualtats necessites per fitar $|f|$ per $|y|$?"
+   },
+   {
+    "fragment": 3,
+    "cita": "a l'obert $\\{y<0\\}$ també $f=\\dfrac{xy}{\\sqrt{x^2+y^2}}$",
+    "tipus": "calcul",
+    "explicacio": "Si $y<0$, $|y|=-y$, de manera que $f=-\\dfrac{xy}{\\sqrt{x^2+y^2}}$, no la mateixa expressió que a $\\{y>0\\}$.",
+    "correccio": "A l'obert $\\{y<0\\}$, $f=-\\dfrac{xy}{\\sqrt{x^2+y^2}}$ (la conclusió sobre la diferenciabilitat no canvia).",
+    "pista": "Quant val $|y|$ quan $y$ és negatiu?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t3-8",
+  "dificultat": "normal",
+  "fragments": [
+   "Fora de l'origen, $f=\\dfrac{x^2+2xy+y^2}{x^2+y^2}=1+\\dfrac{2xy}{x^2+y^2}$ és un quocient de polinomis amb denominador no nul, i per tant és contínua i diferenciable a $\\mathbb{R}^2\\setminus\\{(0,0)\\}$, amb $\\dfrac{\\partial f}{\\partial x}=\\dfrac{2y(x^2-y^2)}{(x^2+y^2)^2}$ i $\\dfrac{\\partial f}{\\partial y}=\\dfrac{2x(x^2-y^2)}{(x^2+y^2)^2}$.",
+   "A l'origen, sobre la recta $y=mx$ amb $x\\neq0$ tenim $f(x,mx)=\\dfrac{(1+m)^2x^2}{(1+m^2)x^2}=\\dfrac{(1+m)^2}{1+m^2}$, que depèn de $m$: val $1$ per a $m=0$ i $2$ per a $m=1$.",
+   "Per tant no existeix $\\displaystyle\\lim_{(x,y)\\to(0,0)}f(x,y)$, i $f$ no és contínua a l'origen.",
+   "Per a les parcials a l'origen, $f(t,0)=\\dfrac{t^2}{t^2}=1$ per a $t\\neq0$, així que $\\dfrac{f(t,0)-f(0,0)}{t}=\\dfrac{1-1}{t}=0$ i $\\dfrac{\\partial f}{\\partial x}(0,0)=0$. Igualment $f(0,t)=1$ i $\\dfrac{\\partial f}{\\partial y}(0,0)=0$: existeixen totes dues.",
+   "Tot i així, $f$ no és diferenciable a l'origen: les parcials no hi són contínues, ja que per exemple $\\dfrac{\\partial f}{\\partial y}(x,0)=\\dfrac{2}{x}$ no té límit quan $x\\to0$.",
+   "En resum: fora de l'origen $f$ és contínua, té derivades parcials i és diferenciable; a l'origen no és contínua, té les dues derivades parcials (nul·les) i no és diferenciable."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "$\\dfrac{\\partial f}{\\partial x}=\\dfrac{2y(x^2-y^2)}{(x^2+y^2)^2}$",
+    "tipus": "calcul",
+    "explicacio": "$\\dfrac{\\partial}{\\partial x}\\dfrac{2xy}{x^2+y^2}=\\dfrac{2y(x^2+y^2)-2xy\\cdot2x}{(x^2+y^2)^2}=\\dfrac{2y(y^2-x^2)}{(x^2+y^2)^2}$: el signe està canviat.",
+    "correccio": "$\\dfrac{\\partial f}{\\partial x}=\\dfrac{2y(y^2-x^2)}{(x^2+y^2)^2}$.",
+    "pista": "Fes la regla del quocient amb compte: quin terme surt restant, $2x^2y$ o $2y^3$?"
+   },
+   {
+    "fragment": 5,
+    "cita": "les parcials no hi són contínues",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "La continuïtat de les parcials és una condició suficient de diferenciabilitat, no necessària: que no siguin contínues no prova res. El motiu correcte és que $f$ no és contínua a l'origen.",
+    "correccio": "$f$ no és diferenciable a l'origen perquè diferenciable implica contínua, i $f$ no hi és contínua.",
+    "pista": "Hi ha funcions diferenciables amb parcials discontínues? Quina propietat de $f$ a l'origen ja has vist que impedeix la diferenciabilitat?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t3-9",
+  "dificultat": "normal",
+  "fragments": [
+   "La funció $t\\mapsto t^{1/3}$ (l'arrel cúbica real) és contínua a tot $\\mathbb{R}$, i $f(x,y)=x^{1/3}y^{1/3}$ és producte de composicions de funcions contínues; per tant $f$ és contínua a tot $\\mathbb{R}^2$.",
+   "A l'obert $\\{xy\\neq0\\}$, $\\dfrac{\\partial f}{\\partial x}=\\dfrac13x^{-2/3}y^{1/3}$ i $\\dfrac{\\partial f}{\\partial y}=\\dfrac13x^{1/3}y^{-2/3}$ són contínues; per la condició suficient, $f$ hi és diferenciable i hi té totes les derivades direccionals, $D_uf=\\nabla f\\cdot u$.",
+   "A l'origen, per a $u=(u_1,u_2)\\neq(0,0)$, $f(tu_1,tu_2)=(tu_1)^{1/3}(tu_2)^{1/3}=t^{1/3}(u_1u_2)^{1/3}$, de manera que el quocient incremental és $(u_1u_2)^{1/3}\\,t^{-2/3}$.",
+   "Si $u_1u_2\\neq0$ aquest quocient no té límit finit quan $t\\to0$; si $u_1u_2=0$ és idènticament $0$. Així, a l'origen només existeixen les derivades direccionals en les direccions dels eixos, i valen $0$; en particular $\\dfrac{\\partial f}{\\partial x}(0,0)=\\dfrac{\\partial f}{\\partial y}(0,0)=0$.",
+   "En un punt $(x_0,0)$ amb $x_0\\neq0$: $\\dfrac{f(x_0+tu_1,tu_2)-f(x_0,0)}{t}=(x_0+tu_1)^{1/3}u_2^{1/3}\\,t^{-2/3}$. Si $u_2\\neq0$, el factor $(x_0+tu_1)^{1/3}$ tendeix a $x_0^{1/3}\\neq0$ i el quocient tendeix a $\\pm\\infty$; si $u_2=0$, $f$ és nul·la sobre l'eix i $D_uf(x_0,0)=0$.",
+   "Anàlogament, en un punt $(0,y_0)$ amb $y_0\\neq0$ la derivada direccional només existeix si $u_2=0$, i aleshores val $0$.",
+   "Si $f$ fos diferenciable en un punt, hi existirien totes les derivades direccionals. Als punts dels eixos (inclòs l'origen) n'hi ha que no existeixen, i per tant $f$ no hi és diferenciable.",
+   "Conclusió: $f$ és contínua a tot $\\mathbb{R}^2$ i és diferenciable exactament al conjunt $\\{(x,y): xy\\neq0\\}$."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "$f(tu_1,tu_2)=(tu_1)^{1/3}(tu_2)^{1/3}=t^{1/3}(u_1u_2)^{1/3}$, de manera que el quocient incremental és $(u_1u_2)^{1/3}\\,t^{-2/3}$",
+    "tipus": "calcul",
+    "explicacio": "$(tu_1)^{1/3}(tu_2)^{1/3}=t^{1/3}t^{1/3}(u_1u_2)^{1/3}=t^{2/3}(u_1u_2)^{1/3}$; per això el quocient incremental és $(u_1u_2)^{1/3}t^{-1/3}$, no amb $t^{-2/3}$ (la conclusió no canvia).",
+    "correccio": "$f(tu_1,tu_2)=t^{2/3}(u_1u_2)^{1/3}$, i el quocient incremental és $(u_1u_2)^{1/3}\\,t^{-1/3}$.",
+    "pista": "Quantes vegades apareix el factor $t^{1/3}$ en el producte $(tu_1)^{1/3}(tu_2)^{1/3}$?"
+   },
+   {
+    "fragment": 6,
+    "cita": "només existeix si $u_2=0$",
+    "tipus": "logica",
+    "explicacio": "Pel mateix argument amb els papers de $x$ i $y$ intercanviats, a $(0,y_0)$ cal que $u_1=0$ (direcció vertical, al llarg de l'eix on $f$ és nul·la); amb $u_2=0$ i $u_1\\neq0$ el quocient és $u_1^{1/3}y_0^{1/3}t^{-2/3}\\to\\pm\\infty$.",
+    "correccio": "A $(0,y_0)$, $y_0\\neq0$, la derivada direccional només existeix si $u_1=0$, i aleshores val $0$.",
+    "pista": "Al punt $(0,y_0)$, sobre quina recta és nul·la $f$? Quina component de $u$ ha de ser zero per moure's sobre aquesta recta?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t3-11a",
+  "dificultat": "normal",
+  "fragments": [
+   "El logaritme demana $x+y+1>0$, i la integral $\\displaystyle\\int_0^x y\\cos t^2\\,dt$ està definida per a tot $(x,y)$ perquè l'integrand és continu en $t$. El domini és el semiplà $\\{(x,y): x+y+1>0\\}$, que és obert.",
+   "Escrivim $f(x,y)=\\log(x+y+1)+y\\,G(x)$, amb $G(x)=\\displaystyle\\int_0^x\\cos t^2\\,dt$, ja que $y$ no depèn de la variable d'integració $t$.",
+   "Pel teorema fonamental del càlcul, $G'(x)=2x\\cos x^2$, i per tant $\\dfrac{\\partial f}{\\partial x}=\\dfrac{1}{x+y+1}+2xy\\cos x^2$.",
+   "Respecte de $y$, $G(x)$ és constant i $\\dfrac{\\partial f}{\\partial y}=\\dfrac{1}{x+y+1}+G(x)$.",
+   "Les dues parcials són contínues a l'obert $\\{x+y+1>0\\}$ ($G$ és contínua, i la resta són composicions, productes i quocients de funcions contínues amb denominador no nul). Per la condició suficient de diferenciabilitat, $f$ és diferenciable (de fet, de classe $\\mathcal{C}^1$) a tot el domini.",
+   "A l'origen, $\\dfrac{\\partial f}{\\partial x}(0,0)=1+0=1$ i $\\dfrac{\\partial f}{\\partial y}(0,0)=1+G(0)=1$. Així $Jf(0,0)=(1\\ \\ 1)$, és a dir, $Df(0,0)(h,k)=h+k$.",
+   "Com que $f(0,0)=\\log1+0=0$, l'aproximació lineal dona $f(0.03,0.02)\\approx f(0,0)+Df(0,0)(0.03,0.02)=0+0.03+0.02=0.05$.",
+   "A més, com que $\\log(1+s)\\ge s$ per a tot $s>-1$, el valor exacte $f(0.03,0.02)=\\log(1.05)+0.02\\,G(0.03)$ és una mica més gran que $0.05$."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "$G'(x)=2x\\cos x^2$, i per tant $\\dfrac{\\partial f}{\\partial x}=\\dfrac{1}{x+y+1}+2xy\\cos x^2$",
+    "tipus": "calcul",
+    "explicacio": "El límit superior de la integral és $x$, no $x^2$: pel teorema fonamental del càlcul $G'(x)=\\cos x^2$, sense el factor $2x$ de la regla de la cadena.",
+    "correccio": "$G'(x)=\\cos x^2$, i $\\dfrac{\\partial f}{\\partial x}=\\dfrac{1}{x+y+1}+y\\cos x^2$ (a l'origen el valor, $1$, no canvia).",
+    "pista": "Quin és el límit superior de la integral que defineix $G$? Cal aplicar-hi la regla de la cadena?"
+   },
+   {
+    "fragment": 8,
+    "cita": "$\\log(1+s)\\ge s$ per a tot $s>-1$, el valor exacte $f(0.03,0.02)=\\log(1.05)+0.02\\,G(0.03)$ és una mica més gran que $0.05$",
+    "tipus": "desigualtat",
+    "explicacio": "La desigualtat està girada: $\\log(1+s)\\le s$ (el logaritme és còncau). De fet $\\log1.05\\approx0.0488$ i $0.02\\,G(0.03)\\approx0.0006$, i el valor exacte és $\\approx0.0494$, inferior a $0.05$.",
+    "correccio": "Com que $\\log(1+s)\\le s$, $\\log1.05<0.05$; numèricament $f(0.03,0.02)\\approx0.0488+0.0006\\approx0.0494$, una mica per sota de l'aproximació $0.05$.",
+    "pista": "La gràfica de $\\log(1+s)$, queda per sobre o per sota de la seva recta tangent a $s=0$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t3-14a",
+  "dificultat": "normal",
+  "fragments": [
+   "La funció està definida a $\\mathbb{R}^2\\setminus\\{(0,0)\\}$ i hi podem escriure $f(x,y)=\\log\\sqrt{x^2+y^2}=\\dfrac12\\log(x^2+y^2)$.",
+   "Les seves parcials són $\\dfrac{\\partial f}{\\partial x}=\\dfrac12\\cdot\\dfrac{2x}{x^2+y^2}=\\dfrac{x}{x^2+y^2}$ i $\\dfrac{\\partial f}{\\partial y}=\\dfrac{y}{(x^2+y^2)^2}$.",
+   "Aquestes parcials són contínues a l'obert $\\mathbb{R}^2\\setminus\\{(0,0)\\}$, que conté $(1,0)$; per la condició suficient, $f$ és diferenciable a $(1,0)$ i podem calcular les derivades direccionals amb el gradient.",
+   "A $(1,0)$, $\\dfrac{\\partial f}{\\partial x}(1,0)=\\dfrac{1}{1}=1$ i $\\dfrac{\\partial f}{\\partial y}(1,0)=0$, de manera que $\\nabla f(1,0)=(1,0)$.",
+   "Per tant, $D_{\\mathbf v}f(1,0)=\\langle\\nabla f(1,0),\\mathbf v\\rangle=\\langle(1,0),(2,1)\\rangle=2$.",
+   "Si es vol la derivada en la direcció unitària de $\\mathbf v$, com que $\\|\\mathbf v\\|=\\sqrt5$, s'obté $D_{\\mathbf v/\\|\\mathbf v\\|}f(1,0)=\\dfrac{2}{5}$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "$\\dfrac{\\partial f}{\\partial y}=\\dfrac{y}{(x^2+y^2)^2}$",
+    "tipus": "calcul",
+    "explicacio": "Per simetria amb la parcial respecte de $x$, $\\dfrac{\\partial f}{\\partial y}=\\dfrac12\\cdot\\dfrac{2y}{x^2+y^2}=\\dfrac{y}{x^2+y^2}$; el denominador no va al quadrat (a $(1,0)$ el valor $0$ no canvia).",
+    "correccio": "$\\dfrac{\\partial f}{\\partial y}=\\dfrac{y}{x^2+y^2}$.",
+    "pista": "La derivada de $\\log g$ és $g'/g$: per què el denominador hauria de quedar al quadrat en una de les parcials i no en l'altra?"
+   },
+   {
+    "fragment": 6,
+    "cita": "$D_{\\mathbf v/\\|\\mathbf v\\|}f(1,0)=\\dfrac{2}{5}$",
+    "tipus": "calcul",
+    "explicacio": "La derivada direccional és lineal en el vector: $D_{\\mathbf v/\\|\\mathbf v\\|}f=\\dfrac{1}{\\|\\mathbf v\\|}D_{\\mathbf v}f=\\dfrac{2}{\\sqrt5}$; s'ha dividit per $\\|\\mathbf v\\|^2$.",
+    "correccio": "$D_{\\mathbf v/\\|\\mathbf v\\|}f(1,0)=\\dfrac{2}{\\sqrt5}$.",
+    "pista": "Si divideixes el vector per $\\sqrt5$, per quant queda dividit el producte escalar amb el gradient?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t3-15a",
+  "dificultat": "normal",
+  "fragments": [
+   "Les funcions $\\log y$ i $x/y$ són de classe $\\mathcal{C}^1$ per a $y>0$, i $\\arcsin$ és derivable, amb derivada contínua, a l'interval tancat $[-1,1]$. Per tant, a l'obert $U=\\{(x,y,z): y>0,\\ |x\\log y|<1\\}$, que conté $a$ (allà $x\\log y=0$), totes les parcials de $f$ existeixen i són contínues, i $f$ és diferenciable a $a$: existeix l'hiperplà tangent a la gràfica.",
+   "El valor al punt és $f(0,1,2)=1\\cdot\\arcsin(0\\cdot\\log1)+2^{0}=0+1=1$.",
+   "Derivant respecte de $x$, $\\dfrac{\\partial f}{\\partial x}=\\dfrac{y\\log y}{\\sqrt{1-x^2\\log^2y}}+\\dfrac{\\log2}{y}\\,2^{x/y}$, que a $a$ val $0+\\log2=\\log2$.",
+   "Respecte de $y$, $\\dfrac{\\partial f}{\\partial y}=\\arcsin(x\\log y)+\\dfrac{x}{\\sqrt{1-x^2\\log^2y}}-\\dfrac{x\\log2}{y}\\,2^{x/y}$, que a $a$ val $0$ perquè $x=0$. A més, $f$ no depèn de $z$, així que $\\dfrac{\\partial f}{\\partial z}=0$ i $\\nabla f(a)=(\\log2,0,0)$.",
+   "La gràfica de $f$ és a $\\mathbb{R}^4$; amb coordenades $(x,y,z,w)$, l'hiperplà tangent és $w=f(a)+\\nabla f(a)\\cdot(x-0,y-1,z-2)$.",
+   "Substituint, $w=1+\\log2\\,(x-0)+0\\,(y-1)+0\\,(z-2)$, és a dir, $w=1+(\\log2)\\,x$."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "derivable, amb derivada contínua, a l'interval tancat $[-1,1]$",
+    "tipus": "hipotesi",
+    "explicacio": "$\\arcsin'(s)=\\dfrac{1}{\\sqrt{1-s^2}}$ no està definida a $s=\\pm1$: $\\arcsin$ només és derivable amb derivada contínua a l'obert $(-1,1)$ (per això cal $|x\\log y|<1$).",
+    "correccio": "$\\arcsin$ és derivable, amb derivada contínua, a l'interval obert $(-1,1)$.",
+    "pista": "Quant val la derivada d'$\\arcsin$ a $s=1$?"
+   },
+   {
+    "fragment": 4,
+    "cita": "$\\dfrac{\\partial f}{\\partial y}=\\arcsin(x\\log y)+\\dfrac{x}{\\sqrt{1-x^2\\log^2y}}-\\dfrac{x\\log2}{y}\\,2^{x/y}$",
+    "tipus": "calcul",
+    "explicacio": "La derivada de $x/y$ respecte de $y$ és $-x/y^2$, així que el terme correcte és $-\\dfrac{x\\log2}{y^2}2^{x/y}$ (a $a$ s'anul·la igualment perquè $x=0$).",
+    "correccio": "$\\dfrac{\\partial f}{\\partial y}=\\arcsin(x\\log y)+\\dfrac{x}{\\sqrt{1-x^2\\log^2y}}-\\dfrac{x\\log2}{y^2}\\,2^{x/y}$.",
+    "pista": "Quina és la derivada de $x/y$ respecte de $y$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t3-17",
+  "dificultat": "normal",
+  "fragments": [
+   "La funció $(x,y)\\mapsto|xy|$ és contínua, $\\sqrt{\\cdot}$ és contínua a $[0,+\\infty)$ i l'exponencial ho és a $\\mathbb{R}$; per composició, $f$ és contínua a tot $\\mathbb{R}^2$.",
+   "Sigui $(x_0,y_0)$ amb $x_0y_0\\neq0$. En un entorn seu el signe de $xy$ és constant, i hi tenim $|xy|=s\\,xy$ amb $s=\\pm1$ fix. Allà $\\dfrac{\\partial f}{\\partial x}=e^{\\sqrt{|xy|}}\\,\\dfrac{y}{2\\sqrt{|xy|}}$ i $\\dfrac{\\partial f}{\\partial y}=e^{\\sqrt{|xy|}}\\,\\dfrac{x}{2\\sqrt{|xy|}}$.",
+   "Aquestes parcials són contínues a l'obert $\\{xy\\neq0\\}$, de manera que $f$ hi és diferenciable i hi té totes les derivades direccionals, $D_uf=\\langle\\nabla f,u\\rangle$.",
+   "En un punt $(a,0)$ amb $a\\neq0$: $\\dfrac{f(a+tu_1,tu_2)-1}{t}=\\dfrac{e^{\\sqrt{|a+tu_1|\\,|u_2|}\\sqrt{|t|}}-1}{t}\\sim\\dfrac{\\sqrt{|a|\\,|u_2|}\\,\\sqrt{|t|}}{t}$, que no té límit finit si $u_2\\neq0$. Si $u_2=0$, $f\\equiv1$ sobre l'eix i $D_uf(a,0)=0$. Anàlogament, a $(0,b)$ amb $b\\neq0$ només existeix si $u_1=0$, i val $0$.",
+   "A l'origen, $f(tu_1,tu_2)=e^{c|t|}$ amb $c=\\sqrt{|u_1u_2|}$, i $\\dfrac{e^{c|t|}-1}{t}$ tendeix a $c$ quan $t\\to0^+$ i a $-c$ quan $t\\to0^-$. El límit existeix només si $c=0$, és a dir $u_1u_2=0$ (direccions dels eixos), i llavors val $0$.",
+   "Finalment, als punts dels eixos, inclòs l'origen, alguna de les dues derivades parcials no existeix, i per tant $f$ no hi és diferenciable.",
+   "En resum: $f$ és contínua a tot $\\mathbb{R}^2$, té totes les derivades direccionals als punts amb $xy\\neq0$ i només les de les direccions indicades als eixos, i és diferenciable exactament a $\\{(x,y): xy\\neq0\\}$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "$\\dfrac{\\partial f}{\\partial x}=e^{\\sqrt{|xy|}}\\,\\dfrac{y}{2\\sqrt{|xy|}}$ i $\\dfrac{\\partial f}{\\partial y}=e^{\\sqrt{|xy|}}\\,\\dfrac{x}{2\\sqrt{|xy|}}$",
+    "tipus": "calcul",
+    "explicacio": "Derivant $\\sqrt{s\\,xy}$ respecte de $x$ surt $\\dfrac{s\\,y}{2\\sqrt{|xy|}}$: falta el factor $s$, i quan $xy<0$ el signe és incorrecte (el mateix passa a $\\partial f/\\partial y$).",
+    "correccio": "$\\dfrac{\\partial f}{\\partial x}=e^{\\sqrt{|xy|}}\\,\\dfrac{s\\,y}{2\\sqrt{|xy|}}$ i $\\dfrac{\\partial f}{\\partial y}=e^{\\sqrt{|xy|}}\\,\\dfrac{s\\,x}{2\\sqrt{|xy|}}$.",
+    "pista": "Si $xy<0$, què val la derivada de $|xy|=-xy$ respecte de $x$? Hi és a la teva fórmula?"
+   },
+   {
+    "fragment": 6,
+    "cita": "inclòs l'origen, alguna de les dues derivades parcials no existeix",
+    "tipus": "logica",
+    "explicacio": "A l'origen les dues parcials existeixen (les direccions dels eixos donen $0$). El motiu correcte és que, en tots els punts dels eixos, hi ha derivades direccionals que no existeixen, i diferenciable implicaria que existissin totes.",
+    "correccio": "Si $f$ fos diferenciable en un punt dels eixos, hi existirien totes les derivades direccionals; com que n'hi ha que no existeixen (les de direccions fora de l'eix), $f$ no hi és diferenciable.",
+    "pista": "Quant valen $\\partial f/\\partial x(0,0)$ i $\\partial f/\\partial y(0,0)$ segons el que has calculat? Quina propietat de la diferenciabilitat sí que falla a l'origen?"
+   }
+  ]
+ }
+]

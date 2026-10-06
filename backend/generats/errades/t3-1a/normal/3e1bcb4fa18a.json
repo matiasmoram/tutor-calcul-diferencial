@@ -1,0 +1,59 @@
+{
+  "id": "3e1bcb4fa18a",
+  "exercici": "t3-1a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "La funció $u$ és un quocient de polinomis, de manera que està definida exactament on el denominador no s'anul·la: cal $x^2-y^2\\neq0$, és a dir, $y\\neq x$ i $y\\neq-x$.",
+    "El domini és, doncs, el complementari de les rectes $y=x$ i $y=-x$. Com que la unió d'aquestes dues rectes és un conjunt tancat, el domini és obert i té sentit calcular les derivades parcials a qualsevol punt seu.",
+    "Per calcular $\\dfrac{\\partial u}{\\partial x}$ fixem $y$ i derivem el quocient respecte de $x$: la derivada del numerador $x^2+y^2$ és $2x$, i la del denominador $x^2-y^2$ també és $2x$.",
+    "Aplicant la regla del quocient, $\\dfrac{\\partial u}{\\partial x}=\\dfrac{2x(x^2-y^2)-(x^2+y^2)\\,2x}{(x^2-y^2)^2}=\\dfrac{4xy^2}{(x^2-y^2)^2}$.",
+    "Per calcular $\\dfrac{\\partial u}{\\partial y}$ fixem $x$. Com que la derivada de $x^2-y^2$ respecte de $y$ és $2y$, la regla del quocient dona $\\dfrac{\\partial u}{\\partial y}=\\dfrac{2y(x^2-y^2)-(x^2+y^2)\\,2y}{(x^2-y^2)^2}=\\dfrac{-4y^3}{(x^2-y^2)^2}$.",
+    "Aquestes fórmules són vàlides a tot punt del domini, ja que el denominador $(x^2-y^2)^2$ hi és estrictament positiu."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "$\\dfrac{\\partial u}{\\partial x}=\\dfrac{2x(x^2-y^2)-(x^2+y^2)\\,2x}{(x^2-y^2)^2}=\\dfrac{4xy^2}{(x^2-y^2)^2}$",
+      "inici": 32,
+      "fi": 138,
+      "tipus": "calcul",
+      "explicacio": "El numerador és $2x(x^2-y^2)-2x(x^2+y^2)=2x\\cdot(-2y^2)=-4xy^2$: el resultat té el signe canviat.",
+      "correccio": "$\\dfrac{\\partial u}{\\partial x}=\\dfrac{-4xy^2}{(x^2-y^2)^2}$.",
+      "pista": "Quan restes $(x^2+y^2)$ de $(x^2-y^2)$, quin signe té el terme en $y^2$ que queda?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "la derivada de $x^2-y^2$ respecte de $y$ és $2y$, la regla del quocient dona $\\dfrac{\\partial u}{\\partial y}=\\dfrac{2y(x^2-y^2)-(x^2+y^2)\\,2y}{(x^2-y^2)^2}=\\dfrac{-4y^3}{(x^2-y^2)^2}$",
+      "inici": 65,
+      "fi": 248,
+      "tipus": "calcul",
+      "explicacio": "La derivada de $x^2-y^2$ respecte de $y$ és $-2y$, no $2y$; per això el numerador no surt bé.",
+      "correccio": "Amb $-2y$: $\\dfrac{\\partial u}{\\partial y}=\\dfrac{2y(x^2-y^2)-(x^2+y^2)(-2y)}{(x^2-y^2)^2}=\\dfrac{4x^2y}{(x^2-y^2)^2}$.",
+      "pista": "Quin signe té el terme $-y^2$ del denominador, i què li passa en derivar-lo?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3a.json",
+    "valoracio": "Dos errors de càlcul: signe final de la parcial en x i derivada del denominador en y.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "=\\dfrac{4xy^2}{(x^2-y^2)^2}",
+        "gravetat": "error",
+        "explicacio": "El numerador $2x(x^2-y^2)-(x^2+y^2)2x=-4xy^2$: s'ha perdut el signe, $\\partial_xu=-4xy^2/(x^2-y^2)^2$."
+      },
+      {
+        "fragment": 5,
+        "cita": "respecte de $y$ és $2y$",
+        "gravetat": "error",
+        "explicacio": "La derivada de $x^2-y^2$ respecte de $y$ és $-2y$; amb el signe correcte s'obté $\\partial_yu=4x^2y/(x^2-y^2)^2$, no $-4y^3/(x^2-y^2)^2$."
+      }
+    ]
+  },
+  "creat": 1791299309.4561033
+}

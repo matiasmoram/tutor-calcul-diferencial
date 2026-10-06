@@ -1,0 +1,58 @@
+{
+  "id": "a6af028f100a",
+  "exercici": "t1-18b",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Primer vegem quina inclusió és sempre certa. Si $x\\in\\overline V$, tota bola centrada en $x$ talla $V$; com que $A\\subseteq V$, també talla $A$, i igualment talla $B$. Així $\\overline V\\subseteq\\overline A\\cap\\overline B$ sempre.",
+    "Per tant, un contraexemple ha de tenir un punt de $\\overline V$ que no sigui de $\\overline A\\cap\\overline B$. Busquem dos conjunts disjunts que es toquin en un punt que no pertanyi a cap dels dos.",
+    "A $\\mathbb{R}$ prenem $A=(0,1)$ i $B=(1,2)$. Aleshores $V=A\\cap B=\\varnothing$, i per tant $\\overline V=\\varnothing$.",
+    "D'altra banda, $\\overline A=[0,1]$: $A\\subseteq\\overline A$, tota bola centrada en $0$ o en $1$ talla $(0,1)$, i cada punt de fora de $[0,1]$ té una bola que no talla $(0,1)$. Anàlogament $\\overline B=[1,2]$.",
+    "Així $\\overline A\\cap\\overline B=[0,1]\\cap[1,2]=\\{1\\}\\neq\\varnothing=\\overline V$, i la igualtat $\\overline V=\\overline A\\cap\\overline B$ és falsa en general."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "com que $A\\subseteq V$",
+      "inici": 104,
+      "fi": 126,
+      "tipus": "logica",
+      "explicacio": "La inclusió és al revés: $V=A\\cap B\\subseteq A$. Precisament perquè $V\\subseteq A$, una bola que talla $V$ també talla $A$.",
+      "correccio": "Com que $V\\subseteq A$, també talla $A$ (i, com que $V\\subseteq B$, també talla $B$).",
+      "pista": "Qui està contingut en qui: $A$ en $A\\cap B$, o $A\\cap B$ en $A$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 2,
+      "cita": "un contraexemple ha de tenir un punt de $\\overline V$ que no sigui de $\\overline A\\cap\\overline B$",
+      "inici": 10,
+      "fi": 108,
+      "tipus": "conclusio",
+      "explicacio": "Acabem de veure que $\\overline V\\subseteq\\overline A\\cap\\overline B$ sempre, així que aquest punt no pot existir. La inclusió que pot fallar és l'altra: cal un punt de $\\overline A\\cap\\overline B$ que no sigui de $\\overline V$.",
+      "correccio": "Un contraexemple ha de tenir un punt de $\\overline A\\cap\\overline B$ que no sigui de $\\overline V$.",
+      "pista": "Si $\\overline V\\subseteq\\overline A\\cap\\overline B$ sempre, quina de les dues inclusions pot fallar?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t1.json",
+    "valoracio": "El contraexemple és correcte, però la inclusió $V\\subseteq A$ i la descripció del que ha de complir el contraexemple estan invertides.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "com que $A\\subseteq V$",
+        "gravetat": "error",
+        "explicacio": "La inclusió és $V\\subseteq A$ (i $V\\subseteq B$), que és la que permet passar de tallar $V$ a tallar $A$."
+      },
+      {
+        "fragment": 2,
+        "cita": "un punt de $\\overline V$ que no sigui de $\\overline A\\cap\\overline B$",
+        "gravetat": "error",
+        "explicacio": "Sentit invertit: com que $\\overline V\\subseteq\\overline A\\cap\\overline B$, el contraexemple ha de tenir un punt de $\\overline A\\cap\\overline B$ fora de $\\overline V$ (el que de fet fa el fragment 5)."
+      }
+    ]
+  },
+  "creat": 1791299422.5375986
+}

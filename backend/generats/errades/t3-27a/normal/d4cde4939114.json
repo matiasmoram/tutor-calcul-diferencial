@@ -1,0 +1,60 @@
+{
+  "id": "d4cde4939114",
+  "exercici": "t3-27a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "A l'obert $\\{y\\neq0\\}$, $\\dfrac{\\partial f}{\\partial x}=y^2\\sin\\dfrac1y$ i $\\dfrac{\\partial f}{\\partial y}=2xy\\sin\\dfrac1y+x\\cos\\dfrac1y$.",
+    "Aquestes parcials són contínues a l'obert $\\{y\\neq0\\}$ (sumes, productes i composicions de funcions contínues amb $y\\neq0$), i per la condició suficient $f$ és diferenciable a tots els punts amb $y\\neq0$.",
+    "Als punts $(a,0)$ la funció està definida a part. Com que $f(a+t,0)=0$, $\\dfrac{\\partial f}{\\partial x}(a,0)=0$; i $\\dfrac{\\partial f}{\\partial y}(a,0)=\\lim_{k\\to0}\\dfrac{ak^2\\sin(1/k)}{k}=\\lim_{k\\to0}ak\\sin\\dfrac1k=0$, ja que $\\left|ak\\sin\\dfrac1k\\right|\\le|a|\\,|k|$.",
+    "L'única candidata a diferencial a $(a,0)$ és, doncs, l'aplicació lineal nul·la, i cal veure que $\\dfrac{|f(a+h,k)|}{\\|(h,k)\\|}\\to0$ quan $(h,k)\\to(0,0)$. Si $k=0$, el quocient és $0$.",
+    "Si $k\\neq0$, el quocient és $\\dfrac{|a+h|\\,k^2\\left|\\sin\\frac1k\\right|}{\\|(h,k)\\|}\\le|a+h|\\,\\dfrac{k^2}{\\|(h,k)\\|}$, i com que $\\dfrac{k^2}{\\|(h,k)\\|}\\le k^2$, el quocient és com a molt $|a+h|\\,k^2$, que tendeix a $0$.",
+    "Pel criteri del sandvitx, el quocient tendeix a $0$ i $f$ és diferenciable a $(a,0)$ amb $Df(a,0)=0$, per a tot $a\\in\\mathbb{R}$ (també $a=0$).",
+    "Observem que, per a $a\\neq0$, $\\dfrac{\\partial f}{\\partial y}$ no és contínua a $(a,0)$ pel terme oscil·lant amb $\\cos\\frac1y$: la condició suficient no s'hi podia aplicar, però $f$ hi és igualment diferenciable. Conclusió: $f$ és diferenciable a tot $\\mathbb{R}^2$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "$\\dfrac{\\partial f}{\\partial y}=2xy\\sin\\dfrac1y+x\\cos\\dfrac1y$",
+      "inici": 75,
+      "fi": 137,
+      "tipus": "calcul",
+      "explicacio": "La derivada de $\\sin\\frac1y$ és $\\cos\\frac1y\\cdot\\left(-\\frac{1}{y^2}\\right)$: el segon terme és $xy^2\\cos\\frac1y\\cdot\\left(-\\frac1{y^2}\\right)=-x\\cos\\frac1y$, amb signe negatiu.",
+      "correccio": "$\\dfrac{\\partial f}{\\partial y}=2xy\\sin\\dfrac1y-x\\cos\\dfrac1y$.",
+      "pista": "Quina és la derivada de $\\frac1y$ respecte de $y$? Quin signe aporta a la regla de la cadena?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "com que $\\dfrac{k^2}{\\|(h,k)\\|}\\le k^2$",
+      "inici": 119,
+      "fi": 158,
+      "tipus": "desigualtat",
+      "explicacio": "Prop de l'origen $\\|(h,k)\\|<1$, i llavors $\\dfrac{k^2}{\\|(h,k)\\|}\\ge k^2$: la desigualtat és al revés. La fita correcta usa $\\|(h,k)\\|\\ge|k|$.",
+      "correccio": "Com que $\\|(h,k)\\|\\ge|k|$, $\\dfrac{k^2}{\\|(h,k)\\|}\\le|k|$, i el quocient és com a molt $|a+h|\\,|k|\\to0$.",
+      "pista": "Dividir per un nombre més petit que $1$, fa el resultat més gran o més petit? Quina fita de $\\|(h,k)\\|$ en termes de $|k|$ tens?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3b.json",
+    "valoracio": "La conclusió (diferenciable a tot $\\mathbb{R}^2$) és correcta, però $f_y$ té un error de signe i la fita del quocient és falsa.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "2xy\\sin\\dfrac1y+x\\cos\\dfrac1y",
+        "gravetat": "error",
+        "explicacio": "$\\frac{d}{dy}\\sin\\frac1y=-\\frac{1}{y^2}\\cos\\frac1y$, per tant $f_y=2xy\\sin\\frac1y-x\\cos\\frac1y$ (signe canviat)."
+      },
+      {
+        "fragment": 5,
+        "cita": "$\\dfrac{k^2}{\\|(h,k)\\|}\\le k^2$",
+        "gravetat": "error",
+        "explicacio": "Fals per $\\|(h,k)\\|<1$; la fita correcta és $\\frac{k^2}{\\|(h,k)\\|}\\le|k|$, que també tendeix a $0$."
+      }
+    ]
+  },
+  "creat": 1791299348.7099884
+}

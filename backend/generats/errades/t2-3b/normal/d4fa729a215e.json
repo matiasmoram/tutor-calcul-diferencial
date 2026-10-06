@@ -1,0 +1,58 @@
+{
+  "id": "d4fa729a215e",
+  "exercici": "t2-3b",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "El conjunt de nivell $k$ és $C_k(f)=\\{(x,y,z)\\mid x^2+y^2-z^2=k\\}$. Com que el signe de $k$ pot canviar la forma de la superfície, distingim els casos $k>0$, $k=0$ i $k<0$.",
+    "Tallem amb el pla $z=z_0$: queda $x^2+y^2=k+z_0^2$, que és una circumferència de centre $(0,0,z_0)$ i radi $\\sqrt{k+z_0^2}$ si $k+z_0^2>0$, un sol punt si $k+z_0^2=0$ i el buit si $k+z_0^2<0$. Per tant la superfície és de revolució al voltant de l'eix $Oz$.",
+    "Si $k>0$, $k+z_0^2>0$ per a tot $z_0$: totes les seccions horitzontals són circumferències, i la més petita, a $z=0$, té radi $k$. És un hiperboloide d'una fulla d'eix $Oz$.",
+    "Si $k=0$, l'equació és $x^2+y^2=z^2$: la secció a l'altura $z_0$ és una circumferència de radi $|z_0|$, que es redueix a l'origen per a $z_0=0$. És el con circular de vèrtex l'origen i eix $Oz$.",
+    "Si $k<0$, la secció és buida quan $z_0^2<-k$, és a dir, per a $|z_0|<\\sqrt{-k}$, i és una circumferència per a $|z_0|>\\sqrt{-k}$. Com que només hi ha punts amb $|z|\\geq\\sqrt{-k}$, la superfície és un hiperboloide d'una fulla d'eix $Oz$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "la més petita, a $z=0$, té radi $k$",
+      "inici": 94,
+      "fi": 129,
+      "tipus": "calcul",
+      "explicacio": "Amb $z_0=0$ la secció és $x^2+y^2=k$, el radi de la qual és $\\sqrt{k}$, no $k$.",
+      "correccio": "La secció més petita, a $z=0$, és la circumferència de radi $\\sqrt{k}$.",
+      "pista": "Si $x^2+y^2=k$, quina és la distància dels punts de la secció a l'eix $Oz$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "la superfície és un hiperboloide d'una fulla d'eix $Oz$",
+      "inici": 180,
+      "fi": 235,
+      "tipus": "conclusio",
+      "explicacio": "La franja $|z|<\\sqrt{-k}$ sense punts separa la superfície en dues parts (una amb $z\\geq\\sqrt{-k}$ i l'altra amb $z\\leq-\\sqrt{-k}$): és un hiperboloide de dues fulles.",
+      "correccio": "Per a $k<0$, $C_k(f)$ és un hiperboloide de dues fulles d'eix $Oz$.",
+      "pista": "Si no hi ha cap punt amb $|z|<\\sqrt{-k}$, la superfície és d'una sola peça?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t2.json",
+    "valoracio": "Radi de la secció mínima incorrecte i confusió d'una/dues fulles per a $k<0$.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "té radi $k$",
+        "gravetat": "error",
+        "explicacio": "La secció a $z=0$ és $x^2+y^2=k$, de radi $\\sqrt{k}$, no $k$."
+      },
+      {
+        "fragment": 5,
+        "cita": "la superfície és un hiperboloide d'una fulla d'eix $Oz$",
+        "gravetat": "error",
+        "explicacio": "Per a $k<0$ hi ha una franja $|z|<\\sqrt{-k}$ sense punts: és un hiperboloide de dues fulles."
+      }
+    ]
+  },
+  "creat": 1791299452.0325656
+}

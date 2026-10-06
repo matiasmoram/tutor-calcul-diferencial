@@ -1,0 +1,59 @@
+{
+  "id": "0d53fc20f60e",
+  "exercici": "t1-16a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Sí que n'existeixen. La idea és que, si a un conjunt obert li traiem un punt interior, aquest punt passa a ser de frontera, de manera que el conjunt més petit pot tenir més frontera.",
+    "Concretament, si $B$ és obert i $p\\in B$, posem $A=B\\setminus\\{p\\}\\subseteq B$. Tota bola centrada en $p$ conté $p\\notin A$ i punts d'$A$, així que $p\\in Fr(A)$; en canvi, $p\\in B$ i un punt d'un conjunt mai no pertany a la seva frontera, així que $p\\notin Fr(B)$.",
+    "Prenem a $\\mathbb{R}$ els conjunts $A=(0,1)\\cup(1,2)$ i $B=(0,2)$. Clarament $A\\subseteq B$, i $A\\neq B$ perquè $1\\in B\\setminus A$.",
+    "$Fr(B)=\\{0,2\\}$: com que $0,2\\notin B$, no són interiors a $B$ i, per tant, són de frontera; els punts de $(0,2)$ són interiors a $B$ i els de fora de $[0,2]$ són exteriors.",
+    "Per a $A$: $0$ i $2$ en són punts de frontera com abans, i també $1$, perquè tota bola $(1-r,1+r)$ conté $1\\notin A$ i punts d'$A$. Els altres punts són interiors o exteriors a $A$, així que $Fr(A)=\\{0,1,2\\}$.",
+    "Per tant $Fr(B)=\\{0,2\\}\\subseteq\\{0,1,2\\}=Fr(A)$, amb $A\\subseteq B$ i $A\\neq B$: l'exemple compleix totes les condicions."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "un punt d'un conjunt mai no pertany a la seva frontera",
+      "inici": 183,
+      "fi": 237,
+      "tipus": "logica",
+      "explicacio": "És fals: $1\\in[0,1]$ i $1\\in Fr([0,1])$. El motiu correcte és que $p$ és interior a $B$ (perquè $B$ és obert), i un punt interior no és de frontera.",
+      "correccio": "Com que $B$ és obert, $p$ és interior a $B$: hi ha una bola centrada en $p$ continguda a $B$, que no talla $B^c$, i per tant $p\\notin Fr(B)$.",
+      "pista": "Quina és la frontera de $[0,1]$? Els seus punts pertanyen al conjunt o no?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "com que $0,2\\notin B$, no són interiors a $B$ i, per tant, són de frontera",
+      "inici": 17,
+      "fi": 91,
+      "tipus": "logica",
+      "explicacio": "No ser interior no implica ser de frontera: per exemple $5\\notin B$ tampoc és interior, i és exterior. Per a $0$ i $2$ cal comprovar que tota bola centrada en ells talla $B$ i $B^c$.",
+      "correccio": "$0$ i $2$ són de frontera perquè tota bola $(0-r,0+r)$ (o centrada en $2$) conté punts de $B$ i punts de $B^c$.",
+      "pista": "El punt $5$ tampoc és de $B$. És de la frontera de $B$? Què cal comprovar exactament?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t1.json",
+    "valoracio": "Exemple correcte, però les justificacions de $p\\notin Fr(B)$ i de $Fr(B)=\\{0,2\\}$ són falses.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "un punt d'un conjunt mai no pertany a la seva frontera",
+        "gravetat": "error",
+        "explicacio": "Fals (p. ex. $0\\in[0,1]$ és de frontera). La raó correcta és que $p$ és interior a $B$ perquè $B$ és obert."
+      },
+      {
+        "fragment": 4,
+        "cita": "no són interiors a $B$ i, per tant, són de frontera",
+        "gravetat": "error",
+        "explicacio": "No ser interior no implica ser de frontera (p. ex. $5\\notin B$ és exterior); cal veure que tota bola centrada en $0$ o $2$ talla $B$ i $B^c$."
+      }
+    ]
+  },
+  "creat": 1791299422.5335941
+}

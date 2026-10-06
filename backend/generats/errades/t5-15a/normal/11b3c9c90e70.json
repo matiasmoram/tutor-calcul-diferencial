@@ -1,0 +1,60 @@
+{
+  "id": "11b3c9c90e70",
+  "exercici": "t5-15a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Com que $\\varphi$ és derivable, és contínua, i pel teorema fonamental del càlcul $\\frac{\\partial f}{\\partial x}(x,y)=-\\varphi(x)$ i $\\frac{\\partial f}{\\partial y}(x,y)=\\varphi(y)$. Com que existeixen les derivades parcials en tot punt, $f$ és diferenciable.",
+    "Els punts crítics són les solucions de $\\varphi(x)=0$ i $\\varphi(y)=0$, és a dir, $(a,a)$, $(a,b)$, $(b,a)$ i $(b,b)$.",
+    "Com que $\\varphi(a)=0$ i $\\varphi'(a)<0$, $\\varphi>0$ just a l'esquerra de $a$ i $\\varphi<0$ just a la dreta; com que $\\varphi'(b)>0$, $\\varphi<0$ just a l'esquerra de $b$ i $\\varphi>0$ just a la dreta. Com que $a$ i $b$ són els únics zeros, pel teorema de Bolzano $\\varphi>0$ a $(-\\infty,a)$, $\\varphi<0$ a $(a,b)$ i $\\varphi>0$ a $(b,+\\infty)$.",
+    "Sigui $\\Phi$ una primitiva de $\\varphi$, de manera que $f(x,y)=\\Phi(y)-\\Phi(x)$. $\\Phi$ és estrictament creixent a $(-\\infty,a]$, estrictament decreixent a $[a,b]$ i estrictament creixent a $[b,+\\infty)$: $a$ és un màxim local estricte de $\\Phi$ i $b$ un mínim local estricte.",
+    "Punt $(a,b)$: per a $(x,y)$ proper, $\\Phi(y)\\geq\\Phi(b)$ i $\\Phi(x)\\leq\\Phi(a)$, amb igualtat només si $y=b$ i $x=a$ respectivament; per tant $f(x,y)>f(a,b)$ si $(x,y)\\neq(a,b)$, i $(a,b)$ és un mínim local estricte, amb $f(a,b)=\\int_a^b\\varphi<0$. Anàlogament, $(b,a)$ és un màxim local estricte, amb $f(b,a)=\\int_a^b|\\varphi|>0$.",
+    "Punt $(a,a)$: per a $y\\neq a$ proper a $a$, $f(a,y)-f(a,a)=\\Phi(y)-\\Phi(a)>0$, i per a $x\\neq a$ proper a $a$, $f(x,a)-f(a,a)=\\Phi(a)-\\Phi(x)<0$. Així $f$ pren valors més grans i més petits que $f(a,a)=0$ a prop de $(a,a)$: és un punt de sella. El mateix raonament amb $b$ mostra que $(b,b)$ també és un punt de sella.",
+    "Interpretació: $[a,b]$ és el tram on $\\varphi<0$. Integrant-lo d'esquerra a dreta, $\\int_a^b\\varphi$ és l'àrea més negativa que es pot aconseguir movent poc els extrems d'integració, i integrant-lo al revés s'obté la més positiva; a la diagonal, $f=0$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "Com que existeixen les derivades parcials en tot punt, $f$ és diferenciable.",
+      "inici": 181,
+      "fi": 257,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "L'existència de les derivades parcials no implica la diferenciabilitat. Cal que siguin contínues, i aquí ho són perquè $\\varphi$ és contínua.",
+      "correccio": "Com que les derivades parcials $-\\varphi(x)$ i $\\varphi(y)$ són contínues, $f$ és diferenciable (de fet, de classe $\\mathcal{C}^1$).",
+      "pista": "Quina hipòtesi sobre les derivades parcials garanteix la diferenciabilitat?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "$f(a,y)-f(a,a)=\\Phi(y)-\\Phi(a)>0$, i per a $x\\neq a$ proper a $a$, $f(x,a)-f(a,a)=\\Phi(a)-\\Phi(x)<0$",
+      "inici": 44,
+      "fi": 144,
+      "tipus": "desigualtat",
+      "explicacio": "$a$ és un màxim local estricte de $\\Phi$, així que $\\Phi(y)<\\Phi(a)$ i $\\Phi(x)<\\Phi(a)$ a prop de $a$: les dues desigualtats estan girades. La conclusió (sella) és la mateixa, però la justificació és falsa.",
+      "correccio": "$f(a,y)-f(a,a)=\\Phi(y)-\\Phi(a)<0$ i $f(x,a)-f(a,a)=\\Phi(a)-\\Phi(x)>0$.",
+      "pista": "Quin tipus d'extrem té $\\Phi$ al punt $a$? Què implica per al signe de $\\Phi(y)-\\Phi(a)$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t56.json",
+    "valoracio": "Diferenciabilitat deduïda només de l'existència de parcials i signes intercanviats a l'estudi de $(a,a)$.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "Com que existeixen les derivades parcials en tot punt, $f$ és diferenciable.",
+        "gravetat": "error",
+        "explicacio": "L'existència de les parcials no implica diferenciabilitat; cal que siguin contínues (T3.18), cosa que aquí es té perquè $\\varphi$ és contínua."
+      },
+      {
+        "fragment": 6,
+        "cita": "$f(a,y)-f(a,a)=\\Phi(y)-\\Phi(a)>0$",
+        "gravetat": "error",
+        "explicacio": "Com que $a$ és màxim local estricte de $\\Phi$, $\\Phi(y)-\\Phi(a)<0$ i $\\Phi(a)-\\Phi(x)>0$: els dos signes estan intercanviats (la conclusió de sella es manté)."
+      }
+    ]
+  },
+  "creat": 1791299721.5580502
+}

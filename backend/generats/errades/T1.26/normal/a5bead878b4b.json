@@ -1,0 +1,65 @@
+{
+  "id": "a5bead878b4b",
+  "exercici": "T1.26",
+  "font": "teoria",
+  "dificultat": "normal",
+  "fragments": [
+    "(Bolzano-Weierstrass.) Sigui $(M,d)$ espai mètric i $A\\subseteq M$.",
+    "Aleshores, $A$ és compacte si i només si $A$ és seqüencialment compacte, és a dir, si i només si tota successió fitada $(x_n)_n\\subseteq A$ admet una parcial convergent a un punt de $A$.",
+    "$\\Rightarrow$) Suposem que $A$ és compacte i vegem que és seqüencialment compacte. Per reducció a l'absurd, sigui $(x_n)_n$ una successió d'elements de $A$ que no admet cap parcial convergent.",
+    "La successió $(x_n)_n$ no pot contenir infinites còpies d'un mateix element (altrament, la parcial constant formada per aquestes còpies seria convergent). Eliminant les còpies repetides obtenim una subsuccessió $(y_n)_n\\subseteq A$ de punts diferents dos a dos.",
+    "Afirmació: existeix una successió d'oberts $(U_n)_n$ de $M$ tal que $y_n\\in U_n$ és l'únic punt de la successió $(y_n)_n$ que pertany a $U_n$.",
+    "Ho demostrem també per reducció a l'absurd: si l'afirmació no fos certa, per a qualsevol tria d'oberts $(U_n)_n$ (per exemple, boles) hi hauria un $y_{n_0}\\in U_{n_0}$ tal que $U_{n_0}$ conté infinits punts de $(y_n)_n$ diferents de $y_{n_0}$. En particular, això ha de passar també per als entorns $V_m=B_{1/m}(y_{n_0})\\cap U_{n_0}$, $m\\geq 1$.",
+    "Triem, per a cada $m\\geq 1$, un punt $y_m^0\\in V_m\\setminus\\{y_{n_0}\\}$ de la successió, amb índexs creixents. Com que $d(y_m^0,y_{n_0})<\\frac{1}{m}\\to 0$, la parcial $(y_m^0)_m$ convergeix a $y_{n_0}\\in A$, en contradicció amb el fet que $(x_n)_n$ no admet cap parcial convergent.",
+    "Sigui $Y=\\{y_1,y_2,\\ldots\\}\\subseteq A$. Per l'afirmació, cap $y_n$ és punt d'acumulació de $Y$, i un punt d'acumulació $x\\notin Y$ seria límit d'una parcial de $(y_n)_n$; per tant, $Y$ no té punts d'acumulació, $\\overline{Y}=Y$ i $Y$ és tancat. Pel Lema 28, com que $A$ és compacte, $Y$ també és compacte.",
+    "Però el recobriment per oberts $Y\\subseteq\\bigcup_{n\\geq 1}U_n$ no admet cap subrecobriment finit, ja que cada $U_n$ conté exactament un punt de $Y$ i tots són necessaris. Contradicció: per tant, $(x_n)_n$ admet una parcial convergent.",
+    "Falta veure que el límit és a $A$. Sigui $(x_{n_k})_k$ aquesta parcial i $x=\\lim_k x_{n_k}\\in M$. Com que $x_{n_k}\\in A$ per a tot $k$, $x$ és un punt adherent d'$A$, és a dir, $x\\in\\overline{A}$; pel Lema 27, $A$ és tancat, d'on $\\overline{A}=A$ i $x\\in A$.",
+    "$\\Leftarrow$) Suposem ara que $A$ és seqüencialment compacte i sigui $A\\subseteq\\bigcup_{i\\in I}U_i$ un recobriment per oberts. Pel Lema 29, existeix $\\delta>0$ tal que per a tot $a\\in A$ es té $B_\\delta(a)\\subseteq U_i$ per a un cert $i\\in I$ (que depèn de $a$).",
+    "Aplicant el Lema 30 amb $\\varepsilon=2\\delta$, existeixen $y_1,\\ldots,y_r\\in A$ tals que $A\\subseteq B_{2\\delta}(y_1)\\cup\\cdots\\cup B_{2\\delta}(y_r)\\subseteq U_{i_1}\\cup\\cdots\\cup U_{i_r}$, on $U_{i_j}$ és un obert del recobriment que conté $B_{2\\delta}(y_j)$. Hem extret un subrecobriment finit i, per tant, $A$ és compacte."
+  ],
+  "n_enunciat": 2,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "tota successió fitada $(x_n)_n\\subseteq A$",
+      "inici": 97,
+      "fi": 139,
+      "tipus": "definicio",
+      "explicacio": "Ser seqüencialment compacte demana que TOTA successió d'$A$ tingui una parcial convergent a un punt d'$A$, no només les fitades; amb aquesta restricció l'equivalència és falsa. Contraexemple: $A=\\mathbb{R}$; tota successió fitada de $\\mathbb{R}$ té una parcial convergent a un punt de $\\mathbb{R}$ (Bolzano-Weierstrass a la recta), però $\\mathbb{R}$ no és compacte.",
+      "correccio": "Tota successió $(x_n)_n\\subseteq A$ (sense cap restricció) admet una parcial convergent a un punt de $A$.",
+      "pista": "Penseu en $A=\\mathbb{R}$: les seves successions fitades tenen parcials convergents dins de $\\mathbb{R}$? I és $\\mathbb{R}$ compacte?"
+    },
+    {
+      "id": "e2",
+      "fragment": 12,
+      "cita": "Aplicant el Lema 30 amb $\\varepsilon=2\\delta$",
+      "inici": 0,
+      "fi": 45,
+      "tipus": "pas_injustificat",
+      "explicacio": "El Lema 29 només garanteix que les boles de radi $\\delta$ estan contingudes en algun $U_i$; una bola $B_{2\\delta}(y_j)$ pot no estar continguda en cap obert del recobriment, i la inclusió en $U_{i_1}\\cup\\cdots\\cup U_{i_r}$ no està justificada.",
+      "correccio": "Cal aplicar el Lema 30 amb $\\varepsilon=\\delta$, de manera que cada $B_\\delta(y_j)\\subseteq U_{i_j}$.",
+      "pista": "Quines boles assegura el Lema 29 que estan dins d'algun obert del recobriment? Quin radi tenen?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "repair.json",
+    "valoracio": "Enunciat alterat (afegeix 'fitada' a la definició de compacitat seqüencial) i error a la implicació inversa en prendre $\u000barepsilon=2\\delta$; la resta segueix els apunts (la citació del Lema 27 per compacte ⇒ tancat és correcta).",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "tota successió fitada $(x_n)_n\\subseteq A$",
+        "gravetat": "error",
+        "explicacio": "La compacitat seqüencial demana que TOTA successió d'A tingui una parcial convergent a A, no només les fitades. Amb 'fitada' l'enunciat és fals (p. ex. A=R: tota successió fitada té parcial convergent a R, però R no és compacte)."
+      },
+      {
+        "fragment": 12,
+        "cita": "$\u000barepsilon=2\\delta$",
+        "gravetat": "error",
+        "explicacio": "El Lema 29 només garanteix que les boles de radi $\\delta$ estan contingudes en algun $U_i$; una bola $B_{2\\delta}(y_j)$ no té per què estar dins de cap obert del recobriment. Cal prendre $\u000barepsilon=\\delta$."
+      }
+    ]
+  },
+  "creat": 1791299191.5862515
+}

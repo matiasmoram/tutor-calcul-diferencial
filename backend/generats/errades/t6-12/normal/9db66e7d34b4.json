@@ -1,0 +1,60 @@
+{
+  "id": "9db66e7d34b4",
+  "exercici": "t6-12",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $\\Phi=2x^2+y^2+z^3-5xz-2$. Comprovem que $p\\in M$: $\\Phi(p)=2+4+1-5-2=0$. A més, $\\nabla\\Phi=(4x-5z,\\ 2y,\\ 3z^2-5x)$ i $\\nabla\\Phi(p)=(-1,4,-2)\\neq0$; per continuïtat $\\nabla\\Phi\\neq0$ en un obert $G\\ni p$, i $M\\cap G$ és una 2-varietat de classe $\\mathcal{C}^\\infty$.",
+    "$\\nabla f=(4x^3-2xy,\\ \\frac y2-x^2,\\ 2z-2)$, i $\\nabla f(p)=(0,0,0)=0\\cdot\\nabla\\Phi(p)$. Per tant $(p,0)$ és un punt crític de la funció de Lagrange $L=f-\\lambda\\Phi$, i $F=L(\\cdot,0)=f$.",
+    "$HF(p)=Hf(p)=\\begin{pmatrix}8&-2&0\\\\-2&\\frac12&0\\\\0&0&2\\end{pmatrix}$. El menor $2\\times2$ superior té determinant $4-4=0$, i la forma és semidefinida positiva: s'anul·la en la direcció $(4,1,0)$. El criteri d'extrems lliures no decideix.",
+    "L'espai tangent és $T_M(p)=\\ker D\\Phi(p)=\\{v\\in\\mathbb{R}^3\\mid -v_1+4v_2-2v_3=0\\}$.",
+    "La forma quadràtica és $q(v)=8v_1^2-4v_1v_2+\\frac12v_2^2+2v_3^2=\\frac12(4v_1-v_2)^2+2v_3^2\\geq0$, i $q(v)=0$ si i només si $v_3=0$ i $v_2=4v_1$.",
+    "Com que $q$ és semidefinida positiva a tot $\\mathbb{R}^3$, la seva restricció a $T_M(p)$ és definida positiva, i pel teorema de condicions suficients $p$ és un mínim local estricte de $f|_M$.",
+    "És un mínim absolut? Sí: $f(p)=1+1+1-2-2+1=0$ i $f=\\left(x^2-\\frac y2\\right)^2+(z-1)^2\\geq0$ a tot $\\mathbb{R}^3$, de manera que $f(\\mathbf{x})\\geq f(p)$ per a tot $\\mathbf{x}\\in M$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "s'anul·la en la direcció $(4,1,0)$",
+      "inici": 161,
+      "fi": 195,
+      "tipus": "calcul",
+      "explicacio": "$q(4,1,0)=128-16+\\frac12\\neq0$. La direcció on s'anul·la és $(1,4,0)$: $q(1,4,0)=8-16+8=0$.",
+      "correccio": "S'anul·la en la direcció $(1,4,0)$.",
+      "pista": "Quant val $8v_1^2-4v_1v_2+\\frac12v_2^2$ per a $v=(4,1,0)$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "Com que $q$ és semidefinida positiva a tot $\\mathbb{R}^3$, la seva restricció a $T_M(p)$ és definida positiva",
+      "inici": 0,
+      "fi": 109,
+      "tipus": "logica",
+      "explicacio": "Que $q$ sigui semidefinida a $\\mathbb{R}^3$ no implica que sigui definida sobre un subespai: cal comprovar que la direcció nul·la $(1,4,0)$ no és tangent. Ho és? $-1+16-0=15\\neq0$, així que no, i per això sí que és definida positiva a $T_M(p)$.",
+      "correccio": "Si $v\\in T_M(p)$ i $q(v)=0$, aleshores $v_3=0$, $v_2=4v_1$ i $-v_1+16v_1=0$, d'on $v=0$: $q$ és definida positiva sobre $T_M(p)$.",
+      "pista": "Si la direcció on $q$ s'anul·la fos tangent a $M$, seria definida positiva la restricció?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t56.json",
+    "valoracio": "Direcció del nucli incorrecta i conclusió de definida positiva sobre el tangent sense justificar.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "s'anul·la en la direcció $(4,1,0)$",
+        "gravetat": "error",
+        "explicacio": "$Hf(p)(4,1,0)^T=(30,-7.5,0)\\neq0$; la direcció del nucli és $(1,4,0)$."
+      },
+      {
+        "fragment": 6,
+        "cita": "Com que $q$ és semidefinida positiva a tot $\\mathbb{R}^3$, la seva restricció a $T_M(p)$ és definida positiva",
+        "gravetat": "error",
+        "explicacio": "No se segueix: cal comprovar que el vector nul $(1,4,0)$ no és tangent ($-1+16=15\\neq0$). Una forma semidefinida pot anul·lar-se sobre $T_M(p)$."
+      }
+    ]
+  },
+  "creat": 1791299721.5636055
+}

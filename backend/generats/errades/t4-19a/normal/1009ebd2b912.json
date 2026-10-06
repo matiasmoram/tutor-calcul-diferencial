@@ -1,0 +1,65 @@
+{
+  "id": "1009ebd2b912",
+  "exercici": "t4-19a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Un punt $p=(x_0,y_0,z_0,u_0,v_0)$ és solució del sistema si i només si $x_0=u_0+v_0$, $y_0=u_0^2+v_0^2$ i $z_0=u_0^3+v_0^3$, amb $(u_0,v_0)\\in\\mathbb{R}^2$ qualsevol.",
+    "Sigui $\\Phi=(x-u-v,\\,y-u^2-v^2,\\,z-u^3-v^3)$, polinòmica i per tant de classe $\\mathcal{C}^\\infty$. Com que volem aïllar $z,u,v$, calculem $\\frac{\\partial\\Phi}{\\partial(z,u,v)}=\\begin{pmatrix}0&-1&-1\\\\0&-2u&-2v\\\\1&-3u^2&-3v^2\\end{pmatrix}$.",
+    "Desenvolupant per la primera columna, $\\det\\frac{\\partial\\Phi}{\\partial(z,u,v)}=\\begin{vmatrix}-1&-1\\\\-2u&-2v\\end{vmatrix}$, que val $2u-2v$.",
+    "Si $u_0\\neq v_0$, aquest determinant és no nul a $p$, i el teorema de la funció implícita dona $f_1,f_2,f_3$ de classe $\\mathcal{C}^\\infty$ en un entorn de $(x_0,y_0)$, amb $(f_1,f_2,f_3)(x_0,y_0)=(z_0,u_0,v_0)$.",
+    "Si $u_0=v_0$, el determinant s'anul·la a $p$ i, per tant, pel teorema de la funció implícita, el sistema no defineix funcions implícites diferenciables al voltant de $p$.",
+    "Per tant, els punts buscats són $p=(u_0+v_0,\\ u_0^2+v_0^2,\\ u_0^3+v_0^3,\\ u_0,\\ v_0)$ amb $u_0\\neq v_0$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "que val $2u-2v$",
+      "inici": 125,
+      "fi": 140,
+      "tipus": "calcul",
+      "explicacio": "$\\begin{vmatrix}-1&-1\\\\-2u&-2v\\end{vmatrix}=(-1)(-2v)-(-1)(-2u)=2v-2u$; el signe està canviat (la condició $u\\neq v$ no varia).",
+      "correccio": "Val $2v-2u=2(v-u)$.",
+      "pista": "Torna a fer el producte de la diagonal menys el de l'antidiagonal: quin terme va amb $v$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "per tant, pel teorema de la funció implícita, el sistema no defineix funcions implícites diferenciables",
+      "inici": 48,
+      "fi": 151,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "El teorema de la funció implícita dona una condició suficient, no necessària: que el determinant s'anul·li no implica que no hi hagi funcions implícites. Cal un argument directe.",
+      "correccio": "Si $u_0=v_0$ i existissin $f_2,f_3$ diferenciables, derivant $x=f_2+f_3$ i $y=f_2^2+f_3^2$ respecte de $y$ al punt s'obtindria $0=\\partial_yf_2+\\partial_yf_3$ i $1=2u_0(\\partial_yf_2+\\partial_yf_3)=0$, contradicció.",
+      "pista": "El teorema de la funció implícita diu què passa quan el determinant és nul?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4b.json",
+    "valoracio": "Resultat final correcte, però el determinant té el signe canviat i el cas $u_0=v_0$ es descarta amb un ús invàlid del TFI com a condició necessària.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "que val $2u-2v$",
+        "gravetat": "error",
+        "explicacio": "Desenvolupant per la primera columna, el cofactor de l'entrada (3,1) dona $(-1)(-2v)-(-1)(-2u)=2v-2u=2(v-u)$, no $2u-2v$."
+      },
+      {
+        "fragment": 5,
+        "cita": "pel teorema de la funció implícita, el sistema no defineix funcions implícites diferenciables al voltant de $p$",
+        "gravetat": "error",
+        "explicacio": "El TFI només dona una condició suficient; que el determinant s'anul·li no implica la no-existència. Cal un argument a part (p. ex. derivar $x=f_2+f_3$, $y=f_2^2+f_3^2$ respecte de $y$ i arribar a $1=0$)."
+      },
+      {
+        "fragment": 6,
+        "cita": "els punts buscats són",
+        "gravetat": "consequencia",
+        "explicacio": "La resposta coincideix amb la correcta, però l'exclusió dels punts amb $u_0=v_0$ depèn de l'argument invàlid del fragment 5."
+      }
+    ]
+  },
+  "creat": 1791299408.5579178
+}

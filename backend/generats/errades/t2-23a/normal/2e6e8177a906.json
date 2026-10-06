@@ -1,0 +1,59 @@
+{
+  "id": "2e6e8177a906",
+  "exercici": "t2-23a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "L'afirmació és falsa. De fet, el que diu la teoria és el recíproc: si existeix el límit doble, aleshores existeixen els dos límits iterats i hi coincideixen.",
+    "Contraexemple: $f(x,y)=\\frac{xy}{x^2+y^2}$ si $(x,y)\\neq(0,0)$ i $f(0,0)=0$. Val $0$ sobre tots dos eixos.",
+    "Fixat $y\\neq0$, $\\lim_{x\\to0}\\frac{xy}{x^2+y^2}=\\frac{0}{y^2}=0$, i fixat $y=0$, $f(x,0)=0$ per a tot $x$. Per tant $\\lim_{x\\to0}f(x,y)=0$ per a tot $y$, i $\\lim_{y\\to0}\\lim_{x\\to0}f(x,y)=0$.",
+    "Com que $f(x,y)=f(y,x)$, per simetria també $\\lim_{x\\to0}\\lim_{y\\to0}f(x,y)=0$: els dos iterats existeixen i són iguals.",
+    "Sobre la recta $y=mx$, per a $x\\neq0$: $f(x,mx)=\\frac{mx^2}{x^2+m^2x^2}=\\frac{m}{1+m}$, constant al llarg de cada recta.",
+    "Per a $m=0$ el límit sobre la recta és $0$ i per a $m=1$ és $\\frac12$. Per la proposició de límit per camins, no existeix $\\lim_{(x,y)\\to(0,0)}f(x,y)$, i l'afirmació és falsa."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "si existeix el límit doble, aleshores existeixen els dos límits iterats i hi coincideixen",
+      "inici": 67,
+      "fi": 156,
+      "tipus": "logica",
+      "explicacio": "L'existència del límit doble no garanteix l'existència dels iterats: per exemple, $f(x,y)=x\\sin\\frac1y$ ($y\\neq0$), $f(x,0)=0$ té límit doble $0$, però $\\lim_{y\\to0}f(x,y)$ no existeix per a $x\\neq0$. La teoria diu que, si existeixen el límit doble i un iterat, coincideixen.",
+      "correccio": "Si existeix el límit doble i existeixen els límits iterats, aleshores aquests coincideixen amb el límit doble.",
+      "pista": "Amb $f(x,y)=x\\sin\\frac1y$, existeix $\\lim_{y\\to0}f(x,y)$ per a $x$ fix no nul?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$f(x,mx)=\\frac{mx^2}{x^2+m^2x^2}=\\frac{m}{1+m}$",
+      "inici": 39,
+      "fi": 86,
+      "tipus": "calcul",
+      "explicacio": "Traient $x^2$ factor comú al denominador queda $x^2(1+m^2)$, de manera que el quocient és $\\frac{m}{1+m^2}$, no $\\frac{m}{1+m}$.",
+      "correccio": "$f(x,mx)=\\frac{mx^2}{x^2(1+m^2)}=\\frac{m}{1+m^2}$.",
+      "pista": "Quant val $(mx)^2$? Què queda al denominador si treus $x^2$ factor comú?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t2.json",
+    "valoracio": "Enunciat de la teoria mal citat i càlcul erroni sobre $y=mx$ (la conclusió final és correcta).",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "si existeix el límit doble, aleshores existeixen els dos límits iterats i hi coincideixen",
+        "gravetat": "error",
+        "explicacio": "La proposició exigeix com a hipòtesi que existeixin els límits interiors; l'existència del límit doble no garanteix l'existència dels iterats."
+      },
+      {
+        "fragment": 5,
+        "cita": "=\\frac{m}{1+m}$",
+        "gravetat": "error",
+        "explicacio": "$\\frac{mx^2}{x^2+m^2x^2}=\\frac{m}{1+m^2}$, no $\\frac{m}{1+m}$."
+      }
+    ]
+  },
+  "creat": 1791299452.066275
+}

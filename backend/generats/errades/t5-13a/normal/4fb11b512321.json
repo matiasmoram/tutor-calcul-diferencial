@@ -1,0 +1,64 @@
+{
+  "id": "4fb11b512321",
+  "exercici": "t5-13a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Centrem a $p$ amb $u=x+1$, $v=y+1$. Llavors $x-y=u-v$ i $f=e^{u-v}\\left(\\cos u-\\sin v-1\\right)$, amb $f(p)=e^0(1-0-1)=0$.",
+    "Desenvolupem els factors: $\\cos u-1-\\sin v=-v-\\frac12u^2+\\frac16v^3+O_4(u,v)$ i, com que aquest factor no té terme constant, de l'exponencial n'hi ha prou amb $e^{u-v}=1+(u-v)+\\frac12(u-v)^2+O_3(u,v)$.",
+    "Multiplicant i agrupant per graus: el grau $1$ és $-v$, i el grau $2$ és $-\\frac12u^2+(u-v)(-v)=-\\frac12u^2-uv-v^2$.",
+    "El grau $3$ és $\\frac16v^3+(u-v)\\left(-\\frac12u^2\\right)+(u-v)^2(-v)=\\frac16v^3-\\frac12u^3+\\frac12u^2v-u^2v+2uv^2-v^3=-\\frac12u^3-\\frac12u^2v+2uv^2-\\frac56v^3$.",
+    "Per tant, $P_3=-v-\\frac12u^2-uv-v^2-\\frac12u^3-\\frac12u^2v+2uv^2-\\frac56v^3$, és a dir, $P_3(x,y)=-(y+1)-\\frac12(x+1)^2-(x+1)(y+1)-(y+1)^2-\\frac12(x+1)^3-\\frac12(x+1)^2(y+1)+2(x+1)(y+1)^2-\\frac56(y+1)^3$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "$-\\frac12u^2+(u-v)(-v)=-\\frac12u^2-uv-v^2$",
+      "inici": 73,
+      "fi": 115,
+      "tipus": "calcul",
+      "explicacio": "$(u-v)(-v)=-uv+v^2$: el terme $v^2$ té signe positiu.",
+      "correccio": "El grau $2$ és $-\\frac12u^2+(u-v)(-v)=-\\frac12u^2-uv+v^2$.",
+      "pista": "Quant val $(-v)\\cdot(-v)$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "$\\frac16v^3+(u-v)\\left(-\\frac12u^2\\right)+(u-v)^2(-v)",
+      "inici": 15,
+      "fi": 68,
+      "tipus": "calcul",
+      "explicacio": "El terme de grau $2$ de l'exponencial és $\\frac12(u-v)^2$; s'ha oblidat el factor $\\frac12$. Amb ell, el grau $3$ és $\\frac16v^3-\\frac12u^3+\\frac12u^2v-\\frac12u^2v+uv^2-\\frac12v^3=-\\frac12u^3+uv^2-\\frac13v^3$.",
+      "correccio": "El grau $3$ és $\\frac16v^3+(u-v)\\left(-\\frac12u^2\\right)+\\frac12(u-v)^2(-v)=-\\frac12u^3+uv^2-\\frac13v^3$.",
+      "pista": "Quin coeficient porta $(u-v)^2$ al desenvolupament de $e^{u-v}$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t56.json",
+    "valoracio": "Errors en el producte als graus 2 i 3 que donen un $P_3$ incorrecte.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$-\\frac12u^2+(u-v)(-v)=-\\frac12u^2-uv-v^2$",
+        "gravetat": "error",
+        "explicacio": "$(u-v)(-v)=-uv+v^2$: el terme de grau 2 és $-\\frac12u^2-uv+v^2$."
+      },
+      {
+        "fragment": 4,
+        "cita": "+(u-v)^2(-v)=\\frac16v^3",
+        "gravetat": "error",
+        "explicacio": "Falta el factor $\\frac12$ del terme $\\frac12(u-v)^2$ de l'exponencial; el grau 3 correcte és $-\\frac12u^3+uv^2-\\frac13v^3$."
+      },
+      {
+        "fragment": 5,
+        "cita": "$P_3=-v-\\frac12u^2-uv-v^2-\\frac12u^3-\\frac12u^2v+2uv^2-\\frac56v^3$",
+        "gravetat": "consequencia",
+        "explicacio": "Recull els termes de grau 2 i 3 erronis; el correcte és $-v-\\frac12u^2-uv+v^2-\\frac12u^3+uv^2-\\frac13v^3$."
+      }
+    ]
+  },
+  "creat": 1791299721.5573184
+}

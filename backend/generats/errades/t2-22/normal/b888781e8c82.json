@@ -1,0 +1,65 @@
+{
+  "id": "b888781e8c82",
+  "exercici": "t2-22",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Usem el teorema 17, (a)$\\Leftrightarrow$(d), amb $\\Omega=\\mathbb{R}^2$: $f$ és contínua si i només si, per a tot tancat $E\\subseteq\\mathbb{R}$, $f^{-1}(E)$ és un tancat de $\\mathbb{R}^2$. N'hi ha prou, doncs, de trobar un tancat amb antiimatge no tancada.",
+    "Prenem $A=\\{0\\}$, que és tancat a $\\mathbb{R}$. Com que $1+x^2\\geq1$, mai no s'anul·la, de manera que $f(x,y)=0$ si i només si $y\\neq0$.",
+    "Per tant $f^{-1}(\\{0\\})=\\{(x,y)\\in\\mathbb{R}^2\\mid y\\neq0\\}$, el pla sense l'eix $OX$.",
+    "Aquest conjunt és obert, perquè és el complementari de l'eix $OX$, que és tancat; i per ser obert ja no pot ser tancat.",
+    "Ho comprovem explícitament: els punts $p_n=\\left(\\frac1n,0\\right)$ són de $f^{-1}(\\{0\\})$ i $p_n\\to(0,0)$, però $f(0,0)=1+0^2=1\\neq0$, de manera que $(0,0)\\notin f^{-1}(\\{0\\})$.",
+    "Per la proposició 19(iii) del Tema 1, un conjunt que no conté el límit d'una successió convergent de punts seus no és tancat. Per tant $f^{-1}(\\{0\\})$ no és tancat i $f$ no és contínua."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "i per ser obert ja no pot ser tancat",
+      "inici": 82,
+      "fi": 118,
+      "tipus": "logica",
+      "explicacio": "Un conjunt pot ser obert i tancat alhora (per exemple $\\mathbb{R}^2$ o $\\emptyset$): ser obert no implica no ser tancat. Cal un argument que mostri que no és tancat.",
+      "correccio": "Que sigui obert no basta; cal veure explícitament que hi ha un punt límit de punts del conjunt que no hi pertany.",
+      "pista": "$\\mathbb{R}^2$ és obert. És tancat?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "els punts $p_n=\\left(\\frac1n,0\\right)$ són de $f^{-1}(\\{0\\})$",
+      "inici": 28,
+      "fi": 89,
+      "tipus": "calcul",
+      "explicacio": "Els punts $\\left(\\frac1n,0\\right)$ són de l'eix $OX$, on $f=1+\\frac1{n^2}\\neq0$: no són de $f^{-1}(\\{0\\})$. Cal prendre punts fora de l'eix, com $\\left(0,\\frac1n\\right)$.",
+      "correccio": "Els punts $p_n=\\left(0,\\frac1n\\right)$ són de $f^{-1}(\\{0\\})$ (perquè $\\frac1n\\neq0$) i $p_n\\to(0,0)$.",
+      "pista": "Quina és la coordenada $y$ de $p_n$? Quant val $f(p_n)$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t2.json",
+    "valoracio": "Argument obert$\\Rightarrow$no tancat invàlid i successió fora del conjunt.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "per ser obert ja no pot ser tancat",
+        "gravetat": "error",
+        "explicacio": "Ser obert no impedeix ser tancat en general (p. ex. $\\varnothing$, $\\mathbb{R}^2$); no és una justificació vàlida."
+      },
+      {
+        "fragment": 5,
+        "cita": "$p_n=\\left(\\frac1n,0\\right)$ són de $f^{-1}(\\{0\\})$",
+        "gravetat": "error",
+        "explicacio": "Aquests punts són de l'eix $OX$, on $f=1+x^2\\neq0$: no són de $f^{-1}(\\{0\\})$. Cal prendre p. ex. $(0,\\frac1n)$."
+      },
+      {
+        "fragment": 6,
+        "cita": "Per tant $f^{-1}(\\{0\\})$ no és tancat i $f$ no és contínua.",
+        "gravetat": "consequencia",
+        "explicacio": "La conclusió és certa, però es basa en la successió errònia de [5]."
+      }
+    ]
+  },
+  "creat": 1791299452.0639577
+}

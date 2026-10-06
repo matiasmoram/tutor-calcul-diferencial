@@ -1,0 +1,60 @@
+{
+  "id": "19d83d25747d",
+  "exercici": "t1-17b",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Escrivim $\\mathbf a(t)=\\left(\\cos\\frac1t,-\\sin\\frac1t\\right)+2t\\left(\\sin\\frac1t,\\cos\\frac1t\\right)$. El primer sumand és un punt de $C$ i el segon té norma $2|t|$, que tendeix a $0$ quan $t\\to0$.",
+    "Per tant, quan $t\\to 0$ els punts d'$A$ s'acosten a $C$ donant-hi infinites voltes, i esperem que tot punt de $C$ sigui d'acumulació. Sigui $p=(\\cos\\theta,\\sin\\theta)$ un punt qualsevol de $C$.",
+    "Volem $t$ amb $\\cos\\frac1t=\\cos\\theta$ i $-\\sin\\frac1t=\\sin\\theta$, és a dir, $\\frac1t=-\\theta+2\\pi k$ amb $k\\in\\mathbb{Z}$. Prenem $t_k=\\frac{1}{2\\pi k-\\theta}$, que és positiu per a $k$ prou gran i tendeix a $0$.",
+    "Per a aquests $k$, $\\mathbf a(t_k)=p+2t_k(\\sin\\theta,\\cos\\theta)$, i com que $t_k>0$, $\\|\\mathbf a(t_k)-p\\|=2t_k$.",
+    "Com que $2t_k\\to 0$, la successió $\\mathbf a(t_k)$ de punts d'$A$ convergeix a $p$; per tant $p$ és adherent a $A$ i, com que tot punt adherent a un conjunt n'és d'acumulació, $p\\in A'$.",
+    "Com que $p\\in C$ era arbitrari, $C\\subseteq A'$: tots els punts de la circumferència són punts d'acumulació d'$A$.",
+    "A més, per l'apartat (a), $\\|\\mathbf a\\|=\\sqrt{1+4t^2}>1$ per a tot $\\mathbf a\\in A$, així que $A\\cap C=\\varnothing$: aquests punts d'acumulació no pertanyen a $A$ (en particular, $A$ no és tancat)."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "$\\mathbf a(t_k)=p+2t_k(\\sin\\theta,\\cos\\theta)$",
+      "inici": 19,
+      "fi": 65,
+      "tipus": "calcul",
+      "explicacio": "Amb $\\frac1{t_k}=2\\pi k-\\theta$ es té $\\sin\\frac1{t_k}=-\\sin\\theta$, de manera que el segon sumand és $2t_k(-\\sin\\theta,\\cos\\theta)$. (La norma $2t_k$ no canvia.)",
+      "correccio": "$\\mathbf a(t_k)=p+2t_k(-\\sin\\theta,\\cos\\theta)$.",
+      "pista": "Quant val $\\sin(2\\pi k-\\theta)$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "tot punt adherent a un conjunt n'és d'acumulació",
+      "inici": 126,
+      "fi": 174,
+      "tipus": "logica",
+      "explicacio": "És fals: un punt aïllat d'un conjunt n'és adherent però no d'acumulació (p. ex. $0$ a $\\{0\\}\\cup[1,2]$). Per ser d'acumulació cal una successió de punts d'$A$ DIFERENTS de $p$, cosa que aquí es té perquè $\\|\\mathbf a(t_k)-p\\|=2t_k>0$.",
+      "correccio": "Com que $\\mathbf a(t_k)\\neq p$ (la seva distància a $p$ és $2t_k>0$) i $\\mathbf a(t_k)\\to p$, $p$ és punt d'acumulació d'$A$.",
+      "pista": "Pensa en el conjunt $\\{0\\}\\cup[1,2]$: el punt $0$ hi és adherent; n'és punt d'acumulació?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t1.json",
+    "valoracio": "Conclusió correcta, però el càlcul de $\\mathbf a(t_k)$ té un signe erroni i el pas a punt d'acumulació es justifica amb una afirmació falsa.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "$\\mathbf a(t_k)=p+2t_k(\\sin\\theta,\\cos\\theta)$",
+        "gravetat": "error",
+        "explicacio": "Amb $\\frac1{t_k}=2\\pi k-\\theta$, $(\\sin\\frac1t,\\cos\\frac1t)=(-\\sin\\theta,\\cos\\theta)$; el vector correcte és $(-\\sin\\theta,\\cos\\theta)$ (la norma $2t_k$ no canvia)."
+      },
+      {
+        "fragment": 5,
+        "cita": "tot punt adherent a un conjunt n'és d'acumulació",
+        "gravetat": "error",
+        "explicacio": "Fals (un punt aïllat és adherent però no d'acumulació); cal usar que $\\mathbf a(t_k)\\neq p$, que se segueix de $\\|\\mathbf a(t_k)-p\\|=2t_k>0$."
+      }
+    ]
+  },
+  "creat": 1791299422.53559
+}

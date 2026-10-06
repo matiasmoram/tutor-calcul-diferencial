@@ -1,0 +1,59 @@
+{
+  "id": "db62098eeba7",
+  "exercici": "t4-7d",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "De l'apartat (a) sabem que $\\det JF(x,y)=3x^2y^2\\neq 0$ a tot $A$, de manera que $F|_A$ és injectiva. Tot i així, ho comprovem directament, perquè així obtenim la inversa.",
+    "Sigui $(x,y)\\in A$ i $F(x,y)=(u,v)$, és a dir $u=x^2y$ i $v=xy^2$, tots dos no nuls. Aleshores $\\frac{u^2}{v}=\\frac{x^4y^2}{xy^2}=x^3$ i $\\frac{v^2}{u}=\\frac{x^2y^4}{x^2y}=y^3$.",
+    "Com que $t\\mapsto t^3$ és injectiva a $\\mathbb{R}$ (amb inversa l'arrel cúbica real), $x=\\sqrt[3]{u^2/v}$ i $y=\\sqrt[3]{v^2/u}$ queden determinats per $(u,v)$, i $F|_A$ és injectiva.",
+    "Recíprocament, per a $(u,v)\\in A$ el punt $(x,y)=\\big(\\sqrt[3]{u^2/v},\\sqrt[3]{v^2/u}\\big)$ és de $A$ i $x^2y=\\sqrt[3]{u^4/v^2}\\,\\sqrt[3]{v^2/u}=\\sqrt[3]{u^3}=u$, $xy^2=\\sqrt[3]{u^2/v}\\,\\sqrt[3]{v^4/u^2}=\\sqrt[3]{v^3}=v$. Per tant $F(A)=A$ i $F^{-1}(u,v)=\\big(\\sqrt[3]{u^2/v},\\sqrt[3]{v^2/u}\\big)$.",
+    "Avaluant, $F^{-1}(4.1,1.9)=\\big(\\sqrt[3]{16.81/1.9},\\sqrt[3]{3.61/4.1}\\big)=\\big(\\sqrt[3]{8.8474},\\sqrt[3]{0.8805}\\big)\\approx(2.0683,\\ 0.9585)$.",
+    "L'aproximació lineal de l'apartat anterior era $(2.0667,\\ 0.9583)$: les diferències són $\\approx 1.6\\cdot 10^{-2}$ i $\\approx 1.3\\cdot 10^{-4}$, molt més petites que l'increment $\\|(0.1,-0.1)\\|\\approx 0.14$, coherent amb que l'error de l'aproximació de primer ordre és $o(\\|(0.1,-0.1)\\|)$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "$\\det JF(x,y)=3x^2y^2\\neq 0$ a tot $A$, de manera que $F|_A$ és injectiva",
+      "inici": 27,
+      "fi": 100,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "Que el determinant jacobià no s'anul·li només dona injectivitat local (teorema de la funció inversa), no injectivitat a tot $A$; p. ex. les polars tenen $\\det\\neq 0$ i no són injectives.",
+      "correccio": "$\\det JF\\neq 0$ a $A$ només garanteix que $F$ és localment invertible; la injectivitat de $F|_A$ s'ha de provar directament.",
+      "pista": "El teorema de la funció inversa dona una conclusió local o global?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "les diferències són $\\approx 1.6\\cdot 10^{-2}$",
+      "inici": 68,
+      "fi": 114,
+      "tipus": "calcul",
+      "explicacio": "$2.0683-2.0667=0.0016\\approx 1.6\\cdot 10^{-3}$, no $1.6\\cdot 10^{-2}$.",
+      "correccio": "Les diferències són $\\approx 1.6\\cdot 10^{-3}$ i $\\approx 1.3\\cdot 10^{-4}$.",
+      "pista": "Resta de nou $2.0683-2.0667$: en quina xifra decimal comença la diferència?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4a.json",
+    "valoracio": "Inversa i valors correctes, però deducció errònia d'injectivitat a partir del jacobià i un error d'ordre de magnitud a la comparació.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "de manera que $F|_A$ és injectiva",
+        "gravetat": "error",
+        "explicacio": "$\\det JF\\neq0$ a tot $A$ només dona injectivitat local, no global."
+      },
+      {
+        "fragment": 6,
+        "cita": "$\\approx 1.6\\cdot 10^{-2}$",
+        "gravetat": "error",
+        "explicacio": "$2.0683-2.0667\\approx1.6\\cdot10^{-3}$, no $10^{-2}$."
+      }
+    ]
+  },
+  "creat": 1791299402.9670327
+}

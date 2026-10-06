@@ -1,0 +1,60 @@
+{
+  "id": "325a81614627",
+  "exercici": "t3-19",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Recordem que $A=\\{(x,y)\\in\\mathbb{R}^2: 0<y<x^2\\}$ i que $f$ val $0$ a $A$ i $1$ fora de $A$. L'origen no és de $A$, per tant $f(0,0)=1$ i $g(0,0)=f(0,0)+0+0=1$.",
+    "Cap punt dels eixos és de $A$ (sobre $y=0$ falla $0<y$, i sobre $x=0$ caldria $0<y<0$), així que $g(t,0)=1+t$ i $g(0,t)=1+2t$. Per tant $\\dfrac{\\partial g}{\\partial x}(0,0)=\\lim_{t\\to0}\\dfrac{1+t-1}{t}=1$ i $\\dfrac{\\partial g}{\\partial y}(0,0)=\\lim_{t\\to0}\\dfrac{1+2t-1}{t}=2$.",
+    "Si $g$ fos diferenciable a l'origen, la seva diferencial tindria matriu $(1\\ \\ 2)$; per tant $g$ és diferenciable a l'origen si i només si $\\dfrac{|g(x,y)-g(0,0)-x-2y|}{\\|(x,y)\\|}=\\dfrac{|f(x,y)-1|}{\\|(x,y)\\|}$ tendeix a $0$ quan $(x,y)\\to(0,0)$.",
+    "Prenem els punts de la paràbola $y=2x^2$, $x\\neq0$, que és dins de $A$: allà $f=0$ i el quocient val $\\dfrac{1}{\\|(x,2x^2)\\|}\\to+\\infty$. Per tant el quocient no tendeix a $0$ i $g$ no és diferenciable a l'origen.",
+    "Observem que el problema no és de continuïtat: $g$ és contínua a l'origen, ja que sobre qualsevol recta per l'origen $g(x,y)\\to1=g(0,0)$.",
+    "Per a un vector unitari $u=(u_1,u_2)$, el punt $tu$ seria de $A$ només si $0<tu_2<t^2u_1^2$, cosa impossible si $u_1u_2=0$ o si $|t|<|u_2|/u_1^2$. Així, per a $t$ petit, $g(tu)=1+tu_1+2tu_2$ i $D_ug(0,0)=u_1+2u_2$: el pla $z=x+2y+1$ conté les rectes tangents a totes aquestes seccions.",
+    "Però el pla tangent a la gràfica només existeix quan la funció és diferenciable al punt. Com que $g$ no ho és a l'origen, $z=x+2y+1$ no és el pla tangent a la gràfica de $g$ a $(0,0,1)$: la gràfica no en té."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "la paràbola $y=2x^2$, $x\\neq0$, que és dins de $A$",
+      "inici": 20,
+      "fi": 70,
+      "tipus": "calcul",
+      "explicacio": "Els punts de $y=2x^2$ no són de $A$: caldria $2x^2<x^2$, que és fals. Sobre aquesta paràbola $f=1$ i el quocient val $0$, de manera que aquest camí no prova res.",
+      "correccio": "Cal un camí dins de $A$, per exemple $y=x^2/2$ ($0<x^2/2<x^2$ per a $x\\neq0$): allà $f=0$, el quocient val $\\dfrac{1}{\\|(x,x^2/2)\\|}\\to+\\infty$ i $g$ no és diferenciable a l'origen.",
+      "pista": "Els punts de la corba que has triat compleixen de debò $0<y<x^2$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$g$ és contínua a l'origen, ja que sobre qualsevol recta per l'origen",
+      "inici": 47,
+      "fi": 116,
+      "tipus": "conclusio",
+      "explicacio": "Que el límit sigui $1$ sobre totes les rectes no prova la continuïtat. De fet, sobre $y=x^2/2$ (dins de $A$) $g(x,y)=x+x^2\\to0\\neq1=g(0,0)$, així que $g$ no és contínua a l'origen.",
+      "correccio": "$g$ no és ni tan sols contínua a l'origen: sobre el camí $y=x^2/2$, contingut a $A$, $g\\to0\\neq g(0,0)=1$.",
+      "pista": "N'hi ha prou de mirar les rectes per l'origen per assegurar la continuïtat? Què passa amb $g$ sobre camins que entren a $A$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3b.json",
+    "valoracio": "Les parcials i la conclusió final són correctes, però el camí triat no és dins de $A$ i s'afirma falsament que $g$ és contínua.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "Prenem els punts de la paràbola $y=2x^2$, $x\\neq0$, que és dins de $A$",
+        "gravetat": "error",
+        "explicacio": "Sobre $y=2x^2$ es té $y>x^2$, així que aquests punts NO són de $A$: allà $f=1$ i el quocient val $0$. Cal un camí dins de $A$, p. ex. $y=x^2/2$."
+      },
+      {
+        "fragment": 5,
+        "cita": "$g$ és contínua a l'origen, ja que sobre qualsevol recta per l'origen $g(x,y)\\to1=g(0,0)$",
+        "gravetat": "error",
+        "explicacio": "$g$ no és contínua a l'origen (sobre $y=x^2/2$ val $\\to0$); a més, els límits sobre rectes no impliquen continuïtat."
+      }
+    ]
+  },
+  "creat": 1791299348.704231
+}

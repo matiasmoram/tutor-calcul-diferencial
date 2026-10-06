@@ -1,0 +1,59 @@
+{
+  "id": "c2a9dce2d2f6",
+  "exercici": "t2-2i",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "La funció està definida a tot $\\mathbb{R}^2$: fora de la paràbola $x=-y^2$ val el quocient i sobre la paràbola val $0$. Per a $x\\neq-y^2$ tenim $\\frac{x}{x+y^2}=k\\iff x=k(x+y^2)\\iff x(1-k)=ky^2$.",
+    "Si $k=1$, l'equació queda $0=y^2$, és a dir $y=0$, i a més cal $x\\neq-0^2=0$. Així $C_1(f)=\\{(x,0)\\mid x\\neq0\\}$, l'eix d'abscisses sense l'origen; en efecte, $f(x,0)=\\frac{x}{x}=1$.",
+    "Si $k=0$, fora de la paràbola l'equació dona $x=0$, i la condició $x\\neq-y^2$ obliga $y\\neq0$. Per tant $C_0(f)=\\{(0,y)\\mid y\\neq0\\}$, l'eix d'ordenades sense l'origen.",
+    "Si $k\\neq0,1$ podem dividir per $1-k$: $x=\\frac{k}{1-k}y^2$, una paràbola de vèrtex l'origen i eix l'eix $x$. Com que $\\frac{k}{1-k}=-1$ exigiria $k=k-1$, que és impossible, aquesta paràbola no és $x=-y^2$, i totes dues només es tallen a l'origen.",
+    "L'origen compleix l'equació $x(1-k)=ky^2$, de manera que, per a $k\\neq0,1$, $C_k(f)$ és tota la paràbola $x=\\frac{k}{1-k}y^2$, vèrtex inclòs.",
+    "Pel que fa a l'orientació, si $0<k<1$ el coeficient $\\frac{k}{1-k}$ és positiu i la paràbola s'obre cap a $x>0$; si $k<0$ el coeficient és de $(-1,0)$ i si $k>1$ és menor que $-1$: en aquests dos casos s'obre cap a $x<0$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "Per tant $C_0(f)=\\{(0,y)\\mid y\\neq0\\}$, l'eix d'ordenades sense l'origen",
+      "inici": 95,
+      "fi": 167,
+      "tipus": "logica",
+      "explicacio": "S'oblida la segona línia de la definició: sobre la paràbola $x=-y^2$ la funció val $0$ per definició, així que tots aquests punts (l'origen inclòs) són de $C_0(f)$.",
+      "correccio": "$C_0(f)=\\{x=0\\}\\cup\\{x=-y^2\\}$: l'eix d'ordenades i la paràbola $x=-y^2$ (l'origen hi és, perquè és de la paràbola).",
+      "pista": "Quant val $f$ en un punt com $(-1,1)$? A quin conjunt de nivell pertany?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$C_k(f)$ és tota la paràbola $x=\\frac{k}{1-k}y^2$, vèrtex inclòs",
+      "inici": 76,
+      "fi": 140,
+      "tipus": "logica",
+      "explicacio": "L'origen satisfà l'equació, però és un punt de $x=-y^2$, on $f$ val $0$ per definició; com que $k\\neq0$, l'origen no és de $C_k(f)$.",
+      "correccio": "$C_k(f)$ és la paràbola $x=\\frac{k}{1-k}y^2$ sense el vèrtex $(0,0)$.",
+      "pista": "L'origen compleix $x=-y^2$? Quina expressió de la definició s'hi aplica, doncs, i quin valor dona?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t2.json",
+    "valoracio": "Dos errors: $C_0$ sense la paràbola $x=-y^2$ i $C_k$ amb el vèrtex inclòs.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$C_0(f)=\\{(0,y)\\mid y\\neq0\\}$",
+        "gravetat": "error",
+        "explicacio": "Oblida la segona línia de la definició: sobre la paràbola $x=-y^2$ (origen inclòs) $f=0$, de manera que $C_0(f)=\\{x=0\\}\\cup\\{x=-y^2\\}$."
+      },
+      {
+        "fragment": 5,
+        "cita": "$C_k(f)$ és tota la paràbola $x=\\frac{k}{1-k}y^2$, vèrtex inclòs",
+        "gravetat": "error",
+        "explicacio": "L'origen és de la paràbola $x=-y^2$, on $f=0\\neq k$; satisfer l'equació $x(1-k)=ky^2$ no basta. Cal treure el vèrtex."
+      }
+    ]
+  },
+  "creat": 1791299452.0300505
+}

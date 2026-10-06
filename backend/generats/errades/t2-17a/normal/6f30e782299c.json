@@ -1,0 +1,64 @@
+{
+  "id": "6f30e782299c",
+  "exercici": "t2-17a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $p\\in E$ un punt interior de $E$: existeix $r>0$ tal que $B(p,r)=\\{y\\in\\mathbb{R}^m\\mid\\|y-p\\|<r\\}\\subseteq E$.",
+    "Veurem que $B(0,r)\\subseteq E$. Sigui, doncs, $x\\in\\mathbb{R}^m$ amb $\\|x\\|<r$.",
+    "Com que $\\|(x-p)-p\\|=\\|x\\|<r$, el punt $x-p$ és de $B(p,r)$, i per tant $x-p\\in E$.",
+    "Com que $E$ és un subespai i $x-p\\in E$, multiplicant per l'escalar $-1$ obtenim $x\\in E$.",
+    "Per tant tot $x$ amb $\\|x\\|<r$ és de $E$: la bola oberta $B(0,r)$, centrada a l'origen i amb el mateix radi $r$, està continguda a $E$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "Com que $\\|(x-p)-p\\|=\\|x\\|<r$",
+      "inici": 0,
+      "fi": 29,
+      "tipus": "calcul",
+      "explicacio": "$(x-p)-p=x-2p$, i en general $\\|x-2p\\|\\neq\\|x\\|$. El punt que cal traslladar és $p+x$, que compleix $\\|(p+x)-p\\|=\\|x\\|<r$.",
+      "correccio": "Com que $\\|(p+x)-p\\|=\\|x\\|<r$, el punt $p+x$ és de $B(p,r)\\subseteq E$.",
+      "pista": "Quant val exactament $(x-p)-p$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "multiplicant per l'escalar $-1$ obtenim $x\\in E$",
+      "inici": 41,
+      "fi": 89,
+      "tipus": "calcul",
+      "explicacio": "$(-1)(x-p)=p-x$, no $x$. Per obtenir $x$ cal combinar dos elements de $E$ i usar que $p\\in E$: $x=(p+x)-p$.",
+      "correccio": "Com que $p\\in E$, $p+x\\in E$ i $E$ és subespai, $x=(p+x)-p\\in E$.",
+      "pista": "Què dona exactament $(-1)\\cdot(x-p)$? Quin altre element de $E$ et cal per arribar a $x$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t2.json",
+    "valoracio": "Translació mal feta i ús erroni de l'estructura de subespai.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$\\|(x-p)-p\\|=\\|x\\|<r$",
+        "gravetat": "error",
+        "explicacio": "$\\|(x-p)-p\\|=\\|x-2p\\|$, no $\\|x\\|$; el punt correcte és $p+x$, amb $\\|(p+x)-p\\|=\\|x\\|$."
+      },
+      {
+        "fragment": 4,
+        "cita": "multiplicant per l'escalar $-1$ obtenim $x\\in E$",
+        "gravetat": "error",
+        "explicacio": "$-(x-p)=p-x$, no $x$; cal sumar $p\\in E$ (o restar-lo de $p+x$)."
+      },
+      {
+        "fragment": 5,
+        "cita": "la bola oberta $B(0,r)$, centrada a l'origen i amb el mateix radi $r$, està continguda a $E$",
+        "gravetat": "consequencia",
+        "explicacio": "La conclusió és certa però es basa en [3] i [4], que són erronis."
+      }
+    ]
+  },
+  "creat": 1791299452.0549538
+}

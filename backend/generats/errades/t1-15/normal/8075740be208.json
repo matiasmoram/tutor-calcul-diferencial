@@ -1,0 +1,59 @@
+{
+  "id": "8075740be208",
+  "exercici": "t1-15",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Recordem que $K$ és compacte si existeix algun recobriment de $K$ per oberts que admet un subrecobriment finit. Sigui $K=\\{x_n\\mid n\\in\\mathbb{N}\\}\\cup\\{x_0\\}$ i sigui $K\\subseteq\\bigcup_{i\\in I}U_i$ un recobriment de $K$ per oberts $U_i$.",
+    "Com que $x_0\\in K$, existeix $i_0\\in I$ amb $x_0\\in U_{i_0}$. Com que $U_{i_0}$ és obert, existeix $r>0$ amb $B_r(x_0)\\subseteq U_{i_0}$.",
+    "Apliquem la definició de límit amb $\\varepsilon=2r$: existeix $n_0$ tal que $d(x_n,x_0)<2r$ per a tot $n\\geq n_0$, i per tant $x_n\\in B_r(x_0)\\subseteq U_{i_0}$ per a tot $n\\geq n_0$.",
+    "Els termes que queden fora d'aquesta cua, $x_1,\\dots,x_{n_0-1}$, són un nombre finit. Per a cada $n=1,\\dots,n_0-1$ triem $i_n\\in I$ amb $x_n\\in U_{i_n}$.",
+    "Aleshores $K\\subseteq U_{i_0}\\cup U_{i_1}\\cup\\dots\\cup U_{i_{n_0-1}}$: el punt $x_0$ i la cua són a $U_{i_0}$, i els termes restants als $U_{i_n}$. És un subrecobriment finit.",
+    "Com que el recobriment de partida era arbitrari, $K$ és compacte."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "si existeix algun recobriment de $K$ per oberts que admet un subrecobriment finit",
+      "inici": 29,
+      "fi": 110,
+      "tipus": "logica",
+      "explicacio": "La definició demana que TOT recobriment per oberts admeti un subrecobriment finit. Amb «algun» qualsevol conjunt seria compacte (n'hi ha prou amb el recobriment format per tot l'espai).",
+      "correccio": "$K$ és compacte si tot recobriment de $K$ per oberts admet un subrecobriment finit.",
+      "pista": "Amb la teva definició, $\\mathbb{R}$ seria compacte? Pensa en el recobriment format només per $\\mathbb{R}$."
+    },
+    {
+      "id": "e2",
+      "fragment": 3,
+      "cita": "$\\varepsilon=2r$: existeix $n_0$ tal que $d(x_n,x_0)<2r$ per a tot $n\\geq n_0$, i per tant",
+      "inici": 35,
+      "fi": 125,
+      "tipus": "desigualtat",
+      "explicacio": "De $d(x_n,x_0)<2r$ no se segueix $d(x_n,x_0)<r$, que és el que vol dir $x_n\\in B_r(x_0)$. Cal aplicar la definició de límit amb $\\varepsilon=r$ (o més petit).",
+      "correccio": "Amb $\\varepsilon=r$: existeix $n_0$ tal que $d(x_n,x_0)<r$ per a tot $n\\geq n_0$, és a dir, $x_n\\in B_r(x_0)\\subseteq U_{i_0}$.",
+      "pista": "Un punt a distància menor que $2r$ de $x_0$, és necessàriament a la bola $B_r(x_0)$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t1.json",
+    "valoracio": "L'esquema és el correcte, però la definició de compacte és errònia i la tria d'$\\varepsilon$ no dona la inclusió de la cua.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "si existeix algun recobriment de $K$ per oberts que admet un subrecobriment finit",
+        "gravetat": "error",
+        "explicacio": "La definició exigeix que tot recobriment per oberts admeti un subrecobriment finit, no només algun."
+      },
+      {
+        "fragment": 3,
+        "cita": "$\\varepsilon=2r$",
+        "gravetat": "error",
+        "explicacio": "De $d(x_n,x_0)<2r$ no se segueix $x_n\\in B_r(x_0)$; cal prendre $\\varepsilon=r$."
+      }
+    ]
+  },
+  "creat": 1791299422.5313928
+}

@@ -1,0 +1,60 @@
+{
+  "id": "82569b3f65fe",
+  "exercici": "t1-3a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Hem de veure que $\\|x\\|_2=\\sqrt{\\sum_{i=1}^n x_i^2}$ compleix les propietats de norma. És l'arrel quadrada positiva d'una suma de quadrats, per tant $\\|x\\|_2\\geq 0$.",
+    "Si $\\|x\\|_2=0$, aleshores $\\sum_i x_i^2=0$; com que cada $x_i^2\\geq 0$, tots els sumands són nuls, $x_i=0$ per a tot $i$ i $x=0$. Recíprocament, $\\|0\\|_2=0$.",
+    "Homogeneïtat: per a $\\lambda\\in\\mathbb{R}$, $\\|\\lambda x\\|_2=\\sqrt{\\sum_i\\lambda^2x_i^2}=\\sqrt{\\lambda^2}\\sqrt{\\sum_i x_i^2}$, i com que $\\sqrt{\\lambda^2}=\\lambda$, obtenim $\\|\\lambda x\\|_2=\\lambda\\|x\\|_2$.",
+    "Desigualtat triangular: desenvolupant el quadrat, $\\|x+y\\|_2^2=\\sum_i(x_i+y_i)^2=\\|x\\|_2^2+2\\sum_i x_iy_i+\\|y\\|_2^2$.",
+    "Considerem el producte escalar ordinari $\\langle x,y\\rangle=\\sum_i x_iy_i$, que compleix $\\|x\\|_2=\\sqrt{\\langle x,x\\rangle}$. Per Cauchy-Schwarz, $|\\langle x,y\\rangle|=\\|x\\|_2\\|y\\|_2$, i en particular $\\sum_i x_iy_i\\leq\\|x\\|_2\\|y\\|_2$.",
+    "Per tant $\\|x+y\\|_2^2\\leq\\|x\\|_2^2+2\\|x\\|_2\\|y\\|_2+\\|y\\|_2^2=(\\|x\\|_2+\\|y\\|_2)^2$.",
+    "Com que $\\|x+y\\|_2$ i $\\|x\\|_2+\\|y\\|_2$ són tots dos $\\geq 0$, prenent arrels obtenim $\\|x+y\\|_2\\leq\\|x\\|_2+\\|y\\|_2$. Així $\\|\\cdot\\|_2$ és una norma a $\\mathbb{R}^n$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "com que $\\sqrt{\\lambda^2}=\\lambda$",
+      "inici": 129,
+      "fi": 163,
+      "tipus": "calcul",
+      "explicacio": "L'arrel quadrada positiva de $\\lambda^2$ és $|\\lambda|$, no $\\lambda$: per a $\\lambda=-3$, $\\sqrt{9}=3\\neq-3$. Amb $\\lambda<0$ s'obtindria una norma negativa.",
+      "correccio": "Com que $\\sqrt{\\lambda^2}=|\\lambda|$, $\\|\\lambda x\\|_2=|\\lambda|\\,\\|x\\|_2$.",
+      "pista": "Quant val $\\sqrt{(-3)^2}$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "Per Cauchy-Schwarz, $|\\langle x,y\\rangle|=\\|x\\|_2\\|y\\|_2$",
+      "inici": 126,
+      "fi": 183,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "Cauchy-Schwarz dona una desigualtat, $|\\langle x,y\\rangle|\\leq\\|x\\|_2\\|y\\|_2$, no una igualtat (que només val si $x,y$ són linealment dependents; per exemple $x=e_1$, $y=e_2$ dona $0<1$).",
+      "correccio": "Per Cauchy-Schwarz, $|\\langle x,y\\rangle|\\leq\\|x\\|_2\\|y\\|_2$, i en particular $\\sum_i x_iy_i\\leq\\|x\\|_2\\|y\\|_2$.",
+      "pista": "Per a $x=(1,0)$ i $y=(0,1)$, quant val $\\langle x,y\\rangle$? I $\\|x\\|_2\\|y\\|_2$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t1.json",
+    "valoracio": "La positivitat i el pas final són correctes, però l'homogeneïtat i l'enunciat de Cauchy-Schwarz són erronis.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$\\sqrt{\\lambda^2}=\\lambda$",
+        "gravetat": "error",
+        "explicacio": "$\\sqrt{\\lambda^2}=|\\lambda|$; amb $\\lambda<0$ la conclusió $\\|\\lambda x\\|_2=\\lambda\\|x\\|_2$ és falsa (dona un valor negatiu)."
+      },
+      {
+        "fragment": 5,
+        "cita": "$|\\langle x,y\\rangle|=\\|x\\|_2\\|y\\|_2$",
+        "gravetat": "error",
+        "explicacio": "Cauchy-Schwarz dona una desigualtat $\\leq$, no una igualtat (falsa en general)."
+      }
+    ]
+  },
+  "creat": 1791299422.5202363
+}

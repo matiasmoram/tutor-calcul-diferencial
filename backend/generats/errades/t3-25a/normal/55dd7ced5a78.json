@@ -1,0 +1,61 @@
+{
+  "id": "55dd7ced5a78",
+  "exercici": "t3-25a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "$f$ és de classe $\\mathcal{C}^1$, per tant diferenciable, i $G$ té derivades parcials contínues al seu domini obert $\\mathbb{R}^+\\times(0,2\\pi)$, per tant també és diferenciable. Per la regla de la cadena, $F=f\\circ G$ és diferenciable.",
+    "La jacobiana de $G$ és $JG(r,\\varphi)=\\begin{pmatrix}\\cos\\varphi & -r\\sin\\varphi\\\\ \\sin\\varphi & r\\cos\\varphi\\end{pmatrix}$.",
+    "Així $\\left(\\dfrac{\\partial F}{\\partial r}\\ \\ \\dfrac{\\partial F}{\\partial\\varphi}\\right)=\\left(\\dfrac{\\partial f}{\\partial x}\\ \\ \\dfrac{\\partial f}{\\partial y}\\right)JG(r,\\varphi)$, on les parcials de $f$ s'avaluen al mateix punt $(r,\\varphi)$ que les de $F$.",
+    "Fent el producte, $\\dfrac{\\partial F}{\\partial r}=\\dfrac{\\partial f}{\\partial x}\\cos\\varphi+\\dfrac{\\partial f}{\\partial y}\\sin\\varphi$ i $\\dfrac{\\partial F}{\\partial\\varphi}=-\\dfrac{\\partial f}{\\partial x}r\\sin\\varphi+\\dfrac{\\partial f}{\\partial y}r\\cos\\varphi$, que són les dues primeres igualtats.",
+    "El determinant de $JG$ és $r\\cos^2\\varphi+r\\sin^2\\varphi=r>0$, de manera que el sistema es pot resoldre per a $\\dfrac{\\partial f}{\\partial x}$ i $\\dfrac{\\partial f}{\\partial y}$.",
+    "Multiplicant la primera igualtat per $r\\cos\\varphi$ i la segona per $\\sin\\varphi$, els termes en $\\dfrac{\\partial f}{\\partial y}$ coincideixen (tots dos són $r\\sin\\varphi\\cos\\varphi\\,\\dfrac{\\partial f}{\\partial y}$) i, sumant les dues igualtats, s'eliminen: $r\\dfrac{\\partial f}{\\partial x}=r\\cos\\varphi\\,\\dfrac{\\partial F}{\\partial r}-\\sin\\varphi\\,\\dfrac{\\partial F}{\\partial\\varphi}$, és a dir, $\\dfrac{\\partial f}{\\partial x}=\\cos\\varphi\\,\\dfrac{\\partial F}{\\partial r}-\\dfrac{\\sin\\varphi}{r}\\dfrac{\\partial F}{\\partial\\varphi}$.",
+    "Anàlogament, multiplicant la primera per $r\\sin\\varphi$, la segona per $\\cos\\varphi$ i sumant, $\\dfrac{\\partial f}{\\partial y}=\\sin\\varphi\\,\\dfrac{\\partial F}{\\partial r}+\\dfrac{\\cos\\varphi}{r}\\dfrac{\\partial F}{\\partial\\varphi}$.",
+    "Finalment, $r=\\sqrt{x^2+y^2}$, $\\cos\\varphi=\\dfrac{x}{\\sqrt{x^2+y^2}}$ i $\\sin\\varphi=\\dfrac{y}{\\sqrt{x^2+y^2}}$, per tant $\\dfrac{\\sin\\varphi}{r}=\\dfrac{y}{x^2+y^2}$ i $\\dfrac{\\cos\\varphi}{r}=\\dfrac{x}{x^2+y^2}$; substituint s'obtenen les dues últimes fórmules de l'enunciat."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "les parcials de $f$ s'avaluen al mateix punt $(r,\\varphi)$ que les de $F$",
+      "inici": 185,
+      "fi": 258,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "A la regla de la cadena la jacobiana de la funció exterior s'avalua a la imatge del punt: les parcials de $f$ van a $G(r,\\varphi)$, no a $(r,\\varphi)$.",
+      "correccio": "Les parcials de $f$ s'avaluen a $(x,y)=G(r,\\varphi)=(r\\cos\\varphi,r\\sin\\varphi)$, i les de $F$ a $(r,\\varphi)$.",
+      "pista": "Si $F=f\\circ G$, en quin punt s'avalua la jacobiana de $f$ a la regla de la cadena?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "sumant les dues igualtats, s'eliminen",
+      "inici": 219,
+      "fi": 256,
+      "tipus": "calcul",
+      "explicacio": "Dos termes iguals s'eliminen restant, no sumant: sumant s'obtindria $2r\\sin\\varphi\\cos\\varphi\\,\\dfrac{\\partial f}{\\partial y}$. La igualtat escrita és la que surt de restar.",
+      "correccio": "Restant la segona igualtat (multiplicada per $\\sin\\varphi$) de la primera (multiplicada per $r\\cos\\varphi$) s'eliminen els termes en $\\dfrac{\\partial f}{\\partial y}$ i queda $r\\dfrac{\\partial f}{\\partial x}=r\\cos\\varphi\\,\\dfrac{\\partial F}{\\partial r}-\\sin\\varphi\\,\\dfrac{\\partial F}{\\partial\\varphi}$.",
+      "pista": "Si dos termes són iguals, quina operació entre les igualtats els fa desaparèixer?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3b.json",
+    "valoracio": "Fórmules finals correctes, però el punt d'avaluació de les parcials de $f$ és erroni i l'eliminació del fragment 6 es descriu amb l'operació equivocada.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "on les parcials de $f$ s'avaluen al mateix punt $(r,\\varphi)$ que les de $F$",
+        "gravetat": "error",
+        "explicacio": "Per la regla de la cadena, les parcials de $f$ s'avaluen a $G(r,\\varphi)=(r\\cos\\varphi,r\\sin\\varphi)$, no a $(r,\\varphi)$."
+      },
+      {
+        "fragment": 6,
+        "cita": "sumant les dues igualtats, s'eliminen",
+        "gravetat": "error",
+        "explicacio": "Amb aquests multiplicadors els termes en $\\partial f/\\partial y$ són iguals (mateix signe), així que cal restar, no sumar; sumant no s'eliminen. El resultat final escrit sí que és correcte."
+      }
+    ]
+  },
+  "creat": 1791299348.7081943
+}

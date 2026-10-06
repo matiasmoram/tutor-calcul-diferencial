@@ -1,0 +1,58 @@
+{
+  "id": "6b28285a14db",
+  "exercici": "t3-33a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Amb la identificació $F$, la matriu $\\begin{pmatrix}a&c\\\\b&d\\end{pmatrix}$ correspon al punt $(a,b,c,d)\\in\\mathbb{R}^4$, i el seu determinant és $ad-bc$. Per tant, en coordenades, $\\det(a,b,c,d)=ad-bc$.",
+    "Les derivades parcials són $\\dfrac{\\partial\\det}{\\partial a}=d$, $\\dfrac{\\partial\\det}{\\partial b}=c$, $\\dfrac{\\partial\\det}{\\partial c}=-b$ i $\\dfrac{\\partial\\det}{\\partial d}=a$.",
+    "Totes són funcions polinòmiques de $(a,b,c,d)$ (de fet, lineals), per tant existeixen i són contínues a tot $\\mathbb{R}^4$.",
+    "Per la condició suficient de diferenciabilitat (parcials que existeixen i són contínues a l'obert $\\mathbb{R}^4$), $\\det$ és diferenciable a tot $\\mathbb{R}^4\\cong M_2(\\mathbb{R})$; de fet és de classe $\\mathcal{C}^1$.",
+    "A més, la diferencial de $\\det$ en qualsevol matriu $A$ és l'aplicació $H\\mapsto\\det H$, és a dir, $D\\det(A)(H)=\\det H$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$\\dfrac{\\partial\\det}{\\partial b}=c$",
+      "inici": 65,
+      "fi": 101,
+      "tipus": "calcul",
+      "explicacio": "$b$ apareix a $ad-bc$ amb signe negatiu: $\\dfrac{\\partial}{\\partial b}(ad-bc)=-c$.",
+      "correccio": "$\\dfrac{\\partial\\det}{\\partial b}=-c$.",
+      "pista": "Amb quin signe apareix $b$ a l'expressió $ad-bc$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$D\\det(A)(H)=\\det H$",
+      "inici": 99,
+      "fi": 119,
+      "tipus": "conclusio",
+      "explicacio": "La diferencial ha de ser lineal en $H$, i $\\det$ no ho és (p. ex. $\\det(2I)=4\\neq2\\det I$). La diferencial ve donada per les parcials.",
+      "correccio": "Si $A\\leftrightarrow(a,b,c,d)$ i $H\\leftrightarrow(h_1,h_2,h_3,h_4)$, $D\\det(A)(H)=d\\,h_1-c\\,h_2-b\\,h_3+a\\,h_4$.",
+      "pista": "La diferencial en un punt és una aplicació lineal. Ho és $H\\mapsto\\det H$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3b.json",
+    "valoracio": "La conclusió de diferenciabilitat és correcta, però hi ha un signe erroni en una parcial i una diferencial falsa.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$\\dfrac{\\partial\\det}{\\partial b}=c$",
+        "gravetat": "error",
+        "explicacio": "$\\partial(ad-bc)/\\partial b=-c$."
+      },
+      {
+        "fragment": 5,
+        "cita": "$D\\det(A)(H)=\\det H$",
+        "gravetat": "error",
+        "explicacio": "$\\det$ no és lineal; $D\\det(A)(H)=a\\,h_d+d\\,h_a-b\\,h_c-c\\,h_b$ (amb $A=(a,b,c,d)$, $H=(h_a,h_b,h_c,h_d)$), no $\\det H$."
+      }
+    ]
+  },
+  "creat": 1791299348.714777
+}

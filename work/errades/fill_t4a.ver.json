@@ -1,0 +1,189 @@
+{
+  "t4-2:normal": {
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "ja que $\\sin(1/k)\\to 0$ quan $k\\to 0$",
+        "gravetat": "error",
+        "explicacio": "$\\sin(1/k)$ no té límit quan $k\\to0$; el límit val 0 perquè $|k\\sin(1/k)|\\le|k|$ (funció fitada per una que tendeix a 0)."
+      },
+      {
+        "fragment": 7,
+        "cita": "l'únic punt del pla on deixen de ser contínues",
+        "gravetat": "error",
+        "explicacio": "Les creuades valen $2y\\sin(1/y)-\\cos(1/y)$ per $y\\neq0$, independent de $x$: són discontínues a tots els punts de l'eix $y=0$, no només a l'origen."
+      }
+    ],
+    "valoracio": "Càlculs correctes, però la justificació del límit de f_y(x,0) és falsa i s'afirma erròniament que l'origen és l'únic punt de discontinuïtat."
+  },
+  "t4-3:normal": {
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "la composició $F=f\\circ G$ és de classe $\\mathcal{C}^\\infty$",
+        "gravetat": "error",
+        "explicacio": "Amb $f$ només $\\mathcal{C}^2$, la composició és $\\mathcal{C}^2$, no $\\mathcal{C}^\\infty$."
+      },
+      {
+        "fragment": 4,
+        "cita": "Com que existeixen totes les derivades segones de $f$, el teorema de Schwarz dona $f_{xy}=f_{yx}$",
+        "gravetat": "error",
+        "explicacio": "Schwarz requereix la continuïtat de les derivades creuades, no només l'existència; cal invocar que $f$ és $\\mathcal{C}^2$."
+      }
+    ],
+    "valoracio": "Càlculs correctes, però amb una afirmació falsa sobre la regularitat de F i Schwarz aplicat amb una hipòtesi insuficient."
+  },
+  "t4-4:normal": {
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "i això ja ho tenim perquè són dues vegades diferenciables",
+        "gravetat": "error",
+        "explicacio": "Dues vegades diferenciable no implica $\\mathcal{C}^2$ ($f''$ pot no ser contínua); a més, per a la regla de la cadena en una variable n'hi ha prou amb la derivabilitat."
+      },
+      {
+        "fragment": 6,
+        "cita": "si fos $c<0$, la funció $\\varphi$ ja no satisfaria l'equació d'ones",
+        "gravetat": "error",
+        "explicacio": "El càlcul només usa $c^2$ i $1/c^2$: l'equació es compleix per a qualsevol $c\\neq0$."
+      }
+    ],
+    "valoracio": "Les derivades i la verificació són correctes, però hi ha una justificació falsa de regularitat i una observació final falsa sobre el signe de c."
+  },
+  "t4-5c:normal": {
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "de $xy=0$ obtenim $x=0$",
+        "gravetat": "error",
+        "explicacio": "$xy=0$ dona $x=0$ o $y=0$; s'oblida el cas $y=0$ (que també porta a $x=0$ via $x^2=y^2$)."
+      },
+      {
+        "fragment": 5,
+        "cita": "$G(\\rho\\cos\\theta,\\rho\\sin\\theta)=\\rho^2(\\cos 2\\theta,\\sin 2\\theta)$",
+        "gravetat": "error",
+        "explicacio": "$\\rho^2\\sin\\theta\\cos\\theta=\\tfrac12\\rho^2\\sin2\\theta$: la segona component és $\\tfrac12\\rho^2\\sin 2\\theta$."
+      }
+    ],
+    "valoracio": "Hipòtesis, no injectivitat i imatge correctes en conjunt, però amb un cas oblidat i una fórmula en polars errònia."
+  },
+  "t4-6c:normal": {
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "$\\phi$ és estrictament creixent a $(0,\\infty)$",
+        "gravetat": "error",
+        "explicacio": "Com que $\\cosh$ i $\\sinh$ creixen, els termes $x^2/\\cosh^2\\sigma$ i $y^2/\\sinh^2\\sigma$ decreixen: $\\phi$ és estrictament decreixent."
+      },
+      {
+        "fragment": 6,
+        "cita": "la igualtat $\\cos t=\\frac{x}{\\cosh s}$ determina $t$ de manera única a l'interval $(0,2\\pi)$",
+        "gravetat": "error",
+        "explicacio": "El cosinus sol no determina $t$ a $(0,2\\pi)$ ($t$ i $2\\pi-t$ tenen el mateix cosinus); cal usar també $\\sin t=y/\\sinh s$."
+      }
+    ],
+    "valoracio": "Estructura correcta, però la monotonia de phi està invertida i la determinació de t amb només el cosinus és falsa."
+  },
+  "t4-7d:normal": {
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "de manera que $F|_A$ és injectiva",
+        "gravetat": "error",
+        "explicacio": "$\\det JF\\neq0$ a tot $A$ només dona injectivitat local, no global."
+      },
+      {
+        "fragment": 6,
+        "cita": "$\\approx 1.6\\cdot 10^{-2}$",
+        "gravetat": "error",
+        "explicacio": "$2.0683-2.0667\\approx1.6\\cdot10^{-3}$, no $10^{-2}$."
+      }
+    ],
+    "valoracio": "Inversa i valors correctes, però deducció errònia d'injectivitat a partir del jacobià i un error d'ordre de magnitud a la comparació."
+  },
+  "t4-9a:normal": {
+    "problemes": [
+      {
+        "fragment": 5,
+        "cita": "$F(U_\\alpha)=\\mathbb{R}^2\\setminus\\{(t\\cos\\alpha,t\\sin\\alpha)\\mid t>0\\}$, és a dir, el pla menys la semirecta oberta d'angle $\\alpha$",
+        "gravetat": "error",
+        "explicacio": "L'origen no és a la imatge ($r>0$): $F(U_\\alpha)$ és el pla menys la semirecta tancada ($t\\geq0$)."
+      },
+      {
+        "fragment": 7,
+        "cita": "és de la semirecta que no és a $F(U_\\alpha)$, i per tant $F|_W$ tampoc no és injectiva",
+        "gravetat": "error",
+        "explicacio": "Que la imatge d'un punt no sigui a $F(U_\\alpha)$ no produeix cap col·lisió; cal usar que $W$ és obert per trobar un punt proper de $W\\setminus U_\\alpha$ amb angle no congruent amb $\\alpha$ i reduir-se al cas anterior."
+      }
+    ],
+    "valoracio": "Difeomorfisme local i oberts U_alpha correctes, però la imatge està mal descrita i el cas phi_0 congruent amb alpha de la maximalitat és un non sequitur."
+  },
+  "t4-11a:normal": {
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "$G(1,0)=G(0,1)=(1,0)$",
+        "gravetat": "error",
+        "explicacio": "$G(0,1)=(-1,0)$; l'exemple correcte és $G(1,0)=G(-1,0)=(1,0)$."
+      },
+      {
+        "fragment": 5,
+        "cita": "pel teorema de la funció inversa, això implica que $G$ no és injectiva en cap entorn de l'origen",
+        "gravetat": "error",
+        "explicacio": "El TFI dona una condició suficient, no necessària: $\\det JG=0$ no implica no injectivitat (p. ex. $x^3$ a $0$)."
+      }
+    ],
+    "valoracio": "Conclusió correcta, però amb un contraexemple numèric fals i un ús invers del TFI."
+  },
+  "t4-12a:normal": {
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$f'(x)=3x^2>0$ per a tot $x\\in\\mathbb{R}$",
+        "gravetat": "error",
+        "explicacio": "$f'(0)=0$; la monotonia estricta es manté perquè $f'\\ge0$ i només s'anul·la en un punt, però la desigualtat escrita és falsa."
+      },
+      {
+        "fragment": 6,
+        "cita": "és a dir $h^{-1/3}$",
+        "gravetat": "error",
+        "explicacio": "$\\sqrt[3]{h}/h=h^{-2/3}$, no $h^{-1/3}$."
+      }
+    ],
+    "valoracio": "Anàlisi de les tesis correcta en conjunt, però amb una desigualtat falsa a x=0 i un exponent mal calculat."
+  },
+  "t4-13a:normal": {
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "així $g:I\\to\\mathbb{R}$ és bijectiva i té inversa $g^{-1}:\\mathbb{R}\\to I$",
+        "gravetat": "error",
+        "explicacio": "$g$ no és exhaustiva sobre $\\mathbb{R}$ en general (p. ex. $\\arctan$); és bijectiva sobre $g(I)$ i la inversa és $g^{-1}:g(I)\\to I$."
+      },
+      {
+        "fragment": 4,
+        "cita": "és oberta perquè $g$ és contínua i $I$ és obert",
+        "gravetat": "error",
+        "explicacio": "Una funció contínua no porta oberts a oberts ($x^2$ porta $(-1,1)$ a $[0,1)$); cal la monotonia estricta o el teorema de l'aplicació oberta ($g'\\neq0$)."
+      }
+    ],
+    "valoracio": "Signe constant, injectivitat i regularitat de la inversa correctes, però el codomini de la bijecció és erroni i l'obertura de g(I) està mal justificada."
+  },
+  "t4-14a:normal": {
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$\\det JF(x,y)=1+f'(x)f'(y)",
+        "gravetat": "error",
+        "explicacio": "$\\det\\begin{pmatrix}1&f'(y)\\\\ f'(x)&1\\end{pmatrix}=1-f'(x)f'(y)$."
+      },
+      {
+        "fragment": 5,
+        "cita": "|f'(x)|<1$ per a tot $x$, i per tant $\\varphi$ és contractiva a $\\mathbb{R}$",
+        "gravetat": "error",
+        "explicacio": "$|\\varphi'|<1$ punt a punt no dona contractivitat (cal una constant uniforme $<1$); s'ha d'usar la fita $|\\varphi'|\\le k^2<1$ i el teorema del valor mitjà."
+      }
+    ],
+    "valoracio": "Estructura completa i correcta, però amb el determinant mal calculat i la contractivitat justificada amb una fita no uniforme."
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "ec0a34518c3e",
+  "exercici": "t2-14b",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Considerem $f(x,y)=2x^2+3y^2$, que és polinòmica i, per tant, contínua a tot $\\mathbb{R}^2$. Aleshores $B=f^{-1}(\\mathbb{N})$.",
+    "$\\mathbb{N}=\\{1,2,3,\\dots\\}$ és tancat de $\\mathbb{R}$: el seu complementari és $\\mathbb{R}\\setminus\\mathbb{N}=(-\\infty,1)\\cup\\bigcup_{n\\geq1}(n,n+1)$, unió d'intervals oberts, i per tant obert.",
+    "Geomètricament, per a cada $n\\in\\mathbb{N}$ el conjunt $\\{f=n\\}$ és l'el·lipse $\\frac{x^2}{n/2}+\\frac{y^2}{n/3}=1$, de semieixos $\\sqrt{2n}$ i $\\sqrt{3n}$.",
+    "Així $B=\\bigcup_{n\\geq1}\\{f=n\\}$ és una unió d'el·lipses, que són conjunts tancats; com que la unió de qualsevol família de tancats és tancada, això ja permet concloure que $B$ és tancat.",
+    "També ho podem veure amb la continuïtat: per la caracterització topològica, l'antiimatge per $f$, contínua a tot $\\mathbb{R}^2$, del tancat $\\mathbb{N}$ és un tancat de $\\mathbb{R}^2$. Per tant $B$ és tancat."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "de semieixos $\\sqrt{2n}$ i $\\sqrt{3n}$",
+      "inici": 116,
+      "fi": 154,
+      "tipus": "calcul",
+      "explicacio": "De $\\frac{x^2}{n/2}+\\frac{y^2}{n/3}=1$ els semieixos són les arrels dels denominadors, $\\sqrt{n/2}$ i $\\sqrt{n/3}$.",
+      "correccio": "Semieixos $\\sqrt{\\frac n2}$ i $\\sqrt{\\frac n3}$.",
+      "pista": "Quin punt de l'eix $x$ compleix $2x^2=n$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "com que la unió de qualsevol família de tancats és tancada",
+      "inici": 84,
+      "fi": 142,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "Només les unions finites de tancats són sempre tancades; una unió infinita pot no ser-ho (p. ex. $\\bigcup_n[\\frac1n,1]=(0,1]$). Aquí la unió és infinita, així que l'argument no és vàlid.",
+      "correccio": "La unió és infinita i aquest argument no basta; la justificació correcta és la de l'antiimatge del tancat $\\mathbb{N}$ per la funció contínua $f$.",
+      "pista": "La unió dels tancats $[\\frac1n,1]$, per a $n\\geq1$, és tancada?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t2.json",
+    "valoracio": "Semieixos incorrectes i ús d'una propietat falsa (unió arbitrària de tancats).",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "de semieixos $\\sqrt{2n}$ i $\\sqrt{3n}$",
+        "gravetat": "error",
+        "explicacio": "De $\\frac{x^2}{n/2}+\\frac{y^2}{n/3}=1$ els semieixos són $\\sqrt{n/2}$ i $\\sqrt{n/3}$."
+      },
+      {
+        "fragment": 4,
+        "cita": "la unió de qualsevol família de tancats és tancada",
+        "gravetat": "error",
+        "explicacio": "Només la unió finita de tancats és tancada; la unió infinita d'el·lipses no permet concloure res per si sola."
+      }
+    ]
+  },
+  "creat": 1791299452.049986
+}

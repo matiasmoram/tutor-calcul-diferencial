@@ -1,0 +1,60 @@
+{
+  "id": "22ecc62fdf41",
+  "exercici": "t4-25",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $F(x,y)=x^2+y+\\cos(xy)-1$, de classe $\\mathcal{C}^\\infty$, amb $F(0,0)=0+0+1-1=0$. Tenim $\\frac{\\partial F}{\\partial y}=1-x\\sin(xy)$, que en $(0,0)$ val $1\\neq0$.",
+    "Pel teorema de la funció implícita existeix $g$ de classe $\\mathcal{C}^\\infty$ en un interval obert que conté $0$, amb $g(0)=0$, tal que prop de l'origen la corba és exactament la gràfica de $g$. Per tant, sí que es pot escriure $y=g(x)$.",
+    "Per a la forma $x=h(y)$: $\\frac{\\partial F}{\\partial x}=2x+y\\sin(xy)$, que en $(0,0)$ val $0$. El teorema de la funció implícita no s'aplica, i cal estudiar la corba directament.",
+    "Com que $1-\\cos s\\le\\frac{s^2}{2}$ per a tot $s\\in\\mathbb{R}$, sobre la corba tenim $y=1-\\cos(xy)-x^2\\le\\frac{x^2y^2}{2}-x^2=x^2\\left(\\frac{y^2}{2}-1\\right)$.",
+    "Si $|y|<2$, el factor $\\frac{y^2}{2}-1$ és negatiu, i per tant el segon membre és $\\le0$. Així, tot punt de la corba amb $|y|<2$ té $y\\le0$, i per a $0<y<2$ no hi ha cap punt de la corba amb ordenada $y$.",
+    "Si existís $h$ definida en un interval $(-\\delta,\\delta)$ amb $F(h(y),y)=0$ per a tot $y$, per a $0<y<\\delta$ el punt $(h(y),y)$ seria un punt de la corba amb ordenada positiva i petita, cosa impossible.",
+    "Conclusió: prop de l'origen la corba es pot escriure de la forma $y=g(x)$, però no de la forma $x=h(y)$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "$\\frac{\\partial F}{\\partial x}=2x+y\\sin(xy)$",
+      "inici": 25,
+      "fi": 69,
+      "tipus": "calcul",
+      "explicacio": "La derivada de $\\cos(xy)$ respecte de $x$ és $-y\\sin(xy)$, de manera que $\\frac{\\partial F}{\\partial x}=2x-y\\sin(xy)$. En $(0,0)$ el valor continua sent $0$.",
+      "correccio": "$\\frac{\\partial F}{\\partial x}=2x-y\\sin(xy)$.",
+      "pista": "Quina és la derivada del cosinus? I el signe que en resulta?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "Si $|y|<2$, el factor $\\frac{y^2}{2}-1$ és negatiu",
+      "inici": 0,
+      "fi": 50,
+      "tipus": "desigualtat",
+      "explicacio": "$\\frac{y^2}{2}-1<0$ equival a $|y|<\\sqrt2$, no a $|y|<2$ (per exemple, $y=1.8$ dona $0.62>0$). L'argument val per a $0<y<\\sqrt2$, que és suficient.",
+      "correccio": "Si $|y|<\\sqrt2$, el factor és negatiu; per tant, per a $0<y<\\sqrt2$ no hi ha cap punt de la corba.",
+      "pista": "Per a quins valors de $y$ és negatiu $\\frac{y^2}{2}-1$? Prova amb $y=1.8$."
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4b.json",
+    "valoracio": "Conclusió correcta (sí $y=g(x)$, no $x=h(y)$), però amb un signe malament a $F_x$ i una fita errònia ($2$ en lloc de $\\sqrt2$) a l'argument de no-existència.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$\\frac{\\partial F}{\\partial x}=2x+y\\sin(xy)$",
+        "gravetat": "error",
+        "explicacio": "$\\frac{\\partial}{\\partial x}\\cos(xy)=-y\\sin(xy)$, per tant $\\frac{\\partial F}{\\partial x}=2x-y\\sin(xy)$ (el valor a l'origen, $0$, coincideix)."
+      },
+      {
+        "fragment": 5,
+        "cita": "Si $|y|<2$, el factor $\\frac{y^2}{2}-1$ és negatiu",
+        "gravetat": "error",
+        "explicacio": "$\\frac{y^2}{2}-1<0$ si i només si $|y|<\\sqrt2$, no $|y|<2$; per a $\\sqrt2\\le y<2$ l'argument no exclou punts de la corba, i l'afirmació per a $0<y<2$ no està justificada (el correcte és $0<y<\\sqrt2$)."
+      }
+    ]
+  },
+  "creat": 1791299408.5651705
+}

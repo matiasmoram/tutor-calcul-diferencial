@@ -1,0 +1,61 @@
+{
+  "id": "4ca208ad6c6a",
+  "exercici": "t3-3",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $u=(u_1,u_2)\\neq(0,0)$. Per definició, $D_uf(0,0)=\\displaystyle\\lim_{t\\to0}\\frac{f(tu_1,tu_2)-f(0,0)}{t}$, si aquest límit existeix.",
+    "Per a $t\\neq0$ el punt $(tu_1,tu_2)$ no és l'origen, i $f(tu_1,tu_2)=\\dfrac{t^3u_1^2u_2}{t^2(u_1^2+u_2^2)}=\\dfrac{t\\,u_1^2u_2}{u_1^2+u_2^2}$.",
+    "Com que $f(0,0)=0$, el quocient incremental val $\\dfrac{1}{t}\\cdot\\dfrac{t\\,u_1^2u_2}{u_1^2+u_2^2}=\\dfrac{u_1^2u_2}{u_1^2+u_2^2}$ per a tot $t\\neq0$, que no depèn de $t$.",
+    "Per tant el límit existeix per a tota $u\\neq(0,0)$ i $D_uf(0,0)=\\dfrac{u_1^2u_2}{u_1^2+u_2^2}$; si $u$ és unitari, $D_uf(0,0)=u_1u_2^2$.",
+    "Prenent $u=(1,0)$ i $u=(0,1)$ a la fórmula general, obtenim $\\dfrac{\\partial f}{\\partial x}(0,0)=\\dfrac{\\partial f}{\\partial y}(0,0)=0$, és a dir, $\\nabla f(0,0)=(0,0)$.",
+    "Si $f$ fos diferenciable a l'origen, tindríem $D_uf(0,0)=\\nabla f(0,0)\\cdot u=0$ per a tota $u$.",
+    "Però per a $u=(1,1)$ la fórmula dona $D_uf(0,0)=\\dfrac{1\\cdot1}{1+1}=\\dfrac12\\neq0$, de manera que $u\\mapsto D_uf(0,0)$ no és lineal.",
+    "Per tant $f$ no és diferenciable a l'origen i, en particular, tampoc no hi és contínua."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "si $u$ és unitari, $D_uf(0,0)=u_1u_2^2$",
+      "inici": 96,
+      "fi": 135,
+      "tipus": "calcul",
+      "explicacio": "Si $u_1^2+u_2^2=1$, la fórmula $\\dfrac{u_1^2u_2}{u_1^2+u_2^2}$ dona $u_1^2u_2$: s'han intercanviat els exponents.",
+      "correccio": "Si $u$ és unitari, $D_uf(0,0)=u_1^2u_2$.",
+      "pista": "Què queda de $\\dfrac{u_1^2u_2}{u_1^2+u_2^2}$ quan el denominador val $1$? Quina component va al quadrat?"
+    },
+    {
+      "id": "e2",
+      "fragment": 8,
+      "cita": "en particular, tampoc no hi és contínua",
+      "inici": 47,
+      "fi": 86,
+      "tipus": "conclusio",
+      "explicacio": "No ser diferenciable no implica no ser contínua (és el recíproc el que és cert). De fet $f$ és contínua a l'origen: $|f(x,y)|\\le|y|\\to0$.",
+      "correccio": "Per tant $f$ no és diferenciable a l'origen (tot i que hi és contínua, ja que $|f(x,y)|\\le|y|$, i hi té totes les derivades direccionals).",
+      "pista": "La implicació «diferenciable $\\Rightarrow$ contínua», en quin sentit funciona? Pots fitar $|f(x,y)|$ prop de l'origen?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3a.json",
+    "valoracio": "Càlcul general correcte, però la fórmula per a u unitari està intercanviada i la conclusió final sobre continuïtat és falsa.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "$D_uf(0,0)=u_1u_2^2$",
+        "gravetat": "error",
+        "explicacio": "Si $u_1^2+u_2^2=1$, la fórmula general dona $u_1^2u_2$, no $u_1u_2^2$."
+      },
+      {
+        "fragment": 8,
+        "cita": "tampoc no hi és contínua",
+        "gravetat": "error",
+        "explicacio": "No ser diferenciable no implica no ser contínua; de fet $|f(x,y)|\\le|y|\\to0$ i $f$ és contínua a l'origen."
+      }
+    ]
+  },
+  "creat": 1791299309.4633522
+}

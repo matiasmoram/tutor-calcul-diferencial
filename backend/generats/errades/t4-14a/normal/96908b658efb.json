@@ -1,0 +1,61 @@
+{
+  "id": "96908b658efb",
+  "exercici": "t4-14a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Les components $x+f(y)$ i $y+f(x)$ són sumes de funcions de classe $\\mathcal{C}^1$, així que $F\\in\\mathcal{C}^1(\\mathbb{R}^2)$, amb $JF(x,y)=\\begin{pmatrix}1&f'(y)\\\\ f'(x)&1\\end{pmatrix}$.",
+    "El determinant és $\\det JF(x,y)=1+f'(x)f'(y)\\geq 1-|f'(x)|\\,|f'(y)|\\geq 1-k^2>0$, de manera que $JF$ és invertible a tot punt.",
+    "Pel teorema del valor mitjà, per a tot $s,t\\in\\mathbb{R}$ hi ha $\\xi$ entre $s$ i $t$ amb $f(s)-f(t)=f'(\\xi)(s-t)$, i per tant $|f(s)-f(t)|\\le k|s-t|$.",
+    "Injectivitat: si $F(x,y)=F(x',y')$, aleshores $x-x'=f(y')-f(y)$ i $y-y'=f(x')-f(x)$. Llavors $|x-x'|\\le k|y-y'|=k|f(x')-f(x)|\\le k^2|x-x'|$, i com que $k^2<1$, $x=x'$; aleshores $y-y'=f(x')-f(x)=0$.",
+    "Exhaustivitat: donat $(u,v)$, $F(x,y)=(u,v)$ equival a $y=v-f(x)$ i $x=u-f(v-f(x))=:\\varphi(x)$. Per la regla de la cadena, $|\\varphi'(x)|=|f'(v-f(x))|\\,|f'(x)|<1$ per a tot $x$, i per tant $\\varphi$ és contractiva a $\\mathbb{R}$.",
+    "Com que $\\mathbb{R}$ és complet, pel teorema del punt fix existeix $x^*$ amb $\\varphi(x^*)=x^*$, i $(x^*,v-f(x^*))$ és una antiimatge de $(u,v)$. Per tant $F:\\mathbb{R}^2\\to\\mathbb{R}^2$ és bijectiva.",
+    "Donat $(u_0,v_0)=F(a)$, com que $F\\in\\mathcal{C}^1$ i $\\det JF(a)\\neq 0$, el teorema de la funció inversa dona oberts $U\\ni a$ i $V=F(U)\\ni(u_0,v_0)$ i una inversa local de classe $\\mathcal{C}^1$ de $F|_U$ definida a $V$. Per la injectivitat global, aquesta inversa local és la restricció de $F^{-1}$ a $V$.",
+    "Per tant $F^{-1}$ és de classe $\\mathcal{C}^1$ en un entorn de cada punt, és a dir $F^{-1}\\in\\mathcal{C}^1(\\mathbb{R}^2)$: $F$ admet inversa global de classe $\\mathcal{C}^1$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$\\det JF(x,y)=1+f'(x)f'(y)\\geq 1-|f'(x)|\\,|f'(y)|\\geq 1-k^2>0$",
+      "inici": 18,
+      "fi": 80,
+      "tipus": "calcul",
+      "explicacio": "El determinant de $\\begin{pmatrix}1&f'(y)\\\\ f'(x)&1\\end{pmatrix}$ és $1\\cdot 1-f'(y)f'(x)$: el signe del producte és negatiu.",
+      "correccio": "$\\det JF(x,y)=1-f'(x)f'(y)\\geq 1-|f'(x)|\\,|f'(y)|\\geq 1-k^2>0$.",
+      "pista": "Com es calcula el determinant d'una matriu $2\\times 2$? Quin signe porta el producte dels elements de fora de la diagonal?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$|\\varphi'(x)|=|f'(v-f(x))|\\,|f'(x)|<1$ per a tot $x$, i per tant $\\varphi$ és contractiva",
+      "inici": 124,
+      "fi": 214,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "$|\\varphi'(x)|<1$ punt a punt no fa $\\varphi$ contractiva: cal una constant uniforme $L<1$ (p. ex. $\\sqrt{1+x^2}$ té $|\\varphi'|<1$ i no té punt fix).",
+      "correccio": "$|\\varphi'(x)|\\le k^2<1$ per a tot $x$, i pel teorema del valor mitjà $\\varphi$ és Lipschitz amb constant $k^2<1$ (si $k=0$, amb qualsevol constant de $(0,1)$): és contractiva.",
+      "pista": "Per ser contractiva, n'hi ha prou que la derivada sigui menor que $1$ a cada punt, o cal una fita comuna menor que $1$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4a.json",
+    "valoracio": "Estructura completa i correcta, però amb el determinant mal calculat i la contractivitat justificada amb una fita no uniforme.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$\\det JF(x,y)=1+f'(x)f'(y)",
+        "gravetat": "error",
+        "explicacio": "$\\det\\begin{pmatrix}1&f'(y)\\\\ f'(x)&1\\end{pmatrix}=1-f'(x)f'(y)$."
+      },
+      {
+        "fragment": 5,
+        "cita": "|f'(x)|<1$ per a tot $x$, i per tant $\\varphi$ és contractiva a $\\mathbb{R}$",
+        "gravetat": "error",
+        "explicacio": "$|\\varphi'|<1$ punt a punt no dona contractivitat (cal una constant uniforme $<1$); s'ha d'usar la fita $|\\varphi'|\\le k^2<1$ i el teorema del valor mitjà."
+      }
+    ]
+  },
+  "creat": 1791299402.9744866
+}

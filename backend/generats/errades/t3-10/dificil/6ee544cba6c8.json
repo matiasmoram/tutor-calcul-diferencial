@@ -1,0 +1,77 @@
+{
+  "id": "6ee544cba6c8",
+  "exercici": "t3-10",
+  "font": "problema",
+  "dificultat": "dificil",
+  "fragments": [
+    "Fixem un punt $p=(x_0,y_0)\\in D$ i triem $M>0$ tal que $|\\partial_x f|\\le M$ i $|\\partial_y f|\\le M$ a tot $D$, cosa possible perquè les parcials estan fitades. Per provar la continuïtat en $p$ n'hi ha prou de veure que $|f(x,y)-f(x_0,y_0)|\\to0$ quan $(x,y)\\to p$.",
+    "Introduïm el punt intermedi $(x,y_0)$ i apliquem la desigualtat triangular: $|f(x,y)-f(x_0,y_0)|\\le |f(x,y)-f(x,y_0)|+|f(x,y_0)-f(x_0,y_0)|$. Així separem la variació vertical de la variació horitzontal.",
+    "Com que $D$ és obert, per a qualsevol $(x,y)\\in D$ el punt $(x,y_0)$ i els segments que uneixen $(x,y)$ amb $(x,y_0)$ i $(x,y_0)$ amb $(x_0,y_0)$ queden dins de $D$.",
+    "Considerem $g(t)=f(x,t)$ per a $t$ entre $y_0$ i $y$, i $h(s)=f(s,y_0)$ per a $s$ entre $x_0$ i $x$. Com que les parcials existeixen en aquests segments, $g$ i $h$ són de classe $\\mathcal{C}^1$ en els intervals corresponents, amb $g'(t)=\\partial_y f(x,t)$ i $h'(s)=\\partial_x f(s,y_0)$.",
+    "Pel teorema del valor mitjà aplicat a $g$, existeix $\\tilde y$ entre $y_0$ i $y$ tal que $|f(x,y)-f(x,y_0)|=|\\partial_y f(x,\\tilde y)|\\,|y-y_0|\\le M|y-y_0|$. Anàlogament, aplicant-lo a $h$, $|f(x,y_0)-f(x_0,y_0)|\\le M|x-x_0|$.",
+    "Sumant les dues estimacions, $|f(x,y)-f(x_0,y_0)|\\le M(|x-x_0|+|y-y_0|)$, que tendeix a $0$ quan $(x,y)\\to p$. Per tant $f$ és contínua en $p$ i, com que $p$ era arbitrari, $f$ és contínua a tot $D$.",
+    "A $\\mathbb{R}^m$ l'argument és el mateix: es passa de $x_0$ a $x$ canviant una coordenada cada vegada i s'obté $|f(x)-f(x_0)|\\le M\\sum_{i=1}^m |x_i-x_{0,i}|$. Com que $\\sum_{i=1}^m |x_i-x_{0,i}|\\le \\|x-x_0\\|_2$, aquesta fita tendeix a $0$ i el resultat també és cert per a $m>2$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "per a qualsevol $(x,y)\\in D$ el punt $(x,y_0)$ i els segments",
+      "inici": 22,
+      "fi": 83,
+      "tipus": "logica",
+      "explicacio": "Que $D$ sigui obert no fa que contingui aquests segments per a qualsevol punt de $D$ (un obert no ha de ser convex). Per exemple, amb $D=\\mathbb{R}^2\\setminus\\{(1,0)\\}$, $p=(0,0)$ i $(x,y)=(2,1)$, el segment horitzontal de $(0,0)$ a $(2,0)$ passa per $(1,0)\\notin D$, i allà no es pot aplicar el teorema del valor mitjà.",
+      "correccio": "Com que $D$ és obert, existeix $r>0$ amb $B(p,r)\\subseteq D$; si $(x,y)\\in B(p,r)$, el punt $(x,y_0)$ i els dos segments són dins de la bola (convexa) i, per tant, de $D$. Com que la continuïtat és local, n'hi ha prou amb aquests punts.",
+      "pista": "Un conjunt obert conté sempre el segment entre dos dels seus punts? Penseu en el pla sense un punt."
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "$g$ i $h$ són de classe $\\mathcal{C}^1$",
+      "inici": 154,
+      "fi": 193,
+      "tipus": "hipotesi",
+      "explicacio": "L'existència de les derivades parcials només garanteix que $g$ i $h$ són derivables, no que les seves derivades siguin contínues (per exemple, $t^2\\sin(1/t)$ estesa per $0$ és derivable però no $\\mathcal{C}^1$).",
+      "correccio": "$g$ i $h$ són derivables en els intervals corresponents (i per tant contínues), amb $g'(t)=\\partial_y f(x,t)$ i $h'(s)=\\partial_x f(s,y_0)$; això ja és suficient per aplicar el teorema del valor mitjà.",
+      "pista": "L'existència d'una derivada implica que aquesta derivada sigui contínua?"
+    },
+    {
+      "id": "e3",
+      "fragment": 7,
+      "cita": "$\\sum_{i=1}^m |x_i-x_{0,i}|\\le \\|x-x_0\\|_2$",
+      "inici": 167,
+      "fi": 210,
+      "tipus": "desigualtat",
+      "explicacio": "La norma $1$ no és menor o igual que la norma euclidiana; la desigualtat va al revés. Per exemple, per al vector $(1,1)$ la suma és $2$ i la norma euclidiana és $\\sqrt2<2$.",
+      "correccio": "$\\sum_{i=1}^m |x_i-x_{0,i}|\\le \\sqrt m\\,\\|x-x_0\\|_2$ (Cauchy-Schwarz), que igualment tendeix a $0$; per tant el resultat també és cert per a $m>2$.",
+      "pista": "Proveu la desigualtat amb el vector $(1,1,\\dots,1)$: què val cada costat?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "repair.json",
+    "valoracio": "Bona estructura amb el punt intermedi i el TVM, però oblida restringir-se a una bola dins de D, afirma falsament classe $\\mathcal C^1$ i usa una desigualtat de normes invertida a $\\mathbb{R}^m$.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "per a qualsevol $(x,y)\\in D$ el punt $(x,y_0)$ i els segments que uneixen $(x,y)$ amb $(x,y_0)$ i $(x,y_0)$ amb $(x_0,y_0)$ queden dins de $D$",
+        "gravetat": "error",
+        "explicacio": "Fals per a un obert qualsevol (p. ex. no convex). Cal restringir-se a una bola centrada a $(x_0,y_0)$ continguda a D, on per convexitat els segments hi són."
+      },
+      {
+        "fragment": 4,
+        "cita": "$g$ i $h$ són de classe $\\mathcal{C}^1$",
+        "gravetat": "error",
+        "explicacio": "L'existència de les parcials només dona que g i h són derivables, no que la derivada sigui contínua; afirmació falsa (tot i que per al TVM n'hi ha prou amb derivable)."
+      },
+      {
+        "fragment": 7,
+        "cita": "$\\sum_{i=1}^m |x_i-x_{0,i}|\\le \\|x-x_0\\|_2$",
+        "gravetat": "error",
+        "explicacio": "La desigualtat va al revés: $\\|v\\|_2\\le\\|v\\|_1$. Cal usar $\\|v\\|_1\\le\\sqrt m\\,\\|v\\|_2$ (o simplement que cada $|x_i-x_{0,i}|\to0$)."
+      }
+    ]
+  },
+  "creat": 1791299191.6002724
+}

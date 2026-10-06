@@ -1,0 +1,59 @@
+{
+  "id": "775c7f1e973f",
+  "exercici": "t4-24a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Substituint $(x,y,t)=(1,0,t_0)$ a la primera equació: $t_0+0+0-\\frac{25}{4}t_0^3=t_0\\left(1-\\frac{25}{4}t_0^2\\right)=0$, d'on $t_0\\in\\{0,\\pm\\frac52\\}$.",
+    "A la segona equació: $0+0-3(t_0+1)-t_0+3=-4t_0=0$, és a dir, $t_0=0$. Per tant, l'únic punt solució de la forma $(1,0,t_0)$ és $(1,0,0)$.",
+    "Siguin $\\Phi_1=tx^3+xy^2+y-\\frac{25}{4}t^3$ i $\\Phi_2=3xy+t^2y^3-3x^2(t+1)-t+3$, polinòmiques i per tant de classe $\\mathcal{C}^\\infty$. Com que volem aïllar $x$ i $y$, calculem $\\frac{\\partial(\\Phi_1,\\Phi_2)}{\\partial(x,y)}=\\begin{pmatrix}3tx^2+y^2&2xy+1\\\\ 3y-6x&3x+3t^2y^2\\end{pmatrix}$.",
+    "En $(1,0,0)$ aquesta matriu val $\\begin{pmatrix}0&1\\\\-6&3\\end{pmatrix}$, amb determinant $0\\cdot3-1\\cdot(-6)=6\\neq0$.",
+    "Pel teorema de la funció implícita, existeixen un interval obert $I\\ni0$ i funcions $x(t),y(t)$ de classe $\\mathcal{C}^\\infty$ (en particular derivables) en $I$, amb $x(0)=1$ i $y(0)=0$, que satisfan el sistema.",
+    "Per tant, l'únic punt de la forma $(1,0,t_0)$ al voltant del qual el sistema defineix $x,y$ com a funcions derivables de $t$ és $(1,0,0)$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "d'on $t_0\\in\\{0,\\pm\\frac52\\}$",
+      "inici": 121,
+      "fi": 150,
+      "tipus": "calcul",
+      "explicacio": "De $1-\\frac{25}{4}t_0^2=0$ surt $t_0^2=\\frac{4}{25}$, és a dir $t_0=\\pm\\frac25$, no $\\pm\\frac52$. (La segona equació els descarta igualment.)",
+      "correccio": "$t_0\\in\\{0,\\pm\\frac25\\}$.",
+      "pista": "Si aïlles $t_0^2$ de $1-\\frac{25}{4}t_0^2=0$, quant val?"
+    },
+    {
+      "id": "e2",
+      "fragment": 3,
+      "cita": "\\\\ 3y-6x&3x+3t^2y^2\\end{pmatrix}$",
+      "inici": 255,
+      "fi": 288,
+      "tipus": "calcul",
+      "explicacio": "La derivada de $-3x^2(t+1)$ respecte de $x$ és $-6x(t+1)$; s'ha perdut el factor $(t+1)$. Al punt ($t=0$) el valor coincideix, però la matriu és incorrecta.",
+      "correccio": "$\\frac{\\partial\\Phi_2}{\\partial x}=3y-6x(t+1)$.",
+      "pista": "Què passa amb el factor $(t+1)$ quan derives $-3x^2(t+1)$ respecte de $x$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4b.json",
+    "valoracio": "Conclusió correcta, però amb dos errors de càlcul (arrels de la primera equació i derivada parcial de $\\Phi_2$) que no afecten el resultat final.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "d'on $t_0\\in\\{0,\\pm\\frac52\\}$",
+        "gravetat": "error",
+        "explicacio": "$1-\\frac{25}{4}t_0^2=0$ dona $t_0^2=\\frac{4}{25}$, és a dir $t_0=\\pm\\frac25$, no $\\pm\\frac52$ (no afecta el resultat perquè la segona equació força $t_0=0$)."
+      },
+      {
+        "fragment": 3,
+        "cita": "3y-6x",
+        "gravetat": "error",
+        "explicacio": "$\\frac{\\partial\\Phi_2}{\\partial x}=3y-6x(t+1)$; s'ha oblidat el factor $(t+1)$ (el valor a $t=0$ coincideix)."
+      }
+    ]
+  },
+  "creat": 1791299408.5625355
+}

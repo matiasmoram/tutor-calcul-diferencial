@@ -1,0 +1,59 @@
+{
+  "id": "2f0e5bb6e089",
+  "exercici": "t1-2",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Treballem a $\\mathbb{N}=\\{1,2,3,\\dots\\}$, on $\\frac1m$ té sentit per a tot $m$. Positivitat: si $m=n$, $d(m,n)=0$; si $m\\neq n$, $d(m,n)=\\frac1m+\\frac1n\\geq1$ perquè $m,n\\geq1$, i en particular $d(m,n)>0$. Per tant $d\\geq 0$ i $d(m,n)=0\\iff m=n$.",
+    "Simetria: si $m=n$ tots dos valors són $0$, i si $m\\neq n$, $d(m,n)=\\frac1m+\\frac1n=\\frac1n+\\frac1m=d(n,m)$.",
+    "Desigualtat triangular: volem $d(m,n)\\leq d(m,k)+d(k,n)$ per a tots $m,n,k\\in\\mathbb{N}$. Com que la definició va per casos, separem segons quins dels tres naturals coincideixen. Si $m=n$, el costat esquerre és $0$ i el dret és $\\geq 0$.",
+    "Si $m\\neq n$ i $k=m$, el costat dret és $d(m,m)+d(m,n)=\\frac2m+\\frac1n$, que és més gran que $d(m,n)=\\frac1m+\\frac1n$. El cas $k=n$ és anàleg.",
+    "Finalment, si $m\\neq n$, $k\\neq m$ i $k\\neq n$, el costat dret és $\\frac1m+\\frac1k+\\frac1k+\\frac1n=\\frac1m+\\frac1n+\\frac2k$, que és més gran que $\\frac1m+\\frac1n=d(m,n)$ perquè $\\frac2k>0$.",
+    "Com que aquests casos cobreixen totes les possibilitats, $d$ compleix la desigualtat triangular. Per tant $d$ és una distància i $(\\mathbb{N},d)$ és un espai mètric."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "$d(m,n)=\\frac1m+\\frac1n\\geq1$ perquè $m,n\\geq1$",
+      "inici": 129,
+      "fi": 176,
+      "tipus": "desigualtat",
+      "explicacio": "La fita és falsa: per a $m=2$, $n=3$ es té $\\frac12+\\frac13=\\frac56<1$. De $m,n\\geq 1$ només se'n dedueix que $\\frac1m,\\frac1n>0$.",
+      "correccio": "$d(m,n)=\\frac1m+\\frac1n>0$ perquè $m,n\\geq 1$ fa que $\\frac1m>0$ i $\\frac1n>0$.",
+      "pista": "Quant val $d(2,3)$? És més gran o igual que $1$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "$d(m,m)+d(m,n)=\\frac2m+\\frac1n$",
+      "inici": 40,
+      "fi": 71,
+      "tipus": "calcul",
+      "explicacio": "Per definició $d(m,m)=0$ (el cas $m=n$ de la fórmula), no $\\frac1m+\\frac1m$. El costat dret val exactament $d(m,n)$ i es té una igualtat.",
+      "correccio": "$d(m,m)+d(m,n)=0+d(m,n)=d(m,n)$, i la desigualtat és una igualtat.",
+      "pista": "Quina de les dues branques de la definició s'aplica per calcular $d(m,m)$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t1.json",
+    "valoracio": "Estructura per casos correcta, però la fita de positivitat i el cas $k=m$ són incorrectes.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "$d(m,n)=\\frac1m+\\frac1n\\geq1$",
+        "gravetat": "error",
+        "explicacio": "Fals: p. ex. $\\frac12+\\frac13<1$. Només es pot dir que $\\frac1m+\\frac1n>0$."
+      },
+      {
+        "fragment": 4,
+        "cita": "$d(m,m)+d(m,n)=\\frac2m+\\frac1n$",
+        "gravetat": "error",
+        "explicacio": "$d(m,m)=0$, així que el costat dret és exactament $d(m,n)$ (igualtat), no $\\frac2m+\\frac1n$ ni més gran."
+      }
+    ]
+  },
+  "creat": 1791299422.518477
+}

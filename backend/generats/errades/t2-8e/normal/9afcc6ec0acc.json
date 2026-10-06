@@ -1,0 +1,65 @@
+{
+  "id": "9afcc6ec0acc",
+  "exercici": "t2-8e",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Primer, $g$ no és contínua a l'origen: sobre la corba $x=y^3$, amb $y\\neq0$, $g(y^3,y)=\\frac{y^5}{y^6+y^6}=\\frac{1}{2y}$, que no tendeix a $0=g(0,0)$ quan $y\\to0$ (ni tan sols és fitada). Per tant $g$ no és contínua a $\\mathbb{R}^2$.",
+    "Per a $r>0$ tenim $x=r\\cos\\varphi$ i $r=\\|(x,y)\\|$, de manera que $|\\cos\\varphi|>\\delta$ equival a $|x|>\\delta\\|(x,y)\\|$; amb $r=0$ s'obté l'origen. Així $D_\\delta=\\{(0,0)\\}\\cup\\{(x,y)\\mid |x|>\\delta\\|(x,y)\\|\\}$: l'origen i dos sectors angulars oberts al voltant de l'eix $x$.",
+    "L'origen és punt d'acumulació de $D_\\delta$, ja que els punts $(0,t)$ amb $t\\neq0$ hi pertanyen.",
+    "Sigui $(x,y)\\in D_\\delta\\setminus\\{(0,0)\\}$ i $r=\\|(x,y)\\|$. Com que $y^6\\geq0$, $|g(x,y)|=\\frac{|x|y^2}{x^2+y^6}\\leq\\frac{|x|y^2}{x^2}=\\frac{y^2}{|x|}$.",
+    "Ara, com que $y^2\\leq r^2$ i $|x|\\leq r$, tenim $\\frac{y^2}{|x|}\\leq\\frac{r^2}{r}=r$, i per tant $|g(x,y)|\\leq r$ per a tot $(x,y)\\in D_\\delta\\setminus\\{(0,0)\\}$.",
+    "Per aquesta fita, el límit de $g|_{D_\\delta}$ quan $(x,y)\\to(0,0)$ és $0=g(0,0)$, i la restricció és contínua a l'origen. Als altres punts de $D_\\delta$, $g$ és contínua perquè és un quocient de polinomis amb denominador no nul, i per tant també ho és la restricció. L'afirmació és certa."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "els punts $(0,t)$ amb $t\\neq0$ hi pertanyen",
+      "inici": 52,
+      "fi": 95,
+      "tipus": "calcul",
+      "explicacio": "Els punts de l'eix $y$ tenen $|\\cos\\varphi|=0<\\delta$ (o bé $|x|=0$), així que no són de $D_\\delta$: la regió exclou precisament un con al voltant de l'eix $y$.",
+      "correccio": "Els punts $(t,0)$ amb $t\\neq0$ són de $D_\\delta$, i per tant l'origen n'és punt d'acumulació.",
+      "pista": "Quant val $|\\cos\\varphi|$ en un punt de l'eix $y$? Compleix la condició que defineix $D_\\delta$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$|x|\\leq r$, tenim $\\frac{y^2}{|x|}\\leq\\frac{r^2}{r}=r$",
+      "inici": 29,
+      "fi": 84,
+      "tipus": "desigualtat",
+      "explicacio": "De $|x|\\leq r$ es dedueix $\\frac{1}{|x|}\\geq\\frac1r$: la desigualtat va en sentit contrari i no fita $\\frac{y^2}{|x|}$ per dalt. Cal usar la condició de la regió, $|x|>\\delta r$.",
+      "correccio": "Com que $|x|>\\delta r$, $\\frac{y^2}{|x|}<\\frac{r^2}{\\delta r}=\\frac{r}{\\delta}$, que tendeix a $0$.",
+      "pista": "Si el denominador d'una fracció positiva disminueix, la fracció augmenta o disminueix? Quina informació sobre $|x|$ et dona el fet d'estar a $D_\\delta$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t2.json",
+    "valoracio": "Punts d'acumulació mal triats i fita amb la desigualtat en sentit contrari, sense usar $\\delta$.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "els punts $(0,t)$ amb $t\\neq0$ hi pertanyen",
+        "gravetat": "error",
+        "explicacio": "Els punts de l'eix $y$ tenen $\\cos\\varphi=0<\\delta$: no són de $D_\\delta$. Són els punts $(t,0)$ els que hi pertanyen."
+      },
+      {
+        "fragment": 5,
+        "cita": "$|x|\\leq r$, tenim $\\frac{y^2}{|x|}\\leq\\frac{r^2}{r}=r$",
+        "gravetat": "error",
+        "explicacio": "Una fita superior de $|x|$ al denominador dona una fita inferior del quocient; cal usar $|x|>\\delta r$ (condició de $D_\\delta$), que dona $\\frac{y^2}{|x|}<\\frac{r}{\\delta}$."
+      },
+      {
+        "fragment": 6,
+        "cita": "el límit de $g|_{D_\\delta}$ quan $(x,y)\\to(0,0)$ és $0=g(0,0)$",
+        "gravetat": "consequencia",
+        "explicacio": "La conclusió és certa però es basa en la fita $|g|\\leq r$ de [5], que no està justificada."
+      }
+    ]
+  },
+  "creat": 1791299452.0402274
+}

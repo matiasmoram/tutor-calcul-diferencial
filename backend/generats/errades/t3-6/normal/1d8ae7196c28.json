@@ -1,0 +1,59 @@
+{
+  "id": "1d8ae7196c28",
+  "exercici": "t3-6",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Siguin $a=\\dfrac{\\partial f}{\\partial x}(0,0)$ i $b=\\dfrac{\\partial f}{\\partial y}(0,0)$, que existeixen perquè $f$ és diferenciable a l'origen.",
+    "Per la simetria, $f(0,t)=f(t,0)$ per a tot $t$, i per tant $b=\\displaystyle\\lim_{t\\to0}\\frac{f(0,t)-f(0,0)}{t}=\\lim_{t\\to0}\\frac{f(t,0)-f(0,0)}{t}=a$.",
+    "Més en general, el mateix argument mostra que $\\dfrac{\\partial f}{\\partial x}(x,y)=\\dfrac{\\partial f}{\\partial y}(x,y)$ a tot punt $(x,y)$ on existeixin les parcials.",
+    "Com que $f$ és diferenciable a $(0,0)$, la seva diferencial és l'aplicació lineal de matriu $Jf(0,0)=(a\\ \\ a)$, és a dir, $Df(0,0)(h,k)=a(h+k)$.",
+    "A més, $a\\neq0$: si fos $a=0$, tindríem $Df(0,0)=0$, en contra de la hipòtesi.",
+    "Per tant, $Df(0,0)(h,k)=0\\iff h+k=0$, i $\\ker Df(0,0)=\\{(h,k)\\in\\mathbb{R}^2: h+k=0\\}$, que és la recta generada pel vector $(1,1)$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "$\\dfrac{\\partial f}{\\partial x}(x,y)=\\dfrac{\\partial f}{\\partial y}(x,y)$ a tot punt $(x,y)$",
+      "inici": 46,
+      "fi": 138,
+      "tipus": "logica",
+      "explicacio": "L'argument només funciona a la diagonal: en general la simetria dona $\\partial_xf(x,y)=\\partial_yf(y,x)$. Per exemple, $f=x^2+y^2$ és simètrica i a $(1,0)$ té $\\partial_xf=2\\neq0=\\partial_yf$.",
+      "correccio": "La simetria dona $\\dfrac{\\partial f}{\\partial x}(x,y)=\\dfrac{\\partial f}{\\partial y}(y,x)$; en particular les dues parcials coincideixen als punts de la diagonal, com l'origen.",
+      "pista": "Prova l'afirmació amb $f(x,y)=x^2+y^2$ al punt $(1,0)$. A quin punt s'avalua cada parcial quan intercanvies les variables?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "la recta generada pel vector $(1,1)$",
+      "inici": 95,
+      "fi": 131,
+      "tipus": "calcul",
+      "explicacio": "El vector $(1,1)$ compleix $h+k=2\\neq0$, no és del nucli. Les solucions de $h+k=0$ són $(h,-h)$.",
+      "correccio": "$\\ker Df(0,0)=\\{(h,-h):h\\in\\mathbb{R}\\}=\\langle(1,-1)\\rangle$, la recta $y=-x$.",
+      "pista": "Comprova si $(1,1)$ satisfà l'equació $h+k=0$. Quina és la solució general?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3a.json",
+    "valoracio": "Argument central correcte, però amb una generalització falsa de la simetria i un generador del nucli equivocat.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$\\dfrac{\\partial f}{\\partial x}(x,y)=\\dfrac{\\partial f}{\\partial y}(x,y)$ a tot punt $(x,y)$",
+        "gravetat": "error",
+        "explicacio": "La simetria només dona $\\partial_yf(x_0,y_0)=\\partial_xf(y_0,x_0)$; la igualtat al mateix punt només val sobre la diagonal (p. ex. $f=x^2+y^2$ a $(1,0)$: $2\\neq0$)."
+      },
+      {
+        "fragment": 6,
+        "cita": "generada pel vector $(1,1)$",
+        "gravetat": "error",
+        "explicacio": "$h+k=0$ és la recta generada per $(1,-1)$; $(1,1)$ no hi pertany."
+      }
+    ]
+  },
+  "creat": 1791299309.4711406
+}

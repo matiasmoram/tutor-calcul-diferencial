@@ -1,0 +1,59 @@
+{
+  "id": "c215b5007091",
+  "exercici": "t1-11a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Recordem que un conjunt $U\\subseteq\\mathbb{R}^n$ és obert si existeix $r>0$ tal que $B_r(u)\\subseteq U$ per a tot $u\\in U$.",
+    "Primer caracteritzem la pertinença: $z\\in A+\\{y\\}\\iff z=a+y$ per a algun $a\\in A\\iff z-y\\in A$.",
+    "Sigui $z\\in A+\\{y\\}$ i posem $a=z-y$, que és d'$A$. Com que $A$ és obert, existeix $r>0$ amb $B_r(a)\\subseteq A$.",
+    "Vegem que $B_r(z)\\subseteq A+\\{y\\}$. Sigui $w\\in B_r(z)$. Aleshores $\\|(w-y)-a\\|=\\|w-y-(z-y)\\|=\\|w-z\\|<r$, és a dir, $w-y\\in B_r(a)\\subseteq A$.",
+    "Per tant $w=(w-y)-y$ amb $w-y\\in A$, i $w\\in A+\\{y\\}$.",
+    "Així $B_r(z)\\subseteq A+\\{y\\}$. Com que $z\\in A+\\{y\\}$ era arbitrari, $A+\\{y\\}$ és obert: la translació conserva les distàncies i porta boles a boles del mateix radi."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "existeix $r>0$ tal que $B_r(u)\\subseteq U$ per a tot $u\\in U$",
+      "inici": 61,
+      "fi": 122,
+      "tipus": "logica",
+      "explicacio": "L'ordre dels quantificadors és incorrecte: la definició d'obert permet que el radi depengui del punt. Amb un radi comú, $(0,1)$ no seria obert (prop dels extrems el radi ha de ser cada cop més petit).",
+      "correccio": "$U$ és obert si per a tot $u\\in U$ existeix $r>0$ (que pot dependre de $u$) tal que $B_r(u)\\subseteq U$.",
+      "pista": "A l'interval $(0,1)$, hi ha un mateix radi que serveixi per a tots els punts? El radi pot dependre del punt?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$w=(w-y)-y$",
+      "inici": 9,
+      "fi": 20,
+      "tipus": "calcul",
+      "explicacio": "$(w-y)-y=w-2y$, no $w$. La descomposició correcta és $w=(w-y)+y$, que és la que mostra que $w$ és d'$A+\\{y\\}$.",
+      "correccio": "$w=(w-y)+y$ amb $w-y\\in A$, i per tant $w\\in A+\\{y\\}$.",
+      "pista": "Quant val $(w-y)-y$? Quina operació has de fer sobre $w-y$ per recuperar $w$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t1.json",
+    "valoracio": "L'argument de translació és correcte, però la definició d'obert té els quantificadors canviats i la descomposició final de $w$ té un signe erroni.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "si existeix $r>0$ tal que $B_r(u)\\subseteq U$ per a tot $u\\in U$",
+        "gravetat": "error",
+        "explicacio": "Quantificadors intercanviats: la definició és per a tot $u\\in U$ existeix $r>0$ (el radi depèn del punt); amb un radi uniforme molts oberts no ho serien."
+      },
+      {
+        "fragment": 5,
+        "cita": "$w=(w-y)-y$",
+        "gravetat": "error",
+        "explicacio": "Ha de ser $w=(w-y)+y$; la igualtat escrita és falsa per a $y\\neq0$."
+      }
+    ]
+  },
+  "creat": 1791299422.5242457
+}

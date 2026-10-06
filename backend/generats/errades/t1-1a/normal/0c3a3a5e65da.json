@@ -1,0 +1,60 @@
+{
+  "id": "0c3a3a5e65da",
+  "exercici": "t1-1a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Cal veure que $d_2$ compleix les propietats de distància. Primer, $d_2(x,y)$ és l'arrel quadrada positiva del nombre $\\sum_{i=1}^n(x_i-y_i)^2\\geq 0$, per tant $d_2(x,y)\\geq 0$.",
+    "Si $d_2(x,y)=0$, aleshores $\\sum_{i=1}^n(x_i-y_i)^2=0$, i com que una suma de nombres reals només pot valer $0$ si tots els sumands són nuls, $x_i=y_i$ per a tot $i$, és a dir, $x=y$. Recíprocament, si $x=y$ tots els sumands són $0$ i $d_2(x,y)=0$.",
+    "Simetria: per a cada $i$, $(x_i-y_i)^2=(y_i-x_i)^2$, així que les dues sumes coincideixen i $d_2(x,y)=d_2(y,x)$.",
+    "Desigualtat triangular: siguin $x,y,z\\in\\mathbb{R}^n$ i posem $u=x-z$, $v=z-y$, de manera que $u+v=x-y$. Cal veure que $\\sqrt{\\sum_i(u_i+v_i)^2}\\leq\\sqrt{\\sum_i u_i^2}+\\sqrt{\\sum_i v_i^2}$.",
+    "Elevar al quadrat conserva el sentit de qualsevol desigualtat entre nombres reals, de manera que això equival a $\\sum_i u_i^2+2\\sum_i u_iv_i+\\sum_i v_i^2\\leq\\sum_i u_i^2+2\\sqrt{\\sum_i u_i^2}\\sqrt{\\sum_i v_i^2}+\\sum_i v_i^2$, és a dir, a $\\sum_i u_iv_i\\leq\\sqrt{\\sum_i u_i^2}\\sqrt{\\sum_i v_i^2}$.",
+    "Amb el producte escalar ordinari $\\langle u,v\\rangle=\\sum_i u_iv_i$, la desigualtat de Cauchy-Schwarz dona $\\sum_i u_iv_i\\leq|\\langle u,v\\rangle|\\leq\\sqrt{\\sum_i u_i^2}\\sqrt{\\sum_i v_i^2}$, que és el que calia.",
+    "Desfent el canvi, $d_2(x,y)\\leq d_2(x,z)+d_2(z,y)$, i per tant $d_2$ és una distància a $\\mathbb{R}^n$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "una suma de nombres reals només pot valer $0$ si tots els sumands són nuls",
+      "inici": 66,
+      "fi": 140,
+      "tipus": "logica",
+      "explicacio": "L'afirmació és falsa per a nombres reals qualssevol ($1+(-1)=0$). El que fa que els sumands s'anul·lin és que cada $(x_i-y_i)^2$ és $\\geq 0$.",
+      "correccio": "Com que cada sumand $(x_i-y_i)^2$ és $\\geq 0$ i la suma és $0$, tots els sumands són nuls.",
+      "pista": "Una suma de nombres reals pot valer $0$ sense que ho siguin tots els sumands? Què tenen d'especial aquests sumands?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "Elevar al quadrat conserva el sentit de qualsevol desigualtat entre nombres reals",
+      "inici": 0,
+      "fi": 81,
+      "tipus": "desigualtat",
+      "explicacio": "Elevar al quadrat no conserva les desigualtats en general ($-2\\leq 1$ però $4>1$). L'equivalència amb la desigualtat dels quadrats és vàlida perquè els dos costats són $\\geq 0$.",
+      "correccio": "Com que els dos costats són $\\geq 0$, la desigualtat equival a la dels seus quadrats.",
+      "pista": "Si $a\\leq b$, és sempre cert que $a^2\\leq b^2$? Què necessites saber de $a$ i $b$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t1.json",
+    "valoracio": "Estructura correcta, però dues justificacions són falses tal com estan enunciades (suma nul·la i elevar al quadrat).",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "una suma de nombres reals només pot valer $0$ si tots els sumands són nuls",
+        "gravetat": "error",
+        "explicacio": "Fals per a sumands de signe qualsevol (p. ex. $1+(-1)=0$); cal usar que cada $(x_i-y_i)^2\\geq 0$."
+      },
+      {
+        "fragment": 5,
+        "cita": "Elevar al quadrat conserva el sentit de qualsevol desigualtat entre nombres reals",
+        "gravetat": "error",
+        "explicacio": "Fals en general (p. ex. $-2\\leq 1$ però $4>1$); l'equivalència val perquè els dos costats són $\\geq 0$, cosa que no es diu."
+      }
+    ]
+  },
+  "creat": 1791299422.5166602
+}

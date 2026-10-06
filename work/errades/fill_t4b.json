@@ -1,0 +1,343 @@
+[
+ {
+  "font": "problema",
+  "id": "t4-15b",
+  "dificultat": "normal",
+  "fragments": [
+   "Com que $f'$ és contínua i no s'anul·la enlloc, pel teorema de Bolzano té signe constant, i per tant $f$ és estrictament monòtona i injectiva. Així, donat $(u_0,v_0)\\in\\mathrm{Im}\\,G$, hi ha un únic $x_0\\in\\mathbb{R}$ amb $f(x_0)=u_0$, és a dir, $x_0=f^{-1}(u_0)$.",
+   "La segona component de $G(x_0,y_0)=(u_0,v_0)$ dona $-y_0+x_0f(x_0)=v_0$, és a dir, $-y_0+x_0u_0=v_0$, d'on $y_0=v_0-x_0u_0$. Per tant $(x_0,y_0)$ és l'única antiimatge de $(u_0,v_0)$, i $G$ és injectiva.",
+   "$G$ és de classe $\\mathcal{C}^1$ i la seva matriu jacobiana és $JG(x,y)=\\begin{pmatrix}f'(x)&0\\\\ f(x)+xf'(x)&-1\\end{pmatrix}$, amb $\\det JG(x,y)=-f'(x)\\neq0$ per a tot $(x,y)\\in\\mathbb{R}^2$.",
+   "Pel teorema de la funció inversa, hi ha entorns oberts $U$ de $(x_0,y_0)$ i $V$ de $(u_0,v_0)$ tals que $G:U\\to V$ és bijectiva amb inversa de classe $\\mathcal{C}^1$; com que $G$ és injectiva, aquesta inversa coincideix amb $G^{-1}$ a $V$. Per tant $G^{-1}$ és diferenciable en $(u_0,v_0)$ i $DG^{-1}(u_0,v_0)=\\big(DG(x_0,y_0)\\big)^{-1}$.",
+   "Al punt $(x_0,y_0)$, usant $f(x_0)=u_0$: $JG(x_0,y_0)=\\begin{pmatrix}f'(x_0)&0\\\\ u_0+x_0f'(x_0)&-1\\end{pmatrix}$, de determinant $-f'(x_0)$.",
+   "Invertint la matriu $2\\times2$: $\\big(JG(x_0,y_0)\\big)^{-1}=\\frac{1}{-f'(x_0)}\\begin{pmatrix}-1&0\\\\ u_0+x_0f'(x_0)&f'(x_0)\\end{pmatrix}=\\begin{pmatrix}\\frac{1}{f'(x_0)}&0\\\\ -x_0-\\frac{u_0}{f'(x_0)}&-1\\end{pmatrix}$.",
+   "Per tant, amb $x_0=f^{-1}(u_0)$, $DG^{-1}(u_0,v_0)=\\begin{pmatrix}\\frac{1}{f'(x_0)}&0\\\\ -x_0-\\frac{u_0}{f'(x_0)}&-1\\end{pmatrix}$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "d'on $y_0=v_0-x_0u_0$",
+    "tipus": "calcul",
+    "explicacio": "De $-y_0+x_0u_0=v_0$ s'obté $y_0=x_0u_0-v_0$; s'ha canviat el signe en aïllar $y_0$. (No afecta la jacobiana, que no depèn de $y$.)",
+    "correccio": "$y_0=x_0u_0-v_0$.",
+    "pista": "Si substitueixes el teu $y_0$ a $-y_0+x_0u_0$, obtens $v_0$?"
+   },
+   {
+    "fragment": 6,
+    "cita": "=\\frac{1}{-f'(x_0)}\\begin{pmatrix}-1&0\\\\ u_0+x_0f'(x_0)&f'(x_0)\\end{pmatrix}",
+    "tipus": "calcul",
+    "explicacio": "A la matriu adjunta d'una $2\\times2$ els elements de fora de la diagonal canvien de signe: l'entrada $(2,1)$ ha de ser $-(u_0+x_0f'(x_0))$. Amb la matriu escrita, el producte per $JG(x_0,y_0)$ no dona la identitat.",
+    "correccio": "$\\frac{1}{-f'(x_0)}\\begin{pmatrix}-1&0\\\\ -(u_0+x_0f'(x_0))&f'(x_0)\\end{pmatrix}=\\begin{pmatrix}\\frac{1}{f'(x_0)}&0\\\\ x_0+\\frac{u_0}{f'(x_0)}&-1\\end{pmatrix}$.",
+    "pista": "Multiplica la teva inversa per $JG(x_0,y_0)$: obtens la identitat?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-17a",
+  "dificultat": "normal",
+  "fragments": [
+   "Volem aïllar $z$ i $t$ en funció de $x$ i $y$. Escrivim el sistema com $\\Phi(x,y,z,t)=(0,0)$, amb $\\Phi(x,y,z,t)=(x-2y-z,\\,x+yt)$, que és polinòmica i per tant de classe $\\mathcal{C}^\\infty$ a $\\mathbb{R}^4$.",
+   "El punt $(x,y,z,t)=(1,1,-1,-1)$ és solució del sistema: $\\Phi(1,1,-1,-1)=(1-2+1,\\,1+1\\cdot(-1))=(0,0)$.",
+   "La matriu de derivades parcials respecte de les variables que volem aïllar és $\\frac{\\partial\\Phi}{\\partial(z,t)}=\\begin{pmatrix}-1&0\\\\0&t\\end{pmatrix}$, de determinant $-t$, que al punt val $1\\neq0$.",
+   "Per tant es compleixen les hipòtesis del teorema de la funció implícita: $\\Phi$ és de classe $\\mathcal{C}^\\infty$, s'anul·la al punt i el menor respecte de $(z,t)$ hi és invertible.",
+   "El teorema dona un entorn obert $\\Omega$ de $(-1,-1)$ i funcions $g_1,g_2\\in\\mathcal{C}^\\infty(\\Omega)$, amb $g_1(-1,-1)=1$ i $g_2(-1,-1)=1$, tals que $\\Phi(x,y,g_1(x,y),g_2(x,y))=(0,0)$ per a tot $(x,y)\\in\\Omega$; en particular, $z=g_1(x,y)$ i $t=g_2(x,y)$ són diferenciables."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "$\\frac{\\partial\\Phi}{\\partial(z,t)}=\\begin{pmatrix}-1&0\\\\0&t\\end{pmatrix}$, de determinant $-t$, que al punt val $1\\neq0$",
+    "tipus": "calcul",
+    "explicacio": "La derivada de $x+yt$ respecte de $t$ és $y$, no $t$. El menor correcte és $\\begin{pmatrix}-1&0\\\\0&y\\end{pmatrix}$, de determinant $-y$, que al punt val $-1$ (també no nul).",
+    "correccio": "$\\frac{\\partial\\Phi}{\\partial(z,t)}=\\begin{pmatrix}-1&0\\\\0&y\\end{pmatrix}$, de determinant $-y$, que al punt val $-1\\neq0$.",
+    "pista": "Quina és la derivada de $yt$ respecte de $t$?"
+   },
+   {
+    "fragment": 5,
+    "cita": "un entorn obert $\\Omega$ de $(-1,-1)$ i funcions $g_1,g_2\\in\\mathcal{C}^\\infty(\\Omega)$, amb $g_1(-1,-1)=1$ i $g_2(-1,-1)=1$",
+    "tipus": "conclusio",
+    "explicacio": "Les funcions implícites depenen de $(x,y)$: l'entorn ha de ser del punt $(x,y)=(1,1)$, i els valors són $g_1(1,1)=z=-1$, $g_2(1,1)=t=-1$. S'han confós les coordenades del punt.",
+    "correccio": "Un entorn obert $\\Omega$ de $(1,1)$ i $g_1,g_2\\in\\mathcal{C}^\\infty(\\Omega)$ amb $g_1(1,1)=-1$ i $g_2(1,1)=-1$.",
+    "pista": "De quines variables depenen $g_1$ i $g_2$, i quins valors prenen aquestes variables al punt $(1,1,-1,-1)$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-18",
+  "dificultat": "normal",
+  "fragments": [
+   "Escrivim el sistema com $\\Phi(x,y,z,u)=(0,0)$ amb $\\Phi(x,y,z,u)=(xz^3+y^2u^3-1,\\,2xy^3+u^2z)$, polinòmica i per tant de classe $\\mathcal{C}^\\infty$. El punt és solució: $\\Phi(0,1,0,1)=(0+1-1,\\,0+0)=(0,0)$.",
+   "Com que volem aïllar $x$ i $y$, calculem $\\frac{\\partial\\Phi}{\\partial(x,y)}=\\begin{pmatrix}z^3&2yu^3\\\\2y^3&6xy^2\\end{pmatrix}$, que al punt $(0,1,0,1)$ val $\\begin{pmatrix}0&2\\\\2&0\\end{pmatrix}$, de determinant $-4\\neq0$.",
+   "Pel teorema de la funció implícita existeixen un entorn obert $\\Omega$ de $(0,1)$ i $g=(g_1,g_2)\\in\\mathcal{C}^\\infty(\\Omega)$ amb $g(0,1)=(0,1)$ i $\\Phi(g_1(z,u),g_2(z,u),z,u)=(0,0)$ per a tot $(z,u)\\in\\Omega$.",
+   "Derivant aquesta identitat amb la regla de la cadena, $\\frac{\\partial\\Phi}{\\partial(x,y)}\\,Dg+\\frac{\\partial\\Phi}{\\partial(z,u)}=0$, és a dir, $Dg(0,1)=-\\Big(\\frac{\\partial\\Phi}{\\partial(x,y)}\\Big)^{-1}\\frac{\\partial\\Phi}{\\partial(z,u)}$, amb les dues matrius avaluades a $(0,1,0,1)$.",
+   "$\\frac{\\partial\\Phi}{\\partial(z,u)}=\\begin{pmatrix}3xz^2&3y^2u^2\\\\u^2&2uz\\end{pmatrix}$, que al punt val $\\begin{pmatrix}0&3\\\\1&0\\end{pmatrix}$; a més, $\\begin{pmatrix}0&2\\\\2&0\\end{pmatrix}^{-1}=\\begin{pmatrix}0&\\frac12\\\\ \\frac12&0\\end{pmatrix}$.",
+   "Llavors $Dg(0,1)=-\\begin{pmatrix}0&3\\\\1&0\\end{pmatrix}\\begin{pmatrix}0&\\frac12\\\\ \\frac12&0\\end{pmatrix}=-\\begin{pmatrix}\\frac32&0\\\\0&\\frac12\\end{pmatrix}=\\begin{pmatrix}-\\frac32&0\\\\0&-\\frac12\\end{pmatrix}$.",
+   "Per tant $\\det Dg(0,1)=\\left(-\\frac32\\right)\\left(-\\frac12\\right)=\\frac34\\neq0$.",
+   "Com que $g$ és de classe $\\mathcal{C}^\\infty$ a l'obert $\\Omega$ i $\\det Dg(0,1)\\neq0$, el teorema de la funció inversa garanteix que $g$ és injectiva a tot $\\Omega$ i que la seva inversa és de classe $\\mathcal{C}^\\infty$. En particular, $g$ té inversa local diferenciable al voltant de $(0,1)$."
+  ],
+  "errors": [
+   {
+    "fragment": 6,
+    "cita": "$Dg(0,1)=-\\begin{pmatrix}0&3\\\\1&0\\end{pmatrix}\\begin{pmatrix}0&\\frac12\\\\ \\frac12&0\\end{pmatrix}",
+    "tipus": "calcul",
+    "explicacio": "El producte s'ha fet en l'ordre invers al de la fórmula del fragment anterior: cal multiplicar $\\big(\\frac{\\partial\\Phi}{\\partial(x,y)}\\big)^{-1}$ per l'esquerra. El producte de matrius no és commutatiu i el resultat correcte és $\\begin{pmatrix}-\\frac12&0\\\\0&-\\frac32\\end{pmatrix}$.",
+    "correccio": "$Dg(0,1)=-\\begin{pmatrix}0&\\frac12\\\\ \\frac12&0\\end{pmatrix}\\begin{pmatrix}0&3\\\\1&0\\end{pmatrix}=\\begin{pmatrix}-\\frac12&0\\\\0&-\\frac32\\end{pmatrix}$.",
+    "pista": "En quin ordre apareixen les dues matrius a la fórmula que has deduït amb la regla de la cadena? Commuten?"
+   },
+   {
+    "fragment": 8,
+    "cita": "$g$ és injectiva a tot $\\Omega$",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "El teorema de la funció inversa és local: només garanteix que $g$ és injectiva en algun entorn (potser petit) de $(0,1)$, no en tot l'obert $\\Omega$ on està definida.",
+    "correccio": "$g$ és injectiva en un entorn obert de $(0,1)$, la imatge d'aquest entorn és un obert que conté $(0,1)$ i la inversa local és de classe $\\mathcal{C}^\\infty$.",
+    "pista": "El teorema de la funció inversa dona informació sobre tot el domini de $g$ o només a prop del punt?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-19a",
+  "dificultat": "normal",
+  "fragments": [
+   "Un punt $p=(x_0,y_0,z_0,u_0,v_0)$ és solució del sistema si i només si $x_0=u_0+v_0$, $y_0=u_0^2+v_0^2$ i $z_0=u_0^3+v_0^3$, amb $(u_0,v_0)\\in\\mathbb{R}^2$ qualsevol.",
+   "Sigui $\\Phi=(x-u-v,\\,y-u^2-v^2,\\,z-u^3-v^3)$, polinòmica i per tant de classe $\\mathcal{C}^\\infty$. Com que volem aïllar $z,u,v$, calculem $\\frac{\\partial\\Phi}{\\partial(z,u,v)}=\\begin{pmatrix}0&-1&-1\\\\0&-2u&-2v\\\\1&-3u^2&-3v^2\\end{pmatrix}$.",
+   "Desenvolupant per la primera columna, $\\det\\frac{\\partial\\Phi}{\\partial(z,u,v)}=\\begin{vmatrix}-1&-1\\\\-2u&-2v\\end{vmatrix}$, que val $2u-2v$.",
+   "Si $u_0\\neq v_0$, aquest determinant és no nul a $p$, i el teorema de la funció implícita dona $f_1,f_2,f_3$ de classe $\\mathcal{C}^\\infty$ en un entorn de $(x_0,y_0)$, amb $(f_1,f_2,f_3)(x_0,y_0)=(z_0,u_0,v_0)$.",
+   "Si $u_0=v_0$, el determinant s'anul·la a $p$ i, per tant, pel teorema de la funció implícita, el sistema no defineix funcions implícites diferenciables al voltant de $p$.",
+   "Per tant, els punts buscats són $p=(u_0+v_0,\\ u_0^2+v_0^2,\\ u_0^3+v_0^3,\\ u_0,\\ v_0)$ amb $u_0\\neq v_0$."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "que val $2u-2v$",
+    "tipus": "calcul",
+    "explicacio": "$\\begin{vmatrix}-1&-1\\\\-2u&-2v\\end{vmatrix}=(-1)(-2v)-(-1)(-2u)=2v-2u$; el signe està canviat (la condició $u\\neq v$ no varia).",
+    "correccio": "Val $2v-2u=2(v-u)$.",
+    "pista": "Torna a fer el producte de la diagonal menys el de l'antidiagonal: quin terme va amb $v$?"
+   },
+   {
+    "fragment": 5,
+    "cita": "per tant, pel teorema de la funció implícita, el sistema no defineix funcions implícites diferenciables",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "El teorema de la funció implícita dona una condició suficient, no necessària: que el determinant s'anul·li no implica que no hi hagi funcions implícites. Cal un argument directe.",
+    "correccio": "Si $u_0=v_0$ i existissin $f_2,f_3$ diferenciables, derivant $x=f_2+f_3$ i $y=f_2^2+f_3^2$ respecte de $y$ al punt s'obtindria $0=\\partial_yf_2+\\partial_yf_3$ i $1=2u_0(\\partial_yf_2+\\partial_yf_3)=0$, contradicció.",
+    "pista": "El teorema de la funció implícita diu què passa quan el determinant és nul?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-21a",
+  "dificultat": "normal",
+  "fragments": [
+   "Sigui $G(x,y,z)=x^2+y^2+z^2-\\psi(ax+by+cz)$. És de classe $\\mathcal{C}^2$, perquè $\\psi\\in\\mathcal{C}^2$ i $(x,y,z)\\mapsto ax+by+cz$ és lineal, i les solucions de l'equació són exactament els zeros de $G$.",
+   "A l'origen, $G(0,0,0)=0-\\psi(0)=0$, de manera que $(0,0,0)$ és solució.",
+   "Derivant respecte de $z$, $\\frac{\\partial G}{\\partial z}=2z-\\psi'(ax+by+cz)$, que a l'origen val $-\\psi'(0)\\neq0$.",
+   "Pel teorema de la funció implícita (amb $r=2$), existeixen entorns oberts $U$ de $(0,0,0)$ i $\\Omega$ de $(0,0)$ i una funció $f\\in\\mathcal{C}^2(\\Omega)$ amb $f(0,0)=0$ tals que $\\{(x,y,z)\\in U: G(x,y,z)=0\\}=\\{(x,y,f(x,y)):(x,y)\\in\\Omega\\}$.",
+   "Així, a prop de l'origen totes les solucions són de la forma $(x,y,f(x,y))$, i com que $f$ és de classe $\\mathcal{C}^2$, $f$ és diferenciable a tot $\\mathbb{R}^2$."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "$\\frac{\\partial G}{\\partial z}=2z-\\psi'(ax+by+cz)$, que a l'origen val $-\\psi'(0)\\neq0$",
+    "tipus": "calcul",
+    "explicacio": "Per la regla de la cadena, derivar $\\psi(ax+by+cz)$ respecte de $z$ dona el factor $c$: $\\frac{\\partial G}{\\partial z}=2z-c\\,\\psi'(ax+by+cz)$. Per això cal la hipòtesi $c\\neq0$.",
+    "correccio": "$\\frac{\\partial G}{\\partial z}=2z-c\\,\\psi'(ax+by+cz)$, que a l'origen val $-c\\,\\psi'(0)\\neq0$ perquè $c\\neq0$ i $\\psi'(0)\\neq0$.",
+    "pista": "Quina hipòtesi de l'enunciat no has fet servir? Què diu la regla de la cadena en derivar $\\psi(ax+by+cz)$ respecte de $z$?"
+   },
+   {
+    "fragment": 5,
+    "cita": "$f$ és diferenciable a tot $\\mathbb{R}^2$",
+    "tipus": "conclusio",
+    "explicacio": "El teorema de la funció implícita és local: $f$ només està definida (i és $\\mathcal{C}^2$) a l'entorn $\\Omega$ de $(0,0)$, no a tot $\\mathbb{R}^2$.",
+    "correccio": "$f$ és diferenciable a $\\Omega$, un entorn de $(0,0)$.",
+    "pista": "On està definida la funció $f$ que dona el teorema?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-22",
+  "dificultat": "normal",
+  "fragments": [
+   "Sigui $G(x,y,z)=2x^2+y^2+z^3-5xz-2$. Com que és polinòmica, és de classe $\\mathcal{C}^1$, i $G(1,2,1)=2+4+1-5-2=0$.",
+   "$\\frac{\\partial G}{\\partial z}=3z^2-5x$, que en $p=(1,2,1)$ val $3-5=-2\\neq0$.",
+   "Pel teorema de la funció implícita aplicat a $G\\in\\mathcal{C}^1$, existeixen un obert $\\Omega\\ni(1,2)$ i $g:\\Omega\\to\\mathbb{R}$ de classe $\\mathcal{C}^\\infty$ amb $g(1,2)=1$ i $G(x,y,g(x,y))=0$ per a tot $(x,y)\\in\\Omega$.",
+   "Derivant aquesta identitat respecte de $x$ i de $y$ amb la regla de la cadena: $G_x+G_z\\,g_x=0$ i $G_y+G_z\\,g_y=0$, amb $G_x,G_y,G_z$ avaluades a $(x,y,g(x,y))$. Al punt, com que $G_z(p)\\neq0$, $g_x(1,2)=-\\frac{G_x(p)}{G_z(p)}$ i $g_y(1,2)=-\\frac{G_y(p)}{G_z(p)}$.",
+   "$\\frac{\\partial G}{\\partial x}=4x-5$, que en $p$ val $-1$, i $\\frac{\\partial G}{\\partial y}=2y$, que en $p$ val $4$.",
+   "Per tant $g_x(1,2)=-\\frac{-1}{-2}=-\\frac12$ i $g_y(1,2)=-\\frac{4}{-2}=2$, és a dir, $\\nabla g(1,2)=(-1/2,2)$."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "aplicat a $G\\in\\mathcal{C}^1$, existeixen un obert $\\Omega\\ni(1,2)$ i $g:\\Omega\\to\\mathbb{R}$ de classe $\\mathcal{C}^\\infty$",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "Aplicat a una funció de classe $\\mathcal{C}^1$, el teorema de la funció implícita només dona $g$ de classe $\\mathcal{C}^1$. Per obtenir $g\\in\\mathcal{C}^\\infty$ cal usar que $G$, polinòmica, és $\\mathcal{C}^r$ per a tot $r$ (o un argument d'inducció).",
+    "correccio": "Com que $G$ és polinòmica, és de classe $\\mathcal{C}^r$ per a tot $r$, i el teorema de la funció implícita aplicat amb $r$ arbitrari dona $g\\in\\mathcal{C}^\\infty(\\Omega)$.",
+    "pista": "Quina regularitat té la funció implícita segons el teorema, en funció de la de $G$?"
+   },
+   {
+    "fragment": 5,
+    "cita": "$\\frac{\\partial G}{\\partial x}=4x-5$",
+    "tipus": "calcul",
+    "explicacio": "El terme $-5xz$ derivat respecte de $x$ dona $-5z$, no $-5$: $\\frac{\\partial G}{\\partial x}=4x-5z$. En $p$ el valor coincideix ($z=1$), però la derivada és incorrecta.",
+    "correccio": "$\\frac{\\partial G}{\\partial x}=4x-5z$, que en $p$ val $-1$.",
+    "pista": "Què val la derivada de $-5xz$ respecte de $x$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-23a",
+  "dificultat": "normal",
+  "fragments": [
+   "Sigui $p=(p_1,p_2,p_3)$ amb $F(p)=0$. Per hipòtesi, $F$ és de classe $\\mathcal{C}^1$ i les tres derivades parcials de $F$ són no nul·les en $p$.",
+   "Com que $\\frac{\\partial F}{\\partial z}(p)\\neq0$ (és el determinant $1\\times1$ que demana el teorema), el teorema de la funció implícita dona una funció $Z$ de classe $\\mathcal{C}^1$ definida a tot $\\mathbb{R}^2$, amb $Z(p_1,p_2)=p_3$ i $F(x,y,Z(x,y))=0$.",
+   "Per aïllar $x$, considerem $\\tilde F(y,z,x)=F(x,y,z)$, que també és de classe $\\mathcal{C}^1$, i apliquem el teorema prenent $x$ com a variable a aïllar. Com que $\\frac{\\partial F}{\\partial y}(p)\\neq0$, existeix $X$ de classe $\\mathcal{C}^1$ en un entorn de $(p_2,p_3)$ amb $X(p_2,p_3)=p_1$ i $F(X(y,z),y,z)=0$.",
+   "Anàlogament, com que $\\frac{\\partial F}{\\partial y}(p)\\neq0$, existeix $Y$ de classe $\\mathcal{C}^1$ en un entorn de $(p_1,p_3)$ amb $Y(p_1,p_3)=p_2$ i $F(x,Y(x,z),z)=0$.",
+   "Les funcions $X,Y,Z$ són de classe $\\mathcal{C}^1$ i, per tant, diferenciables. Així, en un entorn de $p$ cadascuna de les variables $x,y,z$ s'escriu en funció de les altres dues."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "$Z$ de classe $\\mathcal{C}^1$ definida a tot $\\mathbb{R}^2$",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "El teorema de la funció implícita és local: dona $Z$ definida només en un entorn de $(p_1,p_2)$, no a tot el pla.",
+    "correccio": "Una funció $Z$ de classe $\\mathcal{C}^1$ definida en un entorn de $(p_1,p_2)$.",
+    "pista": "El teorema de la funció implícita assegura l'existència de $Z$ a tot arreu o només a prop d'un punt?"
+   },
+   {
+    "fragment": 3,
+    "cita": "Com que $\\frac{\\partial F}{\\partial y}(p)\\neq0$, existeix $X$",
+    "tipus": "hipotesi",
+    "explicacio": "Per aïllar $x$ cal que la derivada respecte de la variable aïllada sigui no nul·la: $\\frac{\\partial\\tilde F}{\\partial x}=\\frac{\\partial F}{\\partial x}(p)\\neq0$. La derivada respecte de $y$ no és la hipòtesi pertinent.",
+    "correccio": "Com que $\\frac{\\partial F}{\\partial x}(p)\\neq0$, existeix $X$ de classe $\\mathcal{C}^1$ en un entorn de $(p_2,p_3)$.",
+    "pista": "Respecte de quina variable ha de ser no nul·la la derivada quan vols aïllar $x$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-24a",
+  "dificultat": "normal",
+  "fragments": [
+   "Substituint $(x,y,t)=(1,0,t_0)$ a la primera equació: $t_0+0+0-\\frac{25}{4}t_0^3=t_0\\left(1-\\frac{25}{4}t_0^2\\right)=0$, d'on $t_0\\in\\{0,\\pm\\frac52\\}$.",
+   "A la segona equació: $0+0-3(t_0+1)-t_0+3=-4t_0=0$, és a dir, $t_0=0$. Per tant, l'únic punt solució de la forma $(1,0,t_0)$ és $(1,0,0)$.",
+   "Siguin $\\Phi_1=tx^3+xy^2+y-\\frac{25}{4}t^3$ i $\\Phi_2=3xy+t^2y^3-3x^2(t+1)-t+3$, polinòmiques i per tant de classe $\\mathcal{C}^\\infty$. Com que volem aïllar $x$ i $y$, calculem $\\frac{\\partial(\\Phi_1,\\Phi_2)}{\\partial(x,y)}=\\begin{pmatrix}3tx^2+y^2&2xy+1\\\\ 3y-6x&3x+3t^2y^2\\end{pmatrix}$.",
+   "En $(1,0,0)$ aquesta matriu val $\\begin{pmatrix}0&1\\\\-6&3\\end{pmatrix}$, amb determinant $0\\cdot3-1\\cdot(-6)=6\\neq0$.",
+   "Pel teorema de la funció implícita, existeixen un interval obert $I\\ni0$ i funcions $x(t),y(t)$ de classe $\\mathcal{C}^\\infty$ (en particular derivables) en $I$, amb $x(0)=1$ i $y(0)=0$, que satisfan el sistema.",
+   "Per tant, l'únic punt de la forma $(1,0,t_0)$ al voltant del qual el sistema defineix $x,y$ com a funcions derivables de $t$ és $(1,0,0)$."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "d'on $t_0\\in\\{0,\\pm\\frac52\\}$",
+    "tipus": "calcul",
+    "explicacio": "De $1-\\frac{25}{4}t_0^2=0$ surt $t_0^2=\\frac{4}{25}$, és a dir $t_0=\\pm\\frac25$, no $\\pm\\frac52$. (La segona equació els descarta igualment.)",
+    "correccio": "$t_0\\in\\{0,\\pm\\frac25\\}$.",
+    "pista": "Si aïlles $t_0^2$ de $1-\\frac{25}{4}t_0^2=0$, quant val?"
+   },
+   {
+    "fragment": 3,
+    "cita": "\\\\ 3y-6x&3x+3t^2y^2\\end{pmatrix}$",
+    "tipus": "calcul",
+    "explicacio": "La derivada de $-3x^2(t+1)$ respecte de $x$ és $-6x(t+1)$; s'ha perdut el factor $(t+1)$. Al punt ($t=0$) el valor coincideix, però la matriu és incorrecta.",
+    "correccio": "$\\frac{\\partial\\Phi_2}{\\partial x}=3y-6x(t+1)$.",
+    "pista": "Què passa amb el factor $(t+1)$ quan derives $-3x^2(t+1)$ respecte de $x$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-25",
+  "dificultat": "normal",
+  "fragments": [
+   "Sigui $F(x,y)=x^2+y+\\cos(xy)-1$, de classe $\\mathcal{C}^\\infty$, amb $F(0,0)=0+0+1-1=0$. Tenim $\\frac{\\partial F}{\\partial y}=1-x\\sin(xy)$, que en $(0,0)$ val $1\\neq0$.",
+   "Pel teorema de la funció implícita existeix $g$ de classe $\\mathcal{C}^\\infty$ en un interval obert que conté $0$, amb $g(0)=0$, tal que prop de l'origen la corba és exactament la gràfica de $g$. Per tant, sí que es pot escriure $y=g(x)$.",
+   "Per a la forma $x=h(y)$: $\\frac{\\partial F}{\\partial x}=2x+y\\sin(xy)$, que en $(0,0)$ val $0$. El teorema de la funció implícita no s'aplica, i cal estudiar la corba directament.",
+   "Com que $1-\\cos s\\le\\frac{s^2}{2}$ per a tot $s\\in\\mathbb{R}$, sobre la corba tenim $y=1-\\cos(xy)-x^2\\le\\frac{x^2y^2}{2}-x^2=x^2\\left(\\frac{y^2}{2}-1\\right)$.",
+   "Si $|y|<2$, el factor $\\frac{y^2}{2}-1$ és negatiu, i per tant el segon membre és $\\le0$. Així, tot punt de la corba amb $|y|<2$ té $y\\le0$, i per a $0<y<2$ no hi ha cap punt de la corba amb ordenada $y$.",
+   "Si existís $h$ definida en un interval $(-\\delta,\\delta)$ amb $F(h(y),y)=0$ per a tot $y$, per a $0<y<\\delta$ el punt $(h(y),y)$ seria un punt de la corba amb ordenada positiva i petita, cosa impossible.",
+   "Conclusió: prop de l'origen la corba es pot escriure de la forma $y=g(x)$, però no de la forma $x=h(y)$."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "$\\frac{\\partial F}{\\partial x}=2x+y\\sin(xy)$",
+    "tipus": "calcul",
+    "explicacio": "La derivada de $\\cos(xy)$ respecte de $x$ és $-y\\sin(xy)$, de manera que $\\frac{\\partial F}{\\partial x}=2x-y\\sin(xy)$. En $(0,0)$ el valor continua sent $0$.",
+    "correccio": "$\\frac{\\partial F}{\\partial x}=2x-y\\sin(xy)$.",
+    "pista": "Quina és la derivada del cosinus? I el signe que en resulta?"
+   },
+   {
+    "fragment": 5,
+    "cita": "Si $|y|<2$, el factor $\\frac{y^2}{2}-1$ és negatiu",
+    "tipus": "desigualtat",
+    "explicacio": "$\\frac{y^2}{2}-1<0$ equival a $|y|<\\sqrt2$, no a $|y|<2$ (per exemple, $y=1.8$ dona $0.62>0$). L'argument val per a $0<y<\\sqrt2$, que és suficient.",
+    "correccio": "Si $|y|<\\sqrt2$, el factor és negatiu; per tant, per a $0<y<\\sqrt2$ no hi ha cap punt de la corba.",
+    "pista": "Per a quins valors de $y$ és negatiu $\\frac{y^2}{2}-1$? Prova amb $y=1.8$."
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-26",
+  "dificultat": "normal",
+  "fragments": [
+   "Sigui $\\Phi(x,u,v)=(xe^u+ue^v,\\,xe^v+ve^u)$, de classe $\\mathcal{C}^\\infty$ a $\\mathbb{R}^3$ perquè és suma i producte de polinomis i exponencials. Volem veure que $\\Phi(x,u,v)=(0,0)$ defineix $u,v$ com a funcions de $x$ a prop de $x=-1$.",
+   "El punt $(-1,1,1)$ és solució: $\\Phi(-1,1,1)=(-e+e,\\,-e+e)=(0,0)$.",
+   "Derivant respecte de $u$ i de $v$: $\\frac{\\partial\\Phi}{\\partial(u,v)}=\\begin{pmatrix}xe^u+e^v&e^v\\\\ ve^u&xe^v+e^u\\end{pmatrix}$.",
+   "En $(-1,1,1)$ aquesta matriu val $\\begin{pmatrix}0&e\\\\e&0\\end{pmatrix}$, de determinant $-e^2\\neq0$.",
+   "Com que $\\Phi$ és contínua, s'anul·la en $(-1,1,1)$ i el determinant anterior és no nul, el teorema de la funció implícita dona un entorn obert $U$ de $-1$ i funcions $u,v:U\\to\\mathbb{R}$, amb $u(-1)=v(-1)=1$, que satisfan el sistema per a tot $x\\in U$.",
+   "A més, el teorema dona $u,v$ de la mateixa classe que $\\Phi$, és a dir $\\mathcal{C}^\\infty$, i en particular de classe $\\mathcal{C}^1$, com es demanava."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "$\\frac{\\partial\\Phi}{\\partial(u,v)}=\\begin{pmatrix}xe^u+e^v&e^v\\\\",
+    "tipus": "calcul",
+    "explicacio": "La derivada de $ue^v$ respecte de $v$ és $ue^v$, no $e^v$: s'ha perdut el factor $u$. Al punt ($u=1$) el valor coincideix, però la matriu és incorrecta.",
+    "correccio": "$\\frac{\\partial\\Phi}{\\partial(u,v)}=\\begin{pmatrix}xe^u+e^v&ue^v\\\\ ve^u&xe^v+e^u\\end{pmatrix}$.",
+    "pista": "En derivar $ue^v$ respecte de $v$, què passa amb el factor $u$?"
+   },
+   {
+    "fragment": 5,
+    "cita": "Com que $\\Phi$ és contínua",
+    "tipus": "hipotesi",
+    "explicacio": "El teorema de la funció implícita necessita que $\\Phi$ sigui de classe $\\mathcal{C}^1$ (aquí ho és, i fins i tot $\\mathcal{C}^\\infty$); la continuïtat no és suficient, ni tan sols permet parlar del determinant de les derivades.",
+    "correccio": "Com que $\\Phi$ és de classe $\\mathcal{C}^\\infty$ (en particular $\\mathcal{C}^1$), s'anul·la en $(-1,1,1)$ i el determinant és no nul, ...",
+    "pista": "Quina regularitat de $\\Phi$ demana el teorema de la funció implícita?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t4-28a",
+  "dificultat": "normal",
+  "fragments": [
+   "Sigui $p=(x_0,y_0)$. Raonem per reducció a l'absurd: suposem que $g$ és de classe $\\mathcal{C}^1$ en un interval obert $I$ que conté $x_0$, amb $g(x_0)=y_0$ i $F(x,g(x))=0$ per a tot $x\\in I$.",
+   "Com que $F$ té derivades parcials en $p$, és diferenciable en $p$; a més, $\\gamma(x)=(x,g(x))$ és derivable en $x_0$, amb $\\gamma(x_0)=p$ i $\\gamma'(x_0)=(1,g'(x_0))$.",
+   "Per la regla de la cadena, la funció $x\\mapsto F(x,g(x))$, que és idènticament nul·la a $I$, té derivada nul·la en $x_0$: $0=\\frac{\\partial F}{\\partial x}(p)+\\frac{\\partial F}{\\partial y}(p)\\,g'(x_0)$.",
+   "Com que $\\frac{\\partial F}{\\partial y}(p)=0$, queda $\\frac{\\partial F}{\\partial x}(p)=0$, que contradiu la hipòtesi $\\frac{\\partial F}{\\partial x}(p)\\neq0$. Per tant, $g$ no és de classe $\\mathcal{C}^1$.",
+   "De fet, el raonament mostra una mica més: $g$ no pot ser ni tan sols contínua en $x_0$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "Com que $F$ té derivades parcials en $p$, és diferenciable en $p$",
+    "tipus": "logica",
+    "explicacio": "L'existència de derivades parcials en un punt no implica diferenciabilitat. Aquí $F$ és diferenciable perquè és de classe $\\mathcal{C}^1$ (derivades parcials contínues).",
+    "correccio": "Com que $F$ és de classe $\\mathcal{C}^1$, és diferenciable en $p$.",
+    "pista": "Una funció amb derivades parcials en un punt hi és necessàriament diferenciable? Quina hipòtesi de l'enunciat ho garanteix?"
+   },
+   {
+    "fragment": 5,
+    "cita": "$g$ no pot ser ni tan sols contínua en $x_0$",
+    "tipus": "conclusio",
+    "explicacio": "L'argument només usa la derivabilitat de $g$ en $x_0$: mostra que $g$ no és derivable en $x_0$, però no diu res de la continuïtat. Per exemple, $F(x,y)=x-y^3$ en $p=(0,0)$ dona $g(x)=\\sqrt[3]{x}$, contínua.",
+    "correccio": "De fet, $g$ no pot ser ni tan sols derivable en $x_0$.",
+    "pista": "Quina propietat de $g$ s'ha fet servir realment a la regla de la cadena? Coneixes alguna $g$ contínua que compleixi les hipòtesis?"
+   }
+  ]
+ }
+]

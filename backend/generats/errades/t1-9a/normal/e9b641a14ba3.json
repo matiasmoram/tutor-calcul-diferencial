@@ -1,0 +1,60 @@
+{
+  "id": "e9b641a14ba3",
+  "exercici": "t1-9a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "($\\Rightarrow$) Suposem $x\\in Fr(A)$. Per definició, per a tot $r>0$ les interseccions $B_r(x)\\cap A$ i $B_r(x)\\cap A^c$ són no buides.",
+    "Per a cada $n\\geq 1$ ho apliquem amb $r=1/n$: triem $x_n\\in B_{1/n}(x)\\cap A$ i $y_n\\in B_{1/n}(x)\\cap A^c$. Així $x_n\\in A$, $y_n\\notin A$, $d(x_n,x)<1/n$ i $d(y_n,x)<1/n$.",
+    "Vegem que $x_n\\to x$. Donat $\\varepsilon>0$, prenem $n_0\\in\\mathbb{N}$ amb $n_0>\\varepsilon$; per a $n\\geq n_0$ tenim $d(x_n,x)<1/n\\leq 1/n_0<\\varepsilon$.",
+    "Exactament igual, de $d(y_n,x)<1/n$ es dedueix $y_n\\to x$. Per tant tenim dues successions amb límit $x$, una de punts d'$A$ i l'altra de punts que no són d'$A$.",
+    "($\\Leftarrow$) Suposem ara que existeixen successions $(x_n)$ i $(y_n)$, ambdues amb límit $x$, amb $x_n\\in A$ i $y_n\\notin A$ per a tot $n$.",
+    "Sigui $r>0$ qualsevol. Com que $x_n\\to x$, tenim $d(x_n,x)<r$ per a tot $n\\in\\mathbb{N}$; en particular $x_1\\in B_r(x)\\cap A$. Anàlogament, com que $y_n\\to x$, existeix $m$ amb $d(y_m,x)<r$, és a dir, $y_m\\in B_r(x)\\cap A^c$. Com que $r>0$ és arbitrari, les dues interseccions són no buides per a tot $r>0$, i per tant $x\\in Fr(A)$.",
+    "Hem demostrat les dues implicacions, i per tant l'equivalència."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "prenem $n_0\\in\\mathbb{N}$ amb $n_0>\\varepsilon$",
+      "inici": 45,
+      "fi": 92,
+      "tipus": "desigualtat",
+      "explicacio": "De $n_0>\\varepsilon$ no se segueix $1/n_0<\\varepsilon$: amb $\\varepsilon=\\frac12$ i $n_0=1$ es té $n_0>\\varepsilon$ però $1/n_0=1>\\varepsilon$. Cal $n_0>1/\\varepsilon$.",
+      "correccio": "Prenem $n_0\\in\\mathbb{N}$ amb $n_0>1/\\varepsilon$, de manera que $1/n_0<\\varepsilon$.",
+      "pista": "Si $\\varepsilon=\\frac12$ i $n_0=1$, és cert que $1/n_0<\\varepsilon$? Quina condició sobre $n_0$ garanteix aquesta desigualtat?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "tenim $d(x_n,x)<r$ per a tot $n\\in\\mathbb{N}$",
+      "inici": 43,
+      "fi": 88,
+      "tipus": "logica",
+      "explicacio": "La convergència $x_n\\to x$ només garanteix $d(x_n,x)<r$ a partir d'un cert índex $n_0$, no per a tot $n$. En particular és fals que $x_1\\in B_r(x)$ per a tot $r>0$: això obligaria $x_1=x$. Per exemple, a $\\mathbb{R}$ amb $x=0$ i $x_n=1/n$, per a $r=\\frac12$ tenim $d(x_1,0)=1\\geq r$.",
+      "correccio": "Com que $x_n\\to x$, existeix $n_0$ tal que $d(x_n,x)<r$ per a tot $n\\geq n_0$; en particular $x_{n_0}\\in B_r(x)\\cap A$.",
+      "pista": "Què diu exactament la definició de $x_n\\to x$: que tots els termes són a prop de $x$, o que ho són a partir d'un cert índex?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "repair2.json",
+    "valoracio": "Estructura correcta de les dues implicacions, però l'elecció de $n_0$ i l'ús de la convergència a la recíproca són incorrectes.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$n_0>\\varepsilon$",
+        "gravetat": "error",
+        "explicacio": "Cal $n_0>1/\\varepsilon$; amb $n_0>\\varepsilon$ no es té $1/n_0<\\varepsilon$ (p. ex. $\\varepsilon=1/2$, $n_0=1$ dona $1/n_0=1>\\varepsilon$)."
+      },
+      {
+        "fragment": 6,
+        "cita": "tenim $d(x_n,x)<r$ per a tot $n\\in\\mathbb{N}$; en particular $x_1\\in B_r(x)\\cap A$",
+        "gravetat": "error",
+        "explicacio": "La convergència només garanteix $d(x_n,x)<r$ per a $n\\geq n_0$, no per a tot $n$; $x_1$ pot no ser a $B_r(x)$. Cal prendre algun $x_n$ amb $n\\geq n_0$."
+      }
+    ]
+  },
+  "creat": 1791299563.4220183
+}

@@ -1,0 +1,60 @@
+{
+  "id": "29fbcba94ad9",
+  "exercici": "t6-14",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "$x^2+y^2-2x\\leq0$ equival a $(x-1)^2+y^2\\leq1$, així que $D$ és la meitat dreta del disc de centre $(1,0)$ i radi $1$, amb $x\\in[1,2]$. És tancat i fitat, per tant compacte, i $f$ és contínua: pel teorema de Weierstrass, $f$ hi assoleix màxim i mínim.",
+    "Punts crítics: $f_y=2y(x^2+2x+12)$ i $x^2+2x+12=(x+1)^2+11>0$, així que $y=0$; llavors $f_x=4x^3+2xy^2+2y^2=4x^3=0$ dona $x=0$, que no és de $D$. No hi ha punts crítics a $D$.",
+    "Mínim: a $D$, $f=x^4+y^2(x^2+2x+12)\\geq x^4\\geq1$, perquè $x\\geq1$, amb igualtat només si $y=0$ i $x=1$. El mínim és $f(1,0)=1$.",
+    "Frontera, segment $x=1$, $y\\in[-1,1]$: $f=1+y^2+2y^2+12y^2=1+14y^2$, que pren valors entre $1$ i $15$.",
+    "Arc $y^2=2x-x^2$, $x\\in[1,2]$ (amb les dues meitats, $y\\geq0$ i $y\\leq0$): $f=x^4+(2x-x^2)(x^2+2x+12)=-8x^2+24x$.",
+    "La derivada $-16x+24$ s'anul·la a $x=\\frac32$, on $f=-18+36=18$ i $y^2=3-\\frac94=\\frac34$; als extrems de l'arc, $f(1,\\pm1)=16$ i $f(2,0)=16$.",
+    "Comparant tots els candidats, el mínim absolut és $1$, assolit a $(1,0)$, i el màxim absolut és $18$, assolit a $\\left(\\frac32,\\frac{\\sqrt3}{2}\\right)$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "$f=1+y^2+2y^2+12y^2=1+14y^2$",
+      "inici": 39,
+      "fi": 67,
+      "tipus": "calcul",
+      "explicacio": "$1+2+12=15$: sobre el segment, $f=1+15y^2$, que pren valors entre $1$ i $16$ (coherent amb $f(1,\\pm1)=16$ calculat a l'arc).",
+      "correccio": "$f=1+y^2+2y^2+12y^2=1+15y^2$, entre $1$ i $16$.",
+      "pista": "Quant sumen els coeficients $1+2+12$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "assolit a $\\left(\\frac32,\\frac{\\sqrt3}{2}\\right)$",
+      "inici": 102,
+      "fi": 151,
+      "tipus": "conclusio",
+      "explicacio": "De $y^2=\\frac34$ surten dos punts, $y=\\pm\\frac{\\sqrt3}{2}$, i tots dos són de $D$: el màxim s'assoleix també a $\\left(\\frac32,-\\frac{\\sqrt3}{2}\\right)$.",
+      "correccio": "El màxim absolut $18$ s'assoleix a $\\left(\\frac32,\\frac{\\sqrt3}{2}\\right)$ i a $\\left(\\frac32,-\\frac{\\sqrt3}{2}\\right)$.",
+      "pista": "Quantes solucions té $y^2=\\frac34$? Són totes de $D$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t56.json",
+    "valoracio": "Error aritmètic al segment i pèrdua d'un dels dos punts de màxim.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "$f=1+y^2+2y^2+12y^2=1+14y^2$",
+        "gravetat": "error",
+        "explicacio": "$1+y^2+2y^2+12y^2=1+15y^2$, amb valors entre 1 i 16."
+      },
+      {
+        "fragment": 7,
+        "cita": "assolit a $\\left(\\frac32,\\frac{\\sqrt3}{2}\\right)$",
+        "gravetat": "error",
+        "explicacio": "Oblida el punt simètric: el màxim 18 s'assoleix també a $\\left(\\frac32,-\\frac{\\sqrt3}{2}\\right)$, com ja indica el pas 5."
+      }
+    ]
+  },
+  "creat": 1791299721.5643272
+}

@@ -1,0 +1,59 @@
+{
+  "id": "3c0a5992a39e",
+  "exercici": "t3-8",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Fora de l'origen, $f=\\dfrac{x^2+2xy+y^2}{x^2+y^2}=1+\\dfrac{2xy}{x^2+y^2}$ és un quocient de polinomis amb denominador no nul, i per tant és contínua i diferenciable a $\\mathbb{R}^2\\setminus\\{(0,0)\\}$, amb $\\dfrac{\\partial f}{\\partial x}=\\dfrac{2y(x^2-y^2)}{(x^2+y^2)^2}$ i $\\dfrac{\\partial f}{\\partial y}=\\dfrac{2x(x^2-y^2)}{(x^2+y^2)^2}$.",
+    "A l'origen, sobre la recta $y=mx$ amb $x\\neq0$ tenim $f(x,mx)=\\dfrac{(1+m)^2x^2}{(1+m^2)x^2}=\\dfrac{(1+m)^2}{1+m^2}$, que depèn de $m$: val $1$ per a $m=0$ i $2$ per a $m=1$.",
+    "Per tant no existeix $\\displaystyle\\lim_{(x,y)\\to(0,0)}f(x,y)$, i $f$ no és contínua a l'origen.",
+    "Per a les parcials a l'origen, $f(t,0)=\\dfrac{t^2}{t^2}=1$ per a $t\\neq0$, així que $\\dfrac{f(t,0)-f(0,0)}{t}=\\dfrac{1-1}{t}=0$ i $\\dfrac{\\partial f}{\\partial x}(0,0)=0$. Igualment $f(0,t)=1$ i $\\dfrac{\\partial f}{\\partial y}(0,0)=0$: existeixen totes dues.",
+    "Tot i així, $f$ no és diferenciable a l'origen: les parcials no hi són contínues, ja que per exemple $\\dfrac{\\partial f}{\\partial y}(x,0)=\\dfrac{2}{x}$ no té límit quan $x\\to0$.",
+    "En resum: fora de l'origen $f$ és contínua, té derivades parcials i és diferenciable; a l'origen no és contínua, té les dues derivades parcials (nul·les) i no és diferenciable."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "$\\dfrac{\\partial f}{\\partial x}=\\dfrac{2y(x^2-y^2)}{(x^2+y^2)^2}$",
+      "inici": 205,
+      "fi": 270,
+      "tipus": "calcul",
+      "explicacio": "$\\dfrac{\\partial}{\\partial x}\\dfrac{2xy}{x^2+y^2}=\\dfrac{2y(x^2+y^2)-2xy\\cdot2x}{(x^2+y^2)^2}=\\dfrac{2y(y^2-x^2)}{(x^2+y^2)^2}$: el signe està canviat.",
+      "correccio": "$\\dfrac{\\partial f}{\\partial x}=\\dfrac{2y(y^2-x^2)}{(x^2+y^2)^2}$.",
+      "pista": "Fes la regla del quocient amb compte: quin terme surt restant, $2x^2y$ o $2y^3$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "les parcials no hi són contínues",
+      "inici": 48,
+      "fi": 80,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "La continuïtat de les parcials és una condició suficient de diferenciabilitat, no necessària: que no siguin contínues no prova res. El motiu correcte és que $f$ no és contínua a l'origen.",
+      "correccio": "$f$ no és diferenciable a l'origen perquè diferenciable implica contínua, i $f$ no hi és contínua.",
+      "pista": "Hi ha funcions diferenciables amb parcials discontínues? Quina propietat de $f$ a l'origen ja has vist que impedeix la diferenciabilitat?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3a.json",
+    "valoracio": "Conclusions finals correctes, però parcial en x amb signe erroni i justificació de la no-diferenciabilitat invàlida.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "$\\dfrac{\\partial f}{\\partial x}=\\dfrac{2y(x^2-y^2)}{(x^2+y^2)^2}$",
+        "gravetat": "error",
+        "explicacio": "$\\partial_x\\frac{2xy}{x^2+y^2}=\\frac{2y(y^2-x^2)}{(x^2+y^2)^2}$: el signe del numerador està girat."
+      },
+      {
+        "fragment": 5,
+        "cita": "les parcials no hi són contínues",
+        "gravetat": "error",
+        "explicacio": "La continuïtat de les parcials és condició suficient, no necessària; que no siguin contínues no prova la no-diferenciabilitat. El motiu correcte és que $f$ no és contínua a l'origen."
+      }
+    ]
+  },
+  "creat": 1791299309.478341
+}

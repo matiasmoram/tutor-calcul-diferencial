@@ -1,0 +1,58 @@
+{
+  "id": "ff50fb06ce9a",
+  "exercici": "t4-17a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Volem aïllar $z$ i $t$ en funció de $x$ i $y$. Escrivim el sistema com $\\Phi(x,y,z,t)=(0,0)$, amb $\\Phi(x,y,z,t)=(x-2y-z,\\,x+yt)$, que és polinòmica i per tant de classe $\\mathcal{C}^\\infty$ a $\\mathbb{R}^4$.",
+    "El punt $(x,y,z,t)=(1,1,-1,-1)$ és solució del sistema: $\\Phi(1,1,-1,-1)=(1-2+1,\\,1+1\\cdot(-1))=(0,0)$.",
+    "La matriu de derivades parcials respecte de les variables que volem aïllar és $\\frac{\\partial\\Phi}{\\partial(z,t)}=\\begin{pmatrix}-1&0\\\\0&t\\end{pmatrix}$, de determinant $-t$, que al punt val $1\\neq0$.",
+    "Per tant es compleixen les hipòtesis del teorema de la funció implícita: $\\Phi$ és de classe $\\mathcal{C}^\\infty$, s'anul·la al punt i el menor respecte de $(z,t)$ hi és invertible.",
+    "El teorema dona un entorn obert $\\Omega$ de $(-1,-1)$ i funcions $g_1,g_2\\in\\mathcal{C}^\\infty(\\Omega)$, amb $g_1(-1,-1)=1$ i $g_2(-1,-1)=1$, tals que $\\Phi(x,y,g_1(x,y),g_2(x,y))=(0,0)$ per a tot $(x,y)\\in\\Omega$; en particular, $z=g_1(x,y)$ i $t=g_2(x,y)$ són diferenciables."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "$\\frac{\\partial\\Phi}{\\partial(z,t)}=\\begin{pmatrix}-1&0\\\\0&t\\end{pmatrix}$, de determinant $-t$, que al punt val $1\\neq0$",
+      "inici": 78,
+      "fi": 199,
+      "tipus": "calcul",
+      "explicacio": "La derivada de $x+yt$ respecte de $t$ és $y$, no $t$. El menor correcte és $\\begin{pmatrix}-1&0\\\\0&y\\end{pmatrix}$, de determinant $-y$, que al punt val $-1$ (també no nul).",
+      "correccio": "$\\frac{\\partial\\Phi}{\\partial(z,t)}=\\begin{pmatrix}-1&0\\\\0&y\\end{pmatrix}$, de determinant $-y$, que al punt val $-1\\neq0$.",
+      "pista": "Quina és la derivada de $yt$ respecte de $t$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "un entorn obert $\\Omega$ de $(-1,-1)$ i funcions $g_1,g_2\\in\\mathcal{C}^\\infty(\\Omega)$, amb $g_1(-1,-1)=1$ i $g_2(-1,-1)=1$",
+      "inici": 16,
+      "fi": 140,
+      "tipus": "conclusio",
+      "explicacio": "Les funcions implícites depenen de $(x,y)$: l'entorn ha de ser del punt $(x,y)=(1,1)$, i els valors són $g_1(1,1)=z=-1$, $g_2(1,1)=t=-1$. S'han confós les coordenades del punt.",
+      "correccio": "Un entorn obert $\\Omega$ de $(1,1)$ i $g_1,g_2\\in\\mathcal{C}^\\infty(\\Omega)$ amb $g_1(1,1)=-1$ i $g_2(1,1)=-1$.",
+      "pista": "De quines variables depenen $g_1$ i $g_2$, i quins valors prenen aquestes variables al punt $(1,1,-1,-1)$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4b.json",
+    "valoracio": "La conclusió (existència) és correcta, però la derivada respecte de $t$ és errònia i el punt base i els valors de $g_1,g_2$ estan intercanviats.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "\\begin{pmatrix}-1&0\\\\0&t\\end{pmatrix}$, de determinant $-t$, que al punt val $1\\neq0$",
+        "gravetat": "error",
+        "explicacio": "$\\partial(x+yt)/\\partial t=y$, no $t$: la matriu és $\\begin{pmatrix}-1&0\\\\0&y\\end{pmatrix}$, de determinant $-y$, que al punt val $-1\\neq0$."
+      },
+      {
+        "fragment": 5,
+        "cita": "$\\Omega$ de $(-1,-1)$ i funcions $g_1,g_2\\in\\mathcal{C}^\\infty(\\Omega)$, amb $g_1(-1,-1)=1$ i $g_2(-1,-1)=1$",
+        "gravetat": "error",
+        "explicacio": "Les variables independents són $(x,y)=(1,1)$: l'entorn és de $(1,1)$ i $g_1(1,1)=-1$, $g_2(1,1)=-1$ (s'han intercanviat els papers de $(x,y)$ i $(z,t)$)."
+      }
+    ]
+  },
+  "creat": 1791299408.5540779
+}

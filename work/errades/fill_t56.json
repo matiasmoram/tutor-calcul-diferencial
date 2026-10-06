@@ -1,0 +1,569 @@
+[
+ {
+  "font": "problema",
+  "id": "t5-1a",
+  "dificultat": "normal",
+  "fragments": [
+   "Fem el canvi $u=x-1$, $v=y+1$, $w=z$, que mesura el desplaçament respecte de $p=(1,-1,0)$: així $x=1+u$, $y=-1+v$ i $z=w$.",
+   "Com que $f$ és un polinomi, desenvolupem el producte: $xyz=(1+u)(-1+v)\\,w=(-1+v-u+uv)\\,w=-w-uw+vw+uvw$. Per la unicitat del polinomi de Taylor, n'hi ha prou d'agrupar aquesta expressió per graus en $(u,v,w)$.",
+   "Com a comprovació, amb derivades: $D_3f(p)=xy|_p=-1$, $D_{13}f(p)=y|_p=-1$, $D_{23}f(p)=x|_p=1$ i $D_{123}f(p)=1$, i totes les altres derivades de $f$ a $p$ (llevat de les obtingudes permutant aquests índexs) són nul·les, d'acord amb els coeficients obtinguts.",
+   "Separant per graus: grau $0$: $0$ (perquè $f(p)=0$); grau $1$: $-z$; grau $2$: $-(x-1)z+(y+1)z$; grau $3$: $(x-1)(y+1)z$. No hi ha termes de grau $\\geq4$.",
+   "Per tant $P_0=0$, $P_1=-z$ i el polinomi de Taylor de grau $\\leq2$ és $P_2=-(x-1)z+(y+1)z$.",
+   "Per a $k\\geq3$, el polinomi de Taylor és tot el polinomi: $P_k=-z-(x-1)z+(y+1)z+(x-1)(y+1)z=xyz$, ja que $f$ té grau $3$ i, per tant, totes les seves derivades d'ordre $\\geq3$ són nul·les i el residu és $0$."
+  ],
+  "errors": [
+   {
+    "fragment": 5,
+    "cita": "$P_2=-(x-1)z+(y+1)z$",
+    "tipus": "calcul",
+    "explicacio": "$P_2$ és la suma de les parts homogènies de grau $0$, $1$ i $2$, no només la de grau $2$: falta el terme de grau $1$, $-z$.",
+    "correccio": "$P_2=-z-(x-1)z+(y+1)z$.",
+    "pista": "El polinomi de Taylor de grau $\\leq2$ conté només els termes de grau exactament $2$?"
+   },
+   {
+    "fragment": 6,
+    "cita": "totes les seves derivades d'ordre $\\geq3$ són nul·les",
+    "tipus": "logica",
+    "explicacio": "Una derivada d'ordre $3$ no és nul·la: $D_{123}f=1$. El que és cert és que les derivades d'ordre $\\geq4$ són nul·les, i per això el residu d'ordre $k\\geq3$ és $0$.",
+    "correccio": "Totes les derivades d'ordre $\\geq4$ són nul·les (les d'ordre $3$ no: $D_{123}f=1$), i per tant el residu és $0$.",
+    "pista": "Quant val $D_{123}f$? Quines derivades s'anul·len realment per a un polinomi de grau $3$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t5-2",
+  "dificultat": "normal",
+  "fragments": [
+   "Sigui $g(s)=\\varphi(e^{as})$, de manera que $f(\\mathbf{x})=g(x_1+\\cdots+x_m)$. Com que $\\varphi$ és de classe $\\mathcal{C}^3$ i $s\\mapsto e^{as}$ és de classe $\\mathcal{C}^\\infty$, $g$ és de classe $\\mathcal{C}^3$, i per tant $f$ és de classe $\\mathcal{C}^\\infty$.",
+   "Per la regla de la cadena, com que $\\partial(x_1+\\cdots+x_m)/\\partial x_i=1$, es té $D_if(\\mathbf{x})=g'(x_1+\\cdots+x_m)$, i iterant, $D_{i_1\\cdots i_k}f(\\mathbf{x})=g^{(k)}(x_1+\\cdots+x_m)$ per a qualsevol tria d'índexs $i_1,\\dots,i_k$ i $k\\leq3$.",
+   "Amb $S=x_1+\\cdots+x_m$, el terme d'ordre $k$ de la fórmula de Taylor a l'origen és $\\frac{1}{k!}\\sum_{i_1,\\dots,i_k}D_{i_1\\cdots i_k}f(\\mathbf{0})\\,x_{i_1}\\cdots x_{i_k}=\\frac{g^{(k)}(0)}{k!}S^k$, perquè la suma de tots els productes $x_{i_1}\\cdots x_{i_k}$ és $S^k$. Així, $P_3=\\sum_{k=0}^{3}\\frac{g^{(k)}(0)}{k!}S^k$.",
+   "Derivem $g$: $g'(s)=ae^{as}\\varphi'(e^{as})$ i $g''(s)=a^2e^{as}\\varphi'(e^{as})+a^2e^{2as}\\varphi''(e^{as})$.",
+   "A $s=0$, com que $e^0=1$: $g(0)=\\varphi(1)$, $g'(0)=a\\varphi'(1)$ i $g''(0)=a^2\\left(\\varphi'(1)+\\varphi''(1)\\right)$.",
+   "Derivant un cop més, $g'''(s)=a^3\\left(e^{as}\\varphi'(e^{as})+2e^{2as}\\varphi''(e^{as})+e^{3as}\\varphi'''(e^{as})\\right)$, i per tant $g'''(0)=a^3\\left(\\varphi'(1)+2\\varphi''(1)+\\varphi'''(1)\\right)$.",
+   "Per tant, amb $S=x_1+\\cdots+x_m$, $P_3(\\mathbf{x})=\\varphi(1)+a\\varphi'(1)\\,S+\\frac{a^2\\left(\\varphi'(1)+\\varphi''(1)\\right)}{2}S^2+\\frac{a^3\\left(\\varphi'(1)+2\\varphi''(1)+\\varphi'''(1)\\right)}{6}S^3$."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "per tant $f$ és de classe $\\mathcal{C}^\\infty$",
+    "tipus": "conclusio",
+    "explicacio": "Si $\\varphi$ només és $\\mathcal{C}^3$, $g$ i $f$ només són $\\mathcal{C}^3$ en general (per exemple, si $\\varphi'''$ no és derivable a $1$); la regularitat de l'exponencial no la millora.",
+    "correccio": "$g$ és de classe $\\mathcal{C}^3$, i per tant $f=g\\circ(x_1+\\cdots+x_m)$ és de classe $\\mathcal{C}^3$, que és el que cal per al polinomi de grau $3$.",
+    "pista": "Pot una composició ser més regular que la menys regular de les funcions que hi intervenen?"
+   },
+   {
+    "fragment": 6,
+    "cita": "$g'''(s)=a^3\\left(e^{as}\\varphi'(e^{as})+2e^{2as}\\varphi''(e^{as})+e^{3as}\\varphi'''(e^{as})\\right)$",
+    "tipus": "calcul",
+    "explicacio": "En derivar $a^2e^{2as}\\varphi''(e^{as})$, la derivada de $e^{2as}$ aporta $2a^3e^{2as}\\varphi''$, que s'afegeix al terme $a^3e^{2as}\\varphi''$ que ve de derivar $a^2e^{as}\\varphi'(e^{as})$: el coeficient de $\\varphi''$ és $3$, no $2$.",
+    "correccio": "$g'''(s)=a^3\\left(e^{as}\\varphi'(e^{as})+3e^{2as}\\varphi''(e^{as})+e^{3as}\\varphi'''(e^{as})\\right)$ i $g'''(0)=a^3\\left(\\varphi'(1)+3\\varphi''(1)+\\varphi'''(1)\\right)$.",
+    "pista": "Quants termes amb $e^{2as}\\varphi''(e^{as})$ surten en derivar cadascun dels dos sumands de $g''$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t5-7a",
+  "dificultat": "normal",
+  "fragments": [
+   "Desenvolupant, $f(x,y)=y^2-4x^2y+3x^4$, i les derivades parcials són $f_x=-8xy+12x^3=4x(3x^2-2y)$ i $f_y=2y-4x^2$.",
+   "De $f_y=0$ obtenim $y=2x^2$, i substituint a l'altra equació, $f_x=4x(3x^2-2x^2)=4x^3=0$, d'on $x=0$ i, per tant, $y=0$. L'origen és l'únic punt crític.",
+   "Derivades segones: $f_{xx}=36x^2-8y$, $f_{xy}=-8x$, $f_{yy}=2$, de manera que $Hf(0,0)=\\begin{pmatrix}0&0\\\\0&2\\end{pmatrix}$, amb valors propis $0$ i $2$: és semidefinida positiva però no definida, i el criteri de la hessiana no decideix (només descarta que l'origen sigui un màxim local).",
+   "Estudiem directament el signe de $f$ a prop de l'origen, on $f(0,0)=0$. Els factors $y-3x^2$ i $y-x^2$ s'anul·len sobre les paràboles $y=3x^2$ i $y=x^2$, respectivament.",
+   "Entre les dues paràboles, és a dir quan $x^2<y<3x^2$, es té $y-3x^2>0$ i $y-x^2<0$, de manera que $f<0$; per exemple, $f(x,2x^2)=(-x^2)(x^2)=-x^4<0$ per a $x\\neq0$.",
+   "Si $y<x^2$ o $y>3x^2$, els dos factors tenen el mateix signe i $f>0$; per exemple, $f(0,y)=y^2>0$ per a $y\\neq0$.",
+   "Tota bola centrada a l'origen conté punts $(x,2x^2)$ i $(0,y)$ amb $x,y\\neq0$ petits, on $f<0$ i $f>0$ respectivament. Per tant l'origen no és un extrem local: és un punt de sella."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "$f_x=4x(3x^2-2x^2)=4x^3=0$",
+    "tipus": "calcul",
+    "explicacio": "En substituir $y=2x^2$, el terme $2y$ val $4x^2$, no $2x^2$: $f_x=4x(3x^2-4x^2)=-4x^3$. La conclusió $x=0$ és la mateixa, però el càlcul és incorrecte.",
+    "correccio": "$f_x=4x(3x^2-4x^2)=-4x^3=0$.",
+    "pista": "Si $y=2x^2$, quant val exactament $2y$?"
+   },
+   {
+    "fragment": 5,
+    "cita": "$y-3x^2>0$ i $y-x^2<0$",
+    "tipus": "desigualtat",
+    "explicacio": "Els signes estan girats: si $y<3x^2$, aleshores $y-3x^2<0$, i si $y>x^2$, aleshores $y-x^2>0$. El producte continua sent negatiu, però la justificació és falsa.",
+    "correccio": "Quan $x^2<y<3x^2$, $y-3x^2<0$ i $y-x^2>0$, de manera que $f<0$.",
+    "pista": "Si $y<3x^2$, quin signe té $y-3x^2$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t5-8a",
+  "dificultat": "normal",
+  "fragments": [
+   "Les derivades parcials són $f_x=3(x-y)^2+2(x+y)$ i $f_y=-3(x-y)^2+2(x+y)$.",
+   "Sumant les equacions $f_x=0$ i $f_y=0$ obtenim $4(x+y)=0$, i restant-les, $6(x-y)^2=0$. Per tant $x=-y$ i $x=y$, i l'únic punt crític és $(0,0)$.",
+   "Derivades segones: $f_{xx}=6(x-y)+2$, $f_{xy}=-6(x-y)+2$ i $f_{yy}=-6(x-y)+2$. A l'origen, $Hf(0,0)=\\begin{pmatrix}2&2\\\\2&2\\end{pmatrix}$.",
+   "Com que $\\det Hf(0,0)=0$ i $\\mathrm{tr}\\,Hf(0,0)=4$, els valors propis són $0$ i $4$: la hessiana és semidefinida positiva però no definida. El criteri no decideix, tot i que ja descarta que l'origen sigui un mínim local.",
+   "Estudiem $f$ en la direcció del nucli de la hessiana, la recta $y=-x$: allà $x-y=2x$ i $x+y=0$, de manera que $f(x,-x)=(2x)^3=8x^3$.",
+   "Com que $f(0,0)=0$ i $8x^3$ és positiu per a $x>0$ i negatiu per a $x<0$, tota bola centrada a l'origen conté punts amb $f>0$ i punts amb $f<0$: l'origen és un punt de sella."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "$f_{yy}=-6(x-y)+2$",
+    "tipus": "calcul",
+    "explicacio": "Derivant $f_y=-3(x-y)^2+2(x+y)$ respecte de $y$: $-3\\cdot2(x-y)\\cdot(-1)+2=6(x-y)+2$. El signe està malament (a l'origen el valor $2$ coincideix, però l'expressió és incorrecta).",
+    "correccio": "$f_{yy}=6(x-y)+2$.",
+    "pista": "Quin factor aporta la regla de la cadena en derivar $(x-y)^2$ respecte de $y$?"
+   },
+   {
+    "fragment": 4,
+    "cita": "ja descarta que l'origen sigui un mínim local",
+    "tipus": "logica",
+    "explicacio": "Una hessiana semidefinida positiva és compatible amb un mínim; el que descarta (condició necessària) és que el punt sigui un màxim local, que exigiria una hessiana semidefinida negativa.",
+    "correccio": "El criteri no decideix, tot i que descarta que l'origen sigui un màxim local.",
+    "pista": "Quina condició necessària compleix la hessiana en un màxim local? I en un mínim local?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t5-9c",
+  "dificultat": "normal",
+  "fragments": [
+   "Tenim $f(0,0)=0$. Per l'apartat anterior, $f>0$ al semiplà $x>0$; a l'interior del disc $(x+1)^2+y^2<1$ els dos factors $x^2+y^2+2x$ i $x^3$ són negatius, de manera que $f<0$; i als punts amb $x<0$ exteriors al disc, $f<0$.",
+   "Els punts $(t,0)$ amb $t>0$ són del semiplà $x>0$ i s'acosten a l'origen quan $t\\to0^+$; per exemple, $f(t,0)=(t^2+2t)\\,t^3=t^5+2t^4>0=f(0,0)$.",
+   "La circumferència $(x+1)^2+y^2=1$ és tangent a l'eix vertical a l'origen, així que hi ha punts amb $x<0$ exteriors al disc arbitràriament a prop de l'origen. Per a $s>0$ petit, prenem $(-s,\\sqrt{2s})$: $x^2+y^2+2x=s^2+2s-2s=s^2>0$ i $x=-s<0$.",
+   "En aquest punt, $f(-s,\\sqrt{2s})=s^2\\cdot(-s)^3=-s^5<0=f(0,0)$, i la seva distància a l'origen és $\\sqrt{s^2+2s}\\leq\\sqrt{4s^2}=2s$, que tendeix a $0$ quan $s\\to0^+$.",
+   "Per tant, tota bola $B((0,0),\\epsilon)$ conté punts amb $f>f(0,0)$ i punts amb $f<f(0,0)$, i l'origen no és ni màxim ni mínim local de $f$.",
+   "De fet, $f=2x^4+x^5+x^3y^2$ només té termes de grau $\\geq4$, de manera que $Df(0,0)=0$: l'origen és un punt crític que no és extrem, és a dir, un punt de sella."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "els dos factors $x^2+y^2+2x$ i $x^3$ són negatius, de manera que $f<0$",
+    "tipus": "logica",
+    "explicacio": "El producte de dos factors negatius és positiu: a l'interior del disc $f>0$. Només als punts amb $x<0$ exteriors al disc els factors tenen signes oposats i $f<0$.",
+    "correccio": "A l'interior del disc els dos factors són negatius, de manera que $f>0$.",
+    "pista": "Quin signe té el producte de dos nombres negatius?"
+   },
+   {
+    "fragment": 4,
+    "cita": "$\\sqrt{s^2+2s}\\leq\\sqrt{4s^2}=2s$",
+    "tipus": "desigualtat",
+    "explicacio": "$s^2+2s\\leq4s^2$ equival a $s\\geq\\frac23$, i per tant és fals per a $s$ petit (per exemple, amb $s=0.01$, $\\sqrt{s^2+2s}\\approx0.14>0.02$). Que la distància tendeix a $0$ és cert, però no per aquesta fita.",
+    "correccio": "La distància $\\sqrt{s^2+2s}$ tendeix a $0$ quan $s\\to0^+$, per continuïtat de l'arrel (o bé $\\sqrt{s^2+2s}\\leq\\sqrt{3s}$ per a $s\\leq1$).",
+    "pista": "Per a $s=0.01$, quin dels dos costats de la desigualtat és més gran?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t5-10b",
+  "dificultat": "normal",
+  "fragments": [
+   "Sigui $g(x)=e^x+e^{-x^2}$. Com que $g(x)>1$ per a tot $x$, l'arrel $\\sqrt{g(x)}$ està ben definida i és diferenciable, i $f(x,y)=-y^4-e^{-x^2}+2y^2\\sqrt{g(x)}$.",
+   "Derivant respecte de $y$: $f_y=-4y^3+4y\\sqrt{g(x)}=4y\\big(\\sqrt{g(x)}-y^2\\big)$.",
+   "Derivant respecte de $x$, amb $g'(x)=e^x-2xe^{-x^2}$: $f_x=2xe^{-x^2}+2y^2\\frac{g'(x)}{2\\sqrt{g(x)}}=2xe^{-x^2}+y^2\\frac{e^x-2xe^{-x^2}}{\\sqrt{g(x)}}$.",
+   "Per tant $f_y=0$ si i només si $y=0$ o $y^2=\\sqrt{g(x)}$, és a dir, $y=\\sqrt[4]{g(x)}$.",
+   "Cas $y=0$: $f_x(x,0)=2xe^{-x^2}=0$ si i només si $x=0$, perquè $e^{-x^2}>0$. Obtenim el punt crític $(0,0)$.",
+   "Cas $y^2=\\sqrt{g(x)}$: substituint, $f_x=2xe^{-x^2}+\\sqrt{g(x)}\\,\\frac{e^x-2xe^{-x^2}}{\\sqrt{g(x)}}=2xe^{-x^2}+e^x-2xe^{-x^2}=e^x>0$, que no s'anul·la mai: en aquest cas no hi ha punts crítics.",
+   "Per tant, l'únic punt crític de $f$ és $(0,0)$."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "$g(x)>1$ per a tot $x$",
+    "tipus": "desigualtat",
+    "explicacio": "És fals: per exemple $g(-1)=e^{-1}+e^{-1}\\approx0.74<1$. El que és cert (i és tot el que cal) és $g(x)>0$, perquè és suma d'exponencials.",
+    "correccio": "Com que $g(x)>0$ per a tot $x$ (suma de dues exponencials), l'arrel està ben definida i és diferenciable.",
+    "pista": "Quant val $g(-1)$?"
+   },
+   {
+    "fragment": 4,
+    "cita": "és a dir, $y=\\sqrt[4]{g(x)}$",
+    "tipus": "logica",
+    "explicacio": "L'equació $y^2=\\sqrt{g(x)}$ té dues solucions, $y=\\pm\\sqrt[4]{g(x)}$; quedar-se només amb l'arrel positiva oblida la meitat dels punts on s'anul·la $f_y$.",
+    "correccio": "És a dir, $y=\\pm\\sqrt[4]{g(x)}$.",
+    "pista": "Quantes solucions té l'equació $y^2=c$ quan $c>0$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t5-12b",
+  "dificultat": "normal",
+  "fragments": [
+   "Per l'apartat anterior, $f_x=3xy^2(xy-2)$ i $f_y=3x^2y(xy-2)$, i els punts crítics de $f$ són els dels eixos ($xy=0$) i els de la hipèrbola $xy=2$.",
+   "Si $xy=2$, aleshores $|x|\\geq2$ o $|y|\\geq2$, de manera que $x^2+y^2\\geq4>1$ i cap punt de la hipèrbola és a la bola. Els punts crítics de $B(\\mathbf{0},1)$ són, doncs, $(x,0)$ amb $|x|<1$ i $(0,y)$ amb $|y|<1$, on $f$ val $0$.",
+   "Escrivim $f$ en funció de $t=xy$: $f(x,y)=-3t^2+t^3=t^2(t-3)$.",
+   "A la bola, $|xy|\\leq\\frac12(x^2+y^2)<\\frac12$, així que $t-3<0$ i $f=t^2(t-3)\\leq0$, amb igualtat si i només si $t=xy=0$.",
+   "Sigui $p$ un punt d'un eix dins la bola, on $f(p)=0$. Com que la bola és oberta, existeix $\\epsilon>0$ amb $B(p,\\epsilon)\\subseteq B(\\mathbf{0},1)$, i es té $f(x,y)\\leq0=f(p)$ per a tot $(x,y)\\in B(p,\\epsilon)$: $p$ és un màxim local.",
+   "Aquests màxims no són estrictes, perquè $f=0$ en tots els punts de l'eix propers a $p$; l'única excepció és l'origen, que és un màxim local estricte."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "aleshores $|x|\\geq2$ o $|y|\\geq2$",
+    "tipus": "desigualtat",
+    "explicacio": "És fals: $(\\sqrt2,\\sqrt2)$ és de la hipèrbola i té les dues coordenades menors que $2$. El que sí que és cert és $x^2+y^2\\geq2|xy|=4$.",
+    "correccio": "Si $xy=2$, aleshores $x^2+y^2\\geq2|xy|=4>1$.",
+    "pista": "El punt $(\\sqrt2,\\sqrt2)$, és de la hipèrbola? Quines coordenades té?"
+   },
+   {
+    "fragment": 6,
+    "cita": "l'única excepció és l'origen, que és un màxim local estricte",
+    "tipus": "conclusio",
+    "explicacio": "L'origen també és dels eixos: $f(x,0)=0=f(0,0)$ per a tot $x$, així que en tot entorn de l'origen hi ha altres punts amb el mateix valor i el màxim no és estricte.",
+    "correccio": "Cap d'aquests màxims és estricte, tampoc el de l'origen, perquè $f$ és constantment $0$ sobre els eixos.",
+    "pista": "Quant val $f$ als punts $(x,0)$ propers a l'origen?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t5-13a",
+  "dificultat": "normal",
+  "fragments": [
+   "Centrem a $p$ amb $u=x+1$, $v=y+1$. Llavors $x-y=u-v$ i $f=e^{u-v}\\left(\\cos u-\\sin v-1\\right)$, amb $f(p)=e^0(1-0-1)=0$.",
+   "Desenvolupem els factors: $\\cos u-1-\\sin v=-v-\\frac12u^2+\\frac16v^3+O_4(u,v)$ i, com que aquest factor no té terme constant, de l'exponencial n'hi ha prou amb $e^{u-v}=1+(u-v)+\\frac12(u-v)^2+O_3(u,v)$.",
+   "Multiplicant i agrupant per graus: el grau $1$ és $-v$, i el grau $2$ és $-\\frac12u^2+(u-v)(-v)=-\\frac12u^2-uv-v^2$.",
+   "El grau $3$ és $\\frac16v^3+(u-v)\\left(-\\frac12u^2\\right)+(u-v)^2(-v)=\\frac16v^3-\\frac12u^3+\\frac12u^2v-u^2v+2uv^2-v^3=-\\frac12u^3-\\frac12u^2v+2uv^2-\\frac56v^3$.",
+   "Per tant, $P_3=-v-\\frac12u^2-uv-v^2-\\frac12u^3-\\frac12u^2v+2uv^2-\\frac56v^3$, és a dir, $P_3(x,y)=-(y+1)-\\frac12(x+1)^2-(x+1)(y+1)-(y+1)^2-\\frac12(x+1)^3-\\frac12(x+1)^2(y+1)+2(x+1)(y+1)^2-\\frac56(y+1)^3$."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "$-\\frac12u^2+(u-v)(-v)=-\\frac12u^2-uv-v^2$",
+    "tipus": "calcul",
+    "explicacio": "$(u-v)(-v)=-uv+v^2$: el terme $v^2$ té signe positiu.",
+    "correccio": "El grau $2$ és $-\\frac12u^2+(u-v)(-v)=-\\frac12u^2-uv+v^2$.",
+    "pista": "Quant val $(-v)\\cdot(-v)$?"
+   },
+   {
+    "fragment": 4,
+    "cita": "$\\frac16v^3+(u-v)\\left(-\\frac12u^2\\right)+(u-v)^2(-v)",
+    "tipus": "calcul",
+    "explicacio": "El terme de grau $2$ de l'exponencial és $\\frac12(u-v)^2$; s'ha oblidat el factor $\\frac12$. Amb ell, el grau $3$ és $\\frac16v^3-\\frac12u^3+\\frac12u^2v-\\frac12u^2v+uv^2-\\frac12v^3=-\\frac12u^3+uv^2-\\frac13v^3$.",
+    "correccio": "El grau $3$ és $\\frac16v^3+(u-v)\\left(-\\frac12u^2\\right)+\\frac12(u-v)^2(-v)=-\\frac12u^3+uv^2-\\frac13v^3$.",
+    "pista": "Quin coeficient porta $(u-v)^2$ al desenvolupament de $e^{u-v}$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t5-15a",
+  "dificultat": "normal",
+  "fragments": [
+   "Com que $\\varphi$ és derivable, és contínua, i pel teorema fonamental del càlcul $\\frac{\\partial f}{\\partial x}(x,y)=-\\varphi(x)$ i $\\frac{\\partial f}{\\partial y}(x,y)=\\varphi(y)$. Com que existeixen les derivades parcials en tot punt, $f$ és diferenciable.",
+   "Els punts crítics són les solucions de $\\varphi(x)=0$ i $\\varphi(y)=0$, és a dir, $(a,a)$, $(a,b)$, $(b,a)$ i $(b,b)$.",
+   "Com que $\\varphi(a)=0$ i $\\varphi'(a)<0$, $\\varphi>0$ just a l'esquerra de $a$ i $\\varphi<0$ just a la dreta; com que $\\varphi'(b)>0$, $\\varphi<0$ just a l'esquerra de $b$ i $\\varphi>0$ just a la dreta. Com que $a$ i $b$ són els únics zeros, pel teorema de Bolzano $\\varphi>0$ a $(-\\infty,a)$, $\\varphi<0$ a $(a,b)$ i $\\varphi>0$ a $(b,+\\infty)$.",
+   "Sigui $\\Phi$ una primitiva de $\\varphi$, de manera que $f(x,y)=\\Phi(y)-\\Phi(x)$. $\\Phi$ és estrictament creixent a $(-\\infty,a]$, estrictament decreixent a $[a,b]$ i estrictament creixent a $[b,+\\infty)$: $a$ és un màxim local estricte de $\\Phi$ i $b$ un mínim local estricte.",
+   "Punt $(a,b)$: per a $(x,y)$ proper, $\\Phi(y)\\geq\\Phi(b)$ i $\\Phi(x)\\leq\\Phi(a)$, amb igualtat només si $y=b$ i $x=a$ respectivament; per tant $f(x,y)>f(a,b)$ si $(x,y)\\neq(a,b)$, i $(a,b)$ és un mínim local estricte, amb $f(a,b)=\\int_a^b\\varphi<0$. Anàlogament, $(b,a)$ és un màxim local estricte, amb $f(b,a)=\\int_a^b|\\varphi|>0$.",
+   "Punt $(a,a)$: per a $y\\neq a$ proper a $a$, $f(a,y)-f(a,a)=\\Phi(y)-\\Phi(a)>0$, i per a $x\\neq a$ proper a $a$, $f(x,a)-f(a,a)=\\Phi(a)-\\Phi(x)<0$. Així $f$ pren valors més grans i més petits que $f(a,a)=0$ a prop de $(a,a)$: és un punt de sella. El mateix raonament amb $b$ mostra que $(b,b)$ també és un punt de sella.",
+   "Interpretació: $[a,b]$ és el tram on $\\varphi<0$. Integrant-lo d'esquerra a dreta, $\\int_a^b\\varphi$ és l'àrea més negativa que es pot aconseguir movent poc els extrems d'integració, i integrant-lo al revés s'obté la més positiva; a la diagonal, $f=0$."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "Com que existeixen les derivades parcials en tot punt, $f$ és diferenciable.",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "L'existència de les derivades parcials no implica la diferenciabilitat. Cal que siguin contínues, i aquí ho són perquè $\\varphi$ és contínua.",
+    "correccio": "Com que les derivades parcials $-\\varphi(x)$ i $\\varphi(y)$ són contínues, $f$ és diferenciable (de fet, de classe $\\mathcal{C}^1$).",
+    "pista": "Quina hipòtesi sobre les derivades parcials garanteix la diferenciabilitat?"
+   },
+   {
+    "fragment": 6,
+    "cita": "$f(a,y)-f(a,a)=\\Phi(y)-\\Phi(a)>0$, i per a $x\\neq a$ proper a $a$, $f(x,a)-f(a,a)=\\Phi(a)-\\Phi(x)<0$",
+    "tipus": "desigualtat",
+    "explicacio": "$a$ és un màxim local estricte de $\\Phi$, així que $\\Phi(y)<\\Phi(a)$ i $\\Phi(x)<\\Phi(a)$ a prop de $a$: les dues desigualtats estan girades. La conclusió (sella) és la mateixa, però la justificació és falsa.",
+    "correccio": "$f(a,y)-f(a,a)=\\Phi(y)-\\Phi(a)<0$ i $f(x,a)-f(a,a)=\\Phi(a)-\\Phi(x)>0$.",
+    "pista": "Quin tipus d'extrem té $\\Phi$ al punt $a$? Què implica per al signe de $\\Phi(y)-\\Phi(a)$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t6-1a",
+  "dificultat": "normal",
+  "fragments": [
+   "L'el·lipse és $\\frac{x^2}{a^2}+\\frac{y^2}{b^2}=1$. Com que $\\cos^2t+\\sin^2t=1$, la corba $(a\\cos t,\\,b\\sin t)$, $t\\in[0,2\\pi]$, la recorre una vegada començant a $(a,0)$.",
+   "A $t=0$ aquesta corba passa per $(a,0)$ amb velocitat $(0,b)$, cap amunt: la recorre en sentit antihorari. Canviant $t$ per $-t$ obtenim $(a\\cos t,\\,-b\\sin t)$, que passa per $(a,0)$ amb velocitat $(0,-b)$: sentit horari.",
+   "Per fer dues voltes prenem $t\\in[0,4\\pi]$; alternativament, $(a\\cos 2t,\\,-b\\sin 2t)$ amb $t\\in[0,\\pi]$ també dona dues voltes.",
+   "La parametrització $\\gamma(t)=(a\\cos t,\\,-b\\sin t)$ és de classe $\\mathcal{C}^\\infty$, amb $\\gamma'(t)=(a\\sin t,\\,-b\\cos t)$.",
+   "Com que $\\sin t$ i $\\cos t$ no s'anul·len simultàniament i $a,b>0$, $\\gamma'(t)\\neq(0,0)$ per a tot $t$, és a dir, $\\mathrm{rang}\\,D\\gamma(t)=1$: la parametrització és regular.",
+   "Per tant, $\\gamma(t)=(a\\cos t,\\,-b\\sin t)$, $t\\in[0,4\\pi]$, és una parametrització $\\mathcal{C}^1$ regular de l'el·lipse recorreguda dos cops en sentit horari."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "$(a\\cos 2t,\\,-b\\sin 2t)$ amb $t\\in[0,\\pi]$ també dona dues voltes",
+    "tipus": "calcul",
+    "explicacio": "Si $t\\in[0,\\pi]$, l'angle $2t$ recorre $[0,2\\pi]$: només es fa una volta. Per fer-ne dues amb $2t$ cal $t\\in[0,2\\pi]$.",
+    "correccio": "Alternativament, $(a\\cos 2t,\\,-b\\sin 2t)$ amb $t\\in[0,2\\pi]$.",
+    "pista": "Quin interval recorre l'angle $2t$ quan $t\\in[0,\\pi]$?"
+   },
+   {
+    "fragment": 4,
+    "cita": "$\\gamma'(t)=(a\\sin t,\\,-b\\cos t)$",
+    "tipus": "calcul",
+    "explicacio": "La derivada de $a\\cos t$ és $-a\\sin t$: el signe de la primera component és incorrecte.",
+    "correccio": "$\\gamma'(t)=(-a\\sin t,\\,-b\\cos t)$.",
+    "pista": "Quina és la derivada de $\\cos t$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t6-2e",
+  "dificultat": "normal",
+  "fragments": [
+   "L'el·lipsoide és $\\frac{x^2}{a^2}+\\frac{y^2}{b^2}+\\frac{z^2}{c^2}=1$: un punt $(x,y,z)$ hi pertany si i només si $\\left(\\frac xa,\\frac yb,\\frac zc\\right)$ és de l'esfera unitat.",
+   "Parametritzem l'esfera unitat amb coordenades esfèriques, $(\\cos u\\cos v,\\ \\sin u\\cos v,\\ \\sin v)$, i escalem cada coordenada: $\\varphi(u,v)=(a\\cos u\\cos v,\\ b\\sin u\\cos v,\\ c\\sin v)$, amb $(u,v)\\in[0,2\\pi]\\times[-\\pi/2,\\pi/2]$.",
+   "Efectivament, $\\cos^2u\\cos^2v+\\sin^2u\\cos^2v+\\sin^2v=\\cos^2v+\\sin^2v=1$, de manera que $\\varphi$ pren valors a l'el·lipsoide i el recobreix tot; a més, $\\varphi$ és de classe $\\mathcal{C}^\\infty$ i és injectiva en tot el domini.",
+   "Les derivades parcials són $\\partial_u\\varphi=(-a\\sin u\\cos v,\\ b\\cos u\\cos v,\\ 0)$ i $\\partial_v\\varphi=(-a\\cos u\\sin v,\\ b\\sin u\\sin v,\\ c\\cos v)$.",
+   "Si $\\cos v\\neq0$, $\\partial_u\\varphi$ és no nul (perquè $\\sin u$ i $\\cos u$ no s'anul·len alhora) i té tercera component $0$, mentre que la tercera component de $\\partial_v\\varphi$ és $c\\cos v\\neq0$: són linealment independents i $D\\varphi$ té rang $2$. Si $\\cos v=0$, $\\partial_u\\varphi=0$ i el rang és $1$.",
+   "Per tant, $\\varphi$ és una parametrització $\\mathcal{C}^\\infty$ de l'el·lipsoide, regular (rang $2$) als punts amb $\\cos v\\neq0$, és a dir, fora dels pols $(0,0,\\pm c)$."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "és injectiva en tot el domini",
+    "tipus": "conclusio",
+    "explicacio": "No és injectiva: $\\varphi(0,v)=\\varphi(2\\pi,v)$ per a tot $v$, i tots els punts amb $v=\\pi/2$ (o $v=-\\pi/2$) van a un mateix pol.",
+    "correccio": "$\\varphi$ és de classe $\\mathcal{C}^\\infty$ i exhaustiva sobre l'el·lipsoide (és injectiva només a l'interior del rectangle, $(0,2\\pi)\\times(-\\pi/2,\\pi/2)$).",
+    "pista": "Quina imatge tenen els punts $(0,v)$ i $(2\\pi,v)$? I els punts amb $v=\\pi/2$?"
+   },
+   {
+    "fragment": 4,
+    "cita": "$\\partial_v\\varphi=(-a\\cos u\\sin v,\\ b\\sin u\\sin v,\\ c\\cos v)$",
+    "tipus": "calcul",
+    "explicacio": "La derivada de $b\\sin u\\cos v$ respecte de $v$ és $-b\\sin u\\sin v$: falta el signe menys a la segona component.",
+    "correccio": "$\\partial_v\\varphi=(-a\\cos u\\sin v,\\ -b\\sin u\\sin v,\\ c\\cos v)$.",
+    "pista": "Quina és la derivada de $\\cos v$ respecte de $v$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t6-5",
+  "dificultat": "normal",
+  "fragments": [
+   "Minimitzem el quadrat de la distància, $D(x,y)=x^2+(y-b)^2$, sobre la paràbola $P=\\{x^2=4y\\}$. Com que $P$ és un tancat de $\\mathbb{R}^2$, és compacte, i pel teorema de Weierstrass $D$ hi assoleix el mínim.",
+   "Mètode 1 (substitució): sobre $P$, $x^2=4y$ amb $y\\geq0$, i $D=g(y)=4y+(y-b)^2=y^2+(4-2b)y+b^2$, una paràbola en $y$ amb vèrtex a $y=b-2$.",
+   "Si $b\\geq2$, el vèrtex és admissible i el mínim és $g(b-2)=4(b-2)+4=4b-4$, assolit als punts $\\left(\\pm2\\sqrt{b-2},\\,b-2\\right)$. Si $b<2$, el vèrtex és a $y<0$, $g$ és creixent a $[0,+\\infty)$ i el mínim és $g(0)=b^2$, al punt $(0,0)$.",
+   "Mètode 2 (multiplicadors de Lagrange): amb $\\Phi=x^2-4y$, $\\nabla\\Phi=(2x,-4)\\neq0$, i el sistema és $2x=2\\lambda x$, $2(y-b)=-4\\lambda$, $x^2=4y$.",
+   "De la primera equació, $x=0$ o $\\lambda=1$. Si $x=0$, aleshores $y=0$ i $D=b^2$. Si $\\lambda=1$, aleshores $y=b-2$, i cal $x^2=4(b-2)\\geq0$, és a dir, $b\\geq2$; llavors $D=4b-4$.",
+   "Per a $b\\geq2$, $b^2-(4b-4)=(b-2)^2\\geq0$, de manera que el mínim és $4b-4$; per a $b<2$ l'únic candidat és $(0,0)$, que és, doncs, el mínim.",
+   "En conclusió, la distància és $d=b$ si $b\\leq2$ i $d=2\\sqrt{b-1}$ si $b\\geq2$; les dues expressions coincideixen a $b=2$."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "Com que $P$ és un tancat de $\\mathbb{R}^2$, és compacte",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "Un tancat no fitat no és compacte, i la paràbola no és fitada: Weierstrass no s'hi pot aplicar directament. Cal usar que $D\\to+\\infty$ quan $\\|(x,y)\\|\\to\\infty$ per reduir-se a $P\\cap\\overline{B}(0,R)$, que sí que és compacte.",
+    "correccio": "$P$ és tancat però no fitat; com que $D\\to+\\infty$ quan $\\|(x,y)\\|\\to\\infty$, el mínim sobre $P$ coincideix amb el mínim sobre el compacte $P\\cap\\overline{B}(0,R)$ per a $R$ gran, que existeix per Weierstrass.",
+    "pista": "La paràbola, és un conjunt fitat?"
+   },
+   {
+    "fragment": 7,
+    "cita": "$d=b$ si $b\\leq2$",
+    "tipus": "conclusio",
+    "explicacio": "El mínim del quadrat de la distància és $b^2$, i per tant $d=\\sqrt{b^2}=|b|$; per a $b<0$, $d=b$ seria negatiu.",
+    "correccio": "$d=|b|$ si $b\\leq2$.",
+    "pista": "Quant val $\\sqrt{b^2}$ si $b$ és negatiu?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t6-7",
+  "dificultat": "normal",
+  "fragments": [
+   "La corba $C$ és simètrica respecte de l'origen ($\\mathbf{x}\\in C\\Rightarrow-\\mathbf{x}\\in C$), així que el centre de l'el·lipse és l'origen. Els vèrtexs són els punts de $C$ més llunyans i més propers al centre: busquem els extrems de $f=x^2+y^2+z^2$ sobre $C=\\{\\Phi_1=\\frac{x^2}{4}+y^2+z^2-1=0,\\ \\Phi_2=x+y+z=0\\}$.",
+   "$\\nabla\\Phi_1=(\\frac x2,2y,2z)$ i $\\nabla\\Phi_2=(1,1,1)$ només són paral·lels si $\\frac x2=2y=2z$, i amb $x+y+z=0$ això dona l'origen, que no és de $C$: el rang és $2$ a tot $C$. A més, $C$ és tancada, perquè és intersecció de dos tancats, i per tant compacta: $f$ hi té màxim i mínim.",
+   "Sistema de Lagrange: $2x=\\lambda\\frac x2+\\mu$, $2y=2\\lambda y+\\mu$, $2z=2\\lambda z+\\mu$. Restant les dues últimes, $2(1-\\lambda)(y-z)=0$, és a dir, $y=z$ o $\\lambda=1$.",
+   "Si $y=z$, el pla dona $x=-2y$, i l'el·lipsoide, $\\frac{4y^2}{4}+y^2+y^2=3y^2=1$, $y=\\pm\\frac{1}{\\sqrt3}$: punts $\\pm\\left(-\\frac{2}{\\sqrt3},\\frac{1}{\\sqrt3},\\frac{1}{\\sqrt3}\\right)$, amb $f=\\frac43+\\frac13+\\frac13=2$.",
+   "Si $\\lambda=1$, la segona equació dona $\\mu=0$ i la primera, $2x=\\frac x2$, és a dir, $x=0$; llavors $z=-y$ i $2y^2=1$: punts $\\pm\\left(0,\\frac{1}{\\sqrt2},-\\frac{1}{\\sqrt2}\\right)$, amb $f=1$.",
+   "Com que $f$ és el quadrat de la distància al centre, el semieix major és $2$, amb vèrtexs $\\pm\\left(-\\frac{2}{\\sqrt3},\\frac{1}{\\sqrt3},\\frac{1}{\\sqrt3}\\right)$, i el semieix menor és $1$, amb vèrtexs $\\pm\\left(0,\\frac{1}{\\sqrt2},-\\frac{1}{\\sqrt2}\\right)$. Les dues direccions són ortogonals, com ha de ser."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "és tancada, perquè és intersecció de dos tancats, i per tant compacta",
+    "tipus": "logica",
+    "explicacio": "Ser tancat no implica ser compacte (el pla és tancat i no és compacte). Cal també que $C$ sigui fitada, cosa que és certa perquè està continguda a l'el·lipsoide.",
+    "correccio": "$C$ és tancada (intersecció de dos tancats) i fitada (és dins l'el·lipsoide, que és fitat), i per tant compacta.",
+    "pista": "Tot tancat de $\\mathbb{R}^3$ és compacte? Què més cal?"
+   },
+   {
+    "fragment": 6,
+    "cita": "el semieix major és $2$",
+    "tipus": "conclusio",
+    "explicacio": "$f=2$ és el quadrat de la distància; el semieix és la distància, $\\sqrt2$. (Amb el menor no es nota perquè $\\sqrt1=1$.)",
+    "correccio": "El semieix major és $\\sqrt2$.",
+    "pista": "Si $f$ és la distància al quadrat, quina és la distància quan $f=2$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t6-9",
+  "dificultat": "normal",
+  "fragments": [
+   "De $1\\leq y\\leq x^2$ i $x>0$ surt $x\\geq1$, i de $xy\\leq8$ amb $y\\geq1$ surt $x\\leq8$. Els vèrtexs de $K$ són $(1,1)$ (on $y=1$ talla $y=x^2$), $(2,4)$ (on $y=x^2$ talla $xy=8$) i $(8,1)$ (on $xy=8$ talla $y=1$).",
+   "La frontera de $K$ és formada pel segment $y=1$, $x\\in[1,8]$, l'arc de paràbola $y=x^2$, $x\\in[1,2]$, i l'arc d'hipèrbola $y=\\frac8x$, $x\\in[2,8]$.",
+   "Sigui $g=8xy-x^2+1$. A $K$ es té $8xy\\geq8x$ (perquè $y\\geq1$) i $8x\\geq x^2$ (perquè $x\\geq1$), així que $g\\geq1>0$ i $f=\\log g$ és contínua a $K$. Per Weierstrass hi ha extrems absoluts i, com que $\\log$ és estrictament creixent, s'assoleixen als mateixos punts que els de $g$.",
+   "A l'interior de $K$, $g_y=8x\\neq0$ (perquè $x\\geq1$), així que no hi ha punts crítics.",
+   "Sobre $y=1$, $x\\in[1,8]$: $g=8x-x^2+1$, amb punt crític $x=4$ i $g(4)=25$; als extrems, $g(1)=8$ i $g(8)=1$.",
+   "Sobre $y=x^2$, $x\\in[1,2]$: $g=8x^3-x^2+1$ i $g'=24x^2-2x=2x(12x-1)>0$, de manera que $g$ és creixent, de $g(1)=8$ a $g(2)=61$.",
+   "Sobre $y=\\frac8x$, $x\\in[2,8]$: $g=64-x^2+1=65-x^2$, decreixent, de $g(2)=61$ a $g(8)=1$.",
+   "Per tant $\\max g=61$, a $(2,4)$, i $\\min g=1$, a $(8,1)$: el màxim absolut de $f$ és $\\log61$, assolit a $(2,4)$, i el mínim absolut és $\\log1=0$, assolit a $(8,1)$."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "$8x\\geq x^2$ (perquè $x\\geq1$)",
+    "tipus": "desigualtat",
+    "explicacio": "$8x\\geq x^2$ equival (per a $x>0$) a $x\\leq8$, no a $x\\geq1$: per a $x=9\\geq1$ seria fals. La desigualtat és certa a $K$ perquè allà $x\\leq8$.",
+    "correccio": "$8x\\geq x^2$ (perquè $0<x\\leq8$).",
+    "pista": "Per a quins $x>0$ es compleix $8x\\geq x^2$?"
+   },
+   {
+    "fragment": 5,
+    "cita": "$g(4)=25$",
+    "tipus": "calcul",
+    "explicacio": "$g(4)=32-16+1=17$.",
+    "correccio": "$g(4)=17$.",
+    "pista": "Quant fa $8\\cdot4-4^2+1$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t6-11",
+  "dificultat": "normal",
+  "fragments": [
+   "La circumferència unitat és tancada i fitada i $f$ és contínua, així que hi ha extrems absoluts. La parametritzem amb $(x,y)=(\\cos t,\\sin t)$, $t\\in[0,2\\pi]$.",
+   "Sobre la circumferència, $f=\\cos^3t-3\\cos t\\sin^2t=\\cos^3t-3\\cos t(1-\\cos^2t)=4\\cos^3t-3\\cos t=\\cos3t$.",
+   "Per tant $f$ pren valors a $[-1,1]$ sobre la circumferència, i $\\cos3t=1$ si i només si $t\\in\\{0,\\frac{2\\pi}{3},\\frac{4\\pi}{3}\\}$ (o $t=2\\pi$, que dona el mateix punt que $t=0$), mentre que $\\cos3t=-1$ si i només si $t\\in\\{\\frac{\\pi}{3},\\pi,\\frac{5\\pi}{3}\\}$.",
+   "Els punts de màxim són $(\\cos0,\\sin0)=(1,0)$, $\\left(\\cos\\frac{2\\pi}{3},\\sin\\frac{2\\pi}{3}\\right)=\\left(-\\frac{\\sqrt3}{2},\\frac12\\right)$ i $\\left(\\cos\\frac{4\\pi}{3},\\sin\\frac{4\\pi}{3}\\right)=\\left(-\\frac12,-\\frac{\\sqrt3}{2}\\right)$, on $f=1$.",
+   "Els punts de mínim, corresponents a $t=\\frac{\\pi}{3},\\pi,\\frac{5\\pi}{3}$, són $\\left(\\frac12,\\frac{\\sqrt3}{2}\\right)$, $(-1,0)$ i $\\left(\\frac12,-\\frac{\\sqrt3}{2}\\right)$, on $f=-1$.",
+   "Així, el màxim absolut de $f$ sobre la circumferència és $1$ i el mínim absolut és $-1$, cadascun assolit en tres punts. A més, $(1,0)$ és també un màxim local de $f$ a $\\mathbb{R}^2$."
+  ],
+  "errors": [
+   {
+    "fragment": 4,
+    "cita": "$\\left(\\cos\\frac{2\\pi}{3},\\sin\\frac{2\\pi}{3}\\right)=\\left(-\\frac{\\sqrt3}{2},\\frac12\\right)$",
+    "tipus": "calcul",
+    "explicacio": "$\\cos\\frac{2\\pi}{3}=-\\frac12$ i $\\sin\\frac{2\\pi}{3}=\\frac{\\sqrt3}{2}$: s'han intercanviat les coordenades. De fet, $f\\left(-\\frac{\\sqrt3}{2},\\frac12\\right)=0$.",
+    "correccio": "$\\left(\\cos\\frac{2\\pi}{3},\\sin\\frac{2\\pi}{3}\\right)=\\left(-\\frac12,\\frac{\\sqrt3}{2}\\right)$.",
+    "pista": "Quant val $\\cos\\frac{2\\pi}{3}$? I quant val $f$ al punt que has escrit?"
+   },
+   {
+    "fragment": 6,
+    "cita": "$(1,0)$ és també un màxim local de $f$ a $\\mathbb{R}^2$",
+    "tipus": "conclusio",
+    "explicacio": "Ser màxim sobre la circumferència no el fa màxim local al pla: $f(1+h,0)=(1+h)^3>1$ per a $h>0$ (de fet $\\nabla f(1,0)=(3,0)\\neq0$, i l'únic punt crític de $f$ és l'origen).",
+    "correccio": "$(1,0)$ és un màxim de $f$ restringida a la circumferència, però no és un extrem local de $f$ a $\\mathbb{R}^2$.",
+    "pista": "Quant val $f(1+h,0)$ per a $h>0$ petit?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t6-12",
+  "dificultat": "normal",
+  "fragments": [
+   "Sigui $\\Phi=2x^2+y^2+z^3-5xz-2$. Comprovem que $p\\in M$: $\\Phi(p)=2+4+1-5-2=0$. A més, $\\nabla\\Phi=(4x-5z,\\ 2y,\\ 3z^2-5x)$ i $\\nabla\\Phi(p)=(-1,4,-2)\\neq0$; per continuïtat $\\nabla\\Phi\\neq0$ en un obert $G\\ni p$, i $M\\cap G$ és una 2-varietat de classe $\\mathcal{C}^\\infty$.",
+   "$\\nabla f=(4x^3-2xy,\\ \\frac y2-x^2,\\ 2z-2)$, i $\\nabla f(p)=(0,0,0)=0\\cdot\\nabla\\Phi(p)$. Per tant $(p,0)$ és un punt crític de la funció de Lagrange $L=f-\\lambda\\Phi$, i $F=L(\\cdot,0)=f$.",
+   "$HF(p)=Hf(p)=\\begin{pmatrix}8&-2&0\\\\-2&\\frac12&0\\\\0&0&2\\end{pmatrix}$. El menor $2\\times2$ superior té determinant $4-4=0$, i la forma és semidefinida positiva: s'anul·la en la direcció $(4,1,0)$. El criteri d'extrems lliures no decideix.",
+   "L'espai tangent és $T_M(p)=\\ker D\\Phi(p)=\\{v\\in\\mathbb{R}^3\\mid -v_1+4v_2-2v_3=0\\}$.",
+   "La forma quadràtica és $q(v)=8v_1^2-4v_1v_2+\\frac12v_2^2+2v_3^2=\\frac12(4v_1-v_2)^2+2v_3^2\\geq0$, i $q(v)=0$ si i només si $v_3=0$ i $v_2=4v_1$.",
+   "Com que $q$ és semidefinida positiva a tot $\\mathbb{R}^3$, la seva restricció a $T_M(p)$ és definida positiva, i pel teorema de condicions suficients $p$ és un mínim local estricte de $f|_M$.",
+   "És un mínim absolut? Sí: $f(p)=1+1+1-2-2+1=0$ i $f=\\left(x^2-\\frac y2\\right)^2+(z-1)^2\\geq0$ a tot $\\mathbb{R}^3$, de manera que $f(\\mathbf{x})\\geq f(p)$ per a tot $\\mathbf{x}\\in M$."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "s'anul·la en la direcció $(4,1,0)$",
+    "tipus": "calcul",
+    "explicacio": "$q(4,1,0)=128-16+\\frac12\\neq0$. La direcció on s'anul·la és $(1,4,0)$: $q(1,4,0)=8-16+8=0$.",
+    "correccio": "S'anul·la en la direcció $(1,4,0)$.",
+    "pista": "Quant val $8v_1^2-4v_1v_2+\\frac12v_2^2$ per a $v=(4,1,0)$?"
+   },
+   {
+    "fragment": 6,
+    "cita": "Com que $q$ és semidefinida positiva a tot $\\mathbb{R}^3$, la seva restricció a $T_M(p)$ és definida positiva",
+    "tipus": "logica",
+    "explicacio": "Que $q$ sigui semidefinida a $\\mathbb{R}^3$ no implica que sigui definida sobre un subespai: cal comprovar que la direcció nul·la $(1,4,0)$ no és tangent. Ho és? $-1+16-0=15\\neq0$, així que no, i per això sí que és definida positiva a $T_M(p)$.",
+    "correccio": "Si $v\\in T_M(p)$ i $q(v)=0$, aleshores $v_3=0$, $v_2=4v_1$ i $-v_1+16v_1=0$, d'on $v=0$: $q$ és definida positiva sobre $T_M(p)$.",
+    "pista": "Si la direcció on $q$ s'anul·la fos tangent a $M$, seria definida positiva la restricció?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t6-14",
+  "dificultat": "normal",
+  "fragments": [
+   "$x^2+y^2-2x\\leq0$ equival a $(x-1)^2+y^2\\leq1$, així que $D$ és la meitat dreta del disc de centre $(1,0)$ i radi $1$, amb $x\\in[1,2]$. És tancat i fitat, per tant compacte, i $f$ és contínua: pel teorema de Weierstrass, $f$ hi assoleix màxim i mínim.",
+   "Punts crítics: $f_y=2y(x^2+2x+12)$ i $x^2+2x+12=(x+1)^2+11>0$, així que $y=0$; llavors $f_x=4x^3+2xy^2+2y^2=4x^3=0$ dona $x=0$, que no és de $D$. No hi ha punts crítics a $D$.",
+   "Mínim: a $D$, $f=x^4+y^2(x^2+2x+12)\\geq x^4\\geq1$, perquè $x\\geq1$, amb igualtat només si $y=0$ i $x=1$. El mínim és $f(1,0)=1$.",
+   "Frontera, segment $x=1$, $y\\in[-1,1]$: $f=1+y^2+2y^2+12y^2=1+14y^2$, que pren valors entre $1$ i $15$.",
+   "Arc $y^2=2x-x^2$, $x\\in[1,2]$ (amb les dues meitats, $y\\geq0$ i $y\\leq0$): $f=x^4+(2x-x^2)(x^2+2x+12)=-8x^2+24x$.",
+   "La derivada $-16x+24$ s'anul·la a $x=\\frac32$, on $f=-18+36=18$ i $y^2=3-\\frac94=\\frac34$; als extrems de l'arc, $f(1,\\pm1)=16$ i $f(2,0)=16$.",
+   "Comparant tots els candidats, el mínim absolut és $1$, assolit a $(1,0)$, i el màxim absolut és $18$, assolit a $\\left(\\frac32,\\frac{\\sqrt3}{2}\\right)$."
+  ],
+  "errors": [
+   {
+    "fragment": 4,
+    "cita": "$f=1+y^2+2y^2+12y^2=1+14y^2$",
+    "tipus": "calcul",
+    "explicacio": "$1+2+12=15$: sobre el segment, $f=1+15y^2$, que pren valors entre $1$ i $16$ (coherent amb $f(1,\\pm1)=16$ calculat a l'arc).",
+    "correccio": "$f=1+y^2+2y^2+12y^2=1+15y^2$, entre $1$ i $16$.",
+    "pista": "Quant sumen els coeficients $1+2+12$?"
+   },
+   {
+    "fragment": 7,
+    "cita": "assolit a $\\left(\\frac32,\\frac{\\sqrt3}{2}\\right)$",
+    "tipus": "conclusio",
+    "explicacio": "De $y^2=\\frac34$ surten dos punts, $y=\\pm\\frac{\\sqrt3}{2}$, i tots dos són de $D$: el màxim s'assoleix també a $\\left(\\frac32,-\\frac{\\sqrt3}{2}\\right)$.",
+    "correccio": "El màxim absolut $18$ s'assoleix a $\\left(\\frac32,\\frac{\\sqrt3}{2}\\right)$ i a $\\left(\\frac32,-\\frac{\\sqrt3}{2}\\right)$.",
+    "pista": "Quantes solucions té $y^2=\\frac34$? Són totes de $D$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t6-15b",
+  "dificultat": "normal",
+  "fragments": [
+   "Si $(x,y,z)\\in A$, de $x^2+y^2\\leq z\\leq2y-2x+1$ surt $x^2+2x+y^2-2y\\leq1$, és a dir, $(x+1)^2+(y-1)^2\\leq3$: $(x,y)$ és al disc tancat $\\Delta$ de centre $(-1,1)$ i radi $\\sqrt3$.",
+   "Llavors $0\\leq z\\leq2y-2x+1$, que és fitat sobre $\\Delta$, i $A$ és fitat. També és tancat, perquè el defineixen desigualtats no estrictes entre funcions contínues, i no és buit, perquè $(0,0,0)\\in A$. Per tant $A$ és compacte i, com que $f$ és contínua, pel teorema de Weierstrass hi assoleix màxim i mínim absoluts.",
+   "$\\nabla f=(2(x+1),\\ 2(y-1),\\ 2)\\neq0$, així que $f$ no té punts crítics a l'interior de $A$ i els extrems són a la frontera.",
+   "Com que $f$ és creixent en $z$, per a cada $(x,y)\\in\\Delta$ el mínim de $f$ s'assoleix al paraboloide $z=x^2+y^2$ i el màxim al pla $z=2y-2x+1$. Per tant $\\min_Af=\\min_\\Delta g$ amb $g=f(x,y,x^2+y^2)=3x^2+2x+3y^2-2y+2$, i $\\max_Af=\\max_\\Delta h$ amb $h=f(x,y,2y-2x+1)=(x-1)^2+(y+1)^2+2$.",
+   "$g=3\\left(x+\\frac13\\right)^2+3\\left(y-\\frac13\\right)^2+\\frac43$, amb mínim $\\frac43$ a $\\left(-\\frac13,\\frac13\\right)$, que és de $\\Delta$ perquè $\\frac49+\\frac49\\leq3$. El mínim absolut de $f$ a $A$ és $\\frac43$, assolit al punt $\\left(-\\frac13,\\frac13,\\frac23\\right)$.",
+   "$h-2$ és el quadrat de la distància de $(x,y)$ a $(1,-1)$. Aquest punt és a distància $2\\sqrt2$ del centre $(-1,1)$, i el punt de $\\Delta$ més llunyà de $(1,-1)$ és $(-1,1)+\\sqrt3\\,\\frac{(-1,1)}{\\sqrt2}=\\left(-1-\\frac{\\sqrt6}{2},\\ 1+\\frac{\\sqrt6}{2}\\right)$, a distància $2\\sqrt2+\\sqrt3$.",
+   "El màxim absolut és $(2\\sqrt2+\\sqrt3)^2+2=11+2\\sqrt6+2=13+2\\sqrt6$, assolit al punt $\\left(-1-\\frac{\\sqrt6}{2},\\ 1+\\frac{\\sqrt6}{2},\\ 5+2\\sqrt6\\right)$, on $z=2y-2x+1=5+2\\sqrt6$."
+  ],
+  "errors": [
+   {
+    "fragment": 5,
+    "cita": "$\\left(-\\frac13,\\frac13,\\frac23\\right)$",
+    "tipus": "calcul",
+    "explicacio": "El punt és al paraboloide, $z=x^2+y^2=\\frac19+\\frac19=\\frac29$, no $\\frac23$. Al punt $\\left(-\\frac13,\\frac13,\\frac23\\right)$, $f$ valdria $\\frac89+\\frac43\\neq\\frac43$.",
+    "correccio": "Assolit al punt $\\left(-\\frac13,\\frac13,\\frac29\\right)$.",
+    "pista": "Quant val $x^2+y^2$ per a $x=-\\frac13$, $y=\\frac13$?"
+   },
+   {
+    "fragment": 7,
+    "cita": "$(2\\sqrt2+\\sqrt3)^2+2=11+2\\sqrt6+2=13+2\\sqrt6$",
+    "tipus": "calcul",
+    "explicacio": "El doble producte és $2\\cdot2\\sqrt2\\cdot\\sqrt3=4\\sqrt6$: $(2\\sqrt2+\\sqrt3)^2=11+4\\sqrt6$, i el màxim és $13+4\\sqrt6$.",
+    "correccio": "$(2\\sqrt2+\\sqrt3)^2+2=11+4\\sqrt6+2=13+4\\sqrt6$.",
+    "pista": "Quant val el doble producte $2\\cdot(2\\sqrt2)\\cdot\\sqrt3$?"
+   }
+  ]
+ }
+]

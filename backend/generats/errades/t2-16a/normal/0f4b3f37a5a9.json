@@ -1,0 +1,58 @@
+{
+  "id": "0f4b3f37a5a9",
+  "exercici": "t2-16a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Suposem $A,B$ no buits i sigui $\\delta=d(A,B)$. Per a cada $k\\geq1$, $\\delta+\\frac1k$ no és fita inferior de $\\{d(a,b)\\mid a\\in A,\\ b\\in B\\}$, així que existeixen $a_k\\in A$, $b_k\\in B$ amb $\\delta\\leq d(a_k,b_k)<\\delta+\\frac1k$. Per tant $d(a_k,b_k)\\to\\delta$.",
+    "Com que $A$ és compacte, per Bolzano-Weierstrass és seqüencialment compacte: la successió $(a_k)$ té una parcial $a_{k_j}\\to a_0\\in A$.",
+    "Anàlogament, $B$ és seqüencialment compacte i $(b_k)$ té una parcial $b_{k_j}\\to b_0\\in B$, de manera que al llarg de la mateixa successió d'índexs $k_j$ tenim $a_{k_j}\\to a_0$ i $b_{k_j}\\to b_0$.",
+    "Per la desigualtat triangular, $|d(a,b)-d(a',b')|\\leq d(a,a')\\,d(b,b')$, i per tant $|d(a_{k_j},b_{k_j})-d(a_0,b_0)|\\leq d(a_{k_j},a_0)\\,d(b_{k_j},b_0)\\to0$, és a dir, $d(a_{k_j},b_{k_j})\\to d(a_0,b_0)$.",
+    "D'altra banda, $(d(a_{k_j},b_{k_j}))_j$ és una parcial de $(d(a_k,b_k))_k$, que tendeix a $\\delta$, i per tant també tendeix a $\\delta$. Per la unicitat del límit, $d(a_0,b_0)=\\delta=d(A,B)$, amb $a_0\\in A$ i $b_0\\in B$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "$(b_k)$ té una parcial $b_{k_j}\\to b_0\\in B$, de manera que al llarg de la mateixa successió d'índexs",
+      "inici": 46,
+      "fi": 147,
+      "tipus": "logica",
+      "explicacio": "Una parcial convergent de $(b_k)$ extreta independentment no té per què usar els mateixos índexs $k_j$ que la de $(a_k)$. Cal extreure-la de la successió $(b_{k_j})_j$, i la parcial corresponent de $(a_{k_j})$ continua convergint a $a_0$.",
+      "correccio": "La successió $(b_{k_j})_j\\subseteq B$ té una parcial $b_{k_{j_l}}\\to b_0\\in B$, i $a_{k_{j_l}}\\to a_0$; reanomenant, tenim una parcial comuna.",
+      "pista": "Si extreus una parcial de $(a_k)$ i una altra de $(b_k)$ per separat, per què haurien de tenir els mateixos índexs?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "$|d(a,b)-d(a',b')|\\leq d(a,a')\\,d(b,b')$",
+      "inici": 31,
+      "fi": 71,
+      "tipus": "desigualtat",
+      "explicacio": "La desigualtat triangular dona una suma, no un producte: $|d(a,b)-d(a',b')|\\leq d(a,a')+d(b,b')$. Amb el producte és falsa (si $a=a'$ i $b\\neq b'$, el membre dret és $0$).",
+      "correccio": "$|d(a,b)-d(a',b')|\\leq d(a,a')+d(b,b')$, i per tant $|d(a_{k_j},b_{k_j})-d(a_0,b_0)|\\leq d(a_{k_j},a_0)+d(b_{k_j},b_0)\\to0$.",
+      "pista": "Què passa amb la desigualtat que has escrit si $a=a'$ però $b\\neq b'$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t2.json",
+    "valoracio": "Parcials amb índexs incompatibles i desigualtat triangular amb producte en lloc de suma.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$(b_k)$ té una parcial $b_{k_j}\\to b_0\\in B$",
+        "gravetat": "error",
+        "explicacio": "Les parcials s'extreuen independentment: cal extreure-la de $(b_{k_j})_j$ (parcial d'una parcial) perquè els índexs coincideixin."
+      },
+      {
+        "fragment": 4,
+        "cita": "$|d(a,b)-d(a',b')|\\leq d(a,a')\\,d(b,b')$",
+        "gravetat": "error",
+        "explicacio": "La desigualtat triangular dona la suma $d(a,a')+d(b,b')$, no el producte (la del producte és falsa)."
+      }
+    ]
+  },
+  "creat": 1791299452.0524287
+}

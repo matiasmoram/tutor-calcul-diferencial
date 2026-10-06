@@ -1,0 +1,59 @@
+{
+  "id": "4021c5f8237b",
+  "exercici": "t2-20",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Si $f$ i $g$ fossin fitades, $|f|,|g|\\leq K$, tindríem $|f(x)g(x)-f(y)g(y)|\\leq|f(x)|\\,|g(x)-g(y)|+|g(y)|\\,|f(x)-f(y)|\\leq K|g(x)-g(y)|+K|f(x)-f(y)|$, i el producte seria uniformement continu.",
+    "Per tant, per trobar un exemple, n'hi ha prou que alguna de les dues funcions no sigui fitada. La tria més senzilla és $m=1$, $A=\\mathbb{R}$ i $f(x)=g(x)=x$.",
+    "La funció $f(x)=x$ és uniformement contínua: donat $\\varepsilon>0$, prenem $\\delta=\\varepsilon$, i si $|x-y|<\\delta$ aleshores $|f(x)-f(y)|=|x-y|<\\varepsilon$. El mateix val per a $g=f$.",
+    "Hem de veure que $h(x)=x^2$ no és uniformement contínua, és a dir: existeix $\\varepsilon>0$ tal que per a tot $\\delta>0$ existeixen $x,y\\in\\mathbb{R}$ amb $|x-y|<\\delta$ i $|h(x)-h(y)|\\geq\\varepsilon$.",
+    "Prenem $\\varepsilon=1$ i, donat $\\delta>0$, $x=\\frac1\\delta$ i $y=\\frac1\\delta+\\frac\\delta2$. Aleshores $|x-y|=\\frac\\delta2<\\delta$ i $|x^2-y^2|=|x-y|\\,|x+y|=\\frac\\delta2\\left(\\frac2\\delta+\\frac\\delta2\\right)=1+\\frac{\\delta^2}{2}\\geq1$.",
+    "Per tant, per a $\\varepsilon=1$ cap $\\delta>0$ no serveix: $h=f\\cdot g$ no és uniformement contínua, tot i que $f$ i $g$ ho són."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "n'hi ha prou que alguna de les dues funcions no sigui fitada",
+      "inici": 33,
+      "fi": 93,
+      "tipus": "logica",
+      "explicacio": "El pas anterior només diu que cal (condició necessària) que alguna no sigui fitada, no que n'hi hagi prou: per exemple, $f(x)=x$ i $g(x)=1$ a $\\mathbb{R}$ donen el producte $x$, que és uniformement continu.",
+      "correccio": "Cal que alguna de les dues funcions no sigui fitada (és una condició necessària, no suficient).",
+      "pista": "Si $f(x)=x$ i $g(x)=1$, el producte és uniformement continu?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "|x+y|=\\frac\\delta2\\left(\\frac2\\delta+\\frac\\delta2\\right)=1+\\frac{\\delta^2}{2}\\geq1$",
+      "inici": 152,
+      "fi": 235,
+      "tipus": "calcul",
+      "explicacio": "$\\frac\\delta2\\cdot\\frac\\delta2=\\frac{\\delta^2}{4}$, no $\\frac{\\delta^2}{2}$. La conclusió $\\geq1$ es manté.",
+      "correccio": "$\\frac\\delta2\\left(\\frac2\\delta+\\frac\\delta2\\right)=1+\\frac{\\delta^2}{4}\\geq1$.",
+      "pista": "Quant val $\\frac\\delta2\\cdot\\frac\\delta2$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t2.json",
+    "valoracio": "Confon condició necessària amb suficient i error aritmètic menor al càlcul final.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "n'hi ha prou que alguna de les dues funcions no sigui fitada",
+        "gravetat": "error",
+        "explicacio": "[1] mostra que és necessari que alguna no sigui fitada, no que sigui suficient (p. ex. $f(x)=x$, $g=1$ dona producte uniformement continu)."
+      },
+      {
+        "fragment": 5,
+        "cita": "=1+\\frac{\\delta^2}{2}\\geq1",
+        "gravetat": "error",
+        "explicacio": "$\\frac\\delta2\\left(\\frac2\\delta+\\frac\\delta2\\right)=1+\\frac{\\delta^2}{4}$, no $1+\\frac{\\delta^2}{2}$ (la conclusió $\\geq1$ es manté)."
+      }
+    ]
+  },
+  "creat": 1791299452.0595179
+}

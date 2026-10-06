@@ -1,0 +1,59 @@
+{
+  "id": "8024e1c55bab",
+  "exercici": "t6-2e",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "L'el·lipsoide és $\\frac{x^2}{a^2}+\\frac{y^2}{b^2}+\\frac{z^2}{c^2}=1$: un punt $(x,y,z)$ hi pertany si i només si $\\left(\\frac xa,\\frac yb,\\frac zc\\right)$ és de l'esfera unitat.",
+    "Parametritzem l'esfera unitat amb coordenades esfèriques, $(\\cos u\\cos v,\\ \\sin u\\cos v,\\ \\sin v)$, i escalem cada coordenada: $\\varphi(u,v)=(a\\cos u\\cos v,\\ b\\sin u\\cos v,\\ c\\sin v)$, amb $(u,v)\\in[0,2\\pi]\\times[-\\pi/2,\\pi/2]$.",
+    "Efectivament, $\\cos^2u\\cos^2v+\\sin^2u\\cos^2v+\\sin^2v=\\cos^2v+\\sin^2v=1$, de manera que $\\varphi$ pren valors a l'el·lipsoide i el recobreix tot; a més, $\\varphi$ és de classe $\\mathcal{C}^\\infty$ i és injectiva en tot el domini.",
+    "Les derivades parcials són $\\partial_u\\varphi=(-a\\sin u\\cos v,\\ b\\cos u\\cos v,\\ 0)$ i $\\partial_v\\varphi=(-a\\cos u\\sin v,\\ b\\sin u\\sin v,\\ c\\cos v)$.",
+    "Si $\\cos v\\neq0$, $\\partial_u\\varphi$ és no nul (perquè $\\sin u$ i $\\cos u$ no s'anul·len alhora) i té tercera component $0$, mentre que la tercera component de $\\partial_v\\varphi$ és $c\\cos v\\neq0$: són linealment independents i $D\\varphi$ té rang $2$. Si $\\cos v=0$, $\\partial_u\\varphi=0$ i el rang és $1$.",
+    "Per tant, $\\varphi$ és una parametrització $\\mathcal{C}^\\infty$ de l'el·lipsoide, regular (rang $2$) als punts amb $\\cos v\\neq0$, és a dir, fora dels pols $(0,0,\\pm c)$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "és injectiva en tot el domini",
+      "inici": 198,
+      "fi": 227,
+      "tipus": "conclusio",
+      "explicacio": "No és injectiva: $\\varphi(0,v)=\\varphi(2\\pi,v)$ per a tot $v$, i tots els punts amb $v=\\pi/2$ (o $v=-\\pi/2$) van a un mateix pol.",
+      "correccio": "$\\varphi$ és de classe $\\mathcal{C}^\\infty$ i exhaustiva sobre l'el·lipsoide (és injectiva només a l'interior del rectangle, $(0,2\\pi)\\times(-\\pi/2,\\pi/2)$).",
+      "pista": "Quina imatge tenen els punts $(0,v)$ i $(2\\pi,v)$? I els punts amb $v=\\pi/2$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "$\\partial_v\\varphi=(-a\\cos u\\sin v,\\ b\\sin u\\sin v,\\ c\\cos v)$",
+      "inici": 86,
+      "fi": 148,
+      "tipus": "calcul",
+      "explicacio": "La derivada de $b\\sin u\\cos v$ respecte de $v$ és $-b\\sin u\\sin v$: falta el signe menys a la segona component.",
+      "correccio": "$\\partial_v\\varphi=(-a\\cos u\\sin v,\\ -b\\sin u\\sin v,\\ c\\cos v)$.",
+      "pista": "Quina és la derivada de $\\cos v$ respecte de $v$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t56.json",
+    "valoracio": "Afirmació falsa d'injectivitat i error de signe a $\\partial_v\\varphi$.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "és injectiva en tot el domini",
+        "gravetat": "error",
+        "explicacio": "No és injectiva: $u=0$ i $u=2\\pi$ donen el mateix punt, i per a $v=\\pm\\pi/2$ tots els $u$ van al mateix pol."
+      },
+      {
+        "fragment": 4,
+        "cita": "$\\partial_v\\varphi=(-a\\cos u\\sin v,\\ b\\sin u\\sin v,\\ c\\cos v)$",
+        "gravetat": "error",
+        "explicacio": "La segona component és $-b\\sin u\\sin v$ (derivada de $b\\sin u\\cos v$ respecte de $v$)."
+      }
+    ]
+  },
+  "creat": 1791299721.559672
+}

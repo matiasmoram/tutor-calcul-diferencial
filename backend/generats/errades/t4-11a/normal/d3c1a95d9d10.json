@@ -1,0 +1,59 @@
+{
+  "id": "d3c1a95d9d10",
+  "exercici": "t4-11a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "$G(x,y)=(x^2-y^2,2xy)$ té components polinòmiques, per tant és de classe $\\mathcal{C}^\\infty$ a $U=\\mathbb{R}^2$.",
+    "La jacobiana és $JG(x,y)=\\begin{pmatrix}2x&-2y\\\\ 2y&2x\\end{pmatrix}$, amb $\\det JG(x,y)=4x^2+4y^2=4(x^2+y^2)$, que només s'anul·la a l'origen.",
+    "Per tant, a cada punt de $\\mathbb{R}^2\\setminus\\{(0,0)\\}$ el teorema de la funció inversa dona una inversa local, però això no diu res sobre la injectivitat global de $G$.",
+    "De fet, $G(-x,-y)=\\big((-x)^2-(-y)^2,2(-x)(-y)\\big)=G(x,y)$, i $(-x,-y)\\neq(x,y)$ si $(x,y)\\neq(0,0)$; per exemple, $G(1,0)=G(0,1)=(1,0)$. Així $G$ no és injectiva a $U$.",
+    "A més, $\\det JG(0,0)=0$ i, pel teorema de la funció inversa, això implica que $G$ no és injectiva en cap entorn de l'origen.",
+    "Com que $G$ no és injectiva, $G:U\\to G(U)$ no és bijectiva i, per tant, no és un canvi de variables (difeomorfisme)."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "$G(1,0)=G(0,1)=(1,0)$",
+      "inici": 116,
+      "fi": 137,
+      "tipus": "calcul",
+      "explicacio": "$G(0,1)=(0-1,0)=(-1,0)\\neq(1,0)$. L'exemple ha de ser un parell de punts oposats.",
+      "correccio": "Per exemple, $G(1,0)=G(-1,0)=(1,0)$.",
+      "pista": "Calcula $G(0,1)$ directament. És $(0,1)$ l'oposat de $(1,0)$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "pel teorema de la funció inversa, això implica que $G$ no és injectiva en cap entorn de l'origen",
+      "inici": 27,
+      "fi": 123,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "El teorema de la funció inversa només dona una condició suficient; si $\\det JG=0$ no diu res de la injectivitat (p. ex. $x\\mapsto x^3$ és injectiva amb derivada nul·la a $0$).",
+      "correccio": "Com que $\\det JG(0,0)=0$, cap inversa local podria ser diferenciable en $G(0,0)=(0,0)$: si $H\\circ G=\\mathrm{Id}$ amb $H$ diferenciable, $DH(0,0)\\,DG(0,0)=I$, impossible.",
+      "pista": "Què diu el teorema de la funció inversa quan el determinant jacobià és $0$? Coneixes alguna funció injectiva amb derivada nul·la en un punt?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4a.json",
+    "valoracio": "Conclusió correcta, però amb un contraexemple numèric fals i un ús invers del TFI.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "$G(1,0)=G(0,1)=(1,0)$",
+        "gravetat": "error",
+        "explicacio": "$G(0,1)=(-1,0)$; l'exemple correcte és $G(1,0)=G(-1,0)=(1,0)$."
+      },
+      {
+        "fragment": 5,
+        "cita": "pel teorema de la funció inversa, això implica que $G$ no és injectiva en cap entorn de l'origen",
+        "gravetat": "error",
+        "explicacio": "El TFI dona una condició suficient, no necessària: $\\det JG=0$ no implica no injectivitat (p. ex. $x^3$ a $0$)."
+      }
+    ]
+  },
+  "creat": 1791299402.969564
+}

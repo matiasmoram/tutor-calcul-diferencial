@@ -1,0 +1,59 @@
+{
+  "id": "83a667fc9449",
+  "exercici": "t6-7",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "La corba $C$ és simètrica respecte de l'origen ($\\mathbf{x}\\in C\\Rightarrow-\\mathbf{x}\\in C$), així que el centre de l'el·lipse és l'origen. Els vèrtexs són els punts de $C$ més llunyans i més propers al centre: busquem els extrems de $f=x^2+y^2+z^2$ sobre $C=\\{\\Phi_1=\\frac{x^2}{4}+y^2+z^2-1=0,\\ \\Phi_2=x+y+z=0\\}$.",
+    "$\\nabla\\Phi_1=(\\frac x2,2y,2z)$ i $\\nabla\\Phi_2=(1,1,1)$ només són paral·lels si $\\frac x2=2y=2z$, i amb $x+y+z=0$ això dona l'origen, que no és de $C$: el rang és $2$ a tot $C$. A més, $C$ és tancada, perquè és intersecció de dos tancats, i per tant compacta: $f$ hi té màxim i mínim.",
+    "Sistema de Lagrange: $2x=\\lambda\\frac x2+\\mu$, $2y=2\\lambda y+\\mu$, $2z=2\\lambda z+\\mu$. Restant les dues últimes, $2(1-\\lambda)(y-z)=0$, és a dir, $y=z$ o $\\lambda=1$.",
+    "Si $y=z$, el pla dona $x=-2y$, i l'el·lipsoide, $\\frac{4y^2}{4}+y^2+y^2=3y^2=1$, $y=\\pm\\frac{1}{\\sqrt3}$: punts $\\pm\\left(-\\frac{2}{\\sqrt3},\\frac{1}{\\sqrt3},\\frac{1}{\\sqrt3}\\right)$, amb $f=\\frac43+\\frac13+\\frac13=2$.",
+    "Si $\\lambda=1$, la segona equació dona $\\mu=0$ i la primera, $2x=\\frac x2$, és a dir, $x=0$; llavors $z=-y$ i $2y^2=1$: punts $\\pm\\left(0,\\frac{1}{\\sqrt2},-\\frac{1}{\\sqrt2}\\right)$, amb $f=1$.",
+    "Com que $f$ és el quadrat de la distància al centre, el semieix major és $2$, amb vèrtexs $\\pm\\left(-\\frac{2}{\\sqrt3},\\frac{1}{\\sqrt3},\\frac{1}{\\sqrt3}\\right)$, i el semieix menor és $1$, amb vèrtexs $\\pm\\left(0,\\frac{1}{\\sqrt2},-\\frac{1}{\\sqrt2}\\right)$. Les dues direccions són ortogonals, com ha de ser."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "és tancada, perquè és intersecció de dos tancats, i per tant compacta",
+      "inici": 190,
+      "fi": 259,
+      "tipus": "logica",
+      "explicacio": "Ser tancat no implica ser compacte (el pla és tancat i no és compacte). Cal també que $C$ sigui fitada, cosa que és certa perquè està continguda a l'el·lipsoide.",
+      "correccio": "$C$ és tancada (intersecció de dos tancats) i fitada (és dins l'el·lipsoide, que és fitat), i per tant compacta.",
+      "pista": "Tot tancat de $\\mathbb{R}^3$ és compacte? Què més cal?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "el semieix major és $2$",
+      "inici": 53,
+      "fi": 76,
+      "tipus": "conclusio",
+      "explicacio": "$f=2$ és el quadrat de la distància; el semieix és la distància, $\\sqrt2$. (Amb el menor no es nota perquè $\\sqrt1=1$.)",
+      "correccio": "El semieix major és $\\sqrt2$.",
+      "pista": "Si $f$ és la distància al quadrat, quina és la distància quan $f=2$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t56.json",
+    "valoracio": "Compacitat sense fitació i semieix major sense treure l'arrel.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$C$ és tancada, perquè és intersecció de dos tancats, i per tant compacta",
+        "gravetat": "error",
+        "explicacio": "Tancat no implica compacte; cal també que sigui fitada (ho és perquè és dins l'el·lipsoide)."
+      },
+      {
+        "fragment": 6,
+        "cita": "el semieix major és $2$",
+        "gravetat": "error",
+        "explicacio": "$f$ és la distància al quadrat: el semieix major és $\\sqrt2$, no 2 (incoherent amb el menor, $\\sqrt1=1$)."
+      }
+    ]
+  },
+  "creat": 1791299721.5612073
+}

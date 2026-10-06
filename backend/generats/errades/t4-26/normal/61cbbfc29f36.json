@@ -1,0 +1,59 @@
+{
+  "id": "61cbbfc29f36",
+  "exercici": "t4-26",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $\\Phi(x,u,v)=(xe^u+ue^v,\\,xe^v+ve^u)$, de classe $\\mathcal{C}^\\infty$ a $\\mathbb{R}^3$ perquè és suma i producte de polinomis i exponencials. Volem veure que $\\Phi(x,u,v)=(0,0)$ defineix $u,v$ com a funcions de $x$ a prop de $x=-1$.",
+    "El punt $(-1,1,1)$ és solució: $\\Phi(-1,1,1)=(-e+e,\\,-e+e)=(0,0)$.",
+    "Derivant respecte de $u$ i de $v$: $\\frac{\\partial\\Phi}{\\partial(u,v)}=\\begin{pmatrix}xe^u+e^v&e^v\\\\ ve^u&xe^v+e^u\\end{pmatrix}$.",
+    "En $(-1,1,1)$ aquesta matriu val $\\begin{pmatrix}0&e\\\\e&0\\end{pmatrix}$, de determinant $-e^2\\neq0$.",
+    "Com que $\\Phi$ és contínua, s'anul·la en $(-1,1,1)$ i el determinant anterior és no nul, el teorema de la funció implícita dona un entorn obert $U$ de $-1$ i funcions $u,v:U\\to\\mathbb{R}$, amb $u(-1)=v(-1)=1$, que satisfan el sistema per a tot $x\\in U$.",
+    "A més, el teorema dona $u,v$ de la mateixa classe que $\\Phi$, és a dir $\\mathcal{C}^\\infty$, i en particular de classe $\\mathcal{C}^1$, com es demanava."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "$\\frac{\\partial\\Phi}{\\partial(u,v)}=\\begin{pmatrix}xe^u+e^v&e^v\\\\",
+      "inici": 35,
+      "fi": 100,
+      "tipus": "calcul",
+      "explicacio": "La derivada de $ue^v$ respecte de $v$ és $ue^v$, no $e^v$: s'ha perdut el factor $u$. Al punt ($u=1$) el valor coincideix, però la matriu és incorrecta.",
+      "correccio": "$\\frac{\\partial\\Phi}{\\partial(u,v)}=\\begin{pmatrix}xe^u+e^v&ue^v\\\\ ve^u&xe^v+e^u\\end{pmatrix}$.",
+      "pista": "En derivar $ue^v$ respecte de $v$, què passa amb el factor $u$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "Com que $\\Phi$ és contínua",
+      "inici": 0,
+      "fi": 26,
+      "tipus": "hipotesi",
+      "explicacio": "El teorema de la funció implícita necessita que $\\Phi$ sigui de classe $\\mathcal{C}^1$ (aquí ho és, i fins i tot $\\mathcal{C}^\\infty$); la continuïtat no és suficient, ni tan sols permet parlar del determinant de les derivades.",
+      "correccio": "Com que $\\Phi$ és de classe $\\mathcal{C}^\\infty$ (en particular $\\mathcal{C}^1$), s'anul·la en $(-1,1,1)$ i el determinant és no nul, ...",
+      "pista": "Quina regularitat de $\\Phi$ demana el teorema de la funció implícita?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4b.json",
+    "valoracio": "Resultat correcte, però amb una derivada parcial mal calculada i el TFI justificat amb una hipòtesi (continuïtat) insuficient.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "xe^u+e^v&e^v",
+        "gravetat": "error",
+        "explicacio": "$\\frac{\\partial}{\\partial v}(ue^v)=ue^v$, no $e^v$: s'ha oblidat el factor $u$ (al punt $u=1$, per això el valor coincideix)."
+      },
+      {
+        "fragment": 5,
+        "cita": "Com que $\\Phi$ és contínua",
+        "gravetat": "error",
+        "explicacio": "El TFI requereix $\\Phi$ de classe $\\mathcal{C}^r$ amb $r\\ge1$, no només contínua; la hipòtesi invocada és insuficient (cal usar que $\\Phi\\in\\mathcal{C}^\\infty$)."
+      }
+    ]
+  },
+  "creat": 1791299408.5666099
+}

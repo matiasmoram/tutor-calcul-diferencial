@@ -1,0 +1,59 @@
+{
+  "id": "2bb4f9e43414",
+  "exercici": "t6-11",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "La circumferència unitat és tancada i fitada i $f$ és contínua, així que hi ha extrems absoluts. La parametritzem amb $(x,y)=(\\cos t,\\sin t)$, $t\\in[0,2\\pi]$.",
+    "Sobre la circumferència, $f=\\cos^3t-3\\cos t\\sin^2t=\\cos^3t-3\\cos t(1-\\cos^2t)=4\\cos^3t-3\\cos t=\\cos3t$.",
+    "Per tant $f$ pren valors a $[-1,1]$ sobre la circumferència, i $\\cos3t=1$ si i només si $t\\in\\{0,\\frac{2\\pi}{3},\\frac{4\\pi}{3}\\}$ (o $t=2\\pi$, que dona el mateix punt que $t=0$), mentre que $\\cos3t=-1$ si i només si $t\\in\\{\\frac{\\pi}{3},\\pi,\\frac{5\\pi}{3}\\}$.",
+    "Els punts de màxim són $(\\cos0,\\sin0)=(1,0)$, $\\left(\\cos\\frac{2\\pi}{3},\\sin\\frac{2\\pi}{3}\\right)=\\left(-\\frac{\\sqrt3}{2},\\frac12\\right)$ i $\\left(\\cos\\frac{4\\pi}{3},\\sin\\frac{4\\pi}{3}\\right)=\\left(-\\frac12,-\\frac{\\sqrt3}{2}\\right)$, on $f=1$.",
+    "Els punts de mínim, corresponents a $t=\\frac{\\pi}{3},\\pi,\\frac{5\\pi}{3}$, són $\\left(\\frac12,\\frac{\\sqrt3}{2}\\right)$, $(-1,0)$ i $\\left(\\frac12,-\\frac{\\sqrt3}{2}\\right)$, on $f=-1$.",
+    "Així, el màxim absolut de $f$ sobre la circumferència és $1$ i el mínim absolut és $-1$, cadascun assolit en tres punts. A més, $(1,0)$ és també un màxim local de $f$ a $\\mathbb{R}^2$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "$\\left(\\cos\\frac{2\\pi}{3},\\sin\\frac{2\\pi}{3}\\right)=\\left(-\\frac{\\sqrt3}{2},\\frac12\\right)$",
+      "inici": 46,
+      "fi": 137,
+      "tipus": "calcul",
+      "explicacio": "$\\cos\\frac{2\\pi}{3}=-\\frac12$ i $\\sin\\frac{2\\pi}{3}=\\frac{\\sqrt3}{2}$: s'han intercanviat les coordenades. De fet, $f\\left(-\\frac{\\sqrt3}{2},\\frac12\\right)=0$.",
+      "correccio": "$\\left(\\cos\\frac{2\\pi}{3},\\sin\\frac{2\\pi}{3}\\right)=\\left(-\\frac12,\\frac{\\sqrt3}{2}\\right)$.",
+      "pista": "Quant val $\\cos\\frac{2\\pi}{3}$? I quant val $f$ al punt que has escrit?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "$(1,0)$ és també un màxim local de $f$ a $\\mathbb{R}^2$",
+      "inici": 128,
+      "fi": 183,
+      "tipus": "conclusio",
+      "explicacio": "Ser màxim sobre la circumferència no el fa màxim local al pla: $f(1+h,0)=(1+h)^3>1$ per a $h>0$ (de fet $\\nabla f(1,0)=(3,0)\\neq0$, i l'únic punt crític de $f$ és l'origen).",
+      "correccio": "$(1,0)$ és un màxim de $f$ restringida a la circumferència, però no és un extrem local de $f$ a $\\mathbb{R}^2$.",
+      "pista": "Quant val $f(1+h,0)$ per a $h>0$ petit?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t56.json",
+    "valoracio": "Punt de màxim mal avaluat i afirmació falsa d'extrem lliure a $(1,0)$.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "\\left(\\cos\\frac{2\\pi}{3},\\sin\\frac{2\\pi}{3}\\right)=\\left(-\\frac{\\sqrt3}{2},\\frac12\\right)",
+        "gravetat": "error",
+        "explicacio": "$\\cos\\frac{2\\pi}{3}=-\\frac12$ i $\\sin\\frac{2\\pi}{3}=\\frac{\\sqrt3}{2}$: el punt és $\\left(-\\frac12,\\frac{\\sqrt3}{2}\\right)$."
+      },
+      {
+        "fragment": 6,
+        "cita": "A més, $(1,0)$ és també un màxim local de $f$ a $\\mathbb{R}^2$.",
+        "gravetat": "error",
+        "explicacio": "Fals: $\\nabla f(1,0)=(3,0)\\neq0$, no és punt crític i $f(1+t,0)>f(1,0)$ per a $t>0$."
+      }
+    ]
+  },
+  "creat": 1791299721.562842
+}

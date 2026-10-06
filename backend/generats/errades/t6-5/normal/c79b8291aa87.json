@@ -1,0 +1,60 @@
+{
+  "id": "c79b8291aa87",
+  "exercici": "t6-5",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Minimitzem el quadrat de la distància, $D(x,y)=x^2+(y-b)^2$, sobre la paràbola $P=\\{x^2=4y\\}$. Com que $P$ és un tancat de $\\mathbb{R}^2$, és compacte, i pel teorema de Weierstrass $D$ hi assoleix el mínim.",
+    "Mètode 1 (substitució): sobre $P$, $x^2=4y$ amb $y\\geq0$, i $D=g(y)=4y+(y-b)^2=y^2+(4-2b)y+b^2$, una paràbola en $y$ amb vèrtex a $y=b-2$.",
+    "Si $b\\geq2$, el vèrtex és admissible i el mínim és $g(b-2)=4(b-2)+4=4b-4$, assolit als punts $\\left(\\pm2\\sqrt{b-2},\\,b-2\\right)$. Si $b<2$, el vèrtex és a $y<0$, $g$ és creixent a $[0,+\\infty)$ i el mínim és $g(0)=b^2$, al punt $(0,0)$.",
+    "Mètode 2 (multiplicadors de Lagrange): amb $\\Phi=x^2-4y$, $\\nabla\\Phi=(2x,-4)\\neq0$, i el sistema és $2x=2\\lambda x$, $2(y-b)=-4\\lambda$, $x^2=4y$.",
+    "De la primera equació, $x=0$ o $\\lambda=1$. Si $x=0$, aleshores $y=0$ i $D=b^2$. Si $\\lambda=1$, aleshores $y=b-2$, i cal $x^2=4(b-2)\\geq0$, és a dir, $b\\geq2$; llavors $D=4b-4$.",
+    "Per a $b\\geq2$, $b^2-(4b-4)=(b-2)^2\\geq0$, de manera que el mínim és $4b-4$; per a $b<2$ l'únic candidat és $(0,0)$, que és, doncs, el mínim.",
+    "En conclusió, la distància és $d=b$ si $b\\leq2$ i $d=2\\sqrt{b-1}$ si $b\\geq2$; les dues expressions coincideixen a $b=2$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "Com que $P$ és un tancat de $\\mathbb{R}^2$, és compacte",
+      "inici": 95,
+      "fi": 150,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "Un tancat no fitat no és compacte, i la paràbola no és fitada: Weierstrass no s'hi pot aplicar directament. Cal usar que $D\\to+\\infty$ quan $\\|(x,y)\\|\\to\\infty$ per reduir-se a $P\\cap\\overline{B}(0,R)$, que sí que és compacte.",
+      "correccio": "$P$ és tancat però no fitat; com que $D\\to+\\infty$ quan $\\|(x,y)\\|\\to\\infty$, el mínim sobre $P$ coincideix amb el mínim sobre el compacte $P\\cap\\overline{B}(0,R)$ per a $R$ gran, que existeix per Weierstrass.",
+      "pista": "La paràbola, és un conjunt fitat?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "$d=b$ si $b\\leq2$",
+      "inici": 30,
+      "fi": 47,
+      "tipus": "conclusio",
+      "explicacio": "El mínim del quadrat de la distància és $b^2$, i per tant $d=\\sqrt{b^2}=|b|$; per a $b<0$, $d=b$ seria negatiu.",
+      "correccio": "$d=|b|$ si $b\\leq2$.",
+      "pista": "Quant val $\\sqrt{b^2}$ si $b$ és negatiu?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t56.json",
+    "valoracio": "Existència justificada amb una compacitat falsa i distància sense valor absolut.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "Com que $P$ és un tancat de $\\mathbb{R}^2$, és compacte",
+        "gravetat": "error",
+        "explicacio": "La paràbola és tancada però no fitada, per tant no és compacta; cal l'argument de coercivitat ($D\\to\\infty$) per reduir-se a un compacte."
+      },
+      {
+        "fragment": 7,
+        "cita": "$d=b$ si $b\\leq2$",
+        "gravetat": "error",
+        "explicacio": "La distància és $\\sqrt{b^2}=|b|$; per a $b<0$, $d=b$ seria negativa."
+      }
+    ]
+  },
+  "creat": 1791299721.560512
+}

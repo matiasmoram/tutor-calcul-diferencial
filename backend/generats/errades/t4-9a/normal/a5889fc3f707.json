@@ -1,0 +1,61 @@
+{
+  "id": "a5889fc3f707",
+  "exercici": "t4-9a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "$F$ té components de classe $\\mathcal{C}^\\infty$ i $JF(r,\\varphi)=\\begin{pmatrix}\\cos\\varphi&-r\\sin\\varphi\\\\ \\sin\\varphi&r\\cos\\varphi\\end{pmatrix}$, amb $\\det JF(r,\\varphi)=r\\cos^2\\varphi+r\\sin^2\\varphi=r>0$ a tot el domini $(0,\\infty)\\times\\mathbb{R}$.",
+    "Pel teorema de la funció inversa, per a cada punt $p$ del domini hi ha un entorn obert $U_p$ tal que $F|_{U_p}:U_p\\to F(U_p)$ és bijectiva, $F(U_p)$ és obert i la inversa és de classe $\\mathcal{C}^k$ per a tot $k$, és a dir $\\mathcal{C}^\\infty$. Així $F$ és un difeomorfisme local $\\mathcal{C}^\\infty$ en tot punt.",
+    "$F$ no és injectiva al domini sencer: si $F(r,\\varphi)=F(r',\\varphi')$, prenent normes $r=r'$ i llavors $(\\cos\\varphi,\\sin\\varphi)=(\\cos\\varphi',\\sin\\varphi')$, que equival a $\\varphi-\\varphi'\\in 2\\pi\\mathbb{Z}$; per exemple, $F(r,\\varphi+2\\pi)=F(r,\\varphi)$.",
+    "Per a cada $\\alpha\\in\\mathbb{R}$, sigui $U_\\alpha=(0,\\infty)\\times(\\alpha,\\alpha+2\\pi)$. Dos angles d'aquest interval difereixen en menys de $2\\pi$, així que $F|_{U_\\alpha}$ és injectiva i, com que és $\\mathcal{C}^\\infty$ amb $\\det JF\\neq 0$, és un difeomorfisme sobre la seva imatge.",
+    "La imatge és $F(U_\\alpha)=\\mathbb{R}^2\\setminus\\{(t\\cos\\alpha,t\\sin\\alpha)\\mid t>0\\}$, és a dir, el pla menys la semirecta oberta d'angle $\\alpha$.",
+    "Maximalitat: sigui $W\\supsetneq U_\\alpha$ un obert del domini i $(r_0,\\varphi_0)\\in W\\setminus U_\\alpha$. Si $\\varphi_0\\not\\equiv\\alpha\\pmod{2\\pi}$, hi ha un únic $\\varphi_1\\in(\\alpha,\\alpha+2\\pi)$ amb $\\varphi_1\\equiv\\varphi_0$, i $\\varphi_1\\neq\\varphi_0$ perquè $\\varphi_0\\notin(\\alpha,\\alpha+2\\pi)$; els punts $(r_0,\\varphi_0)$ i $(r_0,\\varphi_1)$ són de $W$, són diferents i tenen la mateixa imatge.",
+    "Si $\\varphi_0\\equiv\\alpha\\pmod{2\\pi}$, aleshores $F(r_0,\\varphi_0)=(r_0\\cos\\alpha,r_0\\sin\\alpha)$ és de la semirecta que no és a $F(U_\\alpha)$, i per tant $F|_W$ tampoc no és injectiva.",
+    "En tots els casos $F|_W$ no és injectiva, de manera que cada $U_\\alpha$ és un obert màxim on la restricció de $F$ és un difeomorfisme; per a $\\alpha=0$ és el cas de la indicació. Hi ha, doncs, infinits oberts màxims (per exemple, tots els $U_\\alpha$)."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 5,
+      "cita": "$F(U_\\alpha)=\\mathbb{R}^2\\setminus\\{(t\\cos\\alpha,t\\sin\\alpha)\\mid t>0\\}$, és a dir, el pla menys la semirecta oberta",
+      "inici": 13,
+      "fi": 129,
+      "tipus": "conclusio",
+      "explicacio": "Com que $r>0$, $F$ mai no val $(0,0)$: l'origen tampoc no és a la imatge. Cal treure la semirecta tancada ($t\\geq 0$).",
+      "correccio": "$F(U_\\alpha)=\\mathbb{R}^2\\setminus\\{(t\\cos\\alpha,t\\sin\\alpha)\\mid t\\geq 0\\}$, el pla menys la semirecta tancada d'angle $\\alpha$.",
+      "pista": "Hi ha algun punt $(r,\\varphi)$ del domini amb $F(r,\\varphi)=(0,0)$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 7,
+      "cita": "és de la semirecta que no és a $F(U_\\alpha)$, i per tant $F|_W$ tampoc no és injectiva",
+      "inici": 98,
+      "fi": 184,
+      "tipus": "logica",
+      "explicacio": "Que un punt de $W$ tingui la imatge fora de $F(U_\\alpha)$ no dona cap parell de punts amb la mateixa imatge; no se segueix la no-injectivitat.",
+      "correccio": "Com que $W$ és obert, conté $(r_0,\\varphi_0\\pm\\varepsilon)$ per a $\\varepsilon>0$ petit, i un d'aquests punts és de $W\\setminus U_\\alpha$ amb angle no congruent amb $\\alpha$: es redueix al cas anterior.",
+      "pista": "Per refutar la injectivitat, quins dos punts diferents de $W$ amb la mateixa imatge has trobat en aquest cas?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4a.json",
+    "valoracio": "Difeomorfisme local i oberts U_alpha correctes, però la imatge està mal descrita i el cas phi_0 congruent amb alpha de la maximalitat és un non sequitur.",
+    "problemes": [
+      {
+        "fragment": 5,
+        "cita": "$F(U_\\alpha)=\\mathbb{R}^2\\setminus\\{(t\\cos\\alpha,t\\sin\\alpha)\\mid t>0\\}$, és a dir, el pla menys la semirecta oberta d'angle $\\alpha$",
+        "gravetat": "error",
+        "explicacio": "L'origen no és a la imatge ($r>0$): $F(U_\\alpha)$ és el pla menys la semirecta tancada ($t\\geq0$)."
+      },
+      {
+        "fragment": 7,
+        "cita": "és de la semirecta que no és a $F(U_\\alpha)$, i per tant $F|_W$ tampoc no és injectiva",
+        "gravetat": "error",
+        "explicacio": "Que la imatge d'un punt no sigui a $F(U_\\alpha)$ no produeix cap col·lisió; cal usar que $W$ és obert per trobar un punt proper de $W\\setminus U_\\alpha$ amb angle no congruent amb $\\alpha$ i reduir-se al cas anterior."
+      }
+    ]
+  },
+  "creat": 1791299402.9682605
+}

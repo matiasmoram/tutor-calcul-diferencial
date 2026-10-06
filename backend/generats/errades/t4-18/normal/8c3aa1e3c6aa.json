@@ -1,0 +1,61 @@
+{
+  "id": "8c3aa1e3c6aa",
+  "exercici": "t4-18",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Escrivim el sistema com $\\Phi(x,y,z,u)=(0,0)$ amb $\\Phi(x,y,z,u)=(xz^3+y^2u^3-1,\\,2xy^3+u^2z)$, polinòmica i per tant de classe $\\mathcal{C}^\\infty$. El punt és solució: $\\Phi(0,1,0,1)=(0+1-1,\\,0+0)=(0,0)$.",
+    "Com que volem aïllar $x$ i $y$, calculem $\\frac{\\partial\\Phi}{\\partial(x,y)}=\\begin{pmatrix}z^3&2yu^3\\\\2y^3&6xy^2\\end{pmatrix}$, que al punt $(0,1,0,1)$ val $\\begin{pmatrix}0&2\\\\2&0\\end{pmatrix}$, de determinant $-4\\neq0$.",
+    "Pel teorema de la funció implícita existeixen un entorn obert $\\Omega$ de $(0,1)$ i $g=(g_1,g_2)\\in\\mathcal{C}^\\infty(\\Omega)$ amb $g(0,1)=(0,1)$ i $\\Phi(g_1(z,u),g_2(z,u),z,u)=(0,0)$ per a tot $(z,u)\\in\\Omega$.",
+    "Derivant aquesta identitat amb la regla de la cadena, $\\frac{\\partial\\Phi}{\\partial(x,y)}\\,Dg+\\frac{\\partial\\Phi}{\\partial(z,u)}=0$, és a dir, $Dg(0,1)=-\\Big(\\frac{\\partial\\Phi}{\\partial(x,y)}\\Big)^{-1}\\frac{\\partial\\Phi}{\\partial(z,u)}$, amb les dues matrius avaluades a $(0,1,0,1)$.",
+    "$\\frac{\\partial\\Phi}{\\partial(z,u)}=\\begin{pmatrix}3xz^2&3y^2u^2\\\\u^2&2uz\\end{pmatrix}$, que al punt val $\\begin{pmatrix}0&3\\\\1&0\\end{pmatrix}$; a més, $\\begin{pmatrix}0&2\\\\2&0\\end{pmatrix}^{-1}=\\begin{pmatrix}0&\\frac12\\\\ \\frac12&0\\end{pmatrix}$.",
+    "Llavors $Dg(0,1)=-\\begin{pmatrix}0&3\\\\1&0\\end{pmatrix}\\begin{pmatrix}0&\\frac12\\\\ \\frac12&0\\end{pmatrix}=-\\begin{pmatrix}\\frac32&0\\\\0&\\frac12\\end{pmatrix}=\\begin{pmatrix}-\\frac32&0\\\\0&-\\frac12\\end{pmatrix}$.",
+    "Per tant $\\det Dg(0,1)=\\left(-\\frac32\\right)\\left(-\\frac12\\right)=\\frac34\\neq0$.",
+    "Com que $g$ és de classe $\\mathcal{C}^\\infty$ a l'obert $\\Omega$ i $\\det Dg(0,1)\\neq0$, el teorema de la funció inversa garanteix que $g$ és injectiva a tot $\\Omega$ i que la seva inversa és de classe $\\mathcal{C}^\\infty$. En particular, $g$ té inversa local diferenciable al voltant de $(0,1)$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 6,
+      "cita": "$Dg(0,1)=-\\begin{pmatrix}0&3\\\\1&0\\end{pmatrix}\\begin{pmatrix}0&\\frac12\\\\ \\frac12&0\\end{pmatrix}",
+      "inici": 8,
+      "fi": 103,
+      "tipus": "calcul",
+      "explicacio": "El producte s'ha fet en l'ordre invers al de la fórmula del fragment anterior: cal multiplicar $\\big(\\frac{\\partial\\Phi}{\\partial(x,y)}\\big)^{-1}$ per l'esquerra. El producte de matrius no és commutatiu i el resultat correcte és $\\begin{pmatrix}-\\frac12&0\\\\0&-\\frac32\\end{pmatrix}$.",
+      "correccio": "$Dg(0,1)=-\\begin{pmatrix}0&\\frac12\\\\ \\frac12&0\\end{pmatrix}\\begin{pmatrix}0&3\\\\1&0\\end{pmatrix}=\\begin{pmatrix}-\\frac12&0\\\\0&-\\frac32\\end{pmatrix}$.",
+      "pista": "En quin ordre apareixen les dues matrius a la fórmula que has deduït amb la regla de la cadena? Commuten?"
+    },
+    {
+      "id": "e2",
+      "fragment": 8,
+      "cita": "$g$ és injectiva a tot $\\Omega$",
+      "inici": 134,
+      "fi": 165,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "El teorema de la funció inversa és local: només garanteix que $g$ és injectiva en algun entorn (potser petit) de $(0,1)$, no en tot l'obert $\\Omega$ on està definida.",
+      "correccio": "$g$ és injectiva en un entorn obert de $(0,1)$, la imatge d'aquest entorn és un obert que conté $(0,1)$ i la inversa local és de classe $\\mathcal{C}^\\infty$.",
+      "pista": "El teorema de la funció inversa dona informació sobre tot el domini de $g$ o només a prop del punt?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4b.json",
+    "valoracio": "Planteig i TFI correctes; $Dg(0,1)$ surt amb les entrades intercanviades per l'ordre del producte i la conclusió de la funció inversa és massa forta.",
+    "problemes": [
+      {
+        "fragment": 6,
+        "cita": "-\\begin{pmatrix}0&3\\\\1&0\\end{pmatrix}\\begin{pmatrix}0&\\frac12\\\\ \\frac12&0\\end{pmatrix}",
+        "gravetat": "error",
+        "explicacio": "El producte s'ha fet en ordre invers al de la fórmula del fragment 4: $Dg=-A^{-1}B$, no $-BA^{-1}$. Correcte: $Dg(0,1)=\\begin{pmatrix}-\\frac12&0\\\\0&-\\frac32\\end{pmatrix}$ (el determinant del fragment 7 coincideix per casualitat)."
+      },
+      {
+        "fragment": 8,
+        "cita": "$g$ és injectiva a tot $\\Omega$",
+        "gravetat": "error",
+        "explicacio": "El teorema de la funció inversa només dona injectivitat en un entorn de $(0,1)$ (potser més petit que $\\Omega$), no a tot $\\Omega$."
+      }
+    ]
+  },
+  "creat": 1791299408.5565789
+}

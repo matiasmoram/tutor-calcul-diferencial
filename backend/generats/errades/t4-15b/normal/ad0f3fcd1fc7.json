@@ -1,0 +1,66 @@
+{
+  "id": "ad0f3fcd1fc7",
+  "exercici": "t4-15b",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Com que $f'$ és contínua i no s'anul·la enlloc, pel teorema de Bolzano té signe constant, i per tant $f$ és estrictament monòtona i injectiva. Així, donat $(u_0,v_0)\\in\\mathrm{Im}\\,G$, hi ha un únic $x_0\\in\\mathbb{R}$ amb $f(x_0)=u_0$, és a dir, $x_0=f^{-1}(u_0)$.",
+    "La segona component de $G(x_0,y_0)=(u_0,v_0)$ dona $-y_0+x_0f(x_0)=v_0$, és a dir, $-y_0+x_0u_0=v_0$, d'on $y_0=v_0-x_0u_0$. Per tant $(x_0,y_0)$ és l'única antiimatge de $(u_0,v_0)$, i $G$ és injectiva.",
+    "$G$ és de classe $\\mathcal{C}^1$ i la seva matriu jacobiana és $JG(x,y)=\\begin{pmatrix}f'(x)&0\\\\ f(x)+xf'(x)&-1\\end{pmatrix}$, amb $\\det JG(x,y)=-f'(x)\\neq0$ per a tot $(x,y)\\in\\mathbb{R}^2$.",
+    "Pel teorema de la funció inversa, hi ha entorns oberts $U$ de $(x_0,y_0)$ i $V$ de $(u_0,v_0)$ tals que $G:U\\to V$ és bijectiva amb inversa de classe $\\mathcal{C}^1$; com que $G$ és injectiva, aquesta inversa coincideix amb $G^{-1}$ a $V$. Per tant $G^{-1}$ és diferenciable en $(u_0,v_0)$ i $DG^{-1}(u_0,v_0)=\\big(DG(x_0,y_0)\\big)^{-1}$.",
+    "Al punt $(x_0,y_0)$, usant $f(x_0)=u_0$: $JG(x_0,y_0)=\\begin{pmatrix}f'(x_0)&0\\\\ u_0+x_0f'(x_0)&-1\\end{pmatrix}$, de determinant $-f'(x_0)$.",
+    "Invertint la matriu $2\\times2$: $\\big(JG(x_0,y_0)\\big)^{-1}=\\frac{1}{-f'(x_0)}\\begin{pmatrix}-1&0\\\\ u_0+x_0f'(x_0)&f'(x_0)\\end{pmatrix}=\\begin{pmatrix}\\frac{1}{f'(x_0)}&0\\\\ -x_0-\\frac{u_0}{f'(x_0)}&-1\\end{pmatrix}$.",
+    "Per tant, amb $x_0=f^{-1}(u_0)$, $DG^{-1}(u_0,v_0)=\\begin{pmatrix}\\frac{1}{f'(x_0)}&0\\\\ -x_0-\\frac{u_0}{f'(x_0)}&-1\\end{pmatrix}$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "d'on $y_0=v_0-x_0u_0$",
+      "inici": 102,
+      "fi": 123,
+      "tipus": "calcul",
+      "explicacio": "De $-y_0+x_0u_0=v_0$ s'obté $y_0=x_0u_0-v_0$; s'ha canviat el signe en aïllar $y_0$. (No afecta la jacobiana, que no depèn de $y$.)",
+      "correccio": "$y_0=x_0u_0-v_0$.",
+      "pista": "Si substitueixes el teu $y_0$ a $-y_0+x_0u_0$, obtens $v_0$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "=\\frac{1}{-f'(x_0)}\\begin{pmatrix}-1&0\\\\ u_0+x_0f'(x_0)&f'(x_0)\\end{pmatrix}",
+      "inici": 59,
+      "fi": 135,
+      "tipus": "calcul",
+      "explicacio": "A la matriu adjunta d'una $2\\times2$ els elements de fora de la diagonal canvien de signe: l'entrada $(2,1)$ ha de ser $-(u_0+x_0f'(x_0))$. Amb la matriu escrita, el producte per $JG(x_0,y_0)$ no dona la identitat.",
+      "correccio": "$\\frac{1}{-f'(x_0)}\\begin{pmatrix}-1&0\\\\ -(u_0+x_0f'(x_0))&f'(x_0)\\end{pmatrix}=\\begin{pmatrix}\\frac{1}{f'(x_0)}&0\\\\ x_0+\\frac{u_0}{f'(x_0)}&-1\\end{pmatrix}$.",
+      "pista": "Multiplica la teva inversa per $JG(x_0,y_0)$: obtens la identitat?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4b.json",
+    "valoracio": "Raonament correcte (TFI + injectivitat global), però la inversió de la matriu 2x2 té un error de signe que fa el resultat final incorrecte, i $y_0$ està mal aïllat.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$y_0=v_0-x_0u_0$",
+        "gravetat": "error",
+        "explicacio": "De $-y_0+x_0u_0=v_0$ surt $y_0=x_0u_0-v_0$, no $v_0-x_0u_0$ (signe canviat). No es propaga perquè $y_0$ no apareix a la jacobiana."
+      },
+      {
+        "fragment": 6,
+        "cita": "\\begin{pmatrix}-1&0\\\\ u_0+x_0f'(x_0)&f'(x_0)\\end{pmatrix}",
+        "gravetat": "error",
+        "explicacio": "L'adjunta de $\\begin{pmatrix}a&0\\\\c&-1\\end{pmatrix}$ és $\\begin{pmatrix}-1&0\\\\-c&a\\end{pmatrix}$: falta el signe menys a $u_0+x_0f'(x_0)$. L'entrada (2,1) correcta de la inversa és $x_0+\\frac{u_0}{f'(x_0)}$, no $-x_0-\\frac{u_0}{f'(x_0)}$."
+      },
+      {
+        "fragment": 7,
+        "cita": "-x_0-\\frac{u_0}{f'(x_0)}",
+        "gravetat": "consequencia",
+        "explicacio": "Hereta l'entrada (2,1) amb el signe canviat del fragment 6; el resultat correcte té $x_0+\\frac{u_0}{f'(x_0)}$."
+      }
+    ]
+  },
+  "creat": 1791299408.5523891
+}

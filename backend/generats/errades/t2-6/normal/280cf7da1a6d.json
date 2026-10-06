@@ -1,0 +1,60 @@
+{
+  "id": "280cf7da1a6d",
+  "exercici": "t2-6",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Les rectes que passen per l'origen són les de la forma $y=mx$ amb $m\\in\\mathbb{R}$, de manera que n'hi ha prou d'estudiar la restricció de $f$ a cada una d'aquestes rectes.",
+    "Si $m=0$, la recta és l'eix $y=0$ i cap dels seus punts compleix $0<0$: $f(x,0)=1$ per a tot $x$, i el límit de la restricció és $1$.",
+    "Si $m>0$, el punt $(x,mx)$ és de $A$ si i només si $mx>0$ i $mx<x^2$, és a dir, $x>0$ i (dividint per $x>0$) $x>m$. Si $m<0$, cal $x<0$ i, dividint $mx<x^2$ per $x<0$, $x<m$. En tots dos casos, $(x,mx)\\in A$ implica $|x|>|m|$.",
+    "Per tant, per a $0<|x|<|m|$ es té $f(x,mx)=1$: la restricció és constant a prop de $x=0$ i el seu límit quan $x\\to0$ és $1$.",
+    "Busquem ara un camí per dins de $A$. Per a $x\\neq0$, el punt $\\left(x,\\frac{x^2}{2}\\right)$ compleix $0<\\frac{x^2}{2}<x^2$, així que és de $A$ i $f\\left(x,\\frac{x^2}{2}\\right)=0$; el mateix passa sobre qualsevol paràbola $y=cx^2$ amb $0<c\\leq1$.",
+    "En conseqüència, $\\lim_{x\\to0}f\\left(x,\\frac{x^2}{2}\\right)=0$.",
+    "Si existís $\\lim_{(x,y)\\to(0,0)}f(x,y)=L$, per la proposició de límit per camins hauria de ser $L=1$ (sobre l'eix $y=0$) i també $L=0$ (sobre la paràbola $y=\\frac{x^2}{2}$), cosa impossible per la unicitat del límit. Per tant el límit no existeix."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "Les rectes que passen per l'origen són les de la forma $y=mx$ amb $m\\in\\mathbb{R}$",
+      "inici": 0,
+      "fi": 82,
+      "tipus": "logica",
+      "explicacio": "Falta la recta vertical $x=0$, que no es pot escriure com $y=mx$; l'enunciat demana el límit sobre totes les rectes per l'origen, i aquesta queda sense estudiar.",
+      "correccio": "Cal estudiar també la recta $x=0$: cap punt $(0,y)$ compleix $0<y<0$, així que $f(0,y)=1$ i el límit sobre aquesta recta també és $1$.",
+      "pista": "Totes les rectes per l'origen es poden escriure com $y=mx$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "qualsevol paràbola $y=cx^2$ amb $0<c\\leq1$",
+      "inici": 202,
+      "fi": 244,
+      "tipus": "desigualtat",
+      "explicacio": "Per a $c=1$ els punts $(x,x^2)$ no compleixen la desigualtat estricta $y<x^2$, de manera que no són de $A$ i allà $f=1$.",
+      "correccio": "Qualsevol paràbola $y=cx^2$ amb $0<c<1$.",
+      "pista": "El punt $(x,x^2)$ compleix $y<x^2$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t2.json",
+    "valoracio": "Oblida la recta $x=0$ i inclou incorrectament $c=1$.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "les de la forma $y=mx$ amb $m\\in\\mathbb{R}$",
+        "gravetat": "error",
+        "explicacio": "Oblida la recta vertical $x=0$, que no és de la forma $y=mx$ i també cal estudiar (hi $f\\equiv1$)."
+      },
+      {
+        "fragment": 5,
+        "cita": "$0<c\\leq1$",
+        "gravetat": "error",
+        "explicacio": "Per a $c=1$ la paràbola és $y=x^2$, que no és dins de $A$ (cal $y<x^2$ estricte): ha de ser $0<c<1$."
+      }
+    ]
+  },
+  "creat": 1791299452.0373518
+}

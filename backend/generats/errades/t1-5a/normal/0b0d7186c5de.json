@@ -1,0 +1,60 @@
+{
+  "id": "0b0d7186c5de",
+  "exercici": "t1-5a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Una equivalència són dues implicacions; les estudiem per separat. Suposem primer $A\\cap B\\neq\\emptyset$ i sigui $c\\in A\\cap B$.",
+    "Prenent $a=b=c$, el valor $d(c,c)=0$ pertany al conjunt $\\{d(a,b)\\mid a\\in A,\\ b\\in B\\}$. Com que l'ínfim és una fita superior del conjunt, $d(A,B)\\leq d(c,c)=0$; i com que totes les distàncies són $\\geq 0$, també $d(A,B)\\geq 0$. Per tant $d(A,B)=0$.",
+    "Recíprocament, suposem $d(A,B)=0$. Per la caracterització de l'ínfim, per a tot $\\varepsilon>0$ existeixen $a\\in A$ i $b\\in B$ amb $d(a,b)<\\varepsilon$.",
+    "Això no garanteix que l'ínfim s'assoleixi: hi ha parelles a distància tan petita com vulguem, però potser cap a distància exactament $0$. Busquem, doncs, un contraexemple.",
+    "Prenem $A=\\{0\\}$ i $B=B(0,1)\\setminus\\{0\\}=\\{x\\in\\mathbb{R}^m\\mid 0<\\|x\\|<1\\}$. Tots dos són no buits i $A\\cap B=\\emptyset$, perquè $0\\notin B$.",
+    "Per a tot $k\\geq 2$, el punt $\\frac1k e_1$ és de $B$ (té norma $\\frac1k\\in(0,1)$) i $d(0,\\frac1k e_1)=\\frac1k$. Com que $\\frac1k\\to 0$, existeix un punt $b\\in B$ amb $d(0,b)=0$, i per tant $d(A,B)=0$.",
+    "En conclusió, la implicació $A\\cap B\\neq\\emptyset\\Rightarrow d(A,B)=0$ és certa, però la recíproca és falsa: l'equivalència no és certa en general."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "l'ínfim és una fita superior del conjunt",
+      "inici": 98,
+      "fi": 138,
+      "tipus": "logica",
+      "explicacio": "L'ínfim és la més gran de les fites inferiors, no una fita superior. És precisament perquè és fita inferior que $d(A,B)\\leq d(c,c)$.",
+      "correccio": "Com que l'ínfim és una fita inferior del conjunt, $d(A,B)\\leq d(c,c)=0$.",
+      "pista": "L'ínfim d'un conjunt de nombres és més petit o més gran que cadascun dels seus elements?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "existeix un punt $b\\in B$ amb $d(0,b)=0$",
+      "inici": 136,
+      "fi": 176,
+      "tipus": "logica",
+      "explicacio": "Que les distàncies $\\frac1k$ tendeixin a $0$ no vol dir que l'ínfim s'assoleixi. De fet $d(0,b)=0$ vol dir $b=0$, i $0\\notin B$: aquest punt no existeix (contradiu $A\\cap B=\\emptyset$). El que es dedueix és $0\\leq d(A,B)\\leq\\frac1k$ per a tot $k\\geq 2$, i per tant $d(A,B)=0$ sense que cap parella estigui a distància $0$.",
+      "correccio": "Com que $d(A,B)\\leq d(0,\\frac1k e_1)=\\frac1k$ per a tot $k\\geq 2$ i $d(A,B)\\geq 0$, fent $k\\to\\infty$ obtenim $d(A,B)=0$.",
+      "pista": "Si existís $b\\in B$ amb $d(0,b)=0$, quin punt seria $b$? Pertany a $B$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "repair2.json",
+    "valoracio": "Estructura i contraexemple correctes, però dues justificacions falses: l'ínfim com a fita superior i l'existència d'un punt de $B$ a distància 0.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "l'ínfim és una fita superior del conjunt",
+        "gravetat": "error",
+        "explicacio": "L'ínfim és una fita INFERIOR del conjunt; és això el que dona $d(A,B)\\leq d(c,c)$. Amb 'fita superior' la desigualtat no se seguiria (donaria $d(A,B)\\geq 0$)."
+      },
+      {
+        "fragment": 6,
+        "cita": "existeix un punt $b\\in B$ amb $d(0,b)=0$",
+        "gravetat": "error",
+        "explicacio": "Fals: $d(0,b)=0$ implicaria $b=0\\notin B$. Que $\\frac1k\\to0$ només dona que l'ínfim de les distàncies és $0$ (per la caracterització de l'ínfim), no que s'assoleixi; contradiu el fragment [4] i el propi contraexemple."
+      }
+    ]
+  },
+  "creat": 1791299563.420533
+}

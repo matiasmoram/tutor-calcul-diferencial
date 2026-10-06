@@ -1,0 +1,77 @@
+{
+  "id": "acc026fb45ef",
+  "exercici": "t3-7",
+  "font": "problema",
+  "dificultat": "dificil",
+  "fragments": [
+    "Fora de l'origen, les funcions $x$, $|y|$ i $\\sqrt{x^2+y^2}$ són contínues i el denominador no s'anul·la a $\\mathbb{R}^2\\setminus\\{(0,0)\\}$, de manera que $f$ hi és contínua.",
+    "A l'origen, $|f(x,y)|=\\dfrac{|x|\\,|y|}{\\sqrt{x^2+y^2}}\\le|x|\\,|y|$, i com que $|x|\\,|y|\\to0$ quan $(x,y)\\to(0,0)$, pel criteri del sandvitx el límit a l'origen és $0=f(0,0)$. Per tant $f$ és contínua a tot $\\mathbb{R}^2$.",
+    "A l'obert $\\{y>0\\}$ tenim $f=\\dfrac{xy}{\\sqrt{x^2+y^2}}$, amb $\\dfrac{\\partial f}{\\partial x}=\\dfrac{y^3}{(x^2+y^2)^{3/2}}$ i $\\dfrac{\\partial f}{\\partial y}=\\dfrac{x^3}{(x^2+y^2)^{3/2}}$; a l'obert $\\{y<0\\}$ són les mateixes amb el signe canviat. Com que les dues derivades parcials existeixen a tot punt d'aquests oberts, $f$ és diferenciable a tot punt amb $y\\neq0$.",
+    "En un punt $(x_0,0)$ amb $x_0\\neq0$: $\\dfrac{f(x_0,t)-f(x_0,0)}{t}=\\dfrac{x_0|t|}{t\\sqrt{x_0^2+t^2}}$, que tendeix a $\\dfrac{x_0}{|x_0|}$ quan $t\\to0^+$ i a $-\\dfrac{x_0}{|x_0|}$ quan $t\\to0^-$. Els límits laterals són diferents, no existeix $\\dfrac{\\partial f}{\\partial y}(x_0,0)$ i, per tant, $f$ no és diferenciable en aquests punts.",
+    "A l'origen, $f(t,0)=0$ i $f(0,t)=0$ per a tot $t$, així que $\\nabla f(0,0)=(0,0)$ i l'única candidata a diferencial és l'aplicació lineal nul·la.",
+    "Per a la diferenciabilitat a l'origen cal que $\\dfrac{f(x,y)}{x^2+y^2}=\\dfrac{x|y|}{(x^2+y^2)^{3/2}}$ tendeixi a $0$. Sobre la recta $y=x$, amb $x>0$, val $\\dfrac{x^2}{2\\sqrt2\\,x^3}=\\dfrac{1}{2\\sqrt2\\,x}\\to+\\infty$, de manera que $f$ no és diferenciable a l'origen.",
+    "En resum, $f$ és contínua a tot $\\mathbb{R}^2$ i és diferenciable exactament als punts amb $y\\neq0$: no ho és en cap punt de l'eix $y=0$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$|f(x,y)|=\\dfrac{|x|\\,|y|}{\\sqrt{x^2+y^2}}\\le|x|\\,|y|$",
+      "inici": 12,
+      "fi": 66,
+      "tipus": "desigualtat",
+      "explicacio": "Dividir per $\\sqrt{x^2+y^2}$ només fa el quocient més petit si el denominador és $\\geq1$, i a prop de l'origen és $<1$: la desigualtat hi és falsa. Per exemple, a $(0.1,0.1)$ es té $|f|=\\frac{0.01}{0.1\\sqrt2}\\approx0.071>0.01=|x|\\,|y|$.",
+      "correccio": "Cal fitar un factor del numerador pel denominador: $|x|\\le\\sqrt{x^2+y^2}$, d'on $|f(x,y)|\\le|y|\\to0$, i pel criteri del sandvitx el límit és $0=f(0,0)$.",
+      "pista": "Quan $(x,y)$ és a prop de l'origen, el denominador $\\sqrt{x^2+y^2}$ és més gran o més petit que $1$? Què passa doncs en dividir-hi?"
+    },
+    {
+      "id": "e2",
+      "fragment": 3,
+      "cita": "Com que les dues derivades parcials existeixen a tot punt d'aquests oberts",
+      "inici": 248,
+      "fi": 322,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "L'existència de les derivades parcials no implica la diferenciabilitat. La condició suficient demana que les parcials siguin contínues (en un entorn del punt).",
+      "correccio": "Les parcials són quocients de funcions $\\mathcal{C}^1$ amb denominador no nul, per tant són contínues a cada obert; per la condició suficient, $f$ és diferenciable a tot punt amb $y\\neq0$.",
+      "pista": "Quina hipòtesi sobre les derivades parcials demana la condició suficient de diferenciabilitat?"
+    },
+    {
+      "id": "e3",
+      "fragment": 6,
+      "cita": "$\\dfrac{f(x,y)}{x^2+y^2}=\\dfrac{x|y|}{(x^2+y^2)^{3/2}}$ tendeixi a $0$",
+      "inici": 46,
+      "fi": 116,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "La definició de diferenciabilitat divideix el residu per la norma $\\sqrt{x^2+y^2}$, no pel seu quadrat. Amb $x^2+y^2$ es comprova una condició diferent (més forta), i que falli no prova que $f$ no sigui diferenciable.",
+      "correccio": "Cal estudiar $\\dfrac{f(x,y)}{\\sqrt{x^2+y^2}}=\\dfrac{x|y|}{x^2+y^2}$; sobre $y=x$ val $\\pm\\dfrac12$, que no tendeix a $0$, i per tant $f$ no és diferenciable a l'origen.",
+      "pista": "En la definició de diferenciabilitat, per quina quantitat es divideix el residu $f(a+h)-f(a)-Df(a)h$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "repair.json",
+    "valoracio": "Conclusió final correcta, però amb una fita falsa a la continuïtat, una condició suficient mal aplicada (sense continuïtat de les parcials) i un quocient de diferenciabilitat equivocat a l'origen.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "\\le|x|\\,|y|",
+        "gravetat": "error",
+        "explicacio": "Fals prop de l'origen: dividir per $\\sqrt{x^2+y^2}<1$ augmenta el valor, així que $\frac{|x||y|}{\\sqrt{x^2+y^2}}\\ge|x||y|$ allà. La fita correcta és $|x|\\le\\sqrt{x^2+y^2}$, d'on $|f|\\le|y|$."
+      },
+      {
+        "fragment": 3,
+        "cita": "Com que les dues derivades parcials existeixen a tot punt d'aquests oberts, $f$ és diferenciable",
+        "gravetat": "error",
+        "explicacio": "L'existència de les parcials no implica diferenciabilitat; la condició suficient (T3.18) exigeix que siguin contínues (ho són, però no s'invoca)."
+      },
+      {
+        "fragment": 6,
+        "cita": "$\\dfrac{f(x,y)}{x^2+y^2}=\\dfrac{x|y|}{(x^2+y^2)^{3/2}}$",
+        "gravetat": "error",
+        "explicacio": "El quocient de la definició és $f(x,y)/\\sqrt{x^2+y^2}=x|y|/(x^2+y^2)$, que sobre $y=x$ val $\\pm1/2$; el document divideix per la norma al quadrat i estudia un límit que no és el de la definició."
+      }
+    ]
+  },
+  "creat": 1791299191.5968509
+}

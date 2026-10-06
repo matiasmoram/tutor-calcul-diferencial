@@ -1,0 +1,59 @@
+{
+  "id": "08189f96ee33",
+  "exercici": "t2-21a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "L'adherència $\\overline A$ és sempre un conjunt tancat.",
+    "Com que $A$ és fitat, existeixen $x\\in\\mathbb{R}^m$ i $L>0$ amb $A\\subseteq B(x,L)$, i aleshores també $\\overline A\\subseteq B(x,L)$; per tant $\\overline A$ és fitat.",
+    "Així $\\overline A$ és tancat i fitat a $\\mathbb{R}^m$, i pel teorema de Heine-Borel és compacte.",
+    "Com que $F$ és contínua, la imatge del compacte $\\overline A$ és compacta, i un compacte de $\\mathbb{R}^n$ és tancat: $F(\\overline A)$ és tancat.",
+    "D'altra banda, $A\\subseteq\\overline A$ implica $F(A)\\subseteq F(\\overline A)$. Com que $\\overline{F(A)}$ és el tancat més petit que conté $F(A)$ i $F(\\overline A)$ és un tancat que el conté, obtenim $\\overline{F(A)}\\subseteq F(\\overline A)$.",
+    "Observem, finalment, que la hipòtesi que $A$ és fitat només ha servit per simplificar l'argument: la inclusió $\\overline{F(A)}\\subseteq F(\\overline A)$ és vàlida per a qualsevol $A\\subseteq\\mathbb{R}^m$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "aleshores també $\\overline A\\subseteq B(x,L)$",
+      "inici": 87,
+      "fi": 132,
+      "tipus": "logica",
+      "explicacio": "La bola oberta no és tancada: l'adherència de $A$ pot tenir punts a l'esfera $\\|y-x\\|=L$ (p. ex. $A=B(x,L)$). El que es pot afirmar és $\\overline A\\subseteq\\overline B(x,L)$, que també és fitat.",
+      "correccio": "Com que $\\overline B(x,L)$ és un tancat que conté $A$, $\\overline A\\subseteq\\overline B(x,L)\\subseteq B(x,L+1)$, i $\\overline A$ és fitat.",
+      "pista": "Si $A=B(x,L)$, quina és la seva adherència? Està continguda a $B(x,L)$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "la inclusió $\\overline{F(A)}\\subseteq F(\\overline A)$ és vàlida per a qualsevol $A\\subseteq\\mathbb{R}^m$",
+      "inici": 98,
+      "fi": 202,
+      "tipus": "conclusio",
+      "explicacio": "Sense la fitació la conclusió és falsa: amb $F(x)=e^x$ i $A=\\mathbb{R}$, $\\overline{F(A)}=[0,+\\infty)$ però $F(\\overline A)=(0,+\\infty)$. La fitació és essencial per tenir $\\overline A$ compacte.",
+      "correccio": "La hipòtesi de fitació és necessària: garanteix que $\\overline A$ sigui compacte i, per tant, que $F(\\overline A)$ sigui tancat.",
+      "pista": "Si $A=\\mathbb{R}$ i $F(x)=e^x$, és tancat $F(\\overline A)$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t2.json",
+    "valoracio": "Inclusió en la bola oberta injustificada i afirmació final falsa sobre la necessitat de la fitació.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "també $\\overline A\\subseteq B(x,L)$",
+        "gravetat": "error",
+        "explicacio": "L'adherència pot sortir de la bola oberta; el correcte és $\\overline A\\subseteq\\overline B(x,L)$ (tancada), que també dona fitació."
+      },
+      {
+        "fragment": 6,
+        "cita": "la inclusió $\\overline{F(A)}\\subseteq F(\\overline A)$ és vàlida per a qualsevol $A\\subseteq\\mathbb{R}^m$",
+        "gravetat": "error",
+        "explicacio": "Fals: sense fitació $\\overline A$ no és compacte i $F(\\overline A)$ pot no ser tancat (p. ex. $F(x)=e^x$, $A=\\mathbb{R}$: $\\overline{F(A)}=[0,\\infty)\\not\\subseteq(0,\\infty)$)."
+      }
+    ]
+  },
+  "creat": 1791299452.0617886
+}

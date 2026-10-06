@@ -1,0 +1,60 @@
+{
+  "id": "498dccba974c",
+  "exercici": "t3-17",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "La funció $(x,y)\\mapsto|xy|$ és contínua, $\\sqrt{\\cdot}$ és contínua a $[0,+\\infty)$ i l'exponencial ho és a $\\mathbb{R}$; per composició, $f$ és contínua a tot $\\mathbb{R}^2$.",
+    "Sigui $(x_0,y_0)$ amb $x_0y_0\\neq0$. En un entorn seu el signe de $xy$ és constant, i hi tenim $|xy|=s\\,xy$ amb $s=\\pm1$ fix. Allà $\\dfrac{\\partial f}{\\partial x}=e^{\\sqrt{|xy|}}\\,\\dfrac{y}{2\\sqrt{|xy|}}$ i $\\dfrac{\\partial f}{\\partial y}=e^{\\sqrt{|xy|}}\\,\\dfrac{x}{2\\sqrt{|xy|}}$.",
+    "Aquestes parcials són contínues a l'obert $\\{xy\\neq0\\}$, de manera que $f$ hi és diferenciable i hi té totes les derivades direccionals, $D_uf=\\langle\\nabla f,u\\rangle$.",
+    "En un punt $(a,0)$ amb $a\\neq0$: $\\dfrac{f(a+tu_1,tu_2)-1}{t}=\\dfrac{e^{\\sqrt{|a+tu_1|\\,|u_2|}\\sqrt{|t|}}-1}{t}\\sim\\dfrac{\\sqrt{|a|\\,|u_2|}\\,\\sqrt{|t|}}{t}$, que no té límit finit si $u_2\\neq0$. Si $u_2=0$, $f\\equiv1$ sobre l'eix i $D_uf(a,0)=0$. Anàlogament, a $(0,b)$ amb $b\\neq0$ només existeix si $u_1=0$, i val $0$.",
+    "A l'origen, $f(tu_1,tu_2)=e^{c|t|}$ amb $c=\\sqrt{|u_1u_2|}$, i $\\dfrac{e^{c|t|}-1}{t}$ tendeix a $c$ quan $t\\to0^+$ i a $-c$ quan $t\\to0^-$. El límit existeix només si $c=0$, és a dir $u_1u_2=0$ (direccions dels eixos), i llavors val $0$.",
+    "Finalment, als punts dels eixos, inclòs l'origen, alguna de les dues derivades parcials no existeix, i per tant $f$ no hi és diferenciable.",
+    "En resum: $f$ és contínua a tot $\\mathbb{R}^2$, té totes les derivades direccionals als punts amb $xy\\neq0$ i només les de les direccions indicades als eixos, i és diferenciable exactament a $\\{(x,y): xy\\neq0\\}$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$\\dfrac{\\partial f}{\\partial x}=e^{\\sqrt{|xy|}}\\,\\dfrac{y}{2\\sqrt{|xy|}}$ i $\\dfrac{\\partial f}{\\partial y}=e^{\\sqrt{|xy|}}\\,\\dfrac{x}{2\\sqrt{|xy|}}$",
+      "inici": 131,
+      "fi": 280,
+      "tipus": "calcul",
+      "explicacio": "Derivant $\\sqrt{s\\,xy}$ respecte de $x$ surt $\\dfrac{s\\,y}{2\\sqrt{|xy|}}$: falta el factor $s$, i quan $xy<0$ el signe és incorrecte (el mateix passa a $\\partial f/\\partial y$).",
+      "correccio": "$\\dfrac{\\partial f}{\\partial x}=e^{\\sqrt{|xy|}}\\,\\dfrac{s\\,y}{2\\sqrt{|xy|}}$ i $\\dfrac{\\partial f}{\\partial y}=e^{\\sqrt{|xy|}}\\,\\dfrac{s\\,x}{2\\sqrt{|xy|}}$.",
+      "pista": "Si $xy<0$, què val la derivada de $|xy|=-xy$ respecte de $x$? Hi és a la teva fórmula?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "inclòs l'origen, alguna de les dues derivades parcials no existeix",
+      "inici": 33,
+      "fi": 99,
+      "tipus": "logica",
+      "explicacio": "A l'origen les dues parcials existeixen (les direccions dels eixos donen $0$). El motiu correcte és que, en tots els punts dels eixos, hi ha derivades direccionals que no existeixen, i diferenciable implicaria que existissin totes.",
+      "correccio": "Si $f$ fos diferenciable en un punt dels eixos, hi existirien totes les derivades direccionals; com que n'hi ha que no existeixen (les de direccions fora de l'eix), $f$ no hi és diferenciable.",
+      "pista": "Quant valen $\\partial f/\\partial x(0,0)$ i $\\partial f/\\partial y(0,0)$ segons el que has calculat? Quina propietat de la diferenciabilitat sí que falla a l'origen?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3a.json",
+    "valoracio": "Estudi direccional correcte, però parcials fora dels eixos sense el signe s i justificació final falsa a l'origen.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$\\dfrac{\\partial f}{\\partial x}=e^{\\sqrt{|xy|}}\\,\\dfrac{y}{2\\sqrt{|xy|}}$",
+        "gravetat": "error",
+        "explicacio": "Derivant $\\sqrt{sxy}$ s'obté $\\frac{sy}{2\\sqrt{|xy|}}$: falta el factor $s$, i la fórmula és errònia on $xy<0$ (igual per a $\\partial_yf$)."
+      },
+      {
+        "fragment": 6,
+        "cita": "alguna de les dues derivades parcials no existeix",
+        "gravetat": "error",
+        "explicacio": "A l'origen les dues parcials existeixen (valen 0); la no-diferenciabilitat s'ha de justificar per la no-existència de derivades direccionals no axials."
+      }
+    ]
+  },
+  "creat": 1791299309.4958198
+}

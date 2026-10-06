@@ -1,0 +1,61 @@
+{
+  "id": "387fe3f7f6ab",
+  "exercici": "t3-29",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Escrivim $f(x,y)=\\displaystyle\\int_{y}^{x}e^{xyt}\\,dt$, amb límit inferior $y$ i superior $x$. Com que l'integrand $e^{xyt}$ és continu a $\\mathbb{R}^3$ i els límits d'integració són funcions derivables, es pot aplicar la fórmula de Leibniz.",
+    "Respecte de $x$ (amb $y$ fix, el límit inferior no varia): $\\dfrac{\\partial f}{\\partial x}=e^{x\\cdot y\\cdot x}\\cdot1-0+\\displaystyle\\int_y^x yt\\,e^{xyt}\\,dt=e^{x^2y}+\\int_y^x yt\\,e^{xyt}\\,dt$.",
+    "Respecte de $y$ (ara el límit que varia és l'inferior): $\\dfrac{\\partial f}{\\partial y}=0-e^{xy\\cdot y}\\cdot1+\\displaystyle\\int_y^x xt\\,e^{xyt}\\,dt=-e^{xy^2}+\\int_y^x xt\\,e^{xyt}\\,dt$.",
+    "Per comprovar-ho calculem la integral: com que una primitiva de $e^{xyt}$ respecte de $t$ és $\\dfrac{e^{xyt}}{xy}$, tenim $f(x,y)=\\dfrac{e^{x^2y}-e^{xy^2}}{xy}$ per a tot $(x,y)\\in\\mathbb{R}^2$.",
+    "Amb $a=xy$, $\\displaystyle\\int t\\,e^{at}\\,dt=e^{at}\\left(\\frac ta-\\frac1{a^2}\\right)$, i per tant $\\displaystyle\\int_y^x yt\\,e^{xyt}\\,dt=e^{x^2y}\\left(1-\\frac{1}{x^2y}\\right)-e^{xy^2}\\left(\\frac yx-\\frac{1}{x^2y}\\right)$.",
+    "Substituint a la fórmula de Leibniz, $\\dfrac{\\partial f}{\\partial x}=e^{x^2y}\\left(2-\\dfrac{1}{x^2y}\\right)-e^{xy^2}\\left(\\dfrac yx-\\dfrac{1}{x^2y}\\right)$.",
+    "Derivant directament $\\dfrac{e^{x^2y}-e^{xy^2}}{xy}$ respecte de $x$ amb la regla del quocient s'obté $\\dfrac{(2xy\\,e^{x^2y}-y^2e^{xy^2})\\,xy-(e^{x^2y}-e^{xy^2})\\,y}{x^2y^2}$, que, simplificant, és exactament la mateixa expressió.",
+    "Com que $f(y,x)=-f(x,y)$, de la mateixa manera s'obté pels dos camins $\\dfrac{\\partial f}{\\partial y}=e^{x^2y}\\left(\\dfrac xy-\\dfrac{1}{xy^2}\\right)-e^{xy^2}\\left(2-\\dfrac{1}{xy^2}\\right)$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "Com que l'integrand $e^{xyt}$ és continu a $\\mathbb{R}^3$",
+      "inici": 95,
+      "fi": 152,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "La continuïtat de l'integrand no basta per derivar sota el signe integral: la fórmula de Leibniz demana que les derivades parcials de l'integrand respecte de les variables $x,y$ també siguin contínues.",
+      "correccio": "L'integrand $e^{xyt}$ és de classe $\\mathcal{C}^1$ a $\\mathbb{R}^3$ (les seves parcials $yt\\,e^{xyt}$, $xt\\,e^{xyt}$ són contínues) i els límits són $\\mathcal{C}^1$, de manera que es pot aplicar Leibniz.",
+      "pista": "Quines hipòtesis sobre l'integrand demana la fórmula de Leibniz per poder derivar dins la integral?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "per a tot $(x,y)\\in\\mathbb{R}^2$",
+      "inici": 161,
+      "fi": 193,
+      "tipus": "hipotesi",
+      "explicacio": "La primitiva $\\frac{e^{xyt}}{xy}$ només té sentit si $xy\\neq0$. Si $xy=0$ l'integrand és $1$ i $f(x,y)=x-y$.",
+      "correccio": "$f(x,y)=\\dfrac{e^{x^2y}-e^{xy^2}}{xy}$ si $xy\\neq0$, i $f(x,y)=\\displaystyle\\int_y^x1\\,dt=x-y$ si $xy=0$; la comprovació es fa als punts amb $xy\\neq0$.",
+      "pista": "Per a quins $(x,y)$ pots dividir per $xy$? Què val la integral quan $xy=0$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3b.json",
+    "valoracio": "Leibniz i les parcials explícites són correctes (comprovat amb sympy), però la hipòtesi de Leibniz està mal enunciada i la fórmula explícita s'estén on divideix per zero.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "Com que l'integrand $e^{xyt}$ és continu a $\\mathbb{R}^3$",
+        "gravetat": "error",
+        "explicacio": "La regla de Leibniz demana integrand de classe $\\mathcal{C}^1$, no només continu (aquí ho és, però la hipòtesi invocada no basta)."
+      },
+      {
+        "fragment": 4,
+        "cita": "per a tot $(x,y)\\in\\mathbb{R}^2$",
+        "gravetat": "error",
+        "explicacio": "La primitiva $e^{xyt}/(xy)$ només val si $xy\\neq0$; si $xy=0$, $f(x,y)=x-y$."
+      }
+    ]
+  },
+  "creat": 1791299348.7107334
+}

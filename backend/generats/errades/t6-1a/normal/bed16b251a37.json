@@ -1,0 +1,59 @@
+{
+  "id": "bed16b251a37",
+  "exercici": "t6-1a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "L'el·lipse és $\\frac{x^2}{a^2}+\\frac{y^2}{b^2}=1$. Com que $\\cos^2t+\\sin^2t=1$, la corba $(a\\cos t,\\,b\\sin t)$, $t\\in[0,2\\pi]$, la recorre una vegada començant a $(a,0)$.",
+    "A $t=0$ aquesta corba passa per $(a,0)$ amb velocitat $(0,b)$, cap amunt: la recorre en sentit antihorari. Canviant $t$ per $-t$ obtenim $(a\\cos t,\\,-b\\sin t)$, que passa per $(a,0)$ amb velocitat $(0,-b)$: sentit horari.",
+    "Per fer dues voltes prenem $t\\in[0,4\\pi]$; alternativament, $(a\\cos 2t,\\,-b\\sin 2t)$ amb $t\\in[0,\\pi]$ també dona dues voltes.",
+    "La parametrització $\\gamma(t)=(a\\cos t,\\,-b\\sin t)$ és de classe $\\mathcal{C}^\\infty$, amb $\\gamma'(t)=(a\\sin t,\\,-b\\cos t)$.",
+    "Com que $\\sin t$ i $\\cos t$ no s'anul·len simultàniament i $a,b>0$, $\\gamma'(t)\\neq(0,0)$ per a tot $t$, és a dir, $\\mathrm{rang}\\,D\\gamma(t)=1$: la parametrització és regular.",
+    "Per tant, $\\gamma(t)=(a\\cos t,\\,-b\\sin t)$, $t\\in[0,4\\pi]$, és una parametrització $\\mathcal{C}^1$ regular de l'el·lipse recorreguda dos cops en sentit horari."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "$(a\\cos 2t,\\,-b\\sin 2t)$ amb $t\\in[0,\\pi]$ també dona dues voltes",
+      "inici": 60,
+      "fi": 125,
+      "tipus": "calcul",
+      "explicacio": "Si $t\\in[0,\\pi]$, l'angle $2t$ recorre $[0,2\\pi]$: només es fa una volta. Per fer-ne dues amb $2t$ cal $t\\in[0,2\\pi]$.",
+      "correccio": "Alternativament, $(a\\cos 2t,\\,-b\\sin 2t)$ amb $t\\in[0,2\\pi]$.",
+      "pista": "Quin interval recorre l'angle $2t$ quan $t\\in[0,\\pi]$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "$\\gamma'(t)=(a\\sin t,\\,-b\\cos t)$",
+      "inici": 91,
+      "fi": 124,
+      "tipus": "calcul",
+      "explicacio": "La derivada de $a\\cos t$ és $-a\\sin t$: el signe de la primera component és incorrecte.",
+      "correccio": "$\\gamma'(t)=(-a\\sin t,\\,-b\\cos t)$.",
+      "pista": "Quina és la derivada de $\\cos t$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t56.json",
+    "valoracio": "Variant amb $2t$ que només dona una volta i signe erroni a $\\gamma'$.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$(a\\cos 2t,\\,-b\\sin 2t)$ amb $t\\in[0,\\pi]$",
+        "gravetat": "error",
+        "explicacio": "Amb $t\\in[0,\\pi]$ l'argument $2t$ recorre $[0,2\\pi]$: només una volta. Cal $t\\in[0,2\\pi]$."
+      },
+      {
+        "fragment": 4,
+        "cita": "$\\gamma'(t)=(a\\sin t,\\,-b\\cos t)$",
+        "gravetat": "error",
+        "explicacio": "La derivada de $a\\cos t$ és $-a\\sin t$: $\\gamma'(t)=(-a\\sin t,\\,-b\\cos t)$."
+      }
+    ]
+  },
+  "creat": 1791299721.5588071
+}

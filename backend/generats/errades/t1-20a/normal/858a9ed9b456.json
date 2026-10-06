@@ -1,0 +1,58 @@
+{
+  "id": "858a9ed9b456",
+  "exercici": "t1-20a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Per a cada $y\\in B$ posem $yA=\\{xy\\mid x\\in A\\}$. Aleshores $E=\\bigcup_{y\\in B}yA$: cada producte $xy$ amb $x\\in A$, $y\\in B$ és de $yA$, i cada $yA$ amb $y\\in B$ està contingut a $E$.",
+    "Vegem que $yA$ és obert per a cada $y\\in B$; per hipòtesi, $y>0$. Sigui $z=ya\\in yA$ amb $a\\in A$; com que $A$ és obert, existeix $r>0$ amb $(a-r,a+r)\\subseteq A$.",
+    "Afirmem que $(ya-r,ya+r)\\subseteq yA$. Sigui $w$ amb $|w-ya|<r$. Aleshores $\\left|\\frac wy-a\\right|=\\frac{|w-ya|}{y}<r$, de manera que $\\frac wy\\in A$ i $w=y\\cdot\\frac wy\\in yA$.",
+    "Així $yA$ conté un interval obert centrat en cadascun dels seus punts, i per tant és obert.",
+    "$E$ és la unió (arbitrària) dels oberts $yA$, $y\\in B$, i la unió arbitrària d'oberts és oberta: $E$ és obert. Si $B=\\varnothing$, aleshores $E=\\mathbb{R}$, que també és obert."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "$\\left|\\frac wy-a\\right|=\\frac{|w-ya|}{y}<r$",
+      "inici": 75,
+      "fi": 119,
+      "tipus": "desigualtat",
+      "explicacio": "De $|w-ya|<r$ només se segueix $\\frac{|w-ya|}{y}<\\frac ry$, que és més gran que $r$ si $y<1$. El radi s'ha d'escalar: cal prendre l'interval $(ya-yr,ya+yr)$, és a dir $|w-ya|<yr$.",
+      "correccio": "Prenem $|w-ya|<yr$ (radi $yr>0$ perquè $y>0$); aleshores $\\left|\\frac wy-a\\right|=\\frac{|w-ya|}{y}<r$.",
+      "pista": "Si $y=\\frac1{10}$, dividir per $y$ fa la distància més gran o més petita? Quin radi necessites al voltant de $ya$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "Si $B=\\varnothing$, aleshores $E=\\mathbb{R}$",
+      "inici": 111,
+      "fi": 155,
+      "tipus": "calcul",
+      "explicacio": "Si $B=\\varnothing$ no hi ha cap producte $xy$ amb $y\\in B$, de manera que $E=\\varnothing$ (la unió buida és el conjunt buit), no $\\mathbb{R}$.",
+      "correccio": "Si $B=\\varnothing$, aleshores $E=\\varnothing$, que també és obert.",
+      "pista": "Quins elements té $E$ si no hi ha cap $y\\in B$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t1.json",
+    "valoracio": "Descomposició i conclusió per unió correctes, però el radi no està escalat per $y$ i el cas $B=\\varnothing$ és erroni.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$\\left|\\frac wy-a\\right|=\\frac{|w-ya|}{y}<r$",
+        "gravetat": "error",
+        "explicacio": "De $|w-ya|<r$ només surt $\\frac{|w-ya|}{y}<\\frac ry$, que no és $<r$ si $y<1$; el radi ha de ser $yr$."
+      },
+      {
+        "fragment": 5,
+        "cita": "Si $B=\\varnothing$, aleshores $E=\\mathbb{R}$",
+        "gravetat": "error",
+        "explicacio": "Si $B=\\varnothing$ no hi ha cap producte i $E=\\varnothing$ (que també és obert)."
+      }
+    ]
+  },
+  "creat": 1791299422.5415359
+}

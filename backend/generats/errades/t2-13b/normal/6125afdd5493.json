@@ -1,0 +1,64 @@
+{
+  "id": "6125afdd5493",
+  "exercici": "t2-13b",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "La funció $f(x,y)=xy\\log(x-y)$ només està definida on $x-y>0$, és a dir, a $\\Omega=\\{(x,y)\\in\\mathbb{R}^2\\mid x>y\\}$. En particular $B\\subseteq\\Omega$ i $B=f^{-1}((5,+\\infty))$.",
+    "El conjunt $\\Omega$ és obert: si $(x_0,y_0)\\in\\Omega$ i $d=x_0-y_0>0$, tota la bola de centre $(x_0,y_0)$ i radi $d$ està continguda a $\\Omega$.",
+    "La funció $(x,y)\\mapsto x-y$ és contínua i, sobre $\\Omega$, pren valors a $(0,+\\infty)$, on $\\log$ és contínua; per tant $\\log(x-y)$ és contínua a $\\Omega$, i també ho és $f$, producte d'aquesta funció pel polinomi $xy$.",
+    "Com que $(5,+\\infty)$ és obert de $\\mathbb{R}$ i $f$ és contínua, la caracterització topològica de la continuïtat ens diu directament que $f^{-1}((5,+\\infty))$ és un obert de $\\mathbb{R}^2$, sigui quin sigui el domini de $f$.",
+    "Per tant $B$ és un subconjunt obert de $\\mathbb{R}^2$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "tota la bola de centre $(x_0,y_0)$ i radi $d$ està continguda a $\\Omega$",
+      "inici": 71,
+      "fi": 143,
+      "tipus": "calcul",
+      "explicacio": "El radi $d$ és massa gran: per exemple, per a $(1,0)$ ($d=1$), el punt $(0.4,\\,0.6)$ és a distància $<1$ però no compleix $x>y$. Com que $|(x-y)-(x_0-y_0)|\\leq\\sqrt2\\,\\|(x,y)-(x_0,y_0)\\|$, el radi que funciona és $\\frac{d}{\\sqrt2}$.",
+      "correccio": "La bola de centre $(x_0,y_0)$ i radi $\\frac{d}{\\sqrt2}$ està continguda a $\\Omega$ (o bé: $\\Omega$ és obert per ser una desigualtat estricta entre funcions contínues).",
+      "pista": "Quina és la distància del punt $(x_0,y_0)$ a la recta $y=x$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "és un obert de $\\mathbb{R}^2$, sigui quin sigui el domini de $f$",
+      "inici": 160,
+      "fi": 224,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "Per a una funció contínua en un domini $\\Omega$, la caracterització només dona $f^{-1}((5,+\\infty))=U\\cap\\Omega$ amb $U$ obert de $\\mathbb{R}^2$ (obert relatiu a $\\Omega$); per concloure que és obert de $\\mathbb{R}^2$ cal que $\\Omega$ sigui obert.",
+      "correccio": "Existeix $U$ obert de $\\mathbb{R}^2$ amb $B=U\\cap\\Omega$; com que $\\Omega$ és obert, $B$ és intersecció de dos oberts i, per tant, obert.",
+      "pista": "Si el domini d'una funció contínua fos un conjunt tancat, l'antiimatge de tot $\\mathbb{R}$ seria oberta?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t2.json",
+    "valoracio": "Radi de la bola incorrecte i ús de la caracterització ignorant el domini.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "tota la bola de centre $(x_0,y_0)$ i radi $d$ està continguda a $\\Omega$",
+        "gravetat": "error",
+        "explicacio": "La distància de $(x_0,y_0)$ a la recta $x=y$ és $d/\\sqrt2<d$; amb radi $d$ la bola surt de $\\Omega$ (p. ex. $(1,0)$, $d=1$, punt $(0.4,0.6)$). Cal radi $d/\\sqrt2$."
+      },
+      {
+        "fragment": 4,
+        "cita": "sigui quin sigui el domini de $f$",
+        "gravetat": "error",
+        "explicacio": "La caracterització només dona $f^{-1}(V)=U\\cap\\Omega$ amb $U$ obert; cal que $\\Omega$ sigui obert per concloure que és obert de $\\mathbb{R}^2$."
+      },
+      {
+        "fragment": 5,
+        "cita": "Per tant $B$ és un subconjunt obert de $\\mathbb{R}^2$.",
+        "gravetat": "consequencia",
+        "explicacio": "La conclusió és certa però es dedueix de l'argument erroni de [4]."
+      }
+    ]
+  },
+  "creat": 1791299452.0474977
+}

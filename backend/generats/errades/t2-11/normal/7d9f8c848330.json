@@ -1,0 +1,59 @@
+{
+  "id": "7d9f8c848330",
+  "exercici": "t2-11",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "El denominador $(x-1)^4+y^4$ només s'anul·la si $x=1$ i $y=0$. A l'obert $\\mathbb{R}^2\\setminus\\{(1,0)\\}$, $f$ és quocient de polinomis amb denominador no nul, i per tant hi és contínua.",
+    "Estudiem el punt $(1,0)$. Posem $u=x-1$, de manera que $(x,y)\\to(1,0)$ equival a $(u,y)\\to(0,0)$ i $f(x,y)=\\frac{u^3y^2}{u^4+y^4}$.",
+    "De la desigualtat $(u^2+y^2)^2\\geq0$ surt $u^2y^2\\leq\\frac{u^4+y^4}{2}$.",
+    "Aleshores, per a $(x,y)\\neq(1,0)$, $|f(x,y)|=\\frac{|u|\\,u^2y^2}{u^4+y^4}\\leq\\frac{|u|}{2}=\\frac{|x-1|}{2}$.",
+    "I com que $|x-1|\\leq\\|(x,y)\\|$, tenim $0\\leq|f(x,y)|\\leq\\frac{\\|(x,y)\\|}{2}\\to0$ quan $(x,y)\\to(1,0)$.",
+    "Per tant $\\lim_{(x,y)\\to(1,0)}f(x,y)=0=f(1,0)$: $f$ és contínua a $(1,0)$ i, juntament amb el primer pas, és contínua a tot $\\mathbb{R}^2$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "De la desigualtat $(u^2+y^2)^2\\geq0$ surt",
+      "inici": 0,
+      "fi": 41,
+      "tipus": "logica",
+      "explicacio": "Desenvolupant $(u^2+y^2)^2\\geq0$ s'obté $u^4+2u^2y^2+y^4\\geq0$, que no dona cap fita de $u^2y^2$. La desigualtat correcta surt de $(u^2-y^2)^2\\geq0$.",
+      "correccio": "De $(u^2-y^2)^2=u^4-2u^2y^2+y^4\\geq0$ surt $u^2y^2\\leq\\frac{u^4+y^4}{2}$.",
+      "pista": "Si desenvolupes el quadrat que has escrit, quin signe porta el terme $u^2y^2$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$|x-1|\\leq\\|(x,y)\\|$, tenim $0\\leq|f(x,y)|\\leq\\frac{\\|(x,y)\\|}{2}\\to0$",
+      "inici": 10,
+      "fi": 80,
+      "tipus": "desigualtat",
+      "explicacio": "$|x-1|\\leq\\|(x,y)\\|$ és fals en general (per exemple a $(-1,0)$), i a més $\\|(x,y)\\|\\to1$, no a $0$, quan $(x,y)\\to(1,0)$. La fita útil és directament $\\frac{|x-1|}{2}\\to0$ (o la distància a $(1,0)$).",
+      "correccio": "$0\\leq|f(x,y)|\\leq\\frac{|x-1|}{2}\\to0$ quan $(x,y)\\to(1,0)$.",
+      "pista": "Quant val $\\|(x,y)\\|$ quan $(x,y)$ és a prop de $(1,0)$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t2.json",
+    "valoracio": "Justificació errònia de la desigualtat clau i fita final que no tendeix a $0$.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$(u^2+y^2)^2\\geq0$",
+        "gravetat": "error",
+        "explicacio": "D'aquesta desigualtat no surt $u^2y^2\\leq\\frac{u^4+y^4}{2}$; cal partir de $(u^2-y^2)^2\\geq0$."
+      },
+      {
+        "fragment": 5,
+        "cita": "$|x-1|\\leq\\|(x,y)\\|$, tenim $0\\leq|f(x,y)|\\leq\\frac{\\|(x,y)\\|}{2}\\to0$",
+        "gravetat": "error",
+        "explicacio": "Quan $(x,y)\\to(1,0)$, $\\|(x,y)\\|\\to1$, no $0$; la fita correcta és amb $\\|(x,y)-(1,0)\\|$ o directament $\\frac{|x-1|}{2}\\to0$."
+      }
+    ]
+  },
+  "creat": 1791299452.0430017
+}

@@ -1,0 +1,60 @@
+{
+  "id": "0b5f98a58089",
+  "exercici": "t4-5c",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "El domini $\\mathbb{R}^2\\setminus\\{(0,0)\\}$ és obert i $G(x,y)=(x^2-y^2,xy)$ té components polinòmiques, per tant $G$ és de classe $\\mathcal{C}^\\infty$.",
+    "La jacobiana és $JG(x,y)=\\begin{pmatrix}2x&-2y\\\\ y&x\\end{pmatrix}$, amb $\\det JG(x,y)=2x^2+2y^2$, que només s'anul·la a $(0,0)$, punt que no és del domini. Per tant $G$ satisfà les hipòtesis del teorema de la funció inversa a tot punt del domini.",
+    "Tanmateix, $G(-x,-y)=\\big((-x)^2-(-y)^2,(-x)(-y)\\big)=G(x,y)$, i $(-x,-y)\\neq(x,y)$ perquè $(x,y)\\neq(0,0)$. Així $G$ no és injectiva i no té inversa global; el teorema només en dona inverses locals.",
+    "Imatge. Si $G(x,y)=(0,0)$, aleshores $xy=0$ i $x^2=y^2$; de $xy=0$ obtenim $x=0$, i llavors $y^2=0$, és a dir $y=0$. Com que $(0,0)$ no és del domini, l'origen no és a la imatge.",
+    "En polars, $G(\\rho\\cos\\theta,\\rho\\sin\\theta)=\\big(\\rho^2(\\cos^2\\theta-\\sin^2\\theta),\\rho^2\\sin\\theta\\cos\\theta\\big)$, és a dir, $G(\\rho\\cos\\theta,\\rho\\sin\\theta)=\\rho^2(\\cos 2\\theta,\\sin 2\\theta)$, que, en variar $\\rho>0$ i $\\theta$, recorre tot el pla menys l'origen.",
+    "Rigorosament: donat $(u,v)\\neq(0,0)$, el nombre complex $w=u+2iv$ és no nul i té una arrel quadrada $z=x+iy\\neq 0$; de $z^2=w$ surt $x^2-y^2=u$ i $2xy=2v$, és a dir, $G(x,y)=(u,v)$ amb $(x,y)\\neq(0,0)$.",
+    "Per tant la imatge de $G$ és $\\mathbb{R}^2\\setminus\\{(0,0)\\}$. Com que $G$ no és injectiva (cada punt de la imatge té almenys les dues antiimatges $(x,y)$ i $(-x,-y)$), no existeix $G^{-1}$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 4,
+      "cita": "de $xy=0$ obtenim $x=0$",
+      "inici": 57,
+      "fi": 80,
+      "tipus": "logica",
+      "explicacio": "$xy=0$ vol dir $x=0$ o $y=0$; s'ha oblidat el cas $y=0$ (que, amb $x^2=y^2$, també dona $x=0$).",
+      "correccio": "De $xy=0$, $x=0$ o $y=0$; en tots dos casos $x^2=y^2$ obliga l'altra coordenada a ser $0$, així que $x=y=0$.",
+      "pista": "Quan un producte de dos nombres és $0$, quines possibilitats hi ha?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$G(\\rho\\cos\\theta,\\rho\\sin\\theta)=\\rho^2(\\cos 2\\theta,\\sin 2\\theta)$",
+      "inici": 128,
+      "fi": 196,
+      "tipus": "calcul",
+      "explicacio": "$\\sin\\theta\\cos\\theta=\\tfrac12\\sin 2\\theta$, no $\\sin 2\\theta$: la segona component és $\\tfrac12\\rho^2\\sin 2\\theta$.",
+      "correccio": "$G(\\rho\\cos\\theta,\\rho\\sin\\theta)=\\rho^2\\big(\\cos 2\\theta,\\tfrac12\\sin 2\\theta\\big)$, que també recorre tot el pla menys l'origen.",
+      "pista": "Quina és la fórmula de l'angle doble per al sinus? Quant val exactament $\\sin\\theta\\cos\\theta$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4a.json",
+    "valoracio": "Hipòtesis, no injectivitat i imatge correctes en conjunt, però amb un cas oblidat i una fórmula en polars errònia.",
+    "problemes": [
+      {
+        "fragment": 4,
+        "cita": "de $xy=0$ obtenim $x=0$",
+        "gravetat": "error",
+        "explicacio": "$xy=0$ dona $x=0$ o $y=0$; s'oblida el cas $y=0$ (que també porta a $x=0$ via $x^2=y^2$)."
+      },
+      {
+        "fragment": 5,
+        "cita": "$G(\\rho\\cos\\theta,\\rho\\sin\\theta)=\\rho^2(\\cos 2\\theta,\\sin 2\\theta)$",
+        "gravetat": "error",
+        "explicacio": "$\\rho^2\\sin\\theta\\cos\\theta=\\tfrac12\\rho^2\\sin2\\theta$: la segona component és $\\tfrac12\\rho^2\\sin 2\\theta$."
+      }
+    ]
+  },
+  "creat": 1791299402.9644694
+}

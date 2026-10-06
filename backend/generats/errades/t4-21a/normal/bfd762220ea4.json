@@ -1,0 +1,58 @@
+{
+  "id": "bfd762220ea4",
+  "exercici": "t4-21a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Sigui $G(x,y,z)=x^2+y^2+z^2-\\psi(ax+by+cz)$. És de classe $\\mathcal{C}^2$, perquè $\\psi\\in\\mathcal{C}^2$ i $(x,y,z)\\mapsto ax+by+cz$ és lineal, i les solucions de l'equació són exactament els zeros de $G$.",
+    "A l'origen, $G(0,0,0)=0-\\psi(0)=0$, de manera que $(0,0,0)$ és solució.",
+    "Derivant respecte de $z$, $\\frac{\\partial G}{\\partial z}=2z-\\psi'(ax+by+cz)$, que a l'origen val $-\\psi'(0)\\neq0$.",
+    "Pel teorema de la funció implícita (amb $r=2$), existeixen entorns oberts $U$ de $(0,0,0)$ i $\\Omega$ de $(0,0)$ i una funció $f\\in\\mathcal{C}^2(\\Omega)$ amb $f(0,0)=0$ tals que $\\{(x,y,z)\\in U: G(x,y,z)=0\\}=\\{(x,y,f(x,y)):(x,y)\\in\\Omega\\}$.",
+    "Així, a prop de l'origen totes les solucions són de la forma $(x,y,f(x,y))$, i com que $f$ és de classe $\\mathcal{C}^2$, $f$ és diferenciable a tot $\\mathbb{R}^2$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "$\\frac{\\partial G}{\\partial z}=2z-\\psi'(ax+by+cz)$, que a l'origen val $-\\psi'(0)\\neq0$",
+      "inici": 26,
+      "fi": 113,
+      "tipus": "calcul",
+      "explicacio": "Per la regla de la cadena, derivar $\\psi(ax+by+cz)$ respecte de $z$ dona el factor $c$: $\\frac{\\partial G}{\\partial z}=2z-c\\,\\psi'(ax+by+cz)$. Per això cal la hipòtesi $c\\neq0$.",
+      "correccio": "$\\frac{\\partial G}{\\partial z}=2z-c\\,\\psi'(ax+by+cz)$, que a l'origen val $-c\\,\\psi'(0)\\neq0$ perquè $c\\neq0$ i $\\psi'(0)\\neq0$.",
+      "pista": "Quina hipòtesi de l'enunciat no has fet servir? Què diu la regla de la cadena en derivar $\\psi(ax+by+cz)$ respecte de $z$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$f$ és diferenciable a tot $\\mathbb{R}^2$",
+      "inici": 121,
+      "fi": 162,
+      "tipus": "conclusio",
+      "explicacio": "El teorema de la funció implícita és local: $f$ només està definida (i és $\\mathcal{C}^2$) a l'entorn $\\Omega$ de $(0,0)$, no a tot $\\mathbb{R}^2$.",
+      "correccio": "$f$ és diferenciable a $\\Omega$, un entorn de $(0,0)$.",
+      "pista": "On està definida la funció $f$ que dona el teorema?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4b.json",
+    "valoracio": "Estructura correcta, però la derivada parcial oblida el factor $c$ i la conclusió final estén indegudament la diferenciabilitat a tot $\\mathbb{R}^2$.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$\\frac{\\partial G}{\\partial z}=2z-\\psi'(ax+by+cz)$",
+        "gravetat": "error",
+        "explicacio": "Falta el factor $c$ de la regla de la cadena: $\\frac{\\partial G}{\\partial z}=2z-c\\,\\psi'(ax+by+cz)$, que a l'origen val $-c\\psi'(0)\\neq0$ (aquí és on s'usa $c\\neq0$)."
+      },
+      {
+        "fragment": 5,
+        "cita": "$f$ és diferenciable a tot $\\mathbb{R}^2$",
+        "gravetat": "error",
+        "explicacio": "$f$ només està definida (i és $\\mathcal{C}^2$) a l'entorn $\\Omega$ de $(0,0)$ que dona el teorema; no té sentit afirmar-ho a tot $\\mathbb{R}^2$."
+      }
+    ]
+  },
+  "creat": 1791299408.5592148
+}

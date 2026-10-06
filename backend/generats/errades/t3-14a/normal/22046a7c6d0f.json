@@ -1,0 +1,59 @@
+{
+  "id": "22046a7c6d0f",
+  "exercici": "t3-14a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "La funció està definida a $\\mathbb{R}^2\\setminus\\{(0,0)\\}$ i hi podem escriure $f(x,y)=\\log\\sqrt{x^2+y^2}=\\dfrac12\\log(x^2+y^2)$.",
+    "Les seves parcials són $\\dfrac{\\partial f}{\\partial x}=\\dfrac12\\cdot\\dfrac{2x}{x^2+y^2}=\\dfrac{x}{x^2+y^2}$ i $\\dfrac{\\partial f}{\\partial y}=\\dfrac{y}{(x^2+y^2)^2}$.",
+    "Aquestes parcials són contínues a l'obert $\\mathbb{R}^2\\setminus\\{(0,0)\\}$, que conté $(1,0)$; per la condició suficient, $f$ és diferenciable a $(1,0)$ i podem calcular les derivades direccionals amb el gradient.",
+    "A $(1,0)$, $\\dfrac{\\partial f}{\\partial x}(1,0)=\\dfrac{1}{1}=1$ i $\\dfrac{\\partial f}{\\partial y}(1,0)=0$, de manera que $\\nabla f(1,0)=(1,0)$.",
+    "Per tant, $D_{\\mathbf v}f(1,0)=\\langle\\nabla f(1,0),\\mathbf v\\rangle=\\langle(1,0),(2,1)\\rangle=2$.",
+    "Si es vol la derivada en la direcció unitària de $\\mathbf v$, com que $\\|\\mathbf v\\|=\\sqrt5$, s'obté $D_{\\mathbf v/\\|\\mathbf v\\|}f(1,0)=\\dfrac{2}{5}$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$\\dfrac{\\partial f}{\\partial y}=\\dfrac{y}{(x^2+y^2)^2}$",
+      "inici": 110,
+      "fi": 165,
+      "tipus": "calcul",
+      "explicacio": "Per simetria amb la parcial respecte de $x$, $\\dfrac{\\partial f}{\\partial y}=\\dfrac12\\cdot\\dfrac{2y}{x^2+y^2}=\\dfrac{y}{x^2+y^2}$; el denominador no va al quadrat (a $(1,0)$ el valor $0$ no canvia).",
+      "correccio": "$\\dfrac{\\partial f}{\\partial y}=\\dfrac{y}{x^2+y^2}$.",
+      "pista": "La derivada de $\\log g$ és $g'/g$: per què el denominador hauria de quedar al quadrat en una de les parcials i no en l'altra?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "$D_{\\mathbf v/\\|\\mathbf v\\|}f(1,0)=\\dfrac{2}{5}$",
+      "inici": 101,
+      "fi": 149,
+      "tipus": "calcul",
+      "explicacio": "La derivada direccional és lineal en el vector: $D_{\\mathbf v/\\|\\mathbf v\\|}f=\\dfrac{1}{\\|\\mathbf v\\|}D_{\\mathbf v}f=\\dfrac{2}{\\sqrt5}$; s'ha dividit per $\\|\\mathbf v\\|^2$.",
+      "correccio": "$D_{\\mathbf v/\\|\\mathbf v\\|}f(1,0)=\\dfrac{2}{\\sqrt5}$.",
+      "pista": "Si divideixes el vector per $\\sqrt5$, per quant queda dividit el producte escalar amb el gradient?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3a.json",
+    "valoracio": "Resultat principal correcte, però parcial en y mal escrita i valor normalitzat erroni.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$\\dfrac{\\partial f}{\\partial y}=\\dfrac{y}{(x^2+y^2)^2}$",
+        "gravetat": "error",
+        "explicacio": "$\\partial_yf=\\frac12\\cdot\\frac{2y}{x^2+y^2}=\\frac{y}{x^2+y^2}$; el denominador no va al quadrat (a $(1,0)$ val 0 igualment)."
+      },
+      {
+        "fragment": 6,
+        "cita": "$D_{\\mathbf v/\\|\\mathbf v\\|}f(1,0)=\\dfrac{2}{5}$",
+        "gravetat": "error",
+        "explicacio": "Dividint per $\\|\\mathbf v\\|=\\sqrt5$ s'obté $2/\\sqrt5$, no $2/5$."
+      }
+    ]
+  },
+  "creat": 1791299309.4887826
+}

@@ -1,0 +1,472 @@
+[
+ {
+  "font": "problema",
+  "id": "t1-1a",
+  "dificultat": "normal",
+  "fragments": [
+   "Cal veure que $d_2$ compleix les propietats de distància. Primer, $d_2(x,y)$ és l'arrel quadrada positiva del nombre $\\sum_{i=1}^n(x_i-y_i)^2\\geq 0$, per tant $d_2(x,y)\\geq 0$.",
+   "Si $d_2(x,y)=0$, aleshores $\\sum_{i=1}^n(x_i-y_i)^2=0$, i com que una suma de nombres reals només pot valer $0$ si tots els sumands són nuls, $x_i=y_i$ per a tot $i$, és a dir, $x=y$. Recíprocament, si $x=y$ tots els sumands són $0$ i $d_2(x,y)=0$.",
+   "Simetria: per a cada $i$, $(x_i-y_i)^2=(y_i-x_i)^2$, així que les dues sumes coincideixen i $d_2(x,y)=d_2(y,x)$.",
+   "Desigualtat triangular: siguin $x,y,z\\in\\mathbb{R}^n$ i posem $u=x-z$, $v=z-y$, de manera que $u+v=x-y$. Cal veure que $\\sqrt{\\sum_i(u_i+v_i)^2}\\leq\\sqrt{\\sum_i u_i^2}+\\sqrt{\\sum_i v_i^2}$.",
+   "Elevar al quadrat conserva el sentit de qualsevol desigualtat entre nombres reals, de manera que això equival a $\\sum_i u_i^2+2\\sum_i u_iv_i+\\sum_i v_i^2\\leq\\sum_i u_i^2+2\\sqrt{\\sum_i u_i^2}\\sqrt{\\sum_i v_i^2}+\\sum_i v_i^2$, és a dir, a $\\sum_i u_iv_i\\leq\\sqrt{\\sum_i u_i^2}\\sqrt{\\sum_i v_i^2}$.",
+   "Amb el producte escalar ordinari $\\langle u,v\\rangle=\\sum_i u_iv_i$, la desigualtat de Cauchy-Schwarz dona $\\sum_i u_iv_i\\leq|\\langle u,v\\rangle|\\leq\\sqrt{\\sum_i u_i^2}\\sqrt{\\sum_i v_i^2}$, que és el que calia.",
+   "Desfent el canvi, $d_2(x,y)\\leq d_2(x,z)+d_2(z,y)$, i per tant $d_2$ és una distància a $\\mathbb{R}^n$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "una suma de nombres reals només pot valer $0$ si tots els sumands són nuls",
+    "tipus": "logica",
+    "explicacio": "L'afirmació és falsa per a nombres reals qualssevol ($1+(-1)=0$). El que fa que els sumands s'anul·lin és que cada $(x_i-y_i)^2$ és $\\geq 0$.",
+    "correccio": "Com que cada sumand $(x_i-y_i)^2$ és $\\geq 0$ i la suma és $0$, tots els sumands són nuls.",
+    "pista": "Una suma de nombres reals pot valer $0$ sense que ho siguin tots els sumands? Què tenen d'especial aquests sumands?"
+   },
+   {
+    "fragment": 5,
+    "cita": "Elevar al quadrat conserva el sentit de qualsevol desigualtat entre nombres reals",
+    "tipus": "desigualtat",
+    "explicacio": "Elevar al quadrat no conserva les desigualtats en general ($-2\\leq 1$ però $4>1$). L'equivalència amb la desigualtat dels quadrats és vàlida perquè els dos costats són $\\geq 0$.",
+    "correccio": "Com que els dos costats són $\\geq 0$, la desigualtat equival a la dels seus quadrats.",
+    "pista": "Si $a\\leq b$, és sempre cert que $a^2\\leq b^2$? Què necessites saber de $a$ i $b$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-2",
+  "dificultat": "normal",
+  "fragments": [
+   "Treballem a $\\mathbb{N}=\\{1,2,3,\\dots\\}$, on $\\frac1m$ té sentit per a tot $m$. Positivitat: si $m=n$, $d(m,n)=0$; si $m\\neq n$, $d(m,n)=\\frac1m+\\frac1n\\geq1$ perquè $m,n\\geq1$, i en particular $d(m,n)>0$. Per tant $d\\geq 0$ i $d(m,n)=0\\iff m=n$.",
+   "Simetria: si $m=n$ tots dos valors són $0$, i si $m\\neq n$, $d(m,n)=\\frac1m+\\frac1n=\\frac1n+\\frac1m=d(n,m)$.",
+   "Desigualtat triangular: volem $d(m,n)\\leq d(m,k)+d(k,n)$ per a tots $m,n,k\\in\\mathbb{N}$. Com que la definició va per casos, separem segons quins dels tres naturals coincideixen. Si $m=n$, el costat esquerre és $0$ i el dret és $\\geq 0$.",
+   "Si $m\\neq n$ i $k=m$, el costat dret és $d(m,m)+d(m,n)=\\frac2m+\\frac1n$, que és més gran que $d(m,n)=\\frac1m+\\frac1n$. El cas $k=n$ és anàleg.",
+   "Finalment, si $m\\neq n$, $k\\neq m$ i $k\\neq n$, el costat dret és $\\frac1m+\\frac1k+\\frac1k+\\frac1n=\\frac1m+\\frac1n+\\frac2k$, que és més gran que $\\frac1m+\\frac1n=d(m,n)$ perquè $\\frac2k>0$.",
+   "Com que aquests casos cobreixen totes les possibilitats, $d$ compleix la desigualtat triangular. Per tant $d$ és una distància i $(\\mathbb{N},d)$ és un espai mètric."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "$d(m,n)=\\frac1m+\\frac1n\\geq1$ perquè $m,n\\geq1$",
+    "tipus": "desigualtat",
+    "explicacio": "La fita és falsa: per a $m=2$, $n=3$ es té $\\frac12+\\frac13=\\frac56<1$. De $m,n\\geq 1$ només se'n dedueix que $\\frac1m,\\frac1n>0$.",
+    "correccio": "$d(m,n)=\\frac1m+\\frac1n>0$ perquè $m,n\\geq 1$ fa que $\\frac1m>0$ i $\\frac1n>0$.",
+    "pista": "Quant val $d(2,3)$? És més gran o igual que $1$?"
+   },
+   {
+    "fragment": 4,
+    "cita": "$d(m,m)+d(m,n)=\\frac2m+\\frac1n$",
+    "tipus": "calcul",
+    "explicacio": "Per definició $d(m,m)=0$ (el cas $m=n$ de la fórmula), no $\\frac1m+\\frac1m$. El costat dret val exactament $d(m,n)$ i es té una igualtat.",
+    "correccio": "$d(m,m)+d(m,n)=0+d(m,n)=d(m,n)$, i la desigualtat és una igualtat.",
+    "pista": "Quina de les dues branques de la definició s'aplica per calcular $d(m,m)$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-3a",
+  "dificultat": "normal",
+  "fragments": [
+   "Hem de veure que $\\|x\\|_2=\\sqrt{\\sum_{i=1}^n x_i^2}$ compleix les propietats de norma. És l'arrel quadrada positiva d'una suma de quadrats, per tant $\\|x\\|_2\\geq 0$.",
+   "Si $\\|x\\|_2=0$, aleshores $\\sum_i x_i^2=0$; com que cada $x_i^2\\geq 0$, tots els sumands són nuls, $x_i=0$ per a tot $i$ i $x=0$. Recíprocament, $\\|0\\|_2=0$.",
+   "Homogeneïtat: per a $\\lambda\\in\\mathbb{R}$, $\\|\\lambda x\\|_2=\\sqrt{\\sum_i\\lambda^2x_i^2}=\\sqrt{\\lambda^2}\\sqrt{\\sum_i x_i^2}$, i com que $\\sqrt{\\lambda^2}=\\lambda$, obtenim $\\|\\lambda x\\|_2=\\lambda\\|x\\|_2$.",
+   "Desigualtat triangular: desenvolupant el quadrat, $\\|x+y\\|_2^2=\\sum_i(x_i+y_i)^2=\\|x\\|_2^2+2\\sum_i x_iy_i+\\|y\\|_2^2$.",
+   "Considerem el producte escalar ordinari $\\langle x,y\\rangle=\\sum_i x_iy_i$, que compleix $\\|x\\|_2=\\sqrt{\\langle x,x\\rangle}$. Per Cauchy-Schwarz, $|\\langle x,y\\rangle|=\\|x\\|_2\\|y\\|_2$, i en particular $\\sum_i x_iy_i\\leq\\|x\\|_2\\|y\\|_2$.",
+   "Per tant $\\|x+y\\|_2^2\\leq\\|x\\|_2^2+2\\|x\\|_2\\|y\\|_2+\\|y\\|_2^2=(\\|x\\|_2+\\|y\\|_2)^2$.",
+   "Com que $\\|x+y\\|_2$ i $\\|x\\|_2+\\|y\\|_2$ són tots dos $\\geq 0$, prenent arrels obtenim $\\|x+y\\|_2\\leq\\|x\\|_2+\\|y\\|_2$. Així $\\|\\cdot\\|_2$ és una norma a $\\mathbb{R}^n$."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "com que $\\sqrt{\\lambda^2}=\\lambda$",
+    "tipus": "calcul",
+    "explicacio": "L'arrel quadrada positiva de $\\lambda^2$ és $|\\lambda|$, no $\\lambda$: per a $\\lambda=-3$, $\\sqrt{9}=3\\neq-3$. Amb $\\lambda<0$ s'obtindria una norma negativa.",
+    "correccio": "Com que $\\sqrt{\\lambda^2}=|\\lambda|$, $\\|\\lambda x\\|_2=|\\lambda|\\,\\|x\\|_2$.",
+    "pista": "Quant val $\\sqrt{(-3)^2}$?"
+   },
+   {
+    "fragment": 5,
+    "cita": "Per Cauchy-Schwarz, $|\\langle x,y\\rangle|=\\|x\\|_2\\|y\\|_2$",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "Cauchy-Schwarz dona una desigualtat, $|\\langle x,y\\rangle|\\leq\\|x\\|_2\\|y\\|_2$, no una igualtat (que només val si $x,y$ són linealment dependents; per exemple $x=e_1$, $y=e_2$ dona $0<1$).",
+    "correccio": "Per Cauchy-Schwarz, $|\\langle x,y\\rangle|\\leq\\|x\\|_2\\|y\\|_2$, i en particular $\\sum_i x_iy_i\\leq\\|x\\|_2\\|y\\|_2$.",
+    "pista": "Per a $x=(1,0)$ i $y=(0,1)$, quant val $\\langle x,y\\rangle$? I $\\|x\\|_2\\|y\\|_2$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-5a",
+  "dificultat": "normal",
+  "fragments": [
+   "Una equivalència són dues implicacions; les estudiem per separat. Suposem primer $A\\cap B\\neq\\emptyset$ i sigui $c\\in A\\cap B$.",
+   "Prenent $a=b=c$, el valor $d(c,c)=0$ pertany al conjunt $\\{d(a,b)\\mid a\\in A,\\ b\\in B\\}$. Com que l'ínfim és una fita superior del conjunt, $d(A,B)\\leq d(c,c)=0$; i com que totes les distàncies són $\\geq 0$, també $d(A,B)\\geq 0$. Per tant $d(A,B)=0$.",
+   "Recíprocament, suposem $d(A,B)=0$. Per la caracterització de l'ínfim, per a tot $\\varepsilon>0$ existeixen $a\\in A$ i $b\\in B$ amb $d(a,b)<\\varepsilon$.",
+   "Això no garanteix que l'ínfim s'assoleixi: hi ha parelles a distància tan petita com vulguem, però potser cap a distància exactament $0$. Busquem, doncs, un contraexemple.",
+   "Prenem $A=\\{0\\}$ i $B=B(0,1)\\setminus\\{0\\}=\\{x\\in\\mathbb{R}^m\\mid 0<\\|x\\|<1\\}$. Tots dos són no buits i $A\\cap B=\\emptyset$, perquè $0\\notin B$.",
+   "Per a tot $k\\geq 1$, el punt $\\frac1k e_1$ és de $B$ i $d(0,\\frac1k e_1)=\\frac1k$, així que $0\\leq d(A,B)\\leq\\frac1k$ per a tots aquests $k$ i, per tant, $d(A,B)=0$.",
+   "En conclusió, la implicació $A\\cap B\\neq\\emptyset\\Rightarrow d(A,B)=0$ és certa, però la recíproca és falsa: l'equivalència no és certa en general."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "l'ínfim és una fita superior del conjunt",
+    "tipus": "logica",
+    "explicacio": "L'ínfim és la més gran de les fites inferiors, no una fita superior. És precisament perquè és fita inferior que $d(A,B)\\leq d(c,c)$.",
+    "correccio": "Com que l'ínfim és una fita inferior del conjunt, $d(A,B)\\leq d(c,c)=0$.",
+    "pista": "L'ínfim d'un conjunt de nombres és més petit o més gran que cadascun dels seus elements?"
+   },
+   {
+    "fragment": 6,
+    "cita": "Per a tot $k\\geq 1$, el punt $\\frac1k e_1$ és de $B$",
+    "tipus": "calcul",
+    "explicacio": "Per a $k=1$ el punt és $e_1$, amb $\\|e_1\\|=1$, que no compleix $\\|x\\|<1$: $e_1\\notin B$. Només per a $k\\geq 2$ el punt és de $B$.",
+    "correccio": "Per a tot $k\\geq 2$, el punt $\\frac1k e_1$ és de $B$ (té norma $\\frac1k\\in(0,1)$).",
+    "pista": "Quina norma té $\\frac1k e_1$ quan $k=1$? Compleix la condició que defineix $B$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-9a",
+  "dificultat": "normal",
+  "fragments": [
+   "($\\Rightarrow$) Suposem $x\\in Fr(A)$. Per definició, per a tot $r>0$ les interseccions $B_r(x)\\cap A$ i $B_r(x)\\cap A^c$ són no buides.",
+   "Per a cada $n\\geq 1$ ho apliquem amb $r=1/n$: triem $x_n\\in B_{1/n}(x)\\cap A$ i $y_n\\in B_{1/n}(x)\\cap A^c$. Així $x_n\\in A$, $y_n\\notin A$, $d(x_n,x)<1/n$ i $d(y_n,x)<1/n$.",
+   "Vegem que $x_n\\to x$. Donat $\\varepsilon>0$, prenem $n_0\\in\\mathbb{N}$ amb $n_0>\\varepsilon$; per a $n\\geq n_0$ tenim $d(x_n,x)<1/n\\leq 1/n_0<\\varepsilon$.",
+   "Exactament igual, de $d(y_n,x)<1/n$ es dedueix $y_n\\to x$. Per tant tenim dues successions amb límit $x$, una de punts d'$A$ i l'altra de punts que no són d'$A$.",
+   "($\\Leftarrow$) Suposem ara que existeixen successions $(x_n)$ i $(y_n)$, ambdues amb límit $x$, amb $x_n\\in A$ i $y_n\\notin A$ per a tot $n$.",
+   "Com que $x_n\\to x$, existeix $n$ amb $d(x_n,x)<1$, és a dir, $x_n\\in B_1(x)\\cap A$; anàlogament existeix $m$ amb $y_m\\in B_1(x)\\cap A^c$. Com que la bola $B_1(x)$ talla $A$ i $A^c$, $x\\in Fr(A)$.",
+   "Hem demostrat les dues implicacions, i per tant l'equivalència."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "prenem $n_0\\in\\mathbb{N}$ amb $n_0>\\varepsilon$",
+    "tipus": "desigualtat",
+    "explicacio": "De $n_0>\\varepsilon$ no se segueix $1/n_0<\\varepsilon$: amb $\\varepsilon=\\frac12$ i $n_0=1$ es té $n_0>\\varepsilon$ però $1/n_0=1>\\varepsilon$. Cal $n_0>1/\\varepsilon$.",
+    "correccio": "Prenem $n_0\\in\\mathbb{N}$ amb $n_0>1/\\varepsilon$, de manera que $1/n_0<\\varepsilon$.",
+    "pista": "Si $\\varepsilon=\\frac12$ i $n_0=1$, és cert que $1/n_0<\\varepsilon$? Quina condició sobre $n_0$ garanteix aquesta desigualtat?"
+   },
+   {
+    "fragment": 6,
+    "cita": "Com que la bola $B_1(x)$ talla $A$ i $A^c$, $x\\in Fr(A)$",
+    "tipus": "conclusio",
+    "explicacio": "La definició de punt frontera demana que les interseccions siguin no buides per a TOT radi $r>0$, no per a un sol radi. Cal repetir l'argument amb $r>0$ arbitrari (cosa que la convergència permet).",
+    "correccio": "Sigui $r>0$ qualsevol: com que $x_n\\to x$ i $y_n\\to x$, hi ha $x_n\\in B_r(x)\\cap A$ i $y_m\\in B_r(x)\\cap A^c$; com que $r$ és arbitrari, $x\\in Fr(A)$.",
+    "pista": "La definició de punt frontera, per a quins radis demana que les interseccions siguin no buides?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-10b",
+  "dificultat": "normal",
+  "fragments": [
+   "Hem de veure tres coses: que $A\\subseteq\\overline{A}$, que $\\overline{A}$ és tancat i que tot tancat $C\\supseteq A$ conté $\\overline{A}$. Recordem que $x\\in\\overline{A}$ si i només si $B_r(x)\\cap A\\neq\\varnothing$ per a tot $r>0$.",
+   "Si $x\\in A$, per a tot $r>0$ tenim $x\\in B_r(x)\\cap A$, que per tant és no buit. Així $A\\subseteq\\overline{A}$.",
+   "Per veure que $\\overline{A}$ és tancat, veurem que el seu complementari és obert. Sigui $x\\notin\\overline{A}$: existeix $r>0$ amb $B_r(x)\\cap A=\\varnothing$.",
+   "Per a $y\\in B_r(x)$, amb $s=r+d(x,y)>0$ es té $B_s(y)\\subseteq B_r(x)$, i per tant $B_s(y)\\cap A=\\varnothing$, és a dir, $y\\notin\\overline{A}$.",
+   "Així $B_r(x)\\subseteq(\\overline{A})^c$ per a cada $x\\in(\\overline{A})^c$, de manera que $(\\overline{A})^c$ és obert i $\\overline{A}$ és tancat.",
+   "Minimalitat: sigui $C$ un tancat amb $A\\subseteq C$, i sigui $x\\notin C$. Com que $C^c$ és obert, existeix $r>0$ amb $B_r(x)\\subseteq C^c$.",
+   "Com que $A\\subseteq C$, tenim $A^c\\subseteq C^c$, i per tant $B_r(x)\\subseteq A^c$.",
+   "És a dir, $B_r(x)\\cap A=\\varnothing$ i $x\\notin\\overline{A}$. Hem vist $C^c\\subseteq(\\overline{A})^c$, o sigui, $\\overline{A}\\subseteq C$: $\\overline{A}$ és el tancat més petit que conté $A$."
+  ],
+  "errors": [
+   {
+    "fragment": 4,
+    "cita": "amb $s=r+d(x,y)>0$ es té $B_s(y)\\subseteq B_r(x)$",
+    "tipus": "calcul",
+    "explicacio": "Amb $s=r+d(x,y)$ la bola $B_s(y)$ és més gran que $B_r(x)$ (de fet la conté), i la inclusió és falsa si $y\\neq x$. El radi que funciona és $s=r-d(x,y)$, positiu perquè $y\\in B_r(x)$.",
+    "correccio": "Amb $s=r-d(x,y)>0$, la desigualtat triangular dona $B_s(y)\\subseteq B_r(x)$.",
+    "pista": "Si $z\\in B_s(y)$, quina fita tens per a $d(z,x)$? Quin valor de $s$ la fa més petita que $r$?"
+   },
+   {
+    "fragment": 7,
+    "cita": "Com que $A\\subseteq C$, tenim $A^c\\subseteq C^c$, i per tant $B_r(x)\\subseteq A^c$",
+    "tipus": "logica",
+    "explicacio": "Passar al complementari inverteix la inclusió: de $A\\subseteq C$ se segueix $C^c\\subseteq A^c$, no $A^c\\subseteq C^c$. A més, amb $A^c\\subseteq C^c$ no es podria deduir $B_r(x)\\subseteq A^c$ a partir de $B_r(x)\\subseteq C^c$.",
+    "correccio": "Com que $A\\subseteq C$, tenim $C^c\\subseteq A^c$, i per tant $B_r(x)\\subseteq C^c\\subseteq A^c$.",
+    "pista": "Si un conjunt està dins d'un altre, com es relacionen els seus complementaris? Fes un dibuix amb dos discos encaixats."
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-11a",
+  "dificultat": "normal",
+  "fragments": [
+   "Recordem que un conjunt $U\\subseteq\\mathbb{R}^n$ és obert si existeix $r>0$ tal que $B_r(u)\\subseteq U$ per a tot $u\\in U$.",
+   "Primer caracteritzem la pertinença: $z\\in A+\\{y\\}\\iff z=a+y$ per a algun $a\\in A\\iff z-y\\in A$.",
+   "Sigui $z\\in A+\\{y\\}$ i posem $a=z-y$, que és d'$A$. Com que $A$ és obert, existeix $r>0$ amb $B_r(a)\\subseteq A$.",
+   "Vegem que $B_r(z)\\subseteq A+\\{y\\}$. Sigui $w\\in B_r(z)$. Aleshores $\\|(w-y)-a\\|=\\|w-y-(z-y)\\|=\\|w-z\\|<r$, és a dir, $w-y\\in B_r(a)\\subseteq A$.",
+   "Per tant $w=(w-y)-y$ amb $w-y\\in A$, i $w\\in A+\\{y\\}$.",
+   "Així $B_r(z)\\subseteq A+\\{y\\}$. Com que $z\\in A+\\{y\\}$ era arbitrari, $A+\\{y\\}$ és obert: la translació conserva les distàncies i porta boles a boles del mateix radi."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "existeix $r>0$ tal que $B_r(u)\\subseteq U$ per a tot $u\\in U$",
+    "tipus": "logica",
+    "explicacio": "L'ordre dels quantificadors és incorrecte: la definició d'obert permet que el radi depengui del punt. Amb un radi comú, $(0,1)$ no seria obert (prop dels extrems el radi ha de ser cada cop més petit).",
+    "correccio": "$U$ és obert si per a tot $u\\in U$ existeix $r>0$ (que pot dependre de $u$) tal que $B_r(u)\\subseteq U$.",
+    "pista": "A l'interval $(0,1)$, hi ha un mateix radi que serveixi per a tots els punts? El radi pot dependre del punt?"
+   },
+   {
+    "fragment": 5,
+    "cita": "$w=(w-y)-y$",
+    "tipus": "calcul",
+    "explicacio": "$(w-y)-y=w-2y$, no $w$. La descomposició correcta és $w=(w-y)+y$, que és la que mostra que $w$ és d'$A+\\{y\\}$.",
+    "correccio": "$w=(w-y)+y$ amb $w-y\\in A$, i per tant $w\\in A+\\{y\\}$.",
+    "pista": "Quant val $(w-y)-y$? Quina operació has de fer sobre $w-y$ per recuperar $w$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-12b",
+  "dificultat": "normal",
+  "fragments": [
+   "Per Heine-Borel, un subconjunt de $\\mathbb{R}^3$ és compacte si i només si és tancat i fitat. Estudiem les dues condicions per a $B=\\{(2,3,z)\\mid z\\in(-1,1)\\}$.",
+   "Fitat: per a $(2,3,z)\\in B$, $\\|(2,3,z)\\|=|z|<1$, així $B\\subseteq B_1((0,0,0))$ i $B$ és fitat.",
+   "Tancat: la successió $(2,3,1-\\frac1n)$ és de $B$ per a tot $n\\geq 1$ i convergeix a $(2,3,1)\\notin B$. Per la caracterització seqüencial dels tancats, $B$ no és tancat, i per tant no és compacte.",
+   "Busquem el compacte més petit que conté $B$. Tot tancat que conté $B$ és compacte, de manera que el compacte més petit que conté $B$ és el tancat més petit que el conté, és a dir, $\\overline{B}$.",
+   "Calculem $\\overline{B}$. El segment $S=\\{(2,3,z)\\mid z\\in[-1,1]\\}$ és tancat i conté $B$, així que $\\overline{B}\\subseteq S$; a més els extrems $(2,3,\\pm1)$ són límits de punts de $B$, així que $S\\subseteq\\overline{B}$. Per tant $\\overline{B}=S$.",
+   "$S$ és tancat i fitat, i per tant compacte per Heine-Borel. Així el compacte més petit que conté $B$ és $S=\\{(2,3,z)\\mid z\\in[-1,1]\\}$."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "$\\|(2,3,z)\\|=|z|<1$",
+    "tipus": "calcul",
+    "explicacio": "La norma de $(2,3,z)$ és $\\sqrt{4+9+z^2}=\\sqrt{13+z^2}>3$, no $|z|$; de fet $B\\cap B_1((0,0,0))=\\varnothing$. El que val $|z|$ és la distància a $(2,3,0)$.",
+    "correccio": "$\\|(2,3,z)-(2,3,0)\\|=|z|<1$, així $B\\subseteq B_1((2,3,0))$ i $B$ és fitat.",
+    "pista": "Quant val la norma euclidiana del vector $(2,3,0)$? I la distància de $(2,3,z)$ a $(2,3,0)$?"
+   },
+   {
+    "fragment": 4,
+    "cita": "Tot tancat que conté $B$ és compacte",
+    "tipus": "logica",
+    "explicacio": "És fals: el pla $x=2$ és tancat, conté $B$ i no és fitat, per tant no és compacte. El que cal és el recíproc: tot compacte és tancat, i per tant tot compacte $K\\supseteq B$ conté $\\overline{B}$.",
+    "correccio": "Tot compacte és tancat, així que tot compacte $K\\supseteq B$ conté $\\overline{B}$; si $\\overline{B}$ és compacte, és el compacte més petit que conté $B$.",
+    "pista": "El pla $\\{x=2\\}$ és tancat i conté $B$. És compacte? Quina implicació entre compacte i tancat és la certa?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-13a",
+  "dificultat": "normal",
+  "fragments": [
+   "Sigui $\\{K_i\\}_{i\\in I}$ una família no buida ($I\\neq\\varnothing$) de compactes de $\\mathbb{R}^n$ i $K=\\bigcap_{i\\in I}K_i$.",
+   "Cada $K_i$ és compacte i, per tant, tancat, ja que tot compacte d'un espai mètric és tancat.",
+   "La intersecció d'una família arbitrària de tancats és tancada: el seu complementari és $\\bigcap_{i\\in I}K_i^c$, una intersecció d'oberts, i tota intersecció d'oberts és oberta. Per tant $K$ és tancat.",
+   "Fixem $i_0\\in I$, que existeix perquè $I\\neq\\varnothing$. Aleshores $K\\subseteq K_{i_0}$.",
+   "Tot subconjunt d'un compacte és compacte. Com que $K\\subseteq K_{i_0}$ i $K_{i_0}$ és compacte, $K$ és compacte."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "el seu complementari és $\\bigcap_{i\\in I}K_i^c$, una intersecció d'oberts, i tota intersecció d'oberts és oberta",
+    "tipus": "logica",
+    "explicacio": "Per De Morgan, el complementari d'una intersecció és la unió dels complementaris, $\\bigcup_i K_i^c$. A més, una intersecció infinita d'oberts no és oberta en general ($\\bigcap_n(-\\frac1n,\\frac1n)=\\{0\\}$).",
+    "correccio": "El complementari és $\\bigcup_{i\\in I}K_i^c$, una unió d'oberts, que és oberta; per tant $K$ és tancat.",
+    "pista": "Quin és el complementari d'una intersecció? I una intersecció infinita d'oberts, és sempre oberta?"
+   },
+   {
+    "fragment": 5,
+    "cita": "Tot subconjunt d'un compacte és compacte",
+    "tipus": "teorema_mal_aplicat",
+    "explicacio": "És fals: $(0,1)\\subseteq[0,1]$ no és compacte. El resultat correcte és que un subconjunt TANCAT d'un compacte és compacte, i aquí cal fer servir que $K$ és tancat.",
+    "correccio": "Un tancat contingut en un compacte és compacte. Com que $K$ és tancat i $K\\subseteq K_{i_0}$, $K$ és compacte.",
+    "pista": "L'interval $(0,1)$ està dins del compacte $[0,1]$. És compacte? Quina hipòtesi li falta?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-15",
+  "dificultat": "normal",
+  "fragments": [
+   "Recordem que $K$ és compacte si existeix algun recobriment de $K$ per oberts que admet un subrecobriment finit. Sigui $K=\\{x_n\\mid n\\in\\mathbb{N}\\}\\cup\\{x_0\\}$ i sigui $K\\subseteq\\bigcup_{i\\in I}U_i$ un recobriment de $K$ per oberts $U_i$.",
+   "Com que $x_0\\in K$, existeix $i_0\\in I$ amb $x_0\\in U_{i_0}$. Com que $U_{i_0}$ és obert, existeix $r>0$ amb $B_r(x_0)\\subseteq U_{i_0}$.",
+   "Apliquem la definició de límit amb $\\varepsilon=2r$: existeix $n_0$ tal que $d(x_n,x_0)<2r$ per a tot $n\\geq n_0$, i per tant $x_n\\in B_r(x_0)\\subseteq U_{i_0}$ per a tot $n\\geq n_0$.",
+   "Els termes que queden fora d'aquesta cua, $x_1,\\dots,x_{n_0-1}$, són un nombre finit. Per a cada $n=1,\\dots,n_0-1$ triem $i_n\\in I$ amb $x_n\\in U_{i_n}$.",
+   "Aleshores $K\\subseteq U_{i_0}\\cup U_{i_1}\\cup\\dots\\cup U_{i_{n_0-1}}$: el punt $x_0$ i la cua són a $U_{i_0}$, i els termes restants als $U_{i_n}$. És un subrecobriment finit.",
+   "Com que el recobriment de partida era arbitrari, $K$ és compacte."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "si existeix algun recobriment de $K$ per oberts que admet un subrecobriment finit",
+    "tipus": "logica",
+    "explicacio": "La definició demana que TOT recobriment per oberts admeti un subrecobriment finit. Amb «algun» qualsevol conjunt seria compacte (n'hi ha prou amb el recobriment format per tot l'espai).",
+    "correccio": "$K$ és compacte si tot recobriment de $K$ per oberts admet un subrecobriment finit.",
+    "pista": "Amb la teva definició, $\\mathbb{R}$ seria compacte? Pensa en el recobriment format només per $\\mathbb{R}$."
+   },
+   {
+    "fragment": 3,
+    "cita": "$\\varepsilon=2r$: existeix $n_0$ tal que $d(x_n,x_0)<2r$ per a tot $n\\geq n_0$, i per tant",
+    "tipus": "desigualtat",
+    "explicacio": "De $d(x_n,x_0)<2r$ no se segueix $d(x_n,x_0)<r$, que és el que vol dir $x_n\\in B_r(x_0)$. Cal aplicar la definició de límit amb $\\varepsilon=r$ (o més petit).",
+    "correccio": "Amb $\\varepsilon=r$: existeix $n_0$ tal que $d(x_n,x_0)<r$ per a tot $n\\geq n_0$, és a dir, $x_n\\in B_r(x_0)\\subseteq U_{i_0}$.",
+    "pista": "Un punt a distància menor que $2r$ de $x_0$, és necessàriament a la bola $B_r(x_0)$?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-16a",
+  "dificultat": "normal",
+  "fragments": [
+   "Sí que n'existeixen. La idea és que, si a un conjunt obert li traiem un punt interior, aquest punt passa a ser de frontera, de manera que el conjunt més petit pot tenir més frontera.",
+   "Concretament, si $B$ és obert i $p\\in B$, posem $A=B\\setminus\\{p\\}\\subseteq B$. Tota bola centrada en $p$ conté $p\\notin A$ i punts d'$A$, així que $p\\in Fr(A)$; en canvi, $p\\in B$ i un punt d'un conjunt mai no pertany a la seva frontera, així que $p\\notin Fr(B)$.",
+   "Prenem a $\\mathbb{R}$ els conjunts $A=(0,1)\\cup(1,2)$ i $B=(0,2)$. Clarament $A\\subseteq B$, i $A\\neq B$ perquè $1\\in B\\setminus A$.",
+   "$Fr(B)=\\{0,2\\}$: com que $0,2\\notin B$, no són interiors a $B$ i, per tant, són de frontera; els punts de $(0,2)$ són interiors a $B$ i els de fora de $[0,2]$ són exteriors.",
+   "Per a $A$: $0$ i $2$ en són punts de frontera com abans, i també $1$, perquè tota bola $(1-r,1+r)$ conté $1\\notin A$ i punts d'$A$. Els altres punts són interiors o exteriors a $A$, així que $Fr(A)=\\{0,1,2\\}$.",
+   "Per tant $Fr(B)=\\{0,2\\}\\subseteq\\{0,1,2\\}=Fr(A)$, amb $A\\subseteq B$ i $A\\neq B$: l'exemple compleix totes les condicions."
+  ],
+  "errors": [
+   {
+    "fragment": 2,
+    "cita": "un punt d'un conjunt mai no pertany a la seva frontera",
+    "tipus": "logica",
+    "explicacio": "És fals: $1\\in[0,1]$ i $1\\in Fr([0,1])$. El motiu correcte és que $p$ és interior a $B$ (perquè $B$ és obert), i un punt interior no és de frontera.",
+    "correccio": "Com que $B$ és obert, $p$ és interior a $B$: hi ha una bola centrada en $p$ continguda a $B$, que no talla $B^c$, i per tant $p\\notin Fr(B)$.",
+    "pista": "Quina és la frontera de $[0,1]$? Els seus punts pertanyen al conjunt o no?"
+   },
+   {
+    "fragment": 4,
+    "cita": "com que $0,2\\notin B$, no són interiors a $B$ i, per tant, són de frontera",
+    "tipus": "logica",
+    "explicacio": "No ser interior no implica ser de frontera: per exemple $5\\notin B$ tampoc és interior, i és exterior. Per a $0$ i $2$ cal comprovar que tota bola centrada en ells talla $B$ i $B^c$.",
+    "correccio": "$0$ i $2$ són de frontera perquè tota bola $(0-r,0+r)$ (o centrada en $2$) conté punts de $B$ i punts de $B^c$.",
+    "pista": "El punt $5$ tampoc és de $B$. És de la frontera de $B$? Què cal comprovar exactament?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-17b",
+  "dificultat": "normal",
+  "fragments": [
+   "Escrivim $\\mathbf a(t)=\\left(\\cos\\frac1t,-\\sin\\frac1t\\right)+2t\\left(\\sin\\frac1t,\\cos\\frac1t\\right)$. El primer sumand és un punt de $C$ i el segon té norma $2|t|$, que tendeix a $0$ quan $t\\to0$.",
+   "Per tant, quan $t\\to 0$ els punts d'$A$ s'acosten a $C$ donant-hi infinites voltes, i esperem que tot punt de $C$ sigui d'acumulació. Sigui $p=(\\cos\\theta,\\sin\\theta)$ un punt qualsevol de $C$.",
+   "Volem $t$ amb $\\cos\\frac1t=\\cos\\theta$ i $-\\sin\\frac1t=\\sin\\theta$, és a dir, $\\frac1t=-\\theta+2\\pi k$ amb $k\\in\\mathbb{Z}$. Prenem $t_k=\\frac{1}{2\\pi k-\\theta}$, que és positiu per a $k$ prou gran i tendeix a $0$.",
+   "Per a aquests $k$, $\\mathbf a(t_k)=p+2t_k(\\sin\\theta,\\cos\\theta)$, i com que $t_k>0$, $\\|\\mathbf a(t_k)-p\\|=2t_k$.",
+   "Com que $2t_k\\to 0$, la successió $\\mathbf a(t_k)$ de punts d'$A$ convergeix a $p$; per tant $p$ és adherent a $A$ i, com que tot punt adherent a un conjunt n'és d'acumulació, $p\\in A'$.",
+   "Com que $p\\in C$ era arbitrari, $C\\subseteq A'$: tots els punts de la circumferència són punts d'acumulació d'$A$.",
+   "A més, per l'apartat (a), $\\|\\mathbf a\\|=\\sqrt{1+4t^2}>1$ per a tot $\\mathbf a\\in A$, així que $A\\cap C=\\varnothing$: aquests punts d'acumulació no pertanyen a $A$ (en particular, $A$ no és tancat)."
+  ],
+  "errors": [
+   {
+    "fragment": 4,
+    "cita": "$\\mathbf a(t_k)=p+2t_k(\\sin\\theta,\\cos\\theta)$",
+    "tipus": "calcul",
+    "explicacio": "Amb $\\frac1{t_k}=2\\pi k-\\theta$ es té $\\sin\\frac1{t_k}=-\\sin\\theta$, de manera que el segon sumand és $2t_k(-\\sin\\theta,\\cos\\theta)$. (La norma $2t_k$ no canvia.)",
+    "correccio": "$\\mathbf a(t_k)=p+2t_k(-\\sin\\theta,\\cos\\theta)$.",
+    "pista": "Quant val $\\sin(2\\pi k-\\theta)$?"
+   },
+   {
+    "fragment": 5,
+    "cita": "tot punt adherent a un conjunt n'és d'acumulació",
+    "tipus": "logica",
+    "explicacio": "És fals: un punt aïllat d'un conjunt n'és adherent però no d'acumulació (p. ex. $0$ a $\\{0\\}\\cup[1,2]$). Per ser d'acumulació cal una successió de punts d'$A$ DIFERENTS de $p$, cosa que aquí es té perquè $\\|\\mathbf a(t_k)-p\\|=2t_k>0$.",
+    "correccio": "Com que $\\mathbf a(t_k)\\neq p$ (la seva distància a $p$ és $2t_k>0$) i $\\mathbf a(t_k)\\to p$, $p$ és punt d'acumulació d'$A$.",
+    "pista": "Pensa en el conjunt $\\{0\\}\\cup[1,2]$: el punt $0$ hi és adherent; n'és punt d'acumulació?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-18b",
+  "dificultat": "normal",
+  "fragments": [
+   "Primer vegem quina inclusió és sempre certa. Si $x\\in\\overline V$, tota bola centrada en $x$ talla $V$; com que $A\\subseteq V$, també talla $A$, i igualment talla $B$. Així $\\overline V\\subseteq\\overline A\\cap\\overline B$ sempre.",
+   "Per tant, un contraexemple ha de tenir un punt de $\\overline V$ que no sigui de $\\overline A\\cap\\overline B$. Busquem dos conjunts disjunts que es toquin en un punt que no pertanyi a cap dels dos.",
+   "A $\\mathbb{R}$ prenem $A=(0,1)$ i $B=(1,2)$. Aleshores $V=A\\cap B=\\varnothing$, i per tant $\\overline V=\\varnothing$.",
+   "D'altra banda, $\\overline A=[0,1]$: $A\\subseteq\\overline A$, tota bola centrada en $0$ o en $1$ talla $(0,1)$, i cada punt de fora de $[0,1]$ té una bola que no talla $(0,1)$. Anàlogament $\\overline B=[1,2]$.",
+   "Així $\\overline A\\cap\\overline B=[0,1]\\cap[1,2]=\\{1\\}\\neq\\varnothing=\\overline V$, i la igualtat $\\overline V=\\overline A\\cap\\overline B$ és falsa en general."
+  ],
+  "errors": [
+   {
+    "fragment": 1,
+    "cita": "com que $A\\subseteq V$",
+    "tipus": "logica",
+    "explicacio": "La inclusió és al revés: $V=A\\cap B\\subseteq A$. Precisament perquè $V\\subseteq A$, una bola que talla $V$ també talla $A$.",
+    "correccio": "Com que $V\\subseteq A$, també talla $A$ (i, com que $V\\subseteq B$, també talla $B$).",
+    "pista": "Qui està contingut en qui: $A$ en $A\\cap B$, o $A\\cap B$ en $A$?"
+   },
+   {
+    "fragment": 2,
+    "cita": "un contraexemple ha de tenir un punt de $\\overline V$ que no sigui de $\\overline A\\cap\\overline B$",
+    "tipus": "conclusio",
+    "explicacio": "Acabem de veure que $\\overline V\\subseteq\\overline A\\cap\\overline B$ sempre, així que aquest punt no pot existir. La inclusió que pot fallar és l'altra: cal un punt de $\\overline A\\cap\\overline B$ que no sigui de $\\overline V$.",
+    "correccio": "Un contraexemple ha de tenir un punt de $\\overline A\\cap\\overline B$ que no sigui de $\\overline V$.",
+    "pista": "Si $\\overline V\\subseteq\\overline A\\cap\\overline B$ sempre, quina de les dues inclusions pot fallar?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-19c",
+  "dificultat": "normal",
+  "fragments": [
+   "Prenem $\\mathbb{N}=\\{1,2,\\dots\\}$. Si $a\\neq b$, el conjunt $\\{k\\mid a_k\\neq b_k\\}$ és un subconjunt no buit de $\\mathbb{N}$ i té mínim, que denotem $k(a,b)$; així $d(a,b)=1/k(a,b)$ està ben definida.",
+   "Si $a\\neq b$, $d(a,b)=1/k(a,b)>0$, i si $a=b$, $d(a,b)=0$; per tant $d\\geq 0$ i $d(a,b)=0\\iff a=b$. A més $a_k\\neq b_k\\iff b_k\\neq a_k$, així que $k(a,b)=k(b,a)$ i $d(a,b)=d(b,a)$.",
+   "Desigualtat triangular: si dos dels tres punts $a,b,c$ coincideixen, és immediata. Altrament, $a_j=c_j$ per a $j<k(a,c)$ i $c_j=b_j$ per a $j<k(c,b)$, d'on $a_j=b_j$ per a tot $j<\\min\\{k(a,c),k(c,b)\\}$.",
+   "Per tant $k(a,b)\\geq\\min\\{k(a,c),k(c,b)\\}$ i, prenent inversos, $d(a,b)\\leq\\min\\{d(a,c),d(c,b)\\}$, que és $\\leq d(a,c)+d(c,b)$. Així $d$ és una distància i $(\\{0,1\\}^{\\mathbb{N}},d)$ és un espai mètric.",
+   "Bola: sigui $\\mathbf 0$ la successió nul·la i $\\epsilon>0$. Per a $b\\neq\\mathbf 0$, $d(\\mathbf 0,b)<\\epsilon\\iff 1/k(\\mathbf 0,b)<\\epsilon\\iff k(\\mathbf 0,b)>1/\\epsilon$, és a dir, el primer índex on $b$ val $1$ és més gran que $1/\\epsilon$.",
+   "Equivalentment, $b_k=0$ per a tot $k<1/\\epsilon$: la bola $B(\\mathbf 0,\\epsilon)$ està formada per $\\mathbf 0$ i les successions que s'anul·len en tots aquests índexs.",
+   "En particular, si $\\epsilon>1$, aleshores $1/\\epsilon<1$ i no hi ha cap condició: la bola és tot l'espai $\\{0,1\\}^{\\mathbb{N}}$."
+  ],
+  "errors": [
+   {
+    "fragment": 4,
+    "cita": "prenent inversos, $d(a,b)\\leq\\min\\{d(a,c),d(c,b)\\}$",
+    "tipus": "desigualtat",
+    "explicacio": "En prendre inversos el mínim dels índexs es converteix en el màxim de les distàncies: $1/\\min\\{k(a,c),k(c,b)\\}=\\max\\{d(a,c),d(c,b)\\}$. La fita amb el mínim és falsa: per a $a=000\\dots$, $c=100\\dots$, $b=110\\dots$, $d(a,b)=1>\\frac12=\\min$.",
+    "correccio": "Prenent inversos, $d(a,b)\\leq\\max\\{d(a,c),d(c,b)\\}\\leq d(a,c)+d(c,b)$.",
+    "pista": "Si $k_1\\geq\\min\\{k_2,k_3\\}$, què pots dir de $1/k_1$ respecte de $1/k_2$ i $1/k_3$? Quin dels dos inversos és el gran?"
+   },
+   {
+    "fragment": 6,
+    "cita": "Equivalentment, $b_k=0$ per a tot $k<1/\\epsilon$",
+    "tipus": "desigualtat",
+    "explicacio": "La condició $k(\\mathbf 0,b)>1/\\epsilon$ vol dir que $b_k=0$ per a tot $k\\leq 1/\\epsilon$, amb desigualtat no estricta. Per a $\\epsilon=\\frac13$, la successió amb $b_1=b_2=0$, $b_3=1$ compleix la condició escrita però $d(\\mathbf 0,b)=\\frac13\\not<\\epsilon$.",
+    "correccio": "$b_k=0$ per a tot $k\\leq 1/\\epsilon$; amb $N=\\lfloor 1/\\epsilon\\rfloor$, $B(\\mathbf 0,\\epsilon)=\\{b\\mid b_1=\\dots=b_N=0\\}$.",
+    "pista": "Si $\\epsilon=\\frac13$, la successió $b=(0,0,1,0,\\dots)$ és a la bola? Compleix la teva condició?"
+   }
+  ]
+ },
+ {
+  "font": "problema",
+  "id": "t1-20a",
+  "dificultat": "normal",
+  "fragments": [
+   "Per a cada $y\\in B$ posem $yA=\\{xy\\mid x\\in A\\}$. Aleshores $E=\\bigcup_{y\\in B}yA$: cada producte $xy$ amb $x\\in A$, $y\\in B$ és de $yA$, i cada $yA$ amb $y\\in B$ està contingut a $E$.",
+   "Vegem que $yA$ és obert per a cada $y\\in B$; per hipòtesi, $y>0$. Sigui $z=ya\\in yA$ amb $a\\in A$; com que $A$ és obert, existeix $r>0$ amb $(a-r,a+r)\\subseteq A$.",
+   "Afirmem que $(ya-r,ya+r)\\subseteq yA$. Sigui $w$ amb $|w-ya|<r$. Aleshores $\\left|\\frac wy-a\\right|=\\frac{|w-ya|}{y}<r$, de manera que $\\frac wy\\in A$ i $w=y\\cdot\\frac wy\\in yA$.",
+   "Així $yA$ conté un interval obert centrat en cadascun dels seus punts, i per tant és obert.",
+   "$E$ és la unió (arbitrària) dels oberts $yA$, $y\\in B$, i la unió arbitrària d'oberts és oberta: $E$ és obert. Si $B=\\varnothing$, aleshores $E=\\mathbb{R}$, que també és obert."
+  ],
+  "errors": [
+   {
+    "fragment": 3,
+    "cita": "$\\left|\\frac wy-a\\right|=\\frac{|w-ya|}{y}<r$",
+    "tipus": "desigualtat",
+    "explicacio": "De $|w-ya|<r$ només se segueix $\\frac{|w-ya|}{y}<\\frac ry$, que és més gran que $r$ si $y<1$. El radi s'ha d'escalar: cal prendre l'interval $(ya-yr,ya+yr)$, és a dir $|w-ya|<yr$.",
+    "correccio": "Prenem $|w-ya|<yr$ (radi $yr>0$ perquè $y>0$); aleshores $\\left|\\frac wy-a\\right|=\\frac{|w-ya|}{y}<r$.",
+    "pista": "Si $y=\\frac1{10}$, dividir per $y$ fa la distància més gran o més petita? Quin radi necessites al voltant de $ya$?"
+   },
+   {
+    "fragment": 5,
+    "cita": "Si $B=\\varnothing$, aleshores $E=\\mathbb{R}$",
+    "tipus": "calcul",
+    "explicacio": "Si $B=\\varnothing$ no hi ha cap producte $xy$ amb $y\\in B$, de manera que $E=\\varnothing$ (la unió buida és el conjunt buit), no $\\mathbb{R}$.",
+    "correccio": "Si $B=\\varnothing$, aleshores $E=\\varnothing$, que també és obert.",
+    "pista": "Quins elements té $E$ si no hi ha cap $y\\in B$?"
+   }
+  ]
+ }
+]

@@ -1,0 +1,59 @@
+{
+  "id": "be65a1362fa5",
+  "exercici": "t3-23",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Prenem $h:D\\to\\mathbb{R}$, $h(x,y)=y\\log x$ (ben definida perquè $x>0$ a $D$), i $g:\\mathbb{R}\\to\\mathbb{R}^2$, $g(s)=(\\sin s,s^2)$. Llavors $g(h(x,y))=(\\sin(y\\log x),(y\\log x)^2)=f(x,y)$.",
+    "La funció $h$ té derivades parcials $\\dfrac{\\partial h}{\\partial x}=\\dfrac{y}{x}$ i $\\dfrac{\\partial h}{\\partial y}=\\log x$ a tot punt de $D$; com que aquestes parcials existeixen a tot $D$, $h$ és diferenciable a $D$.",
+    "Les components de $g$, $\\sin s$ i $s^2$, són derivables amb derivada contínua a $\\mathbb{R}$, per tant $g$ és diferenciable a $\\mathbb{R}$, i per la regla de la cadena $f=g\\circ h$ és diferenciable a $D$.",
+    "Les jacobianes són $Jh(x,y)=\\begin{pmatrix}\\frac{y}{x} & \\log x\\end{pmatrix}$ ($1\\times2$) i $Jg(s)=\\begin{pmatrix}\\cos s\\\\ 2s\\end{pmatrix}$ ($2\\times1$).",
+    "Per la regla de la cadena, $Jf(x,y)=Jg(h(x,y))\\,Jh(x,y)=\\begin{pmatrix}\\cos(y\\log x)\\\\ 2y\\log x\\end{pmatrix}\\begin{pmatrix}\\frac{y}{x} & \\log x\\end{pmatrix}$, producte d'una matriu $2\\times1$ per una $1\\times2$, que dona la matriu $2\\times2$ que correspon a $f:D\\subseteq\\mathbb{R}^2\\to\\mathbb{R}^2$.",
+    "Multiplicant, la primera fila de $Jf(x,y)$ és $\\left(\\dfrac{y}{x}\\cos(y\\log x),\\ \\log x\\cos(y\\log x)\\right)$ i la segona és $\\left(\\dfrac{2y\\log x}{x},\\ 2y(\\log x)^2\\right)$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "com que aquestes parcials existeixen a tot $D$, $h$ és diferenciable a $D$",
+      "inici": 143,
+      "fi": 217,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "L'existència de les derivades parcials no implica la diferenciabilitat; la condició suficient demana que les parcials siguin contínues.",
+      "correccio": "Les parcials $\\dfrac{y}{x}$ i $\\log x$ són contínues a l'obert $D$, i per la condició suficient $h$ és diferenciable a $D$.",
+      "pista": "Quina hipòtesi sobre les derivades parcials demana la condició suficient de diferenciabilitat?"
+    },
+    {
+      "id": "e2",
+      "fragment": 6,
+      "cita": "la segona és $\\left(\\dfrac{2y\\log x}{x},\\ 2y(\\log x)^2\\right)$",
+      "inici": 111,
+      "fi": 173,
+      "tipus": "calcul",
+      "explicacio": "L'entrada $(2,1)$ és $2y\\log x\\cdot\\dfrac{y}{x}=\\dfrac{2y^2\\log x}{x}$: s'ha perdut un factor $y$.",
+      "correccio": "La segona fila és $\\left(\\dfrac{2y^2\\log x}{x},\\ 2y(\\log x)^2\\right)$.",
+      "pista": "Torna a multiplicar $2y\\log x$ per $\\dfrac{y}{x}$: quina potència de $y$ hi queda?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3b.json",
+    "valoracio": "Descomposició i producte de jacobianes correctes, però la justificació de la diferenciabilitat de $h$ és falsa i l'entrada (2,1) de $Jf$ és errònia.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "com que aquestes parcials existeixen a tot $D$, $h$ és diferenciable a $D$",
+        "gravetat": "error",
+        "explicacio": "L'existència de parcials no implica diferenciabilitat; cal que siguin contínues (condició suficient), cosa que aquí és certa però no és el que s'argumenta."
+      },
+      {
+        "fragment": 6,
+        "cita": "\\dfrac{2y\\log x}{x}",
+        "gravetat": "error",
+        "explicacio": "$2y\\log x\\cdot\\frac{y}{x}=\\frac{2y^2\\log x}{x}$; falta un factor $y$."
+      }
+    ]
+  },
+  "creat": 1791299348.7064478
+}

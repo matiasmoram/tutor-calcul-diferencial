@@ -1,0 +1,58 @@
+{
+  "id": "2bf479ef9856",
+  "exercici": "t3-24",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Escrivim $\\varphi=f\\circ g$ amb $g(x,y)=2x+3y$. La funció $g$ és diferenciable a $\\mathbb{R}^2$ perquè és contínua, i $f$ és diferenciable per hipòtesi.",
+    "A més, com que $f$ és diferenciable, la seva derivada $f'$ és contínua, i això és el que necessitem per poder aplicar la regla de la cadena a $f\\circ g$.",
+    "Com que $Jg(x,y)=\\begin{pmatrix}2 & 3\\end{pmatrix}$, la regla de la cadena dona $J\\varphi(x,y)=f'(g(x,y))\\,Jg(x,y)=f'(2x+3y)\\begin{pmatrix}2 & 3\\end{pmatrix}$.",
+    "Per tant $\\dfrac{\\partial\\varphi}{\\partial x}(x,y)=2f'(2x+3y)$ i $\\dfrac{\\partial\\varphi}{\\partial y}(x,y)=3f'(2x+3y)$.",
+    "Substituint, $3\\dfrac{\\partial\\varphi}{\\partial x}-2\\dfrac{\\partial\\varphi}{\\partial y}=6f'(2x+3y)-6f'(2x+3y)=0$ per a tot $(x,y)\\in\\mathbb{R}^2$, que és el que volíem provar."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "$g$ és diferenciable a $\\mathbb{R}^2$ perquè és contínua",
+      "inici": 58,
+      "fi": 114,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "La continuïtat no implica la diferenciabilitat (per exemple, $|x|$ és contínua i no és diferenciable a $0$).",
+      "correccio": "$g$ és diferenciable perquè és lineal (o perquè les seves parcials, $2$ i $3$, són constants i, per tant, contínues).",
+      "pista": "Quina propietat de $g$, més forta que la continuïtat, garanteix que sigui diferenciable?"
+    },
+    {
+      "id": "e2",
+      "fragment": 2,
+      "cita": "com que $f$ és diferenciable, la seva derivada $f'$ és contínua",
+      "inici": 7,
+      "fi": 70,
+      "tipus": "logica",
+      "explicacio": "Una funció derivable pot tenir derivada discontínua (p. ex. $x^2\\sin\\frac1x$ amb valor $0$ a l'origen). A més, la regla de la cadena només demana que les dues funcions siguin diferenciables.",
+      "correccio": "No cal (ni se segueix) que $f'$ sigui contínua: la regla de la cadena s'aplica perquè $g$ i $f$ són diferenciables.",
+      "pista": "Coneixes alguna funció derivable amb derivada no contínua? Quines hipòtesis demana exactament la regla de la cadena?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t3b.json",
+    "valoracio": "Càlcul i conclusió correctes, però les dues justificacions d'hipòtesis són falses.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "La funció $g$ és diferenciable a $\\mathbb{R}^2$ perquè és contínua",
+        "gravetat": "error",
+        "explicacio": "Continuïtat no implica diferenciabilitat; $g$ és diferenciable perquè és lineal (parcials constants, contínues)."
+      },
+      {
+        "fragment": 2,
+        "cita": "com que $f$ és diferenciable, la seva derivada $f'$ és contínua, i això és el que necessitem per poder aplicar la regla de la cadena",
+        "gravetat": "error",
+        "explicacio": "Una funció derivable no té necessàriament derivada contínua, i la regla de la cadena no ho necessita: només demana diferenciabilitat de $g$ i de $f$."
+      }
+    ]
+  },
+  "creat": 1791299348.7073042
+}

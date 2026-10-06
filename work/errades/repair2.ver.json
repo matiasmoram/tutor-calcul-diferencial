@@ -1,0 +1,36 @@
+{
+  "t1-5a:normal": {
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "l'ínfim és una fita superior del conjunt",
+        "gravetat": "error",
+        "explicacio": "L'ínfim és una fita INFERIOR del conjunt; és això el que dona $d(A,B)\\leq d(c,c)$. Amb 'fita superior' la desigualtat no se seguiria (donaria $d(A,B)\\geq 0$)."
+      },
+      {
+        "fragment": 6,
+        "cita": "existeix un punt $b\\in B$ amb $d(0,b)=0$",
+        "gravetat": "error",
+        "explicacio": "Fals: $d(0,b)=0$ implicaria $b=0\\notin B$. Que $\\frac1k\\to0$ només dona que l'ínfim de les distàncies és $0$ (per la caracterització de l'ínfim), no que s'assoleixi; contradiu el fragment [4] i el propi contraexemple."
+      }
+    ],
+    "valoracio": "Estructura i contraexemple correctes, però dues justificacions falses: l'ínfim com a fita superior i l'existència d'un punt de $B$ a distància 0."
+  },
+  "t1-9a:normal": {
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "$n_0>\\varepsilon$",
+        "gravetat": "error",
+        "explicacio": "Cal $n_0>1/\\varepsilon$; amb $n_0>\\varepsilon$ no es té $1/n_0<\\varepsilon$ (p. ex. $\\varepsilon=1/2$, $n_0=1$ dona $1/n_0=1>\\varepsilon$)."
+      },
+      {
+        "fragment": 6,
+        "cita": "tenim $d(x_n,x)<r$ per a tot $n\\in\\mathbb{N}$; en particular $x_1\\in B_r(x)\\cap A$",
+        "gravetat": "error",
+        "explicacio": "La convergència només garanteix $d(x_n,x)<r$ per a $n\\geq n_0$, no per a tot $n$; $x_1$ pot no ser a $B_r(x)$. Cal prendre algun $x_n$ amb $n\\geq n_0$."
+      }
+    ],
+    "valoracio": "Estructura correcta de les dues implicacions, però l'elecció de $n_0$ i l'ús de la convergència a la recíproca són incorrectes."
+  }
+}

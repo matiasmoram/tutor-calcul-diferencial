@@ -1,0 +1,60 @@
+{
+  "id": "037f0804ee31",
+  "exercici": "t5-7a",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Desenvolupant, $f(x,y)=y^2-4x^2y+3x^4$, i les derivades parcials són $f_x=-8xy+12x^3=4x(3x^2-2y)$ i $f_y=2y-4x^2$.",
+    "De $f_y=0$ obtenim $y=2x^2$, i substituint a l'altra equació, $f_x=4x(3x^2-2x^2)=4x^3=0$, d'on $x=0$ i, per tant, $y=0$. L'origen és l'únic punt crític.",
+    "Derivades segones: $f_{xx}=36x^2-8y$, $f_{xy}=-8x$, $f_{yy}=2$, de manera que $Hf(0,0)=\\begin{pmatrix}0&0\\\\0&2\\end{pmatrix}$, amb valors propis $0$ i $2$: és semidefinida positiva però no definida, i el criteri de la hessiana no decideix (només descarta que l'origen sigui un màxim local).",
+    "Estudiem directament el signe de $f$ a prop de l'origen, on $f(0,0)=0$. Els factors $y-3x^2$ i $y-x^2$ s'anul·len sobre les paràboles $y=3x^2$ i $y=x^2$, respectivament.",
+    "Entre les dues paràboles, és a dir quan $x^2<y<3x^2$, es té $y-3x^2>0$ i $y-x^2<0$, de manera que $f<0$; per exemple, $f(x,2x^2)=(-x^2)(x^2)=-x^4<0$ per a $x\\neq0$.",
+    "Si $y<x^2$ o $y>3x^2$, els dos factors tenen el mateix signe i $f>0$; per exemple, $f(0,y)=y^2>0$ per a $y\\neq0$.",
+    "Tota bola centrada a l'origen conté punts $(x,2x^2)$ i $(0,y)$ amb $x,y\\neq0$ petits, on $f<0$ i $f>0$ respectivament. Per tant l'origen no és un extrem local: és un punt de sella."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "$f_x=4x(3x^2-2x^2)=4x^3=0$",
+      "inici": 62,
+      "fi": 88,
+      "tipus": "calcul",
+      "explicacio": "En substituir $y=2x^2$, el terme $2y$ val $4x^2$, no $2x^2$: $f_x=4x(3x^2-4x^2)=-4x^3$. La conclusió $x=0$ és la mateixa, però el càlcul és incorrecte.",
+      "correccio": "$f_x=4x(3x^2-4x^2)=-4x^3=0$.",
+      "pista": "Si $y=2x^2$, quant val exactament $2y$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 5,
+      "cita": "$y-3x^2>0$ i $y-x^2<0$",
+      "inici": 60,
+      "fi": 82,
+      "tipus": "desigualtat",
+      "explicacio": "Els signes estan girats: si $y<3x^2$, aleshores $y-3x^2<0$, i si $y>x^2$, aleshores $y-x^2>0$. El producte continua sent negatiu, però la justificació és falsa.",
+      "correccio": "Quan $x^2<y<3x^2$, $y-3x^2<0$ i $y-x^2>0$, de manera que $f<0$.",
+      "pista": "Si $y<3x^2$, quin signe té $y-3x^2$?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t56.json",
+    "valoracio": "Error de substitució en resoldre el sistema i signes dels factors intercanviats entre les paràboles.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "$f_x=4x(3x^2-2x^2)=4x^3=0$",
+        "gravetat": "error",
+        "explicacio": "Substituint $y=2x^2$ a $4x(3x^2-2y)$ s'obté $4x(3x^2-4x^2)=-4x^3$, no $4x(3x^2-2x^2)=4x^3$ (la conclusió $x=0$ coincideix per casualitat)."
+      },
+      {
+        "fragment": 5,
+        "cita": "es té $y-3x^2>0$ i $y-x^2<0$",
+        "gravetat": "error",
+        "explicacio": "Signes intercanviats: si $x^2<y<3x^2$, aleshores $y-3x^2<0$ i $y-x^2>0$ (el producte continua sent negatiu)."
+      }
+    ]
+  },
+  "creat": 1791299721.5529394
+}

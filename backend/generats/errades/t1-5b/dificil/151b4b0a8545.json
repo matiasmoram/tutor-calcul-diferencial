@@ -1,0 +1,76 @@
+{
+  "id": "151b4b0a8545",
+  "exercici": "t1-5b",
+  "font": "problema",
+  "dificultat": "dificil",
+  "fragments": [
+    "Fixem $x,y\\in\\mathbb{R}^m$. Com que $A\\neq\\emptyset$, el conjunt $\\{d(x,a)\\mid a\\in A\\}$ és no buit i fitat inferiorment per $0$, i $d(x,A)$ és el seu ínfim; el mateix val per a $d(y,A)$.",
+    "Sigui $a\\in A$ qualsevol. Per definició d'ínfim, $d(x,A)\\leq d(x,a)$, i per la desigualtat triangular, $d(x,a)\\leq d(x,y)+d(y,a)$.",
+    "Per tant, $d(x,A)-d(x,y)\\leq d(y,a)$ per a algun $a\\in A$, i així $d(x,A)-d(x,y)$ és una fita inferior del conjunt $\\{d(y,a)\\mid a\\in A\\}$.",
+    "Com que $d(y,A)$ també és una fita inferior del mateix conjunt, per transitivitat obtenim $d(x,A)-d(x,y)\\leq d(y,A)$, és a dir, $d(x,A)-d(y,A)\\leq d(x,y)$.",
+    "Per a l'altra desigualtat, sigui $a_0\\in A$ el punt d'$A$ més proper a $x$, de manera que $d(x,a_0)=d(x,A)$. Aleshores $d(y,A)\\leq d(y,a_0)\\leq d(y,x)+d(x,a_0)=d(x,y)+d(x,A)$, és a dir, $d(y,A)-d(x,A)\\leq d(x,y)$.",
+    "Juntant les dues desigualtats, $-d(x,y)\\leq d(x,A)-d(y,A)\\leq d(x,y)$, que és exactament $|d(x,A)-d(y,A)|\\leq d(x,y)$."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 3,
+      "cita": "per a algun $a\\in A$",
+      "inici": 37,
+      "fi": 57,
+      "tipus": "logica",
+      "explicacio": "Per ser una fita inferior del conjunt, la desigualtat ha de valer per a TOTS els $a\\in A$; que valgui per a algun no en fa una fita inferior. (Del pas anterior, amb $a$ qualsevol, sí que se'n dedueix per a tot $a$.)",
+      "correccio": "$d(x,A)-d(x,y)\\leq d(y,a)$ per a tot $a\\in A$, i per tant és una fita inferior de $\\{d(y,a)\\mid a\\in A\\}$.",
+      "pista": "Què ha de complir un nombre per ser fita inferior d'un conjunt: ser menor que algun element o que tots?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "Com que $d(y,A)$ també és una fita inferior del mateix conjunt, per transitivitat",
+      "inici": 0,
+      "fi": 81,
+      "tipus": "logica",
+      "explicacio": "Que dos nombres siguin fites inferiors d'un mateix conjunt no diu res de com estan ordenats entre ells, i aquí no hi ha cap cadena de desigualtats on aplicar la transitivitat: per exemple, $0$ i $-1$ són fites inferiors de $[0,1]$ i no és cert que $0\\leq-1$. El que dona la desigualtat és que l'ínfim és la MÉS GRAN de les fites inferiors.",
+      "correccio": "Com que l'ínfim és la més gran de les fites inferiors, tota fita inferior hi és menor o igual: $d(x,A)-d(x,y)\\leq\\inf_{a\\in A}d(y,a)=d(y,A)$.",
+      "pista": "Si $c$ i $c'$ són fites inferiors d'un conjunt, pots saber quina és més petita? Quina propietat de l'ínfim permet comparar-lo amb qualsevol fita inferior?"
+    },
+    {
+      "id": "e3",
+      "fragment": 5,
+      "cita": "sigui $a_0\\in A$ el punt d'$A$ més proper a $x$",
+      "inici": 27,
+      "fi": 74,
+      "tipus": "hipotesi",
+      "explicacio": "L'ínfim $d(x,A)$ no té per què assolir-se: $A$ és un conjunt no buit qualsevol, no necessàriament tancat (per exemple, $A=(0,1)$ i $x=0$ a $\\mathbb{R}$).",
+      "correccio": "Intercanviar els papers de $x$ i $y$ en l'argument anterior: $d(y,A)-d(x,A)\\leq d(y,x)=d(x,y)$, sense suposar que l'ínfim s'assoleix.",
+      "pista": "Existeix sempre un punt d'$A$ a distància exactament $d(x,A)$ de $x$? Pensa en un $A$ que no sigui tancat."
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "repair.json",
+    "valoracio": "L'estructura és correcta però els passos de l'ínfim estan mal justificats ('per a algun', transitivitat entre fites inferiors) i la segona desigualtat suposa que l'ínfim és un mínim.",
+    "problemes": [
+      {
+        "fragment": 3,
+        "cita": "per a algun $a\\in A$",
+        "gravetat": "error",
+        "explicacio": "La desigualtat val per a TOT $a\\in A$ (a era arbitrari); amb 'per a algun' no se'n dedueix que $d(x,A)-d(x,y)$ sigui fita inferior del conjunt."
+      },
+      {
+        "fragment": 4,
+        "cita": "Com que $d(y,A)$ també és una fita inferior del mateix conjunt, per transitivitat obtenim",
+        "gravetat": "error",
+        "explicacio": "Dues fites inferiors no estan ordenades entre elles; la desigualtat surt perquè l'ínfim $d(y,A)$ és la MÉS GRAN de les fites inferiors, no per transitivitat."
+      },
+      {
+        "fragment": 5,
+        "cita": "sigui $a_0\\in A$ el punt d'$A$ més proper a $x$, de manera que $d(x,a_0)=d(x,A)$",
+        "gravetat": "error",
+        "explicacio": "Suposa que l'ínfim s'assoleix; si A no és tancat pot no existir cap punt més proper. Cal repetir l'argument de l'ínfim intercanviant x i y."
+      }
+    ]
+  },
+  "creat": 1791299191.5926394
+}

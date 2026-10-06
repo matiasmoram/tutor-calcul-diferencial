@@ -1,0 +1,60 @@
+{
+  "id": "3eafc3e09e49",
+  "exercici": "t4-3",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Com que $G$ és de classe $\\mathcal{C}^\\infty$ i $f$ és de classe $\\mathcal{C}^2$, la composició $F=f\\circ G$ és de classe $\\mathcal{C}^\\infty$ i podem aplicar la regla de la cadena tantes vegades com calgui.",
+    "La jacobiana del canvi és $JG=\\begin{pmatrix}\\cos\\varphi&-r\\sin\\varphi\\\\ \\sin\\varphi&r\\cos\\varphi\\end{pmatrix}$, de manera que, amb $f_x,f_y$ avaluades en $G(r,\\varphi)$, $F_r=\\cos\\varphi\\,f_x+\\sin\\varphi\\,f_y$ i $F_\\varphi=-r\\sin\\varphi\\,f_x+r\\cos\\varphi\\,f_y$.",
+    "Per tornar a derivar cal tenir en compte que $f_x$ i $f_y$ també estan avaluades en $G(r,\\varphi)$: per la regla de la cadena, $\\partial_r(f_x\\circ G)=\\cos\\varphi\\,f_{xx}+\\sin\\varphi\\,f_{xy}$, $\\partial_r(f_y\\circ G)=\\cos\\varphi\\,f_{yx}+\\sin\\varphi\\,f_{yy}$, $\\partial_\\varphi(f_x\\circ G)=-r\\sin\\varphi\\,f_{xx}+r\\cos\\varphi\\,f_{xy}$ i $\\partial_\\varphi(f_y\\circ G)=-r\\sin\\varphi\\,f_{yx}+r\\cos\\varphi\\,f_{yy}$.",
+    "Com que existeixen totes les derivades segones de $f$, el teorema de Schwarz dona $f_{xy}=f_{yx}$, i llavors $F_{rr}=\\cos^2\\varphi\\,f_{xx}+2\\sin\\varphi\\cos\\varphi\\,f_{xy}+\\sin^2\\varphi\\,f_{yy}$.",
+    "Derivant $F_\\varphi$ respecte de $\\varphi$ amb la regla del producte, $F_{\\varphi\\varphi}=-r\\cos\\varphi\\,f_x-r\\sin\\varphi\\,f_y-r\\sin\\varphi\\,\\partial_\\varphi(f_x\\circ G)+r\\cos\\varphi\\,\\partial_\\varphi(f_y\\circ G)$, és a dir, $F_{\\varphi\\varphi}=r^2\\sin^2\\varphi\\,f_{xx}-2r^2\\sin\\varphi\\cos\\varphi\\,f_{xy}+r^2\\cos^2\\varphi\\,f_{yy}-rF_r$.",
+    "Per $r\\neq 0$, dividint per $r^2$: $\\frac{1}{r^2}F_{\\varphi\\varphi}=\\sin^2\\varphi\\,f_{xx}-2\\sin\\varphi\\cos\\varphi\\,f_{xy}+\\cos^2\\varphi\\,f_{yy}-\\frac{1}{r}F_r$.",
+    "Sumant $F_{rr}+\\frac{1}{r^2}F_{\\varphi\\varphi}+\\frac{1}{r}F_r$, els termes en $f_{xy}$ i els termes en $F_r$ es cancel·len i queda $(\\cos^2\\varphi+\\sin^2\\varphi)(f_{xx}+f_{yy})=(f_{xx}+f_{yy})\\circ G$, per a $r\\neq 0$, que és l'expressió del laplacià en polars."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 1,
+      "cita": "la composició $F=f\\circ G$ és de classe $\\mathcal{C}^\\infty$",
+      "inici": 82,
+      "fi": 142,
+      "tipus": "conclusio",
+      "explicacio": "La composició només hereta la regularitat menor: $F$ és de classe $\\mathcal{C}^2$, no $\\mathcal{C}^\\infty$ (p. ex. $f(x,y)=|x|^3$ és $\\mathcal{C}^2$ i $F(r,0)=|r|^3$ no és $\\mathcal{C}^3$).",
+      "correccio": "$F=f\\circ G$ és de classe $\\mathcal{C}^2$, que és suficient per derivar-la dues vegades amb la regla de la cadena.",
+      "pista": "Si $f$ només és $\\mathcal{C}^2$, quantes derivades contínues pot tenir garantides $f\\circ G$?"
+    },
+    {
+      "id": "e2",
+      "fragment": 4,
+      "cita": "Com que existeixen totes les derivades segones de $f$, el teorema de Schwarz dona $f_{xy}=f_{yx}$",
+      "inici": 0,
+      "fi": 97,
+      "tipus": "teorema_mal_aplicat",
+      "explicacio": "L'existència de les derivades segones no basta per a la igualtat de les creuades; el teorema de Schwarz demana que siguin contínues.",
+      "correccio": "Com que $f$ és de classe $\\mathcal{C}^2$ (derivades segones contínues), el teorema de Schwarz dona $f_{xy}=f_{yx}$.",
+      "pista": "Quina hipòtesi sobre les derivades segones demana el teorema de Schwarz? N'hi ha prou que existeixin?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t4a.json",
+    "valoracio": "Càlculs correctes, però amb una afirmació falsa sobre la regularitat de F i Schwarz aplicat amb una hipòtesi insuficient.",
+    "problemes": [
+      {
+        "fragment": 1,
+        "cita": "la composició $F=f\\circ G$ és de classe $\\mathcal{C}^\\infty$",
+        "gravetat": "error",
+        "explicacio": "Amb $f$ només $\\mathcal{C}^2$, la composició és $\\mathcal{C}^2$, no $\\mathcal{C}^\\infty$."
+      },
+      {
+        "fragment": 4,
+        "cita": "Com que existeixen totes les derivades segones de $f$, el teorema de Schwarz dona $f_{xy}=f_{yx}$",
+        "gravetat": "error",
+        "explicacio": "Schwarz requereix la continuïtat de les derivades creuades, no només l'existència; cal invocar que $f$ és $\\mathcal{C}^2$."
+      }
+    ]
+  },
+  "creat": 1791299402.960601
+}

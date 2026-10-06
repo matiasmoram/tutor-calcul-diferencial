@@ -1,0 +1,58 @@
+{
+  "id": "694ddade8ba2",
+  "exercici": "t2-5b",
+  "font": "problema",
+  "dificultat": "normal",
+  "fragments": [
+    "Factoritzem el denominador: $x^2y+xy^2=xy(x+y)$. El domini de $f$ és, doncs, $\\{(x,y)\\mid x\\neq0,\\ y\\neq0,\\ x+y\\neq0\\}$, i en aquest domini podem simplificar: $f(x,y)=\\frac{y}{x+y}$.",
+    "Comencem per l'eix d'abscisses: sobre $y=0$ tenim $f(x,0)=\\frac{0}{x+0}=0$, de manera que la restricció de $f$ a aquesta recta té límit $0$ quan $x\\to0$.",
+    "Ara les rectes $y=mx$ amb $m\\neq0,-1$, que (llevat de l'origen) són dins del domini: per a $x\\neq0$, $f(x,mx)=\\frac{x\\cdot m^2x^2}{x^2\\cdot mx+x\\cdot m^2x^2}=\\frac{m^2x^3}{mx^3+m^2x^3}=\\frac{m}{1+m^2}$.",
+    "Per tant la restricció a cada una d'aquestes rectes és constant per a $x\\neq0$, i el seu límit quan $x\\to0$ és aquest mateix valor, que no és el mateix per a totes les $m$.",
+    "L'origen és punt d'acumulació del domini. Si existís $\\lim_{(x,y)\\to(0,0)}f(x,y)$, per la proposició de límit per camins totes aquestes restriccions haurien de tenir el mateix límit; com que no és així, el límit $\\lim_{(x,y)\\to(0,0)}f(x,y)$ no existeix."
+  ],
+  "n_enunciat": 0,
+  "errors": [
+    {
+      "id": "e1",
+      "fragment": 2,
+      "cita": "sobre $y=0$ tenim $f(x,0)=\\frac{0}{x+0}=0$",
+      "inici": 32,
+      "fi": 74,
+      "tipus": "logica",
+      "explicacio": "Sobre l'eix $y=0$ el denominador $xy(x+y)$ s'anul·la: $f$ no hi està definida, i la simplificació $\\frac{y}{x+y}$ només és vàlida dins del domini. No té sentit parlar de la restricció de $f$ a aquesta recta.",
+      "correccio": "Les rectes $x=0$, $y=0$ i $y=-x$ queden fora del domini; només es poden estudiar les rectes $y=mx$ amb $m\\neq0,-1$.",
+      "pista": "Què val el denominador original sobre l'eix $y=0$? Hi està definida, la funció?"
+    },
+    {
+      "id": "e2",
+      "fragment": 3,
+      "cita": "=\\frac{m^2x^3}{mx^3+m^2x^3}=\\frac{m}{1+m^2}$",
+      "inici": 157,
+      "fi": 201,
+      "tipus": "calcul",
+      "explicacio": "Traient $mx^3$ factor comú al denominador queda $mx^3(1+m)$, de manera que el quocient és $\\frac{m^2x^3}{mx^3(1+m)}=\\frac{m}{1+m}$, no $\\frac{m}{1+m^2}$.",
+      "correccio": "$f(x,mx)=\\frac{m^2x^3}{mx^3+m^2x^3}=\\frac{m}{1+m}$.",
+      "pista": "Si treus $mx^3$ factor comú al denominador, què queda dins del parèntesi?"
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "fill_t2.json",
+    "valoracio": "Restricció a un eix fora del domini i càlcul erroni del límit sobre $y=mx$.",
+    "problemes": [
+      {
+        "fragment": 2,
+        "cita": "sobre $y=0$ tenim $f(x,0)=\\frac{0}{x+0}=0$",
+        "gravetat": "error",
+        "explicacio": "L'eix $y=0$ és fora del domini ($xy(x+y)=0$); la restricció no està definida i s'usa la forma simplificada fora del domini."
+      },
+      {
+        "fragment": 3,
+        "cita": "=\\frac{m}{1+m^2}$",
+        "gravetat": "error",
+        "explicacio": "$\\frac{m^2x^3}{mx^3+m^2x^3}=\\frac{m}{1+m}$, no $\\frac{m}{1+m^2}$."
+      }
+    ]
+  },
+  "creat": 1791299452.0347233
+}

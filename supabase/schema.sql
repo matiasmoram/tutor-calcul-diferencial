@@ -34,14 +34,6 @@ CREATE TABLE mistake_exercises (
 CREATE INDEX ix_mistake_exercises_source ON mistake_exercises (source_id, difficulty);
 ALTER TABLE mistake_exercises ENABLE ROW LEVEL SECURITY;
 
-CREATE TABLE problem_sheets (
-	id VARCHAR(64) NOT NULL, 
-	position INTEGER NOT NULL, 
-	data JSONB NOT NULL, 
-	PRIMARY KEY (id)
-);
-ALTER TABLE problem_sheets ENABLE ROW LEVEL SECURITY;
-
 CREATE TABLE quizzes (
 	id VARCHAR(32) NOT NULL, 
 	source_id VARCHAR(64) NOT NULL, 
@@ -53,26 +45,6 @@ CREATE TABLE quizzes (
 );
 CREATE INDEX ix_quizzes_source_difficulty ON quizzes (source_id, difficulty);
 ALTER TABLE quizzes ENABLE ROW LEVEL SECURITY;
-
-CREATE TABLE theory_items (
-	id VARCHAR(32) NOT NULL, 
-	topic INTEGER NOT NULL, 
-	kind VARCHAR(24) NOT NULL, 
-	number INTEGER, 
-	position INTEGER NOT NULL, 
-	data JSONB NOT NULL, 
-	PRIMARY KEY (id)
-);
-CREATE INDEX ix_theory_items_topic ON theory_items (topic);
-ALTER TABLE theory_items ENABLE ROW LEVEL SECURITY;
-
-CREATE TABLE topics (
-	number SERIAL NOT NULL, 
-	title VARCHAR NOT NULL, 
-	data JSONB NOT NULL, 
-	PRIMARY KEY (number)
-);
-ALTER TABLE topics ENABLE ROW LEVEL SECURITY;
 
 CREATE TABLE tutor_sessions (
 	id VARCHAR(64) NOT NULL, 
@@ -89,19 +61,6 @@ CREATE TABLE tutor_sessions (
 CREATE INDEX ix_tutor_sessions_exercise_id ON tutor_sessions (exercise_id);
 CREATE INDEX ix_tutor_sessions_updated_at ON tutor_sessions (updated_at);
 ALTER TABLE tutor_sessions ENABLE ROW LEVEL SECURITY;
-
-CREATE TABLE exercises (
-	id VARCHAR(32) NOT NULL, 
-	sheet_id VARCHAR(64) NOT NULL, 
-	problem INTEGER NOT NULL, 
-	part VARCHAR(8), 
-	position INTEGER NOT NULL, 
-	data JSONB NOT NULL, 
-	PRIMARY KEY (id), 
-	FOREIGN KEY(sheet_id) REFERENCES problem_sheets (id) ON DELETE CASCADE
-);
-CREATE INDEX ix_exercises_sheet_id ON exercises (sheet_id);
-ALTER TABLE exercises ENABLE ROW LEVEL SECURITY;
 
 CREATE TABLE mistake_sessions (
 	id VARCHAR(64) NOT NULL, 

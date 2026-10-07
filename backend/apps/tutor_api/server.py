@@ -14,8 +14,6 @@ from apps.tutor_api.endpoints import course as course_endpoints
 from apps.tutor_api.endpoints import mistakes as mistakes_endpoints
 from apps.tutor_api.endpoints import quizzes as quiz_endpoints
 from apps.tutor_api.endpoints import tutoring as tutoring_endpoints
-from core.course.application.course_loader import CourseLoader
-from core.course.infra.sqlmodel_repository import SQLModelCourseRepository
 from core.course.infra.yaml_course_source import YamlCourseSource
 from core.mistakes.application.pregenerated_importer import PregeneratedImporter
 from core.mistakes.infra.json_file_source import JsonFileMistakeSource
@@ -36,6 +34,23 @@ FRONTEND_DIR = ROOT_DIR / "frontend"
 SOURCES_DIR = ROOT_DIR / "sources"
 
 
+async def _seed_generated(sessions: SQLModelSessionProvider) -> None:
+    """Pre-generated documents and quizzes (backend/generats) seed the generated-content tables.
+
+    Only when the database has fewer than the files (a first start, or a deploy that added files): the import is
+    idempotent but costs a round-trip per document. Assumes one server process (the Dockerfile runs one worker);
+    with several, run `scripts/db.py import-generats` as a deploy step instead."""
+    generated = BACKEND_DIR / "generats"
+    mistakes = SQLModelMistakeExerciseRepository(sessions)
+    stored = sum(n for by_difficulty in (await mistakes.ready_counts()).values() for n in by_difficulty.values())
+    if stored < len(list((generated / "errades").glob("*/*/*.json"))):
+        await PregeneratedImporter(JsonFileMistakeSource(generated / "errades"), mistakes).import_all()
+    quizzes = SQLModelQuizRepository(sessions)
+    stored = sum(n for by_difficulty in (await quizzes.availability()).values() for n in by_difficulty.values())
+    if stored < len(list((generated / "afirmacions").glob("*/*/*.json"))):
+        await QuizImporter(JsonQuizFiles(generated / "afirmacions"), quizzes).import_all()
+
+
 def create_app(config: Config | None = None, llm: LLMClient | None = None) -> FastAPI:
     """`llm` replaces the configured provider (tests pass the scripted fake); every call is still logged."""
 
@@ -46,15 +61,10 @@ def create_app(config: Config | None = None, llm: LLMClient | None = None) -> Fa
         register_all_tables()
         await create_schema_if_sqlite(engine)
         sessions = SQLModelSessionProvider(engine)
-        source = YamlCourseSource(BACKEND_DIR / "exercicis", BACKEND_DIR / "teoria")
-        course = await CourseLoader(SQLModelCourseRepository(sessions), source).load()
-        # Pre-generated documents (backend/generats) are the seed of the generated-content tables.
-        await PregeneratedImporter(
-            JsonFileMistakeSource(BACKEND_DIR / "generats" / "errades"), SQLModelMistakeExerciseRepository(sessions)
-        ).import_all()
-        await QuizImporter(
-            JsonQuizFiles(BACKEND_DIR / "generats" / "afirmacions"), SQLModelQuizRepository(sessions)
-        ).import_all()
+        # The course is read-only authored content shipped in the image: loaded from the YAML on every start, so a
+        # deploy with edited sheets serves them at once (the database holds only what the app produces).
+        course = YamlCourseSource(BACKEND_DIR / "exercicis", BACKEND_DIR / "teoria").load()
+        await _seed_generated(sessions)
         inner = llm or make_llm_client(cfg)
         logged = LoggedLLMClient(inner, SQLModelLLMCallRepository(sessions), log_prompts=cfg.LOG_PROMPTS)
         sympy = SympyCheckPool(max_workers=2)  # workers start lazily, on the first check

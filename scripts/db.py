@@ -21,9 +21,6 @@ from sqlalchemy.dialects import postgresql
 from sqlalchemy.schema import CreateIndex, CreateTable
 from sqlmodel import SQLModel, select
 
-from core.course.application.course_importer import CourseImporter
-from core.course.infra.sqlmodel_repository import SQLModelCourseRepository
-from core.course.infra.yaml_course_source import YamlCourseSource
 from core.mistakes.application.pregenerated_importer import PregeneratedImporter as MistakesImporter
 from core.mistakes.infra.json_file_source import JsonFileMistakeSource
 from core.mistakes.infra.sqlmodel_repository import SQLModelMistakeExerciseRepository
@@ -55,13 +52,6 @@ async def _provider() -> SQLModelSessionProvider:
     engine = make_engine(Config().async_database_url)
     await create_schema_if_sqlite(engine)
     return SQLModelSessionProvider(engine)
-
-
-async def import_course() -> None:
-    sessions = await _provider()
-    source = YamlCourseSource(BACKEND_DIR / "exercicis", BACKEND_DIR / "teoria")
-    print((await CourseImporter(source, SQLModelCourseRepository(sessions)).import_course()).model_dump())
-    await sessions.engine.dispose()
 
 
 async def import_generated() -> None:
@@ -117,7 +107,6 @@ def _reflect(sync_conn: object) -> dict[str, dict[str, bool]]:
 
 COMMANDS = {
     "schema": lambda: print(schema()),
-    "import": lambda: asyncio.run(import_course()),
     "import-generats": lambda: asyncio.run(import_generated()),
     "stats": lambda: asyncio.run(stats()),
     "check-migrations": lambda: asyncio.run(check_migrations()),

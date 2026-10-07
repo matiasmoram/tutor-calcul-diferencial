@@ -1,7 +1,7 @@
 # Deploy
 
 Architecture: one Docker web service (FastAPI + static frontend) + a Supabase Postgres database.
-Everything persistent (course content, sessions, every tutor turn, the log of every model call, generated
+Everything the app produces (sessions, every tutor turn, the log of every model call, generated
 "troba l'error" / quiz content, gradings, photo transcriptions) lives in the database. Tables are the SQLModel records in each context's `infra/` (`backend/core/*/infra/sqlmodel_repository.py`).
 
 ## Secrets
@@ -35,13 +35,9 @@ Where they live:
    SQLAlchemy URL by changing the scheme:
    `postgresql+psycopg://postgres.<ref>:<password>@aws-0-<region>.pooler.supabase.com:6543/postgres`
    That is `DATABASE_URL`.
-4. Load the course content once (from your machine, with `DATABASE_URL` set to the Supabase URL):
-   ```
-   uv run python scripts/db.py import            # sheets + theory
-   uv run python scripts/db.py import-generats   # pre-generated "troba l'error" / quizzes
-   uv run python scripts/db.py stats
-   ```
-   The server also imports both on its first start against an empty database. Re-run `import` whenever sheets change (`scripts/merge_fitxes.py` → `backend/exercicis/`).
+4. Nothing to load by hand: the course (sheets + theory) is read from the YAML in the image on every start, and the
+   pre-generated "troba l'error" documents / quizzes are imported on the first start (and when a deploy adds files).
+   `uv run python scripts/db.py import-generats` / `stats` do it from your machine.
 
 ## Hosting (Render, via the blueprint)
 

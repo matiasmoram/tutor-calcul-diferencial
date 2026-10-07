@@ -10,6 +10,7 @@ from apps.tutor_api.dependencies import (
     get_llm,
     get_session_provider,
     is_professor,
+    rate_limited,
     require_professor,
 )
 from apps.tutor_api.schemas.course import TheoryItemResponse
@@ -85,7 +86,7 @@ async def start_session(
     return SessionResponse.from_started(started, professor)
 
 
-@router.post("/api/sessions/{session_id}/missatges")
+@router.post("/api/sessions/{session_id}/missatges", dependencies=[Depends(rate_limited)])
 async def send_message(
     session_id: str,
     body: MessageRequest,
@@ -104,7 +105,7 @@ async def send_message(
     return TurnResponse(missatge=result.message, referencies=references, trace=trace)
 
 
-@router.post("/api/sessions/{session_id}/transcripcio")
+@router.post("/api/sessions/{session_id}/transcripcio", dependencies=[Depends(rate_limited)])
 async def transcribe_photo(
     session_id: str,
     body: PhotoRequest,

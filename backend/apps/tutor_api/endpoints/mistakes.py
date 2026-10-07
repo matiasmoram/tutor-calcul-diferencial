@@ -9,6 +9,7 @@ from apps.tutor_api.dependencies import (
     get_course,
     get_llm,
     get_session_provider,
+    rate_limited,
 )
 from apps.tutor_api.schemas.course import (
     ExerciseResponse,
@@ -87,7 +88,7 @@ async def ready_documents(lister: AvailabilityLister = Depends(_get_lister)) -> 
     return await lister.ready_counts()
 
 
-@router.post("/api/errades/sessions", response_model_exclude_unset=True)
+@router.post("/api/errades/sessions", response_model_exclude_unset=True, dependencies=[Depends(rate_limited)])
 async def start_session(
     body: NewMistakeSessionRequest,
     course: Course = Depends(get_course),
@@ -121,7 +122,7 @@ async def start_session(
     return out
 
 
-@router.post("/api/errades/sessions/{session_id}/correccio")
+@router.post("/api/errades/sessions/{session_id}/correccio", dependencies=[Depends(rate_limited)])
 async def grade_annotations(
     session_id: str,
     body: GradingRequest,

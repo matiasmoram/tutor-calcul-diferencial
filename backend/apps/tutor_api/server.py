@@ -27,6 +27,7 @@ from core.shared.llm.client import LLMClient
 from core.shared.llm.infra.factory import make_llm_client
 from core.shared.llm.infra.logged_client import LoggedLLMClient
 from core.shared.llm_calls.infra.sqlmodel_repository import SQLModelLLMCallRepository
+from core.shared.math.infra.sympy_pool import SympyCheckPool
 from core.shared.storage.session_provider import SQLModelSessionProvider, create_schema_if_sqlite, make_engine
 from core.shared.storage.table_registry import register_all_tables
 from settings import BACKEND_DIR, ROOT_DIR, Config
@@ -56,8 +57,10 @@ def create_app(config: Config | None = None, llm: LLMClient | None = None) -> Fa
         ).import_all()
         inner = llm or make_llm_client(cfg)
         logged = LoggedLLMClient(inner, SQLModelLLMCallRepository(sessions), log_prompts=cfg.LOG_PROMPTS)
-        app.state.tutor = AppState(config=cfg, sessions=sessions, course=course, llm=logged)
+        sympy = SympyCheckPool(max_workers=2)  # workers start lazily, on the first check
+        app.state.tutor = AppState(config=cfg, sessions=sessions, course=course, llm=logged, sympy=sympy)
         yield
+        sympy.close()
         await engine.dispose()
 
     app = FastAPI(title="Tutor socràtic — Càlcul Diferencial", lifespan=lifespan)

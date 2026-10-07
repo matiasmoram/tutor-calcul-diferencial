@@ -16,7 +16,10 @@ class Config:
         self.TUTOR_MODEL: str | None = os.getenv("TUTOR_MODEL") or None
         self.PROFESSOR_KEY: str | None = os.getenv("TUTOR_CLAU_PROFESSOR") or None
         self.LOG_PROMPTS: bool = os.getenv("TUTOR_LOG_PROMPTS") == "1"
-        self.SESSION_TTL_S: int = int(os.getenv("TUTOR_SESSION_TTL_S", "21600"))
+        # Without a professor key, solutions and traces are hidden from everyone unless demo mode is explicit.
+        self.DEMO_MODE: bool = os.getenv("TUTOR_DEMO") == "1"
+        # Requests per client and minute to the endpoints that call a model (each one costs money).
+        self.MODEL_REQUESTS_PER_MINUTE: int = int(os.getenv("TUTOR_MODEL_REQUESTS_PER_MINUTE", "20"))
 
     def stage_model(self, stage: str) -> str | None:
         return os.getenv(f"TUTOR_MODEL_{stage.upper()}") or None

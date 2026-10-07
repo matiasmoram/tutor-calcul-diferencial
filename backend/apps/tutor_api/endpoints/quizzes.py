@@ -12,6 +12,7 @@ from apps.tutor_api.dependencies import (
     get_llm,
     get_session_provider,
     get_sympy_pool,
+    rate_limited,
 )
 from apps.tutor_api.schemas.course import TheoryIndexEntryResponse, TheoryItemResponse
 from apps.tutor_api.schemas.quizzes import (
@@ -99,7 +100,7 @@ async def quiz_sources(lister: SourceLister = Depends(_get_lister)) -> QuizSourc
     return QuizSourcesResponse.from_entity(await lister.list_sources())
 
 
-@router.post("/api/afirmacions/sessions")
+@router.post("/api/afirmacions/sessions", dependencies=[Depends(rate_limited)])
 async def start_quiz(
     body: NewQuizRequest,
     course: Course = Depends(get_course),
@@ -133,7 +134,7 @@ async def reveal_hint(session_id: str, statement_id: str, hints: HintRevealer = 
     return HintResponse(id=revealed.statement_id, pista=revealed.hint)
 
 
-@router.post("/api/afirmacions/sessions/{session_id}/correccio")
+@router.post("/api/afirmacions/sessions/{session_id}/correccio", dependencies=[Depends(rate_limited)])
 async def grade_answers(
     session_id: str,
     body: AnswersRequest,

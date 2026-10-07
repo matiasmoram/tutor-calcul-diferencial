@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from loguru import logger
 
 from apps.tutor_api.dependencies import AppState
 from apps.tutor_api.endpoints import config as config_endpoints
@@ -14,6 +15,7 @@ from apps.tutor_api.endpoints import course as course_endpoints
 from apps.tutor_api.endpoints import mistakes as mistakes_endpoints
 from apps.tutor_api.endpoints import quizzes as quiz_endpoints
 from apps.tutor_api.endpoints import tutoring as tutoring_endpoints
+from apps.tutor_api.rate_limiter import RateLimiter
 from core.course.infra.yaml_course_source import YamlCourseSource
 from core.mistakes.application.pregenerated_importer import PregeneratedImporter
 from core.mistakes.infra.json_file_source import JsonFileMistakeSource
@@ -67,8 +69,15 @@ def create_app(config: Config | None = None, llm: LLMClient | None = None) -> Fa
         await _seed_generated(sessions)
         inner = llm or make_llm_client(cfg)
         logged = LoggedLLMClient(inner, SQLModelLLMCallRepository(sessions), log_prompts=cfg.LOG_PROMPTS)
+        if not cfg.PROFESSOR_KEY and not cfg.DEMO_MODE:
+            logger.warning(
+                "No TUTOR_CLAU_PROFESSOR and no TUTOR_DEMO=1: solutions and traces are hidden from everyone."
+            )
+        limiter = RateLimiter(cfg.MODEL_REQUESTS_PER_MINUTE)
         sympy = SympyCheckPool(max_workers=2)  # workers start lazily, on the first check
-        app.state.tutor = AppState(config=cfg, sessions=sessions, course=course, llm=logged, sympy=sympy)
+        app.state.tutor = AppState(
+            config=cfg, sessions=sessions, course=course, llm=logged, limiter=limiter, sympy=sympy
+        )
         yield
         sympy.close()
         await engine.dispose()
@@ -76,6 +85,11 @@ def create_app(config: Config | None = None, llm: LLMClient | None = None) -> Fa
     app = FastAPI(title="Tutor socràtic — Càlcul Diferencial", lifespan=lifespan)
     for module in (config_endpoints, course_endpoints, tutoring_endpoints, mistakes_endpoints, quiz_endpoints):
         app.include_router(module.router)
+
+    @app.get("/health", include_in_schema=False)
+    async def health() -> dict[str, str]:
+        """Liveness for the platform's health check: answers once startup (course, database) has finished."""
+        return {"status": "ok"}
 
     @app.get("/", include_in_schema=False)
     async def index() -> FileResponse:

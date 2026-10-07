@@ -1,9 +1,11 @@
+import hmac
 from collections.abc import Iterator, Mapping
 from contextlib import contextmanager
 from dataclasses import dataclass
 
 from fastapi import Depends, HTTPException, Request
 
+from apps.tutor_api.rate_limiter import RateLimiter
 from core.course.domain.entities.course import Course
 from core.shared.domain.exceptions import DomainException
 from core.shared.llm.client import LLMClient
@@ -20,6 +22,7 @@ class AppState:
     sessions: SQLModelSessionProvider
     course: Course
     llm: LLMClient
+    limiter: RateLimiter
     sympy: SympyCheckPool  # one long-lived pool of sympy worker processes for the whole server
 
 
@@ -48,9 +51,18 @@ def get_sympy_pool(state: AppState = Depends(get_state)) -> SympyCheckPool:
 
 
 def is_professor(request: Request, config: Config = Depends(get_config)) -> bool:
-    """With a professor key configured, only requests carrying it see solutions and traces.
-    Without it the app runs in demo mode (everything visible)."""
-    return not config.PROFESSOR_KEY or request.headers.get("X-Clau-Professor") == config.PROFESSOR_KEY
+    """Only requests carrying the professor key see solutions and traces. Demo mode (TUTOR_DEMO=1, no key) shows
+    everything; with neither, nobody does: a missing setting in production must not expose the answer keys."""
+    if config.PROFESSOR_KEY:
+        return hmac.compare_digest(request.headers.get("X-Clau-Professor", ""), config.PROFESSOR_KEY)
+    return config.DEMO_MODE
+
+
+def rate_limited(request: Request, state: AppState = Depends(get_state)) -> None:
+    """For the endpoints that call a model: a client over its budget gets a 429 before any cost."""
+    client = request.client.host if request.client else "?"
+    if not state.limiter.allow(client):
+        raise HTTPException(429, "Massa peticions seguides. Espera un minut i torna-ho a provar.")
 
 
 def require_professor(professor: bool = Depends(is_professor)) -> None:

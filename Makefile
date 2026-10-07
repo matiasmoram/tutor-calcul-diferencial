@@ -17,7 +17,7 @@ types:
 check: lint types test
 
 run:
-	cd backend && uv run --env-file ../.env uvicorn app:app --reload --port 8000
+	uv run uvicorn apps.tutor_api.server:app --reload --port 8000
 
 db-schema:
-	uv run python scripts/db.py schema > supabase/migrations/20261006000000_init.sql
+	uv run python scripts/db.py schema > supabase/migrations/20261007000001_schema.sql

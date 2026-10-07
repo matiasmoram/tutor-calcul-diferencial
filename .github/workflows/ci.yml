@@ -21,7 +21,7 @@ jobs:
       - name: Supabase migration matches the code
         run: |
           uv run python scripts/db.py schema > /tmp/schema.sql
-          diff -u supabase/migrations/20261006000000_init.sql /tmp/schema.sql
+          diff -u supabase/migrations/20261007000001_schema.sql /tmp/schema.sql
 
   docker:
     runs-on: ubuntu-latest

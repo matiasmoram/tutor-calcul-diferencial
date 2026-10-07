@@ -7,7 +7,8 @@ ENV PYTHONDONTWRITEBYTECODE=1     PYTHONUNBUFFERED=1     UV_COMPILE_BYTECODE=1  
 WORKDIR /app
 
 COPY pyproject.toml uv.lock ./
-RUN uv sync --locked --no-dev
+# Dependencies first (cached layer), then the project itself once its code is in.
+RUN uv sync --locked --no-dev --no-install-project
 
 # Code, course content (sheets, theory) and the course PDFs served under /pdf.
 COPY backend/ backend/
@@ -15,12 +16,12 @@ COPY frontend/ frontend/
 COPY scripts/ scripts/
 COPY sources/ sources/
 COPY supabase/ supabase/
+RUN uv sync --locked --no-dev
 
 # Run as an unprivileged user.
 RUN useradd --create-home tutor && chown -R tutor /app
 USER tutor
 
-WORKDIR /app/backend
 EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s CMD python -c "import urllib.request,os; urllib.request.urlopen(f'http://127.0.0.1:{os.environ.get(\"PORT\",\"8000\")}/api/config')"
-CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port ${PORT} --proxy-headers --forwarded-allow-ips='*'"]
+CMD ["sh", "-c", "uvicorn apps.tutor_api.server:app --host 0.0.0.0 --port ${PORT} --proxy-headers --forwarded-allow-ips='*'"]

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Index, func, update
+from sqlalchemy import Column, Index, func, or_, update
 from sqlmodel import Field, SQLModel, col, select
 from sqlmodel.ext.asyncio.session import AsyncSession
 
@@ -41,6 +41,7 @@ class QuizSessionRecord(SQLModel, table=True):
     created_at: float
     updated_at: float
     version: int = 0
+    grading_started_at: float | None = None  # claim of a grading in progress (see claim_grading)
 
 
 class QuizGradingRecord(SQLModel, table=True):
@@ -135,6 +136,31 @@ class SQLModelQuizSessionRepository(QuizSessionRepository, BaseSQLModelRepositor
                 "updated_at": record.updated_at,
                 "version": record.version,
             }
+        )
+
+    @with_session
+    async def claim_grading(self, session: AsyncSession, session_id: str, now: float, stale_before: float) -> bool:
+        graded = select(QuizGradingRecord.session_id).where(QuizGradingRecord.session_id == session_id).exists()
+        result = await session.exec(
+            update(QuizSessionRecord)  # type: ignore[call-overload]
+            .where(
+                col(QuizSessionRecord.id) == session_id,
+                or_(
+                    col(QuizSessionRecord.grading_started_at).is_(None),
+                    col(QuizSessionRecord.grading_started_at) < stale_before,
+                ),
+                ~graded,
+            )
+            .values(grading_started_at=now)
+        )
+        return result.rowcount == 1
+
+    @with_session
+    async def release_grading(self, session: AsyncSession, session_id: str, claimed_at: float) -> None:
+        await session.exec(
+            update(QuizSessionRecord)  # type: ignore[call-overload]
+            .where(col(QuizSessionRecord.id) == session_id, col(QuizSessionRecord.grading_started_at) == claimed_at)
+            .values(grading_started_at=None)
         )
 
     @with_session

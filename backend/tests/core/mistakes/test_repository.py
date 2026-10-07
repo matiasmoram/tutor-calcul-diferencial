@@ -3,7 +3,11 @@ import pytest
 from core.mistakes.domain.entities.annotation import Annotation
 from core.mistakes.domain.entities.mistake_grading import MistakeGrading
 from core.mistakes.domain.entities.mistake_session import MistakeSession
-from core.mistakes.domain.exceptions import MistakeExerciseNotFoundException, MistakeSessionNotFoundException
+from core.mistakes.domain.exceptions import (
+    MistakeExerciseNotFoundException,
+    MistakeSessionAlreadyGradedException,
+    MistakeSessionNotFoundException,
+)
 from core.mistakes.domain.grading import grade
 from core.mistakes.domain.values.mistake_exercise_id import MistakeExerciseId
 from core.mistakes.infra.sqlmodel_repository import (
@@ -76,9 +80,26 @@ async def test_grading_claims_are_exclusive_until_released_or_stale(session_prov
     assert await sessions.claim_grading(s.id, now=100.0, stale_before=0.0)
     assert not await sessions.claim_grading(s.id, now=101.0, stale_before=1.0)
     assert await sessions.claim_grading(s.id, now=500.0, stale_before=200.0)  # the first claim went stale
-    await sessions.release_grading(s.id)
+    await sessions.release_grading(s.id, claimed_at=100.0)  # the dead grading cannot drop the new claim
+    assert not await sessions.claim_grading(s.id, now=501.0, stale_before=201.0)
+    await sessions.release_grading(s.id, claimed_at=500.0)
     assert await sessions.claim_grading(s.id, now=501.0, stale_before=201.0)
     await sessions.save_grading(s.id, [], empty_grading(), 502.0)
-    await sessions.release_grading(s.id)
+    await sessions.release_grading(s.id, claimed_at=501.0)
     assert not await sessions.claim_grading(s.id, now=503.0, stale_before=203.0)  # graded: never again
     assert not await sessions.claim_grading(SessionId.generate(), now=1.0, stale_before=0.0)
+
+
+async def test_a_session_is_graded_once_in_storage(session_provider: SQLModelSessionProvider) -> None:
+    exercises = SQLModelMistakeExerciseRepository(session_provider)
+    sessions = SQLModelMistakeSessionRepository(session_provider)
+    await exercises.save(solution())
+    s = session_of()
+    await sessions.add(s)
+    first = empty_grading()
+    await sessions.save_grading(s.id, [], first, 11.0)
+    second = first.model_copy(update={"summary": "una altra"})
+    with pytest.raises(MistakeSessionAlreadyGradedException) as e:
+        await sessions.save_grading(s.id, [], second, 12.0)
+    assert e.value.error_code == 409
+    assert (await sessions.get(s.id)).grading == first

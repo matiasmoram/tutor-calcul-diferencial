@@ -1,3 +1,4 @@
+import os
 from collections.abc import AsyncIterator
 
 import pytest
@@ -10,11 +11,17 @@ from core.shared.storage.table_registry import register_all_tables
 register_all_tables()
 
 
+# CI also runs the suite against Postgres (the production engine): JSONB, psycopg rowcounts, FK cascades.
+TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL")
+
+
 @pytest.fixture
 async def session_provider(tmp_path) -> AsyncIterator[SQLModelSessionProvider]:
-    """A real (SQLite) database with every registered table, one per test."""
-    engine = make_engine(f"sqlite+aiosqlite:///{(tmp_path / 'test.db').as_posix()}")
+    """A real database with every registered table, empty for each test: SQLite, or TEST_DATABASE_URL."""
+    engine = make_engine(TEST_DATABASE_URL or f"sqlite+aiosqlite:///{(tmp_path / 'test.db').as_posix()}")
     async with engine.begin() as conn:
+        if TEST_DATABASE_URL:
+            await conn.run_sync(SQLModel.metadata.drop_all)
         await conn.run_sync(SQLModel.metadata.create_all)
     yield SQLModelSessionProvider(engine)
     await engine.dispose()

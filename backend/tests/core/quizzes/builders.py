@@ -127,7 +127,7 @@ def generator(llm: LLMClient, rng: Random | None = None) -> QuizGenerator:
     )
 
 
-def answers_grader(llm: LLMClient, provider: SQLModelSessionProvider) -> AnswersGrader:
+def answers_grader(llm: LLMClient, provider: SQLModelSessionProvider, clock: Clock | None = None) -> AnswersGrader:
     return AnswersGrader(
         authored_course(),
         SQLModelQuizSessionRepository(provider),
@@ -135,5 +135,5 @@ def answers_grader(llm: LLMClient, provider: SQLModelSessionProvider) -> Answers
         LLMAnswerGrader(llm),
         LLMClaimExtractor(llm),
         SympyCheckEvaluator(in_process=True),
-        FixedClock(),
+        clock or FixedClock(),
     )

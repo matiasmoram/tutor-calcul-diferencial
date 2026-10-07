@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 from core.course.domain.entities.course import Course
 from core.quizzes.domain.entities.grading import Answer, QuizGrading, StudentCheck
 from core.quizzes.domain.entities.quiz import Quiz
+from core.quizzes.domain.exceptions import ConcurrentQuizGradingException
 from core.quizzes.domain.ports import AnswerGrader, CheckEvaluator, ClaimExtractor
 from core.quizzes.domain.repository import QuizRepository, QuizSessionRepository
 from core.quizzes.domain.services.scoring import admissible_claims, grade_quiz
@@ -14,6 +15,9 @@ from core.quizzes.domain.values.call_summary import CallSummary
 from core.quizzes.domain.values.grading_inputs import AnsweredStatement, GraderEvaluation
 from core.shared.domain.clock import Clock
 from core.shared.llm.call_scope import call_scope
+
+# A claim older than this belongs to a grading that died without releasing it.
+GRADING_CLAIM_TIMEOUT_S = 300.0
 
 
 class AnswersGraderInput(BaseModel):
@@ -47,13 +51,32 @@ class AnswersGrader:
         session = await self._sessions.get(session_id)
         if session.submission is not None:
             return session.submission.result
-        quiz = await self._quizzes.get(session.quiz_id)
-        source = quiz_source(self._course, session.source_id)
-        with call_scope(session.id):
-            result = await self.grade_answers(source, quiz, request.answers, set(session.hints_used))
-        session.submit(request.answers, result, self._clock.now())
-        await self._sessions.save(session)
+        # A second submission while the first is being graded is refused before any model is called.
+        claimed_at = self._clock.now()
+        if not await self._sessions.claim_grading(session_id, claimed_at, claimed_at - GRADING_CLAIM_TIMEOUT_S):
+            return await self._stored_result(session_id)
+        try:
+            # Read again under the claim: the hints used up to now are the ones the grading counts.
+            session = await self._sessions.get(session_id)
+            quiz = await self._quizzes.get(session.quiz_id)
+            source = quiz_source(self._course, session.source_id)
+            with call_scope(session.id):
+                result = await self.grade_answers(source, quiz, request.answers, set(session.hints_used))
+            session.submit(request.answers, result, self._clock.now())
+            await self._sessions.save(session)
+        except ConcurrentQuizGradingException:
+            # Our claim went stale and was taken over, and the other grading was stored first: it stands.
+            return await self._stored_result(session_id)
+        finally:
+            await self._sessions.release_grading(session_id, claimed_at)
         return result
+
+    async def _stored_result(self, session_id: str) -> QuizGrading:
+        """The grading another submission stored; ConcurrentQuizGradingException while it is still running."""
+        session = await self._sessions.get(session_id)
+        if session.submission is None:
+            raise ConcurrentQuizGradingException(session_id)
+        return session.submission.result
 
     async def cited_theory(self, session_id: str) -> set[str]:
         """Items of the notes the session's solutions cite (shown with the grading)."""

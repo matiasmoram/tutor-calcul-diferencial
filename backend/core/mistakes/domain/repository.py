@@ -39,14 +39,17 @@ class MistakeSessionRepository(ABC):
 
     @abstractmethod
     async def claim_grading(self, session_id: SessionId, now: float, stale_before: float) -> bool:
-        """Marks the session as being graded unless it is graded already or another claim newer than
-        `stale_before` holds it. True when this caller got the claim."""
+        """Marks the session as being graded, claimed at `now`, unless it is graded already or another claim newer
+        than `stale_before` holds it. True when this caller got the claim."""
 
     @abstractmethod
-    async def release_grading(self, session_id: SessionId) -> None:
-        """Drops a claim whose grading failed, so the student can submit again."""
+    async def release_grading(self, session_id: SessionId, claimed_at: float) -> None:
+        """Drops the claim made at `claimed_at`, only if it is still that one: a claim taken over after it went
+        stale belongs to another grading and stays."""
 
     @abstractmethod
     async def save_grading(
         self, session_id: SessionId, annotations: list[Annotation], grading: MistakeGrading, now: float
-    ) -> None: ...
+    ) -> None:
+        """Raises MistakeSessionAlreadyGradedException when the session has a grading already: a session is
+        graded once."""

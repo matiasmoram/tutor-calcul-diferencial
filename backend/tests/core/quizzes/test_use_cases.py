@@ -1,18 +1,20 @@
 """The use cases the API calls (the old endpoint test, minus HTTP: that layer is built in phase 6)."""
 
+from collections.abc import Coroutine
 from pathlib import Path
 from random import Random
 
 import pytest
 
-from core.quizzes.application.answers_grader import AnswersGraderInput
+from core.quizzes.application.answers_grader import GRADING_CLAIM_TIMEOUT_S, AnswersGraderInput
 from core.quizzes.application.hint_revealer import HintRevealer
 from core.quizzes.application.pregenerated_importer import PregeneratedImporter
 from core.quizzes.application.quiz_provider import QuizProvider
 from core.quizzes.application.quiz_session_starter import QuizSessionStarter, QuizSessionStarterInput
 from core.quizzes.application.source_lister import SourceLister
-from core.quizzes.domain.entities.grading import Answer
+from core.quizzes.domain.entities.grading import Answer, QuizGrading
 from core.quizzes.domain.exceptions import (
+    ConcurrentQuizGradingException,
     QuizSessionNotFoundException,
     StatementNotFoundException,
     UnknownQuizSourceException,
@@ -20,18 +22,21 @@ from core.quizzes.domain.exceptions import (
 from core.quizzes.domain.values.quiz_id import QuizId
 from core.quizzes.infra.json_quiz_files import JsonQuizFiles
 from core.quizzes.infra.sqlmodel_repository import SQLModelQuizRepository, SQLModelQuizSessionRepository
-from core.shared.llm.client import LLMClient, Stage
+from core.shared.llm.client import CallMeta, JsonObject, LLMClient, LLMError, LLMRequest, Stage
 from core.shared.storage.session_provider import SQLModelSessionProvider
 from tests.core.quizzes.builders import (
     QUIZ_ID,
     FixedClock,
     answers_grader,
     generator,
+    grader,
+    idea,
     item,
     ok_audit,
     ok_solver,
     quiz,
     source,
+    transcriber,
 )
 from tests.fakes.llm import ScriptedLLMClient
 from tests.fixtures.course import authored_course
@@ -113,3 +118,83 @@ async def test_pregenerated_quizzes_seed_the_store(session_provider: SQLModelSes
     importer = PregeneratedImporter(files, repo)
     assert await importer.import_all() == 1 and await importer.import_all() == 1
     assert await repo.of_source("tema-2", "facil") == [quiz()]
+
+
+ANSWERS = AnswersGraderInput(answers=[Answer(statement_id="a1", verdict="fals", justification="sobre $y=x$")])
+
+
+def graded(feedback: str = "f") -> JsonObject:
+    return grader({"id": "a1", "idees": [idea(1, "sobre $y=x$")], "justificacio": "correcta", "feedback": feedback})
+
+
+async def started_session(provider: SQLModelSessionProvider) -> str:
+    await SQLModelQuizRepository(provider).add(quiz())
+    started = await starter(provider).start(QuizSessionStarterInput(source_id="tema-2", difficulty="facil"))
+    return started.session.id
+
+
+class InterleavingLLM(ScriptedLLMClient):
+    """While the first grading waits for its grader call, `meanwhile` runs (a second submission)."""
+
+    meanwhile: Coroutine[object, object, None] | None = None
+
+    async def structured(self, stage: Stage, request: LLMRequest) -> tuple[JsonObject, CallMeta]:
+        if stage == Stage.QUIZ_GRADING and self.meanwhile is not None:
+            pending, self.meanwhile = self.meanwhile, None
+            await pending
+        return await super().structured(stage, request)
+
+
+async def test_a_second_submission_while_grading_is_refused_before_any_model_call(
+    session_provider: SQLModelSessionProvider,
+) -> None:
+    refused: list[ConcurrentQuizGradingException] = []
+    llm = InterleavingLLM({Stage.QUIZ_GRADING: [graded()], Stage.QUIZ_EXTRACTION: [transcriber()]})
+    grading = answers_grader(llm, session_provider)
+    sid = await started_session(session_provider)
+
+    async def second_tab() -> None:
+        with pytest.raises(ConcurrentQuizGradingException) as e:
+            await grading.grade(sid, ANSWERS)
+        refused.append(e.value)
+
+    llm.meanwhile = second_tab()
+    first = await grading.grade(sid, ANSWERS)
+    assert [e.error_code for e in refused] == [409]
+    assert llm.calls(Stage.QUIZ_GRADING) == 1 and llm.calls(Stage.QUIZ_EXTRACTION) == 1
+    assert await grading.grade(sid, ANSWERS) == first  # done: the stored result, no model call
+    assert llm.calls(Stage.QUIZ_GRADING) == 1
+
+
+async def test_a_failed_grading_releases_its_claim(session_provider: SQLModelSessionProvider) -> None:
+    llm = ScriptedLLMClient(
+        {Stage.QUIZ_GRADING: [LLMError("model down"), graded()], Stage.QUIZ_EXTRACTION: [transcriber()] * 2}
+    )
+    grading = answers_grader(llm, session_provider)
+    sid = await started_session(session_provider)
+    with pytest.raises(LLMError):
+        await grading.grade(sid, ANSWERS)
+    assert (await grading.grade(sid, ANSWERS)).statements[0].feedback == "f"
+
+
+async def test_a_grading_whose_claim_was_taken_over_returns_the_stored_one(
+    session_provider: SQLModelSessionProvider,
+) -> None:
+    """The first grading outlives its claim; a later submission takes it over and stores its result first. The
+    first one then returns that result instead of a conflict."""
+    llm = InterleavingLLM(
+        {
+            Stage.QUIZ_GRADING: [graded("de la segona"), graded("de la primera")],
+            Stage.QUIZ_EXTRACTION: [transcriber()] * 2,
+        }
+    )
+    sid = await started_session(session_provider)
+    later = answers_grader(llm, session_provider, FixedClock(1_700_000_000.0 + GRADING_CLAIM_TIMEOUT_S + 1))
+    resubmitted: list[QuizGrading] = []
+
+    async def resubmission() -> None:
+        resubmitted.append(await later.grade(sid, ANSWERS))
+
+    llm.meanwhile = resubmission()
+    first = await answers_grader(llm, session_provider).grade(sid, ANSWERS)
+    assert resubmitted == [first] and first.statements[0].feedback == "de la segona"

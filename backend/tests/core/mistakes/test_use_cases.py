@@ -1,11 +1,12 @@
 import pytest
 
 from core.course.domain.exceptions import ExerciseNotFoundException
-from core.mistakes.application.annotations_grader import AnnotationsGrader
+from core.mistakes.application.annotations_grader import GRADING_CLAIM_TIMEOUT_S, AnnotationsGrader, AnnotationsGrading
 from core.mistakes.application.availability_lister import AvailabilityLister
 from core.mistakes.application.mistake_exercise_provider import MistakeExerciseProvider
 from core.mistakes.application.mistake_session_starter import MistakeSessionStarter, MistakeSessionStarterInput
 from core.mistakes.domain.entities.annotation import Annotation
+from core.mistakes.domain.entities.mistake_grading import MistakeGrading
 from core.mistakes.domain.exceptions import (
     GradingInProgressException,
     MistakeSessionNotFoundException,
@@ -19,7 +20,7 @@ from core.mistakes.infra.sqlmodel_repository import (
     SQLModelMistakeSessionRepository,
 )
 from core.shared.domain.ids import SessionId
-from core.shared.llm.client import JsonObject, LLMError, Stage
+from core.shared.llm.client import CallMeta, JsonObject, LLMError, LLMRequest, Stage
 from core.shared.storage.session_provider import SQLModelSessionProvider
 from tests.core.mistakes.builders import (
     COURSE,
@@ -157,6 +158,65 @@ async def test_a_failed_grading_can_be_retried_and_a_running_one_blocks(
     with pytest.raises(GradingInProgressException) as e:
         await w.grader.grade(other.session.id, [annotation])
     assert e.value.error_code == 409
+
+
+async def test_a_failed_save_releases_the_claim(session_provider: SQLModelSessionProvider) -> None:
+    """The database fails while storing the grading: the student can submit again at once (no 409 until the
+    claim goes stale)."""
+
+    class SaveFailsOnce(SQLModelMistakeSessionRepository):
+        failed = False
+
+        async def save_grading(
+            self, session_id: SessionId, annotations: list[Annotation], grading: MistakeGrading, now: float
+        ) -> None:
+            if not self.failed:
+                self.failed = True
+                raise OSError("database down")
+            await super().save_grading(session_id, annotations, grading, now)
+
+    llm = ScriptedLLMClient({Stage.MISTAKES_GRADING: [grader_answer(), grader_answer()]})
+    w = Wiring(session_provider, llm)
+    w.grader = AnnotationsGrader(
+        COURSE, SaveFailsOnce(session_provider), w.exercises, LLMAnnotationGrader(llm), w.clock
+    )
+    await w.exercises.save(solution())
+    started = await w.starter.start(MistakeSessionStarterInput(exercise_id="t2-4c"))
+    e1 = started.exercise.mistakes[0]
+    annotation = Annotation(id="a1", fragment=2, start=e1.start, end=e1.end)
+    with pytest.raises(OSError):
+        await w.grader.grade(started.session.id, [annotation])
+    assert (await w.grader.grade(started.session.id, [annotation])).grading.found == 1
+
+
+async def test_a_grading_whose_claim_was_taken_over_returns_the_stored_one(
+    session_provider: SQLModelSessionProvider,
+) -> None:
+    """A grading outlives its claim; a resubmission takes the stale claim over and stores its grading first. The
+    first grading then gets that stored result instead of failing on the duplicate."""
+
+    class SlowGrader(ScriptedLLMClient):
+        resubmission: list[Annotation] | None = None
+
+        async def structured(self, stage: Stage, request: LLMRequest) -> tuple[JsonObject, CallMeta]:
+            pending, self.resubmission = self.resubmission, None
+            if pending is not None:
+                w.clock.t += GRADING_CLAIM_TIMEOUT_S + 1
+                resubmitted.append(await w.grader.grade(started.session.id, pending))
+            return await super().structured(stage, request)
+
+    llm = SlowGrader({Stage.MISTAKES_GRADING: [grader_answer("de la segona"), grader_answer("de la primera")]})
+    w = Wiring(session_provider, llm)
+    await w.exercises.save(solution())
+    started = await w.starter.start(MistakeSessionStarterInput(exercise_id="t2-4c"))
+    e1 = started.exercise.mistakes[0]
+    annotation = Annotation(id="a1", fragment=2, start=e1.start, end=e1.end)
+    resubmitted: list[AnnotationsGrading] = []
+    llm.resubmission = [annotation]
+    first = await w.grader.grade(started.session.id, [annotation])
+    assert [r.grading for r in resubmitted] == [first.grading]
+    assert first.grading.annotations[0].feedback == "de la segona"
+    assert (await w.sessions.get(started.session.id)).grading == first.grading
 
 
 async def test_unknown_session_is_not_found(session_provider: SQLModelSessionProvider) -> None:

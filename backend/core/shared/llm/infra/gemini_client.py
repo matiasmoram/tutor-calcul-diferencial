@@ -89,11 +89,14 @@ class GeminiLLMClient(LLMClient):
     async def _generate_with_retry(
         self, model: str, contents: list[types.Part | str] | str, config: types.GenerateContentConfig
     ) -> types.GenerateContentResponse:
-        """Free-tier keys hit per-minute quotas (429) and transient overload (503): wait and retry."""
+        """Free-tier keys hit per-minute quotas (429) and transient overload (503): wait and retry.
+        A request that timed out is not retried: it already spent the whole HTTP timeout."""
         waited = 0.0
         while True:
             try:
                 return await self._client.aio.models.generate_content(model=model, contents=contents, config=config)  # type: ignore[arg-type]
+            except httpx.TimeoutException:
+                raise
             except (errors.APIError, httpx.TransportError) as e:
                 if isinstance(e, errors.APIError) and (e.code not in (429, 503) or _is_daily_quota(e)):
                     raise

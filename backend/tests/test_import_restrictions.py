@@ -44,14 +44,27 @@ def test_domain_depends_on_nothing_outward(path: Path) -> None:
     bad = [
         i
         for i in _imports(path)
-        if _top(i) in SDKS or ".application" in i or ".infra" in i or i.startswith("core.shared.llm.infra")
+        if _top(i) in SDKS
+        or ".application" in i
+        or ".infra" in i
+        or i.startswith("core.shared.storage")
+        or (i.startswith("core.shared.llm_calls") and not _module(path).startswith("core.shared.llm_calls"))
     ]
     assert not bad, f"{_module(path)} imports {bad}"
 
 
 @pytest.mark.parametrize("path", _layer_files("application"), ids=_module)
 def test_application_never_names_infrastructure(path: Path) -> None:
-    bad = [i for i in _imports(path) if _top(i) in SDKS or ".infra" in i]
+    bad = [i for i in _imports(path) if _top(i) in SDKS or ".infra" in i or i.startswith("core.shared.storage")]
+    assert not bad, f"{_module(path)} imports {bad}"
+
+
+@pytest.mark.parametrize("path", _layer_files("domain"), ids=_module)
+def test_a_domain_depends_only_on_its_own_context_course_and_the_shared_kernel(path: Path) -> None:
+    """`course` is the shared kernel of the content (every activity is about its exercises and theory)."""
+    own = path.relative_to(CORE).parts[0]
+    allowed = {own, "course", "shared"}
+    bad = [i for i in _imports(path) if i.startswith("core.") and i.split(".")[1] not in allowed]
     assert not bad, f"{_module(path)} imports {bad}"
 
 

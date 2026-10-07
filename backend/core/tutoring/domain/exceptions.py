@@ -20,6 +20,14 @@ class ConcurrentTurnException(TutoringException):
         self.session_id = session_id
 
 
+class TurnTimeoutException(TutoringException):
+    """The turn did not finish within its deadline; nothing was stored, the student can resend."""
+
+    def __init__(self, session_id: str) -> None:
+        super().__init__("La resposta ha trigat massa. Torna-ho a provar.", 504)
+        self.session_id = session_id
+
+
 class InvalidPhotoException(TutoringException):
     def __init__(self, message: str) -> None:
         super().__init__(message, 400)

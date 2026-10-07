@@ -85,3 +85,24 @@ async def test_a_stale_session_cannot_be_saved(session_provider: SQLModelSession
     with pytest.raises(ConcurrentQuizGradingException) as e:
         await repo.save(second)
     assert e.value.error_code == 409
+
+
+async def test_grading_claims_are_exclusive_owned_and_end_with_the_grading(
+    session_provider: SQLModelSessionProvider,
+) -> None:
+    await SQLModelQuizRepository(session_provider).add(quiz())
+    repo = SQLModelQuizSessionRepository(session_provider)
+    s = _session()
+    await repo.add(s)
+    assert await repo.claim_grading(s.id, now=100.0, stale_before=0.0)
+    assert not await repo.claim_grading(s.id, now=101.0, stale_before=1.0)
+    assert await repo.claim_grading(s.id, now=500.0, stale_before=200.0)  # the first claim went stale
+    await repo.release_grading(s.id, claimed_at=100.0)  # the dead grading cannot drop the new claim
+    assert not await repo.claim_grading(s.id, now=501.0, stale_before=201.0)
+    await repo.release_grading(s.id, claimed_at=500.0)
+    assert await repo.claim_grading(s.id, now=502.0, stale_before=202.0)
+    s.submit([], _grading(), 503.0)
+    await repo.save(s)
+    await repo.release_grading(s.id, claimed_at=502.0)
+    assert not await repo.claim_grading(s.id, now=504.0, stale_before=204.0)  # graded: never again
+    assert not await repo.claim_grading(SessionId.generate(), now=1.0, stale_before=0.0)

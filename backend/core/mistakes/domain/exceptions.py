@@ -32,6 +32,14 @@ class GradingInProgressException(MistakesException):
         super().__init__("Ja s'està corregint aquest document.", 409)
 
 
+class MistakeSessionAlreadyGradedException(MistakesException):
+    """Another grading of the session was stored first (a claim that went stale was taken over)."""
+
+    def __init__(self, session_id: str) -> None:
+        super().__init__("Aquest document ja s'ha corregit.", 409)
+        self.session_id = session_id
+
+
 class MistakeGenerationFailedException(MistakesException):
     """Every attempt was rejected by validation or verification. 502 like any failed model stage, so the API
     reports it as "La generació ha fallat: ..."."""

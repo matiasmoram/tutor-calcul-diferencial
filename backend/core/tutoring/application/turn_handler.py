@@ -11,7 +11,7 @@ from core.shared.domain.ids import SessionId, TheoryItemId
 from core.shared.llm.call_scope import call_scope
 from core.tutoring.domain.entities.tutor_session import TutorSession
 from core.tutoring.domain.entities.tutor_turn import TutorTurn
-from core.tutoring.domain.exceptions import ConcurrentTurnException, ModelOutputException
+from core.tutoring.domain.exceptions import ConcurrentTurnException, ModelOutputException, TurnTimeoutException
 from core.tutoring.domain.fallback import fallback_message
 from core.tutoring.domain.guard import deterministic_check
 from core.tutoring.domain.policy import allowed_content, allowed_theory, decide
@@ -24,8 +24,15 @@ from core.tutoring.domain.values.plan import Plan
 from core.tutoring.domain.values.turn_trace import CheckedDraft, DraftAttempt, FailedDraft, ModelCall, TurnTrace
 
 MAX_ATTEMPTS = 3  # first draft + 2 rewrites
-# A turn claim older than this belongs to a turn that died without releasing it (provider timeouts are 180 s).
-TURN_CLAIM_TIMEOUT_S = 600.0
+TURN_DEADLINE_S = 300.0  # the whole turn, every model call and retry included
+# A claim older than this belongs to a turn that died without releasing it. Strictly above TURN_DEADLINE_S: a live
+# turn is cancelled by its deadline before its claim can go stale, so a takeover never runs beside the turn it
+# replaces (the margin covers the claim and save round trips and clock skew between workers).
+TURN_CLAIM_TIMEOUT_S = TURN_DEADLINE_S + 60.0
+# The sympy guard of one draft. A timed-out check keeps running in its worker thread (threads cannot be
+# cancelled); only its result is dropped.
+GUARD_DEADLINE_S = 20.0
+GUARD_TIMEOUT_PROBLEM = "comprovació CAS: temps esgotat"
 
 
 class TurnInput(BaseModel):
@@ -68,17 +75,24 @@ class TurnHandler:
         self._clock = clock or SystemClock()
 
     async def handle(self, request: TurnInput) -> TurnResult:
-        session = await self._sessions.get(request.session_id)
-        now = self._clock.now()
+        claimed_at = self._clock.now()
         # A second message while one is being answered is refused before any model is called (two tabs, a retry).
-        if not await self._sessions.claim_turn(session.id, now, now - TURN_CLAIM_TIMEOUT_S):
-            raise ConcurrentTurnException(session.id)
+        # Claimed before the session is read, so the turn runs on the version no other turn can change meanwhile.
+        if not await self._sessions.claim_turn(request.session_id, claimed_at, claimed_at - TURN_CLAIM_TIMEOUT_S):
+            raise ConcurrentTurnException(request.session_id)
+        deadline = asyncio.timeout(TURN_DEADLINE_S)
         try:
-            return await self._handle(session, request)
+            async with deadline:
+                session = await self._sessions.get(request.session_id)
+                return await self._handle(session, request, claimed_at)
+        except TimeoutError:
+            if deadline.expired():
+                raise TurnTimeoutException(request.session_id) from None
+            raise
         finally:
-            await self._sessions.release_turn(session.id)
+            await self._sessions.release_turn(request.session_id, claimed_at)
 
-    async def _handle(self, session: TutorSession, request: TurnInput) -> TurnResult:
+    async def _handle(self, session: TutorSession, request: TurnInput, claimed_at: float) -> TurnResult:
         ex = self._course.exercise(session.exercise_id)
         text = request.text.strip()
         with call_scope(session.id, session.next_turn):
@@ -93,7 +107,7 @@ class TurnHandler:
             trace=trace,
         )
         session.record_turn(text, reply.message, trace.state, turn.created_at)
-        await self._sessions.save_turn(session, turn)
+        await self._sessions.save_turn(session, turn, claimed_at)
         return TurnResult(
             message=reply.message, references=[self._course.theory[i] for i in reply.references], trace=trace
         )
@@ -170,7 +184,13 @@ class TurnHandler:
         # References are the allowed items the message actually cites ("Teorema 12 del Tema 3").
         references = cited_items(message, theory, ex.topic)
         # sympy work (the CAS provenance check): off the event loop, other students' turns keep running.
-        problems = await asyncio.to_thread(deterministic_check, message, plan, permitted)
+        try:
+            problems = await asyncio.wait_for(
+                asyncio.to_thread(deterministic_check, message, plan, permitted), GUARD_DEADLINE_S
+            )
+        except TimeoutError:
+            # Fail closed: a draft the CAS could not verify never reaches the student.
+            problems = [GUARD_TIMEOUT_PROBLEM]
         verdict: GuardVerdict | None = None
         if not problems:
             # Only pay for the LLM judge once the cheap checks pass.

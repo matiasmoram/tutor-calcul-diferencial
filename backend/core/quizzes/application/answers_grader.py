@@ -55,6 +55,11 @@ class AnswersGrader:
         await self._sessions.save(session)
         return result
 
+    async def cited_theory(self, session_id: str) -> set[str]:
+        """Items of the notes the session's solutions cite (shown with the grading)."""
+        session = await self._sessions.get(session_id)
+        return (await self._quizzes.get(session.quiz_id)).cited_theory()
+
     async def grade_answers(
         self, source: QuizSource, quiz: Quiz, answers: Sequence[Answer], hints: Collection[str]
     ) -> QuizGrading:

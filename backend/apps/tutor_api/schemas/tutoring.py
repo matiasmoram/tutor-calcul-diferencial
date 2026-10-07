@@ -83,3 +83,10 @@ class ProfessorTurnResponse(BaseModel):
             tutor=turn.tutor_text,
             trace=turn.trace.model_dump(mode="json"),
         )
+
+
+class TurnResponse(BaseModel):
+    missatge: str
+    referencies: list[TheoryItemResponse]  # the allowed items the reply cites, for the web to link
+    # Professors get the full trace; students only {"fallback": ...} (it holds the allowed content and drafts).
+    trace: dict[str, object]

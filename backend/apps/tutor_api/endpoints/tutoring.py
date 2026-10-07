@@ -19,6 +19,7 @@ from apps.tutor_api.schemas.tutoring import (
     PhotoRequest,
     ProfessorTurnResponse,
     SessionResponse,
+    TurnResponse,
 )
 from core.course.domain.entities.course import Course
 from core.course.domain.exceptions import ExerciseNotFoundException
@@ -91,16 +92,16 @@ async def send_message(
     handler: TurnHandler = Depends(_get_turn_handler),
     config: Config = Depends(get_config),
     professor: bool = Depends(is_professor),
-) -> dict[str, object]:
+) -> TurnResponse:
     sid = _session_id(session_id)
     ensure_api_key(config)
     with domain_errors():
         result = await handler.handle(TurnInput(session_id=sid, text=body.text, origin=body.origen))
-    references = [TheoryItemResponse.from_entity(it).model_dump() for it in result.references]
-    if not professor:
-        # The trace holds the allowed content and rejected drafts: students only get the reply.
-        return {"missatge": result.message, "referencies": references, "trace": {"fallback": result.trace.fallback}}
-    return {"missatge": result.message, "referencies": references, "trace": result.trace.model_dump(mode="json")}
+    trace: dict[str, object] = (
+        result.trace.model_dump(mode="json") if professor else {"fallback": result.trace.fallback}
+    )
+    references = [TheoryItemResponse.from_entity(it) for it in result.references]
+    return TurnResponse(missatge=result.message, referencies=references, trace=trace)
 
 
 @router.post("/api/sessions/{session_id}/transcripcio")
@@ -116,7 +117,9 @@ async def transcribe_photo(
         result = await transcriber.transcribe(
             TranscriptionInput(session_id=sid, photo=Photo.from_data_url(body.imatge))
         )
-    return result.transcription.model_dump() | {"crida": result.call.model_dump()}
+    out: dict[str, object] = result.transcription.model_dump()
+    out["crida"] = result.call.model_dump()
+    return out
 
 
 @router.get("/api/professor/sessions", dependencies=[Depends(require_professor)])

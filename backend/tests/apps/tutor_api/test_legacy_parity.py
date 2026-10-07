@@ -116,3 +116,26 @@ def test_same_turns_end_to_end(
         new = api.post(f"/api/sessions/{new_sid}/missatges", json={"text": text}).json()
         assert new["missatge"] == old["missatge"] and new["referencies"] == old["referencies"]
         assert _comparable(new["trace"]) == _comparable(old["trace"])
+
+
+def test_same_quiz_sources(legacy: TestClient, api: TestClient) -> None:
+    assert api.get("/api/afirmacions/fonts").json() == legacy.get("/api/afirmacions/fonts").json()
+
+
+def test_same_quiz_flow_on_a_ready_quiz(legacy: TestClient, api: TestClient) -> None:
+    body = {"font": "T2.12", "dificultat": "facil"}
+    old, new = legacy.post("/api/afirmacions/sessions", json=body).json(), api.post("/api/afirmacions/sessions", json=body).json()
+    assert _without_session_id(new) == _without_session_id(old)
+    first = old["questionari"]["afirmacions"][0]["id"]
+    old_hint = legacy.post(f"/api/afirmacions/sessions/{old['session_id']}/pista/{first}").json()
+    new_hint = api.post(f"/api/afirmacions/sessions/{new['session_id']}/pista/{first}").json()
+    assert new_hint == old_hint
+    unanswered = {"respostes": [{"id": first, "veredicte": "", "justificacio": ""}]}
+    old_grade = legacy.post(f"/api/afirmacions/sessions/{old['session_id']}/correccio", json=unanswered).json()
+    new_grade = api.post(f"/api/afirmacions/sessions/{new['session_id']}/correccio", json=unanswered).json()
+    assert new_grade == old_grade
+    for client, sid in ((legacy, old["session_id"]), (api, new["session_id"])):
+        assert client.post(f"/api/afirmacions/sessions/{sid}/pista/zz").status_code == 404
+    assert api.post("/api/afirmacions/sessions", json={"font": "T9.1"}).json() == legacy.post(
+        "/api/afirmacions/sessions", json={"font": "T9.1"}
+    ).json()

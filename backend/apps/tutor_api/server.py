@@ -12,6 +12,7 @@ from apps.tutor_api.dependencies import AppState
 from apps.tutor_api.endpoints import config as config_endpoints
 from apps.tutor_api.endpoints import course as course_endpoints
 from apps.tutor_api.endpoints import mistakes as mistakes_endpoints
+from apps.tutor_api.endpoints import quizzes as quiz_endpoints
 from apps.tutor_api.endpoints import tutoring as tutoring_endpoints
 from core.course.application.course_loader import CourseLoader
 from core.course.infra.sqlmodel_repository import SQLModelCourseRepository
@@ -19,6 +20,9 @@ from core.course.infra.yaml_course_source import YamlCourseSource
 from core.mistakes.application.pregenerated_importer import PregeneratedImporter
 from core.mistakes.infra.json_file_source import JsonFileMistakeSource
 from core.mistakes.infra.sqlmodel_repository import SQLModelMistakeExerciseRepository
+from core.quizzes.application.pregenerated_importer import PregeneratedImporter as QuizImporter
+from core.quizzes.infra.json_quiz_files import JsonQuizFiles
+from core.quizzes.infra.sqlmodel_repository import SQLModelQuizRepository
 from core.shared.llm.client import LLMClient
 from core.shared.llm.infra.factory import make_llm_client
 from core.shared.llm.infra.logged_client import LoggedLLMClient
@@ -47,6 +51,9 @@ def create_app(config: Config | None = None, llm: LLMClient | None = None) -> Fa
         await PregeneratedImporter(
             JsonFileMistakeSource(BACKEND_DIR / "generats" / "errades"), SQLModelMistakeExerciseRepository(sessions)
         ).import_all()
+        await QuizImporter(
+            JsonQuizFiles(BACKEND_DIR / "generats" / "afirmacions"), SQLModelQuizRepository(sessions)
+        ).import_all()
         inner = llm or make_llm_client(cfg)
         logged = LoggedLLMClient(inner, SQLModelLLMCallRepository(sessions), log_prompts=cfg.LOG_PROMPTS)
         app.state.tutor = AppState(config=cfg, sessions=sessions, course=course, llm=logged)
@@ -54,7 +61,7 @@ def create_app(config: Config | None = None, llm: LLMClient | None = None) -> Fa
         await engine.dispose()
 
     app = FastAPI(title="Tutor socràtic — Càlcul Diferencial", lifespan=lifespan)
-    for module in (config_endpoints, course_endpoints, tutoring_endpoints, mistakes_endpoints):
+    for module in (config_endpoints, course_endpoints, tutoring_endpoints, mistakes_endpoints, quiz_endpoints):
         app.include_router(module.router)
 
     @app.get("/", include_in_schema=False)

@@ -11,6 +11,7 @@ from apps.tutor_api.dependencies import (
     get_course,
     get_llm,
     get_session_provider,
+    get_sympy_pool,
 )
 from apps.tutor_api.schemas.course import TheoryIndexEntryResponse, TheoryItemResponse
 from apps.tutor_api.schemas.quizzes import (
@@ -38,6 +39,7 @@ from core.quizzes.infra.sqlmodel_repository import SQLModelQuizRepository, SQLMo
 from core.quizzes.infra.sympy_check_evaluator import SympyCheckEvaluator
 from core.shared.domain.clock import SystemClock
 from core.shared.llm.client import LLMClient
+from core.shared.math.infra.sympy_pool import SympyCheckPool
 from core.shared.storage.session_provider import SQLModelSessionProvider
 from settings import Config
 
@@ -45,11 +47,13 @@ router = APIRouter()
 
 
 def _get_provider(
-    sessions: SQLModelSessionProvider = Depends(get_session_provider), llm: LLMClient = Depends(get_llm)
+    sessions: SQLModelSessionProvider = Depends(get_session_provider),
+    llm: LLMClient = Depends(get_llm),
+    pool: SympyCheckPool = Depends(get_sympy_pool),
 ) -> QuizProvider:
     rng = random.Random()
     generator = QuizGenerator(
-        LLMQuizWriter(llm), LLMBlindSolver(llm), LLMQuizAuditor(llm), SympyCheckEvaluator(), SystemClock(), rng
+        LLMQuizWriter(llm), LLMBlindSolver(llm), LLMQuizAuditor(llm), SympyCheckEvaluator(pool), SystemClock(), rng
     )
     return QuizProvider(SQLModelQuizRepository(sessions), generator, rng)
 
@@ -70,6 +74,7 @@ def _get_grader(
     course: Course = Depends(get_course),
     sessions: SQLModelSessionProvider = Depends(get_session_provider),
     llm: LLMClient = Depends(get_llm),
+    pool: SympyCheckPool = Depends(get_sympy_pool),
 ) -> AnswersGrader:
     return AnswersGrader(
         course,
@@ -77,7 +82,7 @@ def _get_grader(
         SQLModelQuizRepository(sessions),
         LLMAnswerGrader(llm),
         LLMClaimExtractor(llm),
-        SympyCheckEvaluator(),
+        SympyCheckEvaluator(pool),
         SystemClock(),
     )
 

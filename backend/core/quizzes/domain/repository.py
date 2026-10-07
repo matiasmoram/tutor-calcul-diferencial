@@ -36,6 +36,16 @@ class QuizSessionRepository(ABC):
         """Raises QuizSessionNotFoundException."""
 
     @abstractmethod
+    async def claim_grading(self, session_id: str, now: float, stale_before: float) -> bool:
+        """Marks the session as being graded, claimed at `now`, unless it is graded already or another claim newer
+        than `stale_before` holds it. True when this caller got the claim (False for an unknown session too)."""
+
+    @abstractmethod
+    async def release_grading(self, session_id: str, claimed_at: float) -> None:
+        """Drops the claim made at `claimed_at`, only if it is still that one: a claim taken over after it went
+        stale belongs to another grading and stays."""
+
+    @abstractmethod
     async def save(self, quiz_session: QuizSession) -> None:
         """Stores the session's hints and submission if nobody saved it since it was read, then bumps its
         ``version``. Raises ConcurrentQuizGradingException otherwise."""

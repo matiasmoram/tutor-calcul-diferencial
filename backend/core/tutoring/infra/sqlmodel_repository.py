@@ -141,22 +141,30 @@ class SQLModelTutorSessionRepository(TutorSessionRepository, BaseSQLModelReposit
             )
             .values(turn_started_at=now)
         )
-        return isinstance(result, CursorResult) and result.rowcount == 1
+        if isinstance(result, CursorResult) and result.rowcount == 1:
+            return True
+        if await db.get(TutorSessionRecord, session_id) is None:
+            raise TutorSessionNotFoundException(session_id)
+        return False
 
     @with_session
-    async def release_turn(self, db: AsyncSession, session_id: SessionId) -> None:
+    async def release_turn(self, db: AsyncSession, session_id: SessionId, claimed_at: float) -> None:
         await db.exec(
             update(TutorSessionRecord)  # type: ignore[call-overload]
             .where(col(TutorSessionRecord.id) == session_id)
+            .where(col(TutorSessionRecord.turn_started_at) == claimed_at)
             .values(turn_started_at=None)
         )
 
     @with_session
-    async def save_turn(self, db: AsyncSession, session: TutorSession, turn: TutorTurn) -> TutorSession:
+    async def save_turn(
+        self, db: AsyncSession, session: TutorSession, turn: TutorTurn, claimed_at: float
+    ) -> TutorSession:
         result = await db.exec(
             update(TutorSessionRecord)  # type: ignore[call-overload]
             .where(col(TutorSessionRecord.id) == session.id)
             .where(col(TutorSessionRecord.version) == session.version)
+            .where(col(TutorSessionRecord.turn_started_at) == claimed_at)
             .values(
                 state=session.state.model_dump(mode="json"),
                 history=[m.model_dump(mode="json") for m in session.history],

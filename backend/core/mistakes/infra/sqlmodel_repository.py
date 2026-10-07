@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Index, func, or_, update
+from sqlalchemy.exc import IntegrityError
 from sqlmodel import Field, SQLModel, col, select
 from sqlmodel.ext.asyncio.session import AsyncSession
 
@@ -6,7 +7,11 @@ from core.mistakes.domain.entities.annotation import Annotation
 from core.mistakes.domain.entities.mistake_exercise import MistakeExercise
 from core.mistakes.domain.entities.mistake_grading import MistakeGrading
 from core.mistakes.domain.entities.mistake_session import MistakeSession
-from core.mistakes.domain.exceptions import MistakeExerciseNotFoundException, MistakeSessionNotFoundException
+from core.mistakes.domain.exceptions import (
+    MistakeExerciseNotFoundException,
+    MistakeSessionAlreadyGradedException,
+    MistakeSessionNotFoundException,
+)
 from core.mistakes.domain.repository import MistakeExerciseRepository, MistakeSessionRepository, ReadyCounts
 from core.mistakes.domain.values.difficulty import Difficulty
 from core.mistakes.domain.values.mistake_exercise_id import MistakeExerciseId
@@ -139,10 +144,12 @@ class SQLModelMistakeSessionRepository(MistakeSessionRepository, BaseSQLModelRep
         return result.rowcount == 1
 
     @with_session
-    async def release_grading(self, session: AsyncSession, session_id: SessionId) -> None:
+    async def release_grading(self, session: AsyncSession, session_id: SessionId, claimed_at: float) -> None:
         await session.exec(
             update(MistakeSessionRecord)  # type: ignore[call-overload]
-            .where(col(MistakeSessionRecord.id) == session_id)
+            .where(
+                col(MistakeSessionRecord.id) == session_id, col(MistakeSessionRecord.grading_started_at) == claimed_at
+            )
             .values(grading_started_at=None)
         )
 
@@ -163,3 +170,9 @@ class SQLModelMistakeSessionRepository(MistakeSessionRepository, BaseSQLModelRep
                 result=grading.model_dump(mode="json"),
             )
         )
+        try:
+            await session.flush()
+        except IntegrityError as e:
+            # The one constraint a grading of an existing session can break: session_id is unique, so another
+            # grading of it was stored first. Raising rolls this transaction back.
+            raise MistakeSessionAlreadyGradedException(session_id) from e

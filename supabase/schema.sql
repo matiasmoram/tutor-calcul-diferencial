@@ -126,6 +126,7 @@ CREATE TABLE quiz_sessions (
 	created_at FLOAT NOT NULL, 
 	updated_at FLOAT NOT NULL, 
 	version INTEGER NOT NULL, 
+	grading_started_at FLOAT, 
 	PRIMARY KEY (id), 
 	FOREIGN KEY(quiz_id) REFERENCES quizzes (id)
 );

@@ -5,7 +5,7 @@ from core.course.domain.entities.theory_item import TheoryItem
 from core.mistakes.domain.entities.annotation import Annotation
 from core.mistakes.domain.entities.mistake_grading import MistakeGrading
 from core.mistakes.domain.entities.mistake_session import MistakeSession
-from core.mistakes.domain.exceptions import GradingInProgressException
+from core.mistakes.domain.exceptions import GradingInProgressException, MistakeSessionAlreadyGradedException
 from core.mistakes.domain.grading import grade, locate_annotations
 from core.mistakes.domain.ports import AnnotationGrader
 from core.mistakes.domain.repository import MistakeExerciseRepository, MistakeSessionRepository
@@ -46,19 +46,25 @@ class AnnotationsGrader:
         session = await self._sessions.get(session_id)
         if session.grading is not None:
             return self._outcome(session, session.grading)
-        now = self._clock.now()
-        if not await self._sessions.claim_grading(session_id, now, now - GRADING_CLAIM_TIMEOUT_S):
-            session = await self._sessions.get(session_id)
-            if session.grading is not None:
-                return self._outcome(session, session.grading)
-            raise GradingInProgressException()
+        claimed_at = self._clock.now()
+        if not await self._sessions.claim_grading(session_id, claimed_at, claimed_at - GRADING_CLAIM_TIMEOUT_S):
+            return await self._stored_outcome(session_id)
         try:
             grading = await self._grade(session, annotations)
-        except BaseException:
-            await self._sessions.release_grading(session_id)
-            raise
-        await self._sessions.save_grading(session_id, annotations, grading, self._clock.now())
+            await self._sessions.save_grading(session_id, annotations, grading, self._clock.now())
+        except MistakeSessionAlreadyGradedException:
+            # Our claim went stale and was taken over, and the other grading was stored first: it stands.
+            return await self._stored_outcome(session_id)
+        finally:
+            await self._sessions.release_grading(session_id, claimed_at)
         return self._outcome(session, grading)
+
+    async def _stored_outcome(self, session_id: SessionId) -> AnnotationsGrading:
+        """The grading another submission stored; GradingInProgressException while it is still running."""
+        session = await self._sessions.get(session_id)
+        if session.grading is None:
+            raise GradingInProgressException()
+        return self._outcome(session, session.grading)
 
     async def _grade(self, session: MistakeSession, annotations: list[Annotation]) -> MistakeGrading:
         exercise = await self._exercises.get(session.exercise_id)

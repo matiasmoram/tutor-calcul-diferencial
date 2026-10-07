@@ -1,15 +1,32 @@
 """One tutor turn end to end over the scripted LLM and a real database."""
 
+import asyncio
+import threading
+from collections.abc import Sequence
+
 import pytest
 
+from core.shared.domain.ids import SessionId
 from core.shared.llm.call_scope import current_scope
 from core.shared.llm.client import CallMeta, JsonObject, LLMError, LLMProviderError, LLMRequest, Stage
 from core.shared.llm.infra.logged_client import LoggedLLMClient
 from core.shared.llm_calls.infra.sqlmodel_repository import SQLModelLLMCallRepository
 from core.shared.storage.session_provider import SQLModelSessionProvider
-from core.tutoring.application.turn_handler import TurnInput
-from core.tutoring.domain.exceptions import ConcurrentTurnException, ModelOutputException
+from core.tutoring.application import turn_handler
+from core.tutoring.application.turn_handler import GUARD_TIMEOUT_PROBLEM, TurnHandler, TurnInput
+from core.tutoring.domain.exceptions import (
+    ConcurrentTurnException,
+    ModelOutputException,
+    TurnTimeoutException,
+    TutorSessionNotFoundException,
+)
+from core.tutoring.domain.guard import deterministic_check
+from core.tutoring.domain.values.plan import Plan
 from core.tutoring.domain.values.session_state import SessionState
+from core.tutoring.infra.llm_diagnoser import LLMDiagnoser
+from core.tutoring.infra.llm_reply_judge import LLMReplyJudge
+from core.tutoring.infra.llm_reply_writer import LLMReplyWriter
+from core.tutoring.infra.sqlmodel_repository import SQLModelTutorSessionRepository
 from tests.core.tutoring.builders import COURSE, EX4C, OK, diagnosis_json, tutoring
 from tests.fakes.llm import ScriptedLLMClient
 
@@ -267,3 +284,94 @@ async def test_a_failed_turn_releases_its_claim(session_provider: SQLModelSessio
         await t.turns.handle(TurnInput(session_id=sid, text="hola"))
     llm.then(Stage.DIAGNOSIS, diagnosis_json()).then(Stage.REPLY, {"text": "Què has provat?"}).then(Stage.GUARD, OK)
     assert (await t.turns.handle(TurnInput(session_id=sid, text="hola"))).trace.turn == 1
+
+
+async def test_a_turn_on_an_unknown_session_is_not_found(session_provider: SQLModelSessionProvider) -> None:
+    llm = ScriptedLLMClient({})
+    with pytest.raises(TutorSessionNotFoundException) as e:
+        await tutoring(llm, session_provider).turns.handle(TurnInput(session_id=SessionId.generate(), text="hola"))
+    assert e.value.error_code == 404 and llm.calls(Stage.DIAGNOSIS) == 0
+
+
+async def test_a_turn_reads_the_session_after_claiming_it(session_provider: SQLModelSessionProvider) -> None:
+    """Another tab's turn finishes between this request's arrival and its claim: this turn must run on the
+    session that turn stored, not on an older read (which would pay every model call and then fail the save)."""
+
+    class AnotherTabFinishesFirst(SQLModelTutorSessionRepository):
+        other_turn: TurnInput | None = None
+
+        async def claim_turn(self, session_id: SessionId, now: float, stale_before: float) -> bool:
+            pending, self.other_turn = self.other_turn, None
+            if pending is not None:
+                await handler.handle(pending)
+            return await super().claim_turn(session_id, now, stale_before)
+
+    llm = ScriptedLLMClient(
+        {
+            Stage.DIAGNOSIS: [diagnosis_json(), diagnosis_json()],
+            Stage.REPLY: [{"text": "Què has provat?"}, {"text": "I ara?"}],
+            Stage.GUARD: [OK, OK],
+        }
+    )
+    sessions = AnotherTabFinishesFirst(session_provider)
+    handler = TurnHandler(COURSE, sessions, LLMDiagnoser(llm, COURSE), LLMReplyWriter(llm), LLMReplyJudge(llm, COURSE))
+    sid = (await tutoring(llm, session_provider).starter.start(EX4C.id)).session.id
+    sessions.other_turn = TurnInput(session_id=sid, text="primera pestanya")
+    out = await handler.handle(TurnInput(session_id=sid, text="segona pestanya"))
+    assert out.trace.turn == 2
+    stored = await sessions.get(sid)
+    assert [m.text for m in stored.history] == ["primera pestanya", "Què has provat?", "segona pestanya", "I ara?"]
+    assert stored.version == 2
+
+
+async def test_a_turn_past_its_deadline_is_a_timeout_and_stores_nothing(
+    session_provider: SQLModelSessionProvider, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    class HungProvider(ScriptedLLMClient):
+        hung = True
+
+        async def structured(self, stage: Stage, request: LLMRequest) -> tuple[JsonObject, CallMeta]:
+            if self.hung:
+                await asyncio.sleep(30)
+            return await super().structured(stage, request)
+
+    monkeypatch.setattr(turn_handler, "TURN_DEADLINE_S", 0.05)
+    llm = HungProvider({Stage.DIAGNOSIS: [diagnosis_json()], Stage.REPLY: [{"text": "Què has provat?"}]})
+    llm.then(Stage.GUARD, OK)
+    t = tutoring(llm, session_provider)
+    sid = (await t.starter.start(EX4C.id)).session.id
+    with pytest.raises(TurnTimeoutException) as e:
+        await t.turns.handle(TurnInput(session_id=sid, text="hola"))
+    assert e.value.error_code == 504 and e.value.message == "La resposta ha trigat massa. Torna-ho a provar."
+    stored = await t.sessions.get(sid)
+    assert stored.history == [] and stored.version == 0 and await t.sessions.turns(sid) == []
+    # The claim is released: once the provider answers again, the student's resend goes through.
+    llm.hung = False
+    monkeypatch.setattr(turn_handler, "TURN_DEADLINE_S", 300.0)
+    assert (await t.turns.handle(TurnInput(session_id=sid, text="hola"))).trace.turn == 1
+
+
+async def test_a_cas_check_past_its_deadline_rejects_the_draft(
+    session_provider: SQLModelSessionProvider, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """sympy stuck on a draft: the draft counts as rejected by the deterministic check (fail closed), the LLM
+    judge is never asked, and after the retries the student gets the authored fallback."""
+    release = threading.Event()
+
+    def stuck_check(message: str, plan: Plan, permitted: Sequence[str] = ()) -> list[str]:
+        release.wait(5)
+        return deterministic_check(message, plan, permitted)
+
+    monkeypatch.setattr(turn_handler, "GUARD_DEADLINE_S", 0.05)
+    monkeypatch.setattr(turn_handler, "deterministic_check", stuck_check)
+    llm = ScriptedLLMClient({Stage.DIAGNOSIS: [diagnosis_json()], Stage.REPLY: [{"text": "Què has provat?"}] * 3})
+    t = tutoring(llm, session_provider)
+    sid = (await t.starter.start(EX4C.id)).session.id
+    try:
+        out = await t.turns.handle(TurnInput(session_id=sid, text="no sé què fer"))
+    finally:
+        release.set()
+    attempts = out.trace.model_dump()["intents"]
+    assert [a["determinista"] for a in attempts] == [[GUARD_TIMEOUT_PROBLEM]] * 3
+    assert out.trace.fallback and llm.calls(Stage.GUARD) == 0
+    assert out.message != "Què has provat?"

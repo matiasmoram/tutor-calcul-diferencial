@@ -7,6 +7,7 @@ from fastapi import Depends, HTTPException, Request
 from core.course.domain.entities.course import Course
 from core.shared.domain.exceptions import DomainException
 from core.shared.llm.client import LLMClient
+from core.shared.math.infra.sympy_pool import SympyCheckPool
 from core.shared.storage.session_provider import SQLModelSessionProvider
 from settings import Config
 
@@ -19,6 +20,7 @@ class AppState:
     sessions: SQLModelSessionProvider
     course: Course
     llm: LLMClient
+    sympy: SympyCheckPool  # one long-lived pool of sympy worker processes for the whole server
 
 
 def get_state(request: Request) -> AppState:
@@ -39,6 +41,10 @@ def get_session_provider(state: AppState = Depends(get_state)) -> SQLModelSessio
 
 def get_llm(state: AppState = Depends(get_state)) -> LLMClient:
     return state.llm
+
+
+def get_sympy_pool(state: AppState = Depends(get_state)) -> SympyCheckPool:
+    return state.sympy
 
 
 def is_professor(request: Request, config: Config = Depends(get_config)) -> bool:

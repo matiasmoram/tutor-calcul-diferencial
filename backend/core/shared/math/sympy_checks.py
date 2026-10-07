@@ -11,7 +11,9 @@ the prompt contract and of the stored quizzes:
 
 The strings come from a model that may have read student text, so they are never eval'ed as Python: only a
 whitelist of characters and names reaches sympy's parser, with empty builtins. sympy can hang on hard limits, so
-`evaluate` runs the checks in worker processes under a deadline; a check that times out is "indeterminat".
+checks run in worker processes under a deadline; a check that times out is "indeterminat". Long-running processes
+(the server) use the long-lived `core.shared.math.infra.sympy_pool.SympyCheckPool`; `evaluate` spawns throwaway
+workers per call and suits only one-off scripts.
 """
 
 import multiprocessing as mp
@@ -189,7 +191,7 @@ def evaluate_one(check: MathCheck) -> CheckResult:
 
 
 def evaluate(checks: Sequence[MathCheck], timeout_s: float = 25.0, in_process: bool = False) -> list[CheckResult]:
-    """Evaluates every check, in parallel worker processes under one shared deadline.
+    """Evaluates every check, in parallel throwaway worker processes under one shared deadline.
     `in_process=True` runs them inline (tests; no hang protection)."""
     if not checks:
         return []

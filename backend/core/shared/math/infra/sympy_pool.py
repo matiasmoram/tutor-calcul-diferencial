@@ -147,3 +147,8 @@ def _tear_down(executor: ProcessPoolExecutor) -> None:
             p.terminate()
     for p in processes:
         p.join(_JOIN_TIMEOUT_S)
+    # SIGTERM is not guaranteed to be handled within the timeout (a busy or loaded machine): escalate.
+    for p in processes:
+        if p.is_alive():
+            p.kill()
+            p.join(_JOIN_TIMEOUT_S)

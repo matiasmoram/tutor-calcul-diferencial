@@ -37,7 +37,7 @@ class FakeStudent:
         return self.messages.pop(0), meta
 
 
-def _state(completats=(), estats=None, mostrats=(), confirmat=False) -> dict:
+def _state(completats=(), estats=None, mostrats=(), confirmat=False) -> dict[str, object]:
     return {
         "completats": list(completats),
         "estats": estats or {},

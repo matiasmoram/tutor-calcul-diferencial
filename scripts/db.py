@@ -1,7 +1,11 @@
 """Database utilities (a composition root: builds the infra concretes).
 
-    uv run python scripts/db.py schema > supabase/migrations/20261007000001_schema.sql   # Postgres DDL of every table
-    uv run python scripts/db.py import            # load the course (sheets + theory) into DATABASE_URL
+Schema changes: edit the SQLModel records, run `make db-schema` (refreshes the snapshot supabase/schema.sql), and add
+a NEW timestamped migration in supabase/migrations/ with the ALTER statements. Applied migrations are never edited.
+CI applies every migration to an empty Postgres and runs `check-migrations`.
+
+    uv run python scripts/db.py schema > supabase/schema.sql   # snapshot: Postgres DDL of every table
+    uv run python scripts/db.py check-migrations   # DATABASE_URL (migrated) has exactly the tables/columns of the code
     uv run python scripts/db.py import-generats   # load the pre-generated documents and quizzes (backend/generats)
     uv run python scripts/db.py stats             # row counts
 
@@ -12,7 +16,7 @@ import asyncio
 import sys
 
 from dotenv import load_dotenv
-from sqlalchemy import func
+from sqlalchemy import func, inspect
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.schema import CreateIndex, CreateTable
 from sqlmodel import SQLModel, select
@@ -66,7 +70,9 @@ async def import_generated() -> None:
     mistakes = await MistakesImporter(
         JsonFileMistakeSource(generated / "errades"), SQLModelMistakeExerciseRepository(sessions)
     ).import_all()
-    quizzes = await QuizzesImporter(JsonQuizFiles(generated / "afirmacions"), SQLModelQuizRepository(sessions)).import_all()
+    quizzes = await QuizzesImporter(
+        JsonQuizFiles(generated / "afirmacions"), SQLModelQuizRepository(sessions)
+    ).import_all()
     print(f"{mistakes} mistake documents and {quizzes} quizzes imported")
     await sessions.engine.dispose()
 
@@ -80,11 +86,41 @@ async def stats() -> None:
     await sessions.engine.dispose()
 
 
+async def check_migrations() -> None:
+    """Compares the migrated database with the code: tables, columns, nullability. Exits 1 on any drift."""
+    register_all_tables()
+    engine = make_engine(Config().async_database_url)
+    async with engine.connect() as conn:
+        found = await conn.run_sync(_reflect)
+    await engine.dispose()
+    expected = {t.name: {c.name: c.nullable for c in t.columns} for t in SQLModel.metadata.sorted_tables}
+    problems = [f"missing table {t}" for t in expected if t not in found]
+    problems += [f"extra table {t}" for t in found if t not in expected]
+    for table, columns in expected.items():
+        for name, nullable in columns.items():
+            if table in found and name not in found[table]:
+                problems.append(f"{table}: missing column {name}")
+            elif table in found and bool(found[table][name]) != bool(nullable):
+                problems.append(
+                    f"{table}.{name}: nullable {found[table][name]} in the database, {nullable} in the code"
+                )
+        problems += [f"{table}: extra column {c}" for c in found.get(table, {}) if c not in columns]
+    print("\n".join(problems) or "migrations match the code")
+    if problems:
+        sys.exit(1)
+
+
+def _reflect(sync_conn: object) -> dict[str, dict[str, bool]]:
+    inspector = inspect(sync_conn)
+    return {t: {c["name"]: c["nullable"] for c in inspector.get_columns(t)} for t in inspector.get_table_names()}
+
+
 COMMANDS = {
     "schema": lambda: print(schema()),
     "import": lambda: asyncio.run(import_course()),
     "import-generats": lambda: asyncio.run(import_generated()),
     "stats": lambda: asyncio.run(stats()),
+    "check-migrations": lambda: asyncio.run(check_migrations()),
 }
 
 if __name__ == "__main__":

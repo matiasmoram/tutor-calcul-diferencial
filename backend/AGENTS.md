@@ -49,6 +49,6 @@ standing rulebook. Reference implementations to copy: `core/course/` (a full con
 
 - Mock only what we do not own (the LLM via `ScriptedLLMClient`, the network, the clock). Repositories are tested
   against the real SQLite fixture (`session_provider`). No new in-memory repository fakes.
-- Keep behaviour identical to the legacy `backend/tutor/` during the migration: every legacy test has a ported
-  equivalent, plus `test_legacy_parity.py` per context comparing old and new outputs (deleted in phase 6).
+- A change of behaviour visible to students (prompts, policy, JSON the frontend reads) needs a test that pins the
+  new behaviour; prompts and LLM schemas are contracts, change them deliberately.
 - `make check` = ruff + pyright + pytest; all clean before a phase is done.

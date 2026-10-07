@@ -1,5 +1,4 @@
-"""Prompts of the "troba l'error" stages. Catalan: they are the contract with the model (texts unchanged from the
-legacy ``tutor/errades.py``)."""
+"""Prompts of the "troba l'error" stages. Catalan: they are the contract with the model."""
 
 from core.course.domain.entities.theory_item import TheoryItem
 from core.mistakes.domain.entities.mistake_exercise import MistakeExercise

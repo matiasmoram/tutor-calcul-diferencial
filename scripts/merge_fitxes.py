@@ -7,11 +7,10 @@ The list header comes from the transcribed statements (work/enunciats/temaN.yaml
 a problem present in two chunks is an error.
 """
 
-from __future__ import annotations
-
 import re
 import sys
 from pathlib import Path
+from typing import Any
 
 import yaml
 
@@ -21,7 +20,7 @@ ENUNCIATS = ROOT / "work" / "enunciats"
 OUT = ROOT / "backend" / "exercicis"
 
 
-def _str_repr(dumper: yaml.Dumper, data: str):
+def _str_repr(dumper: yaml.SafeDumper, data: str) -> yaml.ScalarNode:
     # Multi-line prose as block scalars, so the merged file stays as readable as the chunks.
     style = "|" if "\n" in data else None
     return dumper.represent_scalar("tag:yaml.org,2002:str", data, style=style)
@@ -34,7 +33,7 @@ def merge(tema: int) -> Path | None:
     chunks = sorted(CHUNKS.glob(f"tema{tema}_p*.yaml"))
     if not chunks:
         return None
-    problemes: dict[int, dict] = {}
+    problemes: dict[int, dict[str, Any]] = {}
     for c in chunks:
         for p in yaml.safe_load(c.read_text(encoding="utf-8"))["problemes"]:
             if p["num"] in problemes:
@@ -58,8 +57,10 @@ def merge(tema: int) -> Path | None:
     header = f"# Tema {tema}: generat per scripts/merge_fitxes.py a partir de work/fitxes/tema{tema}_p*.yaml\n"
     out.write_text(header + yaml.safe_dump(data, allow_unicode=True, sort_keys=False, width=120), encoding="utf-8")
     n_ex = sum(len(p["exercicis"]) for p in data["problemes"])
-    print(f"tema {tema}: {len(problemes)} problems, {n_ex} exercises -> {out.name}"
-          + (f"  (missing problems: {missing})" if missing else ""))
+    print(
+        f"tema {tema}: {len(problemes)} problems, {n_ex} exercises -> {out.name}"
+        + (f"  (missing problems: {missing})" if missing else "")
+    )
     return out
 
 

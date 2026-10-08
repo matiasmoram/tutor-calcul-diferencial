@@ -5,13 +5,13 @@ Demo of a Socratic tutor for every problem of the Càlcul Diferencial collection
 ## Run
 
 ```powershell
-py -3.13 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-copy .env.example .env   # then put your ANTHROPIC_API_KEY in .env
-.\run.ps1                # http://127.0.0.1:8000
+uv sync                  # Python 3.13 + dependencies into .venv (https://docs.astral.sh/uv/)
+copy .env.example .env   # then put your API key in .env
+uv run uvicorn apps.tutor_api.server:app --reload --port 8000   # http://127.0.0.1:8000  (or: make run)
 ```
 
-Tests (no API calls, scripted fake LLM): `.\.venv\Scripts\python.exe -m pytest tests -q`
+Checks (no API calls, scripted fake LLM, a throwaway SQLite database per test): `make check`, or `uv run pytest -q`,
+`uv run ruff check backend scripts`, `uv run pyright`. Deploy: `DEPLOY.md`.
 
 ## How one turn works
 
@@ -45,23 +45,32 @@ student message
    Fail-closed: if the judge errors, the draft is rejected.
 ```
 
-## Files
+## Architecture
+
+DDD + Clean Architecture, Python backend in the house style of the Prosper backends. Rules: `backend/AGENTS.md`;
+history of the migration: `work/ARQUITECTURA.md`.
 
 | Path | What |
 |---|---|
+| `backend/core/course/` | Course content: topics, theory items (`T3.12`, `T3.12+dem` = with proof), problem sheets, exercises with their hidden solution sheets |
+| `backend/core/tutoring/` | The tutor: diagnosis → deterministic policy (`domain/policy.py`) → reply → guard (`domain/guard.py`), photo transcription, sessions |
+| `backend/core/mistakes/` | "Troba l'error" |
+| `backend/core/quizzes/` | "Cert o fals" |
+| `backend/core/shared/` | Ids and exceptions, the LLM port + provider clients + call log, async SQLModel storage, CAS / sympy checks |
+| `backend/apps/tutor_api/` | FastAPI app (composition root): endpoints, response schemas, dependency providers |
 | `backend/exercicis/temaN.yaml` | Solution sheets, one list per tema: steps (objective / idea / detail / theory), common errors with Socratic questions, leak regexes |
-| `backend/teoria/temaN.yaml` | Course notes transcribed to Markdown + LaTeX, one item per numbered Definició/Teorema/… (`T3.12`) |
-| `backend/tutor/teoria.py` | Loads the notes; theory references (`T3.12`, `T3.12+dem` = with proof) |
-| `backend/tutor/schemas.py` | Structured-output schemas per stage |
-| `backend/tutor/politica.py` | Deterministic policy + what content the reply stage may see |
-| `backend/tutor/guardia.py` | Deterministic output checks |
-| `backend/tutor/prompts.py` | Catalan system prompts |
-| `backend/tutor/pipeline.py` | The turn loop (diagnosis → policy → reply → guard) |
+| `backend/teoria/temaN.yaml` | Course notes transcribed to Markdown + LaTeX, one item per numbered Definició/Teorema/… |
+| `backend/generats/` | Pre-generated "troba l'error" documents and quizzes (seed of the database) |
+| `scripts/` | Authoring checks, pregeneration, simulation, model study, database utilities |
 | `frontend/` | Static UI (KaTeX), chat + professor panel |
+
+Every context is `domain/` (pure) → `application/` (one use case per file) → `infra/` (LLM adapters, SQLModel
+repositories). Everything persistent lives in the database (`DATABASE_URL`; local SQLite by default), including the
+log of every model call (`llm_calls`).
 
 ## "Troba l'error" mode (`#/errades`)
 
-Two activities on the same machinery (`backend/tutor/errades.py`); `#/errades` lets the student choose:
+Two activities on the same machinery (`backend/core/mistakes`); `#/errades` lets the student choose:
 
 - **Teoremes i demostracions** (`#/errades/teoria/<item>`): a theorem / proposition / lemma / corollary of the notes
   (every numbered result that has a proof, 59 items) rewritten with errors. At least one error is in the **statement**
@@ -92,7 +101,7 @@ The static reference (sheet or original item) is sent as `context=`, so provider
 instantly; lists show which ones are ready (`GET /api/errades/disponibles`, `GET /api/errades/teoria`). "Una altra"
 picks a different cached document, or generates a new one when there is no other.
 
-- Live: `python scripts/pregenerate_errades.py t3-10:normal T3.21:dificil ...` (ids starting with `T` are theory).
+- Live: `uv run python scripts/pregenerate_errades.py t3-10:normal T3.21:dificil ...` (ids starting with `T` are theory).
 - Offline (written by an agent or by hand, same gates): `scripts/errades_offline.py validate|blind|import <batch.json>`.
   `blind` writes the documents without their declared errors for an independent reviewer, `import` compares that review
   in code (`compare_verification`) and caches only what passes; `check-cache` re-validates the whole cache. Specs:
@@ -102,13 +111,13 @@ picks a different cached document, or generates a new one when there is no other
 
 A quiz of statements about one tema (or centred on one result of the notes, e.g. `T2.12`): the student decides
 true / false and justifies it, a proof or a counterexample ("iterated limits agree ⇒ double limit exists" is false:
-$xy/(x^2+y^2)$). 6 / 8 / 10 statements for fàcil / normal / difícil. `backend/tutor/afirmacions.py`:
+$xy/(x^2+y^2)$). 6 / 8 / 10 statements for fàcil / normal / difícil. `backend/core/quizzes`:
 
 1. **Generation (LLM, structured):** batches of up to 5 statements, each with verdict, trap type, model proof or
    counterexample, key ideas (grading rubric), a Socratic hint, cited theory (closed enum) and sympy checks of the
    counterexample's computations. At least half are false, at least two true.
 2. **Validation (code + CAS):** LaTeX, duplicates, a hint that doesn't name the verdict; every sympy check is
-   evaluated (`backend/tutor/comprovacions.py`, whitelisted parser, worker processes under a deadline). A failing
+   evaluated (`backend/core/shared/math/sympy_checks.py`, whitelisted parser, worker processes under a deadline). A failing
    check rejects the statement.
 3. **Verification (2 LLMs in parallel):** a blind solver that only sees the statements decides each verdict; an
    audit sees the solutions and checks proofs, counterexamples, theory and hints. Code keeps a statement only if the
@@ -123,12 +132,12 @@ $xy/(x^2+y^2)$). 6 / 8 / 10 statements for fàcil / normal / difícil. `backend/
    ×0.85 if the hint was used.
 
 Quizzes are cached in `backend/generats/afirmacions/<font>/<difficulty>/`. Pre-generate with
-`python scripts/pregenerate_afirmacions.py tema-2:normal T2.12:facil ...`. Stages `afirmacions_generacio`,
-`afirmacions_verificacio`, `afirmacions_auditoria`, `afirmacions_correccio` (override with `TUTOR_MODEL_<STAGE>`).
+`uv run python scripts/pregenerate_afirmacions.py tema-2:normal T2.12:facil ...`. Stages `quiz_generation`,
+`quiz_verification`, `quiz_audit`, `quiz_grading`, `quiz_extraction` (override with `TUTOR_MODEL_<STAGE>`).
 
 ## Photo of the notebook
 
-Students can attach a photo (button, paste, or drag and drop) instead of typing. The browser shrinks it to 1800 px JPEG, and `POST /api/sessions/{id}/transcripcio` runs a vision stage (`tutor/transcripcio.py`, structured output: transcription, legibility, content type, doubts). The transcriber is told to copy **literally**, without fixing mistakes, so the diagnosis still sees them. The transcription is placed in the text box for the student to review and correct, then sent as a normal message tagged `origen: "foto"` (shown in the professor panel).
+Students can attach a photo (button, paste, or drag and drop) instead of typing. The browser shrinks it to 1800 px JPEG, and `POST /api/sessions/{id}/transcripcio` runs a vision stage (stage `transcription` in `backend/core/tutoring`, structured output: transcription, legibility, content type, doubts). The transcriber is told to copy **literally**, without fixing mistakes, so the diagnosis still sees them. The transcription is placed in the text box for the student to review and correct, then sent as a normal message tagged `origen: "foto"` (shown in the professor panel).
 
 ## Navigation
 
@@ -136,7 +145,7 @@ Students can attach a photo (button, paste, or drag and drop) instead of typing.
 
 ## Adding an exercise or a list
 
-Each YAML file in `backend/exercicis/` is one list (one tema): a `llista:` header (`id: tema-N`, `etiqueta`, `titol`, `tema`, `tipus`, `format`) plus `problemes`, each with its shared statement (`preambul`) and one sheet per sub-part (`exercicis`, ids like `t2-4c`). Sheets are authored in chunks under `work/fitxes/` and merged with `python scripts/merge_fitxes.py`; `python scripts/check_fitxes.py [chunk.yaml --tema N]` validates them. See `work/PLA.md` and `work/SPEC_wave2.md`.
+Each YAML file in `backend/exercicis/` is one list (one tema): a `llista:` header (`id: tema-N`, `etiqueta`, `titol`, `tema`, `tipus`, `format`) plus `problemes`, each with its shared statement (`preambul`) and one sheet per sub-part (`exercicis`, ids like `t2-4c`). Sheets are authored in chunks under `work/fitxes/` and merged with `uv run python scripts/merge_fitxes.py`; `uv run python scripts/check_fitxes.py [chunk.yaml --tema N]` validates them. See `work/PLA.md` and `work/SPEC_wave2.md`.
 
 ## Course theory
 
@@ -150,7 +159,7 @@ Each YAML file in `backend/exercicis/` is one list (one tema): a `llista:` heade
 
 ## Prompt caching and token budget
 
-The static part of the diagnosis and guard prompts (sheet + theory + tema index) is passed as `context=` and goes first: an explicit `cache_control` block for Anthropic, an identical prefix for OpenAI/Gemini automatic caching. `CallMeta.cached_tokens` and the professor panel show cache hits. `PYTHONPATH=work/pylib python scripts/token_budget.py` builds the real prompts over a simulated session and counts tokens (tiktoken).
+The static part of the diagnosis and guard prompts (sheet + theory + tema index) is passed as `context=` and goes first: an explicit `cache_control` block for Anthropic, an identical prefix for OpenAI/Gemini automatic caching. `CallMeta.cached_tokens` and the professor panel show cache hits. `PYTHONPATH=work/pylib uv run python scripts/token_budget.py` builds the real prompts over a simulated session and counts tokens (tiktoken).
 
 Sheet tests check that (1) each step's leak regexes catch that step's own worked detail, (2) no level-1/2 hint text (objective, idea) contains its own banned content, and (3) no hint text reveals the final result.
 
@@ -162,7 +171,7 @@ Sheet tests check that (1) each step's leak regexes catch that step's own worked
 - OpenAI: diagnosis `gpt-5.5`, reply and guard `gpt-5.4-mini`. Tested live: about 5–8 s per turn.
 - Anthropic: `claude-opus-5-5` for all stages.
 
-Override any stage with `TUTOR_MODEL_<STAGE>` (see `.env.example`). `scripts/live_demo.py` runs a scripted 4-turn conversation against the real API and prints the trace.
+Override any stage with `TUTOR_MODEL_<STAGE>` / `TUTOR_EFFORT_<STAGE>` (stages `diagnosis`, `reply`, `guard`, `transcription`, `mistakes_*`, `quiz_*`; see `.env.example`). `scripts/live_demo.py` runs a scripted 4-turn conversation against the real API and prints the trace.
 
 
 ## Visualitzador (`#/visual`)
@@ -188,19 +197,19 @@ central differences as fallback). math.js installs a global `math`, which would 
 
 ## Hardening (2026-10)
 
-- **Policy = explicit state machine** (`backend/tutor/politica.py`): one escalation rule for every action, session facts
+- **Policy = explicit state machine** (`backend/core/tutoring/domain/policy.py`): one escalation rule for every action, session facts
   (closed, steps shown, errors seen, repetitions, result confirmed, student attempts), no yes/no oracle for bare guesses,
   terminal closing, anti-gaming (help requests without an attempt climb at half speed; the full step only after an attempt;
   `demanar_intent` asks for a concrete micro-attempt), empathetic tone for frustration, MathDial teacher-move tags.
   Invariants are tested in `tests/test_politica.py`.
-- **Guard**: regexes (spelling) + **sympy math-provenance check** (`backend/tutor/cas.py`): a reply formula equivalent to
+- **Guard**: regexes (spelling) + **sympy math-provenance check** (`backend/core/shared/math/latex_cas.py`): a reply formula equivalent to
   forbidden content (result, unopened steps) is rejected whatever its notation, unless it comes from allowed content,
-  the statement, the theory shown or the student's own words. `python scripts/check_cas.py` self-tests it on all sheets.
+  the statement, the theory shown or the student's own words. `uv run python scripts/check_cas.py` self-tests it on all sheets.
 - **Reply in plain text** (no JSON): LaTeX survives; references are extracted from the citations it writes.
 - **Roles**: set `TUTOR_CLAU_PROFESSOR` and open the app once with `?prof=<key>`; without the key students get only the
   chat (no solution, no trace). With no key configured the app runs in open demo mode.
 - **Conversation log** in `backend/registres/*.jsonl` and a professor review page at `#/professor` (flags: fallbacks,
   rejected drafts, loops, steps shown, frustration).
-- **Simulated students**: `python scripts/simulate.py --mostra 40 --workers 4` (misconception personas from each sheet,
+- **Simulated students**: `uv run python scripts/simulate.py --mostra 40 --workers 4` (misconception personas from each sheet,
   lost / guesser / answer-beggar / silent / injector / persuader / extractor archetypes; completion, loops, fallback,
   level-aware leak judge, cost). Model study: `scripts/model_study.py` (recommended: gpt-5.4-mini for all stages).

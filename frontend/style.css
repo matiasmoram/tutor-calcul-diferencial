@@ -842,6 +842,8 @@ a.theory-src:hover { text-decoration: underline; }
 .ce-resum.ok { background: var(--ok-soft); color: var(--ok); }
 .ce-resum.bad { background: color-mix(in srgb, var(--reveal) 12%, transparent); color: var(--reveal); }
 .ce-pista, .ce-exemple { margin-bottom: 12px; }
+.ce-teoria { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 6px; }
+.cf-card-head .ce-teoria { margin: 0 0 0 auto; }
 @media (max-width: 600px) {
   .ce-row-label { min-width: 0; width: 100%; }
   .ce-input { width: 130px; }

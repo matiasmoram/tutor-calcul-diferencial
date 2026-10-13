@@ -9,9 +9,9 @@ const CE_ESTATS = {
   ok: ["ok", "Demostrat"],
   plausible: ["warn", "Plausible"],
   falla: ["bad", "No es compleix"],
-  indeterminat: ["neutral", "Indeterminat"],
+  indeterminat: ["neutral", "No demostrat"],
 };
-const CE_SINTAXI = "Sintaxi: multiplicació explícita (2*x, x*y), potències x**2 o x^2, Abs(x), sqrt, sin, cos, exp, log. Variables: x, y; als camins t; a la fita r.";
+const CE_SINTAXI = "Sintaxi: multiplicació explícita (2*x, x*y), potències x**2 o x^2, Abs(x), sqrt, cbrt (arrel cúbica real), sin, cos, exp, log. Variables: x, y; als camins t; a la fita r.";
 
 const CE = { reptes: null, repte: null, entrada: null, resultat: null, enviant: false };
 
@@ -65,7 +65,10 @@ function ceCert(prop) {
 
 async function viewContraexemple(id) {
   show("contraexemples");
-  const repte = await api(`/api/contraexemples/${id}`);
+  const [repte] = await Promise.all([
+    api(`/api/contraexemples/${id}`),
+    getTeoria().then((t) => t.byKey || indexTeoria(t)).catch(() => null),  // citations still render as text without it
+  ]);
   crumbs([["Inici", "#/"], ["Contraexemples", "#/contraexemples"], [repte.titol.replace(/\$/g, ""), null]]);
   CE.repte = repte;
   CE.resultat = null;
@@ -81,9 +84,9 @@ function ceInput(label, value, onInput, attrs = {}) {
 
 function cePaths(cert, n) {
   return el("div", { class: "ce-paths" }, ...cert.camins.slice(0, n).map((p, i) => el("div", { class: "ce-row" },
-    el("span", { class: "ce-row-label", text: `Camí ${i + 1}${i ? " (opcional)" : ""}` }),
-    ceInput("$x(t) =$", p.x, (v) => { p.x = v; }, { placeholder: i ? "" : "t" }),
-    ceInput("$y(t) =$", p.y, (v) => { p.y = v; }, { placeholder: i ? "" : "t**2" }))));
+    el("span", { class: "ce-row-label", text: i ? "Camí 2 (cal si pel camí 1 hi ha límit)" : "Camí 1" }),
+    ceInput("$x(t) =$", p.x, (v) => { p.x = v; }, { placeholder: "t" }),
+    ceInput("$y(t) =$", p.y, (v) => { p.y = v; }, { placeholder: i ? "0" : "t" }))));
 }
 
 function ceCertificate(prop) {
@@ -107,12 +110,26 @@ function ceCertificate(prop) {
   return body;
 }
 
-function ceVerdict(v) {
+function ceNotes(r, node) {
+  // Citations of the notes in a text become links to the PDF page (app.js).
+  return linkCitations(node, r.tema);
+}
+
+function ceTheoryChips(items, prefix = "") {
+  if (!items?.length) return null;
+  return el("div", { class: "ce-teoria" },
+    prefix ? el("span", { class: "small muted", text: prefix }) : null,
+    ...items.map((it) => theoryButton(`📖 ${it.etiqueta}`, it.nom || it.etiqueta, [it], "ref-chip")));
+}
+
+function ceVerdict(v, prop) {
   if (!v) return null;
   const [cls, label] = CE_ESTATS[v.estat] || CE_ESTATS.indeterminat;
   return el("div", { class: `ce-verdict ${v.estat}` },
-    el("span", { class: `pill ${cls}`, text: label }),
-    math(el("span", { class: "ce-detail", text: v.detall })),
+    el("span", { class: `pill ${cls}`, text: label,
+      title: v.estat === "plausible" ? "Comprovat en milers de punts o direccions, però no demostrat" : "" }),
+    ceNotes(CE.repte, math(el("span", { class: "ce-detail", text: v.detall }))),
+    ["ok", "plausible"].includes(v.estat) ? null : ceTheoryChips(prop.teoria, "Repassa:"),
     v.calculs.length ? el("details", { class: "ce-calculs" },
       el("summary", { text: "Càlculs" }),
       ...v.calculs.map((c) => math(el("div", { text: `$${c}$` })))) : null);
@@ -138,13 +155,15 @@ function ceRender() {
     class: `cf-card ce-prop${res ? (["ok", "plausible"].includes(res.veredictes[i]?.estat) ? " right" : " wrong") : ""}` },
   el("div", { class: "cf-card-head" },
     el("span", { class: "cf-num", text: String(i + 1) }),
-    math(el("span", { class: "ce-prop-label", text: p.etiqueta }))),
+    math(el("span", { class: "ce-prop-label", text: p.etiqueta })),
+    ceTheoryChips(p.teoria)),
   ceCertificate(p),
-  ceVerdict(res?.veredictes[i])));
+  ceVerdict(res?.veredictes[i], p)));
 
   const comprova = el("button", { type: "button", class: "btn primary", id: "ce-comprova", text: "Comprova" });
   comprova.addEventListener("click", ceComprova);
-  const pista = el("details", { class: "cf-solution ce-pista" }, el("summary", { text: "Pista" }), math(el("p", { text: r.pista })));
+  const pista = el("details", { class: "cf-solution ce-pista" }, el("summary", { text: "Pista" }),
+    ceNotes(r, math(el("p", { text: r.pista }))));
 
   // replaceChildren() would turn a null into the text "null".
   $("#view-contraexemples").replaceChildren(...[
@@ -152,7 +171,8 @@ function ceRender() {
       el("div", { class: "er-title" },
         el("div", { class: "eyebrow", text: `Construeix el contraexemple · Tema ${r.tema} · ${CE_DIFICULTATS[r.dificultat] || ""}` }),
         math(el("h2", { text: r.titol })),
-        math(el("p", { class: "ce-enunciat", text: r.enunciat })))),
+        ceNotes(r, math(el("p", { class: "ce-enunciat", text: r.enunciat }))),
+        ceTheoryChips(r.teoria, "Als apunts:"))),
     el("section", { class: "cf-card ce-form" },
       funcio,
       el("p", { class: "small muted", text: CE_SINTAXI }),
@@ -166,8 +186,10 @@ function ceRender() {
 function ceResum(res) {
   const text = res.superat
     ? (res.rigoros ? "Repte superat: totes les propietats estan demostrades."
-      : "Repte superat. Alguna propietat és «plausible»: la fita s'ha comprovat numèricament, no demostrat. Pots demostrar-la a mà?")
-    : "Encara no: mira les propietats en vermell o gris.";
+      : "Repte superat, però alguna propietat és «plausible»: el codi l'ha comprovada en milers de punts o direccions, "
+        + "però no l'ha demostrada. Per demostrar una fita, escriu f en polars i fita el factor angular per una constant.")
+    : "Encara no. «No es compleix»: la propietat és falsa per a la teva f. «No demostrat»: potser és certa, però el "
+      + "certificat no ho prova (o falta).";
   return el("div", { class: `ce-resum ${res.superat ? "ok" : "bad"}`, text });
 }
 
@@ -179,13 +201,15 @@ function ceExemple(ex, superat) {
     if (c.fita) parts.push(`G(r) = ${c.fita}`);
     if (c.direccio) parts.push(`v = (${c.direccio.u}, ${c.direccio.w})`);
     if (c.parcial) parts.push(`∂f/∂${c.parcial}`);
-    return el("li", {}, el("strong", { text: `${prop}: ` }), el("code", { text: parts.join(" · ") }));
+    const label = CE.repte.propietats.find((pp) => pp.id === prop)?.etiqueta || prop;
+    return el("li", {}, math(el("span", { text: `${label}: ` })), el("code", { text: parts.join(" · ") }));
   });
   return el("details", { class: "cf-solution ce-exemple", ...(superat ? { open: "" } : {}) },
     el("summary", { text: superat ? "Un exemple de l'autor (per comparar)" : "Exemple de l'autor (professorat)" }),
     el("p", {}, el("code", { text: `f(x,y) = ${ex.funcio}` }), el("span", { text: "  ·  " }), el("code", { text: `f(0,0) = ${ex.valor}` })),
     certs.length ? el("ul", { class: "small" }, ...certs) : null,
-    math(el("p", { class: "cf-res", text: ex.explicacio })));
+    ceNotes(CE.repte, math(el("p", { class: "cf-res", text: ex.explicacio }))),
+    ceTheoryChips(ex.teoria_reservada, "Als apunts, un exemple com aquest:"));
 }
 
 async function ceComprova() {

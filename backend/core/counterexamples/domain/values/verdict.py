@@ -4,6 +4,7 @@ from pydantic import AliasChoices, BaseModel, ConfigDict, Field
 
 from core.counterexamples.domain.properties import PropertyKind
 from core.counterexamples.domain.values.submission import Submission
+from core.shared.domain.ids import TheoryItemId
 
 # "ok": decided exactly (one-variable limits, an equality sympy simplifies). "plausible": rests on sampling (a radial
 # bound checked on a grid, directional derivatives in a generic direction plus a few fixed ones). "falla": the
@@ -33,6 +34,7 @@ class RevealedExample(BaseModel):
 
     submission: Submission
     explanation: str
+    reserved_theory: list[TheoryItemId] = Field(default_factory=list)  # where the notes show such an example
 
 
 class SubmissionResult(BaseModel):

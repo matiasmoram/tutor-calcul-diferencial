@@ -2,10 +2,13 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-from core.counterexamples.domain.entities.spec import Spec
+from apps.tutor_api.schemas.course import TheoryItemResponse
+from core.counterexamples.domain.entities.spec import Spec, SpecCatalog
 from core.counterexamples.domain.properties import PROPERTIES, CertificateKind, PropertyKind
 from core.counterexamples.domain.values.submission import MAX_PATHS, Certificate, Direction, Path, Submission
 from core.counterexamples.domain.values.verdict import PropertyVerdict, RevealedExample, SubmissionResult
+from core.course.domain.entities.course import Course
+from core.shared.domain.ids import TheoryItemId
 
 MAX_EXPRESSION = 300  # the sympy parser's own limit
 
@@ -48,16 +51,27 @@ class SubmissionRequest(BaseModel):
         )
 
 
+def _items(course: Course, ids: list[TheoryItemId]) -> list[TheoryItemResponse]:
+    return [TheoryItemResponse.from_entity(course.theory_item(i)) for i in ids]
+
+
 class PropertyResponse(BaseModel):
     id: PropertyKind
     etiqueta: str
     certificat: CertificateKind
     ajuda: str
+    teoria: list[TheoryItemResponse]  # where the notes define it ("Repassa" when it fails)
 
     @classmethod
-    def of(cls, kind: PropertyKind) -> "PropertyResponse":
+    def of(cls, kind: PropertyKind, catalog: SpecCatalog, course: Course) -> "PropertyResponse":
         info = PROPERTIES[kind]
-        return cls(id=kind, etiqueta=info.label, certificat=info.certificate, ajuda=info.help)
+        return cls(
+            id=kind,
+            etiqueta=info.label,
+            certificat=info.certificate,
+            ajuda=info.help,
+            teoria=_items(course, list(catalog.property_theory.get(kind, []))),
+        )
 
 
 class SpecSummaryResponse(BaseModel):
@@ -68,13 +82,13 @@ class SpecSummaryResponse(BaseModel):
     propietats: list[PropertyResponse]
 
     @classmethod
-    def from_entity(cls, spec: Spec) -> "SpecSummaryResponse":
+    def from_entity(cls, spec: Spec, catalog: SpecCatalog, course: Course) -> "SpecSummaryResponse":
         return cls(
             id=spec.id,
             tema=spec.topic,
             titol=spec.title,
             dificultat=spec.difficulty,
-            propietats=[PropertyResponse.of(k) for k in spec.properties],
+            propietats=[PropertyResponse.of(k, catalog, course) for k in spec.properties],
         )
 
 
@@ -83,31 +97,36 @@ class ExampleResponse(BaseModel):
     valor: str
     certificats: dict[PropertyKind, Certificate]
     explicacio: str
+    teoria_reservada: list[TheoryItemResponse]  # where the notes show a counterexample like this one
 
     @classmethod
-    def from_entity(cls, example: RevealedExample) -> "ExampleResponse":
+    def from_entity(cls, example: RevealedExample, course: Course) -> "ExampleResponse":
         return cls(
             funcio=example.submission.function,
             valor=example.submission.origin_value,
             certificats=dict(example.submission.certificates),
             explicacio=example.explanation,
+            teoria_reservada=_items(course, example.reserved_theory),
         )
 
 
 class SpecResponse(SpecSummaryResponse):
     enunciat: str
     pista: str
+    teoria: list[TheoryItemResponse]  # the definitions and results the challenge is about, shown from the start
     exemple: ExampleResponse | None  # professors only: students see it once they pass
 
     @classmethod
-    def build(cls, spec: Spec, with_example: bool) -> "SpecResponse":
+    def build(cls, spec: Spec, catalog: SpecCatalog, course: Course, with_example: bool) -> "SpecResponse":
+        example = RevealedExample(
+            submission=spec.example, explanation=spec.explanation, reserved_theory=spec.reserved_theory
+        )
         return cls(
-            **SpecSummaryResponse.from_entity(spec).model_dump(),
+            **SpecSummaryResponse.from_entity(spec, catalog, course).model_dump(),
             enunciat=spec.statement,
             pista=spec.hint,
-            exemple=ExampleResponse.from_entity(RevealedExample(submission=spec.example, explanation=spec.explanation))
-            if with_example
-            else None,
+            teoria=_items(course, spec.theory),
+            exemple=ExampleResponse.from_entity(example, course) if with_example else None,
         )
 
 
@@ -118,10 +137,10 @@ class SubmissionResponse(BaseModel):
     exemple: ExampleResponse | None
 
     @classmethod
-    def from_entity(cls, result: SubmissionResult) -> "SubmissionResponse":
+    def from_entity(cls, result: SubmissionResult, course: Course) -> "SubmissionResponse":
         return cls(
             superat=result.passed,
             rigoros=result.rigorous,
             veredictes=result.verdicts,
-            exemple=ExampleResponse.from_entity(result.example) if result.example else None,
+            exemple=ExampleResponse.from_entity(result.example, course) if result.example else None,
         )

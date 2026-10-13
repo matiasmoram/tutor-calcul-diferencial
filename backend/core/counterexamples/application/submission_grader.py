@@ -37,5 +37,7 @@ class SubmissionGrader:
         ]
         result = SubmissionResult(verdicts=await self._checker.check(checks))
         if result.passed or data.reveal_example:
-            result.example = RevealedExample(submission=spec.example, explanation=spec.explanation)
+            result.example = RevealedExample(
+                submission=spec.example, explanation=spec.explanation, reserved_theory=spec.reserved_theory
+            )
         return result

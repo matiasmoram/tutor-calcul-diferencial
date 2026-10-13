@@ -153,8 +153,19 @@ for each property that needs one. No model is called: every verdict is computed 
 - **Positive properties need a radial bound** $G(r)$ ("continuous": $|f-f(0,0)|\le G(r)$; "differentiable": the same
   for the remainder). $G\to0$ is checked exactly. The inequality is sampled on a polar grid, with angles that hug the
   axes so that a parabola like $y=x^2$ is caught; the verdict is therefore **plausible**, not proved.
-- Statuses: `ok` (exact), `plausible` (sampled), `falla`, `indeterminat` (sympy cannot decide, or a certificate is
-  missing). An undecided property never passes.
+- Statuses: `ok` (exact), `plausible` (sampled), `falla` (the property is shown false for this f, or f is not a
+  real function off the origin), `indeterminat` (shown as "No demostrat": sympy cannot decide, or the certificate is
+  missing or proves nothing). Only `ok` and `plausible` pass.
+- **Tied to the notes** (`backend/teoria`). Each challenge cites the items it is about (`teoria`, shown under the
+  statement). `teoria_propietats` maps each property to its definition, and a failed property shows it as "Repassa".
+  `teoria_reservada` lists items that already contain such a counterexample (e.g. Observació 17 del Tema 3); they are
+  shown only with the author's example. Hints and explanations cite the notes, and the citations become links to the
+  PDF page. The server refuses to start if a cited item does not exist (`SpecCatalog.check_theory`).
+- Hardened against a simulated student trying to game the checker (two rounds). Inputs are parsed without evaluation;
+  nested exponentials and huge powers are rejected. sympy's "no limit" counts only after retrying on rewritten forms
+  and seeing a spread that does not shrink. Equality is exact, with no tolerance. f must be real off the origin, which
+  is checked with a 4096-angle sweep and with sign changes of the denominator. Positive properties are also checked
+  exactly along rays and along every path in the submission.
 - Each property runs in its own worker of the server's `SympyCheckPool` (`map`), under the pool's deadline.
 - Challenges: `backend/contraexemples/reptes.yaml`. Each has an authored example with its certificates; the tests run
   every example through the checker. A student sees the example only after passing; professors always see it.

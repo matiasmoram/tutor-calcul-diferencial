@@ -25,4 +25,7 @@ class YamlSpecSource:
             if spec.id in specs:
                 raise InvalidSpecContentException(f"{self._path.name}: repte «{spec.id}» repetit")
             specs[spec.id] = spec
-        return SpecCatalog(specs=specs)
+        try:
+            return SpecCatalog(specs=specs, property_theory=data.get("teoria_propietats") or {})
+        except ValidationError as e:
+            raise InvalidSpecContentException(f"{self._path.name}: teoria_propietats invàlid: {e}") from e

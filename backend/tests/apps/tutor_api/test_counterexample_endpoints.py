@@ -24,6 +24,9 @@ def test_list_and_a_spec_without_its_example(student: TestClient) -> None:
     spec = student.get(SPEC).json()
     assert spec["enunciat"] and spec["pista"] and spec["exemple"] is None
     assert [p["certificat"] for p in spec["propietats"]] == ["cap", "camins"]
+    # Tied to the notes: the challenge's items, each property's definition (with its PDF page).
+    assert spec["teoria"] and all(it["pdf"].startswith("/pdf/") for it in spec["teoria"])
+    assert all(p["teoria"] for p in spec["propietats"])
     assert student.get("/api/contraexemples/nope").status_code == 404
     assert student.get(SPEC, headers={"X-Clau-Professor": "secret"}).json()["exemple"]["funcio"]
 
@@ -31,9 +34,10 @@ def test_list_and_a_spec_without_its_example(student: TestClient) -> None:
 def test_the_example_is_revealed_only_after_passing(student: TestClient) -> None:
     good = student.post(f"{SPEC}/comprova", json=GOOD).json()
     assert good["superat"] and good["rigoros"] and good["exemple"]["explicacio"]
+    assert [it["id"] for it in good["exemple"]["teoria_reservada"]] == ["T3.6"]
     assert [v["estat"] for v in good["veredictes"]] == ["ok", "ok"] and good["veredictes"][1]["calculs"]
     bad = student.post(f"{SPEC}/comprova", json=BAD).json()
-    assert not bad["superat"] and bad["exemple"] is None and bad["veredictes"][1]["estat"] == "falla"
+    assert not bad["superat"] and bad["exemple"] is None and bad["veredictes"][1]["estat"] == "indeterminat"
 
 
 def test_unreadable_input_is_a_422_with_the_reason(student: TestClient) -> None:

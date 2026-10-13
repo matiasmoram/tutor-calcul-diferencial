@@ -79,6 +79,19 @@ MAX_EXP_DEPTH = 2
 _GROWING = (sp.exp, sp.sinh, sp.cosh)
 
 
+MAX_EXPONENT = 1000
+
+
+def _has_huge_power(e: sp.Basic) -> bool:
+    """A numeric exponent above MAX_EXPONENT, or a power tower of numbers: 10**10**9 is a billion-digit integer."""
+    if isinstance(e, sp.Pow) and e.exp.is_number:
+        if any(isinstance(a, sp.Integer) and abs(int(a)) > MAX_EXPONENT for a in e.exp.atoms(sp.Integer)):
+            return True
+        if any(isinstance(q, sp.Pow) and q.exp.is_number and q.exp.is_positive for q in e.exp.atoms(sp.Pow)):
+            return True
+    return any(_has_huge_power(a) for a in e.args)
+
+
 def _exp_depth(e: sp.Basic) -> int:
     inner = max((_exp_depth(a) for a in e.args), default=0)
     grows = isinstance(e, _GROWING) or (isinstance(e, sp.Pow) and not e.exp.is_number)
@@ -114,6 +127,8 @@ def _expression(text: str, what: str, allowed: set[str]) -> None:
         expr = parse(text, evaluate=False)
     except InvalidExpression as e:
         raise InvalidSubmissionException(f"{what}: {e}") from e
+    if _has_huge_power(expr):
+        raise InvalidSubmissionException(f"{what}: hi ha una potència massa gran (exponent com a molt {MAX_EXPONENT})")
     if _exp_depth(expr) > MAX_EXP_DEPTH:
         raise InvalidSubmissionException(f"{what}: massa exponencials niades (com a molt {MAX_EXP_DEPTH})")
     extra = sorted(str(s) for s in expr.free_symbols if str(s) not in allowed)

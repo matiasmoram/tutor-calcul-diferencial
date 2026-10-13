@@ -36,31 +36,32 @@ TWO_LINES = {"camins": [{"x": "t", "y": "t"}, {"x": "t", "y": "2*t"}]}
 DIAGONAL = {"camins": [{"x": "t", "y": "t"}]}
 
 
-# Wrong submissions: each must fail, or stay undecided when a certificate is missing; never pass.
+# Wrong submissions never pass. "falla": the property is shown false; "indeterminat": the certificate is missing
+# or proves nothing (the property may still be true, as for x**2+y**2 and a path that stays at its limit).
 @pytest.mark.parametrize(
     ("kind", "function", "value", "certificate", "expected"),
     [
         # The parabola y = x^2 breaks every bound G(r) -> 0, also close to the origin (angles hugging the axis).
-        ("continua", "x**2*y/(x**4+y**2)", "0", {"fita": "r"}, "falla"),
-        ("continua", "x**2*y/(x**4+y**2)", "0", {"fita": "2*r**(1/10)"}, "falla"),
-        ("continua", "x**2+y**2", "0", {"fita": "1"}, "falla"),
+        ("continua", "x**2*y/(x**4+y**2)", "0", {"fita": "r"}, "indeterminat"),
+        ("continua", "x**2*y/(x**4+y**2)", "0", {"fita": "2*r**(1/10)"}, "indeterminat"),
+        ("continua", "x**2+y**2", "0", {"fita": "1"}, "indeterminat"),
         ("continua", "x**2+y**2", "0", {}, "indeterminat"),
-        ("limit_no_existeix", "x**2*y/(x**4+y**2)", "0", TWO_LINES, "falla"),
-        ("limit_no_existeix", "x**2+y**2", "0", {"camins": [{"x": "t", "y": "1"}]}, "falla"),
-        ("limit_no_existeix", "x**2+y**2", "0", {"camins": [{"x": "0", "y": "0"}]}, "falla"),
+        ("limit_no_existeix", "x**2*y/(x**4+y**2)", "0", TWO_LINES, "indeterminat"),
+        ("limit_no_existeix", "x**2+y**2", "0", {"camins": [{"x": "t", "y": "1"}]}, "indeterminat"),
+        ("limit_no_existeix", "x**2+y**2", "0", {"camins": [{"x": "0", "y": "0"}]}, "indeterminat"),
         ("limit_no_existeix", "x**2+y**2", "0", {}, "indeterminat"),
-        ("discontinua", "x**2+y**2", "0", {"camins": [{"x": "t", "y": "0"}]}, "falla"),
+        ("discontinua", "x**2+y**2", "0", {"camins": [{"x": "t", "y": "0"}]}, "indeterminat"),
         ("diferenciable", "x*y/sqrt(x**2+y**2)", "0", {"fita": "r"}, "falla"),
         ("diferenciable", "x**2*y/(x**2+y**2)", "0", {"fita": "r"}, "falla"),
         ("creuades_diferents", "x*y", "0", {}, "falla"),
         ("rectes_mateix_limit", "x*y/(x**2+y**2)", "0", {}, "falla"),
         ("iterats_iguals", "(x-y)/(x+y)", "0", {}, "falla"),
         ("no_diferenciable", "x**2+y**2", "0", {}, "indeterminat"),
-        ("no_diferenciable", "x**2+y**2", "0", DIAGONAL, "falla"),
-        ("no_diferenciable", "Abs(x*y)**(3/4)", "0", DIAGONAL, "falla"),
-        ("parcial_discontinua", "x**2+y**2", "0", {"parcial": "x", **DIAGONAL}, "falla"),
+        ("no_diferenciable", "x**2+y**2", "0", DIAGONAL, "indeterminat"),
+        ("no_diferenciable", "Abs(x*y)**(3/4)", "0", DIAGONAL, "indeterminat"),
+        ("parcial_discontinua", "x**2+y**2", "0", {"parcial": "x", **DIAGONAL}, "indeterminat"),
         ("direccionals_existeixen", "Abs(x)", "0", {}, "falla"),
-        ("alguna_direccional_no_existeix", "x**2", "0", {"direccio": {"u": "0", "w": "0"}}, "falla"),
+        ("alguna_direccional_no_existeix", "x**2", "0", {"direccio": {"u": "0", "w": "0"}}, "indeterminat"),
         ("alguna_parcial_no_existeix", "x**2+y**2", "0", {}, "falla"),
         ("parcials_existeixen", "Abs(x)", "0", {}, "falla"),
         # A slope sympy's generic-m limit hides: along y = 7x the limit is 0, along every other line 1.
@@ -98,11 +99,16 @@ def test_found_by_simulated_students() -> None:
     assert verdict("creuades_diferents", "x*y*cos(2*atan(y/x))")[0] in ("ok", "indeterminat")
     # One path with a limit proves nothing about non-existence: the message says to add a second one.
     status, detail = verdict("limit_no_existeix", "x**2*y/(x**4+y**2)", camins=[{"x": "t", "y": "t**2"}])
-    assert status == "falla" and "segon camí" in detail
+    assert status == "indeterminat" and "segon camí" in detail
     assert verdict("parcials_existeixen", "x*y", "1/0")[0] == "falla"
 
 
 # Attacks found by a simulated student trying to game the checker: each one used to pass.
+LINES_1E15 = (
+    "1+x*y*(y-x)*(y+x)*(y-2*x)*(y+3*x)*(2*y-x)*(2*y+x)*(3*y-x)*(y-3*x)*(3*y+x)*(2*y-3*x)*(3*y-2*x)*(7*y+5*x)"
+    "/(10**15*(x**2+y**2)**7)"
+)
+SLOW_DECAY = "x**2*y**2/(x**2+y**2)**2*((sin(1/(x**2+y**2))+(x**2+y**2)**(1/100))**2-sin(1/(x**2+y**2))**2)"
 SIN2_COS2 = "sin(x*y/(x**2+y**2)**2)**2+cos(x*y/(x**2+y**2)**2)**2+x**2*y**2*(x**2+y**2)**(1/4)/(x**2+y**2)**2"
 
 
@@ -125,6 +131,17 @@ SIN2_COS2 = "sin(x*y/(x**2+y**2)**2)**2+cos(x*y/(x**2+y**2)**2)**2+x**2*y**2*(x*
         ),
         # Complex in the thin sector 3/5 < y/x < 2/3.
         ("discontinua", "sqrt((2*x-3*y)*(3*x-5*y))+x**2*y/(x**4+y**2)", "0", {"camins": [{"x": "t", "y": "t**2"}]}),
+        # Round 2. Exactly 1 on the 13 fixed slopes, 1 + 1e-15*c(m) elsewhere: no tolerance may call that equal.
+        ("rectes_mateix_limit", LINES_1E15, "1", {"camins": [{"x": "t", "y": "5*t+t**2"}]}),
+        # (sin A + r^(1/50))^2 - sin(A)^2 -> 0 slowly: sympy says AccumBounds, the expanded form has a limit.
+        ("discontinua", SLOW_DECAY, "0", DIAGONAL),
+        # D_(1,5) does not exist: the direction of the student's own path is tried.
+        ("direccionals_existeixen", "Max(0,1-1000*(y-5*x)**2/(x**2+y**2))", "0", {"camins": [{"x": "t", "y": "5*t"}]}),
+        # A discontinuity along y = x^20 and one along y = x^4.
+        ("continua", "Abs(x)+x**20*y/(x**40+y**2)", "0", {"fita": "2*r"}),
+        ("continua", "Abs(x)+x**20/((y-x**4)**2+x**20)", "0", {"fita": "2*r"}),
+        # Undefined on the whole parabola y = x^2.
+        ("limit_no_existeix", "x**4/(y-x**2)", "0", TWO_LINES),
     ],
 )
 def test_attacks_do_not_pass(kind: PropertyKind, function: str, value: str, certificate: dict[str, object]) -> None:
@@ -136,3 +153,15 @@ def test_attacks_do_not_pass(kind: PropertyKind, function: str, value: str, cert
         context_paths=Certificate.model_validate(certificate).paths,
     )
     assert check_property(check).status not in ("ok", "plausible")
+
+
+def test_cbrt_is_the_real_cube_root() -> None:
+    # sympy's own (x**3+y**3)**(1/3) is complex for x**3+y**3 < 0; cbrt is defined on the whole plane.
+    assert verdict("direccionals_existeixen", "cbrt(x**3+y**3)")[0] == "plausible"
+    assert verdict("parcials_existeixen", "(x**3+y**3)**(1/3)")[0] == "falla"
+
+
+def test_a_positive_denominator_is_not_a_hole() -> None:
+    # (y-x^4)^2 + x^20 > 0 off the origin; expanded, floats lose its sign. Only an exact sign change is a hole.
+    assert verdict("alguna_parcial_no_existeix", "Abs(x)+x**20/((y-x**4)**2+x**20)")[0] == "ok"
+    assert verdict("parcials_existeixen", "x**2*y/(x**4+y**2)")[0] == "ok"

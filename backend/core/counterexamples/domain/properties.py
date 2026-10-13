@@ -14,6 +14,7 @@ from pydantic import BaseModel
 
 PropertyKind = Literal[
     "rectes_mateix_limit",
+    "rectes_limit_f0",
     "iterats_iguals",
     "limit_no_existeix",
     "discontinua",
@@ -47,6 +48,12 @@ PROPERTIES: Mapping[PropertyKind, PropertyInfo] = {
         PropertyInfo(
             kind="rectes_mateix_limit",
             label="El límit de $f$ per totes les rectes que passen per l'origen existeix i és el mateix",
+            certificate="cap",
+            help="",
+        ),
+        PropertyInfo(
+            kind="rectes_limit_f0",
+            label="El límit de $f$ per totes les rectes que passen per l'origen és $f(0,0)$",
             certificate="cap",
             help="",
         ),
@@ -124,8 +131,8 @@ PROPERTIES: Mapping[PropertyKind, PropertyInfo] = {
         ),
         PropertyInfo(
             kind="creuades_diferents",
-            label="$\\dfrac{\\partial^2 f}{\\partial x\\partial y}(0,0) \\ne \\dfrac{\\partial^2 f}{\\partial y\\partial x}(0,0)$"
-            " (les dues existeixen)",
+            label="Les derivades creuades a l'origen existeixen i són diferents: $D_yD_xf(0,0)\\ne D_xD_yf(0,0)$, "
+            "on $D_yD_xf=\\dfrac{\\partial}{\\partial y}\\Big(\\dfrac{\\partial f}{\\partial x}\\Big)$",
             certificate="cap",
             help="",
         ),

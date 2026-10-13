@@ -69,6 +69,7 @@ def create_app(config: Config | None = None, llm: LLMClient | None = None) -> Fa
         # deploy with edited sheets serves them at once (the database holds only what the app produces).
         course = YamlCourseSource(BACKEND_DIR / "exercicis", BACKEND_DIR / "teoria").load()
         counterexamples = YamlSpecSource(BACKEND_DIR / "contraexemples" / "reptes.yaml").load()
+        counterexamples.check_theory(course.theory)  # a challenge citing a missing item fails the start-up
         await _seed_generated(sessions)
         inner = llm or make_llm_client(cfg)
         logged = LoggedLLMClient(inner, SQLModelLLMCallRepository(sessions), log_prompts=cfg.LOG_PROMPTS)

@@ -35,7 +35,7 @@ async def test_a_counterexample_with_its_certificates_passes(grader: SubmissionG
 async def test_a_function_without_the_property_fails_and_says_why(grader: SubmissionGrader) -> None:
     body = submission("x**2+y**2", discontinua={"camins": [{"x": "t", "y": "t"}]})
     result = await grade(grader, "parcials-sense-continuitat", body)
-    assert not result.passed and result.verdicts[1].status == "falla" and result.verdicts[1].detail
+    assert not result.passed and result.verdicts[1].status == "indeterminat" and result.verdicts[1].detail
     assert result.example is None
     assert (await grade(grader, "parcials-sense-continuitat", body, reveal=True)).example is not None
 
@@ -55,7 +55,7 @@ async def test_a_bound_makes_it_plausible_not_rigorous(grader: SubmissionGrader)
         (submission("x", value="x"), "valor a l'origen"),
         (submission("limit(x, x, 0)"), "no es pot fer servir limit"),
         # Read without evaluating: a power tower must not freeze the event loop before reaching a worker.
-        (submission("9**9**9**9*z"), "només de x, y"),
+        (submission("9**9**9**9*z"), "potència massa gran"),
     ],
 )
 async def test_unreadable_input_is_rejected_before_any_check(
@@ -83,3 +83,9 @@ async def test_common_typing_mistakes_get_the_fix(grader: SubmissionGrader, func
 async def test_an_exponential_tower_is_rejected_before_any_worker(grader: SubmissionGrader) -> None:
     with pytest.raises(InvalidSubmissionException, match="exponencials niades"):
         await grade(grader, "parcials-sense-continuitat", submission("exp(-exp(exp(1/(x**2+y**2))))"))
+
+
+@pytest.mark.parametrize("value", ["10**10**9", "2**5000"])
+async def test_huge_powers_are_rejected_before_any_worker(grader: SubmissionGrader, value: str) -> None:
+    with pytest.raises(InvalidSubmissionException, match="potència massa gran"):
+        await grade(grader, "parcials-sense-continuitat", submission("x*y", value=value))

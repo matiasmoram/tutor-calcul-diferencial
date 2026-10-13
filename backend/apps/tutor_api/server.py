@@ -11,11 +11,13 @@ from loguru import logger
 
 from apps.tutor_api.dependencies import AppState
 from apps.tutor_api.endpoints import config as config_endpoints
+from apps.tutor_api.endpoints import counterexamples as counterexample_endpoints
 from apps.tutor_api.endpoints import course as course_endpoints
 from apps.tutor_api.endpoints import mistakes as mistakes_endpoints
 from apps.tutor_api.endpoints import quizzes as quiz_endpoints
 from apps.tutor_api.endpoints import tutoring as tutoring_endpoints
 from apps.tutor_api.rate_limiter import RateLimiter
+from core.counterexamples.infra.yaml_spec_source import YamlSpecSource
 from core.course.infra.yaml_course_source import YamlCourseSource
 from core.mistakes.application.pregenerated_importer import PregeneratedImporter
 from core.mistakes.infra.json_file_source import JsonFileMistakeSource
@@ -66,6 +68,7 @@ def create_app(config: Config | None = None, llm: LLMClient | None = None) -> Fa
         # The course is read-only authored content shipped in the image: loaded from the YAML on every start, so a
         # deploy with edited sheets serves them at once (the database holds only what the app produces).
         course = YamlCourseSource(BACKEND_DIR / "exercicis", BACKEND_DIR / "teoria").load()
+        counterexamples = YamlSpecSource(BACKEND_DIR / "contraexemples" / "reptes.yaml").load()
         await _seed_generated(sessions)
         inner = llm or make_llm_client(cfg)
         logged = LoggedLLMClient(inner, SQLModelLLMCallRepository(sessions), log_prompts=cfg.LOG_PROMPTS)
@@ -76,14 +79,27 @@ def create_app(config: Config | None = None, llm: LLMClient | None = None) -> Fa
         limiter = RateLimiter(cfg.MODEL_REQUESTS_PER_MINUTE)
         sympy = SympyCheckPool(max_workers=2)  # workers start lazily, on the first check
         app.state.tutor = AppState(
-            config=cfg, sessions=sessions, course=course, llm=logged, limiter=limiter, sympy=sympy
+            config=cfg,
+            sessions=sessions,
+            course=course,
+            llm=logged,
+            limiter=limiter,
+            sympy=sympy,
+            counterexamples=counterexamples,
         )
         yield
         sympy.close()
         await engine.dispose()
 
     app = FastAPI(title="Tutor socràtic — Càlcul Diferencial", lifespan=lifespan)
-    for module in (config_endpoints, course_endpoints, tutoring_endpoints, mistakes_endpoints, quiz_endpoints):
+    for module in (
+        config_endpoints,
+        course_endpoints,
+        tutoring_endpoints,
+        mistakes_endpoints,
+        quiz_endpoints,
+        counterexample_endpoints,
+    ):
         app.include_router(module.router)
 
     @app.get("/health", include_in_schema=False)

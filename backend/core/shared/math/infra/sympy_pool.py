@@ -17,6 +17,7 @@ import threading
 from collections.abc import Callable, Sequence
 from concurrent.futures import Future, ProcessPoolExecutor, wait
 from concurrent.futures.process import BrokenProcessPool
+from typing import Any
 
 from core.shared.math.sympy_checks import CheckResult, MathCheck, evaluate_one
 
@@ -49,11 +50,26 @@ class SympyCheckPool:
         self._closed = False
 
     async def evaluate(self, checks: Sequence[MathCheck], timeout_s: float | None = None) -> list[CheckResult]:
-        if not checks:
+        return await self.map(self._worker, checks, _undecided, timeout_s)
+
+    def evaluate_blocking(self, checks: Sequence[MathCheck], timeout_s: float | None = None) -> list[CheckResult]:
+        """Same as `evaluate`, blocking the calling thread (for synchronous callers already off the event loop)."""
+        return self.map_blocking(self._worker, checks, _undecided, timeout_s)
+
+    async def map[T, R](
+        self,
+        worker: Callable[[T], R],
+        items: Sequence[T],
+        undecided: Callable[[T, str], R],
+        timeout_s: float | None = None,
+    ) -> list[R]:
+        """Any other sympy job on the same workers: `worker` is a picklable module-level function, `undecided(item, reason)`
+        builds the result of an item without one by the deadline."""
+        if not items:
             return []
         if self._in_process:
-            return [self._worker(c) for c in checks]
-        executor, futures = self._submit(checks)
+            return [worker(i) for i in items]
+        executor, futures = self._submit(worker, items)
         waiters = [asyncio.wrap_future(f) for f in futures]
         await asyncio.wait(waiters, timeout=self._timeout_s if timeout_s is None else timeout_s)
         for w in waiters:
@@ -62,20 +78,25 @@ class SympyCheckPool:
                 w.cancel()
             elif not w.cancelled():
                 w.exception()
-        results, retire = _collect(futures)
+        results, retire = _collect(items, futures, undecided)
         if retire:
             await asyncio.to_thread(self._retire, executor)
         return results
 
-    def evaluate_blocking(self, checks: Sequence[MathCheck], timeout_s: float | None = None) -> list[CheckResult]:
-        """Same as `evaluate`, blocking the calling thread (for synchronous callers already off the event loop)."""
-        if not checks:
+    def map_blocking[T, R](
+        self,
+        worker: Callable[[T], R],
+        items: Sequence[T],
+        undecided: Callable[[T, str], R],
+        timeout_s: float | None = None,
+    ) -> list[R]:
+        if not items:
             return []
         if self._in_process:
-            return [self._worker(c) for c in checks]
-        executor, futures = self._submit(checks)
+            return [worker(i) for i in items]
+        executor, futures = self._submit(worker, items)
         wait(futures, timeout=self._timeout_s if timeout_s is None else timeout_s)
-        results, retire = _collect(futures)
+        results, retire = _collect(items, futures, undecided)
         if retire:
             self._retire(executor)
         return results
@@ -88,7 +109,9 @@ class SympyCheckPool:
         if executor is not None:
             _tear_down(executor)
 
-    def _submit(self, checks: Sequence[MathCheck]) -> tuple[ProcessPoolExecutor, list[Future[CheckResult]]]:
+    def _submit(
+        self, worker: Callable[[Any], Any], items: Sequence[Any]
+    ) -> tuple[ProcessPoolExecutor, list[Future[Any]]]:
         with self._lock:
             if self._closed:
                 raise RuntimeError("SympyCheckPool is closed")
@@ -97,7 +120,7 @@ class SympyCheckPool:
                     self._executor = ProcessPoolExecutor(self._max_workers, mp_context=mp.get_context("spawn"))
                 executor = self._executor
                 try:
-                    return executor, [executor.submit(self._worker, c) for c in checks]
+                    return executor, [executor.submit(worker, i) for i in items]
                 except BrokenProcessPool:  # a worker died (e.g. OOM-killed) since the last call
                     self._executor = None
                     _tear_down(executor)
@@ -111,21 +134,23 @@ class SympyCheckPool:
         _tear_down(executor)
 
 
-def _undecided(detail: str) -> CheckResult:
+def _undecided(_check: MathCheck, detail: str) -> CheckResult:
     return CheckResult(status="indeterminat", detail=detail)
 
 
-def _collect(futures: Sequence[Future[CheckResult]]) -> tuple[list[CheckResult], bool]:
+def _collect[T, R](
+    items: Sequence[T], futures: Sequence[Future[R]], undecided: Callable[[T, str], R]
+) -> tuple[list[R], bool]:
     """The results in order, and whether the executor must be retired (a worker is stuck or the pool is broken)."""
-    results: list[CheckResult] = []
+    results: list[R] = []
     retire = False
-    for f in futures:
+    for item, f in zip(items, futures, strict=True):
         if not f.done():
             if not f.cancel():
                 retire = True
-            results.append(_undecided(TIMEOUT_DETAIL))
+            results.append(undecided(item, TIMEOUT_DETAIL))
         elif f.cancelled():
-            results.append(_undecided(INTERRUPTED_DETAIL))
+            results.append(undecided(item, INTERRUPTED_DETAIL))
         elif (error := f.exception()) is not None:
             retire = retire or isinstance(error, BrokenProcessPool)
             detail = (
@@ -133,7 +158,7 @@ def _collect(futures: Sequence[Future[CheckResult]]) -> tuple[list[CheckResult],
                 if isinstance(error, BrokenProcessPool)
                 else f"error de sympy ({type(error).__name__})"
             )
-            results.append(_undecided(detail))
+            results.append(undecided(item, detail))
         else:
             results.append(f.result())
     return results, retire

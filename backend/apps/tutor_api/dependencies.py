@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from fastapi import Depends, HTTPException, Request
 
 from apps.tutor_api.rate_limiter import RateLimiter
+from core.counterexamples.domain.entities.spec import SpecCatalog
 from core.course.domain.entities.course import Course
 from core.shared.domain.exceptions import DomainException
 from core.shared.llm.client import LLMClient
@@ -24,6 +25,7 @@ class AppState:
     llm: LLMClient
     limiter: RateLimiter
     sympy: SympyCheckPool  # one long-lived pool of sympy worker processes for the whole server
+    counterexamples: SpecCatalog
 
 
 def get_state(request: Request) -> AppState:
@@ -36,6 +38,10 @@ def get_config(state: AppState = Depends(get_state)) -> Config:
 
 def get_course(state: AppState = Depends(get_state)) -> Course:
     return state.course
+
+
+def get_counterexamples(state: AppState = Depends(get_state)) -> SpecCatalog:
+    return state.counterexamples
 
 
 def get_session_provider(state: AppState = Depends(get_state)) -> SQLModelSessionProvider:

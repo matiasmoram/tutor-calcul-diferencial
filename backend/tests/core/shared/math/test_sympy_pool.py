@@ -7,7 +7,7 @@ import pytest
 from core.shared.math.infra.sympy_pool import TIMEOUT_DETAIL, SympyCheckPool
 from core.shared.math.sympy_checks import MathCheck
 from tests.core.shared.math.test_sympy_checks import ITERATED, check
-from tests.core.shared.math.workers import hang_on_description
+from tests.core.shared.math.workers import hang_on_description, hang_on_negative
 
 HANG = MathCheck(description="hang", kind="igualtat", expression="x", value="x")
 NO_LIMIT = check("no_limit", "sin(1/x)")
@@ -82,3 +82,14 @@ async def test_in_process_mode_needs_no_workers() -> None:
     assert [r.status for r in p.evaluate_blocking([NO_LIMIT])] == ["ok"]
     assert p._executor is None
     assert await p.evaluate([]) == []
+
+
+async def test_map_runs_any_job_and_times_out_per_item() -> None:
+    p = SympyCheckPool(max_workers=1, timeout_s=60)
+    try:
+        assert await p.map(hang_on_negative, [2, 3], lambda n, why: -1) == [4, 9]
+        out = await p.map(hang_on_negative, [2, -1], lambda n, why: (n, why), timeout_s=1.0)
+        assert out == [4, (-1, TIMEOUT_DETAIL)]
+        assert await p.map(hang_on_negative, [5], lambda n, why: -1) == [25]
+    finally:
+        p.close()

@@ -6,7 +6,7 @@ standing rulebook. Reference implementations to copy: `core/course/` (a full con
 ## Layout
 
 - `core/<context>/` is a bounded context, a triad `domain/ → application/ → infra/` (`infra/` only when the
-  context persists something or talks to the outside). Contexts: `course`, `tutoring`, `mistakes`, `quizzes`.
+  context persists something or talks to the outside). Contexts: `course`, `tutoring`, `mistakes`, `quizzes`, `counterexamples`.
 - `core/shared/`: shared kernel (`domain/` ids + exceptions + clock, `llm/` port + clients, `llm_calls/` call log,
   `storage/` async SQLModel session provider, `math/` CAS + sympy checks).
 - `apps/tutor_api/`: the FastAPI app (composition root): `server.py`, `endpoints/`, `schemas/`, `dependencies.py`.

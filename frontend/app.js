@@ -75,7 +75,7 @@ async function api(path, options = {}) {
 
 /* ---------- Views & routing ---------- */
 
-const VIEWS = ["landing", "llistes", "llista", "exercici", "errades", "teoria", "professor", "visual", "afirmacions"];
+const VIEWS = ["landing", "llistes", "llista", "exercici", "errades", "teoria", "professor", "visual", "afirmacions", "contraexemples"];
 let PROFESSOR = false;  // set from /api/config: only professors get the panel, solutions and traces
 const cache = { llistes: null, llista: {}, teoria: null };
 
@@ -444,6 +444,7 @@ async function route() {
     if (mode === "teoria") await viewTeoria();
     else if (mode === "visual") await viewVisual(llista);
     else if (mode === "afirmacions") await (llista ? viewAfirmacions(llista) : viewAfirmacionsInici());
+    else if (mode === "contraexemples") await (llista ? viewContraexemple(llista) : viewContraexemplesInici());
     else if (mode === "professor") await (llista ? viewProfessorSessio(llista) : viewProfessor());
     else if (mode === "errades" && !llista) await viewErradesInici();
     else if (mode === "errades" && llista === "teoria") await (ex ? viewErradesTeoria(ex) : viewErradesTeoriaLlista());

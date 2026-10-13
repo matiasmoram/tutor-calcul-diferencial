@@ -10,10 +10,11 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
-  <link rel="stylesheet" href="/static/style.css?v=15">
-  <script defer src="/static/app.js?v=14"></script>
+  <link rel="stylesheet" href="/static/style.css?v=16">
+  <script defer src="/static/app.js?v=15"></script>
   <script defer src="/static/errades.js?v=11"></script>
   <script defer src="/static/afirmacions.js?v=1"></script>
+  <script defer src="/static/contraexemples.js?v=1"></script>
   <script defer src="/static/visual-latex.js?v=1"></script>
   <script defer src="/static/visual.js?v=2"></script>
   <script defer src="/static/visual-eines.js?v=1"></script>
@@ -119,6 +120,13 @@
           <span class="mode-cta">Entrar →</span>
           <span class="new">Nou</span>
         </a>
+        <a class="mode featured" href="#/contraexemples">
+          <span class="mode-icon">∄</span>
+          <h3>Construeix el contraexemple</h3>
+          <p>Fabrica la funció que trenca la intuïció: parcials sense continuïtat, totes les rectes d'acord sense límit, Schwarz trencat… Dona el certificat (camins, una fita) i sympy ho comprova. Sense IA: el veredicte és càlcul.</p>
+          <span class="mode-cta">Entrar →</span>
+          <span class="new">Nou</span>
+        </a>
       </div>
     </section>
 
@@ -193,6 +201,8 @@
 
   <!-- True or false: prove it or find a counterexample -->
   <main class="page errades hidden" id="view-afirmacions"></main>
+
+  <main class="page errades hidden" id="view-contraexemples"></main>
 
   <!-- Tutoring workspace -->
   <main class="layout hidden" id="view-exercici">

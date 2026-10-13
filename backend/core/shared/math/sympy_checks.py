@@ -47,6 +47,7 @@ ALLOWED_NAMES = frozenset(SYMBOLS) | frozenset(FUNCTIONS)
 _CHARACTERS = re.compile(r"^[0-9A-Za-z_+\-*/^().,\s]*$")
 _PARSER_GLOBALS: Mapping[str, object] = {
     "__builtins__": {}, "Integer": sp.Integer, "Float": sp.Float, "Rational": sp.Rational, "Symbol": sp.Symbol,
+    "Add": sp.Add, "Mul": sp.Mul, "Pow": sp.Pow,  # used by the evaluate=False transformation
 }  # fmt: skip
 
 
@@ -86,8 +87,9 @@ class CheckResult(BaseModel):
     detail: str = Field(default="", validation_alias=_ca("detall", "detail"), serialization_alias="detall")
 
 
-def parse(text: str) -> sp.Expr:
-    """sympy expression from an untrusted string: whitelisted characters and names only."""
+def parse(text: str, evaluate: bool = True) -> sp.Expr:
+    """sympy expression from an untrusted string: whitelisted characters and names only. `evaluate=False` only builds
+    the tree (cheap and bounded: safe outside a worker); `True` also computes it (`9**9**9**9`, `limit(...)`)."""
     text = (text or "").strip()
     if not text:
         raise InvalidExpression("expressió buida")
@@ -104,13 +106,13 @@ def parse(text: str) -> sp.Expr:
             local_dict=dict(SYMBOLS) | dict(FUNCTIONS),
             global_dict=dict(_PARSER_GLOBALS),
             transformations=(*standard_transformations, convert_xor),
-            evaluate=True,
+            evaluate=evaluate,
         )
     except Exception as e:  # sympy raises many types on malformed input
         raise InvalidExpression(f"no s'ha pogut interpretar «{text}» ({type(e).__name__})") from e
 
 
-def _equal(a: sp.Expr, b: sp.Expr) -> bool | None:
+def equal(a: sp.Expr, b: sp.Expr) -> bool | None:
     """True/False when decidable; None when sympy cannot tell."""
     if a == b:
         return True
@@ -151,7 +153,7 @@ def evaluate_one(check: MathCheck) -> CheckResult:
             raise InvalidExpression(f"tipus desconegut «{check.kind}»")
         expr = parse(check.expression)
         if check.kind == "igualtat":
-            r = _equal(expr, parse(check.value))
+            r = equal(expr, parse(check.value))
             if r is None:
                 return _undecided("sympy no ho pot decidir")
             return CheckResult(status="ok" if r else "falla", computed=str(sp.simplify(expr)))
@@ -180,7 +182,7 @@ def evaluate_one(check: MathCheck) -> CheckResult:
             return CheckResult(status="falla", computed="no existeix", detail="el límit no existeix")
         if lim.has(sp.Limit):
             return _undecided("sympy no avalua el límit")
-        r = _equal(sp.simplify(lim), parse(check.value))
+        r = equal(sp.simplify(lim), parse(check.value))
         if r is None:
             return _undecided("sympy no pot comparar el valor", computed=str(lim))
         return CheckResult(status="ok" if r else "falla", computed=str(sp.simplify(lim)))

@@ -56,6 +56,8 @@ history of the migration: `work/ARQUITECTURA.md`.
 | `backend/core/tutoring/` | The tutor: diagnosis → deterministic policy (`domain/policy.py`) → reply → guard (`domain/guard.py`), photo transcription, sessions |
 | `backend/core/mistakes/` | "Troba l'error" |
 | `backend/core/quizzes/` | "Cert o fals" |
+| `backend/core/counterexamples/` | "Construeix el contraexemple" (sympy only, no model) |
+| `backend/contraexemples/reptes.yaml` | Counterexample challenges, each with an authored example and its certificates |
 | `backend/core/shared/` | Ids and exceptions, the LLM port + provider clients + call log, async SQLModel storage, CAS / sympy checks |
 | `backend/apps/tutor_api/` | FastAPI app (composition root): endpoints, response schemas, dependency providers |
 | `backend/exercicis/temaN.yaml` | Solution sheets, one list per tema: steps (objective / idea / detail / theory), common errors with Socratic questions, leak regexes |
@@ -134,6 +136,29 @@ $xy/(x^2+y^2)$). 6 / 8 / 10 statements for fàcil / normal / difícil. `backend/
 Quizzes are cached in `backend/generats/afirmacions/<font>/<difficulty>/`. Pre-generate with
 `uv run python scripts/pregenerate_afirmacions.py tema-2:normal T2.12:facil ...`. Stages `quiz_generation`,
 `quiz_verification`, `quiz_audit`, `quiz_grading`, `quiz_extraction` (override with `TUTOR_MODEL_<STAGE>`).
+
+## "Construeix el contraexemple" mode (`#/contraexemples`)
+
+The student builds the pathological function. A challenge asks for $f$ with properties at the origin that look
+incompatible (partials but not continuous; every line agrees but there is no limit; differentiable but not $C^1$;
+crossed second derivatives that differ…). The student writes $f(x,y)$ off the origin, $f(0,0)$, and a **certificate**
+for each property that needs one. No model is called: every verdict is computed (`backend/core/counterexamples`).
+
+- **Only one-variable limits are trusted.** sympy's two-variable limits are unsound: with the angle left free, the
+  polar limit of $x^2y/(x^4+y^2)$ is 0, but the limit does not exist. Partial and directional derivatives are limits of
+  difference quotients in $h$, iterated limits are two one-variable limits, and a path $(x(t),y(t))$ reduces $f$ to $t$.
+- **Negative properties need paths** ("the limit does not exist": two paths with different limits, or one without a
+  limit). "Not differentiable" is often decided with no certificate: a missing partial, or a directional derivative
+  that is not $\nabla f\cdot v$.
+- **Positive properties need a radial bound** $G(r)$ ("continuous": $|f-f(0,0)|\le G(r)$; "differentiable": the same
+  for the remainder). $G\to0$ is checked exactly. The inequality is sampled on a polar grid, with angles that hug the
+  axes so that a parabola like $y=x^2$ is caught; the verdict is therefore **plausible**, not proved.
+- Statuses: `ok` (exact), `plausible` (sampled), `falla`, `indeterminat` (sympy cannot decide, or a certificate is
+  missing). An undecided property never passes.
+- Each property runs in its own worker of the server's `SympyCheckPool` (`map`), under the pool's deadline.
+- Challenges: `backend/contraexemples/reptes.yaml`. Each has an authored example with its certificates; the tests run
+  every example through the checker. A student sees the example only after passing; professors always see it.
+- Endpoints: `GET /api/contraexemples`, `GET /api/contraexemples/{id}`, `POST /api/contraexemples/{id}/comprova`.
 
 ## Photo of the notebook
 

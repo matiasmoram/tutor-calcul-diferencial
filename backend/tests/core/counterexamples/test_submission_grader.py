@@ -78,3 +78,8 @@ async def test_unknown_challenge(grader: SubmissionGrader) -> None:
 async def test_common_typing_mistakes_get_the_fix(grader: SubmissionGrader, function: str, message: str) -> None:
     with pytest.raises(InvalidSubmissionException, match=re.escape(message)):
         await grade(grader, "parcials-sense-continuitat", submission(function))
+
+
+async def test_an_exponential_tower_is_rejected_before_any_worker(grader: SubmissionGrader) -> None:
+    with pytest.raises(InvalidSubmissionException, match="exponencials niades"):
+        await grade(grader, "parcials-sense-continuitat", submission("exp(-exp(exp(1/(x**2+y**2))))"))

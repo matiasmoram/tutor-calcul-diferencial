@@ -8,6 +8,7 @@ import re
 from collections.abc import Mapping
 from typing import Literal
 
+import sympy as sp
 from pydantic import AliasChoices, BaseModel, ConfigDict, Field
 
 from core.counterexamples.domain.exceptions import InvalidSubmissionException
@@ -68,6 +69,20 @@ class PropertyCheck(BaseModel):
     function: str
     origin_value: str
     certificate: Certificate
+    # Every path given anywhere in the submission: a positive property (continuous, differentiable, the same limit
+    # on every line) must also hold along them.
+    context_paths: list[Path] = Field(default_factory=list)
+
+
+# exp(exp(exp(1/r^2))) cannot be evaluated near the origin in any reasonable time.
+MAX_EXP_DEPTH = 2
+_GROWING = (sp.exp, sp.sinh, sp.cosh)
+
+
+def _exp_depth(e: sp.Basic) -> int:
+    inner = max((_exp_depth(a) for a in e.args), default=0)
+    grows = isinstance(e, _GROWING) or (isinstance(e, sp.Pow) and not e.exp.is_number)
+    return inner + 1 if grows else inner
 
 
 # A function of x and y: sympy's own calculus would let the student run limits and derivatives in our workers.
@@ -99,6 +114,8 @@ def _expression(text: str, what: str, allowed: set[str]) -> None:
         expr = parse(text, evaluate=False)
     except InvalidExpression as e:
         raise InvalidSubmissionException(f"{what}: {e}") from e
+    if _exp_depth(expr) > MAX_EXP_DEPTH:
+        raise InvalidSubmissionException(f"{what}: massa exponencials niades (com a molt {MAX_EXP_DEPTH})")
     extra = sorted(str(s) for s in expr.free_symbols if str(s) not in allowed)
     if extra:
         names = ", ".join(sorted(allowed)) or "cap variable"

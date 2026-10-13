@@ -100,3 +100,39 @@ def test_found_by_simulated_students() -> None:
     status, detail = verdict("limit_no_existeix", "x**2*y/(x**4+y**2)", camins=[{"x": "t", "y": "t**2"}])
     assert status == "falla" and "segon camí" in detail
     assert verdict("parcials_existeixen", "x*y", "1/0")[0] == "falla"
+
+
+# Attacks found by a simulated student trying to game the checker: each one used to pass.
+SIN2_COS2 = "sin(x*y/(x**2+y**2)**2)**2+cos(x*y/(x**2+y**2)**2)**2+x**2*y**2*(x**2+y**2)**(1/4)/(x**2+y**2)**2"
+
+
+@pytest.mark.parametrize(
+    ("kind", "function", "value", "certificate"),
+    [
+        # sympy reads sin^2+cos^2 of a blowing-up argument as AccumBounds(0, 2): "no limit" needs numeric confirmation.
+        ("discontinua", SIN2_COS2, "1", DIAGONAL),
+        ("limit_no_existeix", SIN2_COS2, "1", DIAGONAL),
+        # A bound that is >= 1 exactly at the sampled radii; a change below the smallest radius; a spike on a line.
+        ("continua", "1", "0", {"fita": "r*(1+10**9*sin(1/r)**2)"}),
+        ("continua", "exp(-10**20*(x**2+y**2))", "0", {"fita": "r"}),
+        ("continua", "sign(Abs(x*y))*exp(-(1000*(y-37*x/100))**2/(x**2+y**2))", "0", {"fita": "r"}),
+        # Not rational along y = m x, so no special slopes: the student's own line y = x/2 is checked.
+        (
+            "rectes_mateix_limit",
+            "1-sign(Abs(2*y-x))",
+            "0",
+            {"camins": [{"x": "t", "y": "t/2"}]},
+        ),
+        # Complex in the thin sector 3/5 < y/x < 2/3.
+        ("discontinua", "sqrt((2*x-3*y)*(3*x-5*y))+x**2*y/(x**4+y**2)", "0", {"camins": [{"x": "t", "y": "t**2"}]}),
+    ],
+)
+def test_attacks_do_not_pass(kind: PropertyKind, function: str, value: str, certificate: dict[str, object]) -> None:
+    check = PropertyCheck(
+        kind=kind,
+        function=function,
+        origin_value=value,
+        certificate=Certificate.model_validate(certificate),
+        context_paths=Certificate.model_validate(certificate).paths,
+    )
+    assert check_property(check).status not in ("ok", "plausible")

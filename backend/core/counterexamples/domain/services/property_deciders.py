@@ -9,8 +9,10 @@ exactly for G(r) -> 0 and on a grid of points for the inequality, so a property 
 """
 
 import math
+import random
+import zlib
 from collections.abc import Callable, Iterator, Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 import sympy as sp
 
@@ -30,9 +32,11 @@ _THETA = sp.Dummy("theta", real=True)
 # Fixed directions and slopes tried on top of the generic one: sympy solves a limit with a symbolic parameter for a
 # "generic" value of it and can miss the special ones (the axes, the diagonals).
 DIRECTIONS: tuple[tuple[int, int], ...] = ((1, 0), (0, 1), (1, 1), (1, -1), (2, 1), (1, -3))
-SLOPES: tuple[int, ...] = (0, 1, -1, 2, -3)
+SLOPES: tuple[sp.Expr, ...] = tuple(
+    sp.Rational(m) for m in ("0", "1", "-1", "2", "-3", "1/2", "-1/2", "1/3", "3", "-1/3", "3/2", "2/3", "-5/7")
+)
 R_MAX = 0.5
-_RADII = tuple(R_MAX * 10 ** (-k / 3) * f for k in range(19) for f in (1.0, 0.977))
+_RADII = tuple(R_MAX * 10 ** (-k / 3) * f for k in range(43) for f in (1.0, 0.977))  # down to ~1e-14
 _ANGLES = tuple(2 * math.pi * j / 120 for j in range(120)) + tuple(2 * math.pi * j / 120 + 0.0123 for j in range(120))
 _MIN_EVALUATED = 0.5  # of the grid points; fewer (f undefined almost everywhere?) and the bound is not judged
 
@@ -60,7 +64,7 @@ def _limit(expr: sp.Expr, var: sp.Symbol, side: str = "+-") -> _Limit:
     except ValueError as e:
         # sympy: "The limit does not exist since left hand limit = a and right hand limit = b". Any other
         # ValueError is sympy failing, not a proof.
-        if "does not exist" not in str(e) or _numerically_settles(expr, var, side):
+        if "does not exist" not in str(e) or not _numerically_unsettled(expr, var, side):
             return _Limit(None)
         return _Limit(False)
     except Exception:  # NotImplementedError, PoleError, recursion... : sympy cannot tell
@@ -68,8 +72,9 @@ def _limit(expr: sp.Expr, var: sp.Symbol, side: str = "+-") -> _Limit:
     if lim.has(sp.Limit) or lim.has(sp.nan):
         return _Limit(None)
     if isinstance(lim, sp.AccumBounds) or lim.has(sp.AccumBounds) or lim.has(sp.oo, -sp.oo, sp.zoo):
-        # "No limit" from sympy is a proof only if f does not visibly settle on one number near 0.
-        return _Limit(None) if _numerically_settles(expr, var, side) else _Limit(False, lim)
+        # sympy's "no limit" is a proof only if f visibly keeps oscillating (or jumping, or growing) at every scale:
+        # sympy reads sin(A)^2 + cos(A)^2 with A blowing up as AccumBounds(0, 2).
+        return _Limit(False, lim) if _numerically_unsettled(expr, var, side) else _Limit(None)
     value = sp.simplify(lim)
     if _numerically_elsewhere(expr, var, side, value):
         return _Limit(None)
@@ -107,15 +112,32 @@ def _settled(a: float, b: float) -> bool:
     return abs(a - b) <= 1e-6 * max(1.0, abs(b))
 
 
-def _numerically_settles(expr: sp.Expr, var: sp.Symbol, side: str) -> bool:
-    """Every side, at both scales, gives the same number: f clearly has a limit, whatever sympy said."""
+_SCALES = (1e-3, 1e-6, 1e-9, 1e-12)
+_WINDOW = (1.0, 1.21, 1.43, 1.67, 1.94)
+
+
+def _numerically_unsettled(expr: sp.Expr, var: sp.Symbol, side: str) -> bool:
+    """f near 0 keeps a spread that does not shrink: across the window [s, 2s] (both sides when two-sided) the values
+    differ at every scale s, and as much at the smallest scale as at the largest. A jump, an oscillation like
+    sin(1/t) and a blow-up all qualify; a slow convergence, or an identity sympy did not see, does not."""
     params = sorted(expr.free_symbols - {var}, key=str)
+    signs = {"+": (1,), "-": (-1,)}.get(side, (1, -1))
     for p_value in _PARAMETER_VALUES:
-        near = _near_values(expr, var, side, params, p_value)
-        if near is None:
-            return False
-        values = [v for pair in near for v in pair]
-        if not _settled(min(values), max(values)):
+        fixed = expr.subs([(p, p_value) for p in params])
+        spreads: list[float] = []
+        for scale in _SCALES:
+            values: list[float] = []
+            for sign in signs:
+                for w in _WINDOW:
+                    v = _number(fixed.subs(var, sign * sp.Float(scale * w, 30)))
+                    if v is None:
+                        return False
+                    values.append(v)
+            spread = max(values) - min(values)
+            if not spread > 1e-6 * max(1.0, min(abs(v) for v in values)):
+                return False
+            spreads.append(spread)
+        if not spreads[-1] >= 0.1 * spreads[0]:
             return False
     return True
 
@@ -172,6 +194,7 @@ class _Ctx:
     c: sp.Expr
     cert: Certificate
     lines: list[str]
+    context_paths: list[Path] = field(default_factory=list)  # every path of the submission, for cross-checks
 
     def log(self, line: str) -> None:
         self.lines.append(line)
@@ -252,36 +275,69 @@ def _bound(ctx: _Ctx, expr: sp.Expr, target: sp.Expr, what: str) -> tuple[Verdic
         raise _Undecided("sympy no pot calcular el límit de $G(r)$ quan $r\\to0^+$.")
     if lim.exists is False or lim.value is None or _compare(lim.value, sp.Integer(0)) is not True:
         return "falla", f"$G(r)$ no tendeix a 0 quan $r\\to0^+$ (tendeix a ${_describe(lim)}$)."
+    # Exact first: along fixed rays and every path of the submission, expr must tend to target. A bound can only be
+    # sampled, and a feature thinner than the grid (a spike on a line, a change below the smallest radius) slips by.
+    if (refuted := _refuted_on_curves(ctx, expr - target)) is not None:
+        return "falla", refuted
     polar = sp.Abs(_at(expr - target, R * sp.cos(_THETA), R * sp.sin(_THETA)))
     try:
         f_num, g_num = _numeric(polar, (R, _THETA)), _numeric(G, (R,))
     except Exception as e:
         raise _Undecided(f"No s'ha pogut avaluar numèricament ({type(e).__name__}).") from e
+    rng = random.Random(zlib.crc32(f"{expr}|{G}".encode()))  # reproducible per submission
+    scattered = [(R_MAX * 10 ** (-12 * rng.random()), 2 * math.pi * rng.random()) for _ in range(600)]
+    grid = [
+        (r, theta)
+        for r in _RADII
+        # The angles of the grid, plus angles that hug the axes as r shrinks (curves like y = x^2, y^2 = x^3).
+        for theta in (
+            *_ANGLES,
+            *(b + s * r**p for b in (0.0, math.pi / 2, math.pi, 3 * math.pi / 2) for s in (1, -1) for p in (0.5, 1, 2)),
+        )
+    ]
+    # A fine angular sweep at a few radii: a feature narrow in angle (a spike along a line) is only seen this way.
+    sweep = [(r, theta) for r in _SWEEP_RADII for theta in _SWEEP_ANGLES]
     evaluated = total = 0
-    for r in _RADII:
+    for r, theta in (*grid, *sweep, *scattered):
+        total += 1
         g_val = _real(_safe(g_num, r))
-        # The angles of the grid, plus angles that hug the axes as r shrinks (curved paths like y = x^2).
-        near_axes = [
-            base + s * r**p for base in (0.0, math.pi / 2, math.pi, 3 * math.pi / 2) for s in (1, -1) for p in (1, 2)
-        ]
-        for theta in (*_ANGLES, *near_axes):
-            total += 1
-            e_val = _real(_safe(f_num, r, theta))
-            if e_val is None or g_val is None or not math.isfinite(g_val):
-                continue
-            evaluated += 1
-            if e_val > g_val * (1 + 1e-9) + 1e-12:
-                x, y = r * math.cos(theta), r * math.sin(theta)
-                return "falla", (
-                    f"La fita no es compleix: a $(x,y)\\approx({x:.3g}, {y:.3g})$ (r = {r:.3g}) "
-                    f"el valor és {e_val:.4g} i $G(r)$ = {g_val:.4g}."
-                )
+        e_val = _real(_safe(f_num, r, theta))
+        if e_val is None or g_val is None or not math.isfinite(g_val):
+            continue
+        evaluated += 1
+        if e_val > g_val * (1 + 1e-9) + 1e-12:
+            x, y = r * math.cos(theta), r * math.sin(theta)
+            return "falla", (
+                f"La fita no es compleix: a $(x,y)\\approx({x:.3g}, {y:.3g})$ (r = {r:.3g}) "
+                f"el valor és {e_val:.4g} i $G(r)$ = {g_val:.4g}."
+            )
     if evaluated < _MIN_EVALUATED * total:
         raise _Undecided("No s'ha pogut avaluar la funció en prou punts per comprovar la fita.")
     return "plausible", (
         f"$G(r)\\to0$ i la fita es compleix en els {evaluated} punts provats amb $0<r\\le{R_MAX}$ "
         "(comprovació numèrica, no una demostració)."
     )
+
+
+_RAYS: tuple[tuple[int, int], ...] = (*DIRECTIONS, (-1, 0), (0, -1), (-1, -1), (-1, 1), (3, 1), (1, 3), (-3, 2))
+
+
+def _refuted_on_curves(ctx: _Ctx, expr: sp.Expr) -> str | None:
+    """Why expr does not tend to 0 at the origin, found on a ray or on a path given anywhere in the submission."""
+    curves = [(f"el raig $({u},{w})t$", sp.Integer(u) * T, sp.Integer(w) * T) for u, w in _RAYS]
+    for i, p in enumerate(ctx.context_paths, 1):
+        try:
+            px, py = _path(p, i)
+        except _BadCertificate:
+            continue
+        curves.append((f"el camí $({sp.latex(px)}, {sp.latex(py)})$", px, py))
+    for label, px, py in curves:
+        lim = _limit(_at(expr, px, py), T, "+")
+        if lim.exists is False:
+            return f"Per {label} no té límit quan $t\\to0^+$, i hauria de tendir a 0: la fita no pot ser certa."
+        if lim.exists and lim.value is not None and _compare(lim.value, sp.Integer(0)) is False:
+            return f"Per {label} tendeix a ${_tex(lim.value)} \\ne 0$: la fita no pot ser certa."
+    return None
 
 
 def _safe(fn: Callable[..., object], *args: float) -> object:
@@ -344,7 +400,7 @@ def _lines(ctx: _Ctx) -> tuple[VerdictStatus, str]:
                 f"Per ${values[0][0]}$ el límit és ${_tex(values[0][1])}$ i per ${label}$ és ${_tex(value)}$."
             )
     special = _special_slopes(_at(ctx.g, _H, _M * _H))
-    for m in special or []:
+    for m in [*(special or []), *_straight_path_slopes(ctx)]:
         lim = _limit(_at(ctx.g, _H, m * _H), _H)
         label = f"y={sp.latex(m)}x"
         if lim.exists is False:
@@ -593,7 +649,7 @@ _DECIDERS: Mapping[PropertyKind, Callable[[_Ctx], tuple[VerdictStatus, str]]] = 
 
 def check_property(check: PropertyCheck) -> PropertyVerdict:
     """Module-level and picklable: the unit of work sent to a sympy worker process."""
-    ctx = _Ctx(g=sp.Integer(0), c=sp.Integer(0), cert=check.certificate, lines=[])
+    ctx = _Ctx(g=sp.Integer(0), c=sp.Integer(0), cert=check.certificate, lines=[], context_paths=check.context_paths)
     try:
         ctx.g = _parse(check.function, {"x", "y"}, "La funció")
         ctx.c = _parse(check.origin_value, set(), "El valor a l'origen")
@@ -614,8 +670,23 @@ def undecided(check: PropertyCheck, reason: str) -> PropertyVerdict:
     return PropertyVerdict(kind=check.kind, status="indeterminat", detail=reason)
 
 
-def _line_label(m: int) -> str:
-    return {0: "y=0", 1: "y=x", -1: "y=-x"}.get(m, f"y={m}x")
+def _line_label(m: sp.Expr) -> str:
+    named: dict[sp.Expr, str] = {sp.Integer(0): "y=0", sp.Integer(1): "y=x", sp.Integer(-1): "y=-x"}
+    return named.get(m, f"y={sp.latex(m)}x")
+
+
+def _straight_path_slopes(ctx: _Ctx) -> list[sp.Expr]:
+    """Slopes of the submission's paths that are lines y = m x: a line the student singled out is worth checking."""
+    out: list[sp.Expr] = []
+    for i, p in enumerate(ctx.context_paths, 1):
+        try:
+            px, py = _path(p, i)
+            m = sp.simplify(py / px)
+        except (_BadCertificate, ZeroDivisionError, TypeError):
+            continue
+        if m.is_number and m.is_finite and m.is_real:
+            out.append(m)
+    return out
 
 
 _MAX_SPECIAL = 12
@@ -642,12 +713,45 @@ def _special_slopes(on_line: sp.Expr) -> list[sp.Expr] | None:
     return sorted(roots, key=lambda r: float(r))
 
 
-_PROBE_DIRECTIONS = (*DIRECTIONS, (-1, 0), (0, -1), (-1, -1), (-1, 1))
+# Integer directions every 7.5 degrees (offset so that no grid line is special), plus the usual ones: a sector where
+# f is complex or undefined has to be narrower than that to slip by.
+_PROBE_DIRECTIONS = (
+    *DIRECTIONS,
+    (-1, 0),
+    (0, -1),
+    (-1, -1),
+    (-1, 1),
+    *((round(97 * math.cos(a)), round(97 * math.sin(a))) for a in (2 * math.pi * j / 48 + 0.071 for j in range(48))),
+)
+
+
+_SWEEP_ANGLES = tuple(2 * math.pi * (j + 0.37) / 4096 for j in range(4096))
+_SWEEP_RADII = (0.1, 1e-3, 1e-6)
+_HOLE = (
+    "ha de ser una funció real a tot $\\mathbb{R}^2\\setminus\\{(0,0)\\}$. Si la fórmula té un forat (p. ex. "
+    "$\\sin(1/x)$), canvia-la per una definida a tot arreu (p. ex. $\\sin(1/(x^2+y^2))$)."
+)
 
 
 def _check_defined(g: sp.Expr) -> None:
     """f must be a real function on the whole plane minus the origin: a hole on an axis would otherwise make a
     difference quotient "not exist" (1/x has no partial derivative in y because it is not defined on x = 0)."""
+    # Numerically first, on a fine sweep of angles: a thin sector where f is complex (sqrt of a negative) is found.
+    try:
+        f_num = _numeric(g, (X, Y))
+    except Exception:
+        f_num = None
+    for r in _SWEEP_RADII if f_num is not None else ():
+        for theta in _SWEEP_ANGLES:
+            x, y = r * math.cos(theta), r * math.sin(theta)
+            try:
+                value = complex(f_num(x, y))  # type: ignore[misc, arg-type]
+            except OverflowError:
+                continue
+            except (ValueError, ZeroDivisionError, TypeError):
+                value = complex(math.nan)
+            if math.isnan(value.real) or abs(value.imag) > 1e-9 * max(1.0, abs(value.real)):
+                raise _BadCertificate(f"$f$ no està definida a $(x,y)\\approx({x:.3g}, {y:.3g})$: {_HOLE}")
     for u, w in _PROBE_DIRECTIONS:
         for h in (sp.Rational(1, 10), sp.Rational(1, 1000)):
             value = _at(g, h * u, h * w)
@@ -656,7 +760,4 @@ def _check_defined(g: sp.Expr) -> None:
                 math.inf,
                 -math.inf,
             ):
-                raise _BadCertificate(
-                    f"$f$ no està definida a $({sp.latex(h * u)}, {sp.latex(h * w)})$: "
-                    "ha de ser una funció real a tot $\\mathbb{R}^2\\setminus\\{(0,0)\\}$."
-                )
+                raise _BadCertificate(f"$f$ no està definida a $({sp.latex(h * u)}, {sp.latex(h * w)})$: {_HOLE}")

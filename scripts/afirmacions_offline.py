@@ -226,7 +226,8 @@ def cmd_import(path: Path, checks: CheckEvaluator, directory: Path = GENERATED_D
 
 
 if __name__ == "__main__":
-    if isinstance(sys.stdout, io.TextIOWrapper):  # statements are Catalan with math symbols; a Windows console is cp1252
+    # Statements are Catalan with math symbols; a Windows console is cp1252.
+    if isinstance(sys.stdout, io.TextIOWrapper):
         sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("command", choices=["brief", "validate", "blind", "import"])

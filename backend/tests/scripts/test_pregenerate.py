@@ -168,8 +168,50 @@ def test_offline_import_saves_only_reviewed_documents_and_check_cache_accepts_th
         "lot": "lot.json",
         "valoracio": "bé",
         "problemes": PROBLEM_FINDINGS,
+        "hash_referencia": errades_offline.reference_hash(errades_offline.source_of(batch_doc(PROBLEM_ERRORS))),
     }
     assert [e["cita"] for e in doc["errors"]] == ["$x^4 \\ge x^4+y^2$", "demostra que el límit existeix"]
 
     assert errades_offline.cmd_check_cache(out_dir) == 0
-    assert "0 cached documents with problems" in capsys.readouterr().out
+    assert "0 cached documents with problems, 0 unhashed" in capsys.readouterr().out
+
+
+def import_one(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> tuple[Path, Path]:
+    out_dir = tmp_path / "errades"
+    batch = write_json(tmp_path / "lot.json", [batch_doc(PROBLEM_ERRORS)])
+    write_json(tmp_path / "lot.ver.json", {"t2-4c:normal": {"problemes": PROBLEM_FINDINGS, "valoracio": ""}})
+    assert errades_offline.cmd_import(batch, out_dir) == 0
+    capsys.readouterr()
+    (path,) = stored(out_dir)
+    return out_dir, path
+
+
+def edit_verification(path: Path, **changes: object) -> None:
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    doc["verificacio"] |= changes
+    doc["verificacio"] = {k: v for k, v in doc["verificacio"].items() if v is not None}
+    write_json(path, doc)
+
+
+def test_check_cache_reports_a_reference_changed_since_review_and_counts_unhashed(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    out_dir, path = import_one(tmp_path, capsys)
+    edit_verification(path, hash_referencia="0" * 64)
+    assert errades_offline.cmd_check_cache(out_dir) == 1
+    out = capsys.readouterr().out
+    assert f"{path.stem}.json: the sheet / notes changed since the document was reviewed" in out
+
+    edit_verification(path, hash_referencia=None)  # reviewed before hashes were recorded: not a failure
+    assert errades_offline.cmd_check_cache(out_dir) == 0
+    assert "0 cached documents with problems, 1 unhashed" in capsys.readouterr().out
+
+
+def test_check_cache_reapplies_the_verification_gate_to_the_stored_review(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    out_dir, path = import_one(tmp_path, capsys)
+    extra = finding(2, "el quocient està fitat per $|x|$", "error", "fita falsa")
+    edit_verification(path, problemes=[*PROBLEM_FINDINGS, extra])
+    assert errades_offline.cmd_check_cache(out_dir) == 1
+    assert "hi ha un error NO intencionat al fragment 2" in capsys.readouterr().out

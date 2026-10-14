@@ -1,7 +1,7 @@
 """Code gates on a generated document (Catalan messages: they go back to the generator as rejection reasons).
 
 1. VALIDATION   error count, one error per fragment, quotes located in their fragment, balanced $...$ so KaTeX
-                renders; for theory, statement/proof split and at least one error in the statement.
+                renders, no LaTeX command outside the known vocabulary; for theory, statement/proof split and at least one error in the statement.
 2. VERIFICATION an independent pass that never sees the declared errors lists every error it finds; code then
                 requires that every declared error is found and nothing else is wrong."""
 
@@ -13,6 +13,7 @@ from core.mistakes.domain.entities.mistake_exercise import DeclaredMistake
 from core.mistakes.domain.locate import locate, overlap
 from core.mistakes.domain.values.llm_outputs import GenerationDraft, VerifierFinding
 from core.mistakes.domain.values.mistake_kind import PROBLEM_MISTAKE_KINDS, THEORY_MISTAKE_KINDS
+from core.shared.math.latex_vocabulary import unknown_commands
 
 
 class GenerationCheck(BaseModel):
@@ -26,16 +27,26 @@ class GenerationCheck(BaseModel):
         return not self.problems
 
 
+def _unknown_message(commands: set[str]) -> str:
+    listed = ", ".join(sorted(f"\\{c}" for c in commands))
+    return f"fa servir ordres LaTeX que no existeixen ({listed}); fes servir només ordres estàndard de LaTeX/KaTeX"
+
+
 def validate_generation(draft: GenerationDraft, n: int, theory: bool = False) -> GenerationCheck:
-    fragments = [f.strip() for f in draft.fragments if f.strip()]
+    # Never drop an empty fragment: the declared errors are numbered by the fragments as sent.
+    fragments = [f.strip() for f in draft.fragments]
     problems: list[str] = []
     if not 4 <= len(fragments) <= 14:
-        problems.append(f"el nombre de fragments ha de ser entre 5 i 10 (n'hi ha {len(fragments)})")
+        problems.append(f"el nombre de fragments ha de ser entre 4 i 14 (n'hi ha {len(fragments)})")
     for i, f in enumerate(fragments, 1):
+        if not f:
+            problems.append(f"el fragment {i} és buit")
         if len(re.findall(r"(?<!\\)\$", f)) % 2:
             problems.append(f"el fragment {i} té un nombre senar de '$' (LaTeX mal tancat)")
         if "$$" in f:
             problems.append(f"el fragment {i} fa servir $$...$$; cal $...$")
+        if unknown := unknown_commands(f):
+            problems.append(f"el fragment {i} {_unknown_message(unknown)}")
     n_statement = draft.statement_fragments if theory else 0
     if theory and (not isinstance(n_statement, int) or not 1 <= n_statement <= 3 or n_statement > len(fragments) - 3):
         problems.append(
@@ -48,6 +59,14 @@ def validate_generation(draft: GenerationDraft, n: int, theory: bool = False) ->
     mistakes: list[DeclaredMistake] = []
     used: set[int] = set()
     for k, e in enumerate(raw, 1):
+        for field, value in (
+            ("cita", e.quote),
+            ("explicacio", e.explanation),
+            ("correccio", e.correction),
+            ("pista", e.hint),
+        ):
+            if unknown := unknown_commands(value):
+                problems.append(f"el camp '{field}' de l'error {k} {_unknown_message(unknown)}")
         fi = e.fragment
         if not isinstance(fi, int) or not 1 <= fi <= len(fragments):
             problems.append(f"l'error {k} apunta a un fragment inexistent ({fi})")
@@ -97,7 +116,6 @@ def compare_verification(
     """The independent check must find every declared error and nothing else that is wrong."""
     issues: list[str] = []
     real = [p for p in findings if p.severity in ("error", "consequencia")]
-    declared = {e.fragment for e in mistakes}
 
     def same_problem(e: DeclaredMistake, p: VerifierFinding) -> bool:
         # A different problem in the same fragment does not confirm the declared one: the quotes must overlap
@@ -117,6 +135,7 @@ def compare_verification(
                 "potser no és un error real o és ambigu"
             )
     for p in findings:
-        if p.severity == "error" and p.fragment not in declared:
+        # Inside a declared fragment too: a second, different error there is just as unintended.
+        if p.severity == "error" and not any(same_problem(e, p) for e in mistakes):
             issues.append(f"hi ha un error NO intencionat al fragment {p.fragment}: «{p.quote}» — {p.explanation}")
     return issues

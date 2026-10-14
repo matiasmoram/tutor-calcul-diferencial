@@ -6,6 +6,7 @@ extracts the formulas of a text, parses them into sympy, and compares them by va
 - `formulas(text)`: the math segments of a text ($...$, $$...$$, \\(...\\), \\[...\\]).
 - `sides(segment)`: the comparable pieces of a segment: relations (=, <, \\le, \\to, ...) and top-level commas
   split it, so "A = B = C" gives A, B and C; "\\pm" gives both signs.
+- `prose_formulas(text)`: equations written in the prose without delimiters ("P_2 = 2 + x + (x^2+y^2)/2").
 - `parse(latex)`: LaTeX -> sympy, or None (never raises). A small recursive-descent parser handles the notation
   of the sheets; sympy's lark LaTeX parser is a fallback for what it does not know.
 - `equivalent(a, b)`: True / False / None (undecidable). Random-point numeric comparison with shared values per
@@ -24,7 +25,18 @@ from functools import lru_cache
 import sympy as sp
 from sympy.core.function import AppliedUndef
 
-__all__ = ["checkable", "equivalent", "explain", "formulas", "is_trivial", "leaked", "parse", "sides"]
+__all__ = [
+    "checkable",
+    "equivalent",
+    "explain",
+    "formulas",
+    "is_trivial",
+    "leaked",
+    "literal_tokens",
+    "parse",
+    "prose_formulas",
+    "sides",
+]
 
 N_POINTS = 8
 MIN_VALID_POINTS = 3
@@ -34,6 +46,85 @@ LANDAU = object()  # o(...) / O(...) terms: dropped from sums (Taylor remainders
 
 class _ParseError(Exception):
     pass
+
+
+# Size bounds: sympy evaluates integer powers and factorials exactly, holding the GIL, so "9^{9^{9}}" in a message
+# would freeze every thread of the process. Anything beyond these bounds is not a usable formula (unparseable).
+MAX_INT_BITS = 16384  # ~4900 decimal digits
+MAX_EXPONENT = 10_000  # numeric exponent, any base
+MAX_FACTORIAL = 1000
+MAX_MATRIX_POWER = 64
+MAX_MATRIX_ENTRIES = 36
+MAX_DET_SIZE = 4
+
+
+def _bits(x: sp.Rational) -> int:
+    return max(abs(int(x.p)).bit_length(), int(x.q).bit_length())
+
+
+def _sized(e):
+    """`e`, unless its numeric coefficient is too large to keep computing with."""
+    c = e if isinstance(e, sp.Rational) else e.as_coeff_Mul()[0] if isinstance(e, sp.Mul) else None
+    if isinstance(c, sp.Rational) and _bits(c) > MAX_INT_BITS:
+        raise _ParseError("number too large")
+    return e
+
+
+def _pow(base, exp):
+    """base**exp, refused before sympy starts an exact computation that cannot finish in reasonable time."""
+    if base == sp.E:
+        return sp.exp(exp)
+    if isinstance(exp, sp.Rational):
+        if isinstance(base, sp.MatrixBase):
+            if abs(exp) > MAX_MATRIX_POWER:
+                raise _ParseError("matrix power too large")
+        elif abs(exp) > MAX_EXPONENT:
+            raise _ParseError("exponent too large")
+        elif isinstance(base, sp.Rational) and base not in (0, 1, -1) and _bits(base) * abs(float(exp)) > MAX_INT_BITS:
+            raise _ParseError("power too large")
+    return _sized(base**exp)
+
+
+def _factorial(e):
+    if isinstance(e, sp.Integer) and e > MAX_FACTORIAL:
+        raise _ParseError("factorial too large")
+    return sp.factorial(e)
+
+
+def _check_magnitude(e) -> float | None:
+    """Bound of log2|value| of an unevaluated numeric subtree (None if symbolic); raises _ParseError when
+    evaluating it would exceed the size bounds. Used on sympy's own parser output, built with evaluate=False."""
+    if isinstance(e, sp.Rational):
+        return float(_bits(e))
+    if not isinstance(e, sp.Basic) or not e.args:
+        return None
+    sub = [_check_magnitude(a) for a in e.args]
+    if isinstance(e, sp.Pow):
+        b, x = sub
+        if x is None:
+            return None
+        if x > MAX_EXPONENT.bit_length():
+            raise _ParseError("exponent too large")
+        if b is None:
+            return None
+        mag = b * 2.0**x
+        if mag > MAX_INT_BITS:
+            raise _ParseError("power too large")
+        return mag
+    if isinstance(e, sp.factorial):
+        if sub[0] is not None and sub[0] > MAX_FACTORIAL.bit_length():
+            raise _ParseError("factorial too large")
+        return None if sub[0] is None else 2.0 ** sub[0] * sub[0]
+    if any(m is None for m in sub):
+        return None
+    if isinstance(e, sp.Mul):
+        total = sum(m for m in sub if m is not None)
+        if total > MAX_INT_BITS:
+            raise _ParseError("number too large")
+        return total
+    if isinstance(e, sp.Add):
+        return max(m for m in sub if m is not None) + len(sub)
+    return None
 
 
 # ---------------------------------------------------------------- extraction
@@ -49,6 +140,52 @@ def _formulas(text: str) -> tuple[str, ...]:
 def formulas(text: str) -> list[str]:
     """Math segments of a text, in order ($$...$$, $...$, \\[...\\], \\(...\\))."""
     return [f for f in _formulas(text) if f]
+
+
+# Clause ends outside formulas: a sentence end or colon followed by a space (not the point of 2.125), a line
+# break, a code fence.
+_CLAUSE_END = re.compile(r"[.!?;:](?=\s|$)|\n|`+")
+_WORD = re.compile(r"[^\W\d_]+(?:['’·-][^\W\d_]+)*")
+_MATH_CHAR = re.compile(r"[\d=+\-*/^_()\[\]{}|\\<>≤≥≈²³½√π·!]|[⁰-₟]")
+_PROSE_LETTERS = {"a", "e", "i", "o"}  # Catalan words (to, and, or) when standing alone, not variables
+_PROSE_RELATION = re.compile(r"=|≈|\\approx(?![A-Za-z])")
+
+
+def _mathlike(token: str) -> bool:
+    word = token.rstrip(",")
+    if not word:
+        return False
+    if _WORD.fullmatch(word):  # letters only: a variable, a function name, or a prose word
+        low = word.lower()
+        if len(word) == 1:
+            return low not in _PROSE_LETTERS
+        return low in _FUNC_ALIASES or low in ("sqrt", "pi") or re.fullmatch(r"[xyzuvw]{2,3}", word) is not None
+    return _MATH_CHAR.search(word) is not None
+
+
+@lru_cache(maxsize=4096)
+def _prose_formulas(text: str) -> tuple[str, ...]:
+    prose = _SEGMENT.sub("\n", text or "")
+    out: list[str] = []
+    for clause in _CLAUSE_END.split(prose):
+        run: list[str] = []
+        for token in [*clause.split(), ""]:
+            if token and _mathlike(token):
+                run.append(token)
+                if not token.endswith(","):  # "x = 2, per tant": the comma closes the formula
+                    continue
+            candidate = " ".join(run).rstrip(",").strip()
+            if _PROSE_RELATION.search(candidate):
+                out.append(candidate)
+            run = []
+    return tuple(out)
+
+
+def prose_formulas(text: str) -> list[str]:
+    """Equations written in plain prose, without $...$ (cheap models skip the delimiters): maximal runs of
+    math-looking words that contain "=" or "≈". A word of two or more letters ends a run unless it is a function
+    name, so "el valor és x = 3 aproximadament" gives "x = 3"."""
+    return list(_prose_formulas(text))
 
 
 # ---------------------------------------------------------------- normalisation
@@ -80,7 +217,16 @@ _UNICODE = {
     "φ": r"\varphi ",
     "∂": r"\partial ",
     "∇": r"\nabla ",
+    "\u00bd": r"\frac{1}{2}",
+    "\u00bc": r"\frac{1}{4}",
+    "\u00be": r"\frac{3}{4}",
     "\u00a0": " ",
+    **{chr(0x2080 + d): f"_{d}" for d in range(10)},  # P\u2082
+    **{
+        c: f"^{d}"
+        for d, c in enumerate("\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079")
+        if d not in (2, 3)
+    },
 }
 _FUNC_ALIASES = {
     "sin": "sin",
@@ -369,7 +515,7 @@ class _Parser:
                 g = self.unary()
                 if g is LANDAU or f is LANDAU:
                     raise _ParseError("remainder in quotient")
-                f = f / g
+                f = _sized(f / g)
                 continue
             elif self._starts_factor(t):
                 g = self.power()
@@ -380,7 +526,7 @@ class _Parser:
             if f is LANDAU or g is LANDAU:
                 f = LANDAU
             else:
-                f = f * g
+                f = _sized(f * g)
 
     def unary(self):
         if self.peek() == "-":
@@ -399,14 +545,13 @@ class _Parser:
             exp = self.script()
             if base is LANDAU:
                 raise _ParseError("power of remainder")
-            base = sp.exp(exp) if base == sp.E else base**exp
-            base = self.postfix(base)
+            base = self.postfix(_pow(base, exp))
         return base
 
     def postfix(self, e):
         while self.peek() == "!":
             self.take()
-            e = sp.factorial(e)
+            e = _factorial(e)
         return e
 
     def script(self):
@@ -527,7 +672,7 @@ class _Parser:
         if arg is LANDAU:
             raise _ParseError("remainder in function")
         out = _SP_FUNCS[fname](arg)
-        return out**power if power is not None else out
+        return _pow(out, power) if power is not None else out
 
     def matrix(self):
         env = self.raw_script()
@@ -554,8 +699,10 @@ class _Parser:
                 raise _ParseError(f"unexpected {t} in matrix")
         if len({len(r) for r in rows}) != 1 or any(x is LANDAU for r in rows for x in r):
             raise _ParseError("ragged matrix")
+        if len(rows) * len(rows[0]) > MAX_MATRIX_ENTRIES:
+            raise _ParseError("matrix too large")
         m = sp.ImmutableMatrix(rows)
-        return m.det() if env == "vmatrix" else m
+        return _det(m) if env == "vmatrix" else m
 
     def atom(self):
         t = self.take()
@@ -614,11 +761,17 @@ class _Parser:
                 m = self.power()
                 if not isinstance(m, sp.MatrixBase):
                     raise _ParseError("det of non-matrix")
-                return m.det()
+                return _det(m)
             if cmd in ("max", "min"):
                 args = self.call_args()
                 return (sp.Max if cmd == "max" else sp.Min)(*args)
         raise _ParseError(f"unsupported token {t}")
+
+
+def _det(m):
+    if max(m.shape) > MAX_DET_SIZE:
+        raise _ParseError("determinant too large")
+    return m.det()
 
 
 _LARK_OK = re.compile(r"^[^{}\\]*$")  # lark is only tried on plain text (never on \lim: notation, not a value)
@@ -628,6 +781,10 @@ def _lark(latex: str):
     try:
         from sympy.parsing.latex import parse_latex
 
+        # Built unevaluated first: sympy would otherwise compute "9^9^9" exactly while parsing it.
+        with sp.evaluate(False):
+            raw = parse_latex(latex, backend="lark")
+        _check_magnitude(raw)
         e = parse_latex(latex, backend="lark")
     except Exception:
         return None
@@ -871,11 +1028,10 @@ def _checkable(e) -> bool:
 
 
 @lru_cache(maxsize=4096)
-def _candidates(text: str, bare: bool = False, values_only: bool = False) -> tuple[tuple[str, object, object], ...]:
-    """Non-trivial parsed sides of every formula in a text: (side text, expr, fingerprint)."""
-    segs = formulas(text)
-    if bare and not segs and text and text.strip():
-        segs = [text.strip()]
+def _candidates(text: str, prose: bool = False, values_only: bool = False) -> tuple[tuple[str, object, object], ...]:
+    """Non-trivial parsed sides of every formula in a text: (side text, expr, fingerprint). With `prose`, the
+    equations written in the prose without delimiters too."""
+    segs = formulas(text) + (prose_formulas(text) if prose else [])
     out = []
     for seg in segs:
         for side in _sides(seg, values_only):
@@ -935,7 +1091,7 @@ def _fragments(side: str) -> list[str]:
 def _permitted(text: str) -> tuple[tuple[str, object, object], ...]:
     """Permitted pool of a text: its formulas, their subexpressions (design 6.3 (b)), and the bracketed
     fragments of formulas that do not parse as a whole (limits, notation such as DG^{-1}(4,4,-1))."""
-    segs = formulas(text) or ([text.strip()] if text and text.strip() else [])
+    segs = (formulas(text) or ([text.strip()] if text and text.strip() else [])) + prose_formulas(text)
     roots: list[tuple[str, object]] = []
     for seg in segs:
         for side in _sides(seg):
@@ -968,6 +1124,31 @@ def _permitted(text: str) -> tuple[tuple[str, object, object], ...]:
     return tuple(out)
 
 
+_CELL = re.compile(r"&|\\\\|\\quad(?![A-Za-z])")
+_ENV = re.compile(r"\\(?:begin|end)\{[A-Za-z]*\*?\}")
+
+
+def literal_tokens(text: str) -> set[str]:
+    """The whole pieces of a text's formulas, normalised: each formula, its sides, the cells of its environments
+    (cases, aligned, matrices), and the relation-separated pieces of each bracket or |...| group. A text without
+    $...$ counts as one formula. "x-2y" is not a piece of "x-2y-z = 0"; "(x-2)^2+y^2" is one of
+    "F(\\{(x,y) \\mid (x-2)^2+y^2 \\le 1\\})"."""
+    segs = (formulas(text) or ([text.strip()] if text and text.strip() else [])) + prose_formulas(text)
+    out: set[str] = set()
+    for seg in segs:
+        norm = _normalise(seg)
+        out.add(norm)
+        pieces = [*_top_level_split(norm), *_CELL.split(_ENV.sub(" ", norm))]
+        groups = [g for f in _fragments(norm) for g in ([f, f[1:-1]] if f.startswith("(") else [f])]
+        groups += [m.group(0) for m in re.finditer(r"\|[^|]+\|", norm)]
+        for group in groups:
+            pieces.append(group)
+            pieces += _top_level_split(group)
+        for piece in pieces:
+            out.update(p.strip() for p in [piece, *_CELL.split(piece)] if p.strip())
+    return out
+
+
 def _negated(fp):
     if fp is None or fp[0] in ("tuple", "matrix"):
         return None
@@ -988,28 +1169,28 @@ def _matches_permitted(e, fp, perm) -> bool:
 
 
 def explain(draft: str, forbidden: list[str], allowed: list[str]) -> list[tuple[str, str]]:
-    """Like `leaked`, but each hit comes with the forbidden formula it matches: [(draft side, forbidden side)]."""
-    try:
-        draft_c = _candidates(draft or "")
-        if not draft_c:
-            return []
-        forb = [c for t in forbidden for c in _candidates(t or "", False, True)]
-        if not forb:
-            return []
-        perm = [c for t in allowed for c in _permitted(t or "")]
-        hits: list[tuple[str, str]] = []
-        done: set[str] = set()
-        for side, e, fp in draft_c:
-            if side in done:
-                continue
-            done.add(side)
-            match = next((fs for fs, fe, ffp in forb if e == fe or _compare(e, fe, fp, ffp)), None)
-            if match is None or _matches_permitted(e, fp, perm):
-                continue
-            hits.append((side, match))
-        return hits
-    except Exception:
+    """Like `leaked`, but each hit comes with the forbidden formula it matches: [(draft side, forbidden side)].
+
+    The draft's equations written without $...$ are checked too. An unexpected error propagates: "no leak" and
+    "not checked" must stay distinguishable, so the caller can fail closed."""
+    draft_c = _candidates(draft or "", True)
+    if not draft_c:
         return []
+    forb = [c for t in forbidden for c in _candidates(t or "", False, True)]
+    if not forb:
+        return []
+    perm = [c for t in allowed for c in _permitted(t or "")]
+    hits: list[tuple[str, str]] = []
+    done: set[str] = set()
+    for side, e, fp in draft_c:
+        if side in done:
+            continue
+        done.add(side)
+        match = next((fs for fs, fe, ffp in forb if e == fe or _compare(e, fe, fp, ffp)), None)
+        if match is None or _matches_permitted(e, fp, perm):
+            continue
+        hits.append((side, match))
+    return hits
 
 
 def leaked(draft: str, forbidden: list[str], allowed: list[str]) -> list[str]:

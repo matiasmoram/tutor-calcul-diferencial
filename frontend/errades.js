@@ -34,6 +34,7 @@ const LOADING_STEPS = {
 const E = {
   font: "problema", llista: null, ex: null, item: null, disp: {}, dificultat: "normal", sessionId: null, sol: null,
   anotacions: [], actiu: null, resultat: null, revelats: new Set(), pistes: new Set(), seq: 0,
+  req: 0, busy: false,  // req numbers each document load: only the latest one may touch the page
 };
 
 /* ---------- offsets: backend counts code points, JS strings count UTF-16 units ---------- */
@@ -141,7 +142,7 @@ function renderShell() {
         title: E.disp[d.id] ? "Preparat: s'obre a l'instant" : "Encara no n'hi ha cap de preparat: es generarà (cal l'API)" },
         el("span", { text: d.label }), el("small", { text: `${d.n} error${d.n > 1 ? "s" : ""}${E.disp[d.id] ? "" : " · nou"}` }));
       b.addEventListener("click", () => {
-        if (E.dificultat === d.id) return;
+        if (E.dificultat === d.id || E.busy) return;
         E.dificultat = d.id;
         root.querySelectorAll(".chip").forEach((c) => {
           c.classList.toggle("on", c.dataset.dif === d.id);
@@ -152,8 +153,7 @@ function renderShell() {
       return b;
     }));
   const nova = el("button", { type: "button", class: "btn ghost small-btn", id: "er-nova", text: teoria ? "↻ Una altra versió" : "↻ Una altra resolució" });
-  // With more than one ready document, "another" picks a different one; otherwise it generates a new one.
-  nova.addEventListener("click", () => carregar((E.disp[E.dificultat] || 0) <= 1));
+  nova.addEventListener("click", unAltre);
 
   const eyebrow = teoria
     ? `Troba l'error · Teoria · Tema ${E.item.tema}`
@@ -184,37 +184,87 @@ function renderShell() {
       el("aside", { class: "er-rail", id: "er-rail", "aria-label": "Comentaris" })),
     el("section", { class: "er-original hidden", id: "er-original" }));
 
-  $("#er-mark").addEventListener("mousedown", (e) => e.preventDefault()); // keep the selection alive
+  // Keep the selection alive (pointerdown also covers touch, where mousedown arrives too late).
+  $("#er-mark").addEventListener("mousedown", (e) => e.preventDefault());
+  $("#er-mark").addEventListener("pointerdown", (e) => e.preventDefault());
   $("#er-mark").addEventListener("click", crearAnotacio);
-  $("#er-paper").addEventListener("mouseup", () => setTimeout(onSelection, 0));
+  $("#er-paper").addEventListener("pointerup", () => setTimeout(onSelection, 0));
+  $("#er-paper").addEventListener("touchend", () => setTimeout(onSelection, 0));
   $("#er-paper").addEventListener("keyup", (e) => { if (e.shiftKey) onSelection(); });
-  document.addEventListener("selectionchange", () => {
-    const sel = getSelection();
-    if (!sel || sel.isCollapsed) $("#er-mark")?.classList.add("hidden");
-  });
+}
+
+// Phones select by long-press and drag handles: no mouseup/keyup, only selectionchange (debounced: it fires
+// on every handle move). Registered once, not per document.
+let selTimer = null;
+document.addEventListener("selectionchange", () => {
+  clearTimeout(selTimer);
+  selTimer = setTimeout(onSelection, 250);
+});
+
+function erBusy(on) {
+  // While a document loads or a correction runs: no other paid call can be fired from the page.
+  E.busy = on;
+  document.querySelectorAll("#view-errades .er-controls button").forEach((b) => { b.disabled = on; });
+}
+
+function erStale(req, hash) {
+  // A response that is not for the latest load, or arrives after the student left this page, is dropped.
+  return req !== E.req || location.hash !== hash;
+}
+
+function unAltre() {
+  // With more than one ready document, "another" picks a different one (no API cost);
+  // otherwise generating a new one needs an explicit click.
+  if ((E.disp[E.dificultat] || 0) > 1) carregar(false);
+  else oferirGenerar(true);
 }
 
 /* ---------- loading ---------- */
 
-async function carregar(nova) {
-  const anterior = E.sol?.id || null;
+function resetDoc() {
   Object.assign(E, { sessionId: null, sol: null, anotacions: [], actiu: null, resultat: null, revelats: new Set(), pistes: new Set() });
+  $("#er-rail").replaceChildren();
+  $("#er-bar").replaceChildren();
+  $("#er-original").classList.add("hidden");
+}
+
+function oferirGenerar(altre = false) {
+  // Generating a document is a paid, minutes-long call: it only starts on an explicit click.
+  E.req++;  // a load still in flight for another difficulty must not replace this
+  erBusy(false);
+  resetDoc();
+  const ready = DIFICULTATS.filter((d) => E.disp[d.id]).map((d) => d.label);
+  const gen = el("button", { type: "button", class: "btn primary", text: "Genera'n un de nou (pot trigar uns minuts)" });
+  gen.addEventListener("click", () => carregar(true));
+  const paper = $("#er-paper");
+  paper.classList.remove("loading");
+  paper.replaceChildren(el("div", { class: "er-generate" },
+    el("strong", { text: altre ? "No n'hi ha cap altre de preparat en aquesta dificultat." : "Encara no hi ha cap document preparat en aquesta dificultat." }),
+    POT_GENERAR ? el("p", { class: "muted", text: "Se'n pot generar un de nou: un model l'escriu i un altre el verifica." }) : null,
+    ready.length ? el("p", { class: "muted", text: `Hi ha documents preparats per a: ${ready.join(", ")}.` }) : null,
+    POT_GENERAR ? gen : el("p", { class: "muted", text: "Prova una altra dificultat, o demana al professorat que en prepari un." })));
+}
+
+async function carregar(nova) {
+  // nova=false only opens a ready document; with none ready, the student chooses whether to generate one.
+  if (!nova && !E.disp[E.dificultat]) return oferirGenerar();
+  const req = ++E.req;
+  const hash = location.hash;
+  const anterior = E.sol?.id || null;
+  resetDoc();
   const steps = LOADING_STEPS[E.font];
   const paper = $("#er-paper");
   paper.classList.add("loading");
   paper.replaceChildren(
     el("div", { class: "er-loading" },
-      el("div", { class: "er-loading-step", id: "er-step", text: E.disp[E.dificultat] && !nova ? "Obrint el document…" : steps[0] }),
+      el("div", { class: "er-loading-step", id: "er-step", text: nova ? steps[0] : "Obrint el document…" }),
       ...[92, 78, 88, 64, 95, 70, 84, 58].map((w) => el("div", { class: "skeleton", style: `width:${w}%` }))));
-  $("#er-rail").replaceChildren();
-  $("#er-bar").replaceChildren();
-  $("#er-original").classList.add("hidden");
-  $("#er-nova").disabled = true;
+  erBusy(true);
   let k = 0;
   const ticker = setInterval(() => {
     k = Math.min(k + 1, steps.length - 1);
     const step = $("#er-step");
-    if (step) step.textContent = steps[k];
+    if (step && nova) step.textContent = steps[k];
   }, 9000);
   try {
     const font = E.font === "teoria" ? { teoria_id: E.item.id } : { exercici_id: E.ex.id };
@@ -222,6 +272,7 @@ async function carregar(nova) {
       method: "POST",
       body: JSON.stringify({ ...font, dificultat: E.dificultat, nova, excepte: anterior }),
     });
+    if (erStale(req, hash)) return;
     E.sessionId = data.session_id;
     E.sol = data.solucio;
     if (data.generada_ara) E.disp[E.dificultat] = (E.disp[E.dificultat] || 0) + 1;
@@ -229,14 +280,20 @@ async function carregar(nova) {
     renderBar();
     renderRail();
   } catch (err) {
+    if (erStale(req, hash)) return;
     const ready = DIFICULTATS.filter((d) => E.disp[d.id]).map((d) => d.label);
+    // 403/409: the server refuses to generate (not allowed, or one already being generated): its message, as is.
+    const refusal = err.status === 403 || err.status === 409;
     paper.replaceChildren(el("div", { class: "er-error" },
-      el("strong", { text: "No s'ha pogut preparar el document" }), el("p", { class: "muted", text: err.message }),
+      el("strong", { text: refusal ? err.message : "No s'ha pogut preparar el document" }),
+      refusal ? null : el("p", { class: "muted", text: err.message }),
       ready.length ? el("p", { class: "muted", text: `Hi ha documents preparats per a: ${ready.join(", ")}.` }) : null));
   } finally {
     clearInterval(ticker);
-    paper.classList.remove("loading");
-    $("#er-nova").disabled = false;
+    if (req === E.req) {
+      paper.classList.remove("loading");
+      erBusy(false);
+    }
   }
 }
 
@@ -334,7 +391,8 @@ function tokOf(container, offset, isEnd) {
 
 function onSelection() {
   const btn = $("#er-mark");
-  if (!btn || E.resultat || !E.sol) return;
+  if (!btn) return;
+  if (E.resultat || !E.sol || E.busy) { btn.classList.add("hidden"); return; }
   const sel = getSelection();
   if (!sel || sel.isCollapsed || !sel.rangeCount) { btn.classList.add("hidden"); return; }
   const range = sel.getRangeAt(0);
@@ -420,11 +478,15 @@ function renderBar() {
 }
 
 async function enviar() {
+  if (E.busy || !E.sessionId) return;
+  const req = E.req;
+  const hash = location.hash;
   const bar = $("#er-bar");
   bar.replaceChildren(el("div", { class: "er-progress" }, el("span", { class: "spinner" }),
     el("span", { text: "Corregint les teves anotacions…" })));
+  erBusy(true);
   try {
-    E.resultat = await api(`/api/errades/sessions/${E.sessionId}/correccio`, {
+    const resultat = await api(`/api/errades/sessions/${E.sessionId}/correccio`, {
       method: "POST",
       body: JSON.stringify({
         anotacions: E.anotacions.map((a) => {
@@ -433,6 +495,8 @@ async function enviar() {
         }),
       }),
     });
+    if (erStale(req, hash)) return;
+    E.resultat = resultat;
     E.actiu = null;
     paintHighlights();
     renderRail();
@@ -440,8 +504,11 @@ async function enviar() {
     renderOriginal();
     $("#view-errades").scrollTo({ top: 0, behavior: "smooth" });
   } catch (err) {
+    if (erStale(req, hash)) return;
     renderBar();
     bar.append(el("span", { class: "warn-text", text: err.message }));
+  } finally {
+    if (req === E.req) erBusy(false);
   }
 }
 
@@ -464,7 +531,7 @@ function renderScore() {
     <circle cx="32" cy="32" r="${R}" class="value" stroke-dasharray="${(C * r.nota) / 100} ${C}" transform="rotate(-90 32 32)"/>
     <text x="32" y="37" text-anchor="middle">${r.nota}</text>`;
   const again = el("button", { type: "button", class: "btn primary", text: E.font === "teoria" ? "Una altra versió" : "Una altra resolució" });
-  again.addEventListener("click", () => carregar((E.disp[E.dificultat] || 0) <= 1));
+  again.addEventListener("click", unAltre);
   $("#er-bar").replaceChildren(
     el("div", { class: "er-score" }, ring,
       el("div", {},
@@ -553,12 +620,16 @@ function railResultats() {
     cards.push(card);
   }
   for (const a of r.anotacions.filter((x) => x.error === "cap")) {
+    // A stored grading can carry ids that are not this page's marks (e.g. graded from another tab): show the
+    // server's verdict without the local quote instead of failing.
     const mine = E.anotacions.find((x) => x.id === a.id);
-    cards.push(el("div", { class: "note result false", "data-frag": String(mine.fragment), "data-card": a.id },
-      el("div", { class: "note-head" }, el("span", { class: "note-tag", text: `La teva marca · paràgraf ${mine.fragment}` }),
+    const card = el("div", { class: "note result false", "data-card": a.id },
+      el("div", { class: "note-head" }, el("span", { class: "note-tag", text: mine ? `La teva marca · paràgraf ${mine.fragment}` : "Una marca teva" }),
         el("span", { class: "pill neutral", text: "Aquí no hi havia error" })),
-      quote(mine.cita),
-      a.feedback ? math(el("p", { class: "note-feedback", text: a.feedback })) : null));
+      mine ? quote(mine.cita) : null,
+      a.feedback ? math(el("p", { class: "note-feedback", text: a.feedback })) : null);
+    if (mine) card.dataset.frag = String(mine.fragment);
+    cards.push(card);
   }
   return cards;
 }

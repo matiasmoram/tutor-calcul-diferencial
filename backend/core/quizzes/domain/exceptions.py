@@ -38,6 +38,14 @@ class QuizGenerationException(QuizException):
         super().__init__(message, 502)
 
 
+class QuizGradingTimeoutException(QuizException):
+    """The grading did not finish within its deadline; nothing was stored, the student can resubmit."""
+
+    def __init__(self, session_id: str) -> None:
+        super().__init__("La correcció ha trigat massa. Torna-ho a provar.", 504)
+        self.session_id = session_id
+
+
 class ConcurrentQuizGradingException(QuizException):
     """The session changed while it was being graded (a second submission of the same quiz)."""
 

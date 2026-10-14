@@ -7,6 +7,7 @@ on:
 jobs:
   checks:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
@@ -25,6 +26,8 @@ jobs:
 
   tests:
     runs-on: ubuntu-latest
+    # Each test also has a 300 s pytest-timeout (pyproject.toml).
+    timeout-minutes: 30
     services:
       postgres:
         image: postgres:17
@@ -60,6 +63,21 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     needs: [checks, tests]
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - run: docker build -t tutor-calcul .
+      # The image must start: the start-up checks (course YAML, counterexample theory citations, seeding) run before
+      # /health answers. The key is a placeholder (the OpenAI client needs one to be built; nothing calls the model)
+      # and the database is a throwaway SQLite file in the container. 512 MB as on the Render free plan.
+      - name: Container starts and answers /health
+        run: |
+          docker run -d --name app -m 512m -p 8000:8000 -e LLM_PROVIDER=openai -e OPENAI_API_KEY=sk-ci-placeholder \
+            -e DATABASE_URL=sqlite:////tmp/tutor.db tutor-calcul
+          for i in $(seq 60); do
+            if curl -fsS http://127.0.0.1:8000/health; then exit 0; fi
+            if [ "$(docker inspect -f '{{.State.Running}}' app)" != "true" ]; then break; fi
+            sleep 2
+          done
+          docker logs app
+          exit 1

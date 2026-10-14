@@ -1,3 +1,5 @@
+import asyncio
+
 from pydantic import BaseModel
 
 from core.course.domain.entities.course import Course
@@ -5,8 +7,12 @@ from core.course.domain.entities.theory_item import TheoryItem
 from core.mistakes.domain.entities.annotation import Annotation
 from core.mistakes.domain.entities.mistake_grading import MistakeGrading
 from core.mistakes.domain.entities.mistake_session import MistakeSession
-from core.mistakes.domain.exceptions import GradingInProgressException, MistakeSessionAlreadyGradedException
-from core.mistakes.domain.grading import grade, locate_annotations
+from core.mistakes.domain.exceptions import (
+    GradingInProgressException,
+    MistakeGradingTimeoutException,
+    MistakeSessionAlreadyGradedException,
+)
+from core.mistakes.domain.grading import check_annotations, grade, locate_annotations
 from core.mistakes.domain.ports import AnnotationGrader
 from core.mistakes.domain.repository import MistakeExerciseRepository, MistakeSessionRepository
 from core.mistakes.domain.sources import source_of
@@ -15,8 +21,11 @@ from core.shared.domain.clock import Clock
 from core.shared.domain.ids import SessionId
 from core.shared.llm.call_scope import call_scope
 
-# A claim older than this belongs to a grading that died without releasing it.
-GRADING_CLAIM_TIMEOUT_S = 300.0
+GRADING_DEADLINE_S = 240.0  # the whole grading, every model call and retry included
+# A claim older than this belongs to a grading that died without releasing it. Strictly above GRADING_DEADLINE_S: a
+# live grading is cancelled by its deadline before its claim can go stale, so a takeover never runs (and pays) beside
+# the grading it replaces.
+GRADING_CLAIM_TIMEOUT_S = GRADING_DEADLINE_S + 60.0
 
 
 class AnnotationsGrading(BaseModel):
@@ -43,18 +52,25 @@ class AnnotationsGrader:
         self._clock = clock
 
     async def grade(self, session_id: SessionId, annotations: list[Annotation]) -> AnnotationsGrading:
+        check_annotations(annotations)
         session = await self._sessions.get(session_id)
         if session.grading is not None:
             return self._outcome(session, session.grading)
         claimed_at = self._clock.now()
         if not await self._sessions.claim_grading(session_id, claimed_at, claimed_at - GRADING_CLAIM_TIMEOUT_S):
             return await self._stored_outcome(session_id)
+        deadline = asyncio.timeout(GRADING_DEADLINE_S)
         try:
-            grading = await self._grade(session, annotations)
-            await self._sessions.save_grading(session_id, annotations, grading, self._clock.now())
+            async with deadline:
+                grading = await self._grade(session, annotations)
+                await self._sessions.save_grading(session_id, annotations, grading, self._clock.now())
         except MistakeSessionAlreadyGradedException:
             # Our claim went stale and was taken over, and the other grading was stored first: it stands.
             return await self._stored_outcome(session_id)
+        except TimeoutError:
+            if deadline.expired():
+                raise MistakeGradingTimeoutException(session_id) from None
+            raise
         finally:
             await self._sessions.release_grading(session_id, claimed_at)
         return self._outcome(session, grading)

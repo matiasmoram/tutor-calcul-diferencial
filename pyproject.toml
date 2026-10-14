@@ -28,6 +28,7 @@ dev = [
     "pytest-asyncio>=0.24",
     "ruff>=0.8",
     "pyright>=1.1.390",
+    "pytest-timeout>=2.4.0",
 ]
 
 [build-system]
@@ -43,6 +44,8 @@ pythonpath = ["backend", "."]
 testpaths = ["backend/tests"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
+# pytest-timeout: a check hung in-process (sympy in a hard limit) fails its test instead of holding CI for hours.
+timeout = 300
 
 [tool.ruff]
 line-length = 120

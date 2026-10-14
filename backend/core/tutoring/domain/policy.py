@@ -7,8 +7,16 @@ phrases the plan, and it only sees the content the plan allows.
 Invariants (each has a test):
 - Progress: a student who neither completes nor advances a step after a hint gets a higher level next time;
   every step-targeted action uses the same escalation rule.
-- No oracle: a bare guess (no reasoning shown) is neither confirmed nor denied.
-- Closing is terminal: after `tancar` the session stays closed.
+- No oracle: a guess without reasoning in the same message is neither confirmed nor denied, whatever was worked
+  out earlier (until every step is resolved).
+- Evidence: a step only becomes completed in a message that shows work, and only up to the current target; the
+  conclusion is never stated in the turn in which the last steps were first completed.
+- Closing needs a work intent and reasoning in the message (or every step resolved); then it is terminal: after
+  `tancar` the session stays closed.
+- The result gate only lifts once the student's own text contains the result (regex or CAS), never on the
+  diagnosis' word alone.
+- No dead end: the same mistake repeated at the top of the ladder (or a request for the solution after an attempt)
+  shows the step; with every step resolved, a mistake repeated (or one the student is stuck on) shows the conclusion.
 - Non-hint actions (concept questions, redirections) never move the hint ladder.
 - A regex never vetoes content the plan allows (completed or shown steps, the target's detail from level 3,
   the student's own words).
@@ -25,6 +33,7 @@ from core.course.domain.entities.exercise import Exercise
 from core.course.domain.entities.theory_item import TheoryItem
 from core.course.domain.values.theory_ref import TheoryRef
 from core.shared.domain.ids import TheoryItemId
+from core.shared.math.latex_cas import explain
 from core.tutoring.domain.values.diagnosis import OTHER_MISTAKE, Diagnosis, Disorientation, Intent, StepState
 from core.tutoring.domain.values.plan import TEACHER_MOVES, Action, Plan
 from core.tutoring.domain.values.session_state import SessionState
@@ -49,9 +58,28 @@ class Decision(NamedTuple):
     state: SessionState
 
 
-def _merge_completed(ex: Exercise, previous: Sequence[str], diagnosis: Diagnosis) -> list[str]:
+def _merge_completed(ex: Exercise, previous: Sequence[str], diagnosis: Diagnosis, upto: str | None) -> list[str]:
+    """Steps completed after this message. A step the diagnosis marks completed is only accepted when the message
+    shows work, and only up to `upto` (the target before this message): the diagnosis' word is not evidence."""
     now = diagnosis.step_state_map()
-    return [s for s in ex.step_ids if (s in previous and now.get(s) != "erroni") or now.get(s) == "completat"]
+    works = diagnosis.intent in WORK_INTENTS
+    limit = ex.step_ids.index(upto) if upto is not None else len(ex.step_ids)
+    return [
+        s
+        for i, s in enumerate(ex.step_ids)
+        if (s in previous and now.get(s) != "erroni") or (works and i <= limit and now.get(s) == "completat")
+    ]
+
+
+def _states_result(ex: Exercise, text: str) -> bool:
+    """Does the student's own text contain the expected result (its leak regexes, or a CAS-equivalent formula)?"""
+    if any(re.search(p, text, re.IGNORECASE) for p in ex.result.leak_patterns):
+        return True
+    try:
+        own = explain(ex.result.value, [ex.result.value], [])
+        return bool(own) and len(explain(ex.result.value, [ex.result.value], [text])) < len(own)
+    except Exception:
+        return False  # not verified: the result gate stays closed
 
 
 def _level(current: int, disorientation: Disorientation, escalate: bool) -> int:
@@ -139,11 +167,15 @@ def decide(ex: Exercise, diagnosis: Diagnosis, state: SessionState, student_text
     has_mistake = bool(known_mistakes) or (OTHER_MISTAKE in d.detected_mistakes and bool(d.other_mistake.strip()))
     justified = d.result_justified and not has_mistake
 
-    completed = _merge_completed(ex, state.completed, d)
+    target_before = next((s for s in ex.step_ids if s not in state.completed and s not in state.shown), None)
+    completed = _merge_completed(ex, state.completed, d, target_before)
     new_steps = [s for s in completed if s not in state.completed]
     resolved = list(dict.fromkeys(completed + state.shown))  # a shown step no longer blocks the next one
     target = next((s for s in ex.step_ids if s not in resolved), None)
     states_now: dict[str, StepState] = d.step_state_map()
+    for s, st in list(states_now.items()):
+        if st == "completat" and s not in completed:  # not accepted as completed: not progress either
+            states_now[s] = state.step_states.get(s, "no_iniciat")
     states_now.update(dict.fromkeys(completed, "completat"))
     current = state.level_per_step.get(target, 0) if target else 0
     repeats = state.repetitions.get(target, 0) if target else 0
@@ -164,7 +196,8 @@ def decide(ex: Exercise, diagnosis: Diagnosis, state: SessionState, student_text
     stuck = stuck and earned
     no_progress = no_progress and earned
     level = _level(current, d.disorientation, stuck or no_progress) if target else 0
-    has_reasoning = bool(completed) or any(states_now.get(s) in ("en_curs", "completat") for s in ex.step_ids)
+    # Reasoning in THIS message: what was worked out earlier does not turn a bare guess into a reasoned one.
+    reasoned = d.intent == "mostra_treball" or bool(new_steps) or progress or target is None
     # A result only drives the turn when this message is about it: a request for help, a question or
     # frustration is answered as such even if the diagnosis also reports a result.
     proposes = d.proposed_result != "cap" and d.intent in ("proposa_resultat", "mostra_treball")
@@ -184,7 +217,12 @@ def decide(ex: Exercise, diagnosis: Diagnosis, state: SessionState, student_text
     elif d.intent == "fora_de_tema":
         plan = Plan(action="redirigir", reason="Missatge fora de tema.", target_step=target, hint_level=0)
 
-    elif d.proposed_result == "correcte" and not has_mistake and (justified or target is None):
+    elif (
+        d.proposed_result == "correcte"
+        and not has_mistake
+        and d.intent in WORK_INTENTS
+        and ((justified and reasoned) or target is None)
+    ):
         plan = Plan(
             action="tancar",
             reason="Resultat correcte i justificat.",
@@ -197,6 +235,38 @@ def decide(ex: Exercise, diagnosis: Diagnosis, state: SessionState, student_text
     elif d.intent == "pregunta_conceptual" and target is not None:
         # A question is answered first; a mistake in the same message comes back when the student shows work.
         plan = _concept_plan(ex, d, target, current)
+
+    elif (
+        has_mistake
+        and target is None
+        and not new_steps
+        and _mistake_exhausted(
+            state, known_mistakes, attempt, gives_up=stuck and _times_seen(state, known_mistakes) > 0
+        )
+    ):
+        # No step left to climb a ladder on: questioning the same mistake again would loop until the turn limit. It
+        # is questioned once (twice when the student keeps working on it), then the conclusion is shown.
+        plan = Plan(
+            action="mostrar_conclusio",
+            reason="Tots els passos resolts; l'error es repeteix a la conclusió.",
+            target_step=None,
+            hint_level=0,
+            may_state_result=True,
+        )
+
+    elif (
+        has_mistake
+        and target is not None
+        and current >= MAX_HINT_LEVEL
+        and _mistake_exhausted(state, known_mistakes, attempt, gives_up=d.intent == "demana_solucio")
+    ):
+        plan = Plan(
+            action="mostrar_pas",
+            reason=f"Error repetit al nivell màxim, o demana la solució després d'intentar-ho (nivell {current}).",
+            target_step=target,
+            hint_level=4,
+            max_sentences=6,
+        )
 
     elif has_mistake:
         mistake_id = known_mistakes[0] if known_mistakes else OTHER_MISTAKE
@@ -214,7 +284,7 @@ def decide(ex: Exercise, diagnosis: Diagnosis, state: SessionState, student_text
             suggested_question=mistake.question if (mistake and not repeated) else None,
         )
 
-    elif proposes and not has_reasoning and state.last_action != "demanar_raonament":
+    elif proposes and not reasoned and state.last_action != "demanar_raonament":
         # Asked once; a second bare guess gets a hint on the step instead (handled by the branches below).
         plan = Plan(
             action="demanar_raonament",
@@ -223,7 +293,7 @@ def decide(ex: Exercise, diagnosis: Diagnosis, state: SessionState, student_text
             hint_level=max(current, 1) if target else 0,
         )
 
-    elif proposes and has_reasoning and d.proposed_result == "incorrecte":
+    elif proposes and reasoned and d.proposed_result == "incorrecte":
         plan = Plan(
             action="questionar_resultat",
             reason="Resultat incorrecte després d'haver treballat.",
@@ -231,13 +301,14 @@ def decide(ex: Exercise, diagnosis: Diagnosis, state: SessionState, student_text
             hint_level=level,
         )
 
-    elif proposes and has_reasoning and d.proposed_result == "correcte":
+    elif proposes and reasoned and d.proposed_result == "correcte":
         plan = Plan(
             action="demanar_justificacio",
             reason="Resultat correcte amb raonament parcial.",
             target_step=target,
             hint_level=level,
-            result_stated_by_student=True,
+            # Acknowledged only when the student's own words contain it, not on the diagnosis' word alone.
+            result_stated_by_student=bool(student_texts) and _states_result(ex, student_texts[-1]),
         )
 
     elif target is None:
@@ -249,7 +320,7 @@ def decide(ex: Exercise, diagnosis: Diagnosis, state: SessionState, student_text
                 hint_level=0,
                 extra_theory=list(d.question_theory),
             )
-        elif stuck or state.last_action == "demanar_conclusio":
+        elif not new_steps and (stuck or state.last_action == "demanar_conclusio"):
             # Asked once already (or stuck): the conclusion follows from resolved steps, so the tutor states it.
             plan = Plan(
                 action="mostrar_conclusio",
@@ -319,7 +390,7 @@ def decide(ex: Exercise, diagnosis: Diagnosis, state: SessionState, student_text
     if closes:
         completed = list(ex.step_ids)
     shown = [*state.shown, *([target] if plan.action == "mostrar_pas" and target and target not in state.shown else [])]
-    confirmed = already_said or plan.action in ("tancar", "demanar_justificacio")
+    confirmed = already_said or plan.action == "tancar" or plan.result_stated_by_student
 
     allow_result = plan.may_state_result or confirmed
     plan = plan.model_copy(
@@ -360,6 +431,19 @@ def decide(ex: Exercise, diagnosis: Diagnosis, state: SessionState, student_text
         student_attempts=state.student_attempts + (1 if attempt else 0),
     )
     return Decision(plan, new_state)
+
+
+def _mistake_exhausted(state: SessionState, known: Sequence[str], attempt: bool, gives_up: bool) -> bool:
+    """The same mistake already questioned twice, or the student giving up on it after trying: questioning it once
+    more is a dead end, so the caller shows the content (only after an attempt, as the anti-gaming rule wants)."""
+    if not (attempt or state.student_attempts > 0):
+        return False
+    return _times_seen(state, known) >= 2 or gives_up
+
+
+def _times_seen(state: SessionState, known: Sequence[str]) -> int:
+    """How many times the mistake of this message was already questioned."""
+    return state.mistakes_seen.get(known[0] if known else OTHER_MISTAKE, 0)
 
 
 def allowed_content(ex: Exercise, plan: Plan, completed: Sequence[str], shown: Sequence[str] = ()) -> str:

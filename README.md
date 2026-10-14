@@ -56,6 +56,8 @@ history of the migration: `work/ARQUITECTURA.md`.
 | `backend/core/tutoring/` | The tutor: diagnosis → deterministic policy (`domain/policy.py`) → reply → guard (`domain/guard.py`), photo transcription, sessions |
 | `backend/core/mistakes/` | "Troba l'error" |
 | `backend/core/quizzes/` | "Cert o fals" |
+| `backend/core/counterexamples/` | "Construeix el contraexemple" (sympy only, no model) |
+| `backend/contraexemples/reptes.yaml` | Counterexample challenges, each with an authored example and its certificates |
 | `backend/core/shared/` | Ids and exceptions, the LLM port + provider clients + call log, async SQLModel storage, CAS / sympy checks |
 | `backend/apps/tutor_api/` | FastAPI app (composition root): endpoints, response schemas, dependency providers |
 | `backend/exercicis/temaN.yaml` | Solution sheets, one list per tema: steps (objective / idea / detail / theory), common errors with Socratic questions, leak regexes |
@@ -135,6 +137,40 @@ Quizzes are cached in `backend/generats/afirmacions/<font>/<difficulty>/`. Pre-g
 `uv run python scripts/pregenerate_afirmacions.py tema-2:normal T2.12:facil ...`. Stages `quiz_generation`,
 `quiz_verification`, `quiz_audit`, `quiz_grading`, `quiz_extraction` (override with `TUTOR_MODEL_<STAGE>`).
 
+## "Construeix el contraexemple" mode (`#/contraexemples`)
+
+The student builds the pathological function. A challenge asks for $f$ with properties at the origin that look
+incompatible (partials but not continuous; every line agrees but there is no limit; differentiable but not $C^1$;
+crossed second derivatives that differ…). The student writes $f(x,y)$ off the origin, $f(0,0)$, and a **certificate**
+for each property that needs one. No model is called: every verdict is computed (`backend/core/counterexamples`).
+
+- **Only one-variable limits are trusted.** sympy's two-variable limits are unsound: with the angle left free, the
+  polar limit of $x^2y/(x^4+y^2)$ is 0, but the limit does not exist. Partial and directional derivatives are limits of
+  difference quotients in $h$, iterated limits are two one-variable limits, and a path $(x(t),y(t))$ reduces $f$ to $t$.
+- **Negative properties need paths** ("the limit does not exist": two paths with different limits, or one without a
+  limit). "Not differentiable" is often decided with no certificate: a missing partial, or a directional derivative
+  that is not $\nabla f\cdot v$.
+- **Positive properties need a radial bound** $G(r)$ ("continuous": $|f-f(0,0)|\le G(r)$; "differentiable": the same
+  for the remainder). $G\to0$ is checked exactly. The inequality is sampled on a polar grid, with angles that hug the
+  axes so that a parabola like $y=x^2$ is caught; the verdict is therefore **plausible**, not proved.
+- Statuses: `ok` (exact), `plausible` (sampled), `falla` (the property is shown false for this f, or f is not a
+  real function off the origin), `indeterminat` (shown as "No demostrat": sympy cannot decide, or the certificate is
+  missing or proves nothing). Only `ok` and `plausible` pass.
+- **Tied to the notes** (`backend/teoria`). Each challenge cites the items it is about (`teoria`, shown under the
+  statement). `teoria_propietats` maps each property to its definition, and a failed property shows it as "Repassa".
+  `teoria_reservada` lists items that already contain such a counterexample (e.g. Observació 17 del Tema 3); they are
+  shown only with the author's example. Hints and explanations cite the notes, and the citations become links to the
+  PDF page. The server refuses to start if a cited item does not exist (`SpecCatalog.check_theory`).
+- Hardened against a simulated student trying to game the checker (two rounds). Inputs are parsed without evaluation;
+  nested exponentials and huge powers are rejected. sympy's "no limit" counts only after retrying on rewritten forms
+  and seeing a spread that does not shrink. Equality is exact, with no tolerance. f must be real off the origin, which
+  is checked with a 4096-angle sweep and with sign changes of the denominator. Positive properties are also checked
+  exactly along rays and along every path in the submission.
+- Each property runs in its own worker of the server's `SympyCheckPool` (`map`), under the pool's deadline.
+- Challenges: `backend/contraexemples/reptes.yaml`. Each has an authored example with its certificates; the tests run
+  every example through the checker. A student sees the example only after passing; professors always see it.
+- Endpoints: `GET /api/contraexemples`, `GET /api/contraexemples/{id}`, `POST /api/contraexemples/{id}/comprova`.
+
 ## Photo of the notebook
 
 Students can attach a photo (button, paste, or drag and drop) instead of typing. The browser shrinks it to 1800 px JPEG, and `POST /api/sessions/{id}/transcripcio` runs a vision stage (stage `transcription` in `backend/core/tutoring`, structured output: transcription, legibility, content type, doubts). The transcriber is told to copy **literally**, without fixing mistakes, so the diagnosis still sees them. The transcription is placed in the text box for the student to review and correct, then sent as a normal message tagged `origen: "foto"` (shown in the professor panel).
@@ -169,6 +205,13 @@ Sheet tests check that (1) each step's leak regexes catch that step's own worked
 
 - Gemini (default per stage): diagnosis `gemini-3.5-flash`, reply `gemini-3.5-flash-lite`, guard `gemini-3-flash-preview`. Different models per stage because free-tier quotas are per model. The free tier allows about 5 requests/min and 20 requests/day per model; each turn uses 3+ requests. Enable billing for a real demo.
 - OpenAI: diagnosis `gpt-5.5`, reply and guard `gpt-5.4-mini`. Tested live: about 5–8 s per turn.
+  Production overrides (measured 2026-10, see `render.yaml` / DEPLOY.md): `gpt-5.6-luna` for diagnosis, reply, guard
+  (effort `none`), transcription and both gradings, at ~1/5 the cost of `gpt-5.4-mini` (per 1M tokens in/out: luna
+  0.20/1.20, mini 0.75/4.5, gpt-5.5 5/30). Generation/verification keep the defaults: `gpt-5.4-mini` there truncated
+  quiz generation at `max_tokens` and emitted NUL bytes in the JSON. Do not set a global `TUTOR_MODEL` in production.
+  Measured with luna: a tutor turn ~$0.0037; generating a "Troba l'error" document ~$0.003–0.009 (3/4 succeeded) and a
+  "Cert o fals" quiz ~$0.034–0.047 in 2–4 min (3/4, one truncated), mathematically correct 24/24 but with LaTeX
+  corruption that the generation gates now reject. Live generation is professor-only by default (`TUTOR_GENERACIO`).
 - Anthropic: `claude-opus-5-5` for all stages.
 
 Override any stage with `TUTOR_MODEL_<STAGE>` / `TUTOR_EFFORT_<STAGE>` (stages `diagnosis`, `reply`, `guard`, `transcription`, `mistakes_*`, `quiz_*`; see `.env.example`). `scripts/live_demo.py` runs a scripted 4-turn conversation against the real API and prints the trace.
@@ -212,4 +255,4 @@ central differences as fallback). math.js installs a global `math`, which would 
   rejected drafts, loops, steps shown, frustration).
 - **Simulated students**: `uv run python scripts/simulate.py --mostra 40 --workers 4` (misconception personas from each sheet,
   lost / guesser / answer-beggar / silent / injector / persuader / extractor archetypes; completion, loops, fallback,
-  level-aware leak judge, cost). Model study: `scripts/model_study.py` (recommended: gpt-5.4-mini for all stages).
+  level-aware leak judge, cost). Model study: `scripts/model_study.py` (see Models above).

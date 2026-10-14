@@ -3,21 +3,23 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 from apps.tutor_api.schemas.course import ExerciseResponse, SheetSummaryResponse, TheoryItemResponse
+from apps.tutor_api.schemas.student_text import StudentText
 from core.tutoring.application.session_starter import StartedSession
 from core.tutoring.domain.entities.tutor_turn import TutorTurn
 
 
 class NewSessionRequest(BaseModel):
-    exercici_id: str
+    exercici_id: StudentText = Field(max_length=20)
 
 
 class MessageRequest(BaseModel):
-    text: str = Field(min_length=1, max_length=4000)
+    text: StudentText = Field(min_length=1, max_length=4000)
     origen: Literal["text", "foto"] = "text"
 
 
 class PhotoRequest(BaseModel):
-    imatge: str = Field(max_length=9_000_000, description="data:image/...;base64,...")
+    # Under the body limit of the photo route (server.py). Base64 has no control characters to check.
+    imatge: str = Field(min_length=1, max_length=9_000_000, description="data:image/...;base64,...")
 
 
 class StepLabelResponse(BaseModel):

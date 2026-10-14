@@ -10,6 +10,7 @@ from apps.tutor_api.dependencies import (
     get_llm,
     get_session_provider,
     is_professor,
+    model_rate_limited,
     rate_limited,
     require_professor,
 )
@@ -75,7 +76,7 @@ def _get_browser(sessions: SQLModelSessionProvider = Depends(get_session_provide
     return SessionBrowser(SQLModelTutorSessionRepository(sessions))
 
 
-@router.post("/api/sessions", response_model_exclude_unset=True)
+@router.post("/api/sessions", response_model_exclude_unset=True, dependencies=[Depends(rate_limited)])
 async def start_session(
     body: NewSessionRequest,
     starter: SessionStarter = Depends(_get_starter),
@@ -86,7 +87,7 @@ async def start_session(
     return SessionResponse.from_started(started, professor)
 
 
-@router.post("/api/sessions/{session_id}/missatges", dependencies=[Depends(rate_limited)])
+@router.post("/api/sessions/{session_id}/missatges", dependencies=[Depends(model_rate_limited)])
 async def send_message(
     session_id: str,
     body: MessageRequest,
@@ -105,7 +106,7 @@ async def send_message(
     return TurnResponse(missatge=result.message, referencies=references, trace=trace)
 
 
-@router.post("/api/sessions/{session_id}/transcripcio", dependencies=[Depends(rate_limited)])
+@router.post("/api/sessions/{session_id}/transcripcio", dependencies=[Depends(model_rate_limited)])
 async def transcribe_photo(
     session_id: str,
     body: PhotoRequest,

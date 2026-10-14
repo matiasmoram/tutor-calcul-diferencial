@@ -267,6 +267,7 @@ h2 { font-size: 15px; }
 }
 .chip small { font-weight: 500; font-size: 11px; opacity: .8; }
 .chip.on { background: var(--panel); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+.chip:disabled { cursor: default; opacity: .6; }
 .small-btn { padding: 8px 14px; font-size: 13.5px; }
 .btn:disabled { opacity: .5; cursor: default; }
 
@@ -349,6 +350,8 @@ h2 { font-size: 15px; }
 }
 @keyframes shimmer { to { background-position: -200% 0; } }
 .er-error { font: 15px system-ui, sans-serif; }
+.er-generate { font: 15px system-ui, sans-serif; display: grid; gap: 8px; justify-items: start; }
+.er-generate p { margin: 0; }
 
 .er-rail { position: relative; min-height: 200px; }
 .er-rail .note { position: absolute; left: 0; right: 0; transition: top .2s ease; }
@@ -595,6 +598,7 @@ a.theory-src { display: inline-block; margin-top: 6px; font-size: 12px; color: v
 a.theory-src:hover { text-decoration: underline; }
 .nav-teoria { margin-left: auto; margin-right: 12px; color: var(--accent); text-decoration: none; font-weight: 600; }
 .nav-teoria:hover { text-decoration: underline; }
+.nav-sortir { background: none; border: 0; padding: 0; font: inherit; font-weight: 600; color: var(--muted); cursor: pointer; }
 .teoria-temes { display: grid; gap: 10px; }
 .teoria-tema { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; }
 .teoria-tema > summary { cursor: pointer; font-size: 16px; }
@@ -809,4 +813,42 @@ a.theory-src:hover { text-decoration: underline; }
 @media (max-width: 600px) {
   .cf-card { padding: 14px; }
   .cf-statement { font-size: 16px; }
+}
+
+/* ---------- Construeix el contraexemple ---------- */
+.ce-tema { margin-bottom: 12px; }
+.ce-tema h3 { font-size: 16px; margin: 0; }
+.ce-item { justify-content: space-between; }
+.ce-enunciat { font: 17px/1.6 "Newsreader", Georgia, serif; margin: 8px 0 0; }
+.ce-form { margin-bottom: 14px; }
+.ce-funcio, .ce-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.ce-field { display: inline-flex; align-items: center; gap: 8px; }
+.ce-label { white-space: nowrap; }
+.ce-input {
+  border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; width: 170px;
+  background: var(--bg); color: var(--ink); font: 14px/1.4 ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+.ce-input.wide { width: min(420px, 70vw); }
+.ce-input.short { width: 70px; }
+.ce-input.mid { width: 100px; font-family: inherit; }
+.ce-input:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+.ce-row-label { font-size: 13px; color: var(--muted); min-width: 120px; }
+.ce-cert, .ce-paths { display: grid; gap: 8px; }
+.ce-cert > p { margin: 0; }
+.ce-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.ce-prop-label { font-weight: 600; }
+.ce-verdict { display: grid; gap: 6px; border-top: 1px dashed var(--line); padding-top: 8px; }
+.ce-verdict .pill { justify-self: start; }
+.ce-detail { font-size: 14.5px; line-height: 1.5; overflow-x: auto; }
+.ce-calculs > summary { cursor: pointer; font-size: 13px; color: var(--muted); }
+.ce-calculs > div { font-size: 14px; padding: 2px 0 2px 12px; overflow-x: auto; }
+.ce-resum { border-radius: 10px; padding: 12px 16px; font-weight: 600; margin: 4px 0 14px; }
+.ce-resum.ok { background: var(--ok-soft); color: var(--ok); }
+.ce-resum.bad { background: color-mix(in srgb, var(--reveal) 12%, transparent); color: var(--reveal); }
+.ce-pista, .ce-exemple { margin-bottom: 12px; }
+.ce-teoria { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 6px; }
+.cf-card-head .ce-teoria { margin: 0 0 0 auto; }
+@media (max-width: 600px) {
+  .ce-row-label { min-width: 0; width: 100%; }
+  .ce-input { width: 130px; }
 }

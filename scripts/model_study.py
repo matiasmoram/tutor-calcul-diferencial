@@ -61,6 +61,8 @@ MAX_TOKENS = 8000
 PRICES = {
     "gpt-5.5": (5.0, 30.0, 0.5),
     "gpt-5.4-mini": (0.75, 4.5, 0.075),
+    "gpt-5.6-terra": (2.0, 12.0, 0.2),  # OpenAI list prices after the 2026-07-30 cut
+    "gpt-5.6-luna": (0.2, 1.2, 0.02),
     "gpt-5.4-nano": (0.2, 1.25, 0.02),
     "gpt-5-nano": (0.05, 0.4, 0.005),
     "gpt-4.1-nano": (0.1, 0.4, 0.025),
@@ -91,6 +93,23 @@ CONFIGS: dict[str, StudyConfig] = {
         G: ("openai", "gpt-5.4-mini", "low"),
     },
     "mini54": dict.fromkeys(STAGES, ("openai", "gpt-5.4-mini", "low")),
+    "luna": dict.fromkeys(STAGES, ("openai", "gpt-5.6-luna", "low")),
+    "luna-none": dict.fromkeys(STAGES, ("openai", "gpt-5.6-luna", "none")),
+    "luna+nano": {
+        D: ("openai", "gpt-5.6-luna", "low"),
+        R: ("openai", "gpt-5.4-nano", "low"),
+        G: ("openai", "gpt-5.6-luna", "low"),
+    },
+    "mini+luna": {
+        D: ("openai", "gpt-5.4-mini", "low"),
+        R: ("openai", "gpt-5.6-luna", "low"),
+        G: ("openai", "gpt-5.6-luna", "low"),
+    },
+    "terra+mini": {
+        D: ("openai", "gpt-5.6-terra", "low"),
+        R: ("openai", "gpt-5.4-mini", "low"),
+        G: ("openai", "gpt-5.4-mini", "low"),
+    },
     "gpt5mini": dict.fromkeys(STAGES, ("openai", "gpt-5-mini", "low")),
     "nano54": dict.fromkeys(STAGES, ("openai", "gpt-5.4-nano", "low")),
     "kimi25": dict.fromkeys(STAGES, ("openrouter", "moonshotai/kimi-k2.5", "")),

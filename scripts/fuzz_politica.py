@@ -91,7 +91,11 @@ def check(course: Course, ex: Exercise, seed: int, turns: int, profile: str) -> 
         plan, state = decide(ex, diagnosis, state, STUDENT_TEXTS)
         plans.append((plan.action, plan.target_step, plan.hint_level))
         tag = f"{ex.id} {profile} seed={seed} t={n} {plan.action}/{plan.target_step}/{plan.hint_level}"
-        if len(plans) >= 4 and len(set(plans[-4:])) == 1 and plan.action != "despres_de_tancar":
+        if (
+            len(plans) >= 4
+            and len(set(plans[-4:])) == 1
+            and plan.action not in ("despres_de_tancar", "explicar_concepte")
+        ):
             out.append(f"I1 same plan 4x: {tag}")
         if prev.closed and plan.action != "despres_de_tancar":
             out.append(f"I3 reopened after closing: {tag}")

@@ -2,6 +2,8 @@ import base64
 import json
 import re
 from abc import ABC, abstractmethod
+from collections.abc import Iterator
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from enum import StrEnum
 
@@ -13,8 +15,21 @@ type JsonObject = dict[str, object]
 class LLMError(DomainException):
     """Any failed model call: transport, refusal, truncation, invalid JSON. Callers fail closed on it."""
 
+    # Set when the provider answered (and billed) before the answer turned out unusable, so the tokens still count.
+    meta: "CallMeta | None" = None
+
     def __init__(self, message: str, error_code: int = 502) -> None:
         super().__init__(message, error_code)
+
+
+class TruncatedOutputError(LLMError):
+    """The model hit the stage's max_tokens before finishing. Asking again for the same output would only be cut
+    again: a caller that can split the work asks for less instead."""
+
+
+class MalformedOutputError(LLMError):
+    """The model answered, but the text is unusable: invalid JSON, or characters no text can carry (NUL and other
+    control characters, lone surrogates). A sampling glitch, not a provider failure: asking again usually works."""
 
 
 class LLMProviderError(LLMError):
@@ -45,6 +60,17 @@ class CallMeta:
     input_tokens: int = 0  # total prompt tokens, cached ones included
     output_tokens: int = 0
     cached_tokens: int = 0  # prompt tokens served from the provider's prompt cache
+
+
+@contextmanager
+def billed(meta: CallMeta) -> Iterator[None]:
+    """Reading an answer the provider already billed: a refused, truncated, empty or malformed answer raises its
+    LLMError with ``meta`` attached, so callers still count its tokens."""
+    try:
+        yield
+    except LLMError as e:
+        e.meta = meta
+        raise
 
 
 @dataclass(frozen=True)
@@ -110,12 +136,42 @@ def repair_latex[T](value: T) -> T:
     return value
 
 
+# What may remain below U+0020 in model text once repair_latex has run: newlines only. A NUL comes from a corrupted
+# escape (gpt-5.4-mini wrote "\u0000ab" inside a formula): the text around it is already broken, and Postgres cannot
+# store it in a text or JSONB column. Lone surrogates cannot be encoded as UTF-8 at all.
+_UNUSABLE = re.compile("[\x00-\x09\x0b-\x1f\ud800-\udfff]")
+# Plain text never went through JSON escaping, so a tab or a carriage return in it is what the model meant (a table,
+# a CRLF line end) and Postgres stores both. NUL, the other C0 controls and lone surrogates stay unusable.
+_UNUSABLE_PLAIN = re.compile("[\x00-\x08\x0b\x0c\x0e-\x1f\ud800-\udfff]")
+
+
+def _check_text(stage: str, value: object, unusable: re.Pattern[str] = _UNUSABLE) -> None:
+    if isinstance(value, str):
+        if m := unusable.search(value):
+            raise MalformedOutputError(f"{stage}: character U+{ord(m.group()):04X} in the model's output")
+    elif isinstance(value, list):
+        for v in value:
+            _check_text(stage, v, unusable)
+    elif isinstance(value, dict):
+        for v in value.values():
+            _check_text(stage, v, unusable)
+
+
 def parse_json(stage: str, text: str) -> JsonObject:
     """Invalid JSON from a provider is an LLMError, so every caller's fail-closed path handles it."""
     try:
         data = json.loads(text)
     except json.JSONDecodeError as e:
-        raise LLMError(f"{stage}: invalid JSON from the model ({e})") from e
+        raise MalformedOutputError(f"{stage}: invalid JSON from the model ({e})") from e
     if not isinstance(data, dict):
-        raise LLMError(f"{stage}: expected a JSON object, got {type(data).__name__}")
-    return repair_latex(data)
+        raise MalformedOutputError(f"{stage}: expected a JSON object, got {type(data).__name__}")
+    data = repair_latex(data)
+    _check_text(stage, data)
+    return data
+
+
+def plain_text(stage: str, text: str) -> JsonObject:
+    """A plain-text answer, held to the structured rules except for tab and carriage return: only JSON-escape damage
+    makes those suspicious."""
+    _check_text(stage, text, _UNUSABLE_PLAIN)
+    return {"text": text}

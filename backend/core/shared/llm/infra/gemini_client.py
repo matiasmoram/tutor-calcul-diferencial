@@ -15,7 +15,10 @@ from core.shared.llm.client import (
     LLMRequest,
     Stage,
     StageConfig,
+    TruncatedOutputError,
+    billed,
     parse_json,
+    plain_text,
 )
 
 # Anthropic-style effort names mapped onto Gemini thinking levels.
@@ -73,18 +76,19 @@ class GeminiLLMClient(LLMClient):
             output_tokens=((usage.candidates_token_count or 0) + (usage.thoughts_token_count or 0)) if usage else 0,
             cached_tokens=(usage.cached_content_token_count or 0) if usage else 0,
         )
-        if not response.candidates:
-            raise LLMError(f"{stage}: no candidates (prompt_feedback={response.prompt_feedback})")
-        finish = response.candidates[0].finish_reason
-        if finish is not None and finish.name == "MAX_TOKENS":
-            raise LLMError(f"{stage}: output truncated at max_tokens={cfg.max_tokens}")
-        if finish is not None and finish.name != "STOP":
-            raise LLMError(f"{stage}: generation stopped ({finish.name})")
-        if not response.text:
-            raise LLMError(f"{stage}: empty response")
-        if request.schema is None:
-            return {"text": response.text}, meta
-        return parse_json(stage, response.text), meta
+        with billed(meta):
+            if not response.candidates:
+                raise LLMError(f"{stage}: no candidates (prompt_feedback={response.prompt_feedback})")
+            finish = response.candidates[0].finish_reason
+            if finish is not None and finish.name == "MAX_TOKENS":
+                raise TruncatedOutputError(f"{stage}: output truncated at max_tokens={cfg.max_tokens}")
+            if finish is not None and finish.name != "STOP":
+                raise LLMError(f"{stage}: generation stopped ({finish.name})")
+            if not response.text:
+                raise LLMError(f"{stage}: empty response")
+            if request.schema is None:
+                return plain_text(stage, response.text), meta
+            return parse_json(stage, response.text), meta
 
     async def _generate_with_retry(
         self, model: str, contents: list[types.Part | str] | str, config: types.GenerateContentConfig

@@ -1,8 +1,17 @@
 import pytest
 
 from core.shared.llm.call_scope import call_scope
-from core.shared.llm.client import LLMError, LLMRequest, Stage, parse_json, repair_latex
+from core.shared.llm.client import (
+    LLMError,
+    LLMRequest,
+    MalformedOutputError,
+    Stage,
+    parse_json,
+    plain_text,
+    repair_latex,
+)
 from core.shared.llm.infra.logged_client import LoggedLLMClient
+from core.shared.llm.infra.retrying_client import RetryingLLMClient
 from core.shared.llm.infra.stage_router import StageRouter
 from core.shared.llm_calls.domain.llm_call import LLMCall
 from core.shared.llm_calls.domain.repository import LLMCallRepository
@@ -22,6 +31,45 @@ def test_invalid_json_is_an_llm_error() -> None:
         parse_json("diagnosis", "{not json")
     with pytest.raises(LLMError):
         parse_json("diagnosis", "[1, 2]")
+
+
+def test_text_no_column_can_store_is_malformed_output() -> None:
+    # Real gpt-5.4-mini output that crashed the Postgres save of a whole quiz: a NUL inside a formula.
+    with pytest.raises(MalformedOutputError, match=r"U\+0000"):
+        parse_json("quiz_verification", r'{"r": [{"j": "Si $f\\neq$ \u00e9s $\u0000ab$"}]}')
+    with pytest.raises(MalformedOutputError, match=r"U\+D800"):
+        parse_json("quiz_grading", r'{"f": "\ud800"}')
+    with pytest.raises(MalformedOutputError):
+        plain_text("reply", "Fixa't en $\x00ab$")
+    # What repair_latex turns back into LaTeX, and plain newlines, stay valid.
+    assert parse_json("reply", r'{"m": "$\frac{1}{2}$\nl\u00ednia"}') == {"m": "$\\frac{1}{2}$\nlínia"}
+    assert plain_text("reply", "línia\nnova") == {"text": "línia\nnova"}
+
+
+def test_plain_text_keeps_tabs_and_carriage_returns() -> None:
+    # No JSON escaping happened, so a tab or a CRLF is what the model wrote: asking again would only pay twice.
+    assert plain_text("reply", "a\tb\r\nc") == {"text": "a\tb\r\nc"}
+    for bad in ("\x00", "\x07", "\x0b", "\x0c", "\x1b", "\ud800"):
+        with pytest.raises(MalformedOutputError):
+            plain_text("reply", f"x{bad}y")
+    # In JSON a tab is escape damage ("\\theta"), which repair_latex maps back to the LaTeX backslash.
+    assert parse_json("reply", r'{"m": "$\theta$"}') == {"m": "$\\theta$"}
+    with pytest.raises(MalformedOutputError):
+        parse_json("reply", r'{"m": "a\u0007b"}')
+
+
+async def test_a_malformed_answer_is_asked_again_once() -> None:
+    inner = ScriptedLLMClient({Stage.GUARD: [MalformedOutputError("guard: bad"), {"ok": True}]})
+    assert (await RetryingLLMClient(inner).structured(Stage.GUARD, LLMRequest("s", "u", {})))[0] == {"ok": True}
+    assert inner.calls(Stage.GUARD) == 2
+    twice = ScriptedLLMClient({Stage.GUARD: [MalformedOutputError("a"), MalformedOutputError("b"), {"ok": True}]})
+    with pytest.raises(MalformedOutputError, match="b"):
+        await RetryingLLMClient(twice).structured(Stage.GUARD, LLMRequest("s", "u", {}))
+    # Truncation or a provider failure would only fail again (and cost again): never retried.
+    truncated = ScriptedLLMClient({Stage.GUARD: [LLMError("guard: output truncated"), {"ok": True}]})
+    with pytest.raises(LLMError, match="truncated"):
+        await RetryingLLMClient(truncated).structured(Stage.GUARD, LLMRequest("s", "u", {}))
+    assert truncated.calls(Stage.GUARD) == 1
 
 
 async def test_stage_router_sends_each_stage_to_its_backend() -> None:

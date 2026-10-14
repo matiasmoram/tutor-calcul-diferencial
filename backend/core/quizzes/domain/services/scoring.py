@@ -62,7 +62,9 @@ def ideas_with_evidence(ideas: Sequence[IdeaCitation], n: int, text: str) -> set
 
 def faithful(check: StudentCheck) -> bool:
     """A transcribed value must be stated in the student's quote (as a formula or a number there): otherwise the
-    transcriber computed or corrected it, and the check would test something the student never said."""
+    transcriber computed or corrected it, and the check would test something the student never said.
+    Parses and evaluates student-written math (`9**9**9` never ends): servers run it through `CheckEvaluator.faithful`,
+    in a sympy worker under a deadline."""
     if check.kind == "no_limit" or not check.value.strip():
         return True
     try:
@@ -74,9 +76,9 @@ def faithful(check: StudentCheck) -> bool:
     return any(latex_cas.equivalent(x.replace(",", "."), value) for x in candidates)
 
 
-def admissible_claims(claims: Sequence[StudentCheck], answer_text: str) -> list[StudentCheck]:
-    """The student's claims worth running: quoted from the answer, with a value the quote states."""
-    return [c for c in claims if quote_present(c.quote, answer_text) and faithful(c)][:MAX_STUDENT_CHECKS]
+def quoted_claims(claims: Sequence[StudentCheck], answer_text: str) -> list[StudentCheck]:
+    """The claims whose quote is in the answer (cheap: no math); `faithful` then keeps those worth running."""
+    return [c for c in claims if quote_present(c.quote, answer_text)]
 
 
 def _justification(evaluation: GraderEvaluation | None) -> Justification:
@@ -102,13 +104,16 @@ def grade_quiz(
     for s in quiz.statements:
         r = answers.get(s.id)
         v = evaluations.get(s.id)
-        just = _justification(v)
+        text = r.justification if r else ""
+        just = _justification(v) if text.strip() else "absent"  # nothing written: the model's word is not needed
         correct = bool(r and r.verdict == s.verdict)
         if not correct and just in ("correcta", "parcial"):
             just = "incorrecta"  # a right argument for the wrong verdict cannot exist
-        present = ideas_with_evidence(v.ideas if v else [], len(s.key_ideas), r.justification if r else "")
+        present = ideas_with_evidence(v.ideas if v else [], len(s.key_ideas), text)
         if just == "correcta" and len(present) * 2 < len(s.key_ideas):
             just = "parcial"  # the rubric: a complete argument contains most of the key ideas
+        if just == "parcial" and not present:
+            just = "incorrecta"  # and a partial one at least one, quoted from the answer
         cs = checked.get(s.id, [])
         cas_note = ""
         if just in DOWNGRADE and any(c.failed for c in cs):

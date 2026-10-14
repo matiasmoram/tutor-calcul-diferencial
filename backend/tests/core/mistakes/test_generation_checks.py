@@ -96,3 +96,46 @@ def test_theory_validation_requires_statement_error_and_split() -> None:
     # Problem error types are not valid for theory documents and vice versa.
     p = validate_generation(draft(tgen([terr(1, "diferenciable", "teorema_mal_aplicat")])), 1, theory=True).problems
     assert any("tipus no vàlid" in x for x in p)
+
+
+def test_a_second_error_inside_a_declared_fragment_is_unintended() -> None:
+    check = validate_generation(draft(gen([err(2, "$x^4 \\ge x^4+y^2$")])), 1)
+    other = findings(finding(2, "x^4 \\ge"), finding(2, "el quocient està fitat per $|x|$", "error", "fita falsa"))
+    issues = compare_verification(check.mistakes, other, check.fragments)
+    assert issues == ["hi ha un error NO intencionat al fragment 2: «el quocient està fitat per $|x|$» — fita falsa"]
+    # A consequence of the declared error in its own fragment is not a new error.
+    consequence = findings(finding(2, "x^4 \\ge"), finding(2, "fitat per $|x|$", "consequencia"))
+    assert compare_verification(check.mistakes, consequence, check.fragments) == []
+
+
+def test_an_empty_fragment_is_rejected_and_never_renumbers_the_errors() -> None:
+    frags = [FRAGS[0], "   ", *FRAGS[1:]]
+    check = validate_generation(draft(gen([err(3, "$x^4 \\ge x^4+y^2$")], frags)), 1)
+    assert check.problems == ["el fragment 2 és buit"]
+    assert len(check.fragments) == 6 and check.mistakes[0].fragment == 3
+    assert check.fragments[2][check.mistakes[0].start : check.mistakes[0].end] == "$x^4 \\ge x^4+y^2$"
+
+
+def test_invented_latex_commands_are_rejected_wherever_they_appear() -> None:
+    """What gpt-5.6-luna produced and both the old validation and the verifier let through."""
+    frags = [*FRAGS[:4], r"Per tant el límit és $e^{\fterm{0.2}}\blink$."]
+    bad = err(5, r"$e^{\fterm{0.2}}\blink$") | {"explicacio": r"cal $\term{x}$", "pista": r"i el \freelance?"}
+    problems = validate_generation(draft(gen([bad], frags)), 1).problems
+    assert problems == [
+        "el fragment 5 fa servir ordres LaTeX que no existeixen (\\blink, \\fterm); "
+        "fes servir només ordres estàndard de LaTeX/KaTeX",
+        "el camp 'cita' de l'error 1 fa servir ordres LaTeX que no existeixen (\\blink, \\fterm); "
+        "fes servir només ordres estàndard de LaTeX/KaTeX",
+        "el camp 'explicacio' de l'error 1 fa servir ordres LaTeX que no existeixen (\\term); "
+        "fes servir només ordres estàndard de LaTeX/KaTeX",
+        "el camp 'pista' de l'error 1 fa servir ordres LaTeX que no existeixen (\\freelance); "
+        "fes servir només ordres estàndard de LaTeX/KaTeX",
+    ]
+    ok = err(2, "$x^4 \\ge x^4+y^2$") | {"correccio": r"$x^4 \le x^4+y^2$, amb $\frac{x^4}{x^4+y^2}\le 1$"}
+    assert validate_generation(draft(gen([ok])), 1).valid
+
+
+def test_the_fragment_count_message_states_the_accepted_range() -> None:
+    problems = validate_generation(draft(gen([err(2, "fitat")], FRAGS[:3])), 1).problems
+    assert "el nombre de fragments ha de ser entre 4 i 14 (n'hi ha 3)" in problems
+    assert validate_generation(draft(gen([err(2, "fitat")], FRAGS[:4])), 1).valid

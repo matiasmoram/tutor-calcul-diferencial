@@ -1,15 +1,18 @@
 """'Troba l'error': documents with deliberate errors (a worked solution or a result of the notes) to annotate."""
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 
 from apps.tutor_api.dependencies import (
+    AppState,
     domain_errors,
     ensure_api_key,
     get_config,
     get_course,
     get_llm,
     get_session_provider,
-    rate_limited,
+    get_state,
+    may_generate,
+    model_rate_limited,
 )
 from apps.tutor_api.schemas.course import (
     ExerciseResponse,
@@ -43,15 +46,28 @@ from settings import Config
 
 router = APIRouter()
 
+NOT_READY = (
+    "Encara no hi ha cap document preparat per a aquest tema i dificultat. "
+    "Prova una altra dificultat o demana-ho al professorat."
+)
+
 
 def _get_starter(
+    state: AppState = Depends(get_state),
     course: Course = Depends(get_course),
     sessions: SQLModelSessionProvider = Depends(get_session_provider),
     llm: LLMClient = Depends(get_llm),
 ) -> MistakeSessionStarter:
     clock = SystemClock()
-    generator = MistakeExerciseGenerator(LLMMistakeGenerator(llm), LLMMistakeVerifier(llm), clock)
-    provider = MistakeExerciseProvider(SQLModelMistakeExerciseRepository(sessions), generator)
+    generator = MistakeExerciseGenerator(
+        LLMMistakeGenerator(llm),
+        LLMMistakeVerifier(llm),
+        clock,
+        deadline_s=state.config.MISTAKES_GENERATION_DEADLINE_S,
+    )
+    provider = MistakeExerciseProvider(
+        SQLModelMistakeExerciseRepository(sessions), generator, generations=state.mistake_generations
+    )
     return MistakeSessionStarter(course, provider, SQLModelMistakeSessionRepository(sessions), clock)
 
 
@@ -88,22 +104,27 @@ async def ready_documents(lister: AvailabilityLister = Depends(_get_lister)) -> 
     return await lister.ready_counts()
 
 
-@router.post("/api/errades/sessions", response_model_exclude_unset=True, dependencies=[Depends(rate_limited)])
+@router.post("/api/errades/sessions", response_model_exclude_unset=True, dependencies=[Depends(model_rate_limited)])
 async def start_session(
     body: NewMistakeSessionRequest,
     course: Course = Depends(get_course),
     starter: MistakeSessionStarter = Depends(_get_starter),
     config: Config = Depends(get_config),
+    generation_allowed: bool = Depends(may_generate),
 ) -> MistakeSessionResponse:
+    """Without `generation_allowed` (the cost policy), "nova" picks another ready document (`excepte`), and a
+    source and difficulty with none ready is a 409: a student never starts a generation."""
     data = MistakeSessionStarterInput(
         exercise_id=body.exercici_id,
         theory_id=body.teoria_id,
         difficulty=body.dificultat,
-        fresh=body.nova,
+        fresh=body.nova and generation_allowed,
         avoid=body.excepte,
     )
     with domain_errors("La generació"):
         if await starter.needs_generation(data):
+            if not generation_allowed:
+                raise HTTPException(409, NOT_READY)
             ensure_api_key(config)
         started = await starter.start(data)
     out = MistakeSessionResponse(
@@ -122,7 +143,7 @@ async def start_session(
     return out
 
 
-@router.post("/api/errades/sessions/{session_id}/correccio", dependencies=[Depends(rate_limited)])
+@router.post("/api/errades/sessions/{session_id}/correccio", dependencies=[Depends(model_rate_limited)])
 async def grade_annotations(
     session_id: str,
     body: GradingRequest,

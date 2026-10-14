@@ -1,0 +1,287 @@
+# "Construeix el contraexemple": reptes. L'alumne escriu f(x,y) fora de l'origen i f(0,0); el codi comprova
+# cada propietat amb sympy (vegeu core/counterexamples). Cada repte porta un exemple d'autor amb els seus
+# certificats: els tests el passen pel verificador, i l'alumne el veu només quan ha superat el repte.
+# Sintaxi sympy: multiplicació explícita (2*x), potències x**2 o x^2, Abs, sqrt, cbrt, sin, exp... Les arrels
+# d'índex senar són les reals: (x*y)**(1/3) = cbrt(x*y).
+# Per a cada propietat, els ítems dels apunts que la defineixen: es mostren amb la propietat i, si no es compleix,
+# com a «Repassa».
+teoria_propietats:
+  rectes_mateix_limit: [T2.6, T2.10]
+  rectes_limit_f0: [T2.10, T2.14]
+  iterats_iguals: [T2.12]
+  limit_no_existeix: [T2.6, T2.10]
+  discontinua: [T2.14, T2.10]
+  continua: [T2.14, T2.6]
+  parcials_existeixen: [T3.2]
+  alguna_parcial_no_existeix: [T3.2]
+  direccionals_existeixen: [T3.1]
+  direccionals_lineals: [T3.1, T3.9]
+  alguna_direccional_no_existeix: [T3.1]
+  diferenciable: [T3.8, T3.9]
+  no_diferenciable: [T3.8, T3.9, T3.14]
+  parcial_discontinua: [T3.20, T3.18]
+  creuades_diferents: [T3.31, T5.6]
+
+reptes:
+- id: rectes-enganyoses
+  tema: 2
+  titol: Totes les rectes hi coincideixen
+  enunciat: |
+    Troba una funció $f$ tal que el límit a l'origen per totes les rectes que hi passen existeixi i sigui el mateix, però el límit de $f$ a l'origen no existeixi.
+  propietats: [rectes_mateix_limit, limit_no_existeix]
+  teoria: [T2.6, T2.10]
+  teoria_reservada: [T3.6]
+  dificultat: normal
+  pista: |
+    Per la Proposició 10 del Tema 2, si el límit existeix, el límit per qualsevol camí continu ha de ser el mateix: les rectes són només uns camins entre molts. Busca un quocient on, sobre una corba com $y=x^2$, numerador i denominador tinguin el mateix ordre i el quocient sigui constant.
+  exemple:
+    funcio: x**2*y/(x**4+y**2)
+    valor: "0"
+    certificats:
+      limit_no_existeix:
+        camins: [{x: t, y: "t**2"}, {x: t, y: "0"}]
+  explicacio: |
+    Per $y=mx$: $\dfrac{m x^3}{x^4+m^2x^2}=\dfrac{mx}{x^2+m^2}\to0$. Per la paràbola $y=x^2$: $\dfrac{x^4}{2x^4}=\dfrac12$. Les rectes no veuen el que passa sobre les corbes tangents a l'eix.
+
+- id: iterats-enganyosos
+  tema: 2
+  titol: Iterats iguals, límit doble inexistent
+  enunciat: |
+    Troba una funció $f$ tal que els dos límits iterats a l'origen existeixin i coincideixin, però el límit de $f$ a l'origen no existeixi.
+  propietats: [iterats_iguals, limit_no_existeix]
+  teoria: [T2.6, T2.12]
+  teoria_reservada: []
+  dificultat: facil
+  pista: |
+    La Proposició 12 del Tema 2 diu que, si el límit doble existeix, els iterats hi coincideixen; el recíproc no diu res. Els límits iterats només miren els eixos. Quina funció val 0 sobre els eixos però una altra cosa sobre la diagonal?
+  exemple:
+    funcio: x*y/(x**2+y**2)
+    valor: "0"
+    certificats:
+      limit_no_existeix:
+        camins: [{x: t, y: t}, {x: t, y: "0"}]
+  explicacio: |
+    Sobre els eixos $f=0$, així que els iterats valen 0. Sobre $y=x$, $f=\frac12$: el límit doble no existeix.
+
+- id: parcials-sense-continuitat
+  tema: 3
+  titol: Parcials sense continuïtat
+  enunciat: |
+    Troba una funció $f$ que tingui les dues derivades parcials a l'origen però que no sigui contínua a l'origen.
+  propietats: [parcials_existeixen, discontinua]
+  teoria: [T3.2, T2.14]
+  teoria_reservada: [T3.6]
+  dificultat: facil
+  pista: |
+    Per la Definició 2 del Tema 3, les derivades parcials a l'origen només depenen dels valors de $f$ sobre els eixos. Fes que $f$ valgui $f(0,0)$ a tots els punts dels eixos.
+  exemple:
+    funcio: x*y/(x**2+y**2)
+    valor: "0"
+    certificats:
+      discontinua:
+        camins: [{x: t, y: t}]
+  explicacio: |
+    $f(x,0)=f(0,y)=0$, així que $\partial_x f(0,0)=\partial_y f(0,0)=0$. Però sobre $y=x$, $f=\frac12\ne f(0,0)$.
+
+- id: direccionals-sense-continuitat
+  tema: 3
+  titol: Totes les direccionals, sense continuïtat
+  enunciat: |
+    Troba una funció $f$ que tingui derivada direccional en totes les direccions a l'origen però que no sigui contínua a l'origen.
+  propietats: [direccionals_existeixen, discontinua]
+  teoria: [T3.1, T2.14]
+  teoria_reservada: [T3.6]
+  dificultat: dificil
+  pista: |
+    Per la Definició 1 del Tema 3, la derivada direccional només mira $f$ sobre una recta. Necessites que sobre cada recta $f$ es comporti bé (fins i tot que sigui derivable), però que hi hagi una corba per la qual $f$ no tendeixi a $f(0,0)$. Recorda el repte de les rectes enganyoses.
+  exemple:
+    funcio: x**2*y/(x**4+y**2)
+    valor: "0"
+    certificats:
+      discontinua:
+        camins: [{x: t, y: "t**2"}]
+  explicacio: |
+    En la direcció $(a,b)$ amb $b\ne0$: $\dfrac{f(ha,hb)}{h}=\dfrac{a^2b}{h^2a^4+b^2}\to\dfrac{a^2}{b}$; amb $b=0$, $f=0$. Però sobre $y=x^2$, $f=\frac12$.
+
+- id: continua-no-diferenciable
+  tema: 3
+  titol: Contínua, amb parcials, però no diferenciable
+  enunciat: |
+    Troba una funció $f$ contínua a l'origen, amb les dues derivades parcials a l'origen, però no diferenciable a l'origen.
+  propietats: [continua, parcials_existeixen, no_diferenciable]
+  teoria: [T2.14, T3.2, T3.8, T3.9]
+  teoria_reservada: [T3.15, T3.17]
+  dificultat: normal
+  pista: |
+    Si $f$ fos diferenciable, per la Proposició 9 del Tema 3 tindria $D_vf(0,0)=\nabla f(0,0)\cdot v$ en tota direcció. Una "teulada": $f$ nul·la sobre els eixos, petita com $r$, però que sobre la diagonal es comporti com $|h|$.
+  exemple:
+    funcio: x*y/sqrt(x**2+y**2)
+    valor: "0"
+    certificats:
+      continua:
+        fita: r/2
+  explicacio: |
+    $|f|=r|\cos\theta\sin\theta|\le r/2\to0$. Sobre els eixos $f=0$: parcials nul·les. Però en la direcció $(1,1)$: $\dfrac{f(h,h)}{h}=\dfrac{|h|}{\sqrt2\,h}=\pm\dfrac{1}{\sqrt2}$ segons el signe de $h$, així que $D_{(1,1)}f(0,0)$ no existeix, i una funció diferenciable té totes les derivades direccionals.
+
+- id: direccionals-no-diferenciable
+  tema: 3
+  titol: Totes les direccionals, però no diferenciable
+  enunciat: |
+    Troba una funció $f$ contínua a l'origen, amb derivada direccional en totes les direccions, però no diferenciable a l'origen.
+  propietats: [continua, direccionals_existeixen, no_diferenciable]
+  teoria: [T3.1, T3.8, T3.9, T3.11]
+  teoria_reservada: [T3.17]
+  dificultat: normal
+  pista: |
+    Per la Proposició 9 del Tema 3, una funció diferenciable té $D_vf(0,0)$ lineal en $v$. Si $f$ és homogènia de grau 1 ($f(hv)=h\,f(v)$ per a tot $h$ real, també negatiu), la derivada direccional en la direcció $v$ és $f(v)$. Quan és lineal en $v$?
+  exemple:
+    funcio: x**2*y/(x**2+y**2)
+    valor: "0"
+    certificats:
+      continua:
+        fita: r
+  explicacio: |
+    $|f|=r\cos^2\theta|\sin\theta|\le r$. És homogènia de grau 1, així que $D_v f(0,0)=f(v)=\dfrac{a^2b}{a^2+b^2}$, que no és lineal en $v=(a,b)$: no hi ha cap diferencial possible.
+
+- id: diferenciable-no-c1
+  tema: 3
+  titol: Diferenciable però no $C^1$
+  enunciat: |
+    Troba una funció $f$ diferenciable a l'origen però tal que alguna derivada parcial no sigui contínua a l'origen.
+  propietats: [diferenciable, parcial_discontinua]
+  teoria: [T3.8, T3.18, T3.20]
+  teoria_reservada: [T3.19]
+  dificultat: dificil
+  pista: |
+    El Teorema 18 del Tema 3 dona una condició suficient (parcials contínues), no necessària. Multiplica una oscil·lació, com $\sin\left(\frac{1}{r}\right)$, per un factor que s'anul·li prou de pressa perquè $f$ sigui diferenciable, però no tan de pressa que la derivada deixi d'oscil·lar.
+  exemple:
+    funcio: (x**2+y**2)*sin(1/sqrt(x**2+y**2))
+    valor: "0"
+    certificats:
+      diferenciable:
+        fita: r
+      parcial_discontinua:
+        parcial: x
+        camins: [{x: t, y: "0"}]
+  explicacio: |
+    $|f|\le r^2$, així que el residu $|f|/r\le r\to0$ amb gradient nul. Però fora de l'origen $\partial_x f=2x\sin\frac1r-\frac{x}{r}\cos\frac1r$, i sobre $y=0$, $x\to0^+$, el segon terme $-\cos\frac1x$ oscil·la.
+
+- id: schwarz-trencat
+  tema: 3
+  titol: Derivades creuades diferents
+  enunciat: |
+    Troba una funció $f$ amb les dues derivades segones creuades a l'origen i diferents: $D_yD_xf(0,0)\ne D_xD_yf(0,0)$, on $D_yD_xf=\dfrac{\partial}{\partial y}\Big(\dfrac{\partial f}{\partial x}\Big)$.
+  propietats: [creuades_diferents]
+  teoria: [T3.31, T5.6]
+  teoria_reservada: [T5.5]
+  dificultat: dificil
+  pista: |
+    Pel Teorema 6 del Tema 5 (Schwarz), les derivades creuades de $f$ no poden ser contínues a l'origen. Prova $f=xy\,g(x,y)$ amb $g$ acotada que valgui $1$ sobre l'eix $x$ i $-1$ sobre l'eix $y$.
+  exemple:
+    funcio: x*y*(x**2-y**2)/(x**2+y**2)
+    valor: "0"
+    certificats: {}
+  explicacio: |
+    $\partial_x f(0,y)=-y$ i $\partial_y f(x,0)=x$, així que $D_yD_xf(0,0)=-1$ i $D_xD_yf(0,0)=1$. És l'Exemple 5 del Tema 5. Les derivades segones no són contínues a l'origen.
+
+- id: parcials-sense-direccional
+  tema: 3
+  titol: Parcials sí, alguna direccional no
+  enunciat: |
+    Troba una funció $f$ amb les dues derivades parcials a l'origen però tal que alguna derivada direccional no existeixi.
+  propietats: [parcials_existeixen, alguna_direccional_no_existeix]
+  teoria: [T3.1, T3.2]
+  teoria_reservada: [T3.16]
+  dificultat: facil
+  pista: |
+    Les parcials són les direccionals dels eixos. Què passa en la direcció $(1,1)$ si $f$ val 0 sobre els eixos i una constant no nul·la sobre la diagonal?
+  exemple:
+    funcio: x*y/(x**2+y**2)
+    valor: "0"
+    certificats:
+      alguna_direccional_no_existeix:
+        direccio: {u: "1", w: "1"}
+  explicacio: |
+    $f(h,h)=\frac12$ per a $h\ne0$, així que $\dfrac{f(h,h)-f(0,0)}{h}=\dfrac{1}{2h}$ no té límit.
+
+- id: continua-sense-parcial
+  tema: 3
+  titol: Contínua però sense alguna parcial
+  enunciat: |
+    Troba una funció $f$ contínua a l'origen tal que alguna derivada parcial a l'origen no existeixi.
+  propietats: [continua, alguna_parcial_no_existeix]
+  teoria: [T2.14, T3.2]
+  teoria_reservada: [T3.15]
+  dificultat: facil
+  pista: |
+    Pensa en $|x|$ en una variable: contínua, amb un "pic" a l'origen.
+  exemple:
+    funcio: Abs(x)+y**2
+    valor: "0"
+    certificats:
+      continua:
+        fita: r+r**2
+  explicacio: |
+    $|f|\le|x|+y^2\le r+r^2\to0$. Però $\dfrac{f(h,0)}{h}=\dfrac{|h|}{h}$ val $\pm1$ segons el costat: $\partial_x f(0,0)$ no existeix.
+
+- id: rectes-discontinua
+  tema: 3
+  titol: Discontinua amb límits per rectes iguals a f(0,0)
+  enunciat: |
+    Troba una funció $f$ no contínua a l'origen tal que el límit per totes les rectes que hi passen sigui $f(0,0)$.
+  propietats: [rectes_limit_f0, discontinua]
+  teoria: [T2.10, T2.14]
+  teoria_reservada: [T3.6]
+  dificultat: normal
+  pista: |
+    És la mateixa idea que les rectes enganyoses: la discontinuïtat només la veu una corba.
+  exemple:
+    funcio: x**2*y/(x**4+y**2)
+    valor: "0"
+    certificats:
+      discontinua:
+        camins: [{x: t, y: "t**2"}]
+  explicacio: |
+    Per totes les rectes $f\to0=f(0,0)$, però per $y=x^2$, $f=\frac12$.
+
+- id: direccionals-lineals-no-diferenciable
+  tema: 3
+  titol: Direccionals lineals, però no diferenciable
+  enunciat: |
+    Troba una funció $f$ contínua a l'origen, amb totes les derivades direccionals a l'origen, però no diferenciable. Per fer-ho més difícil: aconsegueix que $D_vf(0,0)=\nabla f(0,0)\cdot v$ per a tota direcció $v$, de manera que la prova de la Proposició 9 del Tema 3 no detecti res.
+  propietats: [continua, direccionals_existeixen, direccionals_lineals, no_diferenciable]
+  teoria: [T3.1, T3.8, T3.9]
+  teoria_reservada: []
+  dificultat: dificil
+  pista: |
+    Fes que $D_vf(0,0)=0$ per a tota $v$ (cada recta veu $f$ com a $o(h)$), però que el residu de la Definició 8 del Tema 3 no tendeixi a 0 sobre una corba com $y=x^2$.
+  exemple:
+    funcio: x**3*y/(x**4+y**2)
+    valor: "0"
+    certificats:
+      continua:
+        fita: r/2
+      no_diferenciable:
+        camins: [{x: t, y: "t**2"}]
+  explicacio: |
+    Sobre cada recta $f(hv)/h\to0$, així que totes les direccionals són 0 i lineals en $v$. Però sobre $y=x^2$ el residu $\dfrac{f(x,x^2)}{\sqrt{x^2+x^4}}\to\dfrac12\ne0$: la candidata a diferencial (la nul·la) no serveix.
+
+- id: schwarz-diferenciable
+  tema: 5
+  titol: Diferenciable, però amb derivades creuades diferents
+  enunciat: |
+    Troba una funció $f$ diferenciable a l'origen amb les derivades creuades a l'origen diferents: ser diferenciable no és cap de les hipòtesis del Teorema 6 del Tema 5.
+  propietats: [diferenciable, creuades_diferents]
+  teoria: [T3.8, T5.6]
+  teoria_reservada: [T5.5]
+  dificultat: dificil
+  pista: |
+    El Teorema 6 del Tema 5 demana que les derivades creuades siguin contínues; la diferenciabilitat a l'origen és una propietat de primer ordre i no les controla. Busca $f=xy\,g$ amb $g$ acotada.
+  exemple:
+    funcio: x*y*(x**2-y**2)/(x**2+y**2)
+    valor: "0"
+    certificats:
+      diferenciable:
+        fita: r
+  explicacio: |
+    $|f|\le r^2/2$, així que $f$ és diferenciable amb diferencial nul·la. Però $D_yD_xf(0,0)=-1\ne1=D_xD_yf(0,0)$ (és l'Exemple 5 del Tema 5): les derivades segones no són contínues a l'origen.

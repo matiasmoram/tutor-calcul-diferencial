@@ -42,3 +42,7 @@ class ModelOutputException(TutoringException):
         super().__init__(f"{stage_name} ha fallat: {detail}", 502)
         self.detail = detail
         self.call = call
+
+
+class TruncatedModelOutputException(ModelOutputException):
+    """The model hit the stage's output limit before finishing (often a degenerate repetition loop)."""

@@ -80,6 +80,13 @@ class Verification(BaseModel):
     attempts: list[GenerationAttempt] | None = Field(
         default=None, validation_alias=_ca("intents", "attempts"), serialization_alias="intents", exclude_if=_is_none
     )
+    # sha256 of the reference text (sheet or notes) the document was checked against; absent on older documents.
+    reference_hash: str | None = Field(
+        default=None,
+        validation_alias=_ca("hash_referencia", "reference_hash"),
+        serialization_alias="hash_referencia",
+        exclude_if=_is_none,
+    )
 
 
 class MistakeExercise(BaseModel):

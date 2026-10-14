@@ -1,0 +1,1021 @@
+{
+ "config": "luna+nano",
+ "stages": {
+  "diagnosis": [
+   "openai",
+   "gpt-5.6-luna",
+   "low"
+  ],
+  "reply": [
+   "openai",
+   "gpt-5.4-nano",
+   "low"
+  ],
+  "guard": [
+   "openai",
+   "gpt-5.6-luna",
+   "low"
+  ]
+ },
+ "sessions": [
+  {
+   "exercici": "t2-4c",
+   "torns": [
+    {
+     "alumne": "He provat les rectes $y=kx$ i sempre dona $0$, per tant el límit és $0$.",
+     "tutor": "Has provat alguns camins i tots donen el mateix. Això demostra que el límit existeix, o només et dona un candidat?\n",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": true,
+     "intents": 3,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [
+      "camins_com_a_prova"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": "camins_com_a_prova",
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 2532,
+       "input_tokens": 4029,
+       "output_tokens": 193,
+       "cached_tokens": 4026
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1453,
+       "input_tokens": 1812,
+       "output_tokens": 131,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 6181,
+       "input_tokens": 3111,
+       "output_tokens": 460,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1699,
+       "input_tokens": 1918,
+       "output_tokens": 167,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 6199,
+       "input_tokens": 3092,
+       "output_tokens": 441,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1592,
+       "input_tokens": 1907,
+       "output_tokens": 169,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 7208,
+       "input_tokens": 3149,
+       "output_tokens": 547,
+       "cached_tokens": 0
+      }
+     ],
+     "latencia_ms": 26872
+    },
+    {
+     "alumne": "Què vol dir exactament que un límit existeixi?",
+     "tutor": "Mira la Definició 6 del Tema 2 als apunts. Com creus que s'aplica a aquest exercici?",
+     "referencies": [],
+     "accio": "explicar_concepte",
+     "nivell": 0,
+     "fallback": true,
+     "intents": 3,
+     "draft_errors": 0,
+     "intencio": "pregunta_conceptual",
+     "errors": [],
+     "want_intent": "pregunta_conceptual",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 2117,
+       "input_tokens": 4085,
+       "output_tokens": 186,
+       "cached_tokens": 1764
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2264,
+       "input_tokens": 1790,
+       "output_tokens": 215,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 5532,
+       "input_tokens": 3173,
+       "output_tokens": 348,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2217,
+       "input_tokens": 1909,
+       "output_tokens": 273,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 9927,
+       "input_tokens": 3168,
+       "output_tokens": 765,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1894,
+       "input_tokens": 1895,
+       "output_tokens": 200,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 6348,
+       "input_tokens": 3158,
+       "output_tokens": 438,
+       "cached_tokens": 0
+      }
+     ],
+     "latencia_ms": 30314
+    },
+    {
+     "alumne": "No sé com fitar-ho. Digues-me la solució, si us plau.",
+     "tutor": "Una idea per avançar: Comparar el denominador amb un dels seus sumands (tots dos són no negatius) per fitar el quocient per dalt. Com ho aplicaries?",
+     "referencies": [],
+     "accio": "pista",
+     "nivell": 2,
+     "fallback": true,
+     "intents": 3,
+     "draft_errors": 0,
+     "intencio": "demana_solucio",
+     "errors": [],
+     "want_intent": "demana_solucio",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 3028,
+       "input_tokens": 4138,
+       "output_tokens": 256,
+       "cached_tokens": 1764
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1704,
+       "input_tokens": 1855,
+       "output_tokens": 161,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 4913,
+       "input_tokens": 1941,
+       "output_tokens": 701,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 4500,
+       "input_tokens": 3180,
+       "output_tokens": 263,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2029,
+       "input_tokens": 1957,
+       "output_tokens": 209,
+       "cached_tokens": 0
+      }
+     ],
+     "latencia_ms": 16207
+    },
+    {
+     "alumne": "Com que $x^4\\le x^4+y^2$, tinc $|f|\\le\\frac{|x|^5}{x^4}=|x|\\to0$, i pel sandvitx el límit és $0$.",
+     "tutor": "Bona feina: has passat de mirar camins a una acotació global, i això és el que faltava per poder afirmar el límit. Comparant el denominador amb $x^4$ has obtingut $\\frac{|x|^5}{x^4+y^2}\\le |x|$, i després el sandvitx et dona la conclusió que el quocient va a $0$ quan $(x,y)\\to(0,0)$. L’idea clau és fer una fita que depengui només de $\\|(x,y)\\|$ (no del camí). El resultat és $0$.",
+     "referencies": [],
+     "accio": "tancar",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [],
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 3734,
+       "input_tokens": 4239,
+       "output_tokens": 298,
+       "cached_tokens": 1764
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1529,
+       "input_tokens": 2018,
+       "output_tokens": 136,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 4131,
+       "input_tokens": 3320,
+       "output_tokens": 226,
+       "cached_tokens": 0
+      }
+     ],
+     "latencia_ms": 9397
+    }
+   ]
+  },
+  {
+   "exercici": "t4-8",
+   "torns": [
+    {
+     "alumne": "Calculo el jacobià: $\\det JG=3+6z$, que a $(1,-1,2)$ val $15$.",
+     "tutor": "Perfecte: ja has situat que el determinant no s’anul·la a $(1,-1,2)$, però ara el pas clau és connectar els dos punts. A quin punt $G(1,-1,2)$ arriba (és a dir, quines són les components de $G(1,-1,2)$) i com encaixa això amb que després et demanen $DG^{-1}(4,4,-1)$?",
+     "referencies": [],
+     "accio": "pista",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 4341,
+       "input_tokens": 4970,
+       "output_tokens": 307,
+       "cached_tokens": 4967
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1112,
+       "input_tokens": 1409,
+       "output_tokens": 98,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 2260,
+       "input_tokens": 4036,
+       "output_tokens": 81,
+       "cached_tokens": 0
+      }
+     ],
+     "latencia_ms": 7716
+    },
+    {
+     "alumne": "Llavors $DG^{-1}(4,4,-1)$ és la jacobiana de $G$ al punt $(4,4,-1)$ invertida, no?",
+     "tutor": "Quan tens una aplicació $f:\\mathbb R^n\\to\\mathbb R^n$ que és un difeomorfisme local, vol dir que al voltant d’un punt $a$ té inversa diferenciable al voltant del punt imatge $f(a)$. En particular, per parlar de $Df^{-1}$ en un punt $b$, necessites identificar quin és l’emplaçament previ $a$ tal que $f(a)=b$. Teixint això amb la idea de difeomorfisme, el que importa és la correspondència entre punt i imatge, més que fer càlculs immediats (vegeu la Definició 9 del Tema 4). Quin és el punt $a$ que necessites perquè la imatge sigui el punt on et demanen $DG^{-1}(4,4,-1)$, és a dir, quin ha de complir $G(a)=(4,4,-1)$?",
+     "referencies": [
+      "T4.9"
+     ],
+     "accio": "explicar_concepte",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 2,
+     "draft_errors": 0,
+     "intencio": "pregunta_conceptual",
+     "errors": [
+      "punt_equivocat"
+     ],
+     "want_intent": "mostra_treball",
+     "want_error": "punt_equivocat",
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 6042,
+       "input_tokens": 5116,
+       "output_tokens": 386,
+       "cached_tokens": 1682
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1901,
+       "input_tokens": 1604,
+       "output_tokens": 192,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 6048,
+       "input_tokens": 4328,
+       "output_tokens": 371,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2744,
+       "input_tokens": 1744,
+       "output_tokens": 361,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 4353,
+       "input_tokens": 4346,
+       "output_tokens": 261,
+       "cached_tokens": 0
+      }
+     ],
+     "latencia_ms": 21092
+    },
+    {
+     "alumne": "Què diu exactament el teorema de la funció inversa?",
+     "tutor": "Mira la Definició 9 del Tema 4 als apunts. Com creus que s'aplica a aquest exercici?",
+     "referencies": [],
+     "accio": "explicar_concepte",
+     "nivell": 1,
+     "fallback": true,
+     "intents": 3,
+     "draft_errors": 0,
+     "intencio": "pregunta_conceptual",
+     "errors": [],
+     "want_intent": "pregunta_conceptual",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 3954,
+       "input_tokens": 5346,
+       "output_tokens": 291,
+       "cached_tokens": 1682
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2030,
+       "input_tokens": 2661,
+       "output_tokens": 203,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 6784,
+       "input_tokens": 5396,
+       "output_tokens": 352,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2245,
+       "input_tokens": 2792,
+       "output_tokens": 291,
+       "cached_tokens": 1792
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 4928,
+       "input_tokens": 5390,
+       "output_tokens": 296,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1968,
+       "input_tokens": 2763,
+       "output_tokens": 240,
+       "cached_tokens": 1792
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 6741,
+       "input_tokens": 5375,
+       "output_tokens": 511,
+       "cached_tokens": 0
+      }
+     ],
+     "latencia_ms": 28656
+    },
+    {
+     "alumne": "Com que té inversa local a tot arreu on $3+6z\\neq0$, $G$ té inversa global.",
+     "tutor": "El teorema de la funció inversa et dona una inversa en un entorn. Què hauria de complir $G$ a tot $\\mathbb{R}^3$ per tenir una inversa global?\n",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 1,
+     "fallback": true,
+     "intents": 3,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [
+      "local_implica_global"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": "local_implica_global",
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 4661,
+       "input_tokens": 5410,
+       "output_tokens": 331,
+       "cached_tokens": 1682
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2436,
+       "input_tokens": 2812,
+       "output_tokens": 129,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 2880,
+       "input_tokens": 5470,
+       "output_tokens": 99,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1540,
+       "input_tokens": 2923,
+       "output_tokens": 175,
+       "cached_tokens": 1792
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 4802,
+       "input_tokens": 5467,
+       "output_tokens": 290,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1326,
+       "input_tokens": 2916,
+       "output_tokens": 110,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 11401,
+       "input_tokens": 5451,
+       "output_tokens": 306,
+       "cached_tokens": 0
+      }
+     ],
+     "latencia_ms": 29054
+    }
+   ]
+  },
+  {
+   "exercici": "t6-3a",
+   "torns": [
+    {
+     "alumne": "No sé per on començar.",
+     "tutor": "Bona idea: per decidir l’existència d’extrems absoluts, mira el **conjunt de lligam** $C=\\{(x,y)\\,:\\,x^2+2y^2=3\\}$ i pregunta’t si és **compact** (és a dir, si és **tancat i fitat**). Com que $f(x,y)=x$ és contínua, si $C$ és compacte llavors el resultat d’existència ve del Teorema 23 del Tema 2 (Weierstrass).  \nEt sembla que $C$ és fitat i tancat, o hi ha algun motiu perquè no ho sigui?",
+     "referencies": [
+      "T2.23"
+     ],
+     "accio": "pista",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 3,
+     "draft_errors": 0,
+     "intencio": "demana_pista",
+     "errors": [],
+     "want_intent": "demana_pista",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 2868,
+       "input_tokens": 3500,
+       "output_tokens": 210,
+       "cached_tokens": 3497
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2104,
+       "input_tokens": 1605,
+       "output_tokens": 182,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 6537,
+       "input_tokens": 2901,
+       "output_tokens": 425,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1344,
+       "input_tokens": 1717,
+       "output_tokens": 120,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 6946,
+       "input_tokens": 2831,
+       "output_tokens": 395,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2104,
+       "input_tokens": 1716,
+       "output_tokens": 190,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 3660,
+       "input_tokens": 2863,
+       "output_tokens": 211,
+       "cached_tokens": 0
+      }
+     ],
+     "latencia_ms": 25583
+    },
+    {
+     "alumne": "Sobre l'el·lipse $x^2=3-2y^2\\le3$, així que $|x|\\le\\sqrt3$.",
+     "tutor": "Bona: ja has observat que l’ansa queda acotada, és a dir, del lligam pots deduir $|x|\\le \\sqrt3$ (i també podries obtenir un límit per $y$). Ara, comprova dues coses sobre el conjunt $M=\\{(x,y):x^2+2y^2=3\\}$: està tancat (per exemple, com a antiimatge d’un tancat mitjançant una funció contínua) i és fitat (amb desigualtats per $x$ i $y$). Un cop tinguis clar que $M$ és compacte i que $f(x,y)=x$ és contínua, quin resultat de la teoria (Teorema de Weierstrass) et diu exactament que hi ha màxim i mínim sobre $M$?",
+     "referencies": [],
+     "accio": "pista",
+     "nivell": 3,
+     "fallback": false,
+     "intents": 2,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 4137,
+       "input_tokens": 3690,
+       "output_tokens": 272,
+       "cached_tokens": 1668
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1840,
+       "input_tokens": 1892,
+       "output_tokens": 198,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 5698,
+       "input_tokens": 3199,
+       "output_tokens": 391,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2191,
+       "input_tokens": 1993,
+       "output_tokens": 236,
+       "cached_tokens": 1792
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 4026,
+       "input_tokens": 3183,
+       "output_tokens": 190,
+       "cached_tokens": 0
+      }
+     ],
+     "latencia_ms": 17898
+    },
+    {
+     "alumne": "Per tant el màxim és $\\sqrt3$ i el mínim $-\\sqrt3$.",
+     "tutor": "Una idea per avançar: Mirar si el conjunt definit pel lligam és tancat i fitat, i si $f$ és contínua. Com ho aplicaries?",
+     "referencies": [],
+     "accio": "demanar_justificacio",
+     "nivell": 3,
+     "fallback": true,
+     "intents": 3,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [],
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 4424,
+       "input_tokens": 3898,
+       "output_tokens": 431,
+       "cached_tokens": 1668
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2308,
+       "input_tokens": 2224,
+       "output_tokens": 267,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 4037,
+       "input_tokens": 3605,
+       "output_tokens": 299,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2712,
+       "input_tokens": 2338,
+       "output_tokens": 323,
+       "cached_tokens": 1792
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 6299,
+       "input_tokens": 3588,
+       "output_tokens": 383,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2665,
+       "input_tokens": 2357,
+       "output_tokens": 305,
+       "cached_tokens": 1792
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 4351,
+       "input_tokens": 3586,
+       "output_tokens": 331,
+       "cached_tokens": 0
+      }
+     ],
+     "latencia_ms": 26820
+    },
+    {
+     "alumne": "S'assoleixen a $(\\sqrt3,0)$ i $(-\\sqrt3,0)$, perquè quan $y=0$ tenim $x^2=3$, i l'el·lipse és compacta.",
+     "tutor": "Exacte: els extrems absoluts s’assoleixen en $(\\sqrt3,0)$ i $(-\\sqrt3,0)$. El màxim és $\\sqrt3$ i el mínim és $-\\sqrt3$, d’acord amb el que has raonat. La idea clau ha estat convertir el problema en un de màxim i mínim d’una funció contínua sobre un conjunt compacte (Weierstrass). Bona feina.",
+     "referencies": [],
+     "accio": "tancar",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [],
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 5715,
+       "input_tokens": 3991,
+       "output_tokens": 596,
+       "cached_tokens": 1668
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1353,
+       "input_tokens": 2315,
+       "output_tokens": 99,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 1695,
+       "input_tokens": 3520,
+       "output_tokens": 67,
+       "cached_tokens": 0
+      }
+     ],
+     "latencia_ms": 8765
+    }
+   ]
+  },
+  {
+   "exercici": "t3-5",
+   "torns": [
+    {
+     "alumne": "Sobre les rectes $y=mx$ el límit a l'origen és $0$, per tant $f$ és contínua a l'origen.",
+     "tutor": "Entenc per què t’has fixat en les rectes $y=mx$, però potser això no és prou per assegurar la continuïtat a l’origen. Hi ha camins cap a l’origen que no siguin rectes (per exemple, corbes) on el quocient $\\frac{x^2}{y}$ es comporti de manera diferent que quan $y=mx$? Quin camí concret et podria canviar el denominador $y$ “més ràpid” que el numerador $x^2$ mentre t’acostes a $(0,0)$?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [
+      "nomes_rectes"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": "nomes_rectes",
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 4028,
+       "input_tokens": 6139,
+       "output_tokens": 359,
+       "cached_tokens": 6136
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1351,
+       "input_tokens": 1534,
+       "output_tokens": 130,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 4061,
+       "input_tokens": 4973,
+       "output_tokens": 221,
+       "cached_tokens": 0
+      }
+     ],
+     "latencia_ms": 9444
+    },
+    {
+     "alumne": "A l'origen, $D_vf(0,0)=\\lim_{t\\to0}\\frac{f(tv)}{t}=\\frac{v_1^2}{v_2}$ si $v_2\\neq0$. Com que existeixen totes, $f$ és contínua a l'origen.",
+     "tutor": "Has escrit que $D_v f(0,0)=\\lim_{t\\to0}\\frac{f(tv)}{t}=\\frac{v_1^2}{v_2}$ (si $v_2\\neq0$). Quan una derivada direccional existeix, quina informació concreta et dóna sobre el comportament de $f(a+tu)$ només al llarg de la recta $a+tu$, i no en tot el voltant del punt en 2D? En concret, per concloure la continuïtat a l’origen, el que necessites és un límit $f(x,y)\\to f(0,0)$ per a $(x,y)\\to(0,0)$ seguint qualsevol camí: com ho justificaries només a partir de l’existència de $D_u f(0,0)$ per a totes les direccions? Què et falta provar perquè el límit bidimensional existeixi?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 2,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [
+      "direccionals_implica_continuitat"
+     ],
+     "want_intent": "mostra_treball",
+     "want_error": "direccionals_implica_continuitat",
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 6067,
+       "input_tokens": 6350,
+       "output_tokens": 588,
+       "cached_tokens": 1793
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2066,
+       "input_tokens": 1695,
+       "output_tokens": 212,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 5913,
+       "input_tokens": 5219,
+       "output_tokens": 369,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2304,
+       "input_tokens": 1788,
+       "output_tokens": 293,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 4667,
+       "input_tokens": 5209,
+       "output_tokens": 252,
+       "cached_tokens": 0
+      }
+     ],
+     "latencia_ms": 21023
+    },
+    {
+     "alumne": "Dona'm una pista per estudiar la continuïtat a l'origen.",
+     "tutor": "Bé: la peça clara és que “fora de l’eix” (és a dir, quan $y\\neq0$) la funció està definida per una única fórmula $\\frac{x^2}{y}$, i això ja et dóna un obert on té sentit estudiar la continuïtat sense el cas especial $y=0$. Per $y\\neq0$, $\\frac{x^2}{y}$ és composició d’operacions elementals (polinomis i divisió per una funció no nul·la), així que la continuïtat es pot justificar directament amb la definició de continuïtat (Teorema/Definició 14 del Tema 2) i l’àlgebra de funcions contínues (Proposició 20 del Tema 2). Quin és el conjunt exacte on tens garantia automàtica que $y\\neq0$, i què et diu això sobre quin cas de la definició de $f$ s’ha d’usar?",
+     "referencies": [
+      "T2.14",
+      "T2.20"
+     ],
+     "accio": "pista",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 2,
+     "draft_errors": 0,
+     "intencio": "demana_pista",
+     "errors": [],
+     "want_intent": "demana_pista",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 4520,
+       "input_tokens": 6574,
+       "output_tokens": 348,
+       "cached_tokens": 1793
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1485,
+       "input_tokens": 2144,
+       "output_tokens": 153,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 4566,
+       "input_tokens": 5606,
+       "output_tokens": 271,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2224,
+       "input_tokens": 2270,
+       "output_tokens": 260,
+       "cached_tokens": 1792
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 4125,
+       "input_tokens": 5671,
+       "output_tokens": 247,
+       "cached_tokens": 0
+      }
+     ],
+     "latencia_ms": 16925
+    },
+    {
+     "alumne": "Fora de l'eix $y=0$ és un quocient de polinomis amb denominador no nul, així que és contínua.",
+     "tutor": "Correcte: fora de l’eix $y=0$ ja tens la continuïtat perquè allí $f(x,y)=\\frac{x^2}{y}$ és un quocient amb denominador no nul. Ara toca analitzar punts de l’eix $y=0$ però amb $x_0\\neq 0$, és a dir, comprovar si $\\lim_{(x,y)\\to(x_0,0)} f(x,y)=f(x_0,0)$ existeix (Teorema/Definició 14 del Tema 2). Quin valor ha de tenir aquest límit perquè la funció sigui contínua en $(x_0,0)$?",
+     "referencies": [
+      "T2.14"
+     ],
+     "accio": "validar_i_avancar",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 2,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 5263,
+       "input_tokens": 6818,
+       "output_tokens": 491,
+       "cached_tokens": 1793
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1999,
+       "input_tokens": 2474,
+       "output_tokens": 166,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 3982,
+       "input_tokens": 5952,
+       "output_tokens": 247,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1554,
+       "input_tokens": 2567,
+       "output_tokens": 188,
+       "cached_tokens": 1792
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.6-luna",
+       "latency_ms": 3439,
+       "input_tokens": 5932,
+       "output_tokens": 185,
+       "cached_tokens": 0
+      }
+     ],
+     "latencia_ms": 16244
+    }
+   ]
+  }
+ ],
+ "metrics": {
+  "turns": 16,
+  "failed_turns": 0,
+  "fallback": 6,
+  "drafts_per_turn": 2.19,
+  "draft_errors": 0,
+  "latex_broken": 0,
+  "intent_match": 11,
+  "error_match": 16,
+  "cost_usd": 0.077,
+  "cost_per_turn_usd": 0.00481,
+  "latency_s": 19.5,
+  "input_tokens": 289996,
+  "cached_tokens": 53683,
+  "output_tokens": 23565
+ }
+}

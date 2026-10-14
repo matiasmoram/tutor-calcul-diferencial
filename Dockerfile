@@ -22,6 +22,14 @@ RUN uv sync --locked --no-dev
 RUN useradd --create-home tutor && chown -R tutor /app
 USER tutor
 
+# Client IP behind Render's proxy. uvicorn's ProxyHeadersMiddleware only reads X-Forwarded-For when the TCP peer is
+# trusted, then walks the list from the right and takes the first untrusted address: the one Render's proxy appended.
+# Trusting '*' instead makes it take the leftmost entry, which the client writes itself (and so dodges the per-IP rate
+# limit on the paid endpoints). Render's proxies reach the container from private addresses; if another hop (e.g. a
+# CDN) shows up as the client, add its ranges here or in the service environment. The rate limiter's key
+# (dependencies.client_key, the rightmost X-Forwarded-For hop) is the same address on Render.
+ENV FORWARDED_ALLOW_IPS=127.0.0.1,::1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+
 EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s CMD python -c "import urllib.request,os; urllib.request.urlopen(f'http://127.0.0.1:{os.environ.get(\"PORT\",\"8000\")}/health')"
-CMD ["sh", "-c", "uvicorn apps.tutor_api.server:app --host 0.0.0.0 --port ${PORT} --proxy-headers --forwarded-allow-ips='*'"]
+CMD ["sh", "-c", "uvicorn apps.tutor_api.server:app --host 0.0.0.0 --port ${PORT} --proxy-headers"]

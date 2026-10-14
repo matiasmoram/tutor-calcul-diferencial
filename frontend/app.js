@@ -54,29 +54,72 @@ function tex(src, display = false) {
 }
 
 // Professor key: open the app once with ?prof=<key> and it is remembered in this browser.
-(() => {
-  const k = new URLSearchParams(location.search).get("prof");
-  try { if (k) localStorage.setItem("clauProfessor", k); } catch { /* private mode: key only for this load */ }
+// The key is then stripped from the URL (history, screenshots, shared links), keeping the hash route.
+const clauDeLaUrl = (() => {
+  const params = new URLSearchParams(location.search);
+  const k = params.get("prof");
+  if (!k) return "";
+  try { localStorage.setItem("clauProfessor", k); } catch { /* private mode: key only for this load */ }
+  params.delete("prof");
+  const qs = params.toString();
+  history.replaceState(history.state, "", `${location.pathname}${qs ? `?${qs}` : ""}${location.hash}`);
+  return k;
 })();
 function clauProfessor() {
-  try { return localStorage.getItem("clauProfessor") || new URLSearchParams(location.search).get("prof") || ""; }
-  catch { return new URLSearchParams(location.search).get("prof") || ""; }
+  try { return localStorage.getItem("clauProfessor") || clauDeLaUrl; }
+  catch { return clauDeLaUrl; }
+}
+function sortirModeProfessor() {
+  try { localStorage.removeItem("clauProfessor"); } catch { /* storage unavailable: the key only lived in this load */ }
+  location.reload();
+}
+
+// What the student reads when a call fails: FastAPI's 422 lists the invalid fields, the rest are mapped by status.
+const ERRORS_HTTP = {
+  401: "No tens permís per fer això (falta la clau de professor o no és vàlida).",
+  429: "Massa peticions; espera un minut i torna-ho a provar.",
+  500: "Error intern del servidor; torna-ho a provar d'aquí a una estona.",
+  502: "El model no ha respost; torna-ho a provar.",
+  503: "El servei no està disponible ara mateix; torna-ho a provar d'aquí a una estona.",
+  504: "El model ha trigat massa a respondre; torna-ho a provar.",
+};
+
+function missatgeError(status, detail) {
+  if (ERRORS_HTTP[status]) return ERRORS_HTTP[status];
+  if (Array.isArray(detail)) {
+    const msgs = detail.map((d) => d?.msg).filter(Boolean);
+    if (msgs.length) return `Dades no vàlides: ${msgs.join("; ")}`;
+  }
+  if (typeof detail === "string" && detail) return detail;
+  return `Error ${status}`;
 }
 
 async function api(path, options = {}) {
-  const res = await fetch(path, {
-    headers: { "Content-Type": "application/json", "X-Clau-Professor": clauProfessor() },
-    ...options,
-  });
+  let res;
+  try {
+    res = await fetch(path, {
+      headers: { "Content-Type": "application/json", "X-Clau-Professor": clauProfessor() },
+      ...options,
+    });
+  } catch {
+    const err = new Error("No hi ha connexió amb el servidor. Comprova la xarxa i torna-ho a provar.");
+    err.status = 0;
+    throw err;
+  }
   const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.detail || `Error ${res.status}`);
+  if (!res.ok) {
+    const err = new Error(missatgeError(res.status, data.detail));
+    err.status = res.status;  // callers tell a refusal (403/409) from a failure
+    throw err;
+  }
   return data;
 }
 
 /* ---------- Views & routing ---------- */
 
-const VIEWS = ["landing", "llistes", "llista", "exercici", "errades", "teoria", "professor", "visual", "afirmacions"];
+const VIEWS = ["landing", "llistes", "llista", "exercici", "errades", "teoria", "professor", "visual", "afirmacions", "contraexemples"];
 let PROFESSOR = false;  // set from /api/config: only professors get the panel, solutions and traces
+let POT_GENERAR = false;  // set from /api/config: may this viewer start a paid generation (TUTOR_GENERACIO)
 const cache = { llistes: null, llista: {}, teoria: null };
 
 /* ---------- Links to the course notes ---------- */
@@ -182,6 +225,7 @@ function show(view) {
   $("#toggle-wrap").classList.toggle("hidden", view !== "exercici" || !PROFESSOR);
   $("#view-exercici").classList.toggle("no-prof", !PROFESSOR || !$("#toggle-prof").checked);
   $(".nav-professor")?.classList.toggle("hidden", !PROFESSOR);
+  $("#sortir-prof")?.classList.toggle("hidden", !PROFESSOR);
 }
 
 function crumbs(items) {
@@ -336,9 +380,15 @@ async function viewLlista(mode, id) {
   }));
 }
 
+// Each opening of an exercise gets a number: a slower earlier load never overwrites the one on screen.
+let sessionReq = 0;
+
 async function viewExercici(llistaId, exId) {
+  const req = ++sessionReq;
+  state.session = null;  // nothing is sent to (or lands in) the previous exercise while this one loads
   show("exercici");
   const l = await getLlista(llistaId);
+  if (req !== sessionReq) return;
   crumbs([["Inici", "#/"], ["Exercicis", "#/exercicis"], [l.etiqueta, `#/exercicis/${llistaId}`],
     [l.exercicis.find((e) => e.id === exId)?.etiqueta || exId, null]]);
   $("#back-to-list").href = `#/exercicis/${llistaId}`;
@@ -349,15 +399,25 @@ async function viewExercici(llistaId, exId) {
         el("span", { class: "ex-label", text: ex.etiqueta }),
         el("span", { class: "ex-math" }, statement(ex))))));
   $("#exercise-list .active")?.scrollIntoView({ block: "center" });
-  await startSession(exId);
+  await startSession(exId, req);
 }
 
-async function startSession(id) {
-  const [data] = await Promise.all([
-    api("/api/sessions", { method: "POST", body: JSON.stringify({ exercici_id: id }) }),
-    getTeoria().then((t) => t.byKey || indexTeoria(t)).catch(() => null),  // citations still render as text without it
-  ]);
+async function startSession(id, req) {
+  $("#send").disabled = true;
+  let data;
+  try {
+    [data] = await Promise.all([
+      api("/api/sessions", { method: "POST", body: JSON.stringify({ exercici_id: id }) }),
+      getTeoria().then((t) => t.byKey || indexTeoria(t)).catch(() => null),  // citations still render as text without it
+    ]);
+  } catch (err) {
+    if (req !== sessionReq) return;  // the student already left: don't throw them back to the landing page
+    throw err;
+  }
+  if (req !== sessionReq) return;
   state.session = { ...data, traces: [] };
+  $("#send").disabled = false;
+  $("#attach").disabled = false;  // a transcription of the previous exercise may have left it disabled
   clearPhoto();
   const ex = data.exercici;
   $("#statement").replaceChildren(
@@ -435,15 +495,18 @@ async function route() {
   if (parts[0] === "problemes") parts = ["exercicis"];
   if (parts[0] === "llista") parts = ["exercicis", ...parts.slice(1)];
   const [mode, llista, ex] = parts;
+  sessionReq++;  // any exercise still loading belongs to the page we're leaving
   try {
     if (!cfgLoaded) {
       const cfg = await api("/api/config");
       PROFESSOR = cfg.panell_professor;
+      POT_GENERAR = cfg.pot_generar;
       cfgLoaded = true;
     }
     if (mode === "teoria") await viewTeoria();
     else if (mode === "visual") await viewVisual(llista);
     else if (mode === "afirmacions") await (llista ? viewAfirmacions(llista) : viewAfirmacionsInici());
+    else if (mode === "contraexemples") await (llista ? viewContraexemple(llista) : viewContraexemplesInici());
     else if (mode === "professor") await (llista ? viewProfessorSessio(llista) : viewProfessor());
     else if (mode === "errades" && !llista) await viewErradesInici();
     else if (mode === "errades" && llista === "teoria") await (ex ? viewErradesTeoria(ex) : viewErradesTeoriaLlista());
@@ -580,22 +643,29 @@ function renderAttachment(dataUrl, status, cls = "") {
 
 async function attachPhoto(file) {
   const sess = state.session;  // a transcription that arrives after switching exercise is dropped
-  if (!sess || !file) return;
+  // One transcription at a time: paste and drop don't go through the (disabled) Foto button.
+  if (!sess || !file || sess.transcribing) return;
   if (!file.type.startsWith("image/")) {
     addMessage("error", "Només es poden adjuntar imatges (JPG, PNG, WebP).");
     return;
   }
+  sess.transcribing = true;
+  $("#attach").disabled = true;
   let dataUrl;
   try {
     dataUrl = await shrink(file);
   } catch (err) {
-    addMessage("error", err.message);
+    sess.transcribing = false;
+    if (state.session === sess) {
+      $("#attach").disabled = false;
+      addMessage("error", err.message);
+    }
     return;
   }
+  if (state.session !== sess) { sess.transcribing = false; return; }
   state.photo = null;
   renderAttachment(dataUrl, [el("strong", { text: "Transcrivint la foto…" }),
     el("span", { class: "muted", text: "Llegint la teva llibreta" })], "busy");
-  $("#attach").disabled = true;
   try {
     const t = await api(`/api/sessions/${sess.session_id}/transcripcio`, {
       method: "POST",
@@ -620,10 +690,12 @@ async function attachPhoto(file) {
     renderAttachment(dataUrl, lines, t.llegibilitat === "bona" ? "ok" : "warn");
     input.focus();
   } catch (err) {
+    if (state.session !== sess) return;
     renderAttachment(dataUrl, [el("strong", { text: "No s'ha pogut transcriure" }),
       el("span", { class: "muted", text: err.message })], "bad");
   } finally {
-    $("#attach").disabled = false;
+    sess.transcribing = false;
+    if (state.session === sess) $("#attach").disabled = false;
   }
 }
 
@@ -649,6 +721,8 @@ $("#composer").addEventListener("drop", (e) => {
   $("#composer").classList.remove("dragging");
   attachPhoto([...e.dataTransfer.files].find((f) => f.type.startsWith("image/")));
 });
+
+$("#sortir-prof").addEventListener("click", sortirModeProfessor);
 
 $("#toggle-prof").addEventListener("change", (e) => {
   $("#view-exercici").classList.toggle("no-prof", !e.target.checked);

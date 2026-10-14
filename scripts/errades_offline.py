@@ -12,10 +12,13 @@ Steps (the same gates as MistakeExerciseGenerator):
   import <batch.json>     needs <batch>.ver.json from the reviewer: {"<id>:<dificultat>": {"problemes": [...],
                           "valoracio": ""}} in the verifier's format. Code compares (every declared error
                           found, nothing else wrong) and saves only the documents that pass.
-  check-cache             re-validates every cached document against the current sheets / notes
+  check-cache             re-validates every cached document against the current sheets / notes and re-applies the
+                          verification gate to its stored review; reports documents whose reference (sheet or
+                          notes) changed since import, and counts the older ones that carry no reference hash
 """
 
 import argparse
+import hashlib
 import json
 import sys
 from functools import cache
@@ -61,6 +64,11 @@ def source_of(doc: BatchDoc) -> MistakeSource:
     if doc["id"] not in course.exercises:
         raise KeyError(f"{doc['id']}: unknown exercise")
     return ProblemSource.of(course, course.exercises[doc["id"]])
+
+
+def reference_hash(source: MistakeSource) -> str:
+    """Of the reference the reviewer compared the document against (the sheet or the item of the notes)."""
+    return hashlib.sha256(prompts.reference(source).encode("utf-8")).hexdigest()
 
 
 def key(doc: BatchDoc) -> str:
@@ -144,7 +152,13 @@ def cmd_import(path: Path, directory: Path = GENERATED_DIR) -> int:
                 fragments=check.fragments,
                 statement_fragments=check.statement_fragments,
                 mistakes=check.mistakes,
-                verification=Verification(origin="offline", batch=path.name, assessment=assessment, findings=findings),
+                verification=Verification(
+                    origin="offline",
+                    batch=path.name,
+                    assessment=assessment,
+                    findings=findings,
+                    reference_hash=reference_hash(source_of(doc)),
+                ),
                 created_at=now,
             )
         )
@@ -165,14 +179,23 @@ def as_batch_doc(exercise: MistakeExercise) -> BatchDoc:
 
 
 def cmd_check_cache(directory: Path = GENERATED_DIR) -> int:
-    bad = 0
+    bad = unhashed = 0
     for exercise in JsonFileMistakeSource(directory).load():
-        problems = validate(as_batch_doc(exercise)).problems
+        doc = as_batch_doc(exercise)
+        check = validate(doc)
+        problems = list(check.problems)
+        if check.valid:
+            problems += compare_verification(check.mistakes, exercise.verification.findings, check.fragments)
+            stored = exercise.verification.reference_hash
+            if stored is None:
+                unhashed += 1
+            elif stored != reference_hash(source_of(doc)):
+                problems.append("the sheet / notes changed since the document was reviewed")
         if problems:
             bad += 1
             relative = Path(exercise.source_id, exercise.difficulty, f"{exercise.id}.json")
             print(f"{relative}: " + "; ".join(problems))
-    print(f"{bad} cached documents with problems")
+    print(f"{bad} cached documents with problems, {unhashed} unhashed (reviewed before the reference was recorded)")
     return 1 if bad else 0
 
 

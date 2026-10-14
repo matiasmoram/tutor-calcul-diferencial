@@ -4,11 +4,15 @@
 !.env.example
 .git/
 .github/
+.claude/
 .pytest_cache/
+.ruff_cache/
 .playwright-mcp/
 **/__pycache__/
 **/*.pyc
 data/
 work/
-tests/
+docs/
+# Not runtime: the Dockerfile copies backend/, frontend/, scripts/, sources/ (PDFs served under /pdf) and supabase/.
+backend/tests/
 backend/registres/

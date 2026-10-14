@@ -4,16 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tutor socràtic · Càlcul Diferencial</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23243b6b'/%3E%3Ctext x='32' y='47' font-family='Georgia,serif' font-size='44' font-style='italic' text-anchor='middle' fill='%23fff'%3E%E2%88%82%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.21/katex.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
-  <link rel="stylesheet" href="/static/style.css?v=15">
-  <script defer src="/static/app.js?v=14"></script>
-  <script defer src="/static/errades.js?v=11"></script>
-  <script defer src="/static/afirmacions.js?v=1"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.21/katex.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.21/contrib/auto-render.min.js"></script>
+  <link rel="stylesheet" href="/static/style.css?v=18">
+  <script defer src="/static/app.js?v=16"></script>
+  <script defer src="/static/errades.js?v=12"></script>
+  <script defer src="/static/afirmacions.js?v=2"></script>
+  <script defer src="/static/contraexemples.js?v=2"></script>
   <script defer src="/static/visual-latex.js?v=1"></script>
   <script defer src="/static/visual.js?v=2"></script>
   <script defer src="/static/visual-eines.js?v=1"></script>
@@ -31,6 +33,7 @@
     <a class="nav-teoria" href="#/visual">Visualitzador</a>
     <a class="nav-teoria" href="#/teoria">Teoria</a>
     <a class="nav-teoria nav-professor hidden" href="#/professor">Professorat</a>
+    <button type="button" class="nav-teoria nav-sortir hidden" id="sortir-prof" title="Oblida la clau de professor en aquest navegador">Sortir del mode professor</button>
     <div class="logos" aria-label="FME · UPC">
       <img src="/static/assets/fme.png" alt="Facultat de Matemàtiques i Estadística" class="logo-fme" onerror="this.remove()">
       <img src="/static/assets/upc.png" alt="Universitat Politècnica de Catalunya" class="logo-upc">
@@ -119,6 +122,13 @@
           <span class="mode-cta">Entrar →</span>
           <span class="new">Nou</span>
         </a>
+        <a class="mode featured" href="#/contraexemples">
+          <span class="mode-icon">∄</span>
+          <h3>Construeix el contraexemple</h3>
+          <p>Fabrica la funció que trenca la intuïció: parcials sense continuïtat, totes les rectes d'acord sense límit, Schwarz trencat… Dona el certificat (camins, una fita) i sympy ho comprova. Sense IA: el veredicte és càlcul.</p>
+          <span class="mode-cta">Entrar →</span>
+          <span class="new">Nou</span>
+        </a>
       </div>
     </section>
 
@@ -193,6 +203,8 @@
 
   <!-- True or false: prove it or find a counterexample -->
   <main class="page errades hidden" id="view-afirmacions"></main>
+
+  <main class="page errades hidden" id="view-contraexemples"></main>
 
   <!-- Tutoring workspace -->
   <main class="layout hidden" id="view-exercici">

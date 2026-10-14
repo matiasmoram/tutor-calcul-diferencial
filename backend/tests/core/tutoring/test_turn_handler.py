@@ -161,9 +161,10 @@ async def test_reply_references_are_the_allowed_items_it_cites(session_provider:
     llm = ScriptedLLMClient(
         {
             Stage.DIAGNOSIS: [diagnosis_json(intencio="pregunta_conceptual", teoria_pregunta=[background])],
-            # Cites the allowed item, and an item it was never shown (Teorema 4 del Tema 6): only the first counts.
+            # Cites the allowed item and one it was never shown (Teorema 4 del Tema 6): rejected, then rewritten.
             Stage.REPLY: [
-                {"text": f"Recorda la {name} del Tema {item.topic} i el Teorema 4 del Tema 6. Com l'aplicaries aquí?"}
+                {"text": f"Recorda la {name} del Tema {item.topic} i el Teorema 4 del Tema 6. Com l'aplicaries aquí?"},
+                {"text": f"Recorda la {name} del Tema {item.topic}. Com l'aplicaries aquí?"},
             ],
             Stage.GUARD: [OK],
         }
@@ -171,6 +172,9 @@ async def test_reply_references_are_the_allowed_items_it_cites(session_provider:
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
     out = await t.turns.handle(TurnInput(session_id=sid, text="Què vol dir exactament que existeixi el límit?"))
+    first = out.trace.model_dump()["intents"][0]["determinista"]
+    assert first == ["cita teoria que no és a la llista permesa: «Teorema 4 del Tema 6»"]
+    assert not out.trace.fallback and "Teorema 4" not in out.message
     assert [r.id for r in out.references] == [background]
     assert out.references[0] == item
     assert background in out.trace.allowed_theory

@@ -1,0 +1,221 @@
+{
+  "font": "tema-1",
+  "dificultat": "normal",
+  "autor": "claude-subagent",
+  "afirmacions": [
+    {
+      "enunciat": "Sigui $K_1\\supseteq K_2\\supseteq K_3\\supseteq\\cdots$ una cadena descendent de subconjunts tancats i no buits de $\\mathbb{R}$ (amb la distància euclidiana). Aleshores $\\bigcap_{n=1}^{\\infty}K_n\\neq\\varnothing$.",
+      "veredicte": "fals",
+      "trampa": "hipotesi_eliminada",
+      "concepte": "Propietat de l'encaixament",
+      "contraexemple": "$K_n=[n,+\\infty)$: són tancats, no buits i encaixats, però $\\bigcap_{n}K_n=\\varnothing$. Falla perquè $\\mathbb{R}$ no és compacte.",
+      "resolucio": "Prenem $K_n=[n,+\\infty)\\subseteq\\mathbb{R}$. Cada $K_n$ és tancat, perquè el seu complementari $(-\\infty,n)$ és obert; és no buit ($n\\in K_n$) i $K_{n+1}\\subseteq K_n$. Tanmateix, si $x\\in\\bigcap_n K_n$, aleshores $x\\geq n$ per a tot $n\\in\\mathbb{N}$, cosa impossible per a un nombre real. Per tant $\\bigcap_n K_n=\\varnothing$. El corol·lari de l'encaixament exigeix que l'espai ambient $M$ sigui compacte, i $\\mathbb{R}$ no ho és (no és fitat); sense aquesta hipòtesi la conclusió falla.",
+      "idees_clau": [
+        "els conjunts $[n,+\\infty)$ són tancats, no buits i encaixats",
+        "la intersecció és buida perquè cap real no és més gran que tots els naturals",
+        "el resultat necessita que l'espai sigui compacte i $\\mathbb{R}$ no ho és"
+      ],
+      "pista": "Quina hipòtesi sobre l'espai ambient fa servir la propietat de l'encaixament dels apunts? La compleix $\\mathbb{R}$? Penseu en tancats no fitats.",
+      "teoria": ["T1.31", "T1.32", "T1.34"],
+      "comprovacions": []
+    },
+    {
+      "enunciat": "Sigui $A\\subseteq\\mathbb{R}^2$ un conjunt connex. Aleshores el seu interior $\\mathrm{int}(A)$ també és connex.",
+      "veredicte": "fals",
+      "trampa": "generalitzacio",
+      "concepte": "Connexió i interior",
+      "contraexemple": "$A=\\overline{B}_1((-1,0))\\cup\\overline{B}_1((1,0))$, dos discos tancats tangents a l'origen: $A$ és connex, però $\\mathrm{int}(A)=B_1((-1,0))\\cup B_1((1,0))$ és disconnex.",
+      "resolucio": "Sigui $A=\\overline{B}_1((-1,0))\\cup\\overline{B}_1((1,0))$. Cada disc tancat és connex (és la clausura de la bola oberta, que és connexa, i la clausura d'un connex és connexa). $A$ és connex: si $U,V$ fossin oberts disjunts amb $A\\subseteq U\\cup V$, $U\\cap A\\neq\\varnothing$, $V\\cap A\\neq\\varnothing$, cada disc, per ser connex, quedaria sencer dins d'$U$ o dins de $V$; com que els dos discos comparteixen el punt $(0,0)$, tots dos quedarien al mateix obert, i l'altre no tallaria $A$. Contradicció. L'origen no és interior: per a tot $\\varepsilon>0$, el punt $(0,\\varepsilon/2)\\in B_\\varepsilon((0,0))$ dista $\\sqrt{1+\\varepsilon^2/4}>1$ dels dos centres, i per tant no és d'$A$. Així $\\mathrm{int}(A)=B_1((-1,0))\\cup B_1((1,0))$. Amb els oberts $U=\\{(x,y)\\mid x<0\\}$ i $V=\\{(x,y)\\mid x>0\\}$ (disjunts) tenim $\\mathrm{int}(A)\\subseteq U\\cup V$, perquè a $B_1((-1,0))$ es té $|x+1|<1$, i per tant $x<0$, i anàlogament $x>0$ a l'altra bola; cada un talla $\\mathrm{int}(A)$. Per tant $\\mathrm{int}(A)$ és disconnex.",
+      "idees_clau": [
+        "dos discos tancats tangents formen un conjunt connex",
+        "el punt de tangència no és interior",
+        "l'interior són dues boles obertes disjuntes, separades per $x<0$ i $x>0$"
+      ],
+      "pista": "Què passa amb el punt on es toquen dues figures que només tenen un punt en comú? Continua sent interior a la unió?",
+      "teoria": ["T1.14", "T1.16", "T1.35", "T1.36"],
+      "comprovacions": []
+    },
+    {
+      "enunciat": "Sigui $A\\subseteq\\mathbb{R}$ un conjunt no buit, amb la distància euclidiana $d(x,y)=|x-y|$ restringida a $A$. Com que $\\mathbb{R}$ és complet, l'espai mètric $(A,d)$ també és complet.",
+      "veredicte": "fals",
+      "trampa": "generalitzacio",
+      "concepte": "Completesa de subespais",
+      "contraexemple": "$A=(0,1]$ i $x_n=\\frac{1}{n}$: és de Cauchy a $A$, però el seu límit a $\\mathbb{R}$ és $0\\notin A$, i no convergeix a cap punt d'$A$.",
+      "resolucio": "Prenem $A=(0,1]$ i $x_n=\\frac{1}{n}\\in A$. A $\\mathbb{R}$, $x_n\\to 0$, i per tant és de Cauchy; com que la distància a $A$ és la mateixa, també és de Cauchy a $(A,d)$. Si convergís a un $a\\in A$ dins de $(A,d)$, també convergiria a $a$ dins de $\\mathbb{R}$, i per unicitat del límit $a=0$; però $0\\notin A$. Per tant $(A,d)$ no és complet. (Un subconjunt de $\\mathbb{R}$ és complet si i només si és tancat.)",
+      "idees_clau": [
+        "$\\frac{1}{n}$ és de Cauchy dins de $(0,1]$",
+        "el seu únic límit possible és $0$, que no és del conjunt",
+        "la completesa es conserva en els subconjunts tancats, no en tots"
+      ],
+      "pista": "Una successió de Cauchy dins d'$A$ té límit a $\\mathbb{R}$. On és aquest límit si $A$ no conté tots els seus punts d'acumulació?",
+      "teoria": ["T1.19", "T1.20", "T1.21", "T1.22", "T1.23"],
+      "comprovacions": [
+        {
+          "descripcio": "el límit a $\\mathbb{R}$ de $x_n=1/n$ és $0$",
+          "tipus": "limit",
+          "expressio": "1/n",
+          "variable": "n",
+          "punt": "oo",
+          "costat": "ambdos",
+          "valor": "0"
+        }
+      ]
+    },
+    {
+      "enunciat": "Sigui $(M,d)$ un espai mètric i sigui $A\\subseteq M$ un conjunt tancat i fitat. Aleshores $A$ és compacte.",
+      "veredicte": "fals",
+      "trampa": "generalitzacio",
+      "concepte": "Teorema de Heine-Borel",
+      "contraexemple": "$M=A=\\mathbb{N}$ amb la distància discreta: $A$ és tancat i fitat ($A\\subseteq B_2(1)$), però el recobriment per les boles $B_{1/2}(n)=\\{n\\}$ no té cap subrecobriment finit.",
+      "resolucio": "Considerem $M=\\mathbb{N}$ amb la distància discreta ($d(x,y)=1$ si $x\\neq y$, $0$ si $x=y$) i $A=M$. $A$ és tancat perquè l'espai sencer sempre ho és. $A$ és fitat: tot punt dista com a molt $1$ de $1$, i per tant $A\\subseteq B_2(1)$. Però les boles $B_{1/2}(n)=\\{n\\}$, $n\\in\\mathbb{N}$, són oberts que recobreixen $A$, i qualsevol subfamília finita només recobreix un nombre finit de punts. Per tant $A$ no és compacte. (Equivalentment, la successió $x_n=n$ no té cap parcial convergent, ja que dos termes diferents disten $1$.) El teorema de Heine-Borel només val a $\\mathbb{R}^n$.",
+      "idees_clau": [
+        "amb la distància discreta tot el conjunt és fitat",
+        "les boles de radi $\\frac{1}{2}$ són punts i formen un recobriment sense subrecobriment finit",
+        "Heine-Borel depèn de l'espai $\\mathbb{R}^n$, no és vàlid en un espai mètric qualsevol"
+      ],
+      "pista": "A quin espai es demostra el teorema de Heine-Borel? Què vol dir «fitat» si totes les distàncies valen com a molt $1$?",
+      "teoria": ["T1.10", "T1.13", "T1.24", "T1.33", "T1.34"],
+      "comprovacions": []
+    },
+    {
+      "enunciat": "Sigui $(M,d)$ un espai mètric i sigui $A\\subseteq M$ un conjunt que és alhora obert i tancat a $M$. Aleshores $A=\\varnothing$ o $A=M$.",
+      "veredicte": "fals",
+      "trampa": "hipotesi_eliminada",
+      "concepte": "Conjunts oberts i tancats",
+      "contraexemple": "$M=[0,1]\\cup[2,3]$ amb la distància euclidiana i $A=[0,1]$: és obert i tancat a $M$, i no és ni $\\varnothing$ ni $M$.",
+      "resolucio": "Sigui $M=[0,1]\\cup[2,3]$ amb $d(x,y)=|x-y|$ i $A=[0,1]$. Per a $x\\in A$, la bola de $M$ $B_{1/2}(x)=\\{y\\in M\\mid |x-y|<\\frac{1}{2}\\}$ està continguda a $[0,1]$, perquè els punts de $[2,3]$ disten almenys $1$ de $x$; per tant $A$ és obert a $M$. Pel mateix argument, $M\\setminus A=[2,3]$ és obert a $M$, és a dir, $A$ és tancat a $M$. I $A\\neq\\varnothing$, $A\\neq M$. El teorema dels apunts exigeix que $M$ sigui connex, i aquest $M$ és disconnex.",
+      "idees_clau": [
+        "les boles es prenen dins de $M$, no dins de $\\mathbb{R}$",
+        "$[0,1]$ i $[2,3]$ són tots dos oberts a $M$",
+        "el resultat només val si $M$ és connex"
+      ],
+      "pista": "Quina hipòtesi sobre $M$ demana el teorema dels apunts sobre conjunts oberts i tancats alhora? Què passa si $M$ està format per dos trossos separats?",
+      "teoria": ["T1.11", "T1.35", "T1.36", "T1.37"],
+      "comprovacions": []
+    },
+    {
+      "enunciat": "Sigui $(x_n)_{n\\in\\mathbb{N}}$ una successió de nombres reals tal que $\\lim_{n\\to\\infty}|x_{n+1}-x_n|=0$. Aleshores $(x_n)$ és de Cauchy.",
+      "veredicte": "fals",
+      "trampa": "quantificadors",
+      "concepte": "Successions de Cauchy",
+      "contraexemple": "$x_n=\\sqrt{n}$: $x_{n+1}-x_n=\\frac{1}{\\sqrt{n+1}+\\sqrt{n}}\\to 0$, però $x_{4n}-x_n=\\sqrt{n}\\geq 1$, i no és de Cauchy (ni tan sols fitada).",
+      "resolucio": "Prenem $x_n=\\sqrt{n}$. Tenim $x_{n+1}-x_n=\\frac{1}{\\sqrt{n+1}+\\sqrt{n}}\\to 0$. Però per a $\\varepsilon=1$ i qualsevol $n_0$, els índexs $n=n_0$ i $m=4n_0\\geq n_0$ donen $|x_m-x_n|=2\\sqrt{n_0}-\\sqrt{n_0}=\\sqrt{n_0}\\geq 1$. Per tant no és de Cauchy. La definició de Cauchy demana $d(x_n,x_m)<\\varepsilon$ per a TOTS els parells $n,m\\geq n_0$, no només per als consecutius.",
+      "idees_clau": [
+        "les diferències consecutives de $\\sqrt{n}$ tendeixen a $0$",
+        "$x_{4n}-x_n=\\sqrt{n}$ no tendeix a $0$",
+        "Cauchy compara tots els parells d'índexs grans, no només els consecutius"
+      ],
+      "pista": "La definició de successió de Cauchy compara $x_n$ amb $x_{n+1}$ o amb qualsevol $x_m$ amb $m$ gran? Penseu en una successió que creix cada cop més a poc a poc.",
+      "teoria": ["T1.20", "T1.21"],
+      "comprovacions": [
+        {
+          "descripcio": "les diferències consecutives tendeixen a $0$",
+          "tipus": "limit",
+          "expressio": "sqrt(n+1)-sqrt(n)",
+          "variable": "n",
+          "punt": "oo",
+          "costat": "ambdos",
+          "valor": "0"
+        },
+        {
+          "descripcio": "la diferència entre $x_{4n}$ i $x_n$ no tendeix a $0$",
+          "tipus": "limit",
+          "expressio": "sqrt(4*n)-sqrt(n)",
+          "variable": "n",
+          "punt": "oo",
+          "costat": "ambdos",
+          "valor": "oo"
+        },
+        {
+          "descripcio": "$x_{4n}-x_n=\\sqrt{n}$",
+          "tipus": "igualtat",
+          "expressio": "sqrt(4*n)-sqrt(n)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "sqrt(n)"
+        }
+      ]
+    },
+    {
+      "enunciat": "Sigui $A\\subseteq\\mathbb{R}^n$ un conjunt compacte i sigui $(x_k)_{k\\in\\mathbb{N}}$ una successió de Cauchy amb $x_k\\in A$ per a tot $k$. Aleshores $(x_k)$ convergeix a un punt d'$A$.",
+      "veredicte": "cert",
+      "trampa": "cert_demostracio",
+      "concepte": "Compacitat i completesa",
+      "contraexemple": "",
+      "resolucio": "Pel teorema de Bolzano-Weierstrass, $A$ compacte és seqüencialment compacte, i per tant $(x_k)$ té una parcial $(x_{k_j})$ que convergeix a un cert $a\\in A$. Una successió de Cauchy amb una parcial convergent és convergent (Proposició 21 iii), i el seu límit és el de la parcial: si $d(x_{k_j},a)<\\varepsilon/2$ i $d(x_k,x_{k_j})<\\varepsilon/2$ per a índexs grans, aleshores $d(x_k,a)<\\varepsilon$. Per tant $x_k\\to a\\in A$.",
+      "idees_clau": [
+        "compacte implica seqüencialment compacte (Bolzano-Weierstrass)",
+        "hi ha una parcial que convergeix a un punt d'$A$",
+        "Cauchy amb una parcial convergent convergeix al mateix límit"
+      ],
+      "pista": "Què garanteix la compacitat sobre les parcials d'una successió? I què passa amb una successió de Cauchy que té una parcial convergent?",
+      "teoria": ["T1.21", "T1.24", "T1.26"],
+      "comprovacions": []
+    },
+    {
+      "enunciat": "Sigui $A\\subseteq\\mathbb{R}^n$ un conjunt qualsevol. Aleshores la seva frontera $\\mathrm{Fr}A$ és un conjunt tancat.",
+      "veredicte": "cert",
+      "trampa": "cert_resultat",
+      "concepte": "Frontera d'un conjunt",
+      "contraexemple": "",
+      "resolucio": "Vegem que el complementari de $\\mathrm{Fr}A$ és obert. Si $x\\notin\\mathrm{Fr}A$, existeix $r>0$ amb $B_r(x)\\cap A=\\varnothing$ o bé $B_r(x)\\cap A^c=\\varnothing$, és a dir, $B_r(x)\\subseteq A^c$ o $B_r(x)\\subseteq A$. Sigui $y\\in B_r(x)$; com que la bola és oberta, hi ha $s>0$ amb $B_s(y)\\subseteq B_r(x)$, i per tant $B_s(y)$ també és dins d'$A^c$ (o dins d'$A$), de manera que $y\\notin\\mathrm{Fr}A$. Així $B_r(x)\\subseteq(\\mathrm{Fr}A)^c$, i el complementari és obert. Per tant $\\mathrm{Fr}A$ és tancat (per a qualsevol $A$, encara que $A$ no sigui ni obert ni tancat).",
+      "idees_clau": [
+        "el complementari de la frontera és la unió de l'interior i l'exterior",
+        "si una bola és dins d'$A$ o d'$A^c$, cap punt seu no és de la frontera",
+        "les boles obertes són conjunts oberts"
+      ],
+      "pista": "Si un punt no és de la frontera, quina bola al seu voltant hi ha? I els punts d'aquesta bola, poden ser de la frontera?",
+      "teoria": ["T1.11", "T1.12", "T1.14", "T1.16"],
+      "comprovacions": []
+    },
+    {
+      "enunciat": "Sigui $A\\subseteq\\mathbb{R}^n$ i sigui $x\\in\\mathbb{R}^n$ un punt d'acumulació d'$A$. Aleshores, per a tot $r>0$, la bola $B_r(x)$ conté infinits punts d'$A$.",
+      "veredicte": "cert",
+      "trampa": "cert_resultat",
+      "concepte": "Punts d'acumulació",
+      "contraexemple": "",
+      "resolucio": "Suposem que per a un cert $r>0$ la bola $B_r(x)$ conté només un nombre finit de punts d'$A$. Siguin $a_1,\\ldots,a_k$ els punts d'$A\\setminus\\{x\\}$ que hi ha a $B_r(x)$ ($k\\geq 1$, ja que $x$ és d'acumulació). Prenem $\\rho=\\min\\{d(x,a_1),\\ldots,d(x,a_k)\\}>0$. Aleshores $B_\\rho(x)\\subseteq B_r(x)$ i cap $a_i$ no hi és, de manera que $B_\\rho(x)\\cap(A\\setminus\\{x\\})=\\varnothing$, en contra que $x$ sigui punt d'acumulació. Per tant cada bola conté infinits punts d'$A$.",
+      "idees_clau": [
+        "argument per reducció a l'absurd",
+        "amb un nombre finit de punts es pot prendre el radi més petit que la mínima distància",
+        "aquesta bola petita no conté punts d'$A$ diferents de $x$"
+      ],
+      "pista": "Si una bola només contingués un nombre finit de punts d'$A$, podríeu trobar una bola més petita al voltant de $x$ que no en contingués cap altre que $x$?",
+      "teoria": ["T1.14", "T1.19"],
+      "comprovacions": []
+    },
+    {
+      "enunciat": "Sigui $(E,\\|\\cdot\\|)$ un espai normat. Aleshores, per a tot $u,v\\in E$, es compleix $\\big|\\,\\|u\\|-\\|v\\|\\,\\big|\\leq\\|u-v\\|$.",
+      "veredicte": "cert",
+      "trampa": "cert_demostracio",
+      "concepte": "Desigualtat triangular inversa",
+      "contraexemple": "",
+      "resolucio": "Per la desigualtat triangular, $\\|u\\|=\\|(u-v)+v\\|\\leq\\|u-v\\|+\\|v\\|$, d'on $\\|u\\|-\\|v\\|\\leq\\|u-v\\|$. Intercanviant els papers, $\\|v\\|-\\|u\\|\\leq\\|v-u\\|$, i per la propietat (ii) amb $\\lambda=-1$, $\\|v-u\\|=|-1|\\,\\|u-v\\|=\\|u-v\\|$. Les dues desigualtats juntes donen $\\big|\\,\\|u\\|-\\|v\\|\\,\\big|\\leq\\|u-v\\|$.",
+      "idees_clau": [
+        "escriure $u=(u-v)+v$ i aplicar la desigualtat triangular",
+        "fer el mateix intercanviant $u$ i $v$",
+        "$\\|v-u\\|=\\|u-v\\|$ per l'homogeneïtat amb $\\lambda=-1$"
+      ],
+      "pista": "Com podeu escriure $u$ com una suma on aparegui $u-v$? Quina propietat de la norma relaciona $\\|v-u\\|$ amb $\\|u-v\\|$?",
+      "teoria": ["T1.3"],
+      "comprovacions": []
+    },
+    {
+      "enunciat": "Sigui $A\\subseteq\\mathbb{R}^n$ un conjunt fitat (no necessàriament tancat). Aleshores la seva clausura $\\overline{A}$ és compacta.",
+      "veredicte": "cert",
+      "trampa": "cert_demostracio",
+      "concepte": "Clausura i compacitat",
+      "contraexemple": "",
+      "resolucio": "Com que $A$ és fitat, $A\\subseteq B_L(x)$ per a uns certs $x$ i $L>0$, i per tant $A\\subseteq\\overline{B}_L(x)$. La bola tancada és un conjunt tancat, i $\\overline{A}$ és el tancat més petit que conté $A$, de manera que $\\overline{A}\\subseteq\\overline{B}_L(x)\\subseteq B_{L+1}(x)$: $\\overline{A}$ és fitat. A més, $\\overline{A}$ és tancat. Pel teorema de Heine-Borel, un subconjunt tancat i fitat de $\\mathbb{R}^n$ és compacte, i per tant $\\overline{A}$ és compacte.",
+      "idees_clau": [
+        "$\\overline{A}$ està continguda en una bola tancada que conté $A$",
+        "$\\overline{A}$ és tancada i fitada",
+        "Heine-Borel a $\\mathbb{R}^n$"
+      ],
+      "pista": "Afegir a $A$ els seus punts adherents pot fer-lo deixar de ser fitat? Quin teorema caracteritza els compactes de $\\mathbb{R}^n$?",
+      "teoria": ["T1.13", "T1.16", "T1.33", "T1.34"],
+      "comprovacions": []
+    }
+  ]
+}

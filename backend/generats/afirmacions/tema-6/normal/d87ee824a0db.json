@@ -1,0 +1,375 @@
+{
+  "id": "d87ee824a0db",
+  "font": "tema-6",
+  "tema": 6,
+  "dificultat": "normal",
+  "afirmacions": [
+    {
+      "id": "a1",
+      "enunciat": "Siguin $M\\subseteq\\mathbb{R}^n$ una $m$-varietat de classe $\\mathcal{C}^1$ compacta, $D\\subseteq\\mathbb{R}^n$ un obert amb $M\\subseteq D$ i $f:D\\to\\mathbb{R}$ una funció de classe $\\mathcal{C}^1$ que no és constant sobre $M$. Aleshores existeixen almenys dos punts $\\mathbf{a}\\in M$ diferents tals que $\\nabla f(\\mathbf{a})\\in N_M(\\mathbf{a})$.",
+      "veredicte": "cert",
+      "concepte": "Extrems condicionats en compactes",
+      "trampa": "cert_resultat",
+      "contraexemple": "",
+      "resolucio": "Com que $M$ és compacte i $f$ és contínua, per Weierstrass $f|_M$ assoleix un màxim absolut en un punt $\\mathbf{a}_1\\in M$ i un mínim absolut en un punt $\\mathbf{a}_2\\in M$. Com que $f$ no és constant sobre $M$, $f(\\mathbf{a}_1)>f(\\mathbf{a}_2)$ i, per tant, $\\mathbf{a}_1\\neq\\mathbf{a}_2$. Tots dos són extrems locals de $f$ condicionats a $M$. Prenent, al voltant de cada $\\mathbf{a}_i$, l'obert $G$ i la funció $\\Phi$ de la definició 2, $\\mathbf{a}_i$ és un extrem local de $f$ condicionat a la varietat $M\\cap G=M_\\Phi$, i la proposició 13 dona $\\nabla f(\\mathbf{a}_i)\\in N_M(\\mathbf{a}_i)$.",
+      "idees_clau": [
+        "Weierstrass: $f|_M$ assoleix màxim i mínim absoluts",
+        "si $f$ no és constant sobre $M$, el màxim i el mínim s'assoleixen en punts diferents",
+        "la proposició 13 aplicada localment dona $\\nabla f\\in N_M$ en tots dos"
+      ],
+      "pista": "Què garanteix la compacitat de $M$ per a una funció contínua? Quina condició compleixen els extrems condicionats?",
+      "teoria": [
+        "T6.13",
+        "T6.12",
+        "T6.1"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "f és contínua sobre el compacte M, així que hi assoleix el màxim i el mínim absoluts. Com que f no és constant, els valors són diferents i, per tant, els punts també. Tots dos són extrems locals condicionats, i per la Prop. 13 (aplicada localment amb una Φ de la Def. 2) compleixen ∇f∈N_M.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a2",
+      "enunciat": "Sigui $g:\\mathbb{R}^2\\to\\mathbb{R}$ una funció de classe $\\mathcal{C}^1$ i $M=\\{(x,y,z)\\in\\mathbb{R}^3\\mid z=g(x,y)\\}$. Aleshores $M$ és una 2-varietat i, per a tot $(x_0,y_0)\\in\\mathbb{R}^2$, l'espai normal a $M$ en $\\mathbf{a}=(x_0,y_0,g(x_0,y_0))$ és $N_M(\\mathbf{a})=\\left\\langle\\left(\\frac{\\partial g}{\\partial x}(x_0,y_0),\\frac{\\partial g}{\\partial y}(x_0,y_0),-1\\right)\\right\\rangle$.",
+      "veredicte": "cert",
+      "concepte": "Gràfica com a varietat",
+      "trampa": "cert_resultat",
+      "contraexemple": "",
+      "resolucio": "Considerem $\\Phi(x,y,z)=g(x,y)-z$, de classe $\\mathcal{C}^1$ a $G=\\mathbb{R}^3$, amb $M=\\{\\Phi=0\\}$. Tenim $D\\Phi(x,y,z)=\\left(g_x(x,y)\\ \\ g_y(x,y)\\ \\ -1\\right)$, que mai no és nul (la tercera component és $-1$), de manera que té rang $1=3-2$ a tot $\\mathbb{R}^3$. Per la definició 2, $M$ és una 2-varietat de classe $\\mathcal{C}^1$ (també ho dona la proposició 8). Pel teorema 10, $N_M(\\mathbf{a})$ és generat per les files de $D\\Phi(\\mathbf{a})$, és a dir, $N_M(\\mathbf{a})=\\langle(g_x(x_0,y_0),g_y(x_0,y_0),-1)\\rangle$.",
+      "idees_clau": [
+        "$\\Phi(x,y,z)=g(x,y)-z$ defineix $M$",
+        "$D\\Phi=(g_x,g_y,-1)$ té rang 1 arreu per la component $-1$",
+        "pel teorema 10, $N_M(\\mathbf{a})$ és generat per $\\nabla\\Phi(\\mathbf{a})$"
+      ],
+      "pista": "Pots escriure $M$ com el conjunt de zeros d'una sola funció de $(x,y,z)$? Quin és el seu gradient?",
+      "teoria": [
+        "T6.8",
+        "T6.2",
+        "T6.10"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "Prenem Φ(x,y,z)=z-g(x,y), que és C^1 amb DΦ=(-g_x,-g_y,1), de rang 1 arreu; per tant M és una 2-varietat (també per la Prop. 8). Pel Teorema 10, N_M(a)=<∇Φ(a)>=<(g_x,g_y,-1)>.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a3",
+      "enunciat": "Siguin $M\\subseteq\\mathbb{R}^2$ una 1-varietat de classe $\\mathcal{C}^\\infty$, $f:\\mathbb{R}^2\\to\\mathbb{R}$ una funció de classe $\\mathcal{C}^\\infty$ i $\\mathbf{a}\\in M$ un punt tal que $\\nabla f(\\mathbf{a})\\in N_M(\\mathbf{a})$. Aleshores $\\mathbf{a}$ és un extrem local de $f$ condicionat a $M$.",
+      "veredicte": "fals",
+      "concepte": "Condició necessària de Lagrange",
+      "trampa": "reciproc",
+      "contraexemple": "$M=\\{(x,y)\\mid y=0\\}$, $f(x,y)=x^3$, $\\mathbf{a}=(0,0)$: $\\nabla f(0,0)=(0,0)\\in N_M(\\mathbf{a})$, però $f|_M(x,0)=x^3$ canvia de signe a $x=0$.",
+      "resolucio": "Prenem $M=\\{(x,y)\\in\\mathbb{R}^2\\mid y=0\\}$, que és una 1-varietat de classe $\\mathcal{C}^\\infty$ (associada a $\\Phi(x,y)=y$, amb $D\\Phi=(0\\ 1)$ de rang 1 arreu), i $f(x,y)=x^3$, de classe $\\mathcal{C}^\\infty$. A $\\mathbf{a}=(0,0)$ tenim $\\nabla f(0,0)=(3x^2,0)|_{x=0}=(0,0)$, i el vector nul pertany a qualsevol subespai, en particular a $N_M(\\mathbf{a})=\\langle(0,1)\\rangle$. Per tant, se satisfà la hipòtesi. Ara bé, $f|_M(x,0)=x^3$, que pren valors negatius per a $x<0$ i positius per a $x>0$ en tot entorn de $0$: $\\mathbf{a}$ és un punt de sella condicionat, no un extrem. La proposició 13 només dona una condició necessària; el recíproc és fals (com a l'exemple 14).",
+      "idees_clau": [
+        "la condició $\\nabla f(\\mathbf{a})\\in N_M(\\mathbf{a})$ és només necessària",
+        "$\\nabla f(0,0)=(0,0)$ pertany a $N_M(\\mathbf{a})$",
+        "$f|_M(x,0)=x^3$ canvia de signe a l'origen"
+      ],
+      "pista": "Què passa en una variable amb els punts on $g'(t)=0$? Són sempre extrems de $g$?",
+      "teoria": [
+        "T6.13",
+        "T6.14",
+        "T6.12"
+      ],
+      "comprovacions": [
+        {
+          "descripcio": "la derivada parcial de $f$ respecte de $x$ s'anul·la a l'origen",
+          "tipus": "limit",
+          "expressio": "diff(x**3, x)",
+          "variable": "x",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "0",
+          "estat": "ok",
+          "calculat": "0",
+          "detall": ""
+        },
+        {
+          "descripcio": "la derivada parcial de $f$ respecte de $y$ és idènticament nul·la",
+          "tipus": "igualtat",
+          "expressio": "diff(x**3, y)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "0",
+          "estat": "ok",
+          "calculat": "0",
+          "detall": ""
+        }
+      ],
+      "verificacio": {
+        "solucionador": "És el recíproc de la condició necessària. Contraexemple: M = eix x (y=0), f(x,y)=x^3, a=(0,0). ∇f(a)=(0,0)∈N_M(a), però f|_M = x^3 no té extrem a x=0 (inflexió).",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a4",
+      "enunciat": "Siguin $M\\subseteq\\mathbb{R}^n$ una $m$-varietat de classe $\\mathcal{C}^1$, $D\\subseteq\\mathbb{R}^n$ un obert amb $M\\subseteq D$ i $f:D\\to\\mathbb{R}$ una funció de classe $\\mathcal{C}^1$ que és constant sobre $M$. Aleshores $\\nabla f(\\mathbf{a})\\in N_M(\\mathbf{a})$ per a tot $\\mathbf{a}\\in M$.",
+      "veredicte": "cert",
+      "concepte": "Espai tangent i normal",
+      "trampa": "cert_demostracio",
+      "contraexemple": "",
+      "resolucio": "Sigui $\\mathbf{a}\\in M$ i $\\mathbf{v}\\in T_M(\\mathbf{a})$. Per definició, existeix $\\alpha:(-\\delta,\\delta)\\to M$ diferenciable en $0$ amb $\\alpha(0)=\\mathbf{a}$ i $\\alpha'(0)=\\mathbf{v}$. Com que $f$ és constant sobre $M$, $f(\\alpha(t))=f(\\mathbf{a})$ per a tot $t$. Per la regla de la cadena ($f$ diferenciable en $\\mathbf{a}$, $\\alpha$ diferenciable en $0$), $0=(f\\circ\\alpha)'(0)=\\langle\\nabla f(\\mathbf{a}),\\alpha'(0)\\rangle=\\langle\\nabla f(\\mathbf{a}),\\mathbf{v}\\rangle$. Com que $\\mathbf{v}\\in T_M(\\mathbf{a})$ és arbitrari, $\\nabla f(\\mathbf{a})\\in T_M(\\mathbf{a})^\\perp=N_M(\\mathbf{a})$. (Alternativament: tot punt de $M$ és un màxim i un mínim, no estrictes, de $f|_M$, i s'aplica la proposició 13.)",
+      "idees_clau": [
+        "tot vector tangent és $\\alpha'(0)$ d'una corba dins $M$",
+        "$f\\circ\\alpha$ és constant, i per la regla de la cadena $\\langle\\nabla f(\\mathbf{a}),\\mathbf{v}\\rangle=0$",
+        "$N_M(\\mathbf{a})=T_M(\\mathbf{a})^\\perp$"
+      ],
+      "pista": "Com es defineix un vector tangent a $M$? Què passa amb $f$ al llarg d'una corba continguda en $M$?",
+      "teoria": [
+        "T6.9",
+        "T6.13"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "Per a tot v∈T_M(a) hi ha una corba α a M amb α(0)=a i α'(0)=v. Com que f∘α és constant, per la regla de la cadena 0=(f∘α)'(0)=<∇f(a),v>. Per tant ∇f(a)⊥T_M(a), és a dir, ∇f(a)∈N_M(a).",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a5",
+      "enunciat": "Sigui $\\Phi:\\mathbb{R}^2\\to\\mathbb{R}$ una funció de classe $\\mathcal{C}^\\infty$ tal que el conjunt $M=\\{(x,y)\\in\\mathbb{R}^2\\mid\\Phi(x,y)=0\\}$ és una 1-varietat de classe $\\mathcal{C}^\\infty$. Aleshores $\\nabla\\Phi(\\mathbf{p})\\neq(0,0)$ per a tot $\\mathbf{p}\\in M$.",
+      "veredicte": "fals",
+      "concepte": "Equacions definidores d'una varietat",
+      "trampa": "quantificadors",
+      "contraexemple": "$\\Phi(x,y)=y^2$: $M$ és l'eix $x$, que és una 1-varietat, però $\\nabla\\Phi(x,0)=(0,0)$ a tots els punts de $M$.",
+      "resolucio": "Prenem $\\Phi(x,y)=y^2$, de classe $\\mathcal{C}^\\infty$. Aleshores $M=\\{(x,y)\\mid y^2=0\\}=\\{(x,y)\\mid y=0\\}$ és l'eix $x$, que és una 1-varietat de classe $\\mathcal{C}^\\infty$: n'hi ha prou de prendre $G=\\mathbb{R}^2$ i $\\tilde\\Phi(x,y)=y$, amb $D\\tilde\\Phi=(0\\ 1)$ de rang 1 arreu i $M=\\{\\tilde\\Phi=0\\}$. En canvi, $\\nabla\\Phi(x,y)=(0,2y)$, que val $(0,0)$ a tots els punts de $M$. La definició 2 demana que EXISTEIXI alguna funció definidora amb rang màxim, no que totes les funcions que defineixen el conjunt el tinguin.",
+      "idees_clau": [
+        "$M=\\{y^2=0\\}$ és l'eix $x$, una 1-varietat via $\\tilde\\Phi(x,y)=y$",
+        "$\\nabla(y^2)=(0,2y)$ s'anul·la sobre tot $M$",
+        "la definició només exigeix l'existència d'una $\\Phi$ amb rang màxim"
+      ],
+      "pista": "Un mateix conjunt es pot descriure amb equacions diferents. La condició de rang de la definició, a quina de les equacions s'aplica?",
+      "teoria": [
+        "T6.2",
+        "T6.7"
+      ],
+      "comprovacions": [
+        {
+          "descripcio": "$\\partial\\Phi/\\partial y=2y$ s'anul·la sobre $y=0$",
+          "tipus": "limit",
+          "expressio": "diff(y**2, y)",
+          "variable": "y",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "0",
+          "estat": "ok",
+          "calculat": "0",
+          "detall": ""
+        },
+        {
+          "descripcio": "$\\partial\\Phi/\\partial x$ és idènticament nul·la",
+          "tipus": "igualtat",
+          "expressio": "diff(y**2, x)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "0",
+          "estat": "ok",
+          "calculat": "0",
+          "detall": ""
+        }
+      ],
+      "verificacio": {
+        "solucionador": "Una varietat pot venir definida per una Φ sense rang màxim. Contraexemple: Φ(x,y)=y^2; M = eix x és 1-varietat C^∞ (gràfica de 0), però ∇Φ=(0,2y)=(0,0) a tot punt de M.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a6",
+      "enunciat": "Tota 1-varietat $M\\subseteq\\mathbb{R}^2$ de classe $\\mathcal{C}^\\infty$ és un subconjunt tancat de $\\mathbb{R}^2$.",
+      "veredicte": "fals",
+      "concepte": "Topologia de les varietats",
+      "trampa": "generalitzacio",
+      "contraexemple": "$M=\\{(x,0)\\mid 0<x<1\\}$ és una 1-varietat (amb $G=(0,1)\\times\\mathbb{R}$ i $\\Phi(x,y)=y$), però $(0,0)\\in\\overline{M}\\setminus M$.",
+      "resolucio": "Sigui $M=\\{(x,0)\\in\\mathbb{R}^2\\mid 0<x<1\\}$. Per a tot $\\mathbf{a}\\in M$ prenem l'obert $G=(0,1)\\times\\mathbb{R}$ i $\\Phi(x,y)=y$, de classe $\\mathcal{C}^\\infty$ amb $D\\Phi=(0\\ 1)$ de rang 1 a tot $G$; aleshores $M\\cap G=M=\\{(x,y)\\in G\\mid y=0\\}$. Per tant, $M$ és una 1-varietat de classe $\\mathcal{C}^\\infty$. Però $M$ no és tancat: els punts $(1/k,0)\\in M$ tendeixen a $(0,0)\\notin M$. La definició de varietat és local i no imposa res sobre els punts d'acumulació que queden fora de $M$; exemples com l'esfera són tancats perquè són $\\{\\Phi=0\\}$ amb $\\Phi$ contínua a tot $\\mathbb{R}^n$.",
+      "idees_clau": [
+        "el segment obert compleix la definició 2 amb $G=(0,1)\\times\\mathbb{R}$, $\\Phi=y$",
+        "$(1/k,0)\\to(0,0)\\notin M$, així que $M$ no és tancat",
+        "la definició de varietat és local"
+      ],
+      "pista": "La definició de varietat només mira un entorn obert de cada punt de $M$. Què passa amb els punts que no són de $M$ però hi són arbitràriament a prop?",
+      "teoria": [
+        "T6.2"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "El segment obert {(x,0) : 0<x<1} és la gràfica de la funció 0 sobre l'obert (0,1), per tant és una 1-varietat C^∞ (Prop. 8), però no és tancat: (0,0) n'és un punt d'acumulació que no hi pertany.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a7",
+      "enunciat": "Siguin $f,\\Phi:\\mathbb{R}^2\\to\\mathbb{R}$ funcions de classe $\\mathcal{C}^1$, $M=\\{(x,y)\\in\\mathbb{R}^2\\mid\\Phi(x,y)=0\\}$ i $\\mathbf{a}\\in M$ un mínim local de la restricció $f|_M$. Aleshores existeix $\\lambda\\in\\mathbb{R}$ tal que $\\nabla f(\\mathbf{a})=\\lambda\\nabla\\Phi(\\mathbf{a})$.",
+      "veredicte": "fals",
+      "concepte": "Multiplicadors de Lagrange",
+      "trampa": "hipotesi_eliminada",
+      "contraexemple": "$\\Phi(x,y)=y^2-x^3$, $f(x,y)=x$, $\\mathbf{a}=(0,0)$: sobre la cúspide $x=y^{2/3}\\geq0$, el mínim de $x$ és a l'origen, però $\\nabla f(0,0)=(1,0)$ i $\\nabla\\Phi(0,0)=(0,0)$.",
+      "resolucio": "Prenem $\\Phi(x,y)=y^2-x^3$ i $f(x,y)=x$, ambdues $\\mathcal{C}^\\infty$. Si $(x,y)\\in M$, aleshores $x^3=y^2\\geq0$ i, per tant, $x\\geq0=f(0,0)$; com que $(0,0)\\in M$, l'origen és un mínim (absolut, i per tant local) de $f|_M$. Però $\\nabla f(0,0)=(1,0)$ i $\\nabla\\Phi(x,y)=(-3x^2,2y)$ val $(0,0)$ a l'origen, de manera que $\\lambda\\nabla\\Phi(0,0)=(0,0)\\neq(1,0)$ per a tot $\\lambda$. El teorema dels multiplicadors de Lagrange exigeix que $D\\Phi$ tingui rang màxim (aquí 1) als punts de $M$; sense aquesta hipòtesi la conclusió falla.",
+      "idees_clau": [
+        "sobre $M$ es té $x^3=y^2\\geq0$, per tant $x\\geq0$ i l'origen és mínim",
+        "$\\nabla\\Phi(0,0)=(0,0)$, de manera que el rang no és màxim",
+        "$\\nabla f(0,0)=(1,0)$ no és múltiple de $(0,0)$"
+      ],
+      "pista": "Quina hipòtesi sobre $D\\Phi$ apareix al teorema dels multiplicadors de Lagrange, i què passa si $\\nabla\\Phi(\\mathbf{a})$ és el vector nul?",
+      "teoria": [
+        "T6.13",
+        "T6.17"
+      ],
+      "comprovacions": [
+        {
+          "descripcio": "$\\partial\\Phi/\\partial x=-3x^2$ s'anul·la a l'origen",
+          "tipus": "limit",
+          "expressio": "diff(y**2 - x**3, x)",
+          "variable": "x",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "0",
+          "estat": "ok",
+          "calculat": "0",
+          "detall": ""
+        },
+        {
+          "descripcio": "$\\partial\\Phi/\\partial y=2y$ s'anul·la a l'origen",
+          "tipus": "limit",
+          "expressio": "diff(y**2 - x**3, y)",
+          "variable": "y",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "0",
+          "estat": "ok",
+          "calculat": "0",
+          "detall": ""
+        },
+        {
+          "descripcio": "$\\partial f/\\partial x=1$",
+          "tipus": "igualtat",
+          "expressio": "diff(x, x)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "1",
+          "estat": "ok",
+          "calculat": "1",
+          "detall": ""
+        }
+      ],
+      "verificacio": {
+        "solucionador": "Falta la hipòtesi ∇Φ(a)≠0. Contraexemple: Φ=y^2, M = eix x, f(x,y)=x^2+y. f|_M=x^2 té mínim a a=(0,0), però ∇f(a)=(0,1) i ∇Φ(a)=(0,0), així que no hi ha cap λ amb ∇f(a)=λ∇Φ(a).",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a8",
+      "enunciat": "Siguin $G=\\mathbb{R}^n\\setminus\\{\\mathbf{0}\\}$, $\\Phi:G\\to\\mathbb{R}$ de classe $\\mathcal{C}^2$ amb $\\nabla\\Phi(\\mathbf{x})\\neq\\mathbf{0}$ per a tot $\\mathbf{x}\\in G$, $M=\\{\\mathbf{x}\\in G\\mid\\Phi(\\mathbf{x})=0\\}\\neq\\emptyset$, $f:G\\to\\mathbb{R}$ de classe $\\mathcal{C}^2$ i $(\\mathbf{a},\\lambda)$ un punt crític de la funció de Lagrange $L(\\mathbf{x},\\lambda)=f(\\mathbf{x})-\\lambda\\Phi(\\mathbf{x})$. Si la forma quadràtica de la matriu hessiana $Hf(\\mathbf{a})$ és definida positiva sobre $T_M(\\mathbf{a})$, aleshores $\\mathbf{a}$ és un mínim local de $f$ condicionat a $M$.",
+      "veredicte": "fals",
+      "concepte": "Condicions suficients de segon ordre",
+      "trampa": "informacio_parcial",
+      "contraexemple": "$n=2$, $\\Phi=x^2+y^2-1$, $f(x,y)=y+\\frac{x^2}{4}$, $\\mathbf{a}=(0,1)$, $\\lambda=\\frac12$: $Hf(\\mathbf{a})$ és definida positiva sobre $T_M(\\mathbf{a})=\\langle(1,0)\\rangle$, però $\\mathbf{a}$ és un màxim condicionat.",
+      "resolucio": "Prenem $n=2$, $\\Phi(x,y)=x^2+y^2-1$ (amb $\\nabla\\Phi=(2x,2y)\\neq\\mathbf{0}$ a $G$), $M$ la circumferència unitat i $f(x,y)=y+\\frac{x^2}{4}$. A $\\mathbf{a}=(0,1)$: $\\nabla f(\\mathbf{a})=(0,1)=\\frac12(0,2)=\\frac12\\nabla\\Phi(\\mathbf{a})$, així que $(\\mathbf{a},\\frac12)$ és punt crític de $L$. Tenim $T_M(\\mathbf{a})=\\ker(0\\ 2)=\\langle(1,0)\\rangle$ i $Hf=\\begin{pmatrix}1/2&0\\\\0&0\\end{pmatrix}$, que sobre $(v,0)$ dona $\\frac12v^2>0$ si $v\\neq0$: definida positiva sobre $T_M(\\mathbf{a})$. Però la hessiana que compta (teorema 19) és la de $F=f-\\frac12\\Phi$: $HF=\\begin{pmatrix}-1/2&0\\\\0&-1\\end{pmatrix}$, que sobre $T_M(\\mathbf{a})$ dona $-\\frac12v^2$, definida negativa: $\\mathbf{a}$ és un màxim local estricte condicionat. Directament: sobre $M$, amb $c=y$, $f=c+\\frac{1-c^2}{4}$, creixent en $c\\in[-1,1]$, de manera que el màxim és a $c=1$. Per tant, $\\mathbf{a}$ no és un mínim condicionat.",
+      "idees_clau": [
+        "el teorema 19 usa la hessiana de $F=f-\\lambda\\Phi$, no la de $f$",
+        "la curvatura de $M$ aporta el terme $-\\lambda H\\Phi$",
+        "per a $f=y+x^2/4$ sobre la circumferència, $(0,1)$ és un màxim condicionat"
+      ],
+      "pista": "En el criteri de segon ordre per a extrems condicionats, de quina funció es calcula la matriu hessiana? Quin paper hi juga la curvatura de $M$?",
+      "teoria": [
+        "T6.16",
+        "T6.19",
+        "T6.10"
+      ],
+      "comprovacions": [
+        {
+          "descripcio": "sobre $M$, amb $(x,y)=(\\sin t,\\cos t)$, $(f-1)/t^2\\to-1/4$: màxim a $t=0$",
+          "tipus": "limit",
+          "expressio": "(cos(t) + sin(t)**2/4 - 1)/t**2",
+          "variable": "t",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "-1/4",
+          "estat": "ok",
+          "calculat": "-1/4",
+          "detall": ""
+        },
+        {
+          "descripcio": "$\\partial^2f/\\partial x^2=1/2$",
+          "tipus": "igualtat",
+          "expressio": "diff(y + x**2/4, x, 2)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "1/2",
+          "estat": "ok",
+          "calculat": "1/2",
+          "detall": ""
+        },
+        {
+          "descripcio": "$\\partial^2F/\\partial x^2=-1/2$ per a $F=f-\\frac12\\Phi$",
+          "tipus": "igualtat",
+          "expressio": "diff(y + x**2/4 - (x**2 + y**2 - 1)/2, x, 2)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "-1/2",
+          "estat": "ok",
+          "calculat": "-1/2",
+          "detall": ""
+        }
+      ],
+      "verificacio": {
+        "solucionador": "Cal la hessiana de F=f-λΦ, no la de f. Contraexemple a R^2\\{0}: Φ=x^2+y^2-1, f=y+x^2/4, a=(0,1), λ=1/2. Hf(a)=diag(1/2,0) és definida positiva sobre T_M(a)=<(1,0)>, però sobre M, amb c=y, f=c+(1-c^2)/4 és creixent en c∈[-1,1], així que a és màxim estricte, no mínim (HF=diag(-1/2,-1), negativa sobre T).",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    }
+  ],
+  "verificacio": {
+    "rondes": [
+      {
+        "ronda": 1,
+        "demanades": 11,
+        "rebudes": 11,
+        "generacio": {
+          "model": "offline:claude-subagent",
+          "latency_ms": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "cached_tokens": 0
+        },
+        "rebutjades": [
+          {
+            "enunciat": "Sigui $\\rho:(0,2\\pi)\\to\\mathbb{R}^2$ una funció de classe $\\mathcal{C}^\\infty$, injectiva i tal que $\\rho'(t)\\neq(0,0)$ per a tot $t\\in(0,2\\pi)$. Aleshores la imatge $\\rho\\big((0,2\\pi)\\big)$ és una 1-varietat de $\\mathbb{R}^2$.",
+            "motius": [
+              "auditoria: la pista revela la resposta: La pista revela la idea del contraexemple: la pregunta «Pot una corba injectiva tornar a apropar-se a un punt per on ja ha passat?» descriu exactament el mecanisme del «vuit» (la corba tendeix a l'origen quan t→0⁺ i t→2π⁻ i hi passa per t=π), i «ρ ha de ser bijectiva i alguna cosa més» indica que les hipòtesis de l'enunciat no basten, cosa que delata el veredicte fals. La resolució és correcta: ρ(t)=(sin 2t, sin t) és injectiva i regular a (0,2π), i les corbes α₁(t)=ρ(π+t) i α₂(t)=(sin 2t, sin t) dins M donen vectors tangents (2,-1) i (2,1) independents a l'origen, en contradicció amb dim T_M=1."
+            ]
+          }
+        ],
+        "solucionador": {
+          "model": "offline:claude-solver",
+          "latency_ms": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "cached_tokens": 0
+        },
+        "auditoria": {
+          "model": "offline:claude-auditor",
+          "latency_ms": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "cached_tokens": 0
+        },
+        "acceptades_total": 8
+      }
+    ]
+  },
+  "creat": 1791967464.795014
+}

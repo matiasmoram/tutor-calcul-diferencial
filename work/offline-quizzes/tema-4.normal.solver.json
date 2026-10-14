@@ -1,0 +1,16 @@
+{
+  "autor": "claude-solver",
+  "respostes": [
+    {"num": 1, "veredicte": "fals", "justificacio": "Contraexemple: f(x,y)=e^x(cos y, sin y) és C^∞ amb det Jf=e^{2x}≠0 arreu, però f(0,0)=f(0,2π), per tant no és injectiva.", "confianca": "alta", "ben_plantejada": true},
+    {"num": 2, "veredicte": "fals", "justificacio": "Contraexemple: f(x,y)=(x^3,y) és C^1, bijectiva amb inversa (u^{1/3},v) contínua (homeomorfisme), però det Jf(x,y)=3x^2 s'anul·la en x=0.", "confianca": "alta", "ben_plantejada": true},
+    {"num": 3, "veredicte": "fals", "justificacio": "Contraexemple: Φ(x,y)=y^3 té Φ(0,0)=0 i ∂Φ/∂y(0,0)=0, però {Φ=0}={y=0} és la gràfica de φ≡0, de classe C^1, en qualsevol entorn. La condició del teorema de la implícita és suficient, no necessària.", "confianca": "alta", "ben_plantejada": true},
+    {"num": 4, "veredicte": "fals", "justificacio": "Contraexemple: f(x,y)=(e^x,y) (o e^x(cos y,sin y)) té det Jf=e^x≠0 arreu però la imatge és el semiplà u>0 (resp. R^2\\{0}), no tot R^2.", "confianca": "alta", "ben_plantejada": true},
+    {"num": 5, "veredicte": "fals", "justificacio": "Contraexemple: f(x)=x+2x^2 sin(1/x), f(0)=0. És derivable arreu, f'(0)=1, però f'(1/(2πk))=-1<0 i f'(1/((2k+1)π))=3>0, així f' canvia de signe a tot entorn de 0; una funció contínua injectiva en un interval seria monòtona, contradicció.", "confianca": "alta", "ben_plantejada": true},
+    {"num": 6, "veredicte": "fals", "justificacio": "Contraexemple: Φ(x,y,z)=(x,y), p=0, rang 2. {Φ=0} és l'eix z, que no és gràfica de cap funció (y,z)=ψ(x) (sobre x=0 hi ha infinits punts). Només funcionen les parelles amb menor 2x2 de DΦ(p) no nul.", "confianca": "alta", "ben_plantejada": true},
+    {"num": 7, "veredicte": "cert", "justificacio": "det Jf=9(x^2+y^2)^2≠0 fora de l'origen, i pel TFI f és localment injectiva allà. A l'origen, f correspon a z↦z^3: per a tot ε>0, z=ε/2 i z·e^{2πi/3} són a B(0,ε), diferents, i tenen el mateix cub.", "confianca": "alta", "ben_plantejada": true},
+    {"num": 8, "veredicte": "cert", "justificacio": "g(y)=y^5+y té g'≥1>0 i és bijectiva R→R, amb inversa C^∞ (inversió global); per tant φ(x)=g^{-1}(-x^2) és l'única solució i és C^∞. Com g^{-1} és creixent i g^{-1}(0)=0, φ(x)<0=φ(0) per a x≠0: màxim a x=0.", "confianca": "alta", "ben_plantejada": true},
+    {"num": 9, "veredicte": "cert", "justificacio": "Derivant f∘f=Id per la regla de la cadena: Df(f(x))·Df(x)=I, per tant det Df(f(x))·det Df(x)=1 i det Jf(x)≠0 per a tot x.", "confianca": "alta", "ben_plantejada": true},
+    {"num": 10, "veredicte": "cert", "justificacio": "Si ∇Φ(p)≠0, alguna derivada parcial, p.ex. ∂Φ/∂z(p), és no nul·la; el teorema de la funció implícita (n=2, m=1) dona U i φ C^1 amb {Φ=0}∩U = gràfica de z=φ(x,y).", "confianca": "alta", "ben_plantejada": true},
+    {"num": 11, "veredicte": "cert", "justificacio": "Pel teorema de l'aplicació oberta, f(R^2) és obert; és no buit i, per hipòtesi, tancat. Com R^2 és connex, els únics oberts-tancats són ∅ i R^2, per tant f(R^2)=R^2.", "confianca": "alta", "ben_plantejada": true}
+  ]
+}

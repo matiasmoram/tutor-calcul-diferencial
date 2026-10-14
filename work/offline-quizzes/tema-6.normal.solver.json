@@ -1,0 +1,82 @@
+{
+  "autor": "claude-solver",
+  "respostes": [
+    {
+      "num": 1,
+      "veredicte": "fals",
+      "justificacio": "És el recíproc de la condició necessària. Contraexemple: M = eix x (y=0), f(x,y)=x^3, a=(0,0). ∇f(a)=(0,0)∈N_M(a), però f|_M = x^3 no té extrem a x=0 (inflexió).",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 2,
+      "veredicte": "fals",
+      "justificacio": "Una varietat pot venir definida per una Φ sense rang màxim. Contraexemple: Φ(x,y)=y^2; M = eix x és 1-varietat C^∞ (gràfica de 0), però ∇Φ=(0,2y)=(0,0) a tot punt de M.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 3,
+      "veredicte": "fals",
+      "justificacio": "Falta la hipòtesi ∇Φ(a)≠0. Contraexemple: Φ=y^2, M = eix x, f(x,y)=x^2+y. f|_M=x^2 té mínim a a=(0,0), però ∇f(a)=(0,1) i ∇Φ(a)=(0,0), així que no hi ha cap λ amb ∇f(a)=λ∇Φ(a).",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 4,
+      "veredicte": "fals",
+      "justificacio": "Cal la hessiana de F=f-λΦ, no la de f. Contraexemple a R^2\\{0}: Φ=x^2+y^2-1, f=y+x^2/4, a=(0,1), λ=1/2. Hf(a)=diag(1/2,0) és definida positiva sobre T_M(a)=<(1,0)>, però sobre M, amb c=y, f=c+(1-c^2)/4 és creixent en c∈[-1,1], així que a és màxim estricte, no mínim (HF=diag(-1/2,-1), negativa sobre T).",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 5,
+      "veredicte": "fals",
+      "justificacio": "El segment obert {(x,0) : 0<x<1} és la gràfica de la funció 0 sobre l'obert (0,1), per tant és una 1-varietat C^∞ (Prop. 8), però no és tancat: (0,0) n'és un punt d'acumulació que no hi pertany.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 6,
+      "veredicte": "fals",
+      "justificacio": "Una immersió injectiva no és necessàriament un homeomorfisme sobre la imatge. Contraexemple: ρ(t)=(sin 2t, sin t) a (0,2π) és injectiva i ρ'(t)=(2cos2t, cos t)≠0 (cos t=0 implica cos2t=-1). La seva imatge és un vuit: a l'origen (t=π, i també el límit quan t→0 i t→2π) té quatre branques, i no és varietat.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 7,
+      "veredicte": "cert",
+      "justificacio": "Per a tot v∈T_M(a) hi ha una corba α a M amb α(0)=a i α'(0)=v. Com que f∘α és constant, per la regla de la cadena 0=(f∘α)'(0)=<∇f(a),v>. Per tant ∇f(a)⊥T_M(a), és a dir, ∇f(a)∈N_M(a).",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 8,
+      "veredicte": "cert",
+      "justificacio": "f és contínua sobre el compacte M, així que hi assoleix el màxim i el mínim absoluts. Com que f no és constant, els valors són diferents i, per tant, els punts també. Tots dos són extrems locals condicionats, i per la Prop. 13 (aplicada localment amb una Φ de la Def. 2) compleixen ∇f∈N_M.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 9,
+      "veredicte": "cert",
+      "justificacio": "Prenem Φ(x,y,z)=z-g(x,y), que és C^1 amb DΦ=(-g_x,-g_y,1), de rang 1 arreu; per tant M és una 2-varietat (també per la Prop. 8). Pel Teorema 10, N_M(a)=<∇Φ(a)>=<(g_x,g_y,-1)>.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 10,
+      "veredicte": "cert",
+      "justificacio": "a és un mínim (absolut, i per tant local) de h(x)=||x-p||^2, de classe C^∞, condicionat a M. Per la Prop. 13, ∇h(a)=2(a-p)∈N_M(a), i com que N_M(a) és un subespai, p-a∈N_M(a). Si p=a, el vector 0 és trivialment normal.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 11,
+      "veredicte": "cert",
+      "justificacio": "S=M_Φ amb Φ(x)=||x||^2-1 i ∇Φ=2x≠0 sobre S. Per Lagrange, ∇f(a)=2Aa=λ·2a (A simètrica), és a dir, Aa=λa amb a≠0. Per tant a és un vector propi de A.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    }
+  ]
+}

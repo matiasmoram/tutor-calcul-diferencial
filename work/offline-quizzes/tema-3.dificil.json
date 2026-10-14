@@ -1,0 +1,375 @@
+{
+  "font": "tema-3",
+  "dificultat": "dificil",
+  "autor": "claude-subagent",
+  "afirmacions": [
+    {
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ tal que existeixen totes les derivades direccionals $D_uf(0,0)$, $u\\neq0$, i l'aplicació $u\\mapsto D_uf(0,0)$ és lineal, és a dir, $D_uf(0,0)=\\langle\\nabla f(0,0),u\\rangle$ per a tot $u\\neq0$. Aleshores $f$ és diferenciable a $(0,0)$.",
+      "veredicte": "fals",
+      "trampa": "informacio_parcial",
+      "concepte": "Direccionals i diferenciabilitat",
+      "contraexemple": "$f(x,y)=\\frac{x^3y}{x^6+y^2}$ si $(x,y)\\neq(0,0)$, $f(0,0)=0$: totes les $D_uf(0,0)$ valen $0$ (lineal), però sobre $y=x^3$ val $\\frac{1}{2}$, de manera que $f$ no és contínua a $(0,0)$.",
+      "resolucio": "Sigui $f(x,y)=\\frac{x^3y}{x^6+y^2}$ si $(x,y)\\neq(0,0)$ i $f(0,0)=0$. Donat $u=(u_1,u_2)\\neq0$: si $u_2=0$, $f(tu_1,0)=0$ i $D_uf(0,0)=0$; si $u_2\\neq0$, $\\frac{f(tu_1,tu_2)}{t}=\\frac{t\\,u_1^3u_2}{t^4u_1^6+u_2^2}\\to0$. Així $D_uf(0,0)=0=\\langle(0,0),u\\rangle$ per a tot $u$, que és lineal en $u$. En canvi, sobre la corba $y=x^3$, $f(x,x^3)=\\frac{x^6}{2x^6}=\\frac{1}{2}\\not\\to0=f(0,0)$, per tant $f$ no és contínua a l'origen i, per la Proposició 14, no hi és diferenciable.",
+      "idees_clau": [
+        "$D_uf(0,0)=0$ per a tota direcció $u$",
+        "sobre $y=x^3$ la funció val constantment $\\frac{1}{2}$",
+        "diferenciable implica contínua, i $f$ no és contínua a $(0,0)$"
+      ],
+      "pista": "Les rectes per l'origen són els únics camins que veuen les derivades direccionals. Què passa si t'hi acostes per una corba de tipus $y=x^k$?",
+      "teoria": ["T3.1", "T3.9", "T3.14", "T3.17"],
+      "comprovacions": [
+        {
+          "descripcio": "límit sobre la corba y=x^3",
+          "tipus": "limit",
+          "expressio": "x**3*(x**3)/(x**6+(x**3)**2)",
+          "variable": "x",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "1/2"
+        },
+        {
+          "descripcio": "quocient de la derivada direccional segons u=(a,b) amb b no nul",
+          "tipus": "limit",
+          "expressio": "((t*a)**3*(t*b)/((t*a)**6+(t*b)**2))/t",
+          "variable": "t",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "0"
+        }
+      ]
+    },
+    {
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ tal que $|f(x,y)|\\leq|xy|$ per a tot $(x,y)\\in\\mathbb{R}^2$ (sense cap altra hipòtesi sobre $f$). Aleshores $f$ és diferenciable a $(0,0)$.",
+      "veredicte": "cert",
+      "trampa": "cert_demostracio",
+      "concepte": "Diferenciabilitat per fitació",
+      "contraexemple": "",
+      "resolucio": "De $|f(0,0)|\\leq0$ es té $f(0,0)=0$, i de $|f(t,0)|\\leq0$, $|f(0,t)|\\leq0$ es té $f(t,0)=f(0,t)=0$, de manera que $\\frac{\\partial f}{\\partial x}(0,0)=\\frac{\\partial f}{\\partial y}(0,0)=0$. La candidata a diferencial és, doncs, l'aplicació nul·la. Per a $(x,y)\\neq(0,0)$, com que $|xy|\\leq\\frac{x^2+y^2}{2}$, es té $0\\leq\\frac{|f(x,y)-0-0|}{\\sqrt{x^2+y^2}}\\leq\\frac{|xy|}{\\sqrt{x^2+y^2}}\\leq\\frac{\\sqrt{x^2+y^2}}{2}\\to0$. Pel lema del sandvitx el quocient tendeix a $0$ i $f$ és diferenciable a $(0,0)$ amb $Df(0,0)=0$.",
+      "idees_clau": [
+        "$f(0,0)=0$ i $f$ s'anul·la sobre els eixos, per tant $\\nabla f(0,0)=(0,0)$",
+        "$|xy|\\leq\\frac{1}{2}(x^2+y^2)$",
+        "el quocient de la definició està fitat per $\\frac{1}{2}\\|(x,y)\\|\\to0$"
+      ],
+      "pista": "Quant valen $f$ sobre els eixos i les derivades parcials a l'origen? Pots fitar el quocient de la definició de diferenciabilitat amb una potència de $\\|(x,y)\\|$?",
+      "teoria": ["T3.2", "T3.8", "T3.9"],
+      "comprovacions": []
+    },
+    {
+      "enunciat": "Si $f:\\mathbb{R}^2\\to\\mathbb{R}$ és diferenciable a tot punt de $\\mathbb{R}^2$, aleshores $f\\in\\mathcal{C}^1(\\mathbb{R}^2)$.",
+      "veredicte": "fals",
+      "trampa": "reciproc",
+      "concepte": "Diferenciable i classe C^1",
+      "contraexemple": "$f(x,y)=x^2\\sin\\frac{1}{x}$ si $x\\neq0$, $f(0,y)=0$: és diferenciable a tot $\\mathbb{R}^2$, però $\\frac{\\partial f}{\\partial x}(x,y)=2x\\sin\\frac{1}{x}-\\cos\\frac{1}{x}$ no té límit quan $(x,y)\\to(0,0)$.",
+      "resolucio": "Sigui $f(x,y)=x^2\\sin\\frac{1}{x}$ si $x\\neq0$ i $f(0,y)=0$. Als punts amb $x\\neq0$, $f$ és composició i producte de funcions $\\mathcal{C}^1$, i per tant diferenciable. En un punt $(0,y_0)$: $f(0,y_0)=0$ i, com que $|f(x,y)|\\leq x^2\\leq\\|(x,y)-(0,y_0)\\|^2$, el quocient $\\frac{|f(x,y)-0|}{\\|(x,y)-(0,y_0)\\|}\\leq\\|(x,y)-(0,y_0)\\|\\to0$, de manera que $f$ hi és diferenciable amb diferencial nul·la (en particular $\\frac{\\partial f}{\\partial x}(0,y_0)=0$). Però per a $x\\neq0$, $\\frac{\\partial f}{\\partial x}(x,y)=2x\\sin\\frac{1}{x}-\\cos\\frac{1}{x}$; sobre $y=0$ el primer terme tendeix a $0$ i $\\cos\\frac{1}{x}$ no té límit quan $x\\to0$. Per tant $\\frac{\\partial f}{\\partial x}$ no és contínua a $(0,0)$ i $f\\notin\\mathcal{C}^1(\\mathbb{R}^2)$.",
+      "idees_clau": [
+        "$f$ és diferenciable als punts $(0,y_0)$ perquè $|f(x,y)|\\leq x^2$",
+        "$\\frac{\\partial f}{\\partial x}=2x\\sin\\frac{1}{x}-\\cos\\frac{1}{x}$ per a $x\\neq0$",
+        "$\\cos\\frac{1}{x}$ no té límit en $0$, i la parcial no és contínua"
+      ],
+      "pista": "Recorda l'exemple d'una variable $x^2\\sin\\frac{1}{x}$: és derivable a tot arreu, però com es comporta la seva derivada prop de $0$? Pots estendre-la a $\\mathbb{R}^2$ sense dependre de $y$?",
+      "teoria": ["T3.8", "T3.18", "T3.19", "T3.20"],
+      "comprovacions": [
+        {
+          "descripcio": "derivada parcial respecte de x per a x no nul",
+          "tipus": "igualtat",
+          "expressio": "diff(x**2*sin(1/x), x)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "2*x*sin(1/x) - cos(1/x)"
+        },
+        {
+          "descripcio": "la parcial respecte de x no té límit sobre y=0",
+          "tipus": "no_limit",
+          "expressio": "2*x*sin(1/x) - cos(1/x)",
+          "variable": "x",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": ""
+        },
+        {
+          "descripcio": "quocient de la derivada parcial a l'origen",
+          "tipus": "limit",
+          "expressio": "(x**2*sin(1/x))/x",
+          "variable": "x",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "0"
+        }
+      ]
+    },
+    {
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ diferenciable a $(0,0)$ i tal que $f(tx,ty)=t\\,f(x,y)$ per a tot $t>0$ i tot $(x,y)\\in\\mathbb{R}^2$. Aleshores $f$ és lineal, és a dir, existeixen $\\alpha,\\beta\\in\\mathbb{R}$ amb $f(x,y)=\\alpha x+\\beta y$ per a tot $(x,y)$.",
+      "veredicte": "cert",
+      "trampa": "cert_demostracio",
+      "concepte": "Homogeneïtat i diferencial",
+      "contraexemple": "",
+      "resolucio": "Prenent $t=2$ i $(x,y)=(0,0)$: $f(0,0)=2f(0,0)$, d'on $f(0,0)=0$. Sigui $u\\neq0$. Com que $f$ és diferenciable a l'origen, per la Proposició 9 existeix $D_uf(0,0)=\\langle\\nabla f(0,0),u\\rangle$, i el límit coincideix amb el límit lateral $t\\to0^+$: $D_uf(0,0)=\\lim_{t\\to0^+}\\frac{f(tu)-f(0,0)}{t}=\\lim_{t\\to0^+}\\frac{t\\,f(u)}{t}=f(u)$. Per tant $f(u)=\\langle\\nabla f(0,0),u\\rangle$ per a tot $u\\neq0$, i també per a $u=0$. Amb $(\\alpha,\\beta)=\\nabla f(0,0)$ es té $f(x,y)=\\alpha x+\\beta y$.",
+      "idees_clau": [
+        "$f(0,0)=0$ per homogeneïtat",
+        "$\\frac{f(tu)}{t}=f(u)$ per a $t>0$, per tant $D_uf(0,0)=f(u)$",
+        "la diferenciabilitat dona $D_uf(0,0)=\\langle\\nabla f(0,0),u\\rangle$"
+      ],
+      "pista": "Calcula el quocient $\\frac{f(tu)-f(0,0)}{t}$ per a $t>0$ fent servir la hipòtesi. Què et diu la diferenciabilitat sobre com depèn $D_uf(0,0)$ de $u$?",
+      "teoria": ["T3.1", "T3.9", "T3.11"],
+      "comprovacions": []
+    },
+    {
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ tal que existeixen totes les derivades direccionals $D_uf(0,0)$, $u\\neq0$, i sigui $\\gamma:\\mathbb{R}\\to\\mathbb{R}^2$ de classe $\\mathcal{C}^1$ amb $\\gamma(0)=(0,0)$ i $\\gamma'(0)\\neq(0,0)$. Aleshores $f\\circ\\gamma$ és derivable a $0$ i $(f\\circ\\gamma)'(0)=D_{\\gamma'(0)}f(0,0)$.",
+      "veredicte": "fals",
+      "trampa": "hipotesi_eliminada",
+      "concepte": "Regla de la cadena",
+      "contraexemple": "$f(x,y)=\\frac{xy^2}{x^2+y^4}$ si $(x,y)\\neq(0,0)$, $f(0,0)=0$, i $\\gamma(t)=(t^2,t)$: $f(\\gamma(t))=\\frac{1}{2}$ per a $t\\neq0$ i $f(\\gamma(0))=0$, de manera que $f\\circ\\gamma$ ni tan sols és contínua a $0$.",
+      "resolucio": "Prenem $f(x,y)=\\frac{xy^2}{x^2+y^4}$ si $(x,y)\\neq(0,0)$, $f(0,0)=0$. Per l'Observació 6(b), totes les derivades direccionals a l'origen existeixen: $D_uf(0,0)=\\frac{u_2^2}{u_1}$ si $u_1\\neq0$ i $D_{(0,u_2)}f(0,0)=0$. La corba $\\gamma(t)=(t^2,t)$ és $\\mathcal{C}^1$, $\\gamma(0)=(0,0)$ i $\\gamma'(0)=(0,1)\\neq(0,0)$. Però per a $t\\neq0$, $f(\\gamma(t))=\\frac{t^2\\cdot t^2}{t^4+t^4}=\\frac{1}{2}$, mentre que $f(\\gamma(0))=0$. Així $f\\circ\\gamma$ no és contínua a $0$, i per tant no és derivable a $0$ (tot i que $D_{(0,1)}f(0,0)=0$ existeix). La regla de la cadena necessita que $f$ sigui diferenciable al punt.",
+      "idees_clau": [
+        "totes les $D_uf(0,0)$ existeixen per a aquesta $f$",
+        "$f(t^2,t)=\\frac{1}{2}$ per a $t\\neq0$",
+        "la regla de la cadena exigeix diferenciabilitat de $f$, no només derivades direccionals"
+      ],
+      "pista": "Les derivades direccionals només controlen $f$ sobre rectes. Una corba $\\mathcal{C}^1$ tangent a l'eix $y$ pot passar per regions on $f$ es comporta de manera molt diferent que sobre aquest eix?",
+      "teoria": ["T3.6", "T3.14", "T3.21"],
+      "comprovacions": [
+        {
+          "descripcio": "valor de f sobre la corba (t^2, t)",
+          "tipus": "limit",
+          "expressio": "(t**2)*t**2/((t**2)**2+t**4)",
+          "variable": "t",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "1/2"
+        },
+        {
+          "descripcio": "derivada direccional segons u=(a,b) amb a no nul",
+          "tipus": "limit",
+          "expressio": "((t*a)*(t*b)**2/((t*a)**2+(t*b)**4))/t",
+          "variable": "t",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "b**2/a"
+        }
+      ]
+    },
+    {
+      "enunciat": "Sigui $f:\\mathbb{R}\\to\\mathbb{R}^2$ diferenciable a tot $\\mathbb{R}$. Aleshores, per a tot $a<b$, existeix $c\\in(a,b)$ tal que $f(b)-f(a)=Jf(c)\\,(b-a)$.",
+      "veredicte": "fals",
+      "trampa": "generalitzacio",
+      "concepte": "Valor mitjà vectorial",
+      "contraexemple": "$f(t)=(\\cos t,\\sin t)$ a $[0,2\\pi]$: $f(2\\pi)-f(0)=(0,0)$, però $Jf(c)=(-\\sin c,\\cos c)^T$ té norma $1$ i mai és nul.",
+      "resolucio": "Sigui $f(t)=(\\cos t,\\sin t)$, que és diferenciable (de fet $\\mathcal{C}^\\infty$) a $\\mathbb{R}$, i prenem $a=0$, $b=2\\pi$. Aleshores $f(2\\pi)-f(0)=(1,0)-(1,0)=(0,0)$. Si existís $c$ amb $(0,0)=Jf(c)\\cdot2\\pi=2\\pi(-\\sin c,\\cos c)$, tindríem $\\sin c=\\cos c=0$, impossible perquè $\\sin^2c+\\cos^2c=1$. El teorema del valor mitjà per a $m>1$ només garanteix, per a cada $u$ fixat, un $\\xi$ (que depèn de $u$) amb $\\langle u,f(b)-f(a)\\rangle=\\langle u,Jf(\\xi)(b-a)\\rangle$.",
+      "idees_clau": [
+        "$f(2\\pi)=f(0)$",
+        "$\\|Jf(c)\\|=1$ per a tot $c$, mai és el vector nul",
+        "el teorema 25 només dona la igualtat després de projectar sobre un $u$ fixat"
+      ],
+      "pista": "En una variable, la igualtat del valor mitjà es demostra amb el teorema de Rolle aplicat a una sola funció real. Si $f$ té dues components, el punt $c$ que funciona per a la primera ha de ser el mateix que funciona per a la segona?",
+      "teoria": ["T3.25", "T3.26"],
+      "comprovacions": [
+        {
+          "descripcio": "primera component de f(2pi)-f(0)",
+          "tipus": "igualtat",
+          "expressio": "cos(2*pi)-cos(0)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "0"
+        },
+        {
+          "descripcio": "segona component de f(2pi)-f(0)",
+          "tipus": "igualtat",
+          "expressio": "sin(2*pi)-sin(0)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "0"
+        },
+        {
+          "descripcio": "la norma al quadrat de Jf(c) val 1",
+          "tipus": "igualtat",
+          "expressio": "diff(cos(c), c)**2 + diff(sin(c), c)**2",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "1"
+        }
+      ]
+    },
+    {
+      "enunciat": "Sigui $f:\\mathbb{R}^n\\to\\mathbb{R}$ diferenciable a $a\\in\\mathbb{R}^n$ i tal que $D_uf(a)\\geq0$ per a tot $u\\in\\mathbb{R}^n\\setminus\\{0\\}$. Aleshores $\\nabla f(a)=0$.",
+      "veredicte": "cert",
+      "trampa": "cert_resultat",
+      "concepte": "Derivades direccionals i gradient",
+      "contraexemple": "",
+      "resolucio": "Sigui $u\\neq0$. Per l'Observació 5 amb $\\lambda=-1$ (o directament, fent el canvi $s=-t$ al límit de la Definició 1), $D_{-u}f(a)=\\lim_{t\\to0}\\frac{f(a-tu)-f(a)}{t}=-\\lim_{s\\to0}\\frac{f(a+su)-f(a)}{s}=-D_uf(a)$. Per hipòtesi $D_uf(a)\\geq0$ i $D_{-u}f(a)\\geq0$, és a dir, $D_uf(a)\\geq0$ i $-D_uf(a)\\geq0$, d'on $D_uf(a)=0$ per a tot $u\\neq0$. Prenent $u=e_i$ s'obté $\\frac{\\partial f}{\\partial x_i}(a)=0$ per a tot $i$, és a dir $\\nabla f(a)=0$. (De fet, aquest argument només fa servir l'existència de les derivades direccionals; la diferenciabilitat garanteix aquesta existència per la Proposició 9.)",
+      "idees_clau": [
+        "$D_uf(a)=\\langle\\nabla f(a),u\\rangle$ per diferenciabilitat",
+        "$D_{-u}f(a)=-D_uf(a)$",
+        "aplicant-ho a $u=e_i$ totes les parcials són $0$"
+      ],
+      "pista": "Quina relació hi ha entre $D_uf(a)$ i $D_{-u}f(a)$? Què en dedueixes si totes dues han de ser no negatives?",
+      "teoria": ["T3.5", "T3.9", "T3.11"],
+      "comprovacions": []
+    },
+    {
+      "enunciat": "Sigui $\\Omega\\subseteq\\mathbb{R}^2$ un obert pre-convex i $f:\\Omega\\to\\mathbb{R}$ diferenciable a tot $\\Omega$ amb $\\frac{\\partial f}{\\partial x}(x,y)=0$ per a tot $(x,y)\\in\\Omega$. Aleshores, si $(x_1,y),(x_2,y)\\in\\Omega$, es té $f(x_1,y)=f(x_2,y)$.",
+      "veredicte": "fals",
+      "trampa": "generalitzacio",
+      "concepte": "Parcial nul·la i dependència",
+      "contraexemple": "$\\Omega=\\mathbb{R}^2\\setminus\\{(0,y)\\mid y\\geq0\\}$ i $f(x,y)=y^2$ si $x>0$ i $y>0$, $f(x,y)=0$ en la resta: $\\frac{\\partial f}{\\partial x}\\equiv0$, però $f(1,1)=1\\neq0=f(-1,1)$.",
+      "resolucio": "Sigui $\\Omega=\\mathbb{R}^2\\setminus\\{(0,y)\\mid y\\geq0\\}$, obert (el complement d'un tancat) i pre-convex: dos punts qualssevol s'uneixen amb una poligonal que baixa al semiplà $y<0$. Definim $f(x,y)=y^2$ si $x>0$ i $y>0$, i $f(x,y)=0$ altrament. Al semiplà $x>0$, $f(x,y)=h(y)$ amb $h(y)=y^2$ per a $y>0$ i $h(y)=0$ per a $y\\leq0$; $h$ és $\\mathcal{C}^1$ ($h'(y)=2y$ o $0$, ambdues tendeixen a $0$ a $y=0$), per tant $f$ hi és $\\mathcal{C}^1$. Al semiplà $x<0$, $f=0$. Als punts $(0,y_0)$ amb $y_0<0$, $f$ és nul·la en un entorn. Així $f$ és diferenciable a $\\Omega$ i $\\frac{\\partial f}{\\partial x}=0$ arreu. Però $(1,1),(-1,1)\\in\\Omega$ i $f(1,1)=1\\neq0=f(-1,1)$. El segment horitzontal entre aquests punts surt d'$\\Omega$, que és el que fa fallar l'argument del valor mitjà.",
+      "idees_clau": [
+        "$\\Omega$ és obert i pre-convex, però no conté el segment de $(-1,1)$ a $(1,1)$",
+        "$f$ és $\\mathcal{C}^1$ a $\\Omega$ i no depèn de $x$ localment",
+        "$f(1,1)=1$ i $f(-1,1)=0$"
+      ],
+      "pista": "El Corol·lari 28 necessita que s'anul·li tot el gradient. Si només s'anul·la $\\frac{\\partial f}{\\partial x}$, quins camins pots fer servir per comparar $f(x_1,y)$ i $f(x_2,y)$, i són dins d'$\\Omega$?",
+      "teoria": ["T3.26", "T3.27", "T3.28", "T3.29"],
+      "comprovacions": [
+        {
+          "descripcio": "la parcial respecte de x de y^2 és nul·la",
+          "tipus": "igualtat",
+          "expressio": "diff(y**2, x)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "0"
+        },
+        {
+          "descripcio": "derivada lateral de h a y=0 per la dreta",
+          "tipus": "limit",
+          "expressio": "y**2/y",
+          "variable": "y",
+          "punt": "0",
+          "costat": "dreta",
+          "valor": "0"
+        }
+      ]
+    },
+    {
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ diferenciable a tot $\\mathbb{R}^2$ i tal que $f(x,x^2)=0$ per a tot $x\\in\\mathbb{R}$. Aleshores $\\frac{\\partial f}{\\partial x}(0,0)=0$.",
+      "veredicte": "cert",
+      "trampa": "cert_demostracio",
+      "concepte": "Regla de la cadena",
+      "contraexemple": "",
+      "resolucio": "Sigui $\\gamma(t)=(t,t^2)$, diferenciable amb $\\gamma(0)=(0,0)$ i $\\gamma'(0)=(1,0)$. Per hipòtesi $(f\\circ\\gamma)(t)=0$ per a tot $t$, de manera que $(f\\circ\\gamma)'(0)=0$. Com que $f$ és diferenciable a $\\gamma(0)=(0,0)$, la regla de la cadena dona $0=(f\\circ\\gamma)'(0)=\\frac{\\partial f}{\\partial x}(0,0)\\cdot1+\\frac{\\partial f}{\\partial y}(0,0)\\cdot2\\cdot0=\\frac{\\partial f}{\\partial x}(0,0)$. Noteu que no es pot dir res de $\\frac{\\partial f}{\\partial y}(0,0)$: per exemple $f(x,y)=y-x^2$ compleix la hipòtesi amb $\\frac{\\partial f}{\\partial y}(0,0)=1$.",
+      "idees_clau": [
+        "considerar la corba $\\gamma(t)=(t,t^2)$ amb $\\gamma'(0)=(1,0)$",
+        "regla de la cadena: $(f\\circ\\gamma)'(0)=\\langle\\nabla f(0,0),\\gamma'(0)\\rangle$",
+        "$f\\circ\\gamma\\equiv0$ dona derivada $0$"
+      ],
+      "pista": "La hipòtesi diu com es comporta $f$ sobre una corba concreta. Quin és el vector tangent d'aquesta corba a l'origen i quina eina relaciona $\\nabla f$ amb la derivada de $f$ al llarg d'una corba?",
+      "teoria": ["T3.9", "T3.21"],
+      "comprovacions": []
+    },
+    {
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ tal que existeixen totes les derivades direccionals $D_uf(0,0)$, $u\\neq0$, i $\\nabla f(0,0)\\neq(0,0)$. Aleshores $\\displaystyle\\max_{\\|u\\|=1}D_uf(0,0)=\\|\\nabla f(0,0)\\|$.",
+      "veredicte": "fals",
+      "trampa": "hipotesi_eliminada",
+      "concepte": "Direcció de màxim creixement",
+      "contraexemple": "$f(x,y)=x+\\frac{x^2y}{x^2+y^2}$ si $(x,y)\\neq(0,0)$, $f(0,0)=0$: $\\nabla f(0,0)=(1,0)$, però per a $u=\\left(\\frac{\\sqrt{3}}{2},\\frac{1}{2}\\right)$ es té $D_uf(0,0)=\\frac{\\sqrt{3}}{2}+\\frac{3}{8}>1$.",
+      "resolucio": "Sigui $f(x,y)=x+\\frac{x^2y}{x^2+y^2}$ si $(x,y)\\neq(0,0)$ i $f(0,0)=0$. Per a $u=(u_1,u_2)\\neq0$, $\\frac{f(tu)-f(0,0)}{t}=u_1+\\frac{u_1^2u_2}{u_1^2+u_2^2}$ (no depèn de $t$), per tant totes les derivades direccionals existeixen i $D_uf(0,0)=u_1+\\frac{u_1^2u_2}{u_1^2+u_2^2}$. En particular $\\frac{\\partial f}{\\partial x}(0,0)=1$, $\\frac{\\partial f}{\\partial y}(0,0)=0$ i $\\|\\nabla f(0,0)\\|=1$. Però amb el vector unitari $u=\\left(\\frac{\\sqrt{3}}{2},\\frac{1}{2}\\right)$, $D_uf(0,0)=\\frac{\\sqrt{3}}{2}+\\frac{3}{4}\\cdot\\frac{1}{2}=\\frac{\\sqrt{3}}{2}+\\frac{3}{8}\\approx1{,}24>1$. Per tant el màxim és estrictament més gran que $\\|\\nabla f(0,0)\\|$. La Proposició 13 requereix que $f$ sigui diferenciable (aquí no ho és, perquè $u\\mapsto D_uf(0,0)$ no és lineal).",
+      "idees_clau": [
+        "$D_uf(0,0)=u_1+\\frac{u_1^2u_2}{u_1^2+u_2^2}$",
+        "$\\nabla f(0,0)=(1,0)$ i $\\|\\nabla f(0,0)\\|=1$",
+        "hi ha una direcció unitària amb $D_uf(0,0)>1$; la Proposició 13 exigeix diferenciabilitat"
+      ],
+      "pista": "La fórmula $D_uf(a)=\\langle\\nabla f(a),u\\rangle$ és la que porta al màxim $\\|\\nabla f(a)\\|$. Què passa amb aquest màxim si les derivades direccionals existeixen però no depenen linealment de $u$?",
+      "teoria": ["T3.9", "T3.13", "T3.17"],
+      "comprovacions": [
+        {
+          "descripcio": "derivada direccional general segons u=(a,b)",
+          "tipus": "limit",
+          "expressio": "((t*a) + (t*a)**2*(t*b)/((t*a)**2+(t*b)**2))/t",
+          "variable": "t",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "a + a**2*b/(a**2+b**2)"
+        },
+        {
+          "descripcio": "derivada direccional segons u=(sqrt(3)/2, 1/2)",
+          "tipus": "limit",
+          "expressio": "((t*sqrt(3)/2) + (t*sqrt(3)/2)**2*(t/2)/((t*sqrt(3)/2)**2+(t/2)**2))/t",
+          "variable": "t",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "sqrt(3)/2 + 3/8"
+        }
+      ]
+    },
+    {
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ tal que, per a cada $y\\in\\mathbb{R}$, la funció $x\\mapsto f(x,y)$ és contínua, i tal que $\\frac{\\partial f}{\\partial y}(x,y)$ existeix a tot punt de $\\mathbb{R}^2$. Aleshores $F(y)=\\int_0^1f(x,y)\\,dx$ és derivable a $y=0$ i $F'(0)=\\int_0^1\\frac{\\partial f}{\\partial y}(x,0)\\,dx$.",
+      "veredicte": "fals",
+      "trampa": "hipotesi_eliminada",
+      "concepte": "Regla de Leibniz",
+      "contraexemple": "$f(x,y)=\\frac{x^3}{y^2}e^{-x^2/y}$ si $y>0$, $f(x,y)=0$ si $y\\leq0$: $\\frac{\\partial f}{\\partial y}(x,0)=0$ per a tot $x$, però $F(y)=\\frac{1}{2}\\left(1-e^{-1/y}\\left(1+\\frac{1}{y}\\right)\\right)\\to\\frac{1}{2}\\neq F(0)=0$ quan $y\\to0^+$.",
+      "resolucio": "Sigui $f(x,y)=\\frac{x^3}{y^2}e^{-x^2/y}$ si $y>0$ i $f(x,y)=0$ si $y\\leq0$. Per a cada $y$, $x\\mapsto f(x,y)$ és contínua. Per a $y\\neq0$, $\\frac{\\partial f}{\\partial y}$ existeix clarament. A $y=0$: per l'esquerra el quocient és $0$; per la dreta, si $x\\neq0$, $\\frac{f(x,y)}{y}=\\frac{x^3}{y^3}e^{-x^2/y}\\to0$ quan $y\\to0^+$ (l'exponencial domina), i si $x=0$, $f(0,y)=0$. Així $\\frac{\\partial f}{\\partial y}(x,0)=0$ per a tot $x$ i $\\int_0^1\\frac{\\partial f}{\\partial y}(x,0)\\,dx=0$. Però per a $y>0$, amb el canvi $s=\\frac{x^2}{y}$ ($x\\,dx=\\frac{y}{2}ds$), $F(y)=\\frac{1}{2}\\int_0^{1/y}s\\,e^{-s}\\,ds=\\frac{1}{2}\\left(1-e^{-1/y}\\left(1+\\frac{1}{y}\\right)\\right)\\to\\frac{1}{2}$ quan $y\\to0^+$, mentre que $F(0)=0$. Per tant $F$ ni tan sols és contínua a $0$, i no hi és derivable. La regla de Leibniz necessita $f\\in\\mathcal{C}^1$ (aquí $f$ no és contínua a $(0,0)$).",
+      "idees_clau": [
+        "$\\frac{\\partial f}{\\partial y}(x,0)=0$ per a tot $x$",
+        "$F(y)\\to\\frac{1}{2}$ quan $y\\to0^+$ però $F(0)=0$",
+        "falla la hipòtesi $f\\in\\mathcal{C}^1$ de la regla de Leibniz"
+      ],
+      "pista": "Quines hipòtesis té la regla de Leibniz dels apunts? Que existeixi $\\frac{\\partial f}{\\partial y}(x,0)$ per a cada $x$ fix, garanteix que es pugui intercanviar el límit en $y$ amb la integral en $x$?",
+      "teoria": ["T3.20", "T3.32"],
+      "comprovacions": [
+        {
+          "descripcio": "quocient f(1,y)/y quan y tendeix a 0 per la dreta",
+          "tipus": "limit",
+          "expressio": "exp(-1/y)/y**3",
+          "variable": "y",
+          "punt": "0",
+          "costat": "dreta",
+          "valor": "0"
+        },
+        {
+          "descripcio": "primitiva de s*exp(-s)",
+          "tipus": "igualtat",
+          "expressio": "diff(-(1+s)*exp(-s), s)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "s*exp(-s)"
+        },
+        {
+          "descripcio": "límit de F(y) quan y tendeix a 0 per la dreta",
+          "tipus": "limit",
+          "expressio": "(1 - exp(-1/y)*(1+1/y))/2",
+          "variable": "y",
+          "punt": "0",
+          "costat": "dreta",
+          "valor": "1/2"
+        }
+      ]
+    },
+    {
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ diferenciable a $(0,0)$. Aleshores existeix $r>0$ tal que $f$ és contínua a tots els punts de la bola $B((0,0),r)$.",
+      "veredicte": "fals",
+      "trampa": "conclusio_mes_forta",
+      "concepte": "Diferenciabilitat puntual",
+      "contraexemple": "$f(x,y)=x^2+y^2$ si $x\\in\\mathbb{Q}$ i $f(x,y)=0$ si $x\\notin\\mathbb{Q}$: és diferenciable a $(0,0)$ però no és contínua a cap altre punt.",
+      "resolucio": "Sigui $f(x,y)=x^2+y^2$ si $x\\in\\mathbb{Q}$ i $f(x,y)=0$ si $x\\notin\\mathbb{Q}$. Com que $0\\leq|f(x,y)|\\leq x^2+y^2$, tenim $f(0,0)=0$, $\\frac{\\partial f}{\\partial x}(0,0)=\\frac{\\partial f}{\\partial y}(0,0)=0$ i $\\frac{|f(x,y)|}{\\|(x,y)\\|}\\leq\\|(x,y)\\|\\to0$, de manera que $f$ és diferenciable a $(0,0)$. Sigui ara $(x_0,y_0)\\neq(0,0)$. Per densitat de $\\mathbb{Q}$ i de $\\mathbb{R}\\setminus\\mathbb{Q}$, hi ha successions $(p_k,y_0)\\to(x_0,y_0)$ amb $p_k\\in\\mathbb{Q}$ i $(q_k,y_0)\\to(x_0,y_0)$ amb $q_k\\notin\\mathbb{Q}$; sobre la primera $f\\to x_0^2+y_0^2>0$ i sobre la segona $f=0$. Per tant $f$ no és contínua a $(x_0,y_0)$, i cap bola centrada a l'origen no conté només punts de continuïtat.",
+      "idees_clau": [
+        "$|f(x,y)|\\leq\\|(x,y)\\|^2$ dona la diferenciabilitat a l'origen",
+        "a cada punt $(x_0,y_0)\\neq(0,0)$ hi ha valors propers $x_0^2+y_0^2$ i $0$",
+        "la diferenciabilitat és una propietat puntual"
+      ],
+      "pista": "La definició de diferenciabilitat a $(0,0)$ involucra un límit en aquest únic punt. Quina informació dona sobre el comportament de $f$ als punts propers diferents de l'origen?",
+      "teoria": ["T3.8", "T3.14"],
+      "comprovacions": []
+    },
+    {
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ diferenciable a tot $\\mathbb{R}^2$ i tal que $f(x,y)=f(y,x)$ per a tot $(x,y)\\in\\mathbb{R}^2$. Aleshores, per a tot $a\\in\\mathbb{R}$, la derivada direccional de $f$ al punt $(a,a)$ segons $u=(1,-1)$ és nul·la.",
+      "veredicte": "cert",
+      "trampa": "cert_demostracio",
+      "concepte": "Simetria i gradient",
+      "contraexemple": "",
+      "resolucio": "Per l'Exercici 4, la simetria dona $\\frac{\\partial f}{\\partial y}(x_0,y_0)=\\frac{\\partial f}{\\partial x}(y_0,x_0)$. En efecte, $\\frac{f(x_0,y_0+t)-f(x_0,y_0)}{t}=\\frac{f(y_0+t,x_0)-f(y_0,x_0)}{t}$. Prenent $(x_0,y_0)=(a,a)$, $\\frac{\\partial f}{\\partial y}(a,a)=\\frac{\\partial f}{\\partial x}(a,a)$. Com que $f$ és diferenciable a $(a,a)$, per la Proposició 9, $D_{(1,-1)}f(a,a)=\\frac{\\partial f}{\\partial x}(a,a)-\\frac{\\partial f}{\\partial y}(a,a)=0$. (Alternativament: $g(t)=f(a+t,a-t)$ compleix $g(-t)=g(t)$, és parell, i la seva derivada a $0$, que existeix, és nul·la.)",
+      "idees_clau": [
+        "per simetria $\\frac{\\partial f}{\\partial y}(a,a)=\\frac{\\partial f}{\\partial x}(a,a)$",
+        "per diferenciabilitat $D_uf(a,a)=\\langle\\nabla f(a,a),u\\rangle$",
+        "$\\langle(c,c),(1,-1)\\rangle=0$"
+      ],
+      "pista": "Què fa la involució $(x,y)\\mapsto(y,x)$ amb els punts de la diagonal i amb la recta $(a+t,a-t)$? Quina relació hi ha entre les dues derivades parcials a $(a,a)$?",
+      "teoria": ["T3.4", "T3.9", "T3.11"],
+      "comprovacions": []
+    }
+  ]
+}

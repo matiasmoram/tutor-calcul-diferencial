@@ -1,0 +1,16 @@
+{
+  "autor": "claude-auditor",
+  "revisions": [
+    {"num": 1, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 2, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 3, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 4, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 5, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 6, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": false, "problemes": "La pista revela la idea del contraexemple: la pregunta «Pot una corba injectiva tornar a apropar-se a un punt per on ja ha passat?» descriu exactament el mecanisme del «vuit» (la corba tendeix a l'origen quan t→0⁺ i t→2π⁻ i hi passa per t=π), i «ρ ha de ser bijectiva i alguna cosa més» indica que les hipòtesis de l'enunciat no basten, cosa que delata el veredicte fals. La resolució és correcta: ρ(t)=(sin 2t, sin t) és injectiva i regular a (0,2π), i les corbes α₁(t)=ρ(π+t) i α₂(t)=(sin 2t, sin t) dins M donen vectors tangents (2,-1) i (2,1) independents a l'origen, en contradicció amb dim T_M=1."},
+    {"num": 7, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 8, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 9, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 10, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 11, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "autor": "claude-auditor",
+  "revisions": [
+    {"num": 1, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 2, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 3, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": false, "problemes": "La pista revela directament el contraexemple: anomena la funció $x^2\\sin\\frac{1}{x}$ i suggereix estendre-la a $\\mathbb{R}^2$ sense dependre de $y$, que és exactament el contraexemple de la resolució; això també delata que el veredicte és fals."},
+    {"num": 4, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 5, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 6, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 7, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 8, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 9, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 10, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 11, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 12, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 13, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""}
+  ]
+}

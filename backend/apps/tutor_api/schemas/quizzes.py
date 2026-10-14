@@ -1,6 +1,7 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from apps.tutor_api.schemas.course import THEORY_PDF, TheoryIndexEntryResponse, TopicSectionResponse, pdf_url
+from apps.tutor_api.schemas.student_text import StudentText, check_text
 from core.quizzes.application.source_lister import QuizSourceIndex, TopicSources
 from core.quizzes.domain.entities.grading import Answer
 from core.quizzes.domain.entities.quiz import Quiz
@@ -8,14 +9,22 @@ from core.quizzes.domain.values.difficulty import Difficulty
 
 
 class NewQuizRequest(BaseModel):
-    font: str = Field(max_length=20)  # "tema-2" or a result of the notes ("T2.12") as the focus
+    font: StudentText = Field(max_length=20)  # "tema-2" or a result of the notes ("T2.12") as the focus
     dificultat: Difficulty = "normal"
     nova: bool = False
-    excepte: str | None = Field(default=None, max_length=40)
+    excepte: StudentText | None = Field(default=None, max_length=40)
 
 
 class AnswersRequest(BaseModel):
     respostes: list[Answer] = Field(max_length=20)
+
+    @field_validator("respostes")
+    @classmethod
+    def _student_text(cls, answers: list[Answer]) -> list[Answer]:
+        for a in answers:
+            check_text(a.statement_id)
+            check_text(a.justification)
+        return answers
 
 
 class PublicStatementResponse(BaseModel):

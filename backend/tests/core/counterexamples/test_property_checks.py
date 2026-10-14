@@ -41,9 +41,12 @@ DIAGONAL = {"camins": [{"x": "t", "y": "t"}]}
 @pytest.mark.parametrize(
     ("kind", "function", "value", "certificate", "expected"),
     [
-        # The parabola y = x^2 breaks every bound G(r) -> 0, also close to the origin (angles hugging the axis).
-        ("continua", "x**2*y/(x**4+y**2)", "0", {"fita": "r"}, "indeterminat"),
-        ("continua", "x**2*y/(x**4+y**2)", "0", {"fita": "2*r**(1/10)"}, "indeterminat"),
+        # Along the parabola y = x^2 the limit is 1/2: an exact one-variable limit on the curve shows f is not
+        # continuous, whatever the bound.
+        ("continua", "x**2*y/(x**4+y**2)", "0", {"fita": "r"}, "falla"),
+        ("continua", "x**2*y/(x**4+y**2)", "0", {"fita": "2*r**(1/10)"}, "falla"),
+        # Off every ray and curve family checked exactly (y = 5x^2): the sampled bound still catches it.
+        ("continua", "x*y/sqrt(x**2+y**2)+x**8*y/(x**10+(y-5*x**2)**2)", "0", {"fita": "r"}, "indeterminat"),
         ("continua", "x**2+y**2", "0", {"fita": "1"}, "indeterminat"),
         ("continua", "x**2+y**2", "0", {}, "indeterminat"),
         ("limit_no_existeix", "x**2*y/(x**4+y**2)", "0", TWO_LINES, "indeterminat"),
@@ -155,10 +158,74 @@ def test_attacks_do_not_pass(kind: PropertyKind, function: str, value: str, cert
     assert check_property(check).status not in ("ok", "plausible")
 
 
-def test_cbrt_is_the_real_cube_root() -> None:
-    # sympy's own (x**3+y**3)**(1/3) is complex for x**3+y**3 < 0; cbrt is defined on the whole plane.
+def test_odd_roots_are_the_real_roots() -> None:
+    # sympy's own (x**3+y**3)**(1/3) is complex for x**3+y**3 < 0; a student means the real root, as cbrt.
     assert verdict("direccionals_existeixen", "cbrt(x**3+y**3)")[0] == "plausible"
-    assert verdict("parcials_existeixen", "(x**3+y**3)**(1/3)")[0] == "falla"
+    assert verdict("parcials_existeixen", "(x**3+y**3)**(1/3)")[0] == "ok"
+    assert verdict("continua", "(x*y)**(1/3)", fita="r**(2/3)")[0] == "plausible"
+    assert verdict("alguna_direccional_no_existeix", "(x*y)**(1/3)", direccio={"u": "1", "w": "1"})[0] == "ok"
+    # An even root of a negative is not real, and the message says so (not the advice about holes).
+    status, detail = verdict("parcials_existeixen", "sqrt(x)+y")
+    assert status == "falla" and "no és real" in detail
+
+
+# A quotient that blows up (sign or cube root over h) has no limit: simplify used to turn sign(h^2)/h into a
+# Piecewise whose sympy limit is 0, so each of these came back "exists".
+@pytest.mark.parametrize(
+    ("kind", "function", "certificate"),
+    [
+        ("alguna_direccional_no_existeix", "cbrt(x*y)", {"direccio": {"u": "1", "w": "1"}}),
+        ("alguna_direccional_no_existeix", "sign(x*y)", {"direccio": {"u": "1", "w": "2"}}),
+        ("alguna_parcial_no_existeix", "cbrt(x)", {}),
+        ("no_diferenciable", "cbrt(x*y)", {}),
+        ("no_diferenciable", "sign(x*y)*Abs(x*y)**(1/3)", {"camins": [{"x": "t", "y": "t"}]}),
+    ],
+)
+def test_a_quotient_that_blows_up_has_no_limit(
+    kind: PropertyKind, function: str, certificate: dict[str, object]
+) -> None:
+    status, detail = verdict(kind, function, "0", **certificate)
+    assert status == "ok", detail
+
+
+# Found by an auditor: each one used to pass.
+HIDDEN = "exp(-10**32*(x**2+y**2))"
+
+
+@pytest.mark.parametrize(
+    ("kind", "function", "certificate"),
+    [
+        ("parcials_existeixen", "cbrt(x)+x*y/(x**2+y**2)", {}),
+        ("direccionals_existeixen", "sign(x*y)", {}),
+        ("direccionals_existeixen", "x**2*y/(x**4+y**2)+cbrt(x)", {}),
+        ("alguna_parcial_no_existeix", "cbrt(x)*Abs(x)", {}),
+        # A discontinuity squeezed below every sampled radius by a huge constant.
+        ("continua", f"x*y/sqrt(x**2+y**2)+x**2*y/(x**4+y**2)*{HIDDEN}", {"fita": "2*r"}),
+        ("continua", f"Abs(x)+x**2*y/(x**4+y**2)*{HIDDEN}", {"fita": "2*r"}),
+        # A special line with an irrational slope, where f along y = m x is not a rational function.
+        ("rectes_mateix_limit", "x**4*exp(x)/((y-pi*x)**2+x**4)", {}),
+        ("rectes_limit_f0", "x**4*exp(x)/((y-pi*x)**2+x**4)", {}),
+        ("direccionals_existeixen", "x**2*y/(x**2+y**2)+Abs(x)*x**4/((y-sqrt(2)*x)**2+x**4)", {}),
+        # Every directional derivative exists, but D_v is not linear in v.
+        ("direccionals_lineals", "x**2*y/(x**2+y**2)", {}),
+        ("direccionals_lineals", "x*y/sqrt(x**2+y**2)", {}),
+    ],
+)
+def test_found_by_an_auditor(kind: PropertyKind, function: str, certificate: dict[str, object]) -> None:
+    status, detail = verdict(kind, function, "0", **certificate)
+    assert status not in ("ok", "plausible"), detail
+
+
+def test_linear_directional_derivatives() -> None:
+    assert verdict("direccionals_lineals", "x**3*y/(x**4+y**2)")[0] == "plausible"
+    assert verdict("direccionals_lineals", "x+2*y+x**2*y**2")[0] == "plausible"
+    status, detail = verdict("direccionals_lineals", "x**3/(x**2+y**2)")
+    assert status == "falla" and "lineal" in detail
+
+
+def test_a_huge_constant_is_refused_with_the_reason() -> None:
+    status, detail = verdict("parcials_existeixen", "x*y*exp(-10**7*x**2)")
+    assert status == "falla" and "massa gran" in detail
 
 
 def test_a_positive_denominator_is_not_a_hole() -> None:

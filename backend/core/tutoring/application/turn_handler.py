@@ -11,9 +11,14 @@ from core.shared.domain.ids import SessionId, TheoryItemId
 from core.shared.llm.call_scope import call_scope
 from core.tutoring.domain.entities.tutor_session import TutorSession
 from core.tutoring.domain.entities.tutor_turn import TutorTurn
-from core.tutoring.domain.exceptions import ConcurrentTurnException, ModelOutputException, TurnTimeoutException
+from core.tutoring.domain.exceptions import (
+    ConcurrentTurnException,
+    ModelOutputException,
+    TruncatedModelOutputException,
+    TurnTimeoutException,
+)
 from core.tutoring.domain.fallback import fallback_message
-from core.tutoring.domain.guard import deterministic_check
+from core.tutoring.domain.guard import citation_problems, deterministic_check
 from core.tutoring.domain.policy import allowed_content, allowed_theory, decide
 from core.tutoring.domain.ports import Diagnoser, ReplyJudge, ReplyWriter
 from core.tutoring.domain.repository import TutorSessionRepository
@@ -120,11 +125,19 @@ class TurnHandler:
         history = session.history_with(text)
 
         concept_ids = concept_question_ids(self._course, ex)
-        raw, call = await self._diagnoser.diagnose(ex, session.state, history, concept_ids)
+        try:
+            raw, call = await self._diagnoser.diagnose(ex, session.state, history, concept_ids)
+        except TruncatedModelOutputException as e:
+            # A degenerate loop up to max_tokens is a sampling accident: asked once more, the model usually
+            # answers. Both calls are paid for, so both are in the trace.
+            if e.call is not None:
+                calls.append(e.call)
+            raw, call = await self._diagnoser.diagnose(ex, session.state, history, concept_ids)
         calls.append(call)
         diagnosis = raw.normalized(ex.step_ids, concept_ids)
         student_texts = [m.text for m in history if m.role == "alumne"]
-        plan, state = decide(ex, diagnosis, session.state, student_texts)
+        # The policy may compare the student's text with the result in sympy: off the event loop.
+        plan, state = await asyncio.to_thread(decide, ex, diagnosis, session.state, student_texts)
         content = allowed_content(ex, plan, state.completed, state.shown)
         theory = allowed_theory(self._course, ex, plan, state.completed)
 
@@ -145,7 +158,8 @@ class TurnHandler:
 
         used_fallback = final is None
         if final is None:
-            final = _Reply(message=fallback_message(ex, plan, theory), references=[])
+            message = fallback_message(ex, plan, theory)
+            final = _Reply(message=message, references=cited_items(message, theory, ex.topic))
 
         trace = TurnTrace(
             turn=state.turns,
@@ -191,6 +205,7 @@ class TurnHandler:
         except TimeoutError:
             # Fail closed: a draft the CAS could not verify never reaches the student.
             problems = [GUARD_TIMEOUT_PROBLEM]
+        problems += citation_problems(message, theory, ex.topic, permitted)
         verdict: GuardVerdict | None = None
         if not problems:
             # Only pay for the LLM judge once the cheap checks pass.

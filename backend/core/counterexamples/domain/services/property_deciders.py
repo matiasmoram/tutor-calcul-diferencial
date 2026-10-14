@@ -17,7 +17,13 @@ from dataclasses import dataclass, field
 import sympy as sp
 
 from core.counterexamples.domain.properties import PROPERTIES, PropertyKind
-from core.counterexamples.domain.values.submission import Certificate, Path, PropertyCheck
+from core.counterexamples.domain.values.submission import (
+    MAX_CONSTANT,
+    Certificate,
+    Path,
+    PropertyCheck,
+    extreme_constant,
+)
 from core.counterexamples.domain.values.verdict import PropertyVerdict, VerdictStatus
 from core.shared.math.sympy_checks import SYMBOLS, InvalidExpression, parse
 
@@ -62,26 +68,47 @@ class _BadFunction(Exception):
     """f itself is not a valid answer (undefined off the origin, f(0,0) not a real number): "falla"."""
 
 
-def _limit(expr: sp.Expr, var: sp.Symbol, side: str = "+-") -> _Limit:
+class _DoesNotExist:
+    """sympy proved different side limits (still to be confirmed numerically)."""
+
+
+def _sympy_limit(expr: sp.Expr, var: sp.Symbol, side: str) -> sp.Expr | _DoesNotExist | None:
+    """sympy's own answer: an expression, "does not exist", or None when sympy fails."""
     try:
         lim = sp.limit(expr, var, 0, side)
     except ValueError as e:
         # sympy: "The limit does not exist since left hand limit = a and right hand limit = b". Any other
         # ValueError is sympy failing, not a proof.
-        if "does not exist" not in str(e) or not _numerically_unsettled(expr, var, side):
-            return _Limit(None)
-        return _Limit(False)
+        return _DoesNotExist() if "does not exist" in str(e) else None
     except Exception:  # NotImplementedError, PoleError, recursion... : sympy cannot tell
+        return None
+    if not isinstance(lim, sp.Expr) or lim.has(sp.Limit) or lim.has(sp.nan):
+        return None
+    return lim
+
+
+def _unbounded_or_oscillating(lim: sp.Expr) -> bool:
+    return isinstance(lim, sp.AccumBounds) or lim.has(sp.AccumBounds) or lim.has(sp.oo, -sp.oo, sp.zoo)
+
+
+def _limit(expr: sp.Expr, var: sp.Symbol, side: str = "+-") -> _Limit:
+    lim = _sympy_limit(expr, var, side)
+    if lim is None:
         return _Limit(None)
-    if lim.has(sp.Limit) or lim.has(sp.nan):
-        return _Limit(None)
-    if isinstance(lim, sp.AccumBounds) or lim.has(sp.AccumBounds) or lim.has(sp.oo, -sp.oo, sp.zoo):
-        # sympy's "no limit" is a proof only if f visibly keeps oscillating (or jumping, or growing) at every scale:
-        # sympy reads sin(A)^2 + cos(A)^2 with A blowing up as AccumBounds(0, 2).
+    if isinstance(lim, _DoesNotExist):
+        return _Limit(False) if _numerically_unsettled(expr, var, side) else _Limit(None)
+    if _unbounded_or_oscillating(lim):
+        # sympy reads sin(A)^2 + cos(A)^2 with A blowing up as AccumBounds(0, 2): an equivalent form may show the
+        # limit. One level of rewrites, each handed straight to sympy (rewriting a rewrite ping-pongs between
+        # expand and simplify), and a finite answer only if the numbers do not contradict it: simplify turns
+        # sign(h^2)/h into a Piecewise whose sympy limit is 0.
         for form in _rewritten(expr):
-            retry = _limit(form, var, side) if form != expr else None
-            if retry is not None and retry.exists is not False:
-                return retry
+            retry = _sympy_limit(form, var, side)
+            if isinstance(retry, sp.Expr) and not _unbounded_or_oscillating(retry):
+                value = sp.simplify(retry)
+                if not _numerically_elsewhere(expr, var, side, value):
+                    return _Limit(True, value)
+        # sympy's "no limit" is a proof only if f visibly keeps oscillating (or jumping, or growing) at every scale.
         return _Limit(False, lim) if _numerically_unsettled(expr, var, side) else _Limit(None)
     value = sp.simplify(lim)
     if _numerically_elsewhere(expr, var, side, value):
@@ -93,14 +120,15 @@ _PARAMETER_VALUES = (sp.Rational(3, 7), sp.Rational(-5, 11))
 
 
 def _rewritten(expr: sp.Expr) -> list[sp.Expr]:
-    """Equivalent forms on which sympy's limit may succeed where it reported AccumBounds on the original."""
+    """Equivalent forms on which sympy's limit may succeed where it reported AccumBounds on the original. A form with
+    a Piecewise is dropped: sympy takes the limit of one branch and may pick the one valid only at 0."""
     out: list[sp.Expr] = []
     for rewrite in (sp.expand, sp.trigsimp, sp.simplify):
         try:
             form = rewrite(expr)
         except Exception:
             continue
-        if isinstance(form, sp.Expr) and form != expr and form not in out:
+        if isinstance(form, sp.Expr) and form != expr and form not in out and not form.has(sp.Piecewise):
             out.append(form)
     return out
 
@@ -168,7 +196,8 @@ def _numerically_unsettled(expr: sp.Expr, var: sp.Symbol, side: str) -> bool:
 def _numerically_elsewhere(expr: sp.Expr, var: sp.Symbol, side: str, value: sp.Expr) -> bool:
     """sympy can return a wrong finite limit (with atan(y/x) it loses a sign). Cross-check: with the parameters fixed
     to sample values, f near 0 settles (two scales agree) on a number other than sympy's. Only a clear, converged
-    disagreement counts, so slow convergence (1/log) is not flagged."""
+    disagreement counts, so slow convergence (1/log) is not flagged. So does a clear blow-up (|f| large and growing
+    between the two scales, as h^(-1/3) does): no finite value can be the limit."""
     params = sorted((expr.free_symbols | value.free_symbols) - {var}, key=str)
     for p_value in _PARAMETER_VALUES:
         target = _number(value.subs([(p, p_value) for p in params]))
@@ -177,6 +206,8 @@ def _numerically_elsewhere(expr: sp.Expr, var: sp.Symbol, side: str, value: sp.E
             continue
         for a, b in near:
             if _settled(a, b) and abs(b - target) > 1e-3 * max(1.0, abs(target)):
+                return True
+            if abs(b) > 1e3 * max(1.0, abs(target)) and abs(b) > 2 * abs(a):
                 return True
     return False
 
@@ -267,7 +298,36 @@ def _parse(text: str, allowed: set[str], what: str) -> sp.Expr:
         raise _BadCertificate(f"{what}: {e}") from e
     if any(str(s) not in allowed for s in expr.free_symbols):
         raise _BadCertificate(f"{what}: variable no permesa")
+    if (constant := extreme_constant(expr)) is not None:
+        raise _BadCertificate(
+            f"{what}: la constant ${sp.latex(constant)}$ és massa gran o massa petita "
+            f"(com a molt {MAX_CONSTANT:g} en valor absolut, i no per sota de {1 / MAX_CONSTANT:g})."
+        )
     return expr
+
+
+def _real_roots(expr: sp.Expr) -> sp.Expr:
+    """b**(p/q) with q odd as the real root, which is what a student means by (x*y)**(1/3): sympy's is the complex
+    principal root for b < 0. Same form as cbrt."""
+
+    def odd_root(e: sp.Basic) -> bool:
+        return (
+            isinstance(e, sp.Pow)
+            and isinstance(e.exp, sp.Rational)
+            and not e.exp.is_Integer
+            and e.exp.q % 2 == 1
+            and e.base.is_nonnegative is not True
+        )
+
+    def real(e: sp.Pow) -> sp.Expr:
+        p = e.exp
+        assert isinstance(p, sp.Rational)
+        magnitude = sp.Pow(sp.Abs(e.base), p)
+        return sp.sign(e.base) * magnitude if p.p % 2 else magnitude
+
+    out = expr.replace(odd_root, real)  # type: ignore[arg-type]
+    assert isinstance(out, sp.Expr)
+    return out
 
 
 def _path(p: Path, i: int) -> tuple[sp.Expr, sp.Expr]:
@@ -367,11 +427,17 @@ def _bound(ctx: _Ctx, expr: sp.Expr, target: sp.Expr, what: str) -> tuple[Verdic
 
 
 _RAYS: tuple[tuple[int, int], ...] = (*DIRECTIONS, (-1, 0), (0, -1), (-1, -1), (-1, 1), (3, 1), (1, 3), (-3, 2))
+_CURVE_FAMILY: tuple[tuple[int, int, int], ...] = tuple((p, c, s) for p in (2, 3) for c in (1, -1, 2) for s in (1, -1))
 
 
 def _refuted_on_curves(ctx: _Ctx, expr: sp.Expr) -> str | None:
     """Why expr does not tend to 0 at the origin, found on a ray or on a path given anywhere in the submission."""
     curves = [(f"raig $({u},{w})t$", sp.Integer(u) * T, sp.Integer(w) * T) for u, w in _RAYS]
+    # Both branches of y = c x^p and x = c y^p: the curves tangent to an axis where a discontinuity hides from rays.
+    for p, c, s in _CURVE_FAMILY:
+        along, across = s * T, c * T**p
+        curves.append((f"camí $({sp.latex(along)}, {sp.latex(across)})$", along, across))
+        curves.append((f"camí $({sp.latex(across)}, {sp.latex(along)})$", across, along))
     for i, p in enumerate(ctx.context_paths, 1):
         try:
             px, py = _path(p, i)
@@ -456,10 +522,10 @@ def _lines(ctx: _Ctx) -> tuple[VerdictStatus, str]:
             return "falla", (
                 f"Per ${values[0][0]}$ el límit és ${_tex(values[0][1])}$ i per ${label}$ és ${_tex(value)}$."
             )
-    special = _special_slopes(_at(ctx.g, _H, _M * _H))
-    for m in [*(special or []), *_straight_path_slopes(ctx)]:
+    special, complete = _special_slopes(_at(ctx.g, _H, _M * _H))
+    for m in dict.fromkeys([*special, *_path_slopes(ctx)]):
         lim = _limit(_at(ctx.g, _H, m * _H), _H)
-        label = f"y={sp.latex(m)}x"
+        label = f"y={sp.latex(m)}\\,x"
         if lim.exists is False:
             return "falla", f"Per la recta ${label}$ el límit no existeix."
         if lim.exists is None or lim.value is None:
@@ -477,8 +543,10 @@ def _lines(ctx: _Ctx) -> tuple[VerdictStatus, str]:
         if same is False:
             return "falla", f"Per la recta $y=mx$ el límit és ${_tex(generic.value)}$: depèn de $m$."
         # "ok" only when every slope where sympy's generic answer could change has been tried.
-        if same is True and special is not None:
+        if same is True and complete:
             return "ok", f"Per totes les rectes el límit és ${_tex(values[0][1])}$."
+    if not complete:
+        raise _Undecided(_INCOMPLETE_LINES.format(value=_tex(values[0][1])))
     return "plausible", (
         f"Per les rectes provades el límit és ${_tex(values[0][1])}$; sympy no ha pogut fer el càlcul per a $m$ qualsevol."
     )
@@ -531,7 +599,8 @@ def _some_partial_missing(ctx: _Ctx) -> tuple[VerdictStatus, str]:
 
 
 def _directionals_exist(ctx: _Ctx) -> tuple[VerdictStatus, str]:
-    for u, w in _directions_to_try(ctx):
+    directions, complete = _directions_to_try(ctx)
+    for u, w in directions:
         lim = ctx.directional(u, w)
         if lim.exists is False:
             ctx.log(f"D_{{({sp.latex(u)},{sp.latex(w)})}} f(0,0) = {_describe(lim)}")
@@ -542,6 +611,8 @@ def _directionals_exist(ctx: _Ctx) -> tuple[VerdictStatus, str]:
         ctx.log(f"D_{{({u},{w})}} f(0,0) = {_describe(ctx.directional(sp.Integer(u), sp.Integer(w)))}")
     # The fixed directions decide a failure; a symbolic (a, b) is only evidence, and sympy can fail on it where
     # every concrete direction works (sign(x^3+y^3)*Abs(x^3+y^3)^(1/3)).
+    if not complete:
+        raise _Undecided(_INCOMPLETE_DIRECTIONS.format(n=len(directions)))
     generic = ctx.directional(_A, _B)
     if generic.exists is True:
         assert generic.value is not None
@@ -552,15 +623,25 @@ def _directionals_exist(ctx: _Ctx) -> tuple[VerdictStatus, str]:
             "(sympy suposa $(a,b)$ genèric: les direccions especials s'han provat a part)."
         )
     return "plausible", (
-        f"Existeix en les {len(_directions_to_try(ctx))} direccions provades (una cada 7,5° i les dels teus camins); "
+        f"Existeix en les {len(directions)} direccions provades (una cada 7,5°, les especials i les dels teus camins); "
         "sympy no ha pogut fer el càlcul en una direcció qualsevol $(a,b)$."
     )
 
 
-def _directions_to_try(ctx: _Ctx) -> list[tuple[sp.Expr, sp.Expr]]:
-    """The fixed directions, a direction every 7.5 degrees, and the direction in which each path of the submission
-    leaves the origin (a feature along a line the student singled out is where to look)."""
+def _directions_to_try(ctx: _Ctx) -> tuple[list[tuple[sp.Expr, sp.Expr]], bool]:
+    """The fixed directions, a direction every 7.5 degrees, the special directions (1, m) of f along y = m x, and the
+    direction in which each path of the submission leaves the origin (a feature along a line the student singled out
+    is where to look). False when the special directions could not all be found."""
+    special, complete = _special_slopes(_at(ctx.g, _H, _M * _H))
     out: list[tuple[sp.Expr, sp.Expr]] = [(sp.Integer(u), sp.Integer(w)) for u, w in _PROBE_DIRECTIONS]
+    out += [(sp.Integer(1), m) for m in special]
+    out += _path_directions(ctx)
+    return list(dict.fromkeys(out)), complete
+
+
+def _path_directions(ctx: _Ctx) -> list[tuple[sp.Expr, sp.Expr]]:
+    """The direction in which each path of the submission leaves the origin."""
+    out: list[tuple[sp.Expr, sp.Expr]] = []
     for i, p in enumerate(ctx.context_paths, 1):
         try:
             px, py = _path(p, i)
@@ -573,6 +654,62 @@ def _directions_to_try(ctx: _Ctx) -> list[tuple[sp.Expr, sp.Expr]]:
         elif px == 0 or (_limit(px / py, T, "+").value == 0 if py != 0 else False):
             out.append((sp.Integer(0), _limit(sp.sign(py), T, "+").value or sp.Integer(1)))
     return out
+
+
+def _directionals_linear(ctx: _Ctx) -> tuple[VerdictStatus, str]:
+    """D_v f(0,0) = grad f(0,0) . v for every v: on every direction tried, then for a symbolic (a, b)."""
+    px, py = ctx.partial("x"), ctx.partial("y")
+    for var, lim in (("x", px), ("y", py)):
+        if lim.exists is False:
+            return "falla", f"$\\partial_{var} f(0,0)$ no existeix."
+    if px.value is None or py.value is None:
+        raise _Undecided("sympy no ha pogut calcular alguna derivada parcial.")
+    a, b = px.value, py.value
+    directions, complete = _directions_to_try(ctx)
+    for u, w in directions:
+        lim = ctx.directional(u, w)
+        v = f"({sp.latex(u)},{sp.latex(w)})"
+        if lim.exists is False:
+            return "falla", f"La derivada direccional en la direcció ${v}$ no existeix."
+        if lim.exists is None or lim.value is None:
+            raise _Undecided(f"sympy no ha pogut calcular la derivada en la direcció ${v}$.")
+        linear = sp.simplify(u * a + w * b)
+        if _compare(lim.value, linear) is False:
+            ctx.log(f"D_{{{v}}} f(0,0) = {_tex(lim.value)} \\ne \\nabla f(0,0)\\cdot v = {_tex(linear)}")
+            return "falla", (
+                f"$D_v f(0,0) = {_tex(lim.value)}$ però $\\nabla f(0,0)\\cdot v = {_tex(linear)}$ per a $v={v}$: "
+                "la derivada direccional no és lineal en $v$."
+            )
+    ctx.log(f"\\nabla f(0,0) = ({_tex(a)}, {_tex(b)})")
+    if not complete:
+        raise _Undecided(_INCOMPLETE_DIRECTIONS.format(n=len(directions)))
+    generic = ctx.directional(_A, _B)
+    if generic.exists is True and generic.value is not None:
+        shown = generic.value.subs({_A: sp.Symbol("a"), _B: sp.Symbol("b")})
+        ctx.log(f"D_{{(a,b)}} f(0,0) = {sp.latex(shown)}")
+        if _compare(generic.value, _A * a + _B * b) is False:
+            linear = sp.latex(sp.Symbol("a") * a + sp.Symbol("b") * b)
+            return "falla", (
+                f"En una direcció genèrica $v=(a,b)$, $D_v f(0,0) = {sp.latex(shown)}$, que no és "
+                f"$\\nabla f(0,0)\\cdot v = {linear}$."
+            )
+    return "plausible", (
+        f"$D_v f(0,0) = \\nabla f(0,0)\\cdot v$ en les {len(directions)} direccions provades"
+        + (" i en una direcció genèrica $(a,b)$" if generic.exists is True else "")
+        + " (comprovació en direccions concretes, no una demostració per a tota $v$)."
+    )
+
+
+_INCOMPLETE_LINES = (
+    "Per les rectes provades el límit és ${value}$, però $f$ sobre $y=mx$ no és d'un tipus on sympy pugui trobar "
+    "totes les pendents especials, i no es pot garantir per a tota $m$. Si hi ha una recta sospitosa, dona-la com a "
+    "camí en un altre certificat."
+)
+_INCOMPLETE_DIRECTIONS = (
+    "Existeix en les {n} direccions provades, però $f$ sobre $y=mx$ no és d'un tipus on sympy pugui trobar totes les "
+    "direccions especials, i no es pot garantir per a tota direcció. Si n'hi ha una de sospitosa, dona-la com a camí "
+    "en un altre certificat."
+)
 
 
 def _some_directional_missing(ctx: _Ctx) -> tuple[VerdictStatus, str]:
@@ -727,6 +864,7 @@ _DECIDERS: Mapping[PropertyKind, Callable[[_Ctx], tuple[VerdictStatus, str]]] = 
     "parcials_existeixen": _partials_exist,
     "alguna_parcial_no_existeix": _some_partial_missing,
     "direccionals_existeixen": _directionals_exist,
+    "direccionals_lineals": _directionals_linear,
     "alguna_direccional_no_existeix": _some_directional_missing,
     "diferenciable": _differentiable,
     "no_diferenciable": _not_differentiable,
@@ -740,7 +878,7 @@ def check_property(check: PropertyCheck) -> PropertyVerdict:
     ctx = _Ctx(g=sp.Integer(0), c=sp.Integer(0), cert=check.certificate, lines=[], context_paths=check.context_paths)
     try:
         try:
-            ctx.g = _parse(check.function, {"x", "y"}, "La funció")
+            ctx.g = _real_roots(_parse(check.function, {"x", "y"}, "La funció"))
             ctx.c = _parse(check.origin_value, set(), "El valor a l'origen")
         except _BadCertificate as e:
             raise _BadFunction(str(e)) from e
@@ -763,45 +901,62 @@ def undecided(check: PropertyCheck, reason: str) -> PropertyVerdict:
 
 def _line_label(m: sp.Expr) -> str:
     named: dict[sp.Expr, str] = {sp.Integer(0): "y=0", sp.Integer(1): "y=x", sp.Integer(-1): "y=-x"}
-    return named.get(m, f"y={sp.latex(m)}x")
+    return named.get(m, f"y={sp.latex(m)}\\,x")
 
 
-def _straight_path_slopes(ctx: _Ctx) -> list[sp.Expr]:
-    """Slopes of the submission's paths that are lines y = m x: a line the student singled out is worth checking."""
-    out: list[sp.Expr] = []
-    for i, p in enumerate(ctx.context_paths, 1):
-        try:
-            px, py = _path(p, i)
-            m = sp.simplify(py / px)
-        except (_BadCertificate, ZeroDivisionError, TypeError):
-            continue
-        if m.is_number and m.is_finite and m.is_real:
-            out.append(m)
-    return out
+def _path_slopes(ctx: _Ctx) -> list[sp.Expr]:
+    """Slopes of the lines tangent to the submission's paths: a line the student singled out is worth checking."""
+    return [w / u for u, w in _path_directions(ctx) if u != 0]
 
 
 _MAX_SPECIAL = 12
 
 
-def _special_slopes(on_line: sp.Expr) -> list[sp.Expr] | None:
-    """The real slopes m where f(h, m h), a rational function of h, can behave differently from a generic m: the
-    roots of the coefficients (polynomials in m) of its numerator and denominator. None when f along the line is not
-    a rational function, or there are too many: then the generic answer cannot be trusted for every m."""
+def _special_slopes(on_line: sp.Expr) -> tuple[list[sp.Expr], bool]:
+    """The real slopes m where f(h, m h) can behave differently from a generic m: the real roots of the coefficients
+    (polynomials in m) of the numerator and denominator of each piece of it that is a rational function of h (the
+    whole expression, or the arguments of the powers and functions it is built from). False when some piece that
+    depends on m is not of that kind, or there are too many roots: then the generic answer is not trusted for every
+    m."""
+    roots: set[sp.Expr] = set()
+    complete = True
+
+    def visit(e: sp.Basic) -> None:
+        nonlocal complete
+        if not complete or not e.has(_M):
+            return
+        found = _coefficient_roots(e)
+        if found is not None:
+            roots.update(found)
+        elif isinstance(e, sp.Pow) and not e.exp.has(_M):
+            visit(e.base)
+        elif isinstance(e, sp.Add | sp.Mul | sp.Abs | sp.sign | sp.exp) or (isinstance(e, sp.Function) and e.has(_H)):
+            for a in e.args:
+                visit(a)
+        else:  # sin(m), h**m...: zeros or singular values in m that no coefficient shows
+            complete = False
+
+    visit(on_line)
+    if not complete or len(roots) > _MAX_SPECIAL:
+        return [], False
+    return sorted(roots, key=lambda r: float(r)), True
+
+
+def _coefficient_roots(e: sp.Basic) -> set[sp.Expr] | None:
+    """The real roots in m of the coefficients of the numerator and denominator of e, when e is a rational function
+    of h whose coefficients are polynomials in m; None otherwise."""
+    roots: set[sp.Expr] = set()
     try:
-        num, den = sp.fraction(sp.cancel(sp.together(on_line)))
-        roots: set[sp.Expr] = set()
+        num, den = sp.fraction(sp.cancel(sp.together(e)))
         for part in (num, den):
-            poly = sp.Poly(part, _H)
-            for coeff in poly.coeffs():
+            for coeff in sp.Poly(part, _H).coeffs():
                 if not coeff.is_polynomial(_M):
                     return None
                 if coeff.has(_M):
                     roots.update(r for r in sp.solve(coeff, _M) if isinstance(r, sp.Expr) and r.is_real)
     except (sp.PolynomialError, sp.GeneratorsNeeded, NotImplementedError, TypeError, ValueError):
         return None
-    if len(roots) > _MAX_SPECIAL:
-        return None
-    return sorted(roots, key=lambda r: float(r))
+    return roots
 
 
 # Integer directions every 7.5 degrees (offset so that no grid line is special), plus the usual ones: a sector where
@@ -824,6 +979,11 @@ _HOLE = (
     "ha de ser una funció real a tot $\\mathbb{R}^2\\setminus\\{(0,0)\\}$. Si la fórmula té un forat (p. ex. "
     "$\\sin(1/x)$), canvia-la per una definida a tot arreu (p. ex. $\\sin(1/(x^2+y^2))$)."
 )
+_NOT_REAL = (
+    "ha de ser una funció real a tot $\\mathbb{R}^2\\setminus\\{(0,0)\\}$, i aquí pren un valor complex: una arrel "
+    "d'índex parell (sqrt, potència 1/2) o un logaritme d'un nombre negatiu, o una potència amb exponent decimal. "
+    "Les arrels d'índex senar ja són reals: cbrt(x*y) o (x*y)**(1/3) valen $-1$ a $(1,-1)$."
+)
 
 
 def _check_defined(g: sp.Expr) -> None:
@@ -844,7 +1004,8 @@ def _check_defined(g: sp.Expr) -> None:
             except (ValueError, ZeroDivisionError, TypeError):
                 value = complex(math.nan)
             if math.isnan(value.real) or abs(value.imag) > 1e-9 * max(1.0, abs(value.real)):
-                raise _BadFunction(f"$f$ no està definida a $(x,y)\\approx({x:.3g}, {y:.3g})$: {_HOLE}")
+                where = f"(x,y)\\approx({x:.3g}, {y:.3g})"
+                raise _BadFunction(_undefined_at(g, sp.Rational(x), sp.Rational(y), where))
     _check_denominator(g)
     for u, w in _PROBE_DIRECTIONS:
         for h in (sp.Rational(1, 10), sp.Rational(1, 1000)):
@@ -854,7 +1015,18 @@ def _check_defined(g: sp.Expr) -> None:
                 math.inf,
                 -math.inf,
             ):
-                raise _BadFunction(f"$f$ no està definida a $({sp.latex(h * u)}, {sp.latex(h * w)})$: {_HOLE}")
+                raise _BadFunction(_undefined_at(g, h * u, h * w, f"({sp.latex(h * u)}, {sp.latex(h * w)})"))
+
+
+def _undefined_at(g: sp.Expr, x: sp.Expr, y: sp.Expr, where: str) -> str:
+    """Why f is not a valid answer at (x, y): a value that is not real (sqrt of a negative) or no value (a hole)."""
+    try:
+        value = complex(sp.N(_at(g, x, y), 30))
+    except (TypeError, ValueError, OverflowError, ZeroDivisionError):
+        value = complex(math.nan)
+    if math.isfinite(abs(value)) and abs(value.imag) > 1e-12 * max(1.0, abs(value.real)):
+        return f"$f$ no és real a ${where}$: {_NOT_REAL}"
+    return f"$f$ no està definida a ${where}$: {_HOLE}"
 
 
 def _check_denominator(g: sp.Expr) -> None:

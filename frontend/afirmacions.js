@@ -28,6 +28,7 @@ const CF_JUST = {
 const CF = {
   fonts: null, font: null, item: null, dificultat: "normal", disp: {}, sessionId: null, q: null,
   respostes: {}, pistes: {}, resultat: null,
+  req: 0, busy: false,  // req numbers each quiz load: only the latest one may touch the page
 };
 
 async function getCfFonts(fresh = false) {
@@ -103,7 +104,7 @@ function cfShell(tema) {
         title: CF.disp[d.id] ? "Preparat: s'obre a l'instant" : "Encara no n'hi ha cap de preparat: es generarà (cal l'API)" },
         el("span", { text: d.label }), el("small", { text: `${CF.mida[d.id]} afirmacions${CF.disp[d.id] ? "" : " · nou"}` }));
       b.addEventListener("click", () => {
-        if (CF.dificultat === d.id) return;
+        if (CF.dificultat === d.id || CF.busy) return;
         CF.dificultat = d.id;
         root.querySelectorAll(".chip").forEach((c) => {
           c.classList.toggle("on", c.dataset.dif === d.id);
@@ -114,7 +115,7 @@ function cfShell(tema) {
       return b;
     }));
   const nova = el("button", { type: "button", class: "btn ghost small-btn", id: "cf-nova", text: "↻ Un altre qüestionari" });
-  nova.addEventListener("click", () => cfCarregar((CF.disp[CF.dificultat] || 0) <= 1));
+  nova.addEventListener("click", cfUnAltre);
   root.replaceChildren(
     el("header", { class: "er-head" },
       el("div", { class: "er-title" },
@@ -135,18 +136,56 @@ function cfLoadDraft() {
   try { return JSON.parse(localStorage.getItem(cfDraftKey()) || "{}") || {}; } catch { return {}; }
 }
 
+function cfBusy(on) {
+  // While a quiz loads or a correction runs: no other paid call (difficulty, another quiz, hints) can be fired.
+  CF.busy = on;
+  document.querySelectorAll("#view-afirmacions .er-controls button, #cf-list .note-actions button").forEach((b) => { b.disabled = on; });
+}
+
+function cfStale(req, hash) {
+  // A response that is not for the latest load, or arrives after the student left this page, is dropped.
+  return req !== CF.req || location.hash !== hash;
+}
+
+function cfUnAltre() {
+  // With more than one ready quiz, "another" picks a different one (no API cost);
+  // otherwise generating a new one needs an explicit click.
+  if ((CF.disp[CF.dificultat] || 0) > 1) cfCarregar(false);
+  else cfOferirGenerar(true);
+}
+
+function cfOferirGenerar(altre = false) {
+  // Generating a quiz is a paid, minutes-long call: it only starts on an explicit click.
+  CF.req++;  // a load still in flight for another difficulty must not replace this
+  cfBusy(false);
+  Object.assign(CF, { sessionId: null, q: null, respostes: {}, pistes: {}, resultat: null });
+  $("#cf-bar").replaceChildren();
+  const ready = CF_DIFICULTATS.filter((d) => CF.disp[d.id]).map((d) => d.label);
+  const gen = el("button", { type: "button", class: "btn primary", text: "Genera'n un de nou (pot trigar uns minuts)" });
+  gen.addEventListener("click", () => cfCarregar(true));
+  $("#cf-list").replaceChildren(el("div", { class: "er-paper er-generate" },
+    el("strong", { text: altre ? "No n'hi ha cap altre de preparat en aquesta dificultat." : "Encara no hi ha cap qüestionari preparat en aquesta dificultat." }),
+    POT_GENERAR ? el("p", { class: "muted", text: "Se'n pot generar un de nou: un model escriu les afirmacions, sympy en comprova els càlculs i dos models més les verifiquen." }) : null,
+    ready.length ? el("p", { class: "muted", text: `Hi ha qüestionaris preparats per a: ${ready.join(", ")}.` }) : null,
+    POT_GENERAR ? gen : el("p", { class: "muted", text: "Prova una altra dificultat, o demana al professorat que en prepari un." })));
+}
+
 async function cfCarregar(nova) {
+  // nova=false only opens a ready quiz; with none ready, the student chooses whether to generate one.
+  if (!nova && !CF.disp[CF.dificultat]) return cfOferirGenerar();
+  const req = ++CF.req;
+  const hash = location.hash;
   const anterior = CF.q?.id || null;
   Object.assign(CF, { sessionId: null, q: null, respostes: {}, pistes: {}, resultat: null });
   const list = $("#cf-list");
-  const ready = CF.disp[CF.dificultat] && !nova;
+  const ready = !nova;
   list.replaceChildren(el("div", { class: "er-paper cf-loading" },
     el("div", { class: "er-loading" },
       el("div", { class: "er-loading-step", id: "cf-step", text: ready ? "Obrint el qüestionari…" : CF_LOADING[0] }),
       ...[92, 78, 88, 64, 95, 70].map((w) => el("div", { class: "skeleton", style: `width:${w}%` })),
       ready ? null : el("p", { class: "small muted", text: "Generar i verificar un qüestionari nou pot trigar uns minuts." }))));
   $("#cf-bar").replaceChildren();
-  $("#cf-nova").disabled = true;
+  cfBusy(true);
   let k = 0;
   const ticker = setInterval(() => {
     k = Math.min(k + 1, CF_LOADING.length - 1);
@@ -158,17 +197,22 @@ async function cfCarregar(nova) {
       method: "POST",
       body: JSON.stringify({ font: CF.font, dificultat: CF.dificultat, nova, excepte: anterior }),
     });
+    if (cfStale(req, hash)) return;
     CF.sessionId = data.session_id;
     CF.q = data.questionari;
     if (data.generat_ara) CF.disp[CF.dificultat] = (CF.disp[CF.dificultat] || 0) + 1;
     CF.respostes = cfLoadDraft();
     cfRender();
   } catch (err) {
+    if (cfStale(req, hash)) return;
+    // 403/409: the server refuses to generate (not allowed, or one already being generated): its message, as is.
+    const refusal = err.status === 403 || err.status === 409;
     list.replaceChildren(el("div", { class: "er-paper er-error" },
-      el("strong", { text: "No s'ha pogut preparar el qüestionari" }), el("p", { class: "muted", text: err.message })));
+      el("strong", { text: refusal ? err.message : "No s'ha pogut preparar el qüestionari" }),
+      refusal ? null : el("p", { class: "muted", text: err.message })));
   } finally {
     clearInterval(ticker);
-    $("#cf-nova").disabled = false;
+    if (req === CF.req) cfBusy(false);
   }
 }
 
@@ -233,13 +277,21 @@ function cfCard(a, i) {
       card.append(math(el("p", { class: "note-hint", text: CF.pistes[a.id] })));
     } else {
       const hint = el("button", { type: "button", class: "btn ghost small-btn", text: "Dona'm una pista (−15%)" });
+      if (CF.busy) hint.disabled = true;
       hint.addEventListener("click", async () => {
+        if (CF.busy) return;
+        const sid = CF.sessionId;
         hint.disabled = true;
         try {
-          const p = await api(`/api/afirmacions/sessions/${CF.sessionId}/pista/${a.id}`, { method: "POST" });
+          const p = await api(`/api/afirmacions/sessions/${sid}/pista/${a.id}`, { method: "POST" });
+          if (CF.sessionId !== sid || CF.resultat) return;  // another quiz, or already corrected: the hint is late
           CF.pistes[a.id] = p.pista;
           card.replaceWith(cfCard(a, i));
-        } catch (err) { hint.disabled = false; hint.textContent = err.message; }
+        } catch (err) {
+          if (CF.sessionId !== sid) return;
+          hint.disabled = CF.busy;
+          hint.textContent = err.message;
+        }
       });
       actions.append(hint);
     }
@@ -307,21 +359,30 @@ function cfBar() {
 }
 
 async function cfEnviar() {
+  if (CF.busy || !CF.sessionId) return;
+  const req = CF.req;
+  const hash = location.hash;
   const bar = $("#cf-bar");
   bar.replaceChildren(el("div", { class: "er-progress" }, el("span", { class: "spinner" }),
     el("span", { text: "Corregint: el model valora els arguments i sympy comprova els teus càlculs…" })));
+  cfBusy(true);
   try {
-    CF.resultat = await api(`/api/afirmacions/sessions/${CF.sessionId}/correccio`, {
+    const resultat = await api(`/api/afirmacions/sessions/${CF.sessionId}/correccio`, {
       method: "POST",
       body: JSON.stringify({ respostes: CF.q.afirmacions.map((a) => ({ id: a.id, ...cfResposta(a.id) })) }),
     });
+    if (cfStale(req, hash)) return;
+    CF.resultat = resultat;
     try { localStorage.removeItem(cfDraftKey()); } catch { /* storage unavailable */ }
     cfRender();
     $("#view-afirmacions").scrollTo({ top: 0, behavior: "smooth" });
     window.scrollTo({ top: 0, behavior: "smooth" });
   } catch (err) {
+    if (cfStale(req, hash)) return;
     cfBar();
     bar.append(el("span", { class: "warn-text", text: err.message }));
+  } finally {
+    if (req === CF.req) cfBusy(false);
   }
 }
 
@@ -335,7 +396,7 @@ function cfScore() {
     <circle cx="32" cy="32" r="${R}" class="value" stroke-dasharray="${(C * r.nota) / 100} ${C}" transform="rotate(-90 32 32)"/>
     <text x="32" y="37" text-anchor="middle">${r.nota}</text>`;
   const again = el("button", { type: "button", class: "btn primary", text: "Un altre qüestionari" });
-  again.addEventListener("click", () => cfCarregar((CF.disp[CF.dificultat] || 0) <= 1));
+  again.addEventListener("click", cfUnAltre);
   $("#cf-bar").replaceChildren(
     el("div", { class: "er-score" }, ring,
       el("div", {},

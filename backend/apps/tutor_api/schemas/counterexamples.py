@@ -3,6 +3,7 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 from apps.tutor_api.schemas.course import TheoryItemResponse
+from apps.tutor_api.schemas.student_text import StudentText
 from core.counterexamples.domain.entities.spec import Spec, SpecCatalog
 from core.counterexamples.domain.properties import PROPERTIES, CertificateKind, PropertyKind
 from core.counterexamples.domain.values.submission import MAX_PATHS, Certificate, Direction, Path, Submission
@@ -14,25 +15,25 @@ MAX_EXPRESSION = 300  # the sympy parser's own limit
 
 
 class PathRequest(BaseModel):
-    x: str = Field(max_length=MAX_EXPRESSION)
-    y: str = Field(max_length=MAX_EXPRESSION)
+    x: StudentText = Field(max_length=MAX_EXPRESSION)
+    y: StudentText = Field(max_length=MAX_EXPRESSION)
 
 
 class DirectionRequest(BaseModel):
-    u: str = Field(max_length=MAX_EXPRESSION)
-    w: str = Field(max_length=MAX_EXPRESSION)
+    u: StudentText = Field(max_length=MAX_EXPRESSION)
+    w: StudentText = Field(max_length=MAX_EXPRESSION)
 
 
 class CertificateRequest(BaseModel):
     camins: list[PathRequest] = Field(default_factory=list, max_length=MAX_PATHS)
-    fita: str = Field(default="", max_length=MAX_EXPRESSION)
+    fita: StudentText = Field(default="", max_length=MAX_EXPRESSION)
     direccio: DirectionRequest | None = None
     parcial: Literal["x", "y"] | None = None
 
 
 class SubmissionRequest(BaseModel):
-    funcio: str = Field(max_length=MAX_EXPRESSION)
-    valor: str = Field(default="0", max_length=MAX_EXPRESSION)
+    funcio: StudentText = Field(max_length=MAX_EXPRESSION)
+    valor: StudentText = Field(default="0", max_length=MAX_EXPRESSION)
     certificats: dict[PropertyKind, CertificateRequest] = Field(default_factory=dict)
 
     def to_domain(self) -> Submission:

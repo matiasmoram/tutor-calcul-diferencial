@@ -40,7 +40,7 @@ def test_closing_is_terminal() -> None:
             dict(
                 resultat_proposat="correcte",
                 resultat_justificat=True,
-                intencio="proposa_resultat",
+                intencio="mostra_treball",
                 nivell_desorientacio="en_cami",
             ),
             dict(intencio="mostra_treball"),
@@ -196,7 +196,7 @@ def test_close_only_when_correct_and_justified() -> None:
     d = diagnosis(
         resultat_proposat="correcte",
         resultat_justificat=True,
-        intencio="proposa_resultat",
+        intencio="mostra_treball",
         nivell_desorientacio="en_cami",
     )
     plan, state = decide(EX4C, d, SessionState())

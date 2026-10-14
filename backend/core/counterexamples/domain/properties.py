@@ -22,6 +22,7 @@ PropertyKind = Literal[
     "parcials_existeixen",
     "alguna_parcial_no_existeix",
     "direccionals_existeixen",
+    "direccionals_lineals",
     "alguna_direccional_no_existeix",
     "diferenciable",
     "no_diferenciable",
@@ -99,6 +100,13 @@ PROPERTIES: Mapping[PropertyKind, PropertyInfo] = {
         PropertyInfo(
             kind="direccionals_existeixen",
             label="Totes les derivades direccionals a l'origen existeixen",
+            certificate="cap",
+            help="",
+        ),
+        PropertyInfo(
+            kind="direccionals_lineals",
+            label="Totes les derivades direccionals a l'origen existeixen i són lineals en la direcció: "
+            "$D_vf(0,0)=\\nabla f(0,0)\\cdot v$ per a tota $v$",
             certificate="cap",
             help="",
         ),

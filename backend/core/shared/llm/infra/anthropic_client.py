@@ -13,7 +13,10 @@ from core.shared.llm.client import (
     LLMRequest,
     Stage,
     StageConfig,
+    TruncatedOutputError,
+    billed,
     parse_json,
+    plain_text,
 )
 
 
@@ -54,16 +57,17 @@ class AnthropicLLMClient(LLMClient):
             output_tokens=usage.output_tokens,
             cached_tokens=usage.cache_read_input_tokens or 0,
         )
-        if response.stop_reason == "refusal":
-            raise LLMError(f"{stage}: model refused")
-        if response.stop_reason == "max_tokens":
-            raise LLMError(f"{stage}: output truncated at max_tokens={cfg.max_tokens}")
-        text = next((b.text for b in response.content if b.type == "text"), None)
-        if text is None:
-            raise LLMError(f"{stage}: no text block in response (stop_reason={response.stop_reason})")
-        if request.schema is None:
-            return {"text": text}, meta
-        return parse_json(stage, text), meta
+        with billed(meta):
+            if response.stop_reason == "refusal":
+                raise LLMError(f"{stage}: model refused")
+            if response.stop_reason == "max_tokens":
+                raise TruncatedOutputError(f"{stage}: output truncated at max_tokens={cfg.max_tokens}")
+            text = next((b.text for b in response.content if b.type == "text"), None)
+            if text is None:
+                raise LLMError(f"{stage}: no text block in response (stop_reason={response.stop_reason})")
+            if request.schema is None:
+                return plain_text(stage, text), meta
+            return parse_json(stage, text), meta
 
 
 def _content(user: str, image: Image | None, context: str | None) -> str | list[dict[str, object]]:

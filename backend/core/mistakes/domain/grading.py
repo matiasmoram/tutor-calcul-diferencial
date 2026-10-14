@@ -6,9 +6,10 @@ from collections.abc import Mapping
 from pydantic import BaseModel
 
 from core.mistakes.domain.entities.annotation import Annotation
-from core.mistakes.domain.entities.mistake_exercise import MistakeExercise
+from core.mistakes.domain.entities.mistake_exercise import DeclaredMistake, MistakeExercise
 from core.mistakes.domain.entities.mistake_grading import AnnotationResult, Location, MistakeGrading
-from core.mistakes.domain.locate import overlap
+from core.mistakes.domain.exceptions import InvalidAnnotationsException
+from core.mistakes.domain.locate import overlap, selectable_span
 from core.mistakes.domain.values.call_record import CallRecord
 from core.mistakes.domain.values.llm_outputs import GraderReport
 
@@ -22,7 +23,10 @@ NO_MISTAKE = "cap"
 class LocatedAnnotation(BaseModel):
     """An annotation clipped to its fragment, with the declared errors it can be about."""
 
-    id: str
+    id: str  # the client's id, echoed in the result
+    # Our own id for it ("a1", "a2"... by position): what the grader sees and answers with, so a student-chosen id
+    # never reaches the prompt and one verdict can only ever score one annotation.
+    key: str
     fragment: int
     start: int
     end: int
@@ -32,6 +36,22 @@ class LocatedAnnotation(BaseModel):
     overlapping: list[str]  # candidates whose quote the underline touches
     # Candidates hit on their quoted words, not by a highlight of the whole fragment that happens to contain them.
     precise: list[str]
+
+
+def _storable(text: str) -> bool:
+    """No control characters but tab, newline and carriage return (pasted text, which the API accepts too): the
+    database refuses some (NUL in JSONB), and only after the paid grading call. Lone surrogates never get this far:
+    pydantic refuses them when it parses the annotation."""
+    return not any(ord(c) < 0x20 and c not in "\t\n\r" for c in text)
+
+
+def check_annotations(annotations: list[Annotation]) -> None:
+    """Before grading: ids unique (each result maps back to one annotation) and text the database can store."""
+    ids = [a.id for a in annotations]
+    if len(set(ids)) != len(ids):
+        raise InvalidAnnotationsException("Hi ha anotacions amb el mateix identificador.")
+    if not all(_storable(a.id) and _storable(a.comment) for a in annotations):
+        raise InvalidAnnotationsException("Una anotació conté caràcters no vàlids (caràcters de control).")
 
 
 def locate_annotations(exercise: MistakeExercise, annotations: list[Annotation]) -> list[LocatedAnnotation]:
@@ -48,6 +68,7 @@ def locate_annotations(exercise: MistakeExercise, annotations: list[Annotation])
         located.append(
             LocatedAnnotation(
                 id=a.id,
+                key=f"a{len(located) + 1}",
                 fragment=a.fragment,
                 start=i0,
                 end=i1,
@@ -55,14 +76,17 @@ def locate_annotations(exercise: MistakeExercise, annotations: list[Annotation])
                 comment=a.comment.strip(),
                 candidates=[e.id for e in candidates],
                 overlapping=[e.id for e in candidates if overlap(i0, i1, e.start, e.end)],
-                precise=[
-                    e.id
-                    for e in candidates
-                    if overlap(i0, i1, e.start, e.end) and (i1 - i0) <= 3 * (e.end - e.start) + 10
-                ],
+                precise=[e.id for e in candidates if overlap(i0, i1, e.start, e.end) and _tight(text, i0, i1, e)],
             )
         )
     return located
+
+
+def _tight(fragment: str, start: int, end: int, mistake: DeclaredMistake) -> bool:
+    """The highlight is not much longer than the quote, measured against the shortest highlight the student can
+    make over it (a quote inside a formula can only be selected with the whole formula)."""
+    q0, q1 = selectable_span(fragment, mistake.start, mistake.end)
+    return end - start <= 3 * (q1 - q0) + 10
 
 
 def grade(
@@ -71,12 +95,12 @@ def grade(
     report: GraderReport | None,
     call: CallRecord | None,
 ) -> MistakeGrading:
-    verdicts = {v.annotation: v for v in report.verdicts} if report else {}
+    verdicts = {v.annotation: v for v in report.verdicts} if report else {}  # by key
     results: list[AnnotationResult] = []
     best: dict[str, float] = {}
     false_positives = 0
     for a in located:
-        verdict = verdicts.get(a.id)
+        verdict = verdicts.get(a.key)
         claimed = verdict.mistake if verdict else NO_MISTAKE
         explanation = verdict.explanation if verdict else "absent"
         if explanation not in EXPLANATION_POINTS:

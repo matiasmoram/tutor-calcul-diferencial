@@ -56,8 +56,14 @@ DEFAULT_EFFORT: Mapping[Stage, str] = {
     # Transcribes the student's computations for sympy: no judgment, never sees the solutions.
     Stage.QUIZ_EXTRACTION: "low",
 }
-# 20000 is the most Anthropic accepts without streaming.
+# 20000 is the most Anthropic accepts without streaming. The tutor stages are capped near their real size
+# (work/study/*.json, reasoning tokens included: diagnosis max 1251, reply 1102, guard 765 over the OpenAI models
+# in use), so a small model stuck in a repetition loop stops within a few seconds instead of burning 16k tokens.
 MAX_TOKENS: Mapping[Stage, int] = {
+    Stage.DIAGNOSIS: 3000,
+    Stage.REPLY: 1500,
+    Stage.GUARD: 1500,
+    Stage.TRANSCRIPTION: 4000,
     Stage.QUIZ_GENERATION: 20000,
     Stage.QUIZ_VERIFICATION: 20000,
     Stage.QUIZ_AUDIT: 20000,

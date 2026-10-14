@@ -11,7 +11,7 @@ const CE_ESTATS = {
   falla: ["bad", "No es compleix"],
   indeterminat: ["neutral", "No demostrat"],
 };
-const CE_SINTAXI = "Sintaxi: multiplicació explícita (2*x, x*y), potències x**2 o x^2, Abs(x), sqrt, cbrt (arrel cúbica real), sin, cos, exp, log. Variables: x, y; als camins t; a la fita r.";
+const CE_SINTAXI = "Sintaxi: multiplicació explícita (2*x, x*y), potències x**2 o x^2, Abs(x), sqrt, cbrt (arrel cúbica real; les arrels d'índex senar com (x*y)**(1/3) també són les reals), sin, cos, exp, log. Les constants numèriques han de tenir valor absolut entre 10^-6 i 10^6 (o ser 0). Variables: x, y; als camins t; a la fita r.";
 
 const CE = { reptes: null, repte: null, entrada: null, resultat: null, enviant: false };
 

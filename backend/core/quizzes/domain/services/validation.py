@@ -5,6 +5,7 @@ import unicodedata
 from collections.abc import Collection, Sequence
 
 from core.quizzes.domain.values.drafts import StatementDraft
+from core.shared.math.latex_vocabulary import unknown_commands
 from core.shared.math.sympy_checks import CheckResult, MathCheck
 
 # A hint that names the verdict or the tool gives the answer away.
@@ -49,6 +50,8 @@ def validate_draft(d: StatementDraft, refs: Collection[str]) -> list[str]:
     ):
         if not dollars_balanced(value):
             problems.append(f"'{name}' té el LaTeX mal tancat o fa servir $$")
+        if unknown := unknown_commands(value):
+            problems.append(f"'{name}' fa servir ordres LaTeX que no existeixen: {', '.join(sorted(unknown))}")
     if _REVEALS_VERDICT.search(d.hint):
         problems.append("la pista revela el veredicte (no pot dir cert/fals/contraexemple)")
     if _REVEALS_VERDICT.search(d.concept):

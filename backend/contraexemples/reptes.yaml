@@ -1,7 +1,8 @@
 # "Construeix el contraexemple": reptes. L'alumne escriu f(x,y) fora de l'origen i f(0,0); el codi comprova
 # cada propietat amb sympy (vegeu core/counterexamples). Cada repte porta un exemple d'autor amb els seus
 # certificats: els tests el passen pel verificador, i l'alumne el veu només quan ha superat el repte.
-# Sintaxi sympy: multiplicació explícita (2*x), potències x**2 o x^2, Abs, sqrt, sin, exp...
+# Sintaxi sympy: multiplicació explícita (2*x), potències x**2 o x^2, Abs, sqrt, cbrt, sin, exp... Les arrels
+# d'índex senar són les reals: (x*y)**(1/3) = cbrt(x*y).
 # Per a cada propietat, els ítems dels apunts que la defineixen: es mostren amb la propietat i, si no es compleix,
 # com a «Repassa».
 teoria_propietats:
@@ -14,6 +15,7 @@ teoria_propietats:
   parcials_existeixen: [T3.2]
   alguna_parcial_no_existeix: [T3.2]
   direccionals_existeixen: [T3.1]
+  direccionals_lineals: [T3.1, T3.9]
   alguna_direccional_no_existeix: [T3.1]
   diferenciable: [T3.8, T3.9]
   no_diferenciable: [T3.8, T3.9, T3.14]
@@ -247,7 +249,7 @@ reptes:
   titol: Direccionals lineals, però no diferenciable
   enunciat: |
     Troba una funció $f$ contínua a l'origen, amb totes les derivades direccionals a l'origen, però no diferenciable. Per fer-ho més difícil: aconsegueix que $D_vf(0,0)=\nabla f(0,0)\cdot v$ per a tota direcció $v$, de manera que la prova de la Proposició 9 del Tema 3 no detecti res.
-  propietats: [continua, direccionals_existeixen, no_diferenciable]
+  propietats: [continua, direccionals_existeixen, direccionals_lineals, no_diferenciable]
   teoria: [T3.1, T3.8, T3.9]
   teoria_reservada: []
   dificultat: dificil

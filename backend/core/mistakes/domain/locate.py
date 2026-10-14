@@ -14,5 +14,18 @@ def locate(fragment: str, quote: str) -> tuple[int, int] | None:
     return (m.start(), m.end()) if m else None
 
 
+# The units the frontend lets a student select (frontend/errades.js tokenize): a $...$ formula is one token.
+_SELECTABLE = re.compile(r"\$[^$]+\$|[^\s$]+")
+
+
+def selectable_span(fragment: str, start: int, end: int) -> tuple[int, int]:
+    """The shortest highlight the frontend allows that covers [start, end): widened to whole tokens, so a quote
+    inside a long formula spans the whole formula."""
+    for m in _SELECTABLE.finditer(fragment):
+        if overlap(m.start(), m.end(), start, end):
+            start, end = min(start, m.start()), max(end, m.end())
+    return start, end
+
+
 def overlap(a0: int, a1: int, b0: int, b1: int) -> bool:
     return max(a0, b0) < min(a1, b1)

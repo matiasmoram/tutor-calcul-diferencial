@@ -4,6 +4,7 @@ Expressions are sympy syntax from untrusted input. They are parsed here with the
 a typo comes back at once as a 422 with the reason, before any worker process is involved.
 """
 
+import math
 import re
 from collections.abc import Mapping
 from typing import Literal
@@ -92,6 +93,31 @@ def _has_huge_power(e: sp.Basic) -> bool:
     return any(_has_huge_power(a) for a in e.args)
 
 
+# exp(-10**32*(x**2+y**2)) hides a discontinuity below every radius the checker samples: numeric constants are
+# kept to a range where every feature of f is on the scale of the sampling.
+MAX_CONSTANT = 10**6
+
+
+def extreme_constant(e: sp.Basic) -> sp.Basic | None:
+    """A numeric constant (a number, or a subexpression without variables) with absolute value above MAX_CONSTANT or
+    below 1/MAX_CONSTANT (0 aside). Innermost first, so a huge constant is never evaluated inside a bigger one."""
+    for a in e.args:
+        if (found := extreme_constant(a)) is not None:
+            return found
+    if e.free_symbols or not isinstance(e, sp.Expr):
+        return None
+    if isinstance(e, sp.Rational):
+        size = abs(e)
+        return e if size > MAX_CONSTANT or (size != 0 and size * MAX_CONSTANT < 1) else None
+    try:
+        value = abs(complex(sp.N(e, 15)))
+    except (TypeError, ValueError, OverflowError, ZeroDivisionError):
+        return None
+    if not math.isfinite(value):
+        return None  # 1/0 and the like are refused with their own message
+    return e if value > MAX_CONSTANT or 0 < value * MAX_CONSTANT < 1 else None
+
+
 def _exp_depth(e: sp.Basic) -> int:
     inner = max((_exp_depth(a) for a in e.args), default=0)
     grows = isinstance(e, _GROWING) or (isinstance(e, sp.Pow) and not e.exp.is_number)
@@ -131,6 +157,11 @@ def _expression(text: str, what: str, allowed: set[str]) -> None:
         raise InvalidSubmissionException(f"{what}: hi ha una potència massa gran (exponent com a molt {MAX_EXPONENT})")
     if _exp_depth(expr) > MAX_EXP_DEPTH:
         raise InvalidSubmissionException(f"{what}: massa exponencials niades (com a molt {MAX_EXP_DEPTH})")
+    if (constant := extreme_constant(expr)) is not None:
+        raise InvalidSubmissionException(
+            f"{what}: la constant {constant} és massa gran o massa petita (com a molt {MAX_CONSTANT:g} en valor "
+            f"absolut, i no per sota de {1 / MAX_CONSTANT:g})"
+        )
     extra = sorted(str(s) for s in expr.free_symbols if str(s) not in allowed)
     if extra:
         names = ", ".join(sorted(allowed)) or "cap variable"

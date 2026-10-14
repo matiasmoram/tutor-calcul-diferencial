@@ -14,8 +14,8 @@ def false_range(n: int) -> tuple[int, int]:
     return math.ceil(n / 2), n - 2
 
 
-def max_rounds(n: int) -> int:
-    return math.ceil(n / BATCH_SIZE) + EXTRA_ROUNDS
+def max_rounds(n: int, batch: int = BATCH_SIZE) -> int:
+    return math.ceil(n / batch) + EXTRA_ROUNDS
 
 
 def _falses(kept: Sequence[StatementDraft]) -> int:
@@ -52,6 +52,31 @@ def trim(kept: Sequence[StatementDraft], n: int) -> list[StatementDraft]:
             trues += 1
             out.append(d)
     return out[:n]
+
+
+def select_for_verification(
+    kept: Sequence[StatementDraft], candidates: Sequence[StatementDraft], n: int, limit: int
+) -> tuple[list[StatementDraft], list[StatementDraft]]:
+    """Splits the candidates into the ones worth verifying now and the rest, kept as backups for later rounds.
+
+    At most `limit`, never more than the quiz still needs, and never so many of one verdict that `trim` would drop
+    them even if all pass: verifying a statement costs two model calls."""
+    lo, hi = false_range(n)
+    falses = _falses(kept)
+    trues = len(kept) - falses
+    room = min(limit, n - len(kept))
+    chosen: list[StatementDraft] = []
+    backups: list[StatementDraft] = []
+    for d in candidates:
+        if len(chosen) < room and d.verdict == "fals" and falses < hi:
+            falses += 1
+            chosen.append(d)
+        elif len(chosen) < room and d.verdict == "cert" and trues < n - lo:
+            trues += 1
+            chosen.append(d)
+        else:
+            backups.append(d)
+    return chosen, backups
 
 
 def is_complete(kept: Sequence[StatementDraft], n: int) -> bool:

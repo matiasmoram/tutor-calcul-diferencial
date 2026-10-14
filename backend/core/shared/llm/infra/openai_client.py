@@ -3,6 +3,7 @@ from typing import cast
 
 import openai
 from openai.types.chat import ChatCompletionMessageParam
+from openai.types.chat.chat_completion import Choice
 
 from core.shared.domain.clock import Clock, SystemClock
 from core.shared.llm.client import (
@@ -15,7 +16,10 @@ from core.shared.llm.client import (
     LLMRequest,
     Stage,
     StageConfig,
+    TruncatedOutputError,
+    billed,
     parse_json,
+    plain_text,
 )
 
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
@@ -78,16 +82,20 @@ class OpenAILLMClient(LLMClient):
             output_tokens=usage.completion_tokens if usage else 0,
             cached_tokens=(details.cached_tokens or 0) if details else 0,
         )
-        choice = response.choices[0]
-        if choice.message.refusal:
-            raise LLMError(f"{stage}: model refused ({choice.message.refusal})")
-        if choice.finish_reason == "length":
-            raise LLMError(f"{stage}: output truncated at max_tokens={cfg.max_tokens}")
-        if not choice.message.content:
-            raise LLMError(f"{stage}: empty response (finish_reason={choice.finish_reason})")
-        if request.schema is None:
-            return {"text": choice.message.content}, meta
-        return parse_json(stage, choice.message.content), meta
+        with billed(meta):
+            return _output(stage, cfg, request, response.choices[0]), meta
+
+
+def _output(stage: Stage, cfg: StageConfig, request: LLMRequest, choice: Choice) -> JsonObject:
+    if choice.message.refusal:
+        raise LLMError(f"{stage}: model refused ({choice.message.refusal})")
+    if choice.finish_reason == "length":
+        raise TruncatedOutputError(f"{stage}: output truncated at max_tokens={cfg.max_tokens}")
+    if not choice.message.content:
+        raise LLMError(f"{stage}: empty response (finish_reason={choice.finish_reason})")
+    if request.schema is None:
+        return plain_text(stage, choice.message.content)
+    return parse_json(stage, choice.message.content)
 
 
 def _content(user: str, image: Image | None) -> str | list[dict[str, object]]:

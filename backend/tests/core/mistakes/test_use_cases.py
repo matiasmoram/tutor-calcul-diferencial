@@ -1,6 +1,9 @@
+import asyncio
+
 import pytest
 
 from core.course.domain.exceptions import ExerciseNotFoundException
+from core.mistakes.application import annotations_grader as annotations_grader_module
 from core.mistakes.application.annotations_grader import GRADING_CLAIM_TIMEOUT_S, AnnotationsGrader, AnnotationsGrading
 from core.mistakes.application.availability_lister import AvailabilityLister
 from core.mistakes.application.mistake_exercise_provider import MistakeExerciseProvider
@@ -9,6 +12,8 @@ from core.mistakes.domain.entities.annotation import Annotation
 from core.mistakes.domain.entities.mistake_grading import MistakeGrading
 from core.mistakes.domain.exceptions import (
     GradingInProgressException,
+    InvalidAnnotationsException,
+    MistakeGradingTimeoutException,
     MistakeSessionNotFoundException,
     MistakeSourceRequiredException,
     UnknownTheoryResultException,
@@ -160,6 +165,24 @@ async def test_a_failed_grading_can_be_retried_and_a_running_one_blocks(
     assert e.value.error_code == 409
 
 
+async def test_an_invalid_submission_is_refused_before_paying_for_the_grading(
+    session_provider: SQLModelSessionProvider,
+) -> None:
+    llm = ScriptedLLMClient({Stage.MISTAKES_GRADING: [grader_answer()]})
+    w = Wiring(session_provider, llm)
+    await w.exercises.save(solution())
+    started = await w.starter.start(MistakeSessionStarterInput(exercise_id="t2-4c"))
+    e1 = started.exercise.mistakes[0]
+    good = Annotation(id="a1", fragment=2, start=e1.start, end=e1.end, comment="al revés")
+    for bad in ([good, good], [good.model_copy(update={"comment": "al revés\x00"})]):
+        with pytest.raises(InvalidAnnotationsException) as e:
+            await w.grader.grade(started.session.id, bad)
+        assert e.value.error_code == 422
+    assert llm.calls(Stage.MISTAKES_GRADING) == 0
+    # Nothing was claimed: the corrected submission is graded at once.
+    assert (await w.grader.grade(started.session.id, [good])).grading.found == 1
+
+
 async def test_a_failed_save_releases_the_claim(session_provider: SQLModelSessionProvider) -> None:
     """The database fails while storing the grading: the student can submit again at once (no 409 until the
     claim goes stale)."""
@@ -217,6 +240,33 @@ async def test_a_grading_whose_claim_was_taken_over_returns_the_stored_one(
     assert [r.grading for r in resubmitted] == [first.grading]
     assert first.grading.annotations[0].feedback == "de la segona"
     assert (await w.sessions.get(started.session.id)).grading == first.grading
+
+
+async def test_a_grading_past_its_deadline_fails_and_releases_its_claim(
+    session_provider: SQLModelSessionProvider, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A model call can outlast the claim: the deadline cancels the grading first, so a resubmission never takes a
+    live claim over and pays for a second grading beside it."""
+
+    class SlowGrader(ScriptedLLMClient):
+        async def structured(self, stage: Stage, request: LLMRequest) -> tuple[JsonObject, CallMeta]:
+            await asyncio.sleep(30)
+            return await super().structured(stage, request)
+
+    assert annotations_grader_module.GRADING_DEADLINE_S < GRADING_CLAIM_TIMEOUT_S
+    monkeypatch.setattr(annotations_grader_module, "GRADING_DEADLINE_S", 0.1)
+    w = Wiring(session_provider, SlowGrader({Stage.MISTAKES_GRADING: [grader_answer()]}))
+    await w.exercises.save(solution())
+    started = await w.starter.start(MistakeSessionStarterInput(exercise_id="t2-4c"))
+    e1 = started.exercise.mistakes[0]
+    annotation = Annotation(id="a1", fragment=2, start=e1.start, end=e1.end)
+    with pytest.raises(MistakeGradingTimeoutException) as e:
+        await asyncio.wait_for(w.grader.grade(started.session.id, [annotation]), 10)
+    assert e.value.error_code == 504
+    assert (await w.sessions.get(started.session.id)).grading is None
+    fast = Wiring(session_provider, ScriptedLLMClient({Stage.MISTAKES_GRADING: [grader_answer("ara sí")]}))
+    graded = await fast.grader.grade(started.session.id, [annotation])
+    assert graded.grading.annotations[0].feedback == "ara sí"
 
 
 async def test_unknown_session_is_not_found(session_provider: SQLModelSessionProvider) -> None:

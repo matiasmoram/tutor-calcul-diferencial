@@ -1,23 +1,28 @@
 import asyncio
 from collections.abc import Collection, Sequence
 
+from loguru import logger
 from pydantic import BaseModel, Field
 
 from core.course.domain.entities.course import Course
 from core.quizzes.domain.entities.grading import Answer, QuizGrading, StudentCheck
 from core.quizzes.domain.entities.quiz import Quiz
-from core.quizzes.domain.exceptions import ConcurrentQuizGradingException
+from core.quizzes.domain.exceptions import ConcurrentQuizGradingException, QuizGradingTimeoutException
 from core.quizzes.domain.ports import AnswerGrader, CheckEvaluator, ClaimExtractor
 from core.quizzes.domain.repository import QuizRepository, QuizSessionRepository
-from core.quizzes.domain.services.scoring import admissible_claims, grade_quiz
+from core.quizzes.domain.services.scoring import MAX_STUDENT_CHECKS, grade_quiz, quoted_claims
 from core.quizzes.domain.sources import QuizSource, quiz_source
 from core.quizzes.domain.values.call_summary import CallSummary
-from core.quizzes.domain.values.grading_inputs import AnsweredStatement, GraderEvaluation
+from core.quizzes.domain.values.grading_inputs import AnsweredStatement, GraderEvaluation, StudentClaims
 from core.shared.domain.clock import Clock
+from core.shared.domain.exceptions import DomainException
 from core.shared.llm.call_scope import call_scope
 
-# A claim older than this belongs to a grading that died without releasing it.
-GRADING_CLAIM_TIMEOUT_S = 300.0
+GRADING_DEADLINE_S = 240.0  # the whole grading, every model call and retry included
+# A claim older than this belongs to a grading that died without releasing it. Strictly above GRADING_DEADLINE_S: a
+# live grading is cancelled by its deadline before its claim can go stale, so a takeover never runs (and pays) beside
+# the grading it replaces.
+GRADING_CLAIM_TIMEOUT_S = GRADING_DEADLINE_S + 60.0
 
 
 class AnswersGraderInput(BaseModel):
@@ -55,18 +60,25 @@ class AnswersGrader:
         claimed_at = self._clock.now()
         if not await self._sessions.claim_grading(session_id, claimed_at, claimed_at - GRADING_CLAIM_TIMEOUT_S):
             return await self._stored_result(session_id)
+        deadline = asyncio.timeout(GRADING_DEADLINE_S)
         try:
-            # Read again under the claim: the hints used up to now are the ones the grading counts.
-            session = await self._sessions.get(session_id)
-            quiz = await self._quizzes.get(session.quiz_id)
-            source = quiz_source(self._course, session.source_id)
-            with call_scope(session.id):
-                result = await self.grade_answers(source, quiz, request.answers, set(session.hints_used))
-            session.submit(request.answers, result, self._clock.now())
-            await self._sessions.save(session)
+            async with deadline:
+                # Read again under the claim: the hints used up to now are the ones the grading counts (the claim
+                # also stops new hints, so the save below cannot conflict with one).
+                session = await self._sessions.get(session_id)
+                quiz = await self._quizzes.get(session.quiz_id)
+                source = quiz_source(self._course, session.source_id)
+                with call_scope(session.id):
+                    result = await self.grade_answers(source, quiz, request.answers, set(session.hints_used))
+                session.submit(request.answers, result, self._clock.now())
+                await self._sessions.save(session)
         except ConcurrentQuizGradingException:
             # Our claim went stale and was taken over, and the other grading was stored first: it stands.
             return await self._stored_result(session_id)
+        except TimeoutError:
+            if deadline.expired():
+                raise QuizGradingTimeoutException(session_id) from None
+            raise
         finally:
             await self._sessions.release_grading(session_id, claimed_at)
         return result
@@ -97,21 +109,30 @@ class AnswersGrader:
         summary: str = ""
         call: CallSummary | None = None
         if answered:
-            verdict, claims = await asyncio.gather(
-                self._grader.grade(source, answered), self._extractor.extract(answered)
-            )
+            verdict, claims = await asyncio.gather(self._grader.grade(source, answered), self._extract(answered))
             evaluations = {e.statement_id: e for e in verdict.evaluations}
             summary, call = verdict.summary, verdict.call
             transcribed = {c.statement_id: c.checks for c in claims}
         checked = await asyncio.to_thread(self._check_claims, answered, transcribed)
         return grade_quiz(quiz, by_id, hints, evaluations, checked, summary, call)
 
+    async def _extract(self, answered: Sequence[AnsweredStatement]) -> list[StudentClaims]:
+        """The transcription is optional: when it fails the grading goes on without student checks (it can only
+        lower a grade), instead of throwing away the grader call already paid for."""
+        try:
+            return await self._extractor.extract(answered)
+        except DomainException as e:  # the port's failures (a failed model call)
+            logger.warning("quiz grading without student checks: transcription failed ({})", e.message)
+            return []
+
     def _check_claims(
         self, answered: Sequence[AnsweredStatement], transcribed: dict[str, list[StudentCheck]]
     ) -> dict[str, list[StudentCheck]]:
         """The student's own claims, checked by sympy in one batch: only those whose quote is in the answer and
-        whose value is one the quote states."""
-        kept = [admissible_claims(transcribed.get(a.statement.id, []), a.answer.justification) for a in answered]
+        whose value is one the quote states (decided in the sympy workers too: a claim that times out is dropped)."""
+        quoted = [quoted_claims(transcribed.get(a.statement.id, []), a.answer.justification) for a in answered]
+        verdicts = iter(self._checks.faithful([c for cs in quoted for c in cs]))
+        kept = [[c for c in cs if next(verdicts)][:MAX_STUDENT_CHECKS] for cs in quoted]
         results = iter(self._checks.evaluate([c for cs in kept for c in cs]))
         return {
             a.statement.id: [c.with_result(next(results)) for c in cs] for a, cs in zip(answered, kept, strict=True)

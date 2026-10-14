@@ -65,7 +65,7 @@ class LLMAnnotationGrader:
         request = LLMRequest(
             system=prompts.GRADING_SYSTEM,
             user=prompts.grading_user(exercise, annotations),
-            schema=grading_schema([a.id for a in annotations], [e.id for e in exercise.mistakes]),
+            schema=grading_schema([a.key for a in annotations], [e.id for e in exercise.mistakes]),
             context=prompts.context(source),
         )
         data, meta = await self._llm.structured(Stage.MISTAKES_GRADING, request)

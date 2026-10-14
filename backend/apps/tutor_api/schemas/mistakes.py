@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from apps.tutor_api.schemas.course import (
     THEORY_PDF,
@@ -8,6 +8,7 @@ from apps.tutor_api.schemas.course import (
     TopicSectionResponse,
     pdf_url,
 )
+from apps.tutor_api.schemas.student_text import StudentText, check_text
 from core.mistakes.application.availability_lister import TopicTheoryResults
 from core.mistakes.domain.entities.annotation import Annotation
 from core.mistakes.domain.entities.mistake_exercise import MistakeExercise
@@ -16,15 +17,23 @@ from core.mistakes.domain.values.difficulty import Difficulty
 
 class NewMistakeSessionRequest(BaseModel):
     # Exactly one source: an exercise of the collection ("resolució dolenta") or a result of the notes.
-    exercici_id: str | None = None
-    teoria_id: str | None = None
+    exercici_id: StudentText | None = Field(default=None, max_length=20)
+    teoria_id: StudentText | None = Field(default=None, max_length=20)
     dificultat: Difficulty = "normal"
     nova: bool = False
-    excepte: str | None = Field(default=None, max_length=40)  # document just seen: prefer another one
+    excepte: StudentText | None = Field(default=None, max_length=40)  # document just seen: prefer another one
 
 
 class GradingRequest(BaseModel):
     anotacions: list[Annotation] = Field(max_length=40)
+
+    @field_validator("anotacions")
+    @classmethod
+    def _student_text(cls, annotations: list[Annotation]) -> list[Annotation]:
+        for a in annotations:
+            check_text(a.id)
+            check_text(a.comment)
+        return annotations
 
 
 class MistakeDocumentResponse(BaseModel):

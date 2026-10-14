@@ -2,7 +2,7 @@ from loguru import logger
 
 from core.shared.domain.clock import Clock, SystemClock
 from core.shared.llm.call_scope import current_scope
-from core.shared.llm.client import CallMeta, JsonObject, LLMClient, LLMRequest, Stage
+from core.shared.llm.client import CallMeta, JsonObject, LLMClient, LLMError, LLMRequest, Stage
 from core.shared.llm_calls.domain.llm_call import LLMCall
 from core.shared.llm_calls.domain.repository import LLMCallRepository
 
@@ -27,7 +27,9 @@ class LoggedLLMClient(LLMClient):
         try:
             data, meta = await self._inner.structured(stage, request)
         except Exception as e:
-            await self._record(stage, request, ok=False, error=f"{type(e).__name__}: {e}")
+            # A truncated or malformed answer was billed all the same: its tokens belong in the log.
+            failed = e.meta if isinstance(e, LLMError) else None
+            await self._record(stage, request, ok=False, meta=failed, error=f"{type(e).__name__}: {e}")
             raise
         await self._record(stage, request, ok=True, meta=meta, response=data)
         return data, meta

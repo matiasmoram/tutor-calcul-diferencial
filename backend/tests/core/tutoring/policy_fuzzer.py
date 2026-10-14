@@ -1,7 +1,8 @@
 """Random diagnosis sequences for the policy (no LLM), as scripts/fuzz_politica.py generates them.
 
 Invariants checked by `check` (any violation is reported with the exercise, seed and turn):
-  I1 no identical plan (action, target, level) more than 3 turns in a row (except after closing)
+  I1 no identical plan (action, target, level) more than 3 turns in a row (except after closing, and answers to
+     consecutive concept questions: each one answers a new question and none moves the ladder)
   I2 a student who keeps trying and stays stuck gets the step shown within 8 turns on that step
   I3 after `tancar` every turn is `despres_de_tancar`
   I4 the level reached on a step never decreases
@@ -92,7 +93,11 @@ def check(course: Course, ex: Exercise, seed: int, turns: int, profile: str) -> 
         plan, state = decide(ex, Diagnosis.model_validate(data), state, STUDENT_TEXTS)
         plans.append((plan.action, plan.target_step, plan.hint_level))
         tag = f"{ex.id} {profile} seed={seed} t={n} {plan.action}/{plan.target_step}/{plan.hint_level}"
-        if len(plans) >= 4 and len(set(plans[-4:])) == 1 and plan.action != "despres_de_tancar":
+        if (
+            len(plans) >= 4
+            and len(set(plans[-4:])) == 1
+            and plan.action not in ("despres_de_tancar", "explicar_concepte")
+        ):
             out.append(f"I1 same plan 4x: {tag}")
         if prev.closed and plan.action != "despres_de_tancar":
             out.append(f"I3 reopened after closing: {tag}")

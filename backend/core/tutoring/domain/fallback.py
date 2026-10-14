@@ -1,7 +1,7 @@
 from collections.abc import Mapping, Sequence
 
 from core.course.domain.entities.exercise import Exercise
-from core.course.domain.entities.theory_item import TheoryItem
+from core.course.domain.entities.theory_item import KIND_NAMES, TheoryItem
 from core.tutoring.domain.values.plan import Action, Plan
 
 FIXED_MESSAGES: Mapping[Action, str] = {
@@ -14,6 +14,18 @@ FIXED_MESSAGES: Mapping[Action, str] = {
 }
 
 
+# Grammatical gender of each item kind, for the Catalan article ("la Definició 3", "el Teorema 12").
+_FEMININE: frozenset[str] = frozenset({"definicio", "proposicio", "observacio", "nota"})
+
+
+def _named(it: TheoryItem) -> str:
+    """How a reply names an item so the web links it: "el Teorema 12 del Tema 3"."""
+    if it.number is None:
+        return f"els apunts del Tema {it.topic} (§{it.section})" if it.section else f"els apunts del Tema {it.topic}"
+    article = "la" if it.kind in _FEMININE else "el"
+    return f"{article} {KIND_NAMES[it.kind]} {it.number} del Tema {it.topic}"
+
+
 def fallback_message(ex: Exercise, plan: Plan, theory: Sequence[TheoryItem] = ()) -> str:
     """Safe message built only from authored content, used when every draft is rejected.
 
@@ -24,12 +36,15 @@ def fallback_message(ex: Exercise, plan: Plan, theory: Sequence[TheoryItem] = ()
         return f"Amb tots els passos resolts, la conclusió és: {ex.result.value.strip()} Ho veus clar?"
     if plan.action in FIXED_MESSAGES:
         return FIXED_MESSAGES[plan.action]
-    if plan.action == "explicar_concepte" and theory:
-        it = theory[0]
-        return (
-            f"Mira la {it.label.split(' (')[0]} del Tema {it.topic} als apunts. "
-            "Com creus que s'aplica a aquest exercici?"
-        )
+    if plan.action == "explicar_concepte":
+        # The item that answers the question; only without one, the first allowed item (usually background). A
+        # concept answer never delivers step content: it does not move the hint ladder.
+        by_id: dict[str, TheoryItem] = {str(it.id): it for it in theory}
+        it = next((by_id[i] for i in plan.extra_theory if i in by_id), theory[0] if theory else None)
+        if it is None:
+            return "Quin concepte concret no et quadra? Explica'm amb les teves paraules com l'entens ara."
+        where = "" if it.number is None else " als apunts"
+        return f"Mira {_named(it)}{where}. Com creus que s'aplica a aquest exercici?"
     if plan.suggested_question:
         return plan.suggested_question
     if plan.target_step:

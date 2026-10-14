@@ -89,3 +89,9 @@ async def test_an_exponential_tower_is_rejected_before_any_worker(grader: Submis
 async def test_huge_powers_are_rejected_before_any_worker(grader: SubmissionGrader, value: str) -> None:
     with pytest.raises(InvalidSubmissionException, match="potència massa gran"):
         await grade(grader, "parcials-sense-continuitat", submission("x*y", value=value))
+
+
+@pytest.mark.parametrize("function", ["x*y*exp(-10**32*(x**2+y**2))", "x*y/10**7", "x*y*exp(-x**2/10**(-7))"])
+async def test_extreme_constants_are_rejected_before_any_worker(grader: SubmissionGrader, function: str) -> None:
+    with pytest.raises(InvalidSubmissionException, match="massa gran o massa petita"):
+        await grade(grader, "parcials-sense-continuitat", submission(function))

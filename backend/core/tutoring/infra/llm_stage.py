@@ -2,8 +2,17 @@
 
 from pydantic import BaseModel, ValidationError
 
-from core.shared.llm.client import CallMeta, JsonObject, LLMClient, LLMError, LLMProviderError, LLMRequest, Stage
-from core.tutoring.domain.exceptions import ModelOutputException
+from core.shared.llm.client import (
+    CallMeta,
+    JsonObject,
+    LLMClient,
+    LLMError,
+    LLMProviderError,
+    LLMRequest,
+    Stage,
+    TruncatedOutputError,
+)
+from core.tutoring.domain.exceptions import ModelOutputException, TruncatedModelOutputException
 from core.tutoring.domain.values.turn_trace import ModelCall
 
 
@@ -27,7 +36,11 @@ async def call_stage(
     except LLMProviderError:
         raise
     except LLMError as e:
-        raise ModelOutputException(stage_name, e.message) from e
+        # The model answered and its tokens were billed: the client attaches the call's metadata to the error.
+        failed = e.meta
+        call = model_call(failed) if isinstance(failed, CallMeta) else None
+        kind = TruncatedModelOutputException if isinstance(e, TruncatedOutputError) else ModelOutputException
+        raise kind(stage_name, e.message, call) from e
     return data, model_call(meta)
 
 

@@ -1,6 +1,7 @@
 from collections.abc import Sequence
 from typing import Protocol
 
+from core.quizzes.domain.entities.grading import StudentCheck
 from core.quizzes.domain.entities.quiz import Quiz
 from core.quizzes.domain.sources import QuizSource
 from core.quizzes.domain.values.drafts import BatchRequest, StatementDraft, WrittenBatch
@@ -43,6 +44,11 @@ class CheckEvaluator(Protocol):
     """Runs sympy checks. Synchronous and CPU-bound: callers run it in a worker thread."""
 
     def evaluate(self, checks: Sequence[MathCheck]) -> list[CheckResult]: ...
+
+    def faithful(self, claims: Sequence[StudentCheck]) -> list[bool]:
+        """`scoring.faithful` of each claim under the same deadline (it parses and compares student-written values,
+        which can take forever); a claim without a verdict by then is not faithful."""
+        ...
 
 
 class PregeneratedQuizSource(Protocol):

@@ -205,6 +205,13 @@ Sheet tests check that (1) each step's leak regexes catch that step's own worked
 
 - Gemini (default per stage): diagnosis `gemini-3.5-flash`, reply `gemini-3.5-flash-lite`, guard `gemini-3-flash-preview`. Different models per stage because free-tier quotas are per model. The free tier allows about 5 requests/min and 20 requests/day per model; each turn uses 3+ requests. Enable billing for a real demo.
 - OpenAI: diagnosis `gpt-5.5`, reply and guard `gpt-5.4-mini`. Tested live: about 5–8 s per turn.
+  Production overrides (measured 2026-10, see `render.yaml` / DEPLOY.md): `gpt-5.6-luna` for diagnosis, reply, guard
+  (effort `none`), transcription and both gradings, at ~1/5 the cost of `gpt-5.4-mini` (per 1M tokens in/out: luna
+  0.20/1.20, mini 0.75/4.5, gpt-5.5 5/30). Generation/verification keep the defaults: `gpt-5.4-mini` there truncated
+  quiz generation at `max_tokens` and emitted NUL bytes in the JSON. Do not set a global `TUTOR_MODEL` in production.
+  Measured with luna: a tutor turn ~$0.0037; generating a "Troba l'error" document ~$0.003–0.009 (3/4 succeeded) and a
+  "Cert o fals" quiz ~$0.034–0.047 in 2–4 min (3/4, one truncated), mathematically correct 24/24 but with LaTeX
+  corruption that the generation gates now reject. Live generation is professor-only by default (`TUTOR_GENERACIO`).
 - Anthropic: `claude-opus-5-5` for all stages.
 
 Override any stage with `TUTOR_MODEL_<STAGE>` / `TUTOR_EFFORT_<STAGE>` (stages `diagnosis`, `reply`, `guard`, `transcription`, `mistakes_*`, `quiz_*`; see `.env.example`). `scripts/live_demo.py` runs a scripted 4-turn conversation against the real API and prints the trace.
@@ -248,4 +255,4 @@ central differences as fallback). math.js installs a global `math`, which would 
   rejected drafts, loops, steps shown, frustration).
 - **Simulated students**: `uv run python scripts/simulate.py --mostra 40 --workers 4` (misconception personas from each sheet,
   lost / guesser / answer-beggar / silent / injector / persuader / extractor archetypes; completion, loops, fallback,
-  level-aware leak judge, cost). Model study: `scripts/model_study.py` (recommended: gpt-5.4-mini for all stages).
+  level-aware leak judge, cost). Model study: `scripts/model_study.py` (see Models above).

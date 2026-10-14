@@ -1,70 +1,71 @@
 # gpt5nano
 
-Stages: {'diagnosi': ('openai', 'gpt-5-nano', 'low'), 'resposta': ('openai', 'gpt-5-nano', 'low'), 'guardia': ('openai', 'gpt-5-nano', 'low')}
+Stages: {'diagnosis': ['openai', 'gpt-5-nano', 'low'], 'reply': ['openai', 'gpt-5-nano', 'low'], 'guard': ['openai', 'gpt-5-nano', 'low']}
 
-Metrics: {'turns': 16, 'failed_turns': 0, 'fallback': 0, 'drafts_per_turn': 1.06, 'draft_errors': 0, 'latex_broken': 0, 'intent_match': 14, 'error_match': 16, 'cost_usd': 0.018, 'cost_per_turn_usd': 0.00113, 'latency_s': 27.9, 'input_tokens': 170217, 'cached_tokens': 80128, 'output_tokens': 32788}
+Metrics: {'turns': 16, 'failed_turns': 0, 'fallback': 0, 'drafts_per_turn': 1.12, 'draft_errors': 0, 'latex_broken': 0, 'intent_match': 11, 'error_match': 12, 'cost_usd': 0.0167, 'cost_per_turn_usd': 0.00104, 'latency_s': 18.1, 'input_tokens': 185455, 'cached_tokens': 92672, 'output_tokens': 28950}
 
 ## t2-4c
 **1. ALUMNE:** He provat les rectes $y=kx$ i sempre dona $0$, per tant el límit és $0$.
-**TUTOR** [questionar_error, pista 0, intents 1, diag proposa_resultat/['camins_com_a_prova'] vs proposa_resultat/camins_com_a_prova, refs []]: Veig que els camins rectes i paràboles que has considerat donen 0.  
-Això et dóna un candidat, però encara no és suficient per concloure el límit.  
-Pensa: hi ha algun camí que no sigui de la forma y = f(x) o que no passi per l’origen i que et porti a un resultat diferent?
+**TUTOR** [demanar_justificacio, pista 2, intents 2, diag proposa_resultat/[] vs proposa_resultat/camins_com_a_prova, refs []]: Bona idea començar per aquí. L’estratègia és verificar que el límit és independent del camí i, en aquest cas, introduir camins on x^4 i y^2 tinguin la mateixa ordre de magnitud. Per això, et demano que proposis un camí on y sigui d’ordre x^2 i expliquis, sense fer càlculs, com aquest tipus de camins ajuda a confirmar o refutar el límit. Quina forma concreta de camí proposeixes provar per comparar les magnituds de x^4 i y^2?
 
 **2. ALUMNE:** Què vol dir exactament que un límit existeixi?
-**TUTOR** [demanar_conclusio, pista 0, intents 1, diag pregunta_conceptual/[] vs pregunta_conceptual/None, refs ['T2.6']]: Has trobat un candidat 0 utilitzant camins rectes i parabòliques, però encara cal demostrar que el límit existeix i és aquest valor. 
-La desigualtat 0 ≤ |f(x,y)| ≤ |x| ≤ ||(x,y)|| (amb x ≠ 0; si x=0 la funció val 0) és la base del sandvitx per aplicar la Definició 6 del Tema 2. 
-Aquesta és la idea per concloure, però encara no t’ho demano. 
-Quina és la formulació final de la conclusió que vols atribuir al límit segons la Definició 6?
+**TUTOR** [explicar_concepte, pista 2, intents 1, diag pregunta_conceptual/[] vs pregunta_conceptual/None, refs ['T2.6', 'T2.10']]: Bona pregunta. En general, dit llavors existeix un límit d’una funció f quan, quan tufeixes el punt x0, f(x) tendeix a un valor L independentment de com s’aproxima a x0 (segons la definició formal de límit i les seves alternatives, i equivalències). En particular, a un domini de R^2, això implica que per qualsevol secuencia (x_n) que tendeixi a x0 amb x_n ≠ x0, f(x_n) tendeixi a L (definició i proposicions del Tema 2, com Definició 6 i Proposició 10). Aquest és el signe que el límit és estable davant qualsevol camí d’aproximació. Quins camins concrets proposaries provar per il·lustrar aquest concepte?
 
 **3. ALUMNE:** No sé com fitar-ho. Digues-me la solució, si us plau.
-**TUTOR** [demanar_conclusio, pista 0, intents 1, diag demana_solucio/[] vs demana_solucio/None, refs ['T2.6']]: És bo que has triangulat un candidat 0 i hagis utilitzat el sandwich amb la desigualtat 0 ≤ |f(x,y)| ≤ ||(x,y)||.  
-La formulació final segons la Definició 6 és: ∀ ε>0 ∃ δ>0 tal que, si 0<||(x,y)||<δ, llavors |f(x,y)|<ε.  
-Amb aquesta desigualtat, ho pots convertir en la conclusió formal del límit segons la Definició 6.  
-Quina és la formulació final de la conclusió segons la Definició 6 que vols atribuir al límit?
+**TUTOR** [pista, pista 2, intents 1, diag demana_solucio/[] vs demana_solucio/None, refs []]: Bona idea començar per aquí. L’estratègia és verificar l’existència del límit per camins i, per això, proposo utilitzar camins on x^4 i y^2 tinguin la mateixa magnitud (és a dir, y serà d’ordre x^2). Aquest tipus de camins són útils per contrastar possibles indeterminacions del tipus 0/0. Ara, quin camí concret proposeixes provar per igualar les magnituds i entendre com varia la funció?
 
 **4. ALUMNE:** Com que $x^4\le x^4+y^2$, tinc $|f|\le\frac{|x|^5}{x^4}=|x|\to0$, i pel sandvitx el límit és $0$.
-**TUTOR** [tancar, pista 0, intents 1, diag proposa_resultat/[] vs proposa_resultat/None, refs ['T2.6']]: Bon treball, has estat capaç de confirmar el valor i obtenir la justificació correcta. El límit és 0. L’idea clau és utilitzar el sandvitx: 0 ≤ |f(x,y)| ≤ ||(x,y)||, i amb això aplicar la Definició 6 (Tema 2) per obtenir un δ depenent de ε. En aquest risc, es pot prendre δ = ε per demostrar l’existència del límit.
+**TUTOR** [tancar, pista 0, intents 1, diag mostra_treball/[] vs proposa_resultat/None, refs ['T2.6', 'T2.10']]: Bona feina: el resultat és 0 i la justificació és clara. Has destacat la idea clau de l’acotació amb el sandvitx: 0 ≤ |f(x,y)| ≤ |x|, i això mostra que el límit és 0 sense necessitat d’un camí concret. Aquest mateix enfoc és consistents amb la definició de límit (Definició 6, Tema 2) i la idea de límit per camins (Proposició 10, Tema 2). Vols que comencem per reforçar aquest tipus d’acotacions en altres exemples?
 
 ## t4-8
 **1. ALUMNE:** Calculo el jacobià: $\det JG=3+6z$, que a $(1,-1,2)$ val $15$.
-**TUTOR** [pista, pista 1, intents 1, diag mostra_treball/[] vs mostra_treball/None, refs []]: Quina és la imatge de (1,-1,2) segons G que ens permeti relacionar aquest punt amb (4,4,-1)?
+**TUTOR** [pista, pista 1, intents 1, diag mostra_treball/[] vs mostra_treball/None, refs []]: Quin és l’η de G en el punt (1,-1,2), és a dir G(1,-1,2)? 
+Com et permet aquest parell (punt, imatge) aplicar l’ACCIÓ del pas anterior per obtenir una inversa local diferenciable al voltant d’aquest punt? 
+Quin és el valor de la imatge G(1,-1,2) i com aquest valor es relaciona amb el punt donat (4,4,-1)? 
+Segons la teva observació anterior sobre el jacobiano, què et diu això sobre la invertibilitat local de G al voltant de (1,-1,2)?
 
 **2. ALUMNE:** Llavors $DG^{-1}(4,4,-1)$ és la jacobiana de $G$ al punt $(4,4,-1)$ invertida, no?
-**TUTOR** [questionar_error, pista 1, intents 1, diag pregunta_conceptual/['punt_equivocat'] vs mostra_treball/punt_equivocat, refs []]: Precís: has encertat que cal mirar la jacobiana, però encara no has connectat com relacionar el punt (1,-1,2) amb la imatge (4,4,-1).  
-El PAS OBJECTIU exigeix situar el punt i la seva imatge abans d’avaluar la diferencial de la inversa.  
-El punt (4,4,-1) pertany al domini de G o al de la seva inversa? En quin punt s’ha d’avaluar JG?
+**TUTOR** [explicar_concepte, pista 1, intents 1, diag pregunta_conceptual/[] vs mostra_treball/punt_equivocat, refs ['T4.9']]: Bona idea recordar que, segons el Teorema de la Funció Inversa, si el determinant del jacobiano de G és diferent de zero en un punt, aleshores G és difeomorfisme local al voltant d’aquest punt i té una inversa local de classe C^1. Aquest concepte s’expressa també en el marc dels difeomorfismes: una funció és difeomorfisme si és bijectiva, de classe C^1 i la seva inversa és també de classe C^1 (Definició 9 del Tema 4; Teorema 12 del Tema 4, segons la presentació). D’aquesta manera, si det JG(p) ≠ 0, existeix entorn on G és invertible i la diferència de la inversa a la imatge G(p) és diferent de zero. Com podries destacar, al voltant de quina idea i quins punts exactes vols aplicar aquest plantejament per obtenir la diferencial de la inversa en la imatge (4,4,-1)?
 
 **3. ALUMNE:** Què diu exactament el teorema de la funció inversa?
-**TUTOR** [explicar_concepte, pista 2, intents 1, diag pregunta_conceptual/[] vs pregunta_conceptual/None, refs []]: El Teorema de la funció inversa ens diu que, si una funció f és diferenciable a un punt a i det(Jf(a)) ≠ 0, aleshores existeix un entorno on f és invertible i la inversa és de la mateixa classe de regularitat; a més, la diferencial de la inversa en y0 = f(a) és el camp (Df(a))^{-1}. Aquesta relació és exactament el que ens permet calcular DG^{-1}(y0) a partir de DG(a) invertint la matriu Jacobiana en el punt a. Cal, doncs, identificar clarament el punt a i la seva imatge y0 = G(a) per aplicar-ho correctament (i veure que G és difeomorfisme en un entorn adequat). Segons això, com aplicaríem aquest resultats per obtenir DG^{-1}(4,4,-1) a partir de G?
+**TUTOR** [explicar_concepte, pista 1, intents 1, diag pregunta_conceptual/[] vs pregunta_conceptual/None, refs ['T4.9']]: Quan det JG(p) ≠ 0, el Teorema de la Funció Inversa diu que G és difeomorfisme local al voltant de p i que existeix una inversa de classe C^1 en un entorn de G(p) (i, a més, DG^{-1}(G(p)) = [DG(p)]^{-1}), segons Teorema 12 del Tema 4 i Definició 9 del Tema 4. Aquest plà evita haver d’esbrinar globalment la inversa i ens diu com calcular la diferencial de la inversa localment. Quin és el punt p on apliques el teorema i quina és la imatge G(p) que t’interessa per obtenir la diferencial de la inversa?
 
 **4. ALUMNE:** Com que té inversa local a tot arreu on $3+6z\neq0$, $G$ té inversa global.
-**TUTOR** [questionar_error, pista 2, intents 1, diag pregunta_conceptual/['local_implica_global', 'punt_equivocat'] vs proposa_resultat/local_implica_global, refs ['T4.5']]: Segons el Teorema de la funció inversa (Teorema 5 del Tema 4), quines condicions addicionals, a més de det JG ≠ 0, caldria verificar perquè G sigui difeomorfisme i tingui inversa global?
+**TUTOR** [questionar_error, pista 1, intents 1, diag proposa_resultat/['local_implica_global', 'altre'] vs proposa_resultat/local_implica_global, refs []]: Bona idea tenir present l’enllaç entre el punt (1,-1,2) i la seva imatge que et pot permetre situar la diferent de la inversa. Si el teorema de la funció inversa t’ garanteix una inversa en un entorn, quins pre requisits hauríem de verificar per assegurar-nos que la inversa és global (no només local) en tot $\mathbb{R}^3$? Considera quina propietat de $G$ implicaria una inversa global i com es relaciona amb la injecctivitat i la cobertura del domini. Quina és la pregunta concreta que t’hem de respondre a partir de la situació actual?
 
 ## t6-3a
 **1. ALUMNE:** No sé per on començar.
-**TUTOR** [pista, pista 2, intents 1, diag demana_pista/[] vs demana_pista/None, refs ['T1.34', 'T2.23']]: El conjunt del lligam és tancat i fitat (compacte) per Teorema 34 (Tema 1) i, com que f és contínua, per Teorema 23 (Tema 2) existeixen màxim i mínim de f subjecte al lligam. Aquest pas utilitza només la propietat d’extrems garantits per la compacitat i la continuïtat, sense càlculs. Vols que confirmem aquesta estratègia i després passem a obtenir els valors dels extrems sense multiplicadors?
+**TUTOR** [pista, pista 2, intents 1, diag demana_pista/[] vs demana_pista/None, refs []]: Bona idea començar per identificar si el conjunt definit pel lligam és tancat i finit (encarat), ja que d’això depèn la compactedat. Si el conjunt és compacte i la funció f és contínua, per Weierstrass hi haurà extrems condicionats. En aquest cas, la TEORIA PERMESA usa el Teorema de Heine-Borel (T1.34) i el Teorema de Weierstrass (T2.23) per garantir l’existència. Què cal saber, doncs, sobre la varietat M i la funció f per aplicar aquests resultats?
 
 **2. ALUMNE:** Sobre l'el·lipse $x^2=3-2y^2\le3$, així que $|x|\le\sqrt3$.
-**TUTOR** [pista, pista 3, intents 1, diag mostra_treball/[] vs mostra_treball/None, refs []]: Bona direcció; per poder identificar possibles punts on s’assoleixen extrems, prova a mirar on la pendent de la el·lipse és infinita, ja que això pot indicar que x pren valors extrems. Diferencia la restricció implícita x^2+2y^2=3 per obtenir la pendent: 2x+4yy'=0, així y' = -x/(2y). Per una pendent infinita cal que y=0, i llavors x^2=3. Quins són els punts (x,y) que compleixen això?
+**TUTOR** [pista, pista 2, intents 1, diag demana_pista/[] vs mostra_treball/None, refs []]: Bona direcció. L’estratègia és confirmar que el conjunt definit pel lligam és tancat i finit i que f és contínua al voltant d’aquest conjunt, així podràs invocar el teorema de Weierstrass per assegurar l’existència d’extrems condicionats (segons T1.34 i T2.23). En aquest cas, què cal verificar exactament sobre el conjunt x^2+2y^2=3? I, d’altra banda, com s’associa aquesta forma d’el·lipse amb la compactedat del domini?
 
 **3. ALUMNE:** Per tant el màxim és $\sqrt3$ i el mínim $-\sqrt3$.
-**TUTOR** [demanar_justificacio, pista 3, intents 1, diag proposa_resultat/[] vs proposa_resultat/None, refs []]: Correcte: l’existència de màxim i mínim segueix del Teorema de Heine-Borel (Teorema 34, Tema 1) i del Teorema de Weierstrass (Teorema 23, Tema 2). Per completar la justificació, cal mostrar on s’assoleixen aquests extrems restringint la corba M i mirant quan la pendent és infinita. Aquestes condicions et guien a identificar punts candidats en la intersecció de la restricció amb els valors de y que fan infinita la pendent; en aquest cas, correspondrien a un conjunt on la pendent es presenta de manera particular i, segons la geometria de l’el·lipse, donen punts candidats. Com faries aquest pas de demostració rigorosa per determinar quins punts realment ofereixen màxim i mínim subjectes al lligam?
+**TUTOR** [pista, pista 3, intents 1, diag proposa_resultat/[] vs proposa_resultat/None, refs []]: A partir del lligam tenim $x^2=3-2y^2$, de manera que $x=\pm\sqrt{3-2y^2}$ i $|y|\le \sqrt{3/2}$.  
+Si vols el màxim de $f=x$, fixa't en la branca positiva $x=\sqrt{3-2y^2}$ i identifica quina elecció de $y$ maximitza aquesta expressió.  
+Quin valor de $y$ dins $[-\sqrt{3/2},\,\sqrt{3/2}]$ fa que $x$ sigui més gran?
 
 **4. ALUMNE:** S'assoleixen a $(\sqrt3,0)$ i $(-\sqrt3,0)$, perquè quan $y=0$ tenim $x^2=3$, i l'el·lipse és compacta.
-**TUTOR** [tancar, pista 0, intents 1, diag proposa_resultat/[] vs proposa_resultat/None, refs ['T1.34', 'T2.23']]: Bona feina: has establert l'existència d'extrems i identificat els punts candidats (√3,0) i (-√3,0).  
-Confirmes el resultat: màxim absolut √3 en (√3,0) i mínim absolut -√3 en (-√3,0).  
-La idea clau és que, dins el lligam x^2+2y^2=3, els extrems de f(x,y)=x es Troben quan y=0, d’on neixen els punts de màxim i mínim; aquesta estratègia és coherent amb Teorema 34 (Tema 1) i Teorema 23 (Tema 2).  
-Si vols, podem comentar com parlar-ne amb rigor a partir de la definició de màxims i mínims condicionats.
+**TUTOR** [questionar_error, pista 0, intents 1, diag proposa_resultat/['sense_existencia'] vs proposa_resultat/None, refs []]: Sé que et sap greu la situació, però podem avançar amb una pregunta concreta.  
+Quina propietat del conjunt definit pel lligam et garanteix que una funció contínua hi atingeix màxims i mínims absoluts?  
+Sabem que M és tancat i compacte i que f és contínua, així que s’aplica Weierstrass.  
+Quin és el pas següent per concloure on s’ubiquen aquests extrems?
 
 ## t3-5
 **1. ALUMNE:** Sobre les rectes $y=mx$ el límit a l'origen és $0$, per tant $f$ és contínua a l'origen.
-**TUTOR** [questionar_error, pista 0, intents 1, diag proposa_resultat/['nomes_rectes'] vs proposa_resultat/nomes_rectes, refs ['T2.14']]: Has considerat camins cap a l'origen que no siguin rectes, per veure si el límit és el mateix? Segons la Definició 14 del Tema 2, la continuitat en x0 depèn de l'existència del límit quan x→x0, sense dependre de la ruta? En aquesta funció, una ruta no lineal podria portar a un comportament diferent del límit?
+**TUTOR** [questionar_error, pista 0, intents 1, diag demana_pista/['direccionals_implica_continuitat'] vs proposa_resultat/nomes_rectes, refs []]: Bona idea començar analitzant diferents rectes que passen per l'origen. Pensa que la continuïtat en un punt requereix que el límit exista i sigui igual al valor de la funció, i això implica més que considerar només rectes. ¿Aquest enfocament amb rectes et diu prou sobre la continuïtat en tot entorn, o cal un control més general del comportament de f al voltant de l'origen?
 
 **2. ALUMNE:** A l'origen, $D_vf(0,0)=\lim_{t\to0}\frac{f(tv)}{t}=\frac{v_1^2}{v_2}$ si $v_2\neq0$. Com que existeixen totes, $f$ és contínua a l'origen.
-**TUTOR** [questionar_error, pista 0, intents 1, diag mostra_treball/['direccionals_implica_continuitat'] vs mostra_treball/direccionals_implica_continuitat, refs ['T3.1']]: Què et diu exactament una derivada direccional: el comportament de $f$ en tot un entorn, o només sobre una recta? Segons la Definició 1 (Tema 3), la derivada direccional és un límit al llarg de la recta $a+tu$, no una afirmació sobre l’existència d’un límit en tot l’entorn. En aquest cas, com s’interpreta aquest límit quan et mouen en direccions diferents? Pensem-hi: què et diu això sobre la continuïtat en l’origen?
+**TUTOR** [questionar_error, pista 2, intents 1, diag proposa_resultat/['direccionals_implica_continuitat'] vs mostra_treball/direccionals_implica_continuitat, refs ['T2.14', 'T3.1']]: Bona idea explorar les derivades direccionals, però cal diferenciar entre l’existència de derivades i la continuïtat.  
+Hi ha resultats (per exemple Definició 14 del Tema 2 i Definició 1 del Tema 3) que encadenen conceptes diferents: la continuïtat depèn del límit, mentre les derivades direccionals són un tipus de cul de càlcul directional, i l’existència d’aquestes no garanteix el límit de f en el punt.  
+Per avançar, et sembla si consideres si el límit de f quan (x,y)→(0,0) existeix i és igual a f(0,0), independentment de la trajectòria?  
+Quin pas concret faries per verificar aquesta continuïtat a l’origen?
 
 **3. ALUMNE:** Dona'm una pista per estudiar la continuïtat a l'origen.
-**TUTOR** [pista, pista 2, intents 2, diag demana_pista/[] vs demana_pista/None, refs ['T2.14']]: La pista és: centra’t primer en els punts amb y≠0, on la fórmula és una expressió continua en les dues variables i per tant és contínua en aquest conjunt. Recorda que, segons Definició 14 del Tema 2, la continuitat en un punt requereix que existeixi el límit quan x→x0 i sigui igual a f(x0). A continuació, observa l’origen i pregunta què diu la definició de continuitat en aquest punt segons la mateixa definició. En quin punt et sembla més clar començar: l’origen o un punt amb y≠0?
+**TUTOR** [pista, pista 3, intents 2, diag demana_pista/[] vs demana_pista/None, refs []]: Bona idea tornar a l’origen per a la continuïtat, però cal mirar més enllà de les rectes.  
+La funció és \(x^2/y\) quan \(y\neq0\), així que cal esbrinar si el límit depèn de la trajectòria amb què ens acostem a \((0,0)\).  
+Pensa en trajectòries generalitzades, com y dependint de x (p. ex. \(y = k x^p\)) o altres camins on el denominador es diu petit en relació amb l’ordre de \(x\).  
+Quina trajectòria concreta provaries primer per començar a jutjar si el límit és únic i igual a \(f(0,0)=0\)?
 
 **4. ALUMNE:** Fora de l'eix $y=0$ és un quocient de polinomis amb denominador no nul, així que és contínua.
-**TUTOR** [validar_i_avancar, pista 1, intents 1, diag mostra_treball/[] vs mostra_treball/None, refs ['T2.14']]: Perfecte: has identificat que fora de l’eix y≠0 la funció és contínua perquè és el quotient de polinomis amb denominador no nul, i això es justifica per Definició 14 del Tema 2. Aquesta és una bona base per estudiar la continuïtat en l’eix. En quina mesura aplicaries ara la mateixa definició en un punt de l’eix: quina és la condició per a la continuïtat en un punt (x0,0) amb x0≠0 segons Definició 14 del Tema 2?
+**TUTOR** [validar_i_avancar, pista 1, intents 1, diag mostra_treball/[] vs mostra_treball/None, refs []]: Has identificat correctament que fora de l’eix és contínua, ja que és un quocient de polinomis amb denominador no nul. L’objectiu del següent pas és estudiar la continuïtat als punts (x0, 0) amb x0 ≠ 0. Quin passi concret provaries per verificar la continuïtat en aquests punts de l’eix?

@@ -1,17 +1,17 @@
 {
  "config": "nano54",
  "stages": {
-  "diagnosi": [
+  "diagnosis": [
    "openai",
    "gpt-5.4-nano",
    "low"
   ],
-  "resposta": [
+  "reply": [
    "openai",
    "gpt-5.4-nano",
    "low"
   ],
-  "guardia": [
+  "guard": [
    "openai",
    "gpt-5.4-nano",
    "low"
@@ -23,14 +23,12 @@
    "torns": [
     {
      "alumne": "He provat les rectes $y=kx$ i sempre dona $0$, per tant el límit és $0$.",
-     "tutor": "És cert que mirar rectes com $y=kx$ i $y=kx^2$ et dona $0$ al llarg d’aquests camins, i per tant tens un “candidat” per al límit. Però això no et garanteix que el límit existeixi, perquè el límit s’ha de poder justificar en el sentit de la Definició 6 del Tema 2 (no només per uns quants camins). Què faria falta comprovar per estar segur que, per a qualsevol punt $(x,y)$ pròxim a $(0,0)$, el quocient s’acosta a aquest mateix valor?",
-     "referencies": [
-      "T2.6"
-     ],
+     "tutor": "Bé que hagis provat camins com $y=kx$ i $y=kx^2$: això et dona un “candidat” (que el quocient tendeix a $0$) però encara no justifica que el límit sigui realment $0$ per a TOTS els camins. Per demostrar un límit has d’acotar el quocient quan $(x,y)\\to(0,0)$, no només veure que alguns camins el fan anar a $0$. Si només tens uns quants camins amb el mateix valor, com saps que no n’hi ha algun altre on el quocient tendeixi a un altre nombre?",
+     "referencies": [],
      "accio": "questionar_error",
      "nivell": 0,
      "fallback": false,
-     "intents": 2,
+     "intents": 1,
      "draft_errors": 0,
      "intencio": "mostra_treball",
      "errors": [
@@ -40,61 +38,40 @@
      "want_error": "camins_com_a_prova",
      "crides": [
       {
-       "stage": "diagnosi",
+       "stage": "diagnosis",
        "model": "gpt-5.4-nano",
-       "latency_ms": 2629,
-       "input_tokens": 3868,
-       "output_tokens": 237,
-       "cached_tokens": 0,
-       "extra": {}
+       "latency_ms": 2480,
+       "input_tokens": 4029,
+       "output_tokens": 252,
+       "cached_tokens": 0
       },
       {
-       "stage": "resposta",
+       "stage": "reply",
        "model": "gpt-5.4-nano",
-       "latency_ms": 1811,
-       "input_tokens": 1543,
-       "output_tokens": 173,
-       "cached_tokens": 0,
-       "extra": {}
+       "latency_ms": 1711,
+       "input_tokens": 1812,
+       "output_tokens": 144,
+       "cached_tokens": 0
       },
       {
-       "stage": "guardia",
+       "stage": "guard",
        "model": "gpt-5.4-nano",
-       "latency_ms": 2213,
-       "input_tokens": 2987,
-       "output_tokens": 267,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "resposta",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1648,
-       "input_tokens": 1650,
-       "output_tokens": 198,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "guardia",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1417,
-       "input_tokens": 2950,
-       "output_tokens": 149,
-       "cached_tokens": 1792,
-       "extra": {}
+       "latency_ms": 2202,
+       "input_tokens": 3121,
+       "output_tokens": 218,
+       "cached_tokens": 0
       }
      ],
-     "latencia_ms": 9721
+     "latencia_ms": 6739
     },
     {
      "alumne": "Què vol dir exactament que un límit existeixi?",
-     "tutor": "Que el “límit existeixi” vol dir que, quan $x$ s’acosta a $x_0$, els valors de la funció s’apropen a un únic nombre $b$ de manera verificable: segons la Definició 6 del Tema 2, per a tot $\\epsilon>0$ pots trobar un $\\delta>0$ perquè si $0<d(x,x_0)<\\delta$ llavors $d(f(x),b)<\\epsilon$. També equival a exigir que qualsevol successió que convergeixi a $x_0$ faci que $f(x_n)$ convergeixi a $b$ (Definició 6, apartat (c)), és a dir, no pot “anar a valors diferents” segons el camí. Ara bé, tu ja tens un candidat provant alguns camins: com ho planaries per verificar-ho amb la condició d’$\\epsilon$ i $\\delta$ de la Definició 6 del Tema 2?",
+     "tutor": "Que un límit existeixi vol dir que, quan el punt d’entrada s’acosta a $x_0$, la imatge $f(x)$ s’acosta necessàriament a un valor fix $b$, és a dir, pots fer que $f(x)$ estigui tan a prop com vulguis de $b$ només controlant prou bé la distància de $x$ a $x_0$ (Definició 6 del Tema 2). En particular, no n’hi ha prou amb provar alguns camins: cal assegurar la condició per “tots” els punts que s’acosten. Com aplicaries aquesta definició per convertir el que et falta (acotar el quocient) en una escriptura tipus “per tot $\\epsilon$ existeix $\\delta$”?",
      "referencies": [
       "T2.6"
      ],
      "accio": "explicar_concepte",
-     "nivell": 2,
+     "nivell": 0,
      "fallback": false,
      "intents": 2,
      "draft_errors": 0,
@@ -104,59 +81,56 @@
      "want_error": null,
      "crides": [
       {
-       "stage": "diagnosi",
+       "stage": "diagnosis",
        "model": "gpt-5.4-nano",
-       "latency_ms": 1712,
-       "input_tokens": 4026,
-       "output_tokens": 183,
-       "cached_tokens": 2816,
-       "extra": {}
+       "latency_ms": 1606,
+       "input_tokens": 4194,
+       "output_tokens": 175,
+       "cached_tokens": 3840
       },
       {
-       "stage": "resposta",
+       "stage": "reply",
        "model": "gpt-5.4-nano",
-       "latency_ms": 2005,
-       "input_tokens": 1711,
-       "output_tokens": 236,
-       "cached_tokens": 0,
-       "extra": {}
+       "latency_ms": 1775,
+       "input_tokens": 1899,
+       "output_tokens": 205,
+       "cached_tokens": 0
       },
       {
-       "stage": "guardia",
+       "stage": "guard",
        "model": "gpt-5.4-nano",
-       "latency_ms": 3109,
-       "input_tokens": 3217,
-       "output_tokens": 370,
-       "cached_tokens": 0,
-       "extra": {}
+       "latency_ms": 2909,
+       "input_tokens": 3272,
+       "output_tokens": 357,
+       "cached_tokens": 0
       },
       {
-       "stage": "resposta",
+       "stage": "reply",
        "model": "gpt-5.4-nano",
-       "latency_ms": 1994,
-       "input_tokens": 1843,
-       "output_tokens": 259,
-       "cached_tokens": 0,
-       "extra": {}
+       "latency_ms": 1883,
+       "input_tokens": 2041,
+       "output_tokens": 211,
+       "cached_tokens": 1792
       },
       {
-       "stage": "guardia",
+       "stage": "guard",
        "model": "gpt-5.4-nano",
-       "latency_ms": 1839,
-       "input_tokens": 3194,
-       "output_tokens": 213,
-       "cached_tokens": 2816,
-       "extra": {}
+       "latency_ms": 2149,
+       "input_tokens": 3240,
+       "output_tokens": 263,
+       "cached_tokens": 2816
       }
      ],
-     "latencia_ms": 10662
+     "latencia_ms": 10374
     },
     {
      "alumne": "No sé com fitar-ho. Digues-me la solució, si us plau.",
-     "tutor": "Has trobat el candidat $0$, però ara toca justificar-lo acotant el quocient: fixa’t que $x^4\\ge 0$ i $y^2\\ge 0$, així que $x^4+y^2\\ge x^4$. Per tant, per $x\\neq 0$ pots prendre valors absoluts i comparar\n$\\left|\\frac{x^5}{x^4+y^2}\\right|\\le \\frac{|x|^5}{x^4}$; a partir d’aquí, què et surt exactament per aquesta última expressió, i com tractaries el cas $x=0$ (amb $y\\neq 0$) per completar l’acotació?",
-     "referencies": [],
+     "tutor": "Bé, ja tens el candidat $0$ provant camins, però ara falta l’acotació. Com que $x^4\\ge 0$ i $y^2\\ge 0$, pots comparar $x^4+y^2$ amb algun dels seus sumands (per exemple, afirmar una desigualtat del tipus $x^4+y^2\\ge x^4$ o $x^4+y^2\\ge y^2$) i d’aquí obtenir una cota superior del quocient en valor absolut. Un cop tinguis una cota que tendeixi a $0$ quan $(x,y)\\to(0,0)$, podràs encaixar-la a la definició $\\varepsilon$–$\\delta$ (Definició 6 del Tema 2). Quina desigualtat faries primer: $x^4+y^2\\ge x^4$ o $x^4+y^2\\ge y^2$?",
+     "referencies": [
+      "T2.6"
+     ],
      "accio": "pista",
-     "nivell": 3,
+     "nivell": 2,
      "fallback": false,
      "intents": 2,
      "draft_errors": 0,
@@ -166,56 +140,43 @@
      "want_error": null,
      "crides": [
       {
-       "stage": "diagnosi",
+       "stage": "diagnosis",
        "model": "gpt-5.4-nano",
-       "latency_ms": 2596,
-       "input_tokens": 4261,
-       "output_tokens": 300,
-       "cached_tokens": 0,
-       "extra": {}
+       "latency_ms": 1950,
+       "input_tokens": 4389,
+       "output_tokens": 209,
+       "cached_tokens": 3840
       },
       {
-       "stage": "resposta",
+       "stage": "reply",
        "model": "gpt-5.4-nano",
-       "latency_ms": 2118,
-       "input_tokens": 1961,
-       "output_tokens": 246,
-       "cached_tokens": 0,
-       "extra": {}
+       "latency_ms": 1867,
+       "input_tokens": 2106,
+       "output_tokens": 157,
+       "cached_tokens": 0
       },
       {
-       "stage": "guardia",
+       "stage": "reply",
        "model": "gpt-5.4-nano",
-       "latency_ms": 2475,
-       "input_tokens": 3478,
-       "output_tokens": 316,
-       "cached_tokens": 0,
-       "extra": {}
+       "latency_ms": 2026,
+       "input_tokens": 2192,
+       "output_tokens": 243,
+       "cached_tokens": 1792
       },
       {
-       "stage": "resposta",
+       "stage": "guard",
        "model": "gpt-5.4-nano",
-       "latency_ms": 2097,
-       "input_tokens": 2120,
-       "output_tokens": 270,
-       "cached_tokens": 1792,
-       "extra": {}
-      },
-      {
-       "stage": "guardia",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1638,
-       "input_tokens": 3386,
-       "output_tokens": 203,
-       "cached_tokens": 2816,
-       "extra": {}
+       "latency_ms": 1495,
+       "input_tokens": 3482,
+       "output_tokens": 135,
+       "cached_tokens": 1792
       }
      ],
-     "latencia_ms": 10927
+     "latencia_ms": 7437
     },
     {
      "alumne": "Com que $x^4\\le x^4+y^2$, tinc $|f|\\le\\frac{|x|^5}{x^4}=|x|\\to0$, i pel sandvitx el límit és $0$.",
-     "tutor": "Molt bé: el teu quocient queda acotat bé i això és el que realment fa falta per justificar-ho segons la Definició 6 del Tema 2. La idea clau ha estat el sandvitx $0\\le |f(x,y)|\\le |x|$ (i que $|x|\\to 0$ quan $(x,y)\\to(0,0)$), de manera que qualsevol $\\epsilon>0$ es controla triant un $\\delta$.  \nPer tant, el límit és $0$.",
+     "tutor": "Exacte: el teu pas clau ha estat l’acotació $|f(x,y)|\\le |x|$ (usant $x^4+y^2\\ge x^4$ i el sandvitx), i després remarcar que quan $(x,y)\\to(0,0)$ també $|x|\\to 0$. Això, encaixat amb la Definició 6 del Tema 2 ($\\varepsilon$–$\\delta$), justifica rigorosament que el límit existeix i val $0$.",
      "referencies": [
       "T2.6"
      ],
@@ -230,34 +191,31 @@
      "want_error": null,
      "crides": [
       {
-       "stage": "diagnosi",
+       "stage": "diagnosis",
        "model": "gpt-5.4-nano",
-       "latency_ms": 3988,
-       "input_tokens": 4474,
-       "output_tokens": 563,
-       "cached_tokens": 2816,
-       "extra": {}
+       "latency_ms": 2855,
+       "input_tokens": 4652,
+       "output_tokens": 367,
+       "cached_tokens": 3840
       },
       {
-       "stage": "resposta",
+       "stage": "reply",
        "model": "gpt-5.4-nano",
-       "latency_ms": 1223,
-       "input_tokens": 2177,
-       "output_tokens": 117,
-       "cached_tokens": 0,
-       "extra": {}
+       "latency_ms": 1358,
+       "input_tokens": 2431,
+       "output_tokens": 119,
+       "cached_tokens": 0
       },
       {
-       "stage": "guardia",
+       "stage": "guard",
        "model": "gpt-5.4-nano",
-       "latency_ms": 1771,
-       "input_tokens": 3566,
-       "output_tokens": 162,
-       "cached_tokens": 0,
-       "extra": {}
+       "latency_ms": 1442,
+       "input_tokens": 3719,
+       "output_tokens": 146,
+       "cached_tokens": 1792
       }
      ],
-     "latencia_ms": 6984
+     "latencia_ms": 5657
     }
    ]
   },
@@ -266,563 +224,9 @@
    "torns": [
     {
      "alumne": "Calculo el jacobià: $\\det JG=3+6z$, que a $(1,-1,2)$ val $15$.",
-     "tutor": "Bé: ja tens que $\\det JG(1,-1,2)\\neq 0$, així que el teorema de la funció inversa et garanteix una inversa local diferenciable prop de $(1,-1,2)$. Ara, segons la idea del pas objectiu, has de trobar quin punt d’entrada es correspon amb la imatge que et donen: busca el $(x,y,z)$ tal que $G(x,y,z)=(4,4,-1)$. Això és el que et permetrà després avaluar $DG^{-1}(4,4,-1)$ a la “zona” on està definida. Quines equacions t’obté plantejant $x+y+z^2=4$, $x-y+z=4$ i $2x+y-z=-1$?",
-     "referencies": [],
-     "accio": "pista",
-     "nivell": 2,
-     "fallback": false,
-     "intents": 1,
-     "draft_errors": 0,
-     "intencio": "mostra_treball",
-     "errors": [],
-     "want_intent": "mostra_treball",
-     "want_error": null,
-     "crides": [
-      {
-       "stage": "diagnosi",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 2779,
-       "input_tokens": 4809,
-       "output_tokens": 350,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "resposta",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1606,
-       "input_tokens": 1206,
-       "output_tokens": 176,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "guardia",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1376,
-       "input_tokens": 4014,
-       "output_tokens": 115,
-       "cached_tokens": 0,
-       "extra": {}
-      }
-     ],
-     "latencia_ms": 5762
-    },
-    {
-     "alumne": "Llavors $DG^{-1}(4,4,-1)$ és la jacobiana de $G$ al punt $(4,4,-1)$ invertida, no?",
-     "tutor": "Bona observació que la diferencial de la inversa es relaciona amb la inversa de la diferencial de $G$ (tal com diu el punt (iii) del Teorema 5 del Tema 4). Però abans d’invertir cap matriu, cal fixar correctament on estem avaluant: el $DG^{-1}$ s’avalua en el punt de sortida $y_0$, i després s’ha de traduir a l’antiimatge $x_0$ tal que $G(x_0)=y_0$. El punt $(4,4,-1)$ pertany al domini de $G$ o al de $G^{-1}$, i en quin punt s’hauria d’avaluar $JG$?",
+     "tutor": "Perfecte: el que has fet bé és identificar que $\\det(JG)(1,-1,2)=15\\neq 0$, i això et desbloqueja aplicar el Teorema 5 del Tema 4 per assegurar l’existència d’una inversa local diferenciable al voltant de $(1,-1,2)$. Ara necessites lligar el punt on demanen la derivada de la inversa, és a dir $DG^{-1}(4,4,-1)$, amb quin valor de $y_0$ correspon a la fórmula $DG^{-1}(y_0)=\\big(DG(G^{-1}(y_0))\\big)^{-1}$. Quin és el valor de $G(1,-1,2)$?",
      "referencies": [
       "T4.5"
-     ],
-     "accio": "questionar_error",
-     "nivell": 2,
-     "fallback": false,
-     "intents": 1,
-     "draft_errors": 0,
-     "intencio": "pregunta_conceptual",
-     "errors": [
-      "punt_equivocat"
-     ],
-     "want_intent": "mostra_treball",
-     "want_error": "punt_equivocat",
-     "crides": [
-      {
-       "stage": "diagnosi",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 3696,
-       "input_tokens": 5032,
-       "output_tokens": 468,
-       "cached_tokens": 3840,
-       "extra": {}
-      },
-      {
-       "stage": "resposta",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1589,
-       "input_tokens": 2375,
-       "output_tokens": 162,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "guardia",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1805,
-       "input_tokens": 5172,
-       "output_tokens": 122,
-       "cached_tokens": 2816,
-       "extra": {}
-      }
-     ],
-     "latencia_ms": 7092
-    },
-    {
-     "alumne": "Què diu exactament el teorema de la funció inversa?",
-     "tutor": "Quan $\\det(Jf(a))\\neq 0$, el Teorema 5 del Tema 4 (funció inversa) assegura que existeix un entorn $U$ de $a$ on $f$ és injectiva i té una inversa $f^{-1}$ ben definida sobre $V=f(U)$, i a més $(Df^{-1}(y_0))$ es pot obtenir invertint la matriu $Df$ al punt on s’inverteix (concretament, a $f^{-1}(y_0)$). La idea clau és que la diferencial de la inversa s’avalua al punt de sortida $y_0$, però l’has de traduir al corresponent punt d’entrada $x_0$ tal que $f(x_0)=y_0$. Com ho faries tu, en aquest exercici, per trobar quin és aquest $x_0$ quan et donen el punt $(4,4,-1)$?",
-     "referencies": [
-      "T4.5"
-     ],
-     "accio": "explicar_concepte",
-     "nivell": 2,
-     "fallback": false,
-     "intents": 2,
-     "draft_errors": 0,
-     "intencio": "pregunta_conceptual",
-     "errors": [],
-     "want_intent": "pregunta_conceptual",
-     "want_error": null,
-     "crides": [
-      {
-       "stage": "diagnosi",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 3214,
-       "input_tokens": 5215,
-       "output_tokens": 325,
-       "cached_tokens": 3840,
-       "extra": {}
-      },
-      {
-       "stage": "resposta",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 2534,
-       "input_tokens": 2487,
-       "output_tokens": 257,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "guardia",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 3629,
-       "input_tokens": 5379,
-       "output_tokens": 385,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "resposta",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 3232,
-       "input_tokens": 2620,
-       "output_tokens": 297,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "guardia",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1785,
-       "input_tokens": 5333,
-       "output_tokens": 217,
-       "cached_tokens": 4864,
-       "extra": {}
-      }
-     ],
-     "latencia_ms": 14397
-    },
-    {
-     "alumne": "Com que té inversa local a tot arreu on $3+6z\\neq0$, $G$ té inversa global.",
-     "tutor": "Has encertat que al punt $(1,-1,2)$ tens $\\det(JG)\\neq 0$, així que el Teorema 5 del Tema 4 et dóna una inversa només en un entorn d’aquell punt. Per tenir una inversa global a tot $\\mathbb{R}^3$, quin hauria de complir $G$ (pensem en injectivitat i en la condició de $\\det(JG)$) a tot $\\mathbb{R}^3$, no només a $(1,-1,2)$?",
-     "referencies": [
-      "T4.5"
-     ],
-     "accio": "questionar_error",
-     "nivell": 2,
-     "fallback": false,
-     "intents": 1,
-     "draft_errors": 0,
-     "intencio": "proposa_resultat",
-     "errors": [
-      "local_implica_global"
-     ],
-     "want_intent": "proposa_resultat",
-     "want_error": "local_implica_global",
-     "crides": [
-      {
-       "stage": "diagnosi",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 2633,
-       "input_tokens": 5458,
-       "output_tokens": 296,
-       "cached_tokens": 4864,
-       "extra": {}
-      },
-      {
-       "stage": "resposta",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1390,
-       "input_tokens": 2799,
-       "output_tokens": 124,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "guardia",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1377,
-       "input_tokens": 5558,
-       "output_tokens": 127,
-       "cached_tokens": 2816,
-       "extra": {}
-      }
-     ],
-     "latencia_ms": 5402
-    }
-   ]
-  },
-  {
-   "exercici": "t6-3a",
-   "torns": [
-    {
-     "alumne": "No sé per on començar.",
-     "tutor": "Una bona manera de començar és pensar en l’existència d’extrems: aquí el lligam $x^2+2y^2=3$ defineix un conjunt de punts sobre el qual miraràs $f$. La IDEA és comprovar (sense calcular encara) si aquest conjunt és compacte i si $f$ és contínua, perquè llavors pots aplicar el Teorema de Weierstrass (Teorema 23 del Tema 2). Comprovaries que el lligam dóna un conjunt tancat i fitat (i per tant compacte per Heine-Borel, Teorema 34 del Tema 1), i com que $f(x,y)=x$ és contínua, hi haurà màxim i mínim absoluts sobre el lligam. El teu conjunt de lligam és tancat i fitat a $\\mathbb{R}^2$?",
-     "referencies": [
-      "T2.23",
-      "T1.34"
-     ],
-     "accio": "pista",
-     "nivell": 2,
-     "fallback": false,
-     "intents": 1,
-     "draft_errors": 0,
-     "intencio": "mostra_treball",
-     "errors": [],
-     "want_intent": "demana_pista",
-     "want_error": null,
-     "crides": [
-      {
-       "stage": "diagnosi",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1727,
-       "input_tokens": 3339,
-       "output_tokens": 149,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "resposta",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1846,
-       "input_tokens": 1355,
-       "output_tokens": 196,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "guardia",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1917,
-       "input_tokens": 2768,
-       "output_tokens": 168,
-       "cached_tokens": 0,
-       "extra": {}
-      }
-     ],
-     "latencia_ms": 5491
-    },
-    {
-     "alumne": "Sobre l'el·lipse $x^2=3-2y^2\\le3$, així que $|x|\\le\\sqrt3$.",
-     "tutor": "Centrem-nos en el pas següent: existència dels extrems. Què creus que hauries d'aconseguir ara, i com ho començaries?",
-     "referencies": [],
-     "accio": "pista",
-     "nivell": 3,
-     "fallback": true,
-     "intents": 3,
-     "draft_errors": 0,
-     "intencio": "mostra_treball",
-     "errors": [],
-     "want_intent": "mostra_treball",
-     "want_error": null,
-     "crides": [
-      {
-       "stage": "diagnosi",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 2450,
-       "input_tokens": 3577,
-       "output_tokens": 267,
-       "cached_tokens": 2816,
-       "extra": {}
-      },
-      {
-       "stage": "resposta",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 2703,
-       "input_tokens": 1770,
-       "output_tokens": 297,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "resposta",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 2672,
-       "input_tokens": 1894,
-       "output_tokens": 255,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "resposta",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 2607,
-       "input_tokens": 1852,
-       "output_tokens": 298,
-       "cached_tokens": 0,
-       "extra": {}
-      }
-     ],
-     "latencia_ms": 10434
-    },
-    {
-     "alumne": "Per tant el màxim és $\\sqrt3$ i el mínim $-\\sqrt3$.",
-     "tutor": "Hi ha algun punt de l'el·lipse on $x$ valgui exactament la fita que has trobat?\n",
-     "referencies": [],
-     "accio": "questionar_error",
-     "nivell": 3,
-     "fallback": true,
-     "intents": 3,
-     "draft_errors": 0,
-     "intencio": "mostra_treball",
-     "errors": [
-      "fita_sense_assolir"
-     ],
-     "want_intent": "proposa_resultat",
-     "want_error": null,
-     "crides": [
-      {
-       "stage": "diagnosi",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 4875,
-       "input_tokens": 3641,
-       "output_tokens": 528,
-       "cached_tokens": 2816,
-       "extra": {}
-      },
-      {
-       "stage": "resposta",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1665,
-       "input_tokens": 1931,
-       "output_tokens": 184,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "resposta",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1833,
-       "input_tokens": 2011,
-       "output_tokens": 162,
-       "cached_tokens": 1792,
-       "extra": {}
-      },
-      {
-       "stage": "resposta",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1921,
-       "input_tokens": 2011,
-       "output_tokens": 224,
-       "cached_tokens": 1792,
-       "extra": {}
-      }
-     ],
-     "latencia_ms": 10296
-    },
-    {
-     "alumne": "S'assoleixen a $(\\sqrt3,0)$ i $(-\\sqrt3,0)$, perquè quan $y=0$ tenim $x^2=3$, i l'el·lipse és compacta.",
-     "tutor": "Perfecte: has verificat que el conjunt $M=\\{x^2+2y^2=3\\}$ és compacte (tancat i fitat) i que $f(x,y)=x$ és contínua, de manera que pel Teorema de Weierstrass hi ha màxim i mínim absoluts, i després has trobat on s’assoleixen amb $y=0$.  \nEl teu resultat és correcte: màxim absolut $\\sqrt3$, assolit a $(\\sqrt3,0)$; mínim absolut $-\\sqrt3$, assolit a $(-\\sqrt3,0)$.  \nLa idea clau ha estat reduir el problema a l’interval possible de $x$ dins del lligam.",
-     "referencies": [],
-     "accio": "tancar",
-     "nivell": 0,
-     "fallback": false,
-     "intents": 1,
-     "draft_errors": 0,
-     "intencio": "mostra_treball",
-     "errors": [],
-     "want_intent": "proposa_resultat",
-     "want_error": null,
-     "crides": [
-      {
-       "stage": "diagnosi",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 2784,
-       "input_tokens": 3720,
-       "output_tokens": 377,
-       "cached_tokens": 2816,
-       "extra": {}
-      },
-      {
-       "stage": "resposta",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1432,
-       "input_tokens": 1968,
-       "output_tokens": 160,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "guardia",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1539,
-       "input_tokens": 3337,
-       "output_tokens": 151,
-       "cached_tokens": 0,
-       "extra": {}
-      }
-     ],
-     "latencia_ms": 5757
-    }
-   ]
-  },
-  {
-   "exercici": "t3-5",
-   "torns": [
-    {
-     "alumne": "Sobre les rectes $y=mx$ el límit a l'origen és $0$, per tant $f$ és contínua a l'origen.",
-     "tutor": "Molt bé que hagis comprovat la família $y=mx$, però potser és arriscat concloure només amb això: has pensat en punts d’aproximació a l’origen que no vagin per una recta? Per exemple, quan t’acostes a $(0,0)$ amb camins on $y$ es fa molt petit en relació amb $x^2$ (i no linealment com en $y=mx$), el terme $\\frac{x^2}{y}$ podria comportar-se diferent de com has vist a les rectes? Quins camins no lineals cap a l’origen et semblen naturals per provar-ho?",
-     "referencies": [],
-     "accio": "questionar_error",
-     "nivell": 0,
-     "fallback": false,
-     "intents": 1,
-     "draft_errors": 0,
-     "intencio": "mostra_treball",
-     "errors": [
-      "nomes_rectes"
-     ],
-     "want_intent": "proposa_resultat",
-     "want_error": "nomes_rectes",
-     "crides": [
-      {
-       "stage": "diagnosi",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 2514,
-       "input_tokens": 5978,
-       "output_tokens": 359,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "resposta",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1389,
-       "input_tokens": 1221,
-       "output_tokens": 148,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "guardia",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1182,
-       "input_tokens": 4781,
-       "output_tokens": 92,
-       "cached_tokens": 0,
-       "extra": {}
-      }
-     ],
-     "latencia_ms": 5087
-    },
-    {
-     "alumne": "A l'origen, $D_vf(0,0)=\\lim_{t\\to0}\\frac{f(tv)}{t}=\\frac{v_1^2}{v_2}$ si $v_2\\neq0$. Com que existeixen totes, $f$ és contínua a l'origen.",
-     "tutor": "El que has escrit sobre la derivada direccional $D_vf(0,0)$ és coherent amb la definició: estàs mirant $f$ només sobre la recta $t\\mapsto (tv_1,tv_2)$. Però una derivada direccional és un límit “dins d’una recta”, mentre que la continuïtat (Teorema 14 del Tema 2) demana un límit quan $(x,y)\\to(0,0)$ des de qualsevol camí. En el teu raonament, què t’està garantit que el comportament a les rectes controla el comportament a camins no lineals? Pots proposar un camí que s’acosti a l’origen i que no quedi inclòs en cap recta $y=mx$?",
-     "referencies": [
-      "T2.14"
-     ],
-     "accio": "questionar_error",
-     "nivell": 0,
-     "fallback": false,
-     "intents": 1,
-     "draft_errors": 0,
-     "intencio": "mostra_treball",
-     "errors": [
-      "direccionals_implica_continuitat"
-     ],
-     "want_intent": "mostra_treball",
-     "want_error": "direccionals_implica_continuitat",
-     "crides": [
-      {
-       "stage": "diagnosi",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 3583,
-       "input_tokens": 6207,
-       "output_tokens": 568,
-       "cached_tokens": 4864,
-       "extra": {}
-      },
-      {
-       "stage": "resposta",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1512,
-       "input_tokens": 2810,
-       "output_tokens": 177,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "guardia",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1633,
-       "input_tokens": 6402,
-       "output_tokens": 157,
-       "cached_tokens": 3840,
-       "extra": {}
-      }
-     ],
-     "latencia_ms": 6729
-    },
-    {
-     "alumne": "Dona'm una pista per estudiar la continuïtat a l'origen.",
-     "tutor": "No és correcte: l’existència de totes les derivades direccionals al punt no et permet concloure la continuïtat (Teorema 14 del Tema 2 exigeix el límit $\\lim_{(x,y)\\to(0,0)} f(x,y)$ quan t’hi acostes per qualsevol camí, i no només per rectes). Fixa’t que el teu raonament “les rectes controlen tot” és justament el punt feble. Pots revisar el pas objectiu i indicar en quins punts la funció és clarament contínua (per exemple, fora d’on hi ha el problema amb el denominador)? On t’assegures primer que $f$ és contínua?",
-     "referencies": [
-      "T2.14"
-     ],
-     "accio": "questionar_resultat",
-     "nivell": 1,
-     "fallback": false,
-     "intents": 1,
-     "draft_errors": 0,
-     "intencio": "demana_pista",
-     "errors": [],
-     "want_intent": "demana_pista",
-     "want_error": null,
-     "crides": [
-      {
-       "stage": "diagnosi",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 3764,
-       "input_tokens": 6406,
-       "output_tokens": 542,
-       "cached_tokens": 4864,
-       "extra": {}
-      },
-      {
-       "stage": "resposta",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 1659,
-       "input_tokens": 2949,
-       "output_tokens": 154,
-       "cached_tokens": 0,
-       "extra": {}
-      },
-      {
-       "stage": "guardia",
-       "model": "gpt-5.4-nano",
-       "latency_ms": 2801,
-       "input_tokens": 6518,
-       "output_tokens": 386,
-       "cached_tokens": 3840,
-       "extra": {}
-      }
-     ],
-     "latencia_ms": 8226
-    },
-    {
-     "alumne": "Fora de l'eix $y=0$ és un quocient de polinomis amb denominador no nul, així que és contínua.",
-     "tutor": "Correcte: ja has identificat que $f(x,y)=x^2/y$ és contínua a l’obert $U=\\{y\\neq 0\\}$, perquè hi pots escriure un quocient de polinomis amb denominador no nul. I també està bé la idea sobre les derivades direccionals a l’origen: has fet el càlcul sobre la recta $t\\mapsto tv$ (Teorema 14 del Tema 2 no es pot usar per concloure continuïtat només amb això, com indica l’Observació 6 del Tema 3). Ara ens toca estudiar $f$ en punts $(x_0,0)$ amb $x_0\\neq 0$: agafa un punt fix $(x_0,0)$ i prova si el límit $\\lim_{(x,y)\\to(x_0,0)} f(x,y)$ existeix; quin camí (no una recta des de l’origen, sinó que connecti amb $(x_0,0)$) et sembla més natural per provar-ho?",
-     "referencies": [
-      "T2.14",
-      "T3.6"
      ],
      "accio": "validar_i_avancar",
      "nivell": 1,
@@ -835,34 +239,576 @@
      "want_error": null,
      "crides": [
       {
-       "stage": "diagnosi",
+       "stage": "diagnosis",
        "model": "gpt-5.4-nano",
-       "latency_ms": 2224,
-       "input_tokens": 6595,
-       "output_tokens": 294,
-       "cached_tokens": 4864,
-       "extra": {}
+       "latency_ms": 1863,
+       "input_tokens": 4970,
+       "output_tokens": 201,
+       "cached_tokens": 0
       },
       {
-       "stage": "resposta",
+       "stage": "reply",
        "model": "gpt-5.4-nano",
-       "latency_ms": 2485,
-       "input_tokens": 3508,
-       "output_tokens": 231,
-       "cached_tokens": 0,
-       "extra": {}
+       "latency_ms": 1753,
+       "input_tokens": 2261,
+       "output_tokens": 163,
+       "cached_tokens": 0
       },
       {
-       "stage": "guardia",
+       "stage": "guard",
        "model": "gpt-5.4-nano",
-       "latency_ms": 1831,
-       "input_tokens": 7159,
-       "output_tokens": 237,
-       "cached_tokens": 3840,
-       "extra": {}
+       "latency_ms": 1205,
+       "input_tokens": 4956,
+       "output_tokens": 101,
+       "cached_tokens": 0
       }
      ],
-     "latencia_ms": 6540
+     "latencia_ms": 4942
+    },
+    {
+     "alumne": "Llavors $DG^{-1}(4,4,-1)$ és la jacobiana de $G$ al punt $(4,4,-1)$ invertida, no?",
+     "tutor": "Bé, estàs connectant la idea de $DG^{-1}$ amb la inversa de $DG$, però abans cal aclarir en quin punt realment s’ha d’avaluar $JG$. El punt $(4,4,-1)$ pertany al domini de $G$ o al de $G^{-1}$? Si és del de $G^{-1}$, quin és llavors el punt $x$ tal que $G(x)=(4,4,-1)$ i en quin punt has d’avaluar $JG$ segons el Teorema 5 del Tema 4?",
+     "referencies": [
+      "T4.5"
+     ],
+     "accio": "questionar_error",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [
+      "punt_equivocat"
+     ],
+     "want_intent": "mostra_treball",
+     "want_error": "punt_equivocat",
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 3435,
+       "input_tokens": 5183,
+       "output_tokens": 400,
+       "cached_tokens": 3840
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1409,
+       "input_tokens": 2585,
+       "output_tokens": 127,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1321,
+       "input_tokens": 5244,
+       "output_tokens": 120,
+       "cached_tokens": 2816
+      }
+     ],
+     "latencia_ms": 6170
+    },
+    {
+     "alumne": "Què diu exactament el teorema de la funció inversa?",
+     "tutor": "El que pregunta el Teorema de la funció inversa (Teorema 5 del Tema 4) és: si a un punt $a$ tens $Jf(a)$ invertible (és a dir, $\\det(Jf(a))\\neq 0$, i $f\\in \\mathcal C^r$), llavors existeix una inversa local $f^{-1}$ definida en un entorn $V$ de $f(a)$, i la seva derivada compleix $Df^{-1}(y_0)=\\big(Df(f^{-1}(y_0))\\big)^{-1}$ per a $y_0\\in V$. La idea clau és que primer es relaciona $a$ amb la seva imatge $f(a)$, i després $y_0$ ha d’estar en l’entorn on aquella inversa local té sentit; per això cal identificar quin punt del domini és $f^{-1}(y_0)$. Com ho pots fer per trobar, a partir del teu $y_0$, quin és el punt $x$ que satisfà $f(x)=y_0$?",
+     "referencies": [
+      "T4.5"
+     ],
+     "accio": "explicar_concepte",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 2,
+     "draft_errors": 0,
+     "intencio": "pregunta_conceptual",
+     "errors": [],
+     "want_intent": "pregunta_conceptual",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1686,
+       "input_tokens": 5329,
+       "output_tokens": 196,
+       "cached_tokens": 4864
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2674,
+       "input_tokens": 2642,
+       "output_tokens": 204,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2947,
+       "input_tokens": 5378,
+       "output_tokens": 326,
+       "cached_tokens": 2816
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2093,
+       "input_tokens": 2760,
+       "output_tokens": 244,
+       "cached_tokens": 1792
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2064,
+       "input_tokens": 5418,
+       "output_tokens": 256,
+       "cached_tokens": 4864
+      }
+     ],
+     "latencia_ms": 11506
+    },
+    {
+     "alumne": "Com que té inversa local a tot arreu on $3+6z\\neq0$, $G$ té inversa global.",
+     "tutor": "Vas bé en usar el Teorema 5 del Tema 4 per a la inversa local al voltant de $(1,-1,2)$, però per dir que és inversa global no n’hi ha prou amb que $\\det(JG)$ no sigui zero en un punt. Què hauria de complir $G$ a tot $\\mathbb{R}^3$ perquè existeixi una única inversa per a qualsevol valor de sortida (o, dit d’una altra manera, per què $G$ hauria de ser injectiva i tenir inversa definida globalment)?",
+     "referencies": [
+      "T4.5"
+     ],
+     "accio": "questionar_error",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [
+      "local_implica_global"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": "local_implica_global",
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2541,
+       "input_tokens": 5605,
+       "output_tokens": 317,
+       "cached_tokens": 4864
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1401,
+       "input_tokens": 3007,
+       "output_tokens": 126,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1481,
+       "input_tokens": 5665,
+       "output_tokens": 138,
+       "cached_tokens": 2816
+      }
+     ],
+     "latencia_ms": 5426
+    }
+   ]
+  },
+  {
+   "exercici": "t6-3a",
+   "torns": [
+    {
+     "alumne": "No sé per on començar.",
+     "tutor": "Entenc el bloqueig: aquí la clau és primer saber si “hi ha extrems” abans de calcular-los.  \nPensa en la IDEA: mira el conjunt de lligam $K=\\{(x,y):x^2+2y^2=3\\}$ i comprova si és compacte (tancat i fitat, Teorema de Heine-Borel) i si $f(x,y)=x$ és contínua sobre $K$ (és polinòmica).  \nSi això es compleix, llavors per Weierstrass (Teorema 23 del Tema 2) el màxim i el mínim absoluts existeixen a $K$.  \nCanviant a una comprovació concreta: el conjunt $K$ és tancat i fitat en $\\mathbb{R}^2$?",
+     "referencies": [
+      "T2.23"
+     ],
+     "accio": "pista",
+     "nivell": 2,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "frustracio",
+     "errors": [],
+     "want_intent": "demana_pista",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1690,
+       "input_tokens": 3500,
+       "output_tokens": 147,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1778,
+       "input_tokens": 1648,
+       "output_tokens": 182,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1705,
+       "input_tokens": 2939,
+       "output_tokens": 168,
+       "cached_tokens": 0
+      }
+     ],
+     "latencia_ms": 5258
+    },
+    {
+     "alumne": "Sobre l'el·lipse $x^2=3-2y^2\\le3$, així que $|x|\\le\\sqrt3$.",
+     "tutor": "Bona feina: ja tens informació de la fitació, ara et falta comprovar el “tancat” per poder usar Heine-Borel.  \nFes servir que $g(x,y)=x^2+2y^2$ és contínua i escriu $M=g^{-1}(\\{3\\})$; com que $\\{3\\}$ és tancat, què pots concloure sobre $M$?  \nUn cop confirmis que $M$ és compacte, aplica Teorema 23 del Tema 2: $f(x,y)=x$ és contínua, així que què et garanteix sobre l’existència d’un màxim i un mínim absoluts a $M$?",
+     "referencies": [
+      "T2.23"
+     ],
+     "accio": "pista",
+     "nivell": 3,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2169,
+       "input_tokens": 3724,
+       "output_tokens": 283,
+       "cached_tokens": 2816
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1604,
+       "input_tokens": 1926,
+       "output_tokens": 153,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1590,
+       "input_tokens": 3188,
+       "output_tokens": 159,
+       "cached_tokens": 1792
+      }
+     ],
+     "latencia_ms": 5368
+    },
+    {
+     "alumne": "Per tant el màxim és $\\sqrt3$ i el mínim $-\\sqrt3$.",
+     "tutor": "Has fet bé de pensar en la fitació de $x$, però ara falta el pas clau: aquesta “fita” s’ha de poder aconseguir dins el lligam.  \nEl lligam és $M=\\{x^2+2y^2=3\\}$; si és compacte i $f(x,y)=x$ és contínua, el Teorema de Weierstrass (Teorema 23 del Tema 2) garanteix que el màxim i el mínim es donen en algun punt de $M$.  \nAra, a partir de la teva cota $|x|\\le \\sqrt3$, hi ha algun punt del l’ el·lipse on $x$ valgui exactament $\\sqrt3$ (o $-\\sqrt3$)?",
+     "referencies": [
+      "T2.23"
+     ],
+     "accio": "questionar_error",
+     "nivell": 3,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [
+      "fita_sense_assolir"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2082,
+       "input_tokens": 3900,
+       "output_tokens": 259,
+       "cached_tokens": 2816
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1924,
+       "input_tokens": 2299,
+       "output_tokens": 170,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1188,
+       "input_tokens": 3578,
+       "output_tokens": 110,
+       "cached_tokens": 1792
+      }
+     ],
+     "latencia_ms": 5198
+    },
+    {
+     "alumne": "S'assoleixen a $(\\sqrt3,0)$ i $(-\\sqrt3,0)$, perquè quan $y=0$ tenim $x^2=3$, i l'el·lipse és compacta.",
+     "tutor": "Exacte: has justificat bé que el conjunt de lligam $M=\\{x^2+2y^2=3\\}$ és compacte (tancat i fitat), i que $f(x,y)=x$ és contínua, així que pel Teorema de Weierstrass (Teorema 23 del Tema 2) existeixen el màxim i el mínim absoluts.  \nA més, has identificat correctament quan s’assoleix la cota $|x|\\le\\sqrt3$: passa només a $y=0$, donant $(\\sqrt3,0)$ i $(-\\sqrt3,0)$.  \nPer tant, el màxim absolut és $\\sqrt3$ a $(\\sqrt3,0)$ i el mínim absolut és $-\\sqrt3$ a $(-\\sqrt3,0)$.",
+     "referencies": [
+      "T2.23"
+     ],
+     "accio": "tancar",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [],
+     "want_intent": "proposa_resultat",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 3011,
+       "input_tokens": 4122,
+       "output_tokens": 398,
+       "cached_tokens": 2816
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1910,
+       "input_tokens": 2446,
+       "output_tokens": 185,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1313,
+       "input_tokens": 3740,
+       "output_tokens": 107,
+       "cached_tokens": 1792
+      }
+     ],
+     "latencia_ms": 6236
+    }
+   ]
+  },
+  {
+   "exercici": "t3-5",
+   "torns": [
+    {
+     "alumne": "Sobre les rectes $y=mx$ el límit a l'origen és $0$, per tant $f$ és contínua a l'origen.",
+     "tutor": "Bona intuïció mirar les rectes \\(y=mx\\), però la continuïtat a l’origen demana controlar \\(f(x,y)\\) quan \\((x,y)\\to(0,0)\\) sense restringir-se només a rectes.  \nHi ha camins cap a l’origen on \\(y\\) es faci molt petit “comparat” amb \\(x^2\\) de manera diferent que en una recta, de manera que el quocient podria no decaure com esperes.  \nHas considerat algun camí tipus \\(y=y(x)\\) no lineal (per exemple \\(y\\) del mateix ordre que \\(x^2\\)) i comparar què passa?  \nQuin és un camí no rectilini cap a \\((0,0)\\) que triaries per comprovar si el límit realment és \\(0\\)?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 2,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [
+      "nomes_rectes"
+     ],
+     "want_intent": "proposa_resultat",
+     "want_error": "nomes_rectes",
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 3827,
+       "input_tokens": 6139,
+       "output_tokens": 546,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1399,
+       "input_tokens": 1491,
+       "output_tokens": 119,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1868,
+       "input_tokens": 1556,
+       "output_tokens": 219,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1286,
+       "input_tokens": 4990,
+       "output_tokens": 112,
+       "cached_tokens": 0
+      }
+     ],
+     "latencia_ms": 8441
+    },
+    {
+     "alumne": "A l'origen, $D_vf(0,0)=\\lim_{t\\to0}\\frac{f(tv)}{t}=\\frac{v_1^2}{v_2}$ si $v_2\\neq0$. Com que existeixen totes, $f$ és contínua a l'origen.",
+     "tutor": "Veig el que intentes amb la derivada direccional, però cal vigilar el salt “si existeixen totes, llavors hi ha continuïtat”. Una derivada direccional, pel que diu la Definició 1 del Tema 3, descriu el comportament de $f$ només quan et mous al llarg d’una recta $a+tu$ (és a dir, en una variable). En canvi, la continuïtat a l’origen (Tema 2, Definició 14) demana que el límit de $f(x,y)$ existeixi i coincideixi amb $f(0,0)$ quan $(x,y)\\to(0,0)$, és a dir, per camins en tot un entorn i no només per rectes. Què et garantiria, a partir de l’existència de $D_u f(0,0)$ per a totes les direccions $u$, sobre el límit de $f(x,y)$ quan t’acostes a $(0,0)$ per un camí no rectilini?",
+     "referencies": [
+      "T3.1"
+     ],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "proposa_resultat",
+     "errors": [
+      "direccionals_implica_continuitat"
+     ],
+     "want_intent": "mostra_treball",
+     "want_error": "direccionals_implica_continuitat",
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 4400,
+       "input_tokens": 6409,
+       "output_tokens": 611,
+       "cached_tokens": 5888
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2139,
+       "input_tokens": 1754,
+       "output_tokens": 231,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1825,
+       "input_tokens": 5297,
+       "output_tokens": 205,
+       "cached_tokens": 3840
+      }
+     ],
+     "latencia_ms": 8368
+    },
+    {
+     "alumne": "Dona'm una pista per estudiar la continuïtat a l'origen.",
+     "tutor": "Ara l'objectiu és aquest: Veure on la funció és clarament contínua. Com ho començaries?",
+     "referencies": [],
+     "accio": "questionar_error",
+     "nivell": 0,
+     "fallback": true,
+     "intents": 3,
+     "draft_errors": 0,
+     "intencio": "demana_pista",
+     "errors": [
+      "altre"
+     ],
+     "want_intent": "demana_pista",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2628,
+       "input_tokens": 6659,
+       "output_tokens": 347,
+       "cached_tokens": 5888
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1464,
+       "input_tokens": 2061,
+       "output_tokens": 147,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2273,
+       "input_tokens": 5517,
+       "output_tokens": 307,
+       "cached_tokens": 3840
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1407,
+       "input_tokens": 2182,
+       "output_tokens": 143,
+       "cached_tokens": 1792
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 3838,
+       "input_tokens": 5521,
+       "output_tokens": 573,
+       "cached_tokens": 4864
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2614,
+       "input_tokens": 2184,
+       "output_tokens": 312,
+       "cached_tokens": 1792
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1641,
+       "input_tokens": 5507,
+       "output_tokens": 191,
+       "cached_tokens": 4864
+      }
+     ],
+     "latencia_ms": 15946
+    },
+    {
+     "alumne": "Fora de l'eix $y=0$ és un quocient de polinomis amb denominador no nul, així que és contínua.",
+     "tutor": "Molt bé: has encertat que a l’obert $y\\neq 0$ la funció és quocient de polinomis amb denominador no nul, i per tant és contínua (això ja ho tenies ben fet). Ara toca el pas següent: què passa als punts on $y=0$ però $x_0\\neq 0$? Concretament, vols estudiar si $\\lim_{(x,y)\\to(x_0,0)} f(x,y)$ existeix i si coincideix amb $f(x_0,0)=0$ (Tema 2, Definició 14). Quin camí (no lineal o bé una recta) triaries per provar el possible comportament d’aquest límit quan t’acostes a $(x_0,0)$?",
+     "referencies": [],
+     "accio": "validar_i_avancar",
+     "nivell": 1,
+     "fallback": false,
+     "intents": 1,
+     "draft_errors": 0,
+     "intencio": "mostra_treball",
+     "errors": [],
+     "want_intent": "mostra_treball",
+     "want_error": null,
+     "crides": [
+      {
+       "stage": "diagnosis",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2584,
+       "input_tokens": 6723,
+       "output_tokens": 282,
+       "cached_tokens": 5888
+      },
+      {
+       "stage": "reply",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 1860,
+       "input_tokens": 2379,
+       "output_tokens": 177,
+       "cached_tokens": 0
+      },
+      {
+       "stage": "guard",
+       "model": "gpt-5.4-nano",
+       "latency_ms": 2085,
+       "input_tokens": 5865,
+       "output_tokens": 167,
+       "cached_tokens": 3840
+      }
+     ],
+     "latencia_ms": 6531
     }
    ]
   }
@@ -870,17 +816,17 @@
  "metrics": {
   "turns": 16,
   "failed_turns": 0,
-  "fallback": 2,
-  "drafts_per_turn": 1.5,
+  "fallback": 1,
+  "drafts_per_turn": 1.38,
   "draft_errors": 0,
   "latex_broken": 0,
   "intent_match": 9,
   "error_match": 15,
-  "cost_usd": 0.0457,
-  "cost_per_turn_usd": 0.00286,
-  "latency_s": 8.1,
-  "input_tokens": 205577,
-  "cached_tokens": 76032,
-  "output_tokens": 14644
+  "cost_usd": 0.0406,
+  "cost_per_turn_usd": 0.00254,
+  "latency_s": 7.5,
+  "input_tokens": 216826,
+  "cached_tokens": 106496,
+  "output_tokens": 13130
  }
 }

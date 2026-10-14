@@ -1,0 +1,330 @@
+{
+  "id": "e6a93070b0fc",
+  "font": "tema-2",
+  "tema": 2,
+  "dificultat": "normal",
+  "afirmacions": [
+    {
+      "id": "a1",
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ tal que, per a cada $x\\in\\mathbb{R}$, existeix $g(x)=\\lim_{y\\to0}f(x,y)$ i, per a cada $y\\in\\mathbb{R}$, existeix $h(y)=\\lim_{x\\to0}f(x,y)$. Si $\\lim_{x\\to0}g(x)=A$ i $\\lim_{y\\to0}h(y)=B$ amb $A\\neq B$, aleshores no existeix $\\lim_{(x,y)\\to(0,0)}f(x,y)$.",
+      "veredicte": "cert",
+      "concepte": "Límits iterats",
+      "trampa": "cert_resultat",
+      "contraexemple": "",
+      "resolucio": "Suposem, per reducció a l'absurd, que existeix $\\lim_{(x,y)\\to(0,0)}f(x,y)=L$. Com que $f$ està definida a tot $\\mathbb{R}^2$, qualsevol quadrat $(-\\eta,\\eta)\\times(-\\eta,\\eta)$ és dins del domini, i per hipòtesi existeixen els límits interiors $\\lim_{y\\to0}f(x,y)$ i $\\lim_{x\\to0}f(x,y)$ per a tot $x$ i tot $y$. Aleshores la proposició 12 dona $\\lim_{x\\to0}\\lim_{y\\to0}f(x,y)=L=\\lim_{y\\to0}\\lim_{x\\to0}f(x,y)$, és a dir, $A=L=B$, en contradicció amb $A\\neq B$. Per exemple, $f(x,y)=\\frac{x^2-y^2}{x^2+y^2}$ (amb $f(0,0)=0$) té iterats $1$ i $-1$.",
+      "idees_clau": [
+        "raonament per reducció a l'absurd",
+        "es comproven les hipòtesis de la proposició 12 (domini i existència dels límits interiors)",
+        "la proposició 12 forçaria $A=L=B$"
+      ],
+      "pista": "Si el límit doble existís, què diu la proposició 12 dels dos límits iterats? Es compleixen totes les seves hipòtesis?",
+      "teoria": [
+        "T2.12",
+        "T2.8"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "Si existís el límit L, donat ε>0, hi ha δ amb |f(x,y)-L|<ε quan 0<||(x,y)||<δ. Per a 0<|x|<δ/2, fent y→0 surt |g(x)-L|≤ε, i per tant A=L. Anàlogament B=L, i llavors A=B, contradicció.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a2",
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$. Si per a tota recta $r$ que passa per l'origen es compleix que el límit de $f$ restringida a $r$ quan el punt tendeix a $(0,0)$ val $0$, aleshores $\\lim_{(x,y)\\to(0,0)}f(x,y)=0$.",
+      "veredicte": "fals",
+      "concepte": "Límits per camins",
+      "trampa": "informacio_parcial",
+      "contraexemple": "$f(x,y)=\\frac{x^2y}{x^4+y^2}$ si $(x,y)\\neq(0,0)$, $f(0,0)=0$: sobre totes les rectes el límit és $0$, però sobre la paràbola $y=x^2$ val $\\frac{1}{2}$.",
+      "resolucio": "Prenem $f(x,y)=\\frac{x^2y}{x^4+y^2}$ per a $(x,y)\\neq(0,0)$ i $f(0,0)=0$. Sobre la recta $x=0$ tenim $f(0,y)=0$, i el límit és $0$. Sobre la recta $y=mx$ (amb $x\\neq0$), $f(x,mx)=\\frac{mx^3}{x^4+m^2x^2}=\\frac{mx}{x^2+m^2}$, que tendeix a $0$ quan $x\\to0$ (si $m=0$ la funció és idènticament $0$; si $m\\neq0$ el denominador tendeix a $m^2\\neq0$). Per tant la hipòtesi es compleix. En canvi, sobre la paràbola $y=x^2$, $f(x,x^2)=\\frac{x^4}{2x^4}=\\frac{1}{2}$ per a $x\\neq0$, de manera que, per la proposició 10 (amb $g(x)=x^2$ contínua i $g(0)=0$), si existís el límit doble hauria de valer $\\frac{1}{2}$, i també $0$ (pel camí $y=0$). Per la unicitat del límit, el límit doble no existeix.",
+      "idees_clau": [
+        "sobre cada recta $y=mx$ i sobre $x=0$ el límit és $0$",
+        "sobre la paràbola $y=x^2$ el límit és $\\frac{1}{2}$",
+        "les rectes no esgoten tots els camins: la proposició 10 només dona una condició necessària"
+      ],
+      "pista": "Quina condició exigeix la definició de límit doble que no exigeixen els límits sobre rectes?",
+      "teoria": [
+        "T2.10",
+        "T2.11",
+        "T2.8"
+      ],
+      "comprovacions": [
+        {
+          "descripcio": "límit sobre la recta y=mx",
+          "tipus": "limit",
+          "expressio": "x**2*(m*x)/(x**4+(m*x)**2)",
+          "variable": "x",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "0",
+          "estat": "ok",
+          "calculat": "0",
+          "detall": ""
+        },
+        {
+          "descripcio": "límit sobre la paràbola y=x^2",
+          "tipus": "limit",
+          "expressio": "x**2*(x**2)/(x**4+(x**2)**2)",
+          "variable": "x",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "1/2",
+          "estat": "ok",
+          "calculat": "1/2",
+          "detall": ""
+        }
+      ],
+      "verificacio": {
+        "solucionador": "Contraexemple: f(x,y)=x^2 y/(x^4+y^2) si (x,y)≠(0,0), f(0,0)=0. Sobre y=mx dona m x/(x^2+m^2)→0 i sobre x=0 val 0, però sobre y=x^2 val 1/2, així que el límit a (0,0) no existeix.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a3",
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ tal que, per a cada $b\\in\\mathbb{R}$, la funció $x\\mapsto f(x,b)$ és contínua a $\\mathbb{R}$ i, per a cada $a\\in\\mathbb{R}$, la funció $y\\mapsto f(a,y)$ és contínua a $\\mathbb{R}$. Aleshores $f$ és contínua a $(0,0)$.",
+      "veredicte": "fals",
+      "concepte": "Continuïtat en cada variable",
+      "trampa": "generalitzacio",
+      "contraexemple": "$f(x,y)=\\frac{x^2y^2}{x^4+y^4}$ si $(x,y)\\neq(0,0)$, $f(0,0)=0$: és contínua en cada variable separadament, però sobre $y=x$ tendeix a $\\frac{1}{2}\\neq f(0,0)$.",
+      "resolucio": "Sigui $f(x,y)=\\frac{x^2y^2}{x^4+y^4}$ si $(x,y)\\neq(0,0)$ i $f(0,0)=0$. Fixat $b\\neq0$, $x\\mapsto\\frac{x^2b^2}{x^4+b^4}$ és un quocient de polinomis amb denominador $\\geq b^4>0$, per tant contínua a $\\mathbb{R}$. Fixat $b=0$, $f(x,0)=0$ per a tot $x$ (també per a $x=0$), que és contínua. Per simetria de $f$ en $x$ i $y$, el mateix val per a $y\\mapsto f(a,y)$. En canvi, sobre la recta $y=x$, $f(x,x)=\\frac{x^4}{2x^4}=\\frac{1}{2}$ per a $x\\neq0$; per la proposició 10, si $f$ fos contínua a $(0,0)$ caldria $\\lim_{x\\to0}f(x,x)=f(0,0)=0$. Per tant $f$ no és contínua a l'origen.",
+      "idees_clau": [
+        "$f(x,0)=f(0,y)=0$ i les restriccions a rectes horitzontals i verticals són contínues",
+        "sobre $y=x$ el límit és $\\frac{1}{2}\\neq f(0,0)$",
+        "la continuïtat en cada variable només controla les direccions dels eixos"
+      ],
+      "pista": "Les hipòtesis controlen $f$ quan ens movem paral·lelament als eixos. Què en sabem si ens acostem a l'origen per la diagonal?",
+      "teoria": [
+        "T2.10",
+        "T2.14"
+      ],
+      "comprovacions": [
+        {
+          "descripcio": "sobre l'eix y=0 la funció és idènticament 0",
+          "tipus": "igualtat",
+          "expressio": "x**2*0**2/(x**4+0**4)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "0",
+          "estat": "ok",
+          "calculat": "0",
+          "detall": ""
+        },
+        {
+          "descripcio": "límit sobre la diagonal y=x",
+          "tipus": "limit",
+          "expressio": "x**2*x**2/(x**4+x**4)",
+          "variable": "x",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "1/2",
+          "estat": "ok",
+          "calculat": "1/2",
+          "detall": ""
+        }
+      ],
+      "verificacio": {
+        "solucionador": "Contraexemple: f(x,y)=xy/(x^2+y^2), amb f(0,0)=0. Per a b fix, x↦xb/(x^2+b^2) és contínua (val idènticament 0 si b=0), i el mateix passa amb y. Però sobre y=mx el límit és m/(1+m^2), així que f no és contínua a (0,0) (Exemple 13).",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a4",
+      "enunciat": "Si $A\\subseteq\\mathbb{R}^2$ és un conjunt tancat i $f:\\mathbb{R}^2\\to\\mathbb{R}$ és contínua, aleshores $f(A)$ és un conjunt tancat de $\\mathbb{R}$.",
+      "veredicte": "fals",
+      "concepte": "Imatge contínua de tancats",
+      "trampa": "hipotesi_eliminada",
+      "contraexemple": "$A=\\{(x,y)\\in\\mathbb{R}^2: xy=1\\}$ i $f(x,y)=x$: $A$ és tancat però $f(A)=\\mathbb{R}\\setminus\\{0\\}$ no ho és.",
+      "resolucio": "Sigui $A=\\{(x,y)\\in\\mathbb{R}^2: xy=1\\}$. És tancat pel corol·lari 18, ja que $A=\\{xy\\geq1\\}\\cap\\{1\\geq xy\\}$ i $(x,y)\\mapsto xy$ és contínua. La projecció $f(x,y)=x$ és contínua (és lineal). Si $(x,y)\\in A$, aleshores $x\\neq0$; i per a tot $t\\neq0$, $(t,1/t)\\in A$ amb $f(t,1/t)=t$. Per tant $f(A)=\\mathbb{R}\\setminus\\{0\\}$, que no és tancat: $0$ és límit de la successió $\\frac{1}{n}\\in f(A)$ però $0\\notin f(A)$. El que sí es conserva (proposició 21) és la compacitat, i $A$ no és fitat.",
+      "idees_clau": [
+        "la hipèrbola $xy=1$ és tancada però no fitada",
+        "la seva projecció sobre l'eix $x$ és $\\mathbb{R}\\setminus\\{0\\}$",
+        "les funcions contínues conserven compactes, no tancats"
+      ],
+      "pista": "Quines propietats dels conjunts es conserven per imatge contínua segons els apunts? Ser tancat n'és una?",
+      "teoria": [
+        "T2.18",
+        "T2.21"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "A={(x,y): xy=1, x>0} és tancat (antiimatge del tancat {1} per xy, intersecada amb el semiplà tancat x≥0). Amb f(x,y)=x tenim f(A)=(0,+∞), que no és tancat. Només la compacitat es conserva.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a5",
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ contínua tal que $f(p,q)=0$ per a tots $p,q\\in\\mathbb{Q}$. Aleshores $f(x,y)=0$ per a tot $(x,y)\\in\\mathbb{R}^2$.",
+      "veredicte": "cert",
+      "concepte": "Caracterització seqüencial de continuïtat",
+      "trampa": "cert_demostracio",
+      "contraexemple": "",
+      "resolucio": "Sigui $(x,y)\\in\\mathbb{R}^2$. Per la densitat de $\\mathbb{Q}$ a $\\mathbb{R}$, existeixen successions de racionals $p_n\\to x$ i $q_n\\to y$ (per exemple, $p_n\\in\\mathbb{Q}$ amb $|p_n-x|<\\frac{1}{n}$). Aleshores $(p_n,q_n)\\to(x,y)$ a $\\mathbb{R}^2$, ja que $\\|(p_n,q_n)-(x,y)\\|\\leq|p_n-x|+|q_n-y|\\to0$. Com que $f$ és contínua, pel teorema 17(b), $f(x,y)=\\lim_{n\\to\\infty}f(p_n,q_n)=\\lim_{n\\to\\infty}0=0$.",
+      "idees_clau": [
+        "$\\mathbb{Q}^2$ és dens a $\\mathbb{R}^2$: tot punt és límit d'una successió de punts amb coordenades racionals",
+        "caracterització seqüencial de la continuïtat (teorema 17(b))",
+        "el límit d'una successió constantment nul·la és $0$"
+      ],
+      "pista": "Pots aproximar qualsevol punt de $\\mathbb{R}^2$ per punts de coordenades racionals? Què diu la continuïtat sobre els valors de $f$ al llarg d'una successió convergent?",
+      "teoria": [
+        "T2.17"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "Q^2 és dens a R^2. Per a qualsevol (x,y), prenem (p_n,q_n)∈Q^2 amb (p_n,q_n)→(x,y). Per continuïtat (caracterització per successions), f(x,y)=lim f(p_n,q_n)=0.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a6",
+      "enunciat": "Tota funció $f:[0,1]\\to\\mathbb{R}$ uniformement contínua és de Lipschitz.",
+      "veredicte": "fals",
+      "concepte": "Lipschitz i continuïtat uniforme",
+      "trampa": "reciproc",
+      "contraexemple": "$f(x)=\\sqrt{x}$ a $[0,1]$: és uniformement contínua (Heine-Cantor) però el quocient $\\frac{\\sqrt{x}-\\sqrt{0}}{x-0}=\\frac{1}{\\sqrt{x}}$ no és fitat.",
+      "resolucio": "Sigui $f(x)=\\sqrt{x}$ a $[0,1]$. És contínua i $[0,1]$ és compacte, així que pel teorema de Heine-Cantor és uniformement contínua. Si fos de Lipschitz amb constant $C>0$, tindríem per a tot $x\\in(0,1]$: $\\sqrt{x}=|f(x)-f(0)|<C\\,x$, és a dir, $\\frac{1}{\\sqrt{x}}<C$. Però $\\frac{1}{\\sqrt{x}}\\to+\\infty$ quan $x\\to0^+$, contradicció. Per tant $f$ no és de Lipschitz: la implicació Lipschitz $\\Rightarrow$ uniformement contínua de la proposició 28 no es pot invertir, ni tan sols en un compacte.",
+      "idees_clau": [
+        "$\\sqrt{x}$ és uniformement contínua a $[0,1]$ per Heine-Cantor",
+        "$\\frac{|f(x)-f(0)|}{|x-0|}=\\frac{1}{\\sqrt{x}}\\to+\\infty$ quan $x\\to0^+$",
+        "una constant de Lipschitz fitaria aquest quocient"
+      ],
+      "pista": "Què controla exactament la condició de Lipschitz que la definició de continuïtat uniforme no controla?",
+      "teoria": [
+        "T2.25",
+        "T2.26",
+        "T2.28",
+        "T2.29"
+      ],
+      "comprovacions": [
+        {
+          "descripcio": "el quocient incremental a 0 tendeix a infinit",
+          "tipus": "limit",
+          "expressio": "sqrt(x)/x",
+          "variable": "x",
+          "punt": "0",
+          "costat": "dreta",
+          "valor": "oo",
+          "estat": "ok",
+          "calculat": "oo",
+          "detall": ""
+        }
+      ],
+      "verificacio": {
+        "solucionador": "f(x)=sqrt(x) és contínua al compacte [0,1] i, per Heine-Cantor, uniformement contínua. No és Lipschitz: |f(x)-f(0)|/|x-0|=1/sqrt(x)→∞ quan x→0+.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a7",
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ tal que existeix $\\lim_{(x,y)\\to(0,0)}f(x,y)=L$. Aleshores existeixen els dos límits iterats $\\lim_{x\\to0}\\lim_{y\\to0}f(x,y)$ i $\\lim_{y\\to0}\\lim_{x\\to0}f(x,y)$, i tots dos valen $L$.",
+      "veredicte": "fals",
+      "concepte": "Límit doble i límits iterats",
+      "trampa": "conclusio_mes_forta",
+      "contraexemple": "$f(x,y)=x\\sin(1/y)$ si $y\\neq0$, $f(x,0)=0$: el límit doble és $0$, però per a $x\\neq0$ no existeix $\\lim_{y\\to0}f(x,y)$.",
+      "resolucio": "Sigui $f(x,y)=x\\sin(1/y)$ si $y\\neq0$ i $f(x,0)=0$. Com que $|f(x,y)|\\leq|x|\\leq\\|(x,y)\\|$, per a tot $\\epsilon>0$ el valor $\\delta=\\epsilon$ funciona a la definició, i $\\lim_{(x,y)\\to(0,0)}f(x,y)=0$. En canvi, fixat $x\\neq0$, $\\lim_{y\\to0}x\\sin(1/y)$ no existeix, perquè $\\sin(1/y)$ no té límit quan $y\\to0$ (per exemple, sobre $y_n=\\frac{1}{n\\pi}$ val $0$ i sobre $y_n=\\frac{1}{2n\\pi+\\pi/2}$ val $1$). Per tant la funció $x\\mapsto\\lim_{y\\to0}f(x,y)$ no està definida per a cap $x\\neq0$ i el límit iterat $\\lim_{x\\to0}\\lim_{y\\to0}f(x,y)$ no existeix. La proposició 12 necessita, com a hipòtesi, que existeixin els límits interiors.",
+      "idees_clau": [
+        "$|x\\sin(1/y)|\\leq|x|$ implica que el límit doble és $0$",
+        "per a $x\\neq0$ fix, $\\lim_{y\\to0}x\\sin(1/y)$ no existeix",
+        "la proposició 12 suposa l'existència dels límits interiors"
+      ],
+      "pista": "Quines hipòtesis té la proposició 12 a més de l'existència del límit doble? Alguna d'elles es dedueix de l'existència del límit doble?",
+      "teoria": [
+        "T2.6",
+        "T2.12"
+      ],
+      "comprovacions": [
+        {
+          "descripcio": "per a x=2 fix, no existeix el límit quan y tendeix a 0",
+          "tipus": "no_limit",
+          "expressio": "2*sin(1/y)",
+          "variable": "y",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "",
+          "estat": "ok",
+          "calculat": "no existeix",
+          "detall": ""
+        },
+        {
+          "descripcio": "sobre la recta y=x el límit és 0",
+          "tipus": "limit",
+          "expressio": "x*sin(1/x)",
+          "variable": "x",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "0",
+          "estat": "ok",
+          "calculat": "0",
+          "detall": ""
+        }
+      ],
+      "verificacio": {
+        "solucionador": "Contraexemple: f(x,y)=x·sin(1/y) si y≠0, f(x,0)=0. Com que |f|≤|x|, el límit a (0,0) val 0. Però per a x≠0 fix, lim_{y→0} x·sin(1/y) no existeix, així que el límit iterat lim_x lim_y no existeix. La Prop. 12 exigeix l'existència dels límits interiors com a hipòtesi.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a8",
+      "enunciat": "Sigui $K\\subseteq\\mathbb{R}^n$ un compacte no buit i $f:K\\to\\mathbb{R}$ una funció contínua tal que $f(x)>0$ per a tot $x\\in K$. Aleshores existeix $c>0$ tal que $f(x)\\geq c$ per a tot $x\\in K$.",
+      "veredicte": "cert",
+      "concepte": "Teorema de Weierstrass",
+      "trampa": "cert_demostracio",
+      "contraexemple": "",
+      "resolucio": "Com que $f$ és contínua i $K$ és compacte i no buit, pel teorema de Weierstrass existeix $x_0\\in K$ tal que $f(x_0)=\\min_{x\\in K}f(x)$. Prenem $c=f(x_0)$. Per hipòtesi $c=f(x_0)>0$, i per definició de mínim $f(x)\\geq c$ per a tot $x\\in K$. Observem que la compacitat és essencial: a $(0,1]$ la funció $f(x)=x$ és positiva però el seu ínfim és $0$.",
+      "idees_clau": [
+        "Weierstrass: $f$ assoleix el mínim en un punt $x_0\\in K$",
+        "$c=f(x_0)>0$ perquè $f$ és positiva a tot $K$",
+        "l'ínfim es pren com a mínim, no només com a ínfim"
+      ],
+      "pista": "Quina diferència hi ha entre l'ínfim d'un conjunt de valors i el mínim? Quin paper hi juga la compacitat del domini?",
+      "teoria": [
+        "T2.23"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "Per Weierstrass, f assoleix el mínim en un punt x0∈K. Prenem c=f(x0)>0; aleshores f(x)≥c per a tot x∈K.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    }
+  ],
+  "verificacio": {
+    "rondes": [
+      {
+        "ronda": 1,
+        "demanades": 11,
+        "rebudes": 11,
+        "generacio": {
+          "model": "offline:claude-subagent",
+          "latency_ms": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "cached_tokens": 0
+        },
+        "rebutjades": [],
+        "solucionador": {
+          "model": "offline:claude-solver",
+          "latency_ms": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "cached_tokens": 0
+        },
+        "auditoria": {
+          "model": "offline:claude-auditor",
+          "latency_ms": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "cached_tokens": 0
+        },
+        "acceptades_total": 8
+      }
+    ]
+  },
+  "creat": 1791967533.7212572
+}

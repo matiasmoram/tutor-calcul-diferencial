@@ -1,0 +1,455 @@
+{
+  "id": "00cdb1000033",
+  "font": "tema-5",
+  "tema": 5,
+  "dificultat": "normal",
+  "afirmacions": [
+    {
+      "id": "a1",
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ de classe $\\mathcal{C}^\\infty$ amb un únic punt crític $\\mathbf{a}$. Si $\\mathbf{a}$ és un mínim local estricte de $f$, aleshores $f(\\mathbf{x})\\geq f(\\mathbf{a})$ per a tot $\\mathbf{x}\\in\\mathbb{R}^2$.",
+      "veredicte": "fals",
+      "concepte": "Extrems locals i absoluts",
+      "trampa": "generalitzacio",
+      "contraexemple": "$f(x,y)=x^2+y^2(1+x)^3$: l'únic punt crític és $(0,0)$, mínim local estricte, però $f(-2,y)=4-y^2$ no està fitada inferiorment.",
+      "resolucio": "Sigui $f(x,y)=x^2+y^2(1+x)^3$, polinomi. $f_x=2x+3y^2(1+x)^2$, $f_y=2y(1+x)^3$. De $f_y=0$: $y=0$ o $x=-1$. Si $y=0$, $f_x=2x=0$ dona $x=0$. Si $x=-1$, $f_x=-2\\neq0$. Per tant $(0,0)$ és l'únic punt crític. $Hf(0,0)=\\begin{pmatrix}2&0\\\\0&2\\end{pmatrix}$ és definida positiva, i $(0,0)$ és mínim local estricte. Però $f(-2,y)=4-y^2$, i per exemple $f(-2,3)=-5<0=f(0,0)$. En una variable l'afirmació és certa (entre un mínim i un punt més baix hi hauria un màxim, que seria un altre punt crític), però en dues variables es pot «sortir» de la vall sense passar per cap altre punt crític.",
+      "idees_clau": [
+        "l'únic punt crític és $(0,0)$",
+        "$Hf(0,0)$ és definida positiva: mínim local estricte",
+        "$f(-2,y)=4-y^2$ pren valors negatius",
+        "la propietat d'una variable no es generalitza"
+      ],
+      "pista": "En una variable, per què un únic punt crític que és mínim local ha de ser absolut? Quin pas d'aquest argument depèn de ser a la recta real?",
+      "teoria": [
+        "T5.21",
+        "T5.22",
+        "T5.33"
+      ],
+      "comprovacions": [
+        {
+          "descripcio": "derivada parcial respecte de x",
+          "tipus": "igualtat",
+          "expressio": "diff(x**2+y**2*(1+x)**3, x)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "2*x+3*y**2*(1+x)**2",
+          "estat": "ok",
+          "calculat": "2*x + 3*y**2*(x + 1)**2",
+          "detall": ""
+        },
+        {
+          "descripcio": "derivada parcial respecte de y",
+          "tipus": "igualtat",
+          "expressio": "diff(x**2+y**2*(1+x)**3, y)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "2*y*(1+x)**3",
+          "estat": "ok",
+          "calculat": "2*y*(x + 1)**3",
+          "detall": ""
+        },
+        {
+          "descripcio": "f_x sobre la recta x=-1",
+          "tipus": "igualtat",
+          "expressio": "2*(-1)+3*y**2*(1+(-1))**2",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "-2",
+          "estat": "ok",
+          "calculat": "-2",
+          "detall": ""
+        },
+        {
+          "descripcio": "f sobre la recta x=-2",
+          "tipus": "igualtat",
+          "expressio": "(-2)**2+y**2*(1+(-2))**3",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "4-y**2",
+          "estat": "ok",
+          "calculat": "4 - y**2",
+          "detall": ""
+        }
+      ],
+      "verificacio": {
+        "solucionador": "Contraexemple: f(x,y)=x^2+y^2(1-x)^3. f_y=2y(1-x)^3=0 dona y=0 (i llavors f_x=2x=0, x=0) o x=1 (i llavors f_x=2≠0); l'únic punt crític és (0,0), amb Hf=diag(2,2), definida positiva, i per tant mínim local estricte. Però f(4,1)=16-27=-11<0=f(0,0).",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a2",
+      "enunciat": "Sigui $f(x,y)=\\mathrm{e}^x\\sin(xy)$. Aleshores $\\dfrac{\\partial^3 f}{\\partial x^2\\partial y}(0,0)=2$.",
+      "veredicte": "cert",
+      "concepte": "Unicitat del polinomi de Taylor",
+      "trampa": "cert_demostracio",
+      "contraexemple": "",
+      "resolucio": "La funció és $\\mathcal{C}^\\infty$, i per Schwarz totes les derivades terceres amb dues $x$ i una $y$ coincideixen; en direm $f_{xxy}$. Pels desenvolupaments d'una variable, $\\mathrm{e}^x\\sin(xy)=xy+x^2y+R_4(x,y)$ amb $R_4/\\|(x,y)\\|^3\\to0$; per la unicitat del polinomi de Taylor, $P_3(x,y)=xy+x^2y$. A la fórmula de Taylor, el terme de grau 3 és $\\frac{1}{3!}\\sum_{i,j,k}D_{ijk}f(0,0)\\,x_ix_jx_k$, i el monomi $x^2y$ hi apareix $3$ vegades (ordres $xxy$, $xyx$, $yxx$), de manera que el seu coeficient és $\\frac{3}{3!}f_{xxy}(0,0)=\\frac12 f_{xxy}(0,0)$. Igualant a $1$, $f_{xxy}(0,0)=2$.",
+      "idees_clau": [
+        "$P_3(x,y)=xy+x^2y$ per unicitat del polinomi de Taylor",
+        "el coeficient de $x^2y$ és $\\frac{1}{2!\\,1!}f_{xxy}(0,0)$",
+        "per Schwarz l'ordre de derivació no importa"
+      ],
+      "pista": "Cal derivar tres vegades? Quina relació hi ha entre els coeficients del polinomi de Taylor i les derivades a l'origen, i com el podeu obtenir sense derivar?",
+      "teoria": [
+        "T5.14",
+        "T5.16",
+        "T5.17",
+        "T5.6"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "Pel polinomi de Taylor de l'exemple 17, f=xy+x^2y+O_4, de manera que el coeficient de x^2y és 1. Per a f C^infinit, el coeficient de x^2y és f_{xxy}(0,0)/(2!·1!), per tant f_{xxy}(0,0)=2 (l'ordre de derivació és irrellevant per Schwarz).",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a3",
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ de classe $\\mathcal{C}^2$ i $\\mathbf{a}$ un punt crític de $f$ amb $q_{Hf(\\mathbf{a})}$ definida positiva. Aleshores existeix $\\epsilon>0$ tal que $\\mathbf{a}$ és l'únic punt crític de $f$ a la bola $B(\\mathbf{a},\\epsilon)$.",
+      "veredicte": "cert",
+      "concepte": "Punts crítics aïllats",
+      "trampa": "cert_demostracio",
+      "contraexemple": "",
+      "resolucio": "El gradient $\\nabla f$ és de classe $\\mathcal{C}^1$, per tant diferenciable a $\\mathbf{a}$ amb diferencial $Hf(\\mathbf{a})$: $\\nabla f(\\mathbf{x})=Hf(\\mathbf{a})(\\mathbf{x}-\\mathbf{a})+\\mathbf{r}(\\mathbf{x})$ amb $\\|\\mathbf{r}(\\mathbf{x})\\|/\\|\\mathbf{x}-\\mathbf{a}\\|\\to0$ (hem usat $\\nabla f(\\mathbf{a})=\\mathbf{0}$). Com que $Hf(\\mathbf{a})$ és simètrica amb valors propis $\\lambda_1,\\lambda_2>0$, si $\\lambda=\\min(\\lambda_1,\\lambda_2)$ es té $\\|Hf(\\mathbf{a})\\mathbf{u}\\|\\geq\\lambda\\|\\mathbf{u}\\|$ (base ortonormal de vectors propis). Triem $\\epsilon>0$ amb $\\|\\mathbf{r}(\\mathbf{x})\\|\\leq\\frac{\\lambda}{2}\\|\\mathbf{x}-\\mathbf{a}\\|$ a $B(\\mathbf{a},\\epsilon)$. Aleshores, per a $\\mathbf{x}\\neq\\mathbf{a}$ de la bola, $\\|\\nabla f(\\mathbf{x})\\|\\geq\\frac{\\lambda}{2}\\|\\mathbf{x}-\\mathbf{a}\\|>0$, i $\\mathbf{x}$ no és crític.",
+      "idees_clau": [
+        "$\\nabla f(\\mathbf{x})=Hf(\\mathbf{a})(\\mathbf{x}-\\mathbf{a})+o(\\|\\mathbf{x}-\\mathbf{a}\\|)$",
+        "$\\|Hf(\\mathbf{a})\\mathbf{u}\\|\\geq\\lambda_{\\min}\\|\\mathbf{u}\\|$ amb $\\lambda_{\\min}>0$",
+        "el gradient no s'anul·la a prop de $\\mathbf{a}$ excepte a $\\mathbf{a}$"
+      ],
+      "pista": "Quina aproximació lineal té el gradient a prop de $\\mathbf{a}$? Si una matriu simètrica té tots els valors propis positius, pot enviar un vector no nul a $\\mathbf{0}$?",
+      "teoria": [
+        "T5.29",
+        "T5.32",
+        "T5.33"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "∇f és C^1 i diferenciable en a amb D(∇f)(a)=Hf(a), de manera que ∇f(x)=Hf(a)(x-a)+o(||x-a||). Com Hf(a) és definida positiva, és invertible i ||Hf(a)u||≥λ_min||u||, per tant ∇f(x)≠0 per a 0<||x-a||<ε amb ε prou petit. Alternativament, pel teorema de la funció inversa ∇f és localment injectiva.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a4",
+      "enunciat": "Sigui $f:\\mathbb{R}\\to\\mathbb{R}$ de classe $\\mathcal{C}^\\infty$ tal que $f^{(k)}(0)=0$ per a tot $k\\geq0$. Aleshores existeix $\\epsilon>0$ tal que $f(x)=0$ per a tot $x\\in(-\\epsilon,\\epsilon)$.",
+      "veredicte": "fals",
+      "concepte": "Funcions C-infinit i analítiques",
+      "trampa": "conclusio_mes_forta",
+      "contraexemple": "$f(x)=\\mathrm{e}^{-1/x^2}$ si $x\\neq0$, $f(0)=0$: totes les derivades a l'origen són nul·les, però $f(x)>0$ per a $x\\neq0$.",
+      "resolucio": "Sigui $f(x)=\\mathrm{e}^{-1/x^2}$ per a $x\\neq0$ i $f(0)=0$. Per inducció, per a $x\\neq0$, $f^{(k)}(x)=Q_k(1/x)\\,\\mathrm{e}^{-1/x^2}$ amb $Q_k$ polinomi, i com que $\\mathrm{e}^{-1/x^2}/x^m\\to0$ quan $x\\to0$ per a tot $m$, s'obté (amb el quocient incremental) $f^{(k)}(0)=0$ per a tot $k$ i que cada $f^{(k)}$ és contínua: $f\\in\\mathcal{C}^\\infty$. Tots els polinomis de Taylor a $0$ són nuls, però $f(x)>0$ per a tot $x\\neq0$, i per tant $f$ no s'anul·la en cap entorn de $0$. És un exemple de funció $\\mathcal{C}^\\infty$ no analítica.",
+      "idees_clau": [
+        "$\\mathrm{e}^{-1/x^2}$ té totes les derivades nul·les a $0$",
+        "$f(x)>0$ per a $x\\neq0$",
+        "$\\mathcal{C}^\\infty$ no implica analítica"
+      ],
+      "pista": "El residu de Taylor tendeix a zero més ràpid que $(x-a)^r$, però això diu que el residu sigui zero? Quina és la diferència entre $\\mathcal{C}^\\infty$ i analítica?",
+      "teoria": [
+        "T5.8",
+        "T5.18",
+        "T5.20"
+      ],
+      "comprovacions": [
+        {
+          "descripcio": "continuïtat a l'origen",
+          "tipus": "limit",
+          "expressio": "exp(-1/x**2)",
+          "variable": "x",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "0",
+          "estat": "ok",
+          "calculat": "0",
+          "detall": ""
+        },
+        {
+          "descripcio": "quocient incremental de f a l'origen",
+          "tipus": "limit",
+          "expressio": "exp(-1/x**2)/x",
+          "variable": "x",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "0",
+          "estat": "ok",
+          "calculat": "0",
+          "detall": ""
+        },
+        {
+          "descripcio": "la derivada fora de l'origen",
+          "tipus": "igualtat",
+          "expressio": "diff(exp(-1/x**2), x)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "2*exp(-1/x**2)/x**3",
+          "estat": "ok",
+          "calculat": "2*exp(-1/x**2)/x**3",
+          "detall": ""
+        },
+        {
+          "descripcio": "la derivada tendeix a 0",
+          "tipus": "limit",
+          "expressio": "2*exp(-1/x**2)/x**3",
+          "variable": "x",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "0",
+          "estat": "ok",
+          "calculat": "0",
+          "detall": ""
+        }
+      ],
+      "verificacio": {
+        "solucionador": "Contraexemple: f(x)=e^{-1/x^2} per x≠0, f(0)=0. És C^infinit amb f^{(k)}(0)=0 per a tot k, però f(x)>0 per a tot x≠0, de manera que no s'anul·la en cap entorn de 0 (és C^infinit i no analítica).",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a5",
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ de classe $\\mathcal{C}^2$. Si $(0,0)$ és un mínim local estricte de $f$, aleshores la forma quadràtica $q_{Hf(0,0)}$ és definida positiva.",
+      "veredicte": "fals",
+      "concepte": "Hessiana i mínims locals",
+      "trampa": "reciproc",
+      "contraexemple": "$f(x,y)=x^4+y^4$: $(0,0)$ és mínim local estricte però $Hf(0,0)$ és la matriu nul·la, que no és definida positiva.",
+      "resolucio": "Prenem $f(x,y)=x^4+y^4$, que és $\\mathcal{C}^\\infty$. Per a tot $(x,y)\\neq(0,0)$ es té $f(x,y)>0=f(0,0)$, de manera que $(0,0)$ és un mínim local estricte (de fet absolut). Ara bé, $f_{xx}=12x^2$, $f_{yy}=12y^2$, $f_{xy}=0$, i per tant $Hf(0,0)$ és la matriu nul·la: $q_{Hf(0,0)}(\\mathbf{u})=0$ per a tot $\\mathbf{u}$, que no és definida positiva. El teorema només dona que un mínim local té hessiana semidefinida positiva; el recíproc de «definida positiva $\\Rightarrow$ mínim estricte» és fals.",
+      "idees_clau": [
+        "$f(x,y)=x^4+y^4$ té mínim local estricte a l'origen",
+        "$Hf(0,0)$ és la matriu nul·la",
+        "un mínim local només obliga la hessiana a ser semidefinida positiva"
+      ],
+      "pista": "La condició «hessiana definida positiva» és suficient per a un mínim estricte; és també necessària? Penseu en funcions que creixen més lentament que $\\|\\mathbf{x}\\|^2$ a prop de l'origen.",
+      "teoria": [
+        "T5.33",
+        "T5.34",
+        "T5.27"
+      ],
+      "comprovacions": [
+        {
+          "descripcio": "derivada segona respecte de x",
+          "tipus": "igualtat",
+          "expressio": "diff(x**4+y**4, x, x)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "12*x**2",
+          "estat": "ok",
+          "calculat": "12*x**2",
+          "detall": ""
+        },
+        {
+          "descripcio": "derivada creuada",
+          "tipus": "igualtat",
+          "expressio": "diff(x**4+y**4, x, y)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "0",
+          "estat": "ok",
+          "calculat": "0",
+          "detall": ""
+        },
+        {
+          "descripcio": "f_xx s'anul·la a l'origen",
+          "tipus": "limit",
+          "expressio": "12*x**2",
+          "variable": "x",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "0",
+          "estat": "ok",
+          "calculat": "0",
+          "detall": ""
+        }
+      ],
+      "verificacio": {
+        "solucionador": "Contraexemple: f(x,y)=x^4+y^4 és C^2 i té un mínim local estricte a (0,0) (f>0 fora de l'origen), però Hf(0,0) és la matriu nul·la, que no és definida positiva. El teorema 33(iv) només dona semidefinida positiva.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a6",
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ de classe $\\mathcal{C}^2$ i $\\mathbf{a}$ un punt crític de $f$. Si $\\dfrac{\\partial^2 f}{\\partial x^2}(\\mathbf{a})\\cdot\\dfrac{\\partial^2 f}{\\partial y^2}(\\mathbf{a})<0$, aleshores $\\mathbf{a}$ és un punt de sella de $f$.",
+      "veredicte": "cert",
+      "concepte": "Classificació de punts crítics",
+      "trampa": "cert_resultat",
+      "contraexemple": "",
+      "resolucio": "Com que $f\\in\\mathcal{C}^2$, pel teorema de Schwarz $f_{xy}(\\mathbf{a})=f_{yx}(\\mathbf{a})$ i la hessiana és simètrica. El seu determinant és $\\det Hf(\\mathbf{a})=f_{xx}(\\mathbf{a})f_{yy}(\\mathbf{a})-f_{xy}(\\mathbf{a})^2<0$, ja que el primer terme és negatiu i el segon no positiu. Si $\\det M<0$, els valors propis tenen signes oposats i $q_{Hf(\\mathbf{a})}$ és indefinida. Per les condicions suficients, un punt crític amb hessiana indefinida és un punt de sella. (També es veu directament: $q(1,0)=f_{xx}(\\mathbf{a})$ i $q(0,1)=f_{yy}(\\mathbf{a})$ tenen signes oposats.)",
+      "idees_clau": [
+        "$\\det Hf(\\mathbf{a})=f_{xx}f_{yy}-f_{xy}^2<0$",
+        "determinant negatiu implica forma indefinida",
+        "hessiana indefinida en un punt crític dona punt de sella"
+      ],
+      "pista": "Què podeu dir del signe del determinant de la hessiana, sense conèixer la derivada creuada? I què vol dir això per als valors propis?",
+      "teoria": [
+        "T5.6",
+        "T5.30",
+        "T5.33",
+        "T5.25"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "det Hf(a)=f_xx f_yy - f_xy^2 ≤ f_xx f_yy < 0 (f_xy=f_yx per Schwarz, f és C^2). Per l'observació 30, det<0 implica valors propis de signes oposats, la forma és indefinida i pel teorema 33(iii) a és punt de sella.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a7",
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ de classe $\\mathcal{C}^2$ i $\\mathbf{a}$ un punt crític de $f$ tal que $q_{Hf(\\mathbf{a})}$ és semidefinida positiva i $Hf(\\mathbf{a})$ no és la matriu nul·la. Aleshores $\\mathbf{a}$ és un mínim local de $f$.",
+      "veredicte": "fals",
+      "concepte": "Hessiana semidefinida",
+      "trampa": "informacio_parcial",
+      "contraexemple": "$f(x,y)=x^2+y^3$ a $(0,0)$: $Hf(0,0)=\\mathrm{diag}(2,0)$, però $f(0,y)=y^3<0$ per a $y<0$.",
+      "resolucio": "Sigui $f(x,y)=x^2+y^3$. $f_x=2x$, $f_y=3y^2$ s'anul·len a $(0,0)$: punt crític. $f_{xx}=2$, $f_{xy}=0$, $f_{yy}=6y$, de manera que $Hf(0,0)=\\begin{pmatrix}2&0\\\\0&0\\end{pmatrix}$, amb valors propis $2$ i $0$: semidefinida positiva i no nul·la. Però $f(0,-t)=-t^3<0=f(0,0)$ per a tot $t>0$, de manera que tota bola centrada a l'origen conté punts amb $f<f(0,0)$: no és mínim local. Quan la hessiana és degenerada, la direcció del nucli queda governada pels termes d'ordre superior.",
+      "idees_clau": [
+        "$Hf(0,0)=\\mathrm{diag}(2,0)$ és semidefinida positiva",
+        "sobre l'eix $y$ la funció és $y^3$, que canvia de signe",
+        "amb hessiana degenerada decideixen els termes d'ordre superior"
+      ],
+      "pista": "La semidefinició positiva és necessària per a un mínim; és també suficient? Què passa en la direcció on la forma quadràtica s'anul·la?",
+      "teoria": [
+        "T5.33",
+        "T5.34",
+        "T5.30"
+      ],
+      "comprovacions": [
+        {
+          "descripcio": "f_xx",
+          "tipus": "igualtat",
+          "expressio": "diff(x**2+y**3, x, x)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "2",
+          "estat": "ok",
+          "calculat": "2",
+          "detall": ""
+        },
+        {
+          "descripcio": "f_yy",
+          "tipus": "igualtat",
+          "expressio": "diff(x**2+y**3, y, y)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "6*y",
+          "estat": "ok",
+          "calculat": "6*y",
+          "detall": ""
+        },
+        {
+          "descripcio": "f_yy s'anul·la a l'origen",
+          "tipus": "limit",
+          "expressio": "6*y",
+          "variable": "y",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "0",
+          "estat": "ok",
+          "calculat": "0",
+          "detall": ""
+        },
+        {
+          "descripcio": "valor sobre l'eix y negatiu",
+          "tipus": "igualtat",
+          "expressio": "0**2+(-t)**3",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "-t**3",
+          "estat": "ok",
+          "calculat": "-t**3",
+          "detall": ""
+        }
+      ],
+      "verificacio": {
+        "solucionador": "Contraexemple: f(x,y)=x^2+y^3 a a=(0,0). És un punt crític, i Hf=diag(2,0) és semidefinida positiva i no nul·la. Però f(0,y)=y^3<0 per y<0 petit, així que no és mínim local.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a8",
+      "enunciat": "Si $f:\\mathbb{R}^2\\to\\mathbb{R}$ és de classe $\\mathcal{C}^3$, aleshores entre les $8$ derivades parcials terceres $D_{i}D_{j}D_{k}f$ ($i,j,k\\in\\{1,2\\}$) n'hi ha com a molt $4$ de diferents.",
+      "veredicte": "cert",
+      "concepte": "Derivades d'ordre superior",
+      "trampa": "cert_resultat",
+      "contraexemple": "",
+      "resolucio": "Com que $f\\in\\mathcal{C}^3$, $f$ i les seves derivades primeres són $\\mathcal{C}^2$ i s'hi pot aplicar el teorema de Schwarz. Per exemple, $D_1D_2D_1f=D_1(D_2D_1f)=D_1(D_1D_2f)=D_1D_1D_2f$ (Schwarz per a $f$), i $D_2D_1(D_1f)=D_1D_2(D_1f)$ (Schwarz per a $D_1f$). Repetint, qualsevol derivada tercera és igual a la que s'obté reordenant els índexs, i per tant només depèn de quantes vegades es deriva respecte de $x$: $0,1,2$ o $3$. Això dona com a molt $4$ funcions diferents: $f_{xxx},f_{xxy},f_{xyy},f_{yyy}$ (i en general són diferents, p. ex. per a $x^3+x^2y+2xy^2+3y^3$ valen $6,2,4,18$).",
+      "idees_clau": [
+        "Schwarz s'aplica a $f$ i a les seves derivades primeres",
+        "les derivades terceres només depenen del nombre de derivacions respecte de cada variable",
+        "hi ha 4 multiíndexs de grau 3 en dues variables"
+      ],
+      "pista": "Si es pot canviar l'ordre de dues derivacions consecutives, de què depèn realment una derivada tercera? Quants monomis de grau 3 hi ha en dues variables?",
+      "teoria": [
+        "T5.6",
+        "T5.1",
+        "T5.12"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "Si f és C^3, Schwarz aplicat a f, D_1f i D_2f (totes C^2 o més) fa que D_iD_jD_kf depengui només de quantes vegades apareix l'índex 1 (0, 1, 2 o 3). Per tant hi ha com a molt 4 derivades terceres diferents: f_xxx, f_xxy, f_xyy, f_yyy.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    }
+  ],
+  "verificacio": {
+    "rondes": [
+      {
+        "ronda": 1,
+        "demanades": 11,
+        "rebudes": 11,
+        "generacio": {
+          "model": "offline:claude-subagent",
+          "latency_ms": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "cached_tokens": 0
+        },
+        "rebutjades": [
+          {
+            "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ de classe $\\mathcal{C}^\\infty$ tal que, per a cada vector $\\mathbf{v}\\in\\mathbb{R}^2\\setminus\\{\\mathbf{0}\\}$, la funció $g_{\\mathbf{v}}(t)=f(t\\mathbf{v})$ té un mínim local estricte a $t=0$. Aleshores $(0,0)$ és un mínim local de $f$.",
+            "motius": [
+              "auditoria: la pista revela la resposta: La pista «On és negatiu un producte de dos factors?» revela l'estructura del contraexemple (f com a producte de dos factors que canvien de signe entre dues paràboles); l'enunciat parla d'una f genèrica i res no suggereix un producte si no és pel contraexemple. La resolució és correcta: g(t)=m^2t^2-3mt^3+2t^4, g(t)=2t^4 i g(t)=t^2 donen mínim estricte, i f(x,3x^2/2)=-x^4/4<0."
+            ]
+          },
+          {
+            "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ contínua tal que totes les derivades parcials primeres i segones de $f$ existeixen en tot punt de $\\mathbb{R}^2$. Aleshores $\\dfrac{\\partial^2 f}{\\partial x\\partial y}(0,0)=\\dfrac{\\partial^2 f}{\\partial y\\partial x}(0,0)$.",
+            "motius": [
+              "auditoria: la pista revela la resposta: La pista «Hi ha algun exemple dels apunts on aquesta hipòtesi no es compleixi?» remet directament al contraexemple (Exemple 5, T5.5), i juntament amb «quina hipòtesi exigeix Schwarz a més de l'existència» delata que el veredicte és fals. La resolució és correcta (f_x(0,y)=-y, f_y(x,0)=x, f_xx(0,0)=f_yy(0,0)=0, derivades creuades -1 i 1)."
+            ]
+          },
+          {
+            "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ contínua. Si $(0,0)$ és un mínim local estricte de $f$, aleshores les derivades parcials $\\dfrac{\\partial f}{\\partial x}(0,0)$ i $\\dfrac{\\partial f}{\\partial y}(0,0)$ existeixen i valen $0$.",
+            "motius": [
+              "auditoria: la pista revela la resposta: La pista «Penseu en la gràfica d'un con» revela explícitament el contraexemple f(x,y)=sqrt(x^2+y^2). La resolució i la teoria citada (T5.23 exigeix diferenciabilitat) són correctes."
+            ]
+          }
+        ],
+        "solucionador": {
+          "model": "offline:claude-solver",
+          "latency_ms": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "cached_tokens": 0
+        },
+        "auditoria": {
+          "model": "offline:claude-auditor",
+          "latency_ms": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "cached_tokens": 0
+        },
+        "acceptades_total": 8
+      }
+    ]
+  },
+  "creat": 1791967422.637449
+}

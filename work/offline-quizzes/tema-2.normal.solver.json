@@ -1,0 +1,82 @@
+{
+  "autor": "claude-solver",
+  "respostes": [
+    {
+      "num": 1,
+      "veredicte": "fals",
+      "justificacio": "Contraexemple: f(x,y)=x^2 y/(x^4+y^2) si (x,y)≠(0,0), f(0,0)=0. Sobre y=mx dona m x/(x^2+m^2)→0 i sobre x=0 val 0, però sobre y=x^2 val 1/2, així que el límit a (0,0) no existeix.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 2,
+      "veredicte": "fals",
+      "justificacio": "f(x)=sqrt(x) és contínua al compacte [0,1] i, per Heine-Cantor, uniformement contínua. No és Lipschitz: |f(x)-f(0)|/|x-0|=1/sqrt(x)→∞ quan x→0+.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 3,
+      "veredicte": "cert",
+      "justificacio": "Per Weierstrass, f assoleix el mínim en un punt x0∈K. Prenem c=f(x0)>0; aleshores f(x)≥c per a tot x∈K.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 4,
+      "veredicte": "fals",
+      "justificacio": "Contraexemple: f(x,y)=x·sin(1/y) si y≠0, f(x,0)=0. Com que |f|≤|x|, el límit a (0,0) val 0. Però per a x≠0 fix, lim_{y→0} x·sin(1/y) no existeix, així que el límit iterat lim_x lim_y no existeix. La Prop. 12 exigeix l'existència dels límits interiors com a hipòtesi.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 5,
+      "veredicte": "fals",
+      "justificacio": "A={(x,y): xy=1, x>0} és tancat (antiimatge del tancat {1} per xy, intersecada amb el semiplà tancat x≥0). Amb f(x,y)=x tenim f(A)=(0,+∞), que no és tancat. Només la compacitat es conserva.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 6,
+      "veredicte": "cert",
+      "justificacio": "Si existís el límit L, donat ε>0, hi ha δ amb |f(x,y)-L|<ε quan 0<||(x,y)||<δ. Per a 0<|x|<δ/2, fent y→0 surt |g(x)-L|≤ε, i per tant A=L. Anàlogament B=L, i llavors A=B, contradicció.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 7,
+      "veredicte": "fals",
+      "justificacio": "Contraexemple: f(x,y)=xy/(x^2+y^2), amb f(0,0)=0. Per a b fix, x↦xb/(x^2+b^2) és contínua (val idènticament 0 si b=0), i el mateix passa amb y. Però sobre y=mx el límit és m/(1+m^2), així que f no és contínua a (0,0) (Exemple 13).",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 8,
+      "veredicte": "cert",
+      "justificacio": "Q^2 és dens a R^2. Per a qualsevol (x,y), prenem (p_n,q_n)∈Q^2 amb (p_n,q_n)→(x,y). Per continuïtat (caracterització per successions), f(x,y)=lim f(p_n,q_n)=0.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 9,
+      "veredicte": "fals",
+      "justificacio": "Contraexemple: f(x)=sqrt(x^2+1). Tenim |f(x)-f(y)|=|x-y|·|x+y|/(sqrt(x^2+1)+sqrt(y^2+1))<|x-y| per a x≠y, perquè |x+y|≤|x|+|y|<sqrt(x^2+1)+sqrt(y^2+1). Però sqrt(x^2+1)>|x|≥x, així que no té cap punt fix. El teorema del punt fix requereix una constant k<1 uniforme.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 10,
+      "veredicte": "cert",
+      "justificacio": "Prenem ε=1 i el δ corresponent. Tot x∈(0,1) es connecta amb 1/2 en N≤⌈1/δ⌉+1 passos de longitud <δ dins de (0,1). Per tant |f(x)|≤|f(1/2)|+N, i f és fitada.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 11,
+      "veredicte": "fals",
+      "justificacio": "f(x)=g(x)=x són uniformement contínues (Lipschitz), però fg=x^2 no ho és: amb x_n=n+1/n i y_n=n, |x_n-y_n|=1/n→0 mentre |x_n^2-y_n^2|=2+1/n^2>2.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    }
+  ]
+}

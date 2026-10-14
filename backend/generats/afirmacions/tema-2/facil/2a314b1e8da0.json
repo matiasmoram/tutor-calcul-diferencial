@@ -1,0 +1,244 @@
+{
+  "id": "2a314b1e8da0",
+  "font": "tema-2",
+  "tema": 2,
+  "dificultat": "facil",
+  "afirmacions": [
+    {
+      "id": "a1",
+      "enunciat": "La funció $f:\\mathbb{R}^2\\to\\mathbb{R}$ definida per $f(x,y)=\\frac{x^2y}{x^2+y^2}$ si $(x,y)\\neq(0,0)$ i $f(0,0)=0$ és contínua a tot $\\mathbb{R}^2$.",
+      "veredicte": "cert",
+      "concepte": "Continuïtat a l'origen",
+      "trampa": "cert_resultat",
+      "contraexemple": "",
+      "resolucio": "Fora de l'origen $f$ és quocient de polinomis amb denominador no nul, per tant contínua. A l'origen: com que $x^2\\leq x^2+y^2$, per a $(x,y)\\neq(0,0)$ es té $|f(x,y)|=\\frac{x^2}{x^2+y^2}|y|\\leq|y|\\leq\\sqrt{x^2+y^2}$. Donat $\\epsilon>0$, prenent $\\delta=\\epsilon$, si $0<\\|(x,y)\\|<\\delta$ aleshores $|f(x,y)-0|<\\epsilon$. Per tant $\\lim_{(x,y)\\to(0,0)}f(x,y)=0=f(0,0)$ i $f$ és contínua a l'origen.",
+      "idees_clau": [
+        "fora de l'origen és un quocient de funcions contínues amb denominador no nul",
+        "la fita $|f(x,y)|\\leq|y|\\leq\\|(x,y)\\|$",
+        "el límit a l'origen és $0=f(0,0)$"
+      ],
+      "pista": "Pots fitar el factor $\\frac{x^2}{x^2+y^2}$ per alguna constant?",
+      "teoria": [
+        "T2.6",
+        "T2.14",
+        "T2.20"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "Fora de l'origen, f és un quocient de polinomis amb denominador no nul i, per tant, és contínua. A l'origen, |f(x,y)|=|y|·x^2/(x^2+y^2)<=|y|→0=f(0,0), així que f també hi és contínua.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a2",
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ contínua i $A\\subseteq\\mathbb{R}^2$. Si $f(A)$ és compacte, aleshores $A$ és compacte.",
+      "veredicte": "fals",
+      "concepte": "Imatge contínua de compactes",
+      "trampa": "reciproc",
+      "contraexemple": "$f(x,y)=\\sin x$ i $A=\\mathbb{R}^2$: $f(A)=[-1,1]$ és compacte però $\\mathbb{R}^2$ no és fitat.",
+      "resolucio": "Prenem $f(x,y)=\\sin x$, contínua a $\\mathbb{R}^2$, i $A=\\mathbb{R}^2$. Aleshores $f(A)=[-1,1]$, que és tancat i fitat de $\\mathbb{R}$, per tant compacte. En canvi $A=\\mathbb{R}^2$ no és fitat (conté els punts $(n,0)$ per a tot $n$), i per tant no és compacte. La proposició diu que la imatge contínua d'un compacte és compacta, però el recíproc no és cert.",
+      "idees_clau": [
+        "$f(A)=[-1,1]$ és compacte",
+        "$A=\\mathbb{R}^2$ no és fitat, per tant no és compacte",
+        "la propietat va de $K$ a $f(K)$, no al revés"
+      ],
+      "pista": "La compacitat es transmet de $A$ cap a $f(A)$; es pot transmetre en sentit contrari si $f$ «aixafa» un conjunt molt gran?",
+      "teoria": [
+        "T2.21",
+        "T2.22"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "Contraexemple: f≡0 i A=R^2. f(A)={0} és compacte, però A=R^2 no és fitat i, per tant, no és compacte.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a3",
+      "enunciat": "Sigui $A=\\{(x,y)\\in\\mathbb{R}^2: x\\neq0\\}$ i $f:A\\to\\mathbb{R}$ contínua. Si existeixen $p,q\\in A$ amb $f(p)<0<f(q)$, aleshores existeix $\\xi\\in A$ amb $f(\\xi)=0$.",
+      "veredicte": "fals",
+      "concepte": "Teorema del valor intermedi",
+      "trampa": "hipotesi_eliminada",
+      "contraexemple": "$f(x,y)=\\frac{x}{|x|}$ a $A$: val $-1$ al semiplà $x<0$ i $1$ al semiplà $x>0$, i no s'anul·la mai.",
+      "resolucio": "Prenem $f(x,y)=\\frac{x}{|x|}$, quocient de funcions contínues amb denominador no nul a $A$, per tant contínua a $A$. Amb $p=(-1,0)$ i $q=(1,0)$ tenim $f(p)=-1<0<1=f(q)$. Però $f$ només pren els valors $\\pm1$, i mai no s'anul·la. El teorema del valor intermedi no s'aplica perquè $A$, unió de dos semiplans oberts disjunts, no és connex.",
+      "idees_clau": [
+        "$f=\\frac{x}{|x|}$ és contínua a $A$ i pren els valors $-1$ i $1$",
+        "$f$ no s'anul·la enlloc",
+        "$A$ no és connex: falla la hipòtesi del valor intermedi"
+      ],
+      "pista": "Pots anar de $p$ a $q$ sense sortir d'$A$? Quina hipòtesi del teorema del valor intermedi depèn d'això?",
+      "teoria": [
+        "T2.21",
+        "T2.24"
+      ],
+      "comprovacions": [
+        {
+          "descripcio": "al semiplà $x<0$, $\\frac{x}{|x|}$ val $-1$ (prop de l'eix)",
+          "tipus": "limit",
+          "expressio": "x/Abs(x)",
+          "variable": "x",
+          "punt": "0",
+          "costat": "esquerra",
+          "valor": "-1",
+          "estat": "ok",
+          "calculat": "-1",
+          "detall": ""
+        },
+        {
+          "descripcio": "al semiplà $x>0$, $\\frac{x}{|x|}$ val $1$ (prop de l'eix)",
+          "tipus": "limit",
+          "expressio": "x/Abs(x)",
+          "variable": "x",
+          "punt": "0",
+          "costat": "dreta",
+          "valor": "1",
+          "estat": "ok",
+          "calculat": "1",
+          "detall": ""
+        }
+      ],
+      "verificacio": {
+        "solucionador": "A no és connex: té dos semiplans. Contraexemple: f(x,y)=x, contínua a A, amb p=(-1,0) i q=(1,0), de manera que f(p)<0<f(q). Però f(ξ)=0 requereix x=0, que no pertany a A.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a4",
+      "enunciat": "La funció $F:\\mathbb{R}^2\\to\\mathbb{R}^2$, $F(x,y)=\\left(\\frac{\\sin y}{2},\\frac{\\cos x}{2}\\right)$, té exactament un punt fix.",
+      "veredicte": "cert",
+      "concepte": "Teorema del punt fix",
+      "trampa": "cert_demostracio",
+      "contraexemple": "",
+      "resolucio": "Pel teorema del valor mitjà en una variable, $|\\sin a-\\sin b|\\leq|a-b|$ i $|\\cos a-\\cos b|\\leq|a-b|$. Per a $p=(x,y)$, $q=(x',y')$: $\\|F(p)-F(q)\\|_2^2=\\frac{1}{4}\\left((\\sin y-\\sin y')^2+(\\cos x-\\cos x')^2\\right)\\leq\\frac{1}{4}\\left((y-y')^2+(x-x')^2\\right)=\\frac{1}{4}\\|p-q\\|_2^2$. Per tant $\\|F(p)-F(q)\\|_2\\leq\\frac{1}{2}\\|p-q\\|_2$ i $F$ és contractiva amb $k=\\frac{1}{2}$. Com que $(\\mathbb{R}^2,\\|\\cdot\\|_2)$ és complet, el teorema del punt fix dona un únic punt fix.",
+      "idees_clau": [
+        "$|\\sin a-\\sin b|\\leq|a-b|$ i $|\\cos a-\\cos b|\\leq|a-b|$",
+        "$F$ és contractiva amb constant $\\frac{1}{2}$",
+        "$\\mathbb{R}^2$ és complet: el teorema del punt fix dona existència i unicitat"
+      ],
+      "pista": "Quant poden allunyar-se les imatges de dos punts en comparació amb la distància entre els punts?",
+      "teoria": [
+        "T2.30",
+        "T2.31"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "Com que |sin a-sin b|<=|a-b| i |cos a-cos b|<=|a-b|, tenim ‖F(p)-F(q)‖_2<=(1/2)sqrt((y-y')^2+(x-x')^2)=(1/2)‖p-q‖_2. Per tant, F és contractiva (k=1/2) a R^2, que és complet, i pel teorema del punt fix té un únic punt fix.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a5",
+      "enunciat": "El conjunt $B=\\{(x,y)\\in\\mathbb{R}^2 : \\sin(xy)\\geq x^2-y\\}$ és un subconjunt tancat de $\\mathbb{R}^2$.",
+      "veredicte": "cert",
+      "concepte": "Conjunts definits per desigualtats",
+      "trampa": "cert_resultat",
+      "contraexemple": "",
+      "resolucio": "Les funcions $f(x,y)=\\sin(xy)$ i $g(x,y)=x^2-y$ són contínues a tot $\\mathbb{R}^2$: $g$ és un polinomi i $f$ és la composició del polinomi $xy$ amb la funció contínua $\\sin$, i la composició de funcions contínues és contínua. Pel corol·lari sobre conjunts definits per desigualtats, $B=\\{f\\geq g\\}$ és tancat. Equivalentment, $B=h^{-1}([0,+\\infty))$ amb $h=f-g$ contínua i $[0,+\\infty)$ tancat.",
+      "idees_clau": [
+        "$\\sin(xy)$ i $x^2-y$ són contínues a tot $\\mathbb{R}^2$ (composició i àlgebra de contínues)",
+        "un conjunt de la forma $\\{f\\geq g\\}$ amb $f,g$ contínues a $\\mathbb{R}^n$ és tancat",
+        "equivalentment, antiimatge del tancat $[0,+\\infty)$ per una funció contínua"
+      ],
+      "pista": "Pots escriure $B$ com l'antiimatge d'algun conjunt de $\\mathbb{R}$ per una funció ben coneguda?",
+      "teoria": [
+        "T2.17",
+        "T2.18",
+        "T2.19",
+        "T2.20"
+      ],
+      "comprovacions": [],
+      "verificacio": {
+        "solucionador": "f(x,y)=sin(xy) i g(x,y)=x^2-y són contínues a tot R^2; pel corol·lari 18(ii), B={f>=g} és tancat (equivalentment, és l'antiimatge del tancat [0,+∞) per la funció contínua f-g).",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    },
+    {
+      "id": "a6",
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}$ contínua i $B=\\{(x,y)\\in\\mathbb{R}^2: x^2+y^2<1\\}$. Si $f$ és fitada a $B$, aleshores existeix $p\\in B$ tal que $f(p)=\\sup_{q\\in B}f(q)$.",
+      "veredicte": "fals",
+      "concepte": "Teorema de Weierstrass",
+      "trampa": "hipotesi_eliminada",
+      "contraexemple": "$f(x,y)=x^2+y^2$: a $B$ pren valors a $[0,1)$, té suprem $1$ però no l'assoleix a la bola oberta.",
+      "resolucio": "Prenem $f(x,y)=x^2+y^2$, contínua a $\\mathbb{R}^2$. A $B$ es té $0\\leq f<1$, per tant és fitada. El suprem és $1$: sobre els punts $(t,0)$ amb $t\\to1^-$, $f(t,0)=t^2\\to1$. Però cap $p\\in B$ compleix $f(p)=1$, perquè $f(p)<1$ per a tot $p\\in B$. El teorema de Weierstrass no s'aplica perquè $B$ no és tancat i, per tant, no és compacte.",
+      "idees_clau": [
+        "$f(x,y)=x^2+y^2$ és contínua i fitada a $B$",
+        "$\\sup_B f=1$ però $f<1$ a tot $B$",
+        "la bola oberta no és compacta: falla la hipòtesi de Weierstrass"
+      ],
+      "pista": "Quina hipòtesi del teorema de Weierstrass sobre el conjunt no compleix $B$? Mira què passa prop de la vora.",
+      "teoria": [
+        "T2.23"
+      ],
+      "comprovacions": [
+        {
+          "descripcio": "$f(t,0)=t^2$ tendeix a $1$ quan $t\\to1^-$",
+          "tipus": "limit",
+          "expressio": "t**2",
+          "variable": "t",
+          "punt": "1",
+          "costat": "esquerra",
+          "valor": "1",
+          "estat": "ok",
+          "calculat": "1",
+          "detall": ""
+        }
+      ],
+      "verificacio": {
+        "solucionador": "Contraexemple: f(x,y)=x, contínua i fitada a la bola oberta B. El suprem a B és 1, però no s'assoleix, perquè x<1 per a tot (x,y)∈B. Weierstrass no s'aplica perquè B no és compacte.",
+        "confianca": "alta",
+        "ronda": 1
+      }
+    }
+  ],
+  "verificacio": {
+    "rondes": [
+      {
+        "ronda": 1,
+        "demanades": 9,
+        "rebudes": 9,
+        "generacio": {
+          "model": "offline:claude-subagent",
+          "latency_ms": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "cached_tokens": 0
+        },
+        "rebutjades": [
+          {
+            "enunciat": "Sigui $f:\\mathbb{R}^2\\setminus\\{(0,0)\\}\\to\\mathbb{R}$. Si per a tot $m\\in\\mathbb{R}$ es té $\\lim_{x\\to 0}f(x,mx)=0$ i, a més, $\\lim_{y\\to 0}f(0,y)=0$, aleshores existeix $\\lim_{(x,y)\\to(0,0)}f(x,y)$ i val $0$.",
+            "motius": [
+              "auditoria: la pista revela la resposta: La pista diu explícitament quina corba s'ha de mirar («Què passa amb una corba com $y=x^2$?»): aquest és exactament el camí del contraexemple. La pregunta «Les rectes són els únics camins...?» també insinua el veredicte (fals). La resolució i el contraexemple són correctes."
+            ]
+          },
+          {
+            "enunciat": "Sigui $K=[-1,1]\\times[-1,1]\\subseteq\\mathbb{R}^2$. Tota funció contínua $f:K\\to\\mathbb{R}$ és de Lipschitz.",
+            "motius": [
+              "auditoria: la pista revela la resposta: La pista «Pensa en una funció amb pendent vertical en algun punt» descriu el contraexemple ($\\sqrt{|x|}$ té pendent vertical a $x=0$) i, juntament amb «Què garanteix Heine-Cantor exactament?», deixa clar que el veredicte és fals. La resolució és correcta."
+            ]
+          }
+        ],
+        "solucionador": {
+          "model": "offline:claude-solver",
+          "latency_ms": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "cached_tokens": 0
+        },
+        "auditoria": {
+          "model": "offline:claude-auditor",
+          "latency_ms": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "cached_tokens": 0
+        },
+        "acceptades_total": 6
+      }
+    ]
+  },
+  "creat": 1791967301.1163409
+}

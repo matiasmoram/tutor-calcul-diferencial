@@ -1,0 +1,16 @@
+{
+  "autor": "claude-auditor",
+  "revisions": [
+    {"num": 1, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 2, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": false, "problemes": "La pista «On és negatiu un producte de dos factors?» revela l'estructura del contraexemple (f com a producte de dos factors que canvien de signe entre dues paràboles); l'enunciat parla d'una f genèrica i res no suggereix un producte si no és pel contraexemple. La resolució és correcta: g(t)=m^2t^2-3mt^3+2t^4, g(t)=2t^4 i g(t)=t^2 donen mínim estricte, i f(x,3x^2/2)=-x^4/4<0."},
+    {"num": 3, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 4, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": false, "problemes": "La pista «Hi ha algun exemple dels apunts on aquesta hipòtesi no es compleixi?» remet directament al contraexemple (Exemple 5, T5.5), i juntament amb «quina hipòtesi exigeix Schwarz a més de l'existència» delata que el veredicte és fals. La resolució és correcta (f_x(0,y)=-y, f_y(x,0)=x, f_xx(0,0)=f_yy(0,0)=0, derivades creuades -1 i 1)."},
+    {"num": 5, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 6, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 7, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": false, "problemes": "La pista «Penseu en la gràfica d'un con» revela explícitament el contraexemple f(x,y)=sqrt(x^2+y^2). La resolució i la teoria citada (T5.23 exigeix diferenciabilitat) són correctes."},
+    {"num": 8, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 9, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 10, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""},
+    {"num": 11, "resolucio_correcta": true, "teoria_correcta": true, "pista_neutra": true, "problemes": ""}
+  ]
+}

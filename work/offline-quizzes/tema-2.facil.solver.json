@@ -1,0 +1,68 @@
+{
+  "autor": "claude-solver",
+  "respostes": [
+    {
+      "num": 1,
+      "veredicte": "fals",
+      "justificacio": "Contraexemple: f(x,y)=x^2 y/(x^4+y^2). Sobre y=mx, f(x,mx)=m x/(x^2+m^2) → 0 (per a m=0 és 0), i f(0,y)=0; però sobre y=x^2, f(x,x^2)=1/2, de manera que el límit no existeix.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 2,
+      "veredicte": "cert",
+      "justificacio": "f(x,y)=sin(xy) i g(x,y)=x^2-y són contínues a tot R^2; pel corol·lari 18(ii), B={f>=g} és tancat (equivalentment, és l'antiimatge del tancat [0,+∞) per la funció contínua f-g).",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 3,
+      "veredicte": "fals",
+      "justificacio": "Contraexemple: f≡0 i A=R^2. f(A)={0} és compacte, però A=R^2 no és fitat i, per tant, no és compacte.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 4,
+      "veredicte": "fals",
+      "justificacio": "Contraexemple: f(x,y)=x, contínua i fitada a la bola oberta B. El suprem a B és 1, però no s'assoleix, perquè x<1 per a tot (x,y)∈B. Weierstrass no s'aplica perquè B no és compacte.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 5,
+      "veredicte": "fals",
+      "justificacio": "Contraexemple: f(x,y)=sqrt(|x|), contínua a K. Tenim |f(x,0)-f(0,0)|/‖(x,0)‖=1/sqrt(|x|)→∞ quan x→0, així que no existeix cap constant de Lipschitz. Heine-Cantor només garanteix continuïtat uniforme, no Lipschitz.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 6,
+      "veredicte": "cert",
+      "justificacio": "Fora de l'origen, f és un quocient de polinomis amb denominador no nul i, per tant, és contínua. A l'origen, |f(x,y)|=|y|·x^2/(x^2+y^2)<=|y|→0=f(0,0), així que f també hi és contínua.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 7,
+      "veredicte": "cert",
+      "justificacio": "Com que |sin a-sin b|<=|a-b| i |cos a-cos b|<=|a-b|, tenim ‖F(p)-F(q)‖_2<=(1/2)sqrt((y-y')^2+(x-x')^2)=(1/2)‖p-q‖_2. Per tant, F és contractiva (k=1/2) a R^2, que és complet, i pel teorema del punt fix té un únic punt fix.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 8,
+      "veredicte": "fals",
+      "justificacio": "A no és connex: té dos semiplans. Contraexemple: f(x,y)=x, contínua a A, amb p=(-1,0) i q=(1,0), de manera que f(p)<0<f(q). Però f(ξ)=0 requereix x=0, que no pertany a A.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    },
+    {
+      "num": 9,
+      "veredicte": "cert",
+      "justificacio": "Com que ‖v‖_∞<=‖v‖_2, si 0<‖x-p‖_2<δ aleshores 0<‖x-p‖_∞<δ (perquè x≠p) i, per tant, |f(x)-L|<ε. El mateix δ serveix per a la definició (a) amb la distància euclidiana.",
+      "confianca": "alta",
+      "ben_plantejada": true
+    }
+  ]
+}

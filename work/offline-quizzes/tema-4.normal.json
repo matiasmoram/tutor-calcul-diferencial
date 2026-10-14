@@ -1,0 +1,326 @@
+{
+  "font": "tema-4",
+  "dificultat": "normal",
+  "autor": "claude-subagent",
+  "afirmacions": [
+    {
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}^2$ de classe $\\mathcal{C}^1$ tal que $\\det Jf(x,y)\\neq 0$ per a tot $(x,y)\\in\\mathbb{R}^2$. Aleshores $f$ és injectiva a tot $\\mathbb{R}^2$.",
+      "veredicte": "fals",
+      "trampa": "generalitzacio",
+      "concepte": "Inversió global en el pla",
+      "contraexemple": "$f(x,y)=(e^x\\cos y,\\,e^x\\sin y)$: $\\det Jf=e^{2x}\\neq 0$ arreu, però $f(0,0)=f(0,2\\pi)=(1,0)$.",
+      "resolucio": "Prenem $f(x,y)=(e^x\\cos y,\\,e^x\\sin y)$, que és de classe $\\mathcal{C}^\\infty$ a $\\mathbb{R}^2$. La seva jacobiana és $Jf=\\begin{pmatrix}e^x\\cos y & -e^x\\sin y\\\\ e^x\\sin y & e^x\\cos y\\end{pmatrix}$, amb $\\det Jf(x,y)=e^{2x}(\\cos^2 y+\\sin^2 y)=e^{2x}>0$ per a tot $(x,y)$. Per tant, compleix totes les hipòtesis. Però $f(0,0)=(1,0)=f(0,2\\pi)$ amb $(0,0)\\neq(0,2\\pi)$, de manera que $f$ no és injectiva. El teorema de la funció inversa només dona injectivitat local; la versió global de la Proposició 1 és pròpia de les funcions d'una variable definides en un interval.",
+      "idees_clau": [
+        "$\\det Jf\\neq 0$ arreu només garanteix injectivitat local (TFI)",
+        "$f(x,y)=e^x(\\cos y,\\sin y)$ té $\\det Jf=e^{2x}\\neq 0$",
+        "$f$ és $2\\pi$-periòdica en $y$: $f(0,0)=f(0,2\\pi)$"
+      ],
+      "pista": "El teorema de la funció inversa dona informació local o global? Penses en alguna funció del pla amb jacobiana invertible arreu que sigui periòdica en una variable?",
+      "teoria": ["T4.1", "T4.3", "T4.5", "T4.6"],
+      "comprovacions": [
+        {
+          "descripcio": "determinant de la jacobiana de $f$",
+          "tipus": "igualtat",
+          "expressio": "diff(exp(x)*cos(y), x)*diff(exp(x)*sin(y), y) - diff(exp(x)*cos(y), y)*diff(exp(x)*sin(y), x)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "exp(2*x)"
+        },
+        {
+          "descripcio": "primera component de $f(0,2\\pi)$",
+          "tipus": "igualtat",
+          "expressio": "exp(0)*cos(2*pi)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "1"
+        },
+        {
+          "descripcio": "segona component de $f(0,2\\pi)$",
+          "tipus": "igualtat",
+          "expressio": "exp(0)*sin(2*pi)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "0"
+        }
+      ]
+    },
+    {
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}^2$ de classe $\\mathcal{C}^1$, bijectiva i amb inversa $f^{-1}$ contínua. Aleshores $\\det Jf(x,y)\\neq 0$ per a tot $(x,y)\\in\\mathbb{R}^2$.",
+      "veredicte": "fals",
+      "trampa": "reciproc",
+      "concepte": "Homeomorfisme i jacobiana",
+      "contraexemple": "$f(x,y)=(x^3,y)$ és un homeomorfisme $\\mathcal{C}^\\infty$ amb inversa $(\\sqrt[3]{u},v)$, però $\\det Jf(0,0)=0$.",
+      "resolucio": "Sigui $f(x,y)=(x^3,y)$, de classe $\\mathcal{C}^\\infty$. Com que $t\\mapsto t^3$ és una bijecció de $\\mathbb{R}$ amb inversa contínua $s\\mapsto\\sqrt[3]{s}$, $f$ és bijectiva amb inversa $f^{-1}(u,v)=(\\sqrt[3]{u},v)$, que és contínua. Per tant, $f$ és un homeomorfisme de classe $\\mathcal{C}^1$. Però $Jf(x,y)=\\begin{pmatrix}3x^2&0\\\\0&1\\end{pmatrix}$, amb $\\det Jf(0,0)=0$. La condició $\\det Jf\\neq 0$ és suficient per a la invertibilitat local diferenciable, però no és necessària per a la invertibilitat contínua: aquí $f^{-1}$ no és diferenciable als punts $(0,v)$, ja que $\\sqrt[3]{u}/u\\to+\\infty$ quan $u\\to 0^+$.",
+      "idees_clau": [
+        "$f(x,y)=(x^3,y)$ és bijectiva, $\\mathcal{C}^1$ i amb inversa contínua",
+        "$\\det Jf(0,0)=3\\cdot 0^2=0$",
+        "el TFI dona una condició suficient, no necessària, per a l'existència d'inversa",
+        "la inversa $(\\sqrt[3]{u},v)$ no és diferenciable on $u=0$"
+      ],
+      "pista": "En una variable, una funció $\\mathcal{C}^1$ estrictament creixent ha de tenir sempre derivada no nul·la? Com ho podries portar a dues variables?",
+      "teoria": ["T4.5", "T4.9"],
+      "comprovacions": [
+        {
+          "descripcio": "determinant de la jacobiana de $(x^3,y)$",
+          "tipus": "igualtat",
+          "expressio": "diff(x**3, x)*diff(y, y) - diff(x**3, y)*diff(y, x)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "3*x**2"
+        },
+        {
+          "descripcio": "el quocient incremental de $\\sqrt[3]{u}$ a $0$ divergeix",
+          "tipus": "limit",
+          "expressio": "cbrt(u)/u",
+          "variable": "u",
+          "punt": "0",
+          "costat": "dreta",
+          "valor": "oo"
+        }
+      ]
+    },
+    {
+      "enunciat": "Sigui $\\Phi:\\mathbb{R}^2\\to\\mathbb{R}$ de classe $\\mathcal{C}^1$ amb $\\Phi(0,0)=0$ i $\\frac{\\partial\\Phi}{\\partial y}(0,0)=0$. Aleshores no existeix cap entorn obert $U$ de $(0,0)$ en què el conjunt $\\{(x,y)\\in U:\\Phi(x,y)=0\\}$ sigui la gràfica $y=\\varphi(x)$ d'una funció $\\varphi$ de classe $\\mathcal{C}^1$.",
+      "veredicte": "fals",
+      "trampa": "reciproc",
+      "concepte": "Teorema de la funció implícita",
+      "contraexemple": "$\\Phi(x,y)=(y-x)^3$: $\\frac{\\partial\\Phi}{\\partial y}(0,0)=0$, però $\\{\\Phi=0\\}$ és la recta $y=x$, gràfica de $\\varphi(x)=x$.",
+      "resolucio": "Prenem $\\Phi(x,y)=(y-x)^3$, de classe $\\mathcal{C}^\\infty$, amb $\\Phi(0,0)=0$ i $\\frac{\\partial\\Phi}{\\partial y}(x,y)=3(y-x)^2$, que val $0$ a $(0,0)$. Per tant, compleix les hipòtesis. Però $\\Phi(x,y)=0\\iff y=x$, de manera que en qualsevol obert $U$ (per exemple $U=\\mathbb{R}^2$) el conjunt $\\{\\Phi=0\\}\\cap U$ és la gràfica de $\\varphi(x)=x$, que és $\\mathcal{C}^\\infty$. La condició $\\frac{\\partial\\Phi}{\\partial y}(a,b)\\neq 0$ del teorema de la funció implícita és suficient, però no necessària: si falla, el teorema simplement no diu res.",
+      "idees_clau": [
+        "la hipòtesi $\\partial\\Phi/\\partial y\\neq 0$ és suficient, no necessària",
+        "$\\Phi(x,y)=(y-x)^3$ té $\\partial\\Phi/\\partial y(0,0)=0$",
+        "$\\{\\Phi=0\\}$ és la recta $y=x$, gràfica d'una funció $\\mathcal{C}^\\infty$"
+      ],
+      "pista": "Si un teorema diu «si $P$, aleshores $Q$», què pots concloure quan $P$ no es compleix? Pots modificar una funció de manera que el seu conjunt de zeros no canviï però la seva derivada s'hi anul·li?",
+      "teoria": ["T4.12", "T4.13"],
+      "comprovacions": [
+        {
+          "descripcio": "derivada parcial respecte de $y$",
+          "tipus": "igualtat",
+          "expressio": "diff((y-x)**3, y)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "3*(y-x)**2"
+        },
+        {
+          "descripcio": "$\\Phi$ s'anul·la sobre la recta $y=x$",
+          "tipus": "igualtat",
+          "expressio": "(x-x)**3",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "0"
+        }
+      ]
+    },
+    {
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}^2$ de classe $\\mathcal{C}^1$ tal que $\\det Jf(x,y)\\neq 0$ per a tot $(x,y)\\in\\mathbb{R}^2$. Aleshores $f(\\mathbb{R}^2)=\\mathbb{R}^2$.",
+      "veredicte": "fals",
+      "trampa": "conclusio_mes_forta",
+      "concepte": "Imatge d'una aplicació oberta",
+      "contraexemple": "$f(x,y)=(e^x,y)$: $\\det Jf=e^x\\neq 0$, però $f(\\mathbb{R}^2)=(0,+\\infty)\\times\\mathbb{R}$.",
+      "resolucio": "Sigui $f(x,y)=(e^x,y)$, de classe $\\mathcal{C}^\\infty$, amb $Jf=\\begin{pmatrix}e^x&0\\\\0&1\\end{pmatrix}$ i $\\det Jf(x,y)=e^x>0$ per a tot $(x,y)$. Compleix les hipòtesis. Però la primera component és sempre positiva, de manera que $f(\\mathbb{R}^2)=(0,+\\infty)\\times\\mathbb{R}\\neq\\mathbb{R}^2$ (per exemple, $(0,0)\\notin f(\\mathbb{R}^2)$). El teorema de l'aplicació oberta només assegura que la imatge és un obert, no que sigui tot l'espai.",
+      "idees_clau": [
+        "el teorema de l'aplicació oberta dona que $f(\\mathbb{R}^2)$ és obert, no que sigui tot $\\mathbb{R}^2$",
+        "$f(x,y)=(e^x,y)$ té $\\det Jf=e^x\\neq 0$",
+        "la imatge és el semiplà obert $\\{u>0\\}$"
+      ],
+      "pista": "Què diu exactament el teorema de l'aplicació oberta sobre $f(\\mathbb{R}^2)$? En una variable, una funció amb derivada sempre positiva ha de ser exhaustiva sobre $\\mathbb{R}$?",
+      "teoria": ["T4.8"],
+      "comprovacions": [
+        {
+          "descripcio": "determinant de la jacobiana de $(e^x,y)$",
+          "tipus": "igualtat",
+          "expressio": "diff(exp(x), x)*diff(y, y) - diff(exp(x), y)*diff(y, x)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "exp(x)"
+        },
+        {
+          "descripcio": "la primera component tendeix a $0$ sense assolir-lo",
+          "tipus": "limit",
+          "expressio": "exp(x)",
+          "variable": "x",
+          "punt": "-oo",
+          "costat": "ambdos",
+          "valor": "0"
+        }
+      ]
+    },
+    {
+      "enunciat": "Sigui $f:\\mathbb{R}\\to\\mathbb{R}$ derivable en tot punt i tal que $f'(0)\\neq 0$. Aleshores existeix $\\delta>0$ tal que $f$ és injectiva a l'interval $(-\\delta,\\delta)$.",
+      "veredicte": "fals",
+      "trampa": "hipotesi_eliminada",
+      "concepte": "Inversió local en una variable",
+      "contraexemple": "$f(x)=x+2x^2\\sin(1/x)$ si $x\\neq 0$, $f(0)=0$: $f'(0)=1$, però $f'$ canvia de signe en tot entorn de $0$, i $f$ no és injectiva a cap $(-\\delta,\\delta)$.",
+      "resolucio": "Sigui $f(x)=x+2x^2\\sin(1/x)$ per a $x\\neq 0$ i $f(0)=0$. Per a $x\\neq 0$, $f$ és derivable amb $f'(x)=1+4x\\sin(1/x)-2\\cos(1/x)$. A l'origen, $\\frac{f(h)-f(0)}{h}=1+2h\\sin(1/h)\\to 1$, de manera que $f'(0)=1\\neq 0$. Compleix les hipòtesis. Ara, als punts $x_k=\\frac{1}{2k\\pi}$ tenim $f'(x_k)=1-2=-1<0$ i als punts $y_k=\\frac{1}{(2k+1)\\pi}$ tenim $f'(y_k)=1+2=3>0$; tots dos tendeixen a $0$. Per tant, a tot interval $(-\\delta,\\delta)$ hi ha punts on $f$ és estrictament decreixent i punts on és estrictament creixent, i $f$ no és monòtona a $(-\\delta,\\delta)$. Com que una funció contínua i injectiva en un interval és estrictament monòtona, $f$ no és injectiva a cap $(-\\delta,\\delta)$. Falla la hipòtesi $f\\in\\mathcal{C}^1$ de la Proposició 2: $f'$ no és contínua a $0$.",
+      "idees_clau": [
+        "la inversió local necessita $f\\in\\mathcal{C}^1$, no només derivable",
+        "$f(x)=x+2x^2\\sin(1/x)$ té $f'(0)=1$",
+        "$f'(1/(2k\\pi))=-1$ i $f'(1/((2k+1)\\pi))=3$: $f$ no és monòtona prop de $0$",
+        "contínua i injectiva en un interval implica monòtona"
+      ],
+      "pista": "Quina hipòtesi de regularitat demana la Proposició 2 sobre $f$? Què passaria si $f'$ oscil·lés molt a prop de $0$ tot i tenir $f'(0)\\neq 0$?",
+      "teoria": ["T4.2"],
+      "comprovacions": [
+        {
+          "descripcio": "quocient incremental a $0$: $f'(0)=1$",
+          "tipus": "limit",
+          "expressio": "(h + 2*h**2*sin(1/h))/h",
+          "variable": "h",
+          "punt": "0",
+          "costat": "ambdos",
+          "valor": "1"
+        },
+        {
+          "descripcio": "derivada de $f$ per a $x\\neq 0$",
+          "tipus": "igualtat",
+          "expressio": "diff(x + 2*x**2*sin(1/x), x)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "1 + 4*x*sin(1/x) - 2*cos(1/x)"
+        },
+        {
+          "descripcio": "$f'$ no té límit a $0$",
+          "tipus": "no_limit",
+          "expressio": "1 + 4*x*sin(1/x) - 2*cos(1/x)",
+          "variable": "x",
+          "punt": "0",
+          "costat": "dreta",
+          "valor": ""
+        },
+        {
+          "descripcio": "$f'$ és negativa a $x=1/(2\\pi)$",
+          "tipus": "igualtat",
+          "expressio": "1 + 4*(1/(2*pi))*sin(2*pi) - 2*cos(2*pi)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "-1"
+        }
+      ]
+    },
+    {
+      "enunciat": "Sigui $\\Phi:\\mathbb{R}^3\\to\\mathbb{R}^2$ de classe $\\mathcal{C}^1$ i $p\\in\\mathbb{R}^3$ amb $\\Phi(p)=0$ i $\\mathrm{rang}\\,D\\Phi(p)=2$. Aleshores, per a qualsevol tria de dues de les tres variables $x,y,z$, existeix un entorn obert $U$ de $p$ en què $\\{q\\in U:\\Phi(q)=0\\}$ és la gràfica d'una funció de classe $\\mathcal{C}^1$ que dona aquestes dues variables en funció de la tercera.",
+      "veredicte": "fals",
+      "trampa": "quantificadors",
+      "concepte": "Elecció de variables dependents",
+      "contraexemple": "$\\Phi(x,y,z)=(x,y)$ a $p=(0,0,0)$: rang 2, però $\\{\\Phi=0\\}$ és l'eix $z$, que no és cap gràfica sobre la variable $x$.",
+      "resolucio": "Prenem $\\Phi(x,y,z)=(x,y)$ i $p=(0,0,0)$. És $\\mathcal{C}^\\infty$, $\\Phi(p)=0$ i $D\\Phi=\\begin{pmatrix}1&0&0\\\\0&1&0\\end{pmatrix}$ té rang 2. Compleix les hipòtesis. Triem les variables $(y,z)$. El conjunt $\\{\\Phi=0\\}$ és l'eix $z$, $\\{(0,0,z)\\}$. Si en un entorn $U$ de $p$ fos la gràfica $\\{(x,\\psi(x))\\}$ d'una funció de $x$ definida en un entorn de $0$, contindria punts amb $x\\neq 0$, impossible; a més, sobre $x=0$ hi hauria infinits valors de $z$, no un de sol. La condició correcta del TFI és que el menor $\\frac{\\partial\\Phi}{\\partial(y,z)}(p)$ tingui determinant no nul, i aquí val $\\begin{vmatrix}0&0\\\\1&0\\end{vmatrix}=0$. El rang 2 només garanteix que ALGUNA tria de dues variables funciona (aquí $(x,y)$ en funció de $z$).",
+      "idees_clau": [
+        "rang 2 garanteix que algun menor $2\\times 2$ és no nul, no tots",
+        "per a $\\Phi=(x,y)$, $\\det\\frac{\\partial\\Phi}{\\partial(y,z)}=0$",
+        "$\\{\\Phi=0\\}$ és l'eix $z$, que no és gràfica sobre $x$"
+      ],
+      "pista": "Què vol dir que una matriu $2\\times 3$ tingui rang 2: que tots els seus menors $2\\times 2$ són no nuls, o que n'hi ha algun? Recorda l'exemple del sistema lineal amb quatre variables dels apunts.",
+      "teoria": ["T4.12", "T4.13"],
+      "comprovacions": [
+        {
+          "descripcio": "determinant del menor respecte de $(y,z)$",
+          "tipus": "igualtat",
+          "expressio": "diff(x, y)*diff(y, z) - diff(x, z)*diff(y, y)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "0"
+        },
+        {
+          "descripcio": "determinant del menor respecte de $(x,y)$",
+          "tipus": "igualtat",
+          "expressio": "diff(x, x)*diff(y, y) - diff(x, y)*diff(y, x)",
+          "variable": "",
+          "punt": "",
+          "costat": "ambdos",
+          "valor": "1"
+        }
+      ]
+    },
+    {
+      "enunciat": "La funció $f:\\mathbb{R}^2\\to\\mathbb{R}^2$, $f(x,y)=(x^3-3xy^2,\\,3x^2y-y^3)$, és injectiva en algun entorn de cada punt de $\\mathbb{R}^2\\setminus\\{(0,0)\\}$, però no és injectiva en cap entorn de $(0,0)$.",
+      "veredicte": "cert",
+      "trampa": "cert_resultat",
+      "concepte": "Injectivitat local",
+      "contraexemple": "",
+      "resolucio": "$f$ és polinòmica, per tant $\\mathcal{C}^\\infty$, i $\\det Jf(x,y)=(3x^2-3y^2)^2+(6xy)^2=9(x^2+y^2)^2$, que és no nul si $(x,y)\\neq(0,0)$. Pel teorema de la funció inversa, a cada punt $a\\neq(0,0)$ hi ha un entorn $U$ on $f|_U$ és injectiva. A l'origen: per a $t\\neq 0$, $f(t,0)=(t^3,0)$ i, amb $w=(-t/2,\\,\\sqrt3\\,t/2)$, $f(w)=\\big(-\\tfrac{t^3}{8}+\\tfrac{9t^3}{8},\\,\\tfrac{3\\sqrt3\\,t^3}{8}-\\tfrac{3\\sqrt3\\,t^3}{8}\\big)=(t^3,0)$. Els punts $(t,0)\\neq w$ tenen norma $|t|$, de manera que, donat qualsevol $\\delta>0$, prenent $0<|t|<\\delta$ tots dos són a $B((0,0),\\delta)$ i tenen la mateixa imatge. (Equivalentment, $f(z)=z^3$ i $z$, $z\\,e^{2\\pi i/3}$ tenen el mateix cub.)",
+      "idees_clau": [
+        "$\\det Jf=9(x^2+y^2)^2\\neq 0$ fora de l'origen: TFI dona injectivitat local",
+        "$f$ correspon a $z\\mapsto z^3$",
+        "$(t,0)$ i $(-t/2,\\sqrt3\\,t/2)$ tenen la mateixa imatge $(t^3,0)$ i són arbitràriament a prop de l'origen"
+      ],
+      "pista": "On s'anul·la el determinant jacobià d'aquesta funció? Si identifiques $(x,y)$ amb $z=x+iy$, quina operació de nombres complexos fa $f$, i quants punts tenen el mateix cub?",
+      "teoria": ["T4.3", "T4.5"],
+      "comprovacions": []
+    },
+    {
+      "enunciat": "Existeix una única funció $\\varphi:\\mathbb{R}\\to\\mathbb{R}$ tal que $\\varphi(x)^5+\\varphi(x)+x^2=0$ per a tot $x\\in\\mathbb{R}$; a més, $\\varphi$ és de classe $\\mathcal{C}^\\infty$ i té un màxim a $x=0$.",
+      "veredicte": "cert",
+      "trampa": "cert_demostracio",
+      "concepte": "Funció implícita global",
+      "contraexemple": "",
+      "resolucio": "Sigui $g(y)=y^5+y$: és contínua, $g'(y)=5y^4+1>0$ i $g(y)\\to\\pm\\infty$ quan $y\\to\\pm\\infty$, per tant $g:\\mathbb{R}\\to\\mathbb{R}$ és bijectiva. Així, per a cada $x$ hi ha un únic $y$ amb $g(y)=-x^2$; definim $\\varphi(x)=g^{-1}(-x^2)$, que és l'única funció possible. Regularitat: sigui $\\Phi(x,y)=y^5+y+x^2$, $\\mathcal{C}^\\infty$, amb $\\frac{\\partial\\Phi}{\\partial y}=5y^4+1\\neq 0$. Pel teorema de la funció implícita, a l'entorn de cada $(x_0,\\varphi(x_0))$ el conjunt $\\{\\Phi=0\\}$ és la gràfica d'una funció $\\mathcal{C}^\\infty$, que per unicitat coincideix amb $\\varphi$; per tant $\\varphi\\in\\mathcal{C}^\\infty(\\mathbb{R})$. Finalment, $\\varphi(0)=0$ (ja que $g(0)=0$) i, com que $g$ és creixent amb $g(0)=0$ i $g(\\varphi(x))=-x^2\\leq 0$, tenim $\\varphi(x)\\leq 0=\\varphi(0)$: màxim a $x=0$. (Coherentment, $\\varphi'(0)=-\\frac{2x}{5y^4+1}\\big|_{(0,0)}=0$.)",
+      "idees_clau": [
+        "$y\\mapsto y^5+y$ és bijectiva (derivada $>0$ i límits $\\pm\\infty$): existència i unicitat global",
+        "$\\partial\\Phi/\\partial y=5y^4+1\\neq 0$ arreu: TFI dona $\\mathcal{C}^\\infty$ localment",
+        "$\\varphi(x)\\leq 0=\\varphi(0)$, o bé $\\varphi'(0)=0$ amb el signe de $\\varphi$"
+      ],
+      "pista": "Per a $x$ fix, quantes solucions $y$ té l'equació? Mira la monotonia de $y\\mapsto y^5+y$. Quin signe pot tenir $\\varphi(x)$?",
+      "teoria": ["T4.1", "T4.13", "T4.15"],
+      "comprovacions": []
+    },
+    {
+      "enunciat": "Sigui $f:\\mathbb{R}^n\\to\\mathbb{R}^n$ de classe $\\mathcal{C}^1$ tal que $f(f(x))=x$ per a tot $x\\in\\mathbb{R}^n$. Aleshores $\\det Jf(x)\\neq 0$ per a tot $x\\in\\mathbb{R}^n$.",
+      "veredicte": "cert",
+      "trampa": "cert_demostracio",
+      "concepte": "Involucions diferenciables",
+      "contraexemple": "",
+      "resolucio": "Com que $f\\circ f=\\mathrm{Id}$ i $f$ és $\\mathcal{C}^1$, per la regla de la cadena, per a tot $x$: $Df(f(x))\\,Df(x)=D(\\mathrm{Id})(x)=I_n$. Prenent determinants, $\\det Jf(f(x))\\cdot\\det Jf(x)=1$, de manera que $\\det Jf(x)\\neq 0$ per a tot $x$. (De fet, $f$ és un difeomorfisme de $\\mathbb{R}^n$ amb $f^{-1}=f$.)",
+      "idees_clau": [
+        "regla de la cadena a $f\\circ f=\\mathrm{Id}$: $Df(f(x))\\,Df(x)=I$",
+        "producte de determinants igual a $1$",
+        "cap dels dos factors pot ser $0$"
+      ],
+      "pista": "Què obtens si derives els dos costats de la igualtat $f(f(x))=x$ amb la regla de la cadena? Quin és el determinant de la identitat?",
+      "teoria": ["T4.9", "T4.10"],
+      "comprovacions": []
+    },
+    {
+      "enunciat": "Sigui $\\Phi:\\mathbb{R}^3\\to\\mathbb{R}$ de classe $\\mathcal{C}^1$ i $p\\in\\mathbb{R}^3$ amb $\\Phi(p)=0$ i $\\nabla\\Phi(p)\\neq 0$. Aleshores existeixen una de les variables $x,y,z$ i un entorn obert $U$ de $p$ tals que $\\{q\\in U:\\Phi(q)=0\\}$ és la gràfica d'una funció de classe $\\mathcal{C}^1$ que dona aquesta variable en funció de les altres dues.",
+      "veredicte": "cert",
+      "trampa": "cert_resultat",
+      "concepte": "Superfícies de nivell",
+      "contraexemple": "",
+      "resolucio": "Com que $\\nabla\\Phi(p)=\\big(\\frac{\\partial\\Phi}{\\partial x}(p),\\frac{\\partial\\Phi}{\\partial y}(p),\\frac{\\partial\\Phi}{\\partial z}(p)\\big)\\neq 0$, alguna de les derivades parcials és no nul·la; posem, reordenant, $\\frac{\\partial\\Phi}{\\partial z}(p)\\neq 0$. Escrivim $p=(a,b)$ amb $a\\in\\mathbb{R}^2$ (variables $x,y$) i $b\\in\\mathbb{R}$ (variable $z$). Aleshores es compleixen les hipòtesis del teorema de la funció implícita amb $n=2$, $m=1$: $\\Phi\\in\\mathcal{C}^1$, $\\Phi(a,b)=0$ i el determinant $1\\times 1$ $\\frac{\\partial\\Phi}{\\partial z}(a,b)\\neq 0$. El teorema dona oberts $U\\ni p$, $\\Omega\\ni a$ i $\\varphi\\in\\mathcal{C}^1(\\Omega)$ amb $\\{q\\in U:\\Phi(q)=0\\}=\\{(u,\\varphi(u)):u\\in\\Omega\\}$, és a dir, $z=\\varphi(x,y)$.",
+      "idees_clau": [
+        "$\\nabla\\Phi(p)\\neq 0$ implica que alguna parcial és no nul·la",
+        "s'aplica el TFI amb $m=1$ respecte d'aquesta variable",
+        "només es garanteix per a alguna variable, no per a totes"
+      ],
+      "pista": "Quan $m=1$, què és la matriu $\\big(\\partial\\Phi_i/\\partial y_j\\big)$ del teorema de la funció implícita? Què vol dir que un vector sigui no nul?",
+      "teoria": ["T4.13"],
+      "comprovacions": []
+    },
+    {
+      "enunciat": "Sigui $f:\\mathbb{R}^2\\to\\mathbb{R}^2$ de classe $\\mathcal{C}^1$ tal que $\\det Jf(x,y)\\neq 0$ per a tot $(x,y)\\in\\mathbb{R}^2$. Si $f(\\mathbb{R}^2)$ és un conjunt tancat de $\\mathbb{R}^2$, aleshores $f(\\mathbb{R}^2)=\\mathbb{R}^2$.",
+      "veredicte": "cert",
+      "trampa": "cert_demostracio",
+      "concepte": "Imatge d'una aplicació oberta",
+      "contraexemple": "",
+      "resolucio": "Pel teorema de l'aplicació oberta (Corol·lari 8) aplicat a l'obert $B=\\mathbb{R}^2$, el conjunt $V=f(\\mathbb{R}^2)$ és obert. Per hipòtesi, també és tancat, i és no buit. Com que $\\mathbb{R}^2$ és connex, els únics subconjunts alhora oberts i tancats són $\\emptyset$ i $\\mathbb{R}^2$. Per tant, $V=\\mathbb{R}^2$.",
+      "idees_clau": [
+        "teorema de l'aplicació oberta: $f(\\mathbb{R}^2)$ és obert",
+        "$f(\\mathbb{R}^2)$ és no buit, obert i tancat",
+        "$\\mathbb{R}^2$ és connex: només $\\emptyset$ i $\\mathbb{R}^2$ són oberts i tancats alhora"
+      ],
+      "pista": "Què et diu el teorema de l'aplicació oberta sobre $f(\\mathbb{R}^2)$? Quins subconjunts de $\\mathbb{R}^2$ són alhora oberts i tancats?",
+      "teoria": ["T4.7", "T4.8"],
+      "comprovacions": []
+    }
+  ]
+}

@@ -29,6 +29,7 @@ dev = [
     "ruff>=0.8",
     "pyright>=1.1.390",
     "pytest-timeout>=2.4.0",
+    "poethepoet>=0.49.0",
 ]
 
 [build-system]
@@ -38,6 +39,25 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 # backend/ is the import root: `core`, `apps` and `settings` are importable from scripts, tests and the server.
 packages = ["backend/core", "backend/apps", "backend/settings"]
+
+# Dev tasks: `uv run poe <task>` (`uv run poe` lists them). Extra arguments go to the command, e.g. `poe test -k quiz`.
+[tool.poe.tasks]
+run = { cmd = "uvicorn apps.tutor_api.server:app --reload --port 8000", help = "Serve the app at http://127.0.0.1:8000" }
+test = { cmd = "pytest -q", help = "Run the test suite" }
+types = { cmd = "pyright", help = "Type-check" }
+schema = { cmd = "python scripts/db.py schema --write", help = "Regenerate supabase/schema.sql from the SQLModel tables" }
+
+[tool.poe.tasks.lint]
+help = "Lint and check formatting"
+sequence = [{ cmd = "ruff check backend scripts" }, { cmd = "ruff format --check backend scripts" }]
+
+[tool.poe.tasks.format]
+help = "Sort imports and format"
+sequence = [{ cmd = "ruff check --select I --fix backend scripts" }, { cmd = "ruff format backend scripts" }]
+
+[tool.poe.tasks.check]
+help = "Lint, type-check and test"
+sequence = ["lint", "types", "test"]
 
 [tool.pytest.ini_options]
 pythonpath = ["backend", "."]

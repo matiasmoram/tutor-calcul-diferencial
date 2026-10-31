@@ -6,6 +6,7 @@ from core.course.domain.citations import cited_items
 from core.course.domain.entities.course import Course
 from core.course.domain.entities.exercise import Exercise
 from core.course.domain.entities.theory_item import TheoryItem
+from core.shared.domain.claims import claim_timeout
 from core.shared.domain.clock import Clock, SystemClock
 from core.shared.domain.ids import SessionId, TheoryItemId
 from core.shared.llm.call_scope import call_scope
@@ -30,10 +31,7 @@ from core.tutoring.domain.values.turn_trace import CheckedDraft, DraftAttempt, F
 
 MAX_ATTEMPTS = 3  # first draft + 2 rewrites
 TURN_DEADLINE_S = 300.0  # the whole turn, every model call and retry included
-# A claim older than this belongs to a turn that died without releasing it. Strictly above TURN_DEADLINE_S: a live
-# turn is cancelled by its deadline before its claim can go stale, so a takeover never runs beside the turn it
-# replaces (the margin covers the claim and save round trips and clock skew between workers).
-TURN_CLAIM_TIMEOUT_S = TURN_DEADLINE_S + 60.0
+TURN_CLAIM_TIMEOUT_S = claim_timeout(TURN_DEADLINE_S)
 # The sympy guard of one draft. A timed-out check keeps running in its worker thread (threads cannot be
 # cancelled); only its result is dropped.
 GUARD_DEADLINE_S = 20.0

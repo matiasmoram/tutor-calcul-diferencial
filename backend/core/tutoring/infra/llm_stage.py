@@ -17,14 +17,7 @@ from core.tutoring.domain.values.turn_trace import ModelCall
 
 
 def model_call(meta: CallMeta) -> ModelCall:
-    return ModelCall(
-        stage=str(meta.stage),
-        model=meta.model,
-        latency_ms=meta.latency_ms,
-        input_tokens=meta.input_tokens,
-        output_tokens=meta.output_tokens,
-        cached_tokens=meta.cached_tokens,
-    )
+    return ModelCall(stage=str(meta.stage), **meta.usage().model_dump())
 
 
 async def call_stage(

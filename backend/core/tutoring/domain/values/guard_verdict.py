@@ -2,7 +2,9 @@
 
 from typing import Literal, get_args
 
-from pydantic import AliasChoices, BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field
+
+from core.shared.domain.contract import catalan_alias
 
 Violation = Literal[
     "revela_resultat",
@@ -22,18 +24,16 @@ VIOLATIONS: tuple[Violation, ...] = get_args(Violation)
 VERDICTS: tuple[Verdict, ...] = get_args(Verdict)
 
 
-def _ca(catalan: str, english: str) -> AliasChoices:
-    return AliasChoices(catalan, english)
-
-
 class GuardVerdict(BaseModel):
     model_config = ConfigDict(serialize_by_alias=True, frozen=True)
 
-    verdict: Verdict = Field(validation_alias=_ca("veredicte", "verdict"), serialization_alias="veredicte")
+    verdict: Verdict = Field(validation_alias=catalan_alias("veredicte", "verdict"), serialization_alias="veredicte")
     violations: list[Violation] = Field(
-        validation_alias=_ca("infraccions", "violations"), serialization_alias="infraccions"
+        validation_alias=catalan_alias("infraccions", "violations"), serialization_alias="infraccions"
     )
-    explanation: str = Field(validation_alias=_ca("explicacio", "explanation"), serialization_alias="explicacio")
+    explanation: str = Field(
+        validation_alias=catalan_alias("explicacio", "explanation"), serialization_alias="explicacio"
+    )
 
     @property
     def approved(self) -> bool:

@@ -1,6 +1,8 @@
 from typing import Literal
 
-from pydantic import AliasChoices, BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field
+
+from core.shared.domain.contract import catalan_alias
 
 Role = Literal["alumne", "tutor"]
 TurnOrigin = Literal["text", "foto"]  # typed, or transcribed from a photo of the student's notebook
@@ -11,7 +13,7 @@ class ChatMessage(BaseModel):
 
     model_config = ConfigDict(serialize_by_alias=True, frozen=True)
 
-    role: Role = Field(validation_alias=AliasChoices("rol", "role"), serialization_alias="rol")
+    role: Role = Field(validation_alias=catalan_alias("rol", "role"), serialization_alias="rol")
     text: str
 
     @classmethod

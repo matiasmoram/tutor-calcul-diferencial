@@ -4,7 +4,9 @@
 from collections.abc import Sequence
 from typing import Literal, get_args
 
-from pydantic import AliasChoices, BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field
+
+from core.shared.domain.contract import catalan_alias
 
 StepState = Literal["no_iniciat", "en_curs", "completat", "erroni"]
 Disorientation = Literal["en_cami", "dubte_puntual", "encallat", "perdut"]
@@ -26,45 +28,47 @@ PROPOSED_RESULTS: tuple[ProposedResult, ...] = get_args(ProposedResult)
 OTHER_MISTAKE = "altre"  # a mistake that is not in the sheet's catalogue
 
 
-def _ca(catalan: str, english: str) -> AliasChoices:
-    return AliasChoices(catalan, english)
-
-
 class StepStatus(BaseModel):
     model_config = ConfigDict(serialize_by_alias=True, frozen=True)
 
-    step_id: str = Field(validation_alias=_ca("pas", "step_id"), serialization_alias="pas")
-    state: StepState = Field(validation_alias=_ca("estat", "state"), serialization_alias="estat")
+    step_id: str = Field(validation_alias=catalan_alias("pas", "step_id"), serialization_alias="pas")
+    state: StepState = Field(validation_alias=catalan_alias("estat", "state"), serialization_alias="estat")
 
 
 class Diagnosis(BaseModel):
     model_config = ConfigDict(serialize_by_alias=True, frozen=True)
 
-    evidence: str = Field(validation_alias=_ca("evidencia", "evidence"), serialization_alias="evidencia")
+    evidence: str = Field(validation_alias=catalan_alias("evidencia", "evidence"), serialization_alias="evidencia")
     student_summary: str = Field(
-        validation_alias=_ca("resum_alumne", "student_summary"), serialization_alias="resum_alumne"
+        validation_alias=catalan_alias("resum_alumne", "student_summary"), serialization_alias="resum_alumne"
     )
     step_states: list[StepStatus] = Field(
-        validation_alias=_ca("estat_passos", "step_states"), serialization_alias="estat_passos"
+        validation_alias=catalan_alias("estat_passos", "step_states"), serialization_alias="estat_passos"
     )
-    current_step: str = Field(validation_alias=_ca("pas_actual", "current_step"), serialization_alias="pas_actual")
+    current_step: str = Field(
+        validation_alias=catalan_alias("pas_actual", "current_step"), serialization_alias="pas_actual"
+    )
     detected_mistakes: list[str] = Field(
-        validation_alias=_ca("errors_detectats", "detected_mistakes"), serialization_alias="errors_detectats"
+        validation_alias=catalan_alias("errors_detectats", "detected_mistakes"), serialization_alias="errors_detectats"
     )
-    other_mistake: str = Field(validation_alias=_ca("error_altre", "other_mistake"), serialization_alias="error_altre")
+    other_mistake: str = Field(
+        validation_alias=catalan_alias("error_altre", "other_mistake"), serialization_alias="error_altre"
+    )
     proposed_result: ProposedResult = Field(
-        validation_alias=_ca("resultat_proposat", "proposed_result"), serialization_alias="resultat_proposat"
+        validation_alias=catalan_alias("resultat_proposat", "proposed_result"), serialization_alias="resultat_proposat"
     )
     result_justified: bool = Field(
-        validation_alias=_ca("resultat_justificat", "result_justified"), serialization_alias="resultat_justificat"
+        validation_alias=catalan_alias("resultat_justificat", "result_justified"),
+        serialization_alias="resultat_justificat",
     )
     disorientation: Disorientation = Field(
-        validation_alias=_ca("nivell_desorientacio", "disorientation"), serialization_alias="nivell_desorientacio"
+        validation_alias=catalan_alias("nivell_desorientacio", "disorientation"),
+        serialization_alias="nivell_desorientacio",
     )
-    intent: Intent = Field(validation_alias=_ca("intencio", "intent"), serialization_alias="intencio")
+    intent: Intent = Field(validation_alias=catalan_alias("intencio", "intent"), serialization_alias="intencio")
     question_theory: list[str] = Field(
         default_factory=list,
-        validation_alias=_ca("teoria_pregunta", "question_theory"),
+        validation_alias=catalan_alias("teoria_pregunta", "question_theory"),
         serialization_alias="teoria_pregunta",
     )
 

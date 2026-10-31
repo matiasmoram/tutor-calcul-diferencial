@@ -22,11 +22,11 @@ async def test_quizzes_round_trip_and_are_counted_per_source(session_provider: S
     other = q.model_copy(update={"id": QuizId("cccccccccccc"), "source_id": "T2.12", "difficulty": "normal"})
     for x in (later, q, other):
         await repo.add(x)
-    assert await repo.get(QUIZ_ID) == q
+    assert await repo.get(QuizId(QUIZ_ID)) == q
     assert [x.id for x in await repo.of_source("tema-2", "facil")] == [QUIZ_ID, "bbbbbbbbbbbb"]  # oldest first
     assert await repo.availability() == {"tema-2": {"facil": 2}, "T2.12": {"normal": 1}}
     with pytest.raises(QuizNotFoundException):
-        await repo.get("ffffffffffff")
+        await repo.get(QuizId("ffffffffffff"))
 
 
 async def test_adding_a_quiz_again_replaces_it(session_provider: SQLModelSessionProvider) -> None:

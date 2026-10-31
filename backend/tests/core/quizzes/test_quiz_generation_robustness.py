@@ -8,8 +8,8 @@ from random import Random
 import pytest
 
 from core.quizzes.application.quiz_generator import QuizGenerator
-from core.quizzes.application.quiz_provider import QuizNotReadyException, QuizProvider
-from core.quizzes.domain.exceptions import QuizGenerationException
+from core.quizzes.application.quiz_provider import QuizProvider
+from core.quizzes.domain.exceptions import QuizGenerationTimeoutException, QuizNotReadyException
 from core.quizzes.domain.values.quiz_id import QuizId
 from core.quizzes.infra.llm_blind_solver import LLMBlindSolver
 from core.quizzes.infra.llm_quiz_auditor import LLMQuizAuditor
@@ -143,9 +143,10 @@ async def test_the_generation_has_a_deadline() -> None:
         Random(0),
         deadline_s=0.05,
     )
-    with pytest.raises(QuizGenerationException) as e:
+    with pytest.raises(QuizGenerationTimeoutException) as e:
         await gen.generate(source(), "facil")
-    assert e.value.error_code == 502 and "no s'ha pogut generar el qüestionari en" in e.value.message
+    assert e.value.error_code == 502
+    assert e.value.message == "no s'ha pogut generar el qüestionari en 0 s: torna-ho a provar més tard"
 
 
 async def test_concurrent_requests_share_one_generation(session_provider: SQLModelSessionProvider) -> None:

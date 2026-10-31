@@ -1,5 +1,6 @@
 from collections.abc import Sequence
 
+from core.quizzes.domain.ports import BlindSolver
 from core.quizzes.domain.values.drafts import StatementDraft
 from core.quizzes.domain.values.quiz_source import QuizSource
 from core.quizzes.domain.values.verification import SolverAnswer, SolverAnswers
@@ -9,7 +10,7 @@ from core.quizzes.infra.prompts import SOLVER_SYSTEM, solver_request, source_con
 from core.shared.llm.client import LLMClient, LLMRequest, Stage
 
 
-class LLMBlindSolver:
+class LLMBlindSolver(BlindSolver):
     def __init__(self, llm: LLMClient) -> None:
         self._llm = llm
 

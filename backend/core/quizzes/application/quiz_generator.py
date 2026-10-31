@@ -6,7 +6,7 @@ from loguru import logger
 
 from core.quizzes.domain.entities.quiz import GenerationRound, Quiz, RejectedStatement
 from core.quizzes.domain.entities.statement import StatementVerification
-from core.quizzes.domain.exceptions import QuizGenerationException
+from core.quizzes.domain.exceptions import QuizGenerationFailedException, QuizGenerationTimeoutException
 from core.quizzes.domain.ports import BlindSolver, CheckEvaluator, QuizAuditor, QuizWriter
 from core.quizzes.domain.services.assembly import build_quiz
 from core.quizzes.domain.services.balance import (
@@ -69,9 +69,7 @@ class QuizGenerator:
         except TimeoutError:
             if not deadline.expired():
                 raise
-            raise QuizGenerationException(
-                f"no s'ha pogut generar el qüestionari en {self._deadline_s:.0f} s: torna-ho a provar més tard"
-            ) from None
+            raise QuizGenerationTimeoutException(self._deadline_s) from None
 
     async def _generate(self, source: QuizSource, difficulty: Difficulty) -> Quiz:
         n = QUIZ_SIZES[difficulty]
@@ -138,9 +136,7 @@ class QuizGenerator:
             if is_complete(kept, n):
                 return build_quiz(source.id, source.topic, difficulty, kept, rounds, self._rng, self._clock.now())
             feedback = round_log.rejected
-        raise QuizGenerationException(
-            f"no s'ha pogut generar un qüestionari verificat de {n} afirmacions després de {number} rondes"
-        )
+        raise QuizGenerationFailedException(n, number)
 
     async def _write(
         self,

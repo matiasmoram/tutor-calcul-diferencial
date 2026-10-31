@@ -8,6 +8,9 @@ from core.shared.math.sympy_checks import CheckResult, MathCheck
 
 # Contract values (LLM schemas, stored quizzes, HTTP): Catalan.
 Verdict = Literal["cert", "fals"]
+VERDICTS: tuple[Verdict, ...] = ("cert", "fals")
+Confidence = Literal["alta", "mitjana", "baixa"]  # the blind solver's
+CONFIDENCES: tuple[Confidence, ...] = ("alta", "mitjana", "baixa")
 TRAPS: tuple[str, ...] = (
     "reciproc",  # the converse of a theorem
     "hipotesi_eliminada",  # a theorem without one of its hypotheses

@@ -23,6 +23,7 @@ from core.quizzes.infra.llm_quiz_writer import LLMQuizWriter
 from core.quizzes.infra.sqlmodel_repository import SQLModelQuizRepository, SQLModelQuizSessionRepository
 from core.quizzes.infra.sympy_check_evaluator import SympyCheckEvaluator
 from core.shared.domain.clock import Clock
+from core.shared.domain.ids import SessionId
 from core.shared.llm.client import CallMeta, JsonObject, LLMClient, LLMRequest, Stage
 from core.shared.storage.session_provider import SQLModelSessionProvider
 from tests.fakes.llm import ScriptedLLMClient
@@ -156,7 +157,7 @@ def hints(provider: SQLModelSessionProvider) -> HintRevealer:
     return HintRevealer(SQLModelQuizSessionRepository(provider), SQLModelQuizRepository(provider), FixedClock())
 
 
-async def started_session(provider: SQLModelSessionProvider) -> str:
+async def started_session(provider: SQLModelSessionProvider) -> SessionId:
     await SQLModelQuizRepository(provider).add(quiz())
     started = await starter(provider).start(QuizSessionStarterInput(source_id="tema-2", difficulty="facil"))
     return started.session.id

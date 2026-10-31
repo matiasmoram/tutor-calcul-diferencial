@@ -4,26 +4,13 @@ from pydantic import BaseModel
 
 from core.quizzes.application.quiz_generator import QuizGenerator
 from core.quizzes.domain.entities.quiz import Quiz
-from core.quizzes.domain.exceptions import QuizException
+from core.quizzes.domain.exceptions import QuizNotReadyException
 from core.quizzes.domain.repository import QuizRepository
 from core.quizzes.domain.values.difficulty import Difficulty
 from core.quizzes.domain.values.quiz_source import QuizSource
 from core.shared.domain.single_flight import SingleFlight
 
 type QuizGenerations = SingleFlight[tuple[str, Difficulty], Quiz]
-
-
-class QuizNotReadyException(QuizException):
-    """Nothing stored for the source and difficulty, and this caller may not start a generation."""
-
-    def __init__(self, source_id: str, difficulty: Difficulty) -> None:
-        super().__init__(
-            "Encara no hi ha cap qüestionari preparat per a aquest tema i dificultat. "
-            "Prova una altra dificultat o demana-ho al professorat.",
-            409,
-        )
-        self.source_id = source_id
-        self.difficulty = difficulty
 
 
 class ProvidedQuiz(BaseModel):

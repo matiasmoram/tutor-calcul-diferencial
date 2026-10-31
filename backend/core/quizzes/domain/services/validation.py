@@ -4,6 +4,7 @@ import re
 import unicodedata
 from collections.abc import Collection, Sequence
 
+from core.quizzes.domain.entities.statement import VERDICTS
 from core.quizzes.domain.values.drafts import StatementDraft
 from core.shared.math.latex_vocabulary import unknown_commands
 from core.shared.math.sympy_checks import CheckResult, MathCheck
@@ -26,7 +27,7 @@ def dollars_balanced(text: str) -> bool:
 def validate_draft(d: StatementDraft, refs: Collection[str]) -> list[str]:
     """Problems of one generated statement (structure only; the sympy checks run separately)."""
     problems: list[str] = []
-    if d.verdict not in ("cert", "fals"):
+    if d.verdict not in VERDICTS:
         problems.append("veredicte no vàlid")
     for name, value in (
         ("enunciat", d.statement),

@@ -3,12 +3,13 @@ from collections.abc import Sequence
 from loguru import logger
 
 from core.quizzes.domain.entities.grading import StudentCheck
+from core.quizzes.domain.ports import CheckEvaluator
 from core.quizzes.domain.services.scoring import faithful
 from core.shared.math.infra.sympy_pool import POOL_UNAVAILABLE, UNAVAILABLE_DETAIL, SympyCheckPool
 from core.shared.math.sympy_checks import CheckResult, MathCheck, evaluate
 
 
-class SympyCheckEvaluator:
+class SympyCheckEvaluator(CheckEvaluator):
     """sympy checks under a deadline. With `pool` (long-lived, owned and closed by the composition root) they run in
     its workers and `timeout_s` is the pool's; without one every call spawns and tears down its own workers (one-off
     scripts). `in_process=True` runs inline (tests: no hang protection).

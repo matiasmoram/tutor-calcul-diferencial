@@ -1,5 +1,6 @@
 from collections.abc import Sequence
 
+from core.quizzes.domain.ports import AnswerGrader
 from core.quizzes.domain.values.grading_inputs import (
     AnsweredStatement,
     GraderEvaluation,
@@ -13,7 +14,7 @@ from core.quizzes.infra.prompts import GRADING_SYSTEM, grading_request, source_c
 from core.shared.llm.client import LLMClient, LLMRequest, Stage
 
 
-class LLMAnswerGrader:
+class LLMAnswerGrader(AnswerGrader):
     def __init__(self, llm: LLMClient) -> None:
         self._llm = llm
 

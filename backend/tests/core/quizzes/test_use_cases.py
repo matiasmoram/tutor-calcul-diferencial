@@ -20,6 +20,7 @@ from core.quizzes.domain.exceptions import (
 from core.quizzes.domain.values.quiz_id import QuizId
 from core.quizzes.infra.json_quiz_files import JsonQuizFiles
 from core.quizzes.infra.sqlmodel_repository import SQLModelQuizRepository
+from core.shared.domain.ids import SessionId
 from core.shared.llm.client import LLMError, Stage
 from core.shared.storage.session_provider import SQLModelSessionProvider
 from tests.core.quizzes.builders import (
@@ -60,7 +61,7 @@ async def test_a_session_on_a_stored_quiz_never_calls_the_model(session_provider
     with pytest.raises(StatementNotFoundException):
         await hints(session_provider).reveal(sid, "a9")
     with pytest.raises(QuizSessionNotFoundException):
-        await hints(session_provider).reveal("0" * 32, "a1")
+        await hints(session_provider).reveal(SessionId("0" * 32), "a1")
     with pytest.raises(UnknownQuizSourceException) as e:
         await starter(session_provider).start(QuizSessionStarterInput(source_id="tema-9"))
     assert e.value.error_code == 404

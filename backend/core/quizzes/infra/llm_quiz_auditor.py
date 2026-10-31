@@ -1,5 +1,6 @@
 from collections.abc import Sequence
 
+from core.quizzes.domain.ports import QuizAuditor
 from core.quizzes.domain.values.drafts import StatementDraft
 from core.quizzes.domain.values.quiz_source import QuizSource
 from core.quizzes.domain.values.verification import AuditReview, AuditReviews
@@ -9,7 +10,7 @@ from core.quizzes.infra.prompts import AUDIT_SYSTEM, audit_request, source_conte
 from core.shared.llm.client import LLMClient, LLMRequest, Stage
 
 
-class LLMQuizAuditor:
+class LLMQuizAuditor(QuizAuditor):
     def __init__(self, llm: LLMClient) -> None:
         self._llm = llm
 

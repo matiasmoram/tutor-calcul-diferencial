@@ -688,6 +688,81 @@ a.theory-src:hover { text-decoration: underline; }
   .er-item { flex-wrap: wrap; }
 }
 
+/* Find the error: layouts (Pas a pas / Document sencer) */
+.er-formats .ready-dots { margin-top: 4px; }
+.er-formats-row { display: flex; align-items: center; gap: 8px 14px; flex-wrap: wrap; margin-top: 14px; }
+.er-formats-row .muted { max-width: 36em; }
+.er-avis {
+  margin: 0 0 14px; padding: 8px 12px; border-radius: 10px; font-size: 14px;
+  background: var(--warn-soft); color: color-mix(in srgb, var(--warn) 80%, var(--ink));
+}
+.er-roadmap { margin-bottom: 14px; }
+.er-roadmap:empty { display: none; }
+.er-roadmap-intro { margin: 0 0 8px; font-size: 14px; color: var(--muted); }
+.er-roadmap-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.er-roadmap-list li { min-width: 0; max-width: 100%; }
+.er-step {
+  display: inline-flex; align-items: center; gap: 8px; max-width: 100%; padding: 6px 10px; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--panel); color: var(--muted); cursor: pointer;
+  font: 500 13.5px system-ui, sans-serif; text-align: left;
+}
+.er-step:hover { border-color: var(--accent); }
+.er-step.flawed { color: var(--ink); }
+.er-step.current { border-color: var(--marker-strong); box-shadow: 0 0 0 1px var(--marker-strong); color: var(--ink); }
+.er-step-num {
+  flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--code); font-weight: 700; font-size: 12px;
+}
+.er-step.flawed .er-step-num { background: var(--warn-soft); color: var(--warn); }
+.er-step-title { min-width: 0; max-width: 22em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.er-part { scroll-margin-top: 120px; }
+.er-part + .er-part { margin-top: 28px; }
+.er-part-head {
+  display: flex; align-items: center; gap: 6px 10px; flex-wrap: wrap; margin: 0 0 10px; user-select: none;
+  font: 700 11.5px system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--accent);
+}
+.er-part-title { font-size: 14px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--paper-ink); }
+.er-part-head .pill { letter-spacing: 0; text-transform: none; }
+/* The part under review: framed, the frame reaching out to the fragment numbers in the margin. */
+.er-part.current {
+  margin: 0 -22px 0 -60px; padding: 16px 22px 18px 60px; border-radius: 10px;
+  border: 1.5px solid var(--marker-strong); background: color-mix(in srgb, var(--marker) 16%, transparent);
+}
+.er-part.current + .er-part, .er-part + .er-part.current { margin-top: 22px; }
+.er-part.clean .frag, .er-part.done .frag { color: color-mix(in srgb, var(--paper-ink) 82%, var(--paper)); }
+.er-part.later .er-part-head { color: var(--muted); }
+.er-part.later .er-part-title { color: var(--muted); }
+.er-part-hidden { margin: 0; font: italic 14px system-ui, sans-serif; color: var(--muted); }
+.er-part-hint { font: 14px/1.5 system-ui, sans-serif; margin: 0 0 12px; }
+.er-fixline {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin-top: 10px; padding: 8px 12px;
+  border-radius: 8px; background: var(--ok-soft); font-size: 16px; line-height: 1.6; overflow-x: auto;
+}
+/* A background line, not text-decoration: it also strikes through the rendered formulas. */
+.er-fix-wrong {
+  text-decoration: none; color: var(--muted);
+  background: linear-gradient(transparent calc(50% - 1px), var(--bad) calc(50% - 1px), var(--bad) calc(50% + 1px), transparent calc(50% + 1px));
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.er-fix-arrow { color: var(--muted); }
+.er-fix-right { color: var(--ok); }
+.er-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.er-hint-cost { max-width: 15em; line-height: 1.35; }
+.er-bar.final { position: static; }
+.er-part-chips { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.er-part-chip {
+  display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--panel); font-size: 13px;
+}
+.er-part-chip-nota { font-weight: 700; font-variant-numeric: tabular-nums; }
+@media (max-width: 600px) {
+  .er-part.current { margin: 0 -10px 0 -40px; padding: 12px 10px 14px 40px; }
+  .er-step-title { max-width: 13em; }
+  .er-actions .btn { flex: 1; }
+  .er-hint-cost { max-width: none; flex-basis: 100%; }
+}
+
 /* Visualitzador */
 .visual { padding-top: 22px; }
 .visual > * { max-width: 1400px !important; }

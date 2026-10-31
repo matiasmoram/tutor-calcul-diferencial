@@ -3,11 +3,21 @@
 /* "Troba l'error": a document with hidden errors. Two activities share this view:
    - problema: a worked solution of an exercise ("resolució dolenta");
    - teoria: a result of the notes (statement + proof) with errors in the statement and in the proof.
-   The student highlights spans on the document, comments why they're wrong, and submits for correction.
+   And two layouts (`format`):
+   - sencer: the whole document at once; the student highlights spans, comments why they're wrong, and submits once;
+   - per_parts ("Pas a pas"): the document split into parts, some of them with exactly one error each. The student
+     reviews one flawed part at a time (earlier parts shown correct, later ones only by title), submits it and sees
+     its correction before moving on.
    Shares el(), math(), tex(), api(), statement(), crumbs(), show(), theoryCard() and the difficulty, ready-dot and
    score helpers with app.js. */
 
 const ERRORS_PER_DIFICULTAT = { facil: 1, normal: 2, dificil: 3 };
+// Pas a pas: parts to review = min(errors, parts of the document), and a document has at least 2 parts.
+const PARTS_PER_DIFICULTAT = { facil: "1 part", normal: "2 parts", dificil: "fins a 3 parts" };
+const FORMATS = [
+  { id: "per_parts", label: "Pas a pas", desc: "Revisa la resolució part per part; després de cada part en veus la correcció." },
+  { id: "sencer", label: "Document sencer", desc: "Tota la resolució de cop, com quan repasses un examen; la correcció arriba al final." },
+];
 const TIPUS_ERROR = {
   calcul: "Càlcul", logica: "Lògica", hipotesi: "Hipòtesi", teorema_mal_aplicat: "Teorema mal aplicat",
   conclusio: "Conclusió", desigualtat: "Desigualtat", quantificador: "Quantificador", implicacio: "Implicació",
@@ -27,9 +37,27 @@ const LOADING_STEPS = {
     "Gairebé a punt…",
   ],
 };
+const LOADING_STEPS_PARTS = {
+  problema: [
+    "Escrivint la resolució correcta, part per part…",
+    "Un segon model la comprova pas a pas…",
+    "Amagant un error a cada part triada…",
+    "Comprovant a cegues que cada part té exactament un error…",
+    "Gairebé a punt…",
+  ],
+  teoria: [
+    "Reescrivint l'enunciat i la demostració per parts a partir dels apunts…",
+    "Un segon model la compara amb els apunts…",
+    "Amagant un error a cada part triada…",
+    "Comprovant a cegues que cada part té exactament un error…",
+    "Gairebé a punt…",
+  ],
+};
 
 const E = {
-  font: "problema", llista: null, ex: null, item: null, disp: {}, dificultat: "normal", sessionId: null, sol: null,
+  font: "problema", llista: null, ex: null, item: null, dificultat: "normal", sessionId: null, sol: null,
+  format: "per_parts", dispFmt: { per_parts: {}, sencer: {} }, disp: {}, avis: null,
+  pp: null,  // Pas a pas: the parts seen so far, their results and hints, the part under review
   anotacions: [], actiu: null, resultat: null, revelats: new Set(), pistes: new Set(), seq: 0,
   req: 0, busy: false,  // req numbers each document load: only the latest one may touch the page
 };
@@ -38,6 +66,84 @@ const E = {
 
 const cpToU16 = (s, cp) => { let i = 0; for (let k = 0; k < cp && i < s.length; k++) i += s.codePointAt(i) > 0xffff ? 2 : 1; return i; };
 const u16ToCp = (s, i) => Array.from(s.slice(0, i)).length;
+
+/* ---------- layouts ---------- */
+
+// The layout of the document on screen comes from the server's answer, not from the request.
+const perParts = () => E.sol?.format === "per_parts";
+
+function textFrag(n) {
+  // Text of the markable fragment n (document-wide numbering): in Pas a pas, only the part under review.
+  if (!perParts()) return E.sol.fragments[n - 1];
+  const a = E.pp.actual;
+  return a.fragments[n - a.primer_fragment];
+}
+
+const FORMAT_KEY = "errades.format";
+
+function formatGuardat() {
+  try {
+    const f = localStorage.getItem(FORMAT_KEY);
+    return FORMATS.some((x) => x.id === f) ? f : "per_parts";
+  } catch { return "per_parts"; }
+}
+
+function guardaFormat(f) {
+  try { localStorage.setItem(FORMAT_KEY, f); } catch { /* storage unavailable: the choice lasts this page */ }
+}
+
+const nomFormat = (id) => FORMATS.find((f) => f.id === id).label;
+const altreFormat = (id) => (id === "per_parts" ? "sencer" : "per_parts");
+const teDocuments = (f) => Object.values(E.dispFmt[f] || {}).some(Boolean);
+const aquestaFont = () => (E.font === "teoria" ? "Aquest resultat" : "Aquest exercici");
+
+async function disponiblesPerFormat(perFormat) {
+  // {format: {difficulty: n}} for this source; a layout the server can't list counts as none ready.
+  const all = await Promise.all(FORMATS.map((f) => perFormat(f.id)));
+  return Object.fromEntries(FORMATS.map((f, i) => [f.id, all[i] || {}]));
+}
+
+function triaFormat() {
+  // The remembered layout, unless this source has none ready in it, nothing may be generated and the other layout
+  // has some: then the other one, with a notice. The remembered choice only changes on an explicit click.
+  const pref = formatGuardat();
+  const altre = altreFormat(pref);
+  E.format = pref;
+  E.avis = null;
+  if (!teDocuments(pref) && !POT_GENERAR && teDocuments(altre)) {
+    E.format = altre;
+    E.avis = `${aquestaFont()} encara no té cap document «${nomFormat(pref)}» preparat: s'obre com a «${nomFormat(altre)}».`;
+  }
+  E.disp = E.dispFmt[E.format];
+  E.dificultat = triaDificultat(E.disp, E.dificultat);
+}
+
+function canviaFormat(f) {
+  guardaFormat(f);
+  E.format = f;
+  E.avis = null;
+  E.disp = E.dispFmt[f];
+  E.dificultat = triaDificultat(E.disp, E.dificultat);
+  renderShell();
+  carregar(false);
+}
+
+function layoutToggle(current, dispFor, onPick) {
+  const wrap = el("div", { class: "diff-chips er-formats", role: "radiogroup", "aria-label": "Format" });
+  for (const f of FORMATS) {
+    const disp = dispFor?.(f.id);
+    const b = el("button", { type: "button", class: `chip${f.id === current ? " on" : ""}`, role: "radio",
+      "aria-checked": String(f.id === current), "data-format": f.id, title: f.desc },
+      el("span", { text: f.label }),
+      disp ? readyDots(disp, `${f.label}: documents preparats per dificultat`) : null);
+    b.addEventListener("click", () => {
+      if (f.id === current || E.busy) return;
+      onPick(f.id);
+    });
+    wrap.append(b);
+  }
+  return wrap;
+}
 
 /* ---------- choosing an activity ---------- */
 
@@ -59,24 +165,33 @@ function viewErradesInici() {
         "La resolució d'un problema de la col·lecció, feta per un alumne no gaire fi: una desigualtat girada, un teorema aplicat sense les hipòtesis, un càlcul mal fet.")));
 }
 
-let erTeoria = null;
+let erTeoria = {};  // format -> /api/errades/teoria
 
-async function getErradesTeoria() {
-  erTeoria ??= await api("/api/errades/teoria");
-  return erTeoria;
+async function getErradesTeoria(format) {
+  erTeoria[format] ??= await api(`/api/errades/teoria?format=${format}`);
+  return erTeoria[format];
 }
 
-async function viewErradesTeoriaLlista() {
+async function viewErradesTeoriaLlista(fresh = true) {
   show("errades");
   crumbs([["Inici", "#/"], ["Troba l'error", "#/errades"], ["Teoremes", null]]);
-  erTeoria = null;  // availability changes as documents are generated
+  if (fresh) erTeoria = {};  // availability changes as documents are generated
+  const hash = location.hash;
+  const format = formatGuardat();
   $("#view-errades").replaceChildren(carregant());
-  const data = await getErradesTeoria();
+  const data = await getErradesTeoria(format);
+  if (location.hash !== hash) return;
+  const formats = layoutToggle(format, null, (f) => {
+    guardaFormat(f);
+    viewErradesTeoriaLlista(false).catch(viewError);
+  });
   $("#view-errades").replaceChildren(
     el("section", { class: "hero left" },
       el("div", { class: "eyebrow", text: "Troba l'error · Teoria" }),
       el("h2", { text: "Teoremes i demostracions amb errors" }),
-      el("p", { class: "muted", text: "Tria un resultat dels apunts. El reescriurem amb errors a l'enunciat i a la demostració; tu els has de trobar. Els punts indiquen les dificultats que ja estan preparades (fàcil · normal · difícil)." })),
+      el("p", { class: "muted", text: "Tria un resultat dels apunts. El reescriurem amb errors a l'enunciat i a la demostració; tu els has de trobar. Els punts indiquen les dificultats que ja estan preparades en el format triat (fàcil · normal · difícil)." }),
+      el("div", { class: "er-formats-row" }, formats,
+        el("span", { class: "muted small", text: FORMATS.find((f) => f.id === format).desc }))),
     el("div", { class: "teoria-temes" }, ...data.temes.filter((t) => t.items.length).map((t, i) => {
       const d = el("details", { class: "teoria-tema" },
         el("summary", {}, el("strong", { text: `Tema ${t.tema}` }), math(el("span", { text: ` · ${t.titol}` })),
@@ -85,7 +200,7 @@ async function viewErradesTeoriaLlista() {
           el("a", { class: "er-item", href: `#/errades/teoria/${it.id}` },
             el("span", { class: "theory-label", text: etiquetaCurta(it.etiqueta) }),
             math(el("span", { class: "theory-name", text: it.nom || "" })),
-            readyDots(it.disponibles, "Documents preparats per dificultat"))))));
+            readyDots(it.disponibles, `Documents «${nomFormat(format)}» preparats per dificultat`))))));
       if (i === 0) d.open = true;
       return d;
     })));
@@ -101,9 +216,10 @@ async function viewErrades(llistaId, exId) {
   if (!ex) throw new Error("Exercici desconegut");
   crumbs([["Inici", "#/"], ["Troba l'error", "#/errades"], ["Resolucions", "#/errades/problemes"],
     [l.etiqueta, `#/errades/${llistaId}`], [ex.etiqueta, null]]);
-  const disp = await api("/api/errades/disponibles").catch(() => ({}));
-  Object.assign(E, { font: "problema", llista: l, ex, item: null, disp: disp[ex.id] || {} });
-  E.dificultat = triaDificultat(E.disp, E.dificultat);
+  const dispFmt = await disponiblesPerFormat((f) =>
+    api(`/api/errades/disponibles?format=${f}`).then((d) => d[ex.id]).catch(() => ({})));
+  Object.assign(E, { font: "problema", llista: l, ex, item: null, dispFmt });
+  triaFormat();
   renderShell();
   await carregar(false);
 }
@@ -111,13 +227,16 @@ async function viewErrades(llistaId, exId) {
 async function viewErradesTeoria(itemId) {
   show("errades");
   $("#view-errades").replaceChildren(carregant());
-  const data = await getErradesTeoria();
-  const item = data.temes.flatMap((t) => t.items).find((it) => it.id === itemId);
+  const troba = (data) => data.temes.flatMap((t) => t.items).find((it) => it.id === itemId);
+  const item = troba(await getErradesTeoria("sencer"));
   if (!item) throw new Error("Resultat dels apunts desconegut");
   crumbs([["Inici", "#/"], ["Troba l'error", "#/errades"], ["Teoremes", "#/errades/teoria"],
     [etiquetaCurta(item.etiqueta, ` · T${item.tema}`), null]]);
-  Object.assign(E, { font: "teoria", llista: null, ex: null, item, disp: item.disponibles || {} });
-  E.dificultat = triaDificultat(E.disp, E.dificultat);
+  const dispFmt = await disponiblesPerFormat((f) => (f === "sencer"
+    ? item.disponibles
+    : getErradesTeoria(f).then((d) => troba(d)?.disponibles).catch(() => ({}))));
+  Object.assign(E, { font: "teoria", llista: null, ex: null, item, dispFmt });
+  triaFormat();
   renderShell();
   await carregar(false);
 }
@@ -125,19 +244,29 @@ async function viewErradesTeoria(itemId) {
 function renderShell() {
   const root = $("#view-errades");
   const teoria = E.font === "teoria";
+  const parts = E.format === "per_parts";
   const chips = difficultyChips({
     current: E.dificultat,
     disp: E.disp,
-    sub: (d) => `${ERRORS_PER_DIFICULTAT[d.id]} error${ERRORS_PER_DIFICULTAT[d.id] > 1 ? "s" : ""}`,
+    sub: (d) => parts
+      ? PARTS_PER_DIFICULTAT[d.id]
+      : `${ERRORS_PER_DIFICULTAT[d.id]} error${ERRORS_PER_DIFICULTAT[d.id] > 1 ? "s" : ""}`,
     isBusy: () => E.busy,
     onPick: (id) => { E.dificultat = id; carregar(false); },
   });
+  const formats = layoutToggle(E.format, (f) => E.dispFmt[f], canviaFormat);
   const nova = el("button", { type: "button", class: "btn ghost small-btn", id: "er-nova", text: teoria ? "↻ Una altra versió" : "↻ Una altra resolució" });
   nova.addEventListener("click", unAltre);
 
   const eyebrow = teoria
     ? `Troba l'error · Teoria · Tema ${E.item.tema}`
     : `Troba l'error · ${E.llista.etiqueta} · ${E.ex.etiqueta}`;
+  const titol = parts
+    ? (teoria ? "Aquest enunciat i la seva demostració tenen errors. Revisa'ls part per part." : "Aquesta resolució té errors. Revisa-la part per part.")
+    : (teoria ? "Aquest enunciat i la seva demostració tenen errors. Troba'ls." : "Aquesta resolució té errors. Troba'ls.");
+  const ajuda = parts
+    ? "Cada part marcada té exactament un error: selecciona el tros que està malament, marca'l i explica per què. En enviar la part en veuràs la correcció."
+    : "Selecciona amb el ratolí el tros que està malament, marca'l i explica per què. Quan acabis, envia la correcció.";
   const context = teoria
     ? el("section", { class: "er-statement" },
         el("span", { class: "er-statement-label", text: "Resultat" }),
@@ -152,10 +281,12 @@ function renderShell() {
     el("header", { class: "er-head" },
       el("div", { class: "er-title" },
         el("div", { class: "eyebrow", text: eyebrow }),
-        el("h2", { text: teoria ? "Aquest enunciat i la seva demostració tenen errors. Troba'ls." : "Aquesta resolució té errors. Troba'ls." }),
-        el("p", { class: "muted", text: "Selecciona amb el ratolí el tros que està malament, marca'l i explica per què. Quan acabis, envia la correcció." })),
-      el("div", { class: "er-controls" }, chips, nova)),
+        el("h2", { text: titol }),
+        el("p", { class: "muted", text: `${FORMATS.find((f) => f.id === E.format).desc} ${ajuda}` })),
+      el("div", { class: "er-controls" }, formats, chips, nova)),
+    ...(E.avis ? [el("p", { class: "er-avis", role: "status", text: E.avis })] : []),
     context,
+    el("nav", { class: "er-roadmap", id: "er-roadmap", "aria-label": "Parts de la resolució" }),
     el("div", { class: "er-bar", id: "er-bar" }),
     el("div", { class: "er-workspace", id: "er-workspace" },
       el("div", { class: "er-paper-wrap", id: "er-paper-wrap" },
@@ -202,9 +333,11 @@ function unAltre() {
 /* ---------- loading ---------- */
 
 function resetDoc() {
-  Object.assign(E, { sessionId: null, sol: null, anotacions: [], actiu: null, resultat: null, revelats: new Set(), pistes: new Set() });
+  Object.assign(E, { sessionId: null, sol: null, pp: null, anotacions: [], actiu: null, resultat: null, revelats: new Set(), pistes: new Set() });
   $("#er-rail").replaceChildren();
   $("#er-bar").replaceChildren();
+  $("#er-bar").classList.remove("final");
+  $("#er-roadmap").replaceChildren();
   $("#er-original").classList.add("hidden");
 }
 
@@ -213,11 +346,22 @@ function oferirGenerar(altre = false) {
   E.req++;  // a load still in flight for another difficulty must not replace this
   erBusy(false);
   resetDoc();
+  const paper = $("#er-paper");
+  paper.classList.remove("loading");
+  const other = altreFormat(E.format);
+  if (!POT_GENERAR && !teDocuments(E.format) && teDocuments(other)) {
+    // Nothing at all in this layout and nothing may be generated: offer the layout that has documents.
+    const obre = el("button", { type: "button", class: "btn primary", text: `Obre-ho com a «${nomFormat(other)}»` });
+    obre.addEventListener("click", () => canviaFormat(other));
+    paper.replaceChildren(el("div", { class: "er-generate" },
+      el("strong", { text: `${aquestaFont()} encara no té cap document «${nomFormat(E.format)}» preparat.` }),
+      el("p", { class: "muted", text: `En format «${nomFormat(other)}» sí que n'hi ha.` }),
+      obre));
+    return;
+  }
   const ready = DIFICULTATS.filter((d) => E.disp[d.id]).map((d) => d.label);
   const gen = el("button", { type: "button", class: "btn primary", text: "Genera'n un de nou (pot trigar uns minuts)" });
   gen.addEventListener("click", () => carregar(true));
-  const paper = $("#er-paper");
-  paper.classList.remove("loading");
   paper.replaceChildren(el("div", { class: "er-generate" },
     el("strong", { text: altre ? "No n'hi ha cap altre de preparat en aquesta dificultat." : "Encara no hi ha cap document preparat en aquesta dificultat." }),
     POT_GENERAR ? el("p", { class: "muted", text: "Se'n pot generar un de nou: un model l'escriu i un altre el verifica." }) : null,
@@ -232,7 +376,7 @@ async function carregar(nova) {
   const hash = location.hash;
   const anterior = E.sol?.id || null;
   resetDoc();
-  const steps = LOADING_STEPS[E.font];
+  const steps = (E.format === "per_parts" ? LOADING_STEPS_PARTS : LOADING_STEPS)[E.font];
   const paper = $("#er-paper");
   paper.classList.add("loading");
   paper.replaceChildren(
@@ -250,15 +394,14 @@ async function carregar(nova) {
     const font = E.font === "teoria" ? { teoria_id: E.item.id } : { exercici_id: E.ex.id };
     const data = await api("/api/errades/sessions", {
       method: "POST",
-      body: JSON.stringify({ ...font, dificultat: E.dificultat, nova, excepte: anterior }),
+      body: JSON.stringify({ ...font, dificultat: E.dificultat, format: E.format, nova, excepte: anterior }),
     });
     if (erStale(req, hash)) return;
     E.sessionId = data.session_id;
     E.sol = data.solucio;
     if (data.generada_ara) E.disp[E.dificultat] = (E.disp[E.dificultat] || 0) + 1;
-    renderPaper();
-    renderBar();
-    renderRail();
+    if (perParts()) iniciPerParts();
+    renderDoc();
   } catch (err) {
     if (erStale(req, hash)) return;
     const ready = DIFICULTATS.filter((d) => E.disp[d.id]).map((d) => d.label);
@@ -277,6 +420,13 @@ async function carregar(nova) {
   }
 }
 
+function renderDoc() {
+  renderPaper();
+  renderRoadmap();
+  renderBar();
+  renderRail();
+}
+
 /* ---------- the document ---------- */
 
 function tokenize(text) {
@@ -288,22 +438,30 @@ function tokenize(text) {
   return out;
 }
 
+function fragNode(text, n, markable) {
+  // A markable fragment is split into tokens the student can select; the others are plain text.
+  const p = el("p", { class: "frag", "data-frag": String(n) },
+    el("span", { class: "frag-num", "aria-hidden": "true", text: String(n) }));
+  if (!markable) {
+    p.append(math(el("span", { class: "frag-body", text })));
+    return p;
+  }
+  const body = el("span", { class: "frag-body" });
+  for (const t of tokenize(text)) {
+    const span = el("span", { class: `tok${t.math ? " m" : ""}${t.ws ? " ws" : ""}`, "data-s": String(t.s), "data-e": String(t.e) });
+    if (t.math) span.append(tex(t.t.slice(1, -1)));
+    else span.textContent = t.t;
+    body.append(span);
+  }
+  p.append(body);
+  return p;
+}
+
 function renderPaper() {
+  if (perParts()) return renderParts();
   const paper = $("#er-paper");
   const nEn = E.sol.n_enunciat || 0;
-  const frags = E.sol.fragments.map((text, i) => {
-    const p = el("p", { class: "frag", "data-frag": String(i + 1) },
-      el("span", { class: "frag-num", "aria-hidden": "true", text: String(i + 1) }));
-    const body = el("span", { class: "frag-body" });
-    for (const t of tokenize(text)) {
-      const span = el("span", { class: `tok${t.math ? " m" : ""}${t.ws ? " ws" : ""}`, "data-s": String(t.s), "data-e": String(t.e) });
-      if (t.math) span.append(tex(t.t.slice(1, -1)));
-      else span.textContent = t.t;
-      body.append(span);
-    }
-    p.append(body);
-    return p;
-  });
+  const frags = E.sol.fragments.map((text, i) => fragNode(text, i + 1, true));
   if (nEn) {
     // Theory: the statement first, then the proof (headings sit outside the fragments, so they can't be selected).
     frags.splice(nEn, 0, el("h4", { class: "er-sec", text: "Demostració" }));
@@ -313,7 +471,10 @@ function renderPaper() {
   paintHighlights();
 }
 
-function paintHighlights() {
+// In Pas a pas a graded part always shows its error; in the whole document only the ones the student asks for.
+const revelat = (id) => perParts() || E.revelats.has(id);
+
+function paintHighlights(r = E.resultat) {
   const paper = $("#er-paper");
   paper.querySelectorAll(".tok").forEach((t) => {
     t.className = t.className.replace(/\s?(hl|hl-\S+|active|err-\S+)/g, "");
@@ -328,21 +489,20 @@ function paintHighlights() {
     });
   };
   // Revealed/found real errors (after correction) go underneath the student's highlights.
-  if (E.resultat) {
-    for (const err of E.resultat.errors) {
-      const text = E.sol.fragments[err.fragment - 1];
-      const found = E.resultat.anotacions.some((a) => a.error === err.id);
-      if (found || E.revelats.has(err.id)) {
+  if (r) {
+    for (const err of r.errors) {
+      const text = textFrag(err.fragment);
+      const found = r.anotacions.some((a) => a.error === err.id);
+      if (found || revelat(err.id)) {
         mark(err.fragment, cpToU16(text, err.inici), cpToU16(text, err.fi), `err-real ${found ? "err-found" : "err-missed"}`);
       }
     }
   }
   for (const a of E.anotacions) {
-    const text = E.sol.fragments[a.fragment - 1];
     let cls = "hl";
-    if (E.resultat) {
-      const r = E.resultat.anotacions.find((x) => x.id === a.id);
-      cls += r ? (r.error === "cap" ? " hl-wrong" : r.explicacio === "correcta" ? " hl-right" : " hl-partial") : "";
+    if (r) {
+      const x = r.anotacions.find((y) => y.id === a.id);
+      cls += x ? (x.error === "cap" ? " hl-wrong" : x.explicacio === "correcta" ? " hl-right" : " hl-partial") : "";
     }
     if (E.actiu === a.id) cls += " active";
     mark(a.fragment, a.s16, a.e16, cls, a.id);
@@ -350,6 +510,260 @@ function paintHighlights() {
   paper.querySelectorAll(".tok[data-ann]").forEach((t) => {
     t.onclick = () => activar(t.dataset.ann);
   });
+}
+
+/* ---------- Pas a pas: one flawed part at a time ---------- */
+
+function iniciPerParts() {
+  E.pp = {
+    textos: new Map(),  // part -> its correct fragments, as they become visible
+    fets: new Map(),    // part -> { r: its grading, anotacions: the marks it graded }
+    pistes: new Map(),  // part -> hint text
+    actual: E.sol.actual,  // { part, primer_fragment, fragments (with its error), anteriors }; null at the end
+    final: null,
+  };
+  absorbeix(E.sol.actual.anteriors);
+}
+
+function absorbeix(parts) {
+  // [{part, fragments}]; the final resolution may also come as one list of fragments per part, in order.
+  (parts || []).forEach((p, i) => {
+    if (Array.isArray(p)) E.pp.textos.set(i + 1, p);
+    else E.pp.textos.set(p.part, p.fragments);
+  });
+}
+
+function estatPart(r) {
+  // [pill class, short label, sentence] of a graded part, from its best match with the part's error.
+  const best = r.anotacions.filter((a) => a.error !== "cap").sort((x, y) => y.punts - x.punts)[0];
+  if (!best) return ["bad", "No trobat", "no has trobat l'error"];
+  if (best.explicacio === "correcta") return ["ok", "Trobat", "has trobat l'error i l'has explicat bé"];
+  return ["warn", "Parcial", "has trobat l'error, però l'explicació no és del tot correcta"];
+}
+
+function pillEstat(r) {
+  const [cls, label] = estatPart(r);
+  return el("span", { class: `pill ${cls}`, text: label });
+}
+
+function liniaCorreccio(err) {
+  // A part already reviewed: what it said, struck through, and the correction.
+  return el("div", { class: "er-fixline" },
+    math(el("del", { class: "er-fix-wrong", text: err.cita })),
+    el("span", { class: "er-fix-arrow", "aria-hidden": "true", text: "→" }),
+    math(el("span", { class: "er-fix-right", text: err.correccio })));
+}
+
+function renderParts() {
+  const paper = $("#er-paper");
+  const pp = E.pp;
+  const actual = pp.actual ? pp.actual.part : Infinity;  // the final screen shows every part
+  let n = 1;  // document-wide number of the next fragment
+  paper.replaceChildren(...E.sol.parts.map((p) => {
+    const fet = pp.fets.get(p.part);
+    const head = el("h4", { class: "er-part-head" },
+      el("span", { class: "er-part-num", text: `Part ${p.part}` }),
+      math(el("span", { class: "er-part-title", text: p.titol })));
+    const sec = el("section", { class: "er-part", "data-part": String(p.part) }, head);
+    if (p.part === actual) {
+      sec.classList.add("current");
+      head.append(E.resultat ? pillEstat(E.resultat) : el("span", { class: "pill warn", text: "Hi ha un error en aquesta part" }));
+      const pista = pp.pistes.get(p.part);
+      if (pista) sec.append(math(el("p", { class: "note-hint er-part-hint", text: `Pista: ${pista}` })));
+      pp.actual.fragments.forEach((t, i) => sec.append(fragNode(t, pp.actual.primer_fragment + i, true)));
+      n = pp.actual.primer_fragment + pp.actual.fragments.length;
+    } else if (p.part < actual && pp.textos.has(p.part)) {
+      sec.classList.add(fet ? "done" : "clean");
+      if (fet) head.append(pillEstat(fet.r));
+      const frags = pp.textos.get(p.part);
+      frags.forEach((t, i) => sec.append(fragNode(t, n + i, false)));
+      n += frags.length;
+      if (fet) sec.append(...fet.r.errors.map(liniaCorreccio));
+    } else {
+      // Later parts are correct and would give the error away: only their titles until the student gets there.
+      sec.classList.add("later");
+      if (p.revisar) head.append(el("span", { class: "pill neutral", text: "a revisar" }));
+      sec.append(el("p", { class: "er-part-hidden", text: "Es mostra quan hi arribis." }));
+    }
+    return sec;
+  }));
+  paintHighlights();
+}
+
+function renderRoadmap() {
+  const nav = $("#er-roadmap");
+  if (!perParts()) return nav.replaceChildren();
+  const k = E.sol.n_errors;
+  const actual = E.pp.actual?.part;
+  nav.replaceChildren(
+    el("p", { class: "er-roadmap-intro", text: k === 1 ? "Revisaràs 1 part; té exactament un error." : `Revisaràs ${k} parts; cadascuna té exactament un error.` }),
+    el("ol", { class: "er-roadmap-list" }, ...E.sol.parts.map((p) => {
+      const fet = E.pp.fets.get(p.part);
+      let pill = null;
+      if (fet) pill = pillEstat(fet.r);
+      else if (p.part === actual) pill = el("span", { class: "pill warn", text: "ara" });
+      else if (p.revisar) pill = el("span", { class: "pill neutral", text: "a revisar" });
+      const b = el("button", { type: "button", class: `er-step${p.revisar ? " flawed" : ""}${p.part === actual ? " current" : ""}` },
+        el("span", { class: "er-step-num", text: String(p.part) }),
+        math(el("span", { class: "er-step-title", text: p.titol })),
+        pill);
+      if (p.part === actual) b.setAttribute("aria-current", "step");
+      b.addEventListener("click", () => $(`#er-paper .er-part[data-part="${p.part}"]`)?.scrollIntoView({ behavior: "smooth", block: "start" }));
+      return el("li", {}, b);
+    })));
+}
+
+function renderBarParts() {
+  const bar = $("#er-bar");
+  const pp = E.pp;
+  bar.classList.toggle("final", !pp.actual);
+  if (!pp.actual) return renderFinal();
+  if (E.resultat) return renderScorePart();
+  const part = pp.actual.part;
+  const revisar = E.sol.parts.filter((p) => p.revisar);
+  const idx = revisar.findIndex((p) => p.part === part) + 1;
+  const marcats = E.anotacions.length;
+  const sense = E.anotacions.filter((a) => !a.comentari.trim()).length;
+  const ambPista = pp.pistes.has(part);
+  const actions = el("div", { class: "er-actions" });
+  if (!ambPista) {
+    const pista = el("button", { type: "button", class: "btn ghost small-btn", text: "Pista" });
+    pista.addEventListener("click", demanaPista);
+    actions.append(el("span", { class: "er-hint-cost muted small", text: "Si la demanes, la nota d'aquesta part baixa un 15 %." }), pista);
+  }
+  // With nothing marked the student can still move on: the part is graded as not found and shown corrected.
+  const submit = el("button", { type: "button", class: marcats ? "btn primary" : "btn ghost", text: marcats ? "Envia aquesta part" : "No el trobo: mostra'l" });
+  submit.addEventListener("click", enviarPart);
+  actions.append(submit);
+  bar.replaceChildren(
+    el("div", { class: "er-progress" },
+      el("span", {}, "Part ", el("strong", { text: String(part) }), ` · revisió ${idx} de ${revisar.length} · `,
+        el("strong", { text: String(marcats) }), ` marcat${marcats === 1 ? "" : "s"}`),
+      sense ? el("span", { class: "warn-text", text: ` · ${sense} sense explicació` }) : null,
+      ambPista ? el("span", { class: "muted", text: " · amb pista" }) : null),
+    actions);
+}
+
+function renderScorePart() {
+  const r = E.resultat;
+  const [, , frase] = estatPart(r);
+  const seguir = el("button", { type: "button", class: "btn primary", text: r.seguent ? "Continua amb la part següent →" : "Mostra el resultat final →" });
+  seguir.addEventListener("click", continuar);
+  $("#er-bar").replaceChildren(
+    el("div", { class: "er-score" }, scoreRing(r.nota),
+      el("div", {},
+        el("strong", { text: `Part ${r.part}: ${frase}` }),
+        E.pp.pistes.has(r.part) ? el("span", { class: "muted", text: " · amb pista" }) : null,
+        r.falsos_positius ? el("span", { class: "muted", text: ` · ${r.falsos_positius} marca${r.falsos_positius > 1 ? "des" : "da"} en passos correctes` }) : null,
+        r.resum ? math(el("p", { class: "muted", text: r.resum })) : null)),
+    seguir);
+}
+
+function renderFinal() {
+  const f = E.pp.final;
+  const again = el("button", { type: "button", class: "btn primary", text: E.font === "teoria" ? "Una altra versió" : "Una altra resolució" });
+  again.addEventListener("click", unAltre);
+  const tutor = E.font === "problema"
+    ? el("a", { class: "btn ghost", href: `#/exercicis/${E.llista.id}/${E.ex.id}`, text: "Resol-lo amb el tutor →" })
+    : null;
+  $("#er-bar").replaceChildren(
+    el("div", { class: "er-score" }, scoreRing(f.nota),
+      el("div", {},
+        el("strong", { text: `Has trobat ${f.trobats} de ${f.total} error${f.total > 1 ? "s" : ""}` }),
+        f.falsos_positius ? el("span", { class: "muted", text: ` · ${f.falsos_positius} marca${f.falsos_positius > 1 ? "des" : "da"} en passos correctes` }) : null,
+        el("ul", { class: "er-part-chips", "aria-label": "Nota de cada part" }, ...f.parts.map((fp) => {
+          const fet = E.pp.fets.get(fp.part);
+          const [cls, label] = fet ? estatPart(fet.r) : ["neutral", "Corregida"];
+          return el("li", { class: "er-part-chip" },
+            el("span", { text: `Part ${fp.part}` }),
+            el("span", { class: `pill ${cls}`, text: label }),
+            fp.pista ? el("span", { class: "pill neutral", text: "pista" }) : null,
+            el("span", { class: "er-part-chip-nota", text: String(fp.nota) }));
+        })))),
+    el("div", { class: "er-actions" }, again, tutor));
+}
+
+function payloadAnotacions() {
+  return E.anotacions.map((a) => {
+    const text = textFrag(a.fragment);
+    return { id: a.id, fragment: a.fragment, inici: u16ToCp(text, a.s16), fi: u16ToCp(text, a.e16), comentari: a.comentari };
+  });
+}
+
+async function demanaPista() {
+  if (E.busy || !E.sessionId || !E.pp?.actual) return;
+  const req = E.req;
+  const hash = location.hash;
+  const part = E.pp.actual.part;
+  const bar = $("#er-bar");
+  bar.replaceChildren(el("div", { class: "er-progress" }, el("span", { class: "spinner" }),
+    el("span", { text: "Demanant una pista…" })));
+  erBusy(true);
+  try {
+    const { pista } = await api(`/api/errades/sessions/${E.sessionId}/parts/${part}/pista`, { method: "POST" });
+    if (erStale(req, hash)) return;
+    E.pp.pistes.set(part, pista);
+    renderPaper();
+    renderBar();
+    renderRail();
+  } catch (err) {
+    if (erStale(req, hash)) return;
+    renderBar();
+    bar.append(el("span", { class: "warn-text", text: err.message }));
+  } finally {
+    if (req === E.req) erBusy(false);
+  }
+}
+
+async function enviarPart() {
+  if (E.busy || !E.sessionId || !E.pp?.actual) return;
+  const req = E.req;
+  const hash = location.hash;
+  const part = E.pp.actual.part;
+  const bar = $("#er-bar");
+  bar.replaceChildren(el("div", { class: "er-progress" }, el("span", { class: "spinner" }),
+    el("span", { text: "Corregint aquesta part…" })));
+  erBusy(true);
+  try {
+    const r = await api(`/api/errades/sessions/${E.sessionId}/parts/${part}/correccio`, {
+      method: "POST",
+      body: JSON.stringify({ anotacions: payloadAnotacions() }),
+    });
+    if (erStale(req, hash)) return;
+    E.resultat = r;
+    E.actiu = null;
+    E.pp.fets.set(part, { r, anotacions: E.anotacions });
+    if (r.correcte) E.pp.textos.set(part, r.correcte);
+    E.pp.final = r.final;
+    renderDoc();
+  } catch (err) {
+    if (erStale(req, hash)) return;
+    renderBar();
+    bar.append(el("span", { class: "warn-text", text: err.message }));
+  } finally {
+    if (req === E.req) erBusy(false);
+  }
+}
+
+function continuar() {
+  const r = E.resultat;
+  if (E.busy || !r) return;
+  const pp = E.pp;
+  if (r.seguent) {
+    absorbeix(r.seguent.anteriors);
+    pp.actual = r.seguent;
+  } else if (r.final) {
+    absorbeix(r.final.resolucio);
+    pp.actual = null;
+  } else return;
+  Object.assign(E, { anotacions: [], actiu: null, resultat: null });
+  renderDoc();
+  if (pp.actual) {
+    $("#er-paper .er-part.current")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  } else {
+    renderOriginal(pp.final.original);
+    $("#view-errades").scrollTo({ top: 0, behavior: "smooth" });
+  }
 }
 
 /* ---------- selecting and annotating ---------- */
@@ -384,6 +798,8 @@ function onSelection() {
   const fragA = (a || range.startContainer.parentElement)?.closest?.(".frag");
   if (!fragA) { btn.classList.add("hidden"); return; }
   const toks = [...fragA.querySelectorAll(".tok")];
+  // Only tokenized fragments take marks (in Pas a pas, the part under review).
+  if (!toks.length) { btn.classList.add("hidden"); return; }
   a ??= toks[0];
   // A selection running into the next paragraph is clipped to the first one.
   if (!b || b.closest(".frag") !== fragA) b = toks[toks.length - 1];
@@ -403,7 +819,7 @@ function onSelection() {
 
 function crearAnotacio() {
   if (!pendingSel) return;
-  const text = E.sol.fragments[pendingSel.fragment - 1];
+  const text = textFrag(pendingSel.fragment);
   const a = {
     id: `a${++E.seq}`,
     ...pendingSel,
@@ -440,6 +856,7 @@ function activar(id) {
 function renderBar() {
   const bar = $("#er-bar");
   if (!E.sol) return bar.replaceChildren();
+  if (perParts()) return renderBarParts();
   if (E.resultat) return renderScore();
   const n = E.sol.n_errors;
   const marcats = E.anotacions.length;
@@ -468,12 +885,7 @@ async function enviar() {
   try {
     const resultat = await api(`/api/errades/sessions/${E.sessionId}/correccio`, {
       method: "POST",
-      body: JSON.stringify({
-        anotacions: E.anotacions.map((a) => {
-          const text = E.sol.fragments[a.fragment - 1];
-          return { id: a.id, fragment: a.fragment, inici: u16ToCp(text, a.s16), fi: u16ToCp(text, a.e16), comentari: a.comentari };
-        }),
-      }),
+      body: JSON.stringify({ anotacions: payloadAnotacions() }),
     });
     if (erStale(req, hash)) return;
     E.resultat = resultat;
@@ -481,7 +893,7 @@ async function enviar() {
     paintHighlights();
     renderRail();
     renderBar();
-    renderOriginal();
+    renderOriginal(resultat.original);
     $("#view-errades").scrollTo({ top: 0, behavior: "smooth" });
   } catch (err) {
     if (erStale(req, hash)) return;
@@ -492,10 +904,9 @@ async function enviar() {
   }
 }
 
-function renderOriginal() {
+function renderOriginal(orig) {
   // Theory: after the correction, the item as the notes state and prove it.
   const box = $("#er-original");
-  const orig = E.resultat?.original;
   if (!box || !orig) return;
   box.replaceChildren(el("h3", { text: "Compara amb els apunts" }), theoryCard(orig, true));
   box.classList.remove("hidden");
@@ -523,12 +934,16 @@ function quote(text) {
 function renderRail() {
   const rail = $("#er-rail");
   if (!E.sol) return rail.replaceChildren();
-  const cards = E.resultat ? railResultats() : railAnotacions();
+  let cards;
+  if (perParts() && !E.pp.actual) cards = [...E.pp.fets.values()].flatMap((f) => railResultats(f.r, f.anotacions));
+  else cards = E.resultat ? railResultats() : railAnotacions();
   rail.replaceChildren(...cards);
   if (!cards.length) {
     rail.append(el("div", { class: "rail-empty" },
       el("span", { class: "rail-empty-icon", text: "✎" }),
-      el("p", { text: "Selecciona un tros del text que creguis que està malament i prem «Marca com a error»." })));
+      el("p", { text: perParts() && E.pp.actual
+        ? `Selecciona el tros de la part ${E.pp.actual.part} que creguis que està malament i prem «Marca com a error».`
+        : "Selecciona un tros del text que creguis que està malament i prem «Marca com a error»." })));
   }
   requestAnimationFrame(alignRail);
 }
@@ -549,13 +964,12 @@ function railAnotacions() {
   });
 }
 
-function railResultats() {
-  const r = E.resultat;
+function railResultats(r = E.resultat, anotacions = E.anotacions) {
   const cards = [];
   for (const [k, err] of r.errors.entries()) {
     const matches = r.anotacions.filter((a) => a.error === err.id);
     const best = matches.sort((x, y) => y.punts - x.punts)[0];
-    const mine = best && E.anotacions.find((a) => a.id === best.id);
+    const mine = best && anotacions.find((a) => a.id === best.id);
     const found = !!best;
     const card = el("div", { class: `note result ${found ? "found" : "missed"}`, "data-frag": String(err.fragment), "data-card": `err-${err.id}` });
     const status = found
@@ -563,9 +977,9 @@ function railResultats() {
           text: best.explicacio === "correcta" ? "Trobat i ben explicat" : best.explicacio === "parcial" ? "Trobat · explicació parcial" : "Trobat · falta el perquè" })
       : el("span", { class: "pill bad", text: "No trobat" });
     card.append(el("div", { class: "note-head" },
-      el("span", { class: "note-tag", text: `Error ${k + 1} · ${TIPUS_ERROR[err.tipus] || err.tipus}` }), status));
+      el("span", { class: "note-tag", text: `${perParts() ? `Part ${r.part}` : `Error ${k + 1}`} · ${TIPUS_ERROR[err.tipus] || err.tipus}` }), status));
 
-    if (found || E.revelats.has(err.id)) {
+    if (found || revelat(err.id)) {
       card.append(quote(err.cita),
         math(el("p", { class: "note-text", text: err.explicacio })),
         el("div", { class: "note-fix" }, el("span", { text: "Correcció" }), math(el("p", { text: err.correccio }))));
@@ -595,7 +1009,7 @@ function railResultats() {
   for (const a of r.anotacions.filter((x) => x.error === "cap")) {
     // A stored grading can carry ids that are not this page's marks (e.g. graded from another tab): show the
     // server's verdict without the local quote instead of failing.
-    const mine = E.anotacions.find((x) => x.id === a.id);
+    const mine = anotacions.find((x) => x.id === a.id);
     const card = el("div", { class: "note result false", "data-card": a.id },
       el("div", { class: "note-head" }, el("span", { class: "note-tag", text: mine ? `La teva marca · paràgraf ${mine.fragment}` : "Una marca teva" }),
         el("span", { class: "pill neutral", text: "Aquí no hi havia error" })),

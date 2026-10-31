@@ -1,6 +1,6 @@
 """The authored course content: one YAML file per topic for the notes (`teoria/temaN.yaml`) and for the problem
-sheets (`exercicis/temaN.yaml`). The files keep their Catalan keys (they are written and validated by
-scripts/check_fitxes.py and merge_fitxes.py); this module maps them onto the English domain entities."""
+sheets (`exercicis/temaN.yaml`). The files keep their Catalan keys (they are edited by hand and validated by
+scripts/check_fitxes.py); this module maps them onto the English domain entities."""
 
 from collections.abc import Mapping
 from pathlib import Path

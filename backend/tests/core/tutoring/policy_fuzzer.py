@@ -1,4 +1,4 @@
-"""Random diagnosis sequences for the policy (no LLM), as scripts/fuzz_politica.py generates them.
+"""Random diagnosis sequences for the policy (no LLM), checked against its invariants.
 
 Invariants checked by `check` (any violation is reported with the exercise, seed and turn):
   I1 no identical plan (action, target, level) more than 3 turns in a row (except after closing, and answers to
@@ -38,7 +38,7 @@ STUDENT_TEXTS = ["(missatge de l'alumne)"]
 
 
 def random_diagnosis(ex: Exercise, rng: random.Random, done: set[str], profile: str) -> tuple[JsonObject, set[str]]:
-    """A diagnosis with the model's (Catalan) keys. Same random stream as the legacy fuzzer."""
+    """A diagnosis with the model's (Catalan) keys."""
     if profile == "stuck_trying":
         intent, disorientation = "mostra_treball", "encallat"
     elif profile == "beggar":

@@ -106,3 +106,80 @@ class GraderReport(BaseModel):
         serialization_alias="avaluacions",
     )
     summary: str = Field(default="", validation_alias=catalan_alias("resum", "summary"), serialization_alias="resum")
+
+
+class DraftPart(BaseModel):
+    """One part of the correct resolution as the writer sent it: a sheet step (problems) or a titled proof stage
+    (theory)."""
+
+    model_config = ConfigDict(serialize_by_alias=True)
+
+    step: str = Field(default="", validation_alias=catalan_alias("pas", "step"), serialization_alias="pas")
+    title: str = Field(default="", validation_alias=catalan_alias("titol", "title"), serialization_alias="titol")
+    fragments: list[str] = Field(default_factory=list)
+
+
+class ResolutionDraft(BaseModel):
+    """The correct resolution in parts (stage A), before the code checks."""
+
+    model_config = ConfigDict(serialize_by_alias=True)
+
+    # Theory: the statement, which becomes the first part.
+    statement: list[str] = Field(
+        default_factory=list, validation_alias=catalan_alias("enunciat", "statement"), serialization_alias="enunciat"
+    )
+    parts: list[DraftPart] = Field(default_factory=list)
+
+
+class DraftEdit(BaseModel):
+    """One replacement in the correct text of a part: `original`, copied from the fragment, becomes `new`."""
+
+    model_config = ConfigDict(serialize_by_alias=True)
+
+    fragment: JsonScalar = None  # 1-based, inside the part
+    original: str = ""
+    new: str = Field(default="", validation_alias=catalan_alias("nou", "new"), serialization_alias="nou")
+
+
+class CorruptionDraft(BaseModel):
+    """The error put into one part (stage B): the first edit is the error, the later ones its local consequences."""
+
+    model_config = ConfigDict(serialize_by_alias=True)
+
+    # False: the model found no believable error for this part. `bool` first, so `false` is not read as 0.
+    fit: bool | JsonScalar = Field(
+        default=True, validation_alias=catalan_alias("apte", "fit"), serialization_alias="apte"
+    )
+    edits: list[DraftEdit] = Field(
+        default_factory=list, validation_alias=catalan_alias("canvis", "edits"), serialization_alias="canvis"
+    )
+    quote: str = Field(default="", validation_alias=catalan_alias("cita", "quote"), serialization_alias="cita")
+    kind: str | None = Field(default=None, validation_alias=catalan_alias("tipus", "kind"), serialization_alias="tipus")
+    explanation: str = Field(
+        default="", validation_alias=catalan_alias("explicacio", "explanation"), serialization_alias="explicacio"
+    )
+    correction: str = Field(
+        default="", validation_alias=catalan_alias("correccio", "correction"), serialization_alias="correccio"
+    )
+    hint: str = Field(default="", validation_alias=catalan_alias("pista", "hint"), serialization_alias="pista")
+
+
+class ResolutionReport(VerificationReport):
+    """The blind check of the correct resolution (stage A)."""
+
+    reaches_result: bool | JsonScalar = Field(
+        default=False,
+        validation_alias=catalan_alias("arriba_al_resultat", "reaches_result"),
+        serialization_alias="arriba_al_resultat",
+    )
+
+
+class PartReport(VerificationReport):
+    """The blind check of one corrupted part (stage C)."""
+
+    # Non-empty: the verifier thinks the earlier parts, given to it as correct context, are wrong.
+    context_alert: str = Field(
+        default="",
+        validation_alias=catalan_alias("alerta_context", "context_alert"),
+        serialization_alias="alerta_context",
+    )

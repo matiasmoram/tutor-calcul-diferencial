@@ -1,4 +1,5 @@
 from core.mistakes.domain.values.difficulty import Difficulty
+from core.mistakes.domain.values.layout import Layout
 from core.shared.domain.exceptions import DomainException
 
 
@@ -76,6 +77,51 @@ class MistakeGenerationTimeoutException(MistakesException):
 
     def __init__(self, deadline_s: float) -> None:
         super().__init__(f"no s'ha pogut generar el document en {deadline_s:.0f} s: torna-ho a provar més tard", 502)
+
+
+class MistakeLayoutMismatchException(MistakesException):
+    """A session graded through the other layout's use case: per parts on the whole-document grading, or the
+    other way round."""
+
+    def __init__(self, session_id: str, layout: Layout) -> None:
+        if layout == "per_parts":
+            message = "Aquest document es corregeix part per part."
+        else:
+            message = "Aquest document es corregeix sencer, no per parts."
+        super().__init__(message, 409)
+        self.session_id = session_id
+        self.layout = layout
+
+
+class UnknownMistakePartException(MistakesException):
+    """Not a part of the document, or a part without an error (nothing to grade or hint)."""
+
+    def __init__(self, part: int) -> None:
+        super().__init__("Part desconeguda", 404)
+        self.part = part
+
+
+class MistakePartOutOfOrderException(MistakesException):
+    def __init__(self, part: int) -> None:
+        super().__init__("Primer cal corregir la part anterior.", 409)
+        self.part = part
+
+
+class MistakePartAlreadyGradedException(MistakesException):
+    """Another grading of the part was stored first (a claim that went stale was taken over)."""
+
+    def __init__(self, session_id: str, part: int) -> None:
+        super().__init__("Aquesta part ja s'ha corregit.", 409)
+        self.session_id = session_id
+        self.part = part
+
+
+class MistakePartsUnavailableException(MistakesException):
+    """A source that cannot be split into at least 2 parts: only the whole-document layout is offered."""
+
+    def __init__(self, source_id: str) -> None:
+        super().__init__("Aquest exercici no es pot fer pas a pas: només té una part. Fes-lo en document sencer.", 422)
+        self.source_id = source_id
 
 
 class MistakeGenerationFailedException(MistakesException):

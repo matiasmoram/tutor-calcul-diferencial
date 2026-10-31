@@ -4,8 +4,16 @@ only judges the student's explanation (port AnnotationGrader). The score is comp
 from collections.abc import Mapping
 
 from core.mistakes.domain.entities.annotation import Annotation
-from core.mistakes.domain.entities.mistake_exercise import DeclaredMistake, MistakeExercise
-from core.mistakes.domain.entities.mistake_grading import AnnotationResult, Location, MistakeGrading
+from core.mistakes.domain.entities.gradable_text import GradableText
+from core.mistakes.domain.entities.mistake_exercise import DeclaredMistake
+from core.mistakes.domain.entities.mistake_grading import (
+    AnnotationResult,
+    Location,
+    MistakeGrading,
+    PartedMistakeGrading,
+    PartGrading,
+    PartScore,
+)
 from core.mistakes.domain.exceptions import InvalidAnnotationsException
 from core.mistakes.domain.services.locate import overlap, selectable_span
 from core.mistakes.domain.values.llm_outputs import EXPLANATION_GRADES, NO_EXPLANATION, NO_MISTAKE, GraderReport
@@ -17,6 +25,7 @@ from core.shared.domain.model_usage import ModelUsage
 EXPLANATION_POINTS: Mapping[str, float] = dict(zip(EXPLANATION_GRADES, (1.0, 0.6, 0.35, 0.3), strict=True))
 APPROXIMATE_FACTOR = 0.8  # annotation in the right fragment but not on the quoted words
 FALSE_POSITIVE_PENALTY = 0.1
+HINT_FACTOR = 0.85  # a per-parts part whose hint the student asked for
 
 
 def _storable(text: str) -> bool:
@@ -35,17 +44,17 @@ def check_annotations(annotations: list[Annotation]) -> None:
         raise InvalidAnnotationsException("Una anotació conté caràcters no vàlids (caràcters de control).")
 
 
-def locate_annotations(exercise: MistakeExercise, annotations: list[Annotation]) -> list[LocatedAnnotation]:
-    """Drops annotations outside the document or empty after clipping."""
+def locate_annotations(text: GradableText, annotations: list[Annotation]) -> list[LocatedAnnotation]:
+    """Drops annotations outside the annotatable fragments or empty after clipping."""
     located: list[LocatedAnnotation] = []
     for a in annotations:
-        if not 1 <= a.fragment <= len(exercise.fragments):
+        if a.fragment not in text.annotatable or not 1 <= a.fragment <= len(text.fragments):
             continue
-        text = exercise.fragments[a.fragment - 1]
-        i0, i1 = max(0, a.start), min(len(text), a.end)
+        fragment = text.fragments[a.fragment - 1]
+        i0, i1 = max(0, a.start), min(len(fragment), a.end)
         if i1 <= i0:
             continue
-        candidates = exercise.mistakes_in(a.fragment)
+        candidates = [e for e in text.mistakes if e.fragment == a.fragment]
         located.append(
             LocatedAnnotation(
                 id=a.id,
@@ -53,11 +62,11 @@ def locate_annotations(exercise: MistakeExercise, annotations: list[Annotation])
                 fragment=a.fragment,
                 start=i0,
                 end=i1,
-                text=text[i0:i1],
+                text=fragment[i0:i1],
                 comment=a.comment.strip(),
                 candidates=[e.id for e in candidates],
                 overlapping=[e.id for e in candidates if overlap(i0, i1, e.start, e.end)],
-                precise=[e.id for e in candidates if overlap(i0, i1, e.start, e.end) and _tight(text, i0, i1, e)],
+                precise=[e.id for e in candidates if overlap(i0, i1, e.start, e.end) and _tight(fragment, i0, i1, e)],
             )
         )
     return located
@@ -71,11 +80,13 @@ def _tight(fragment: str, start: int, end: int, mistake: DeclaredMistake) -> boo
 
 
 def grade(
-    exercise: MistakeExercise,
+    text: GradableText,
     located: list[LocatedAnnotation],
     report: GraderReport | None,
     call: ModelUsage | None,
+    factor: float = 1.0,
 ) -> MistakeGrading:
+    """`factor` scales the score (HINT_FACTOR for a part whose hint was used)."""
     verdicts = {v.annotation: v for v in report.verdicts} if report else {}  # by key
     results: list[AnnotationResult] = []
     best: dict[str, float] = {}
@@ -111,16 +122,28 @@ def grade(
             )
         )
 
-    n = exercise.n_mistakes
+    n = len(text.mistakes)
     raw = sum(best.values()) / n if n else 0.0
     score = max(0.0, raw - FALSE_POSITIVE_PENALTY * false_positives)
     return MistakeGrading(
-        score=round(100 * score),
+        score=round(100 * score * factor),
         found=len(best),
         total=n,
         false_positives=false_positives,
         annotations=results,
-        mistakes=exercise.mistakes,
+        mistakes=text.mistakes,
         summary=report.summary if report else "",
         call=call,
+    )
+
+
+def aggregate_parts(gradings: list[PartGrading]) -> PartedMistakeGrading:
+    """The whole per-parts session: the mean of the part scores, the counts summed."""
+    ordered = sorted(gradings, key=lambda g: g.part)
+    return PartedMistakeGrading(
+        score=round(sum(g.grading.score for g in ordered) / len(ordered)) if ordered else 0,
+        found=sum(g.grading.found for g in ordered),
+        total=sum(g.grading.total for g in ordered),
+        false_positives=sum(g.grading.false_positives for g in ordered),
+        parts=[PartScore(part=g.part, score=g.grading.score, hint_used=g.hint_used) for g in ordered],
     )

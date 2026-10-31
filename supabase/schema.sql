@@ -29,6 +29,7 @@ CREATE TABLE mistake_exercises (
 	difficulty VARCHAR(16) NOT NULL, 
 	created_at FLOAT NOT NULL, 
 	data JSONB NOT NULL, 
+	layout VARCHAR(16) NOT NULL, 
 	PRIMARY KEY (id)
 );
 CREATE INDEX ix_mistake_exercises_source ON mistake_exercises (source_id, difficulty);
@@ -70,6 +71,7 @@ CREATE TABLE mistake_sessions (
 	difficulty VARCHAR(16) NOT NULL, 
 	created_at FLOAT NOT NULL, 
 	grading_started_at FLOAT, 
+	layout VARCHAR(16) NOT NULL, 
 	PRIMARY KEY (id), 
 	FOREIGN KEY(exercise_id) REFERENCES mistake_exercises (id)
 );
@@ -133,6 +135,29 @@ CREATE TABLE mistake_gradings (
 	FOREIGN KEY(session_id) REFERENCES mistake_sessions (id) ON DELETE CASCADE
 );
 ALTER TABLE mistake_gradings ENABLE ROW LEVEL SECURITY;
+
+CREATE TABLE mistake_part_gradings (
+	id SERIAL NOT NULL, 
+	session_id VARCHAR(64) NOT NULL, 
+	part INTEGER NOT NULL, 
+	hint_used BOOLEAN NOT NULL, 
+	created_at FLOAT NOT NULL, 
+	annotations JSONB NOT NULL, 
+	result JSONB NOT NULL, 
+	PRIMARY KEY (id), 
+	UNIQUE (session_id, part), 
+	FOREIGN KEY(session_id) REFERENCES mistake_sessions (id) ON DELETE CASCADE
+);
+ALTER TABLE mistake_part_gradings ENABLE ROW LEVEL SECURITY;
+
+CREATE TABLE mistake_part_hints (
+	session_id VARCHAR(64) NOT NULL, 
+	part INTEGER NOT NULL, 
+	created_at FLOAT NOT NULL, 
+	PRIMARY KEY (session_id, part), 
+	FOREIGN KEY(session_id) REFERENCES mistake_sessions (id) ON DELETE CASCADE
+);
+ALTER TABLE mistake_part_hints ENABLE ROW LEVEL SECURITY;
 
 CREATE TABLE quiz_gradings (
 	session_id VARCHAR(64) NOT NULL, 

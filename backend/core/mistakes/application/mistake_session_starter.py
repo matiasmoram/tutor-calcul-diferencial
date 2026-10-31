@@ -4,9 +4,13 @@ from core.course.domain.entities.course import Course
 from core.mistakes.application.mistake_exercise_provider import MistakeExerciseProvider
 from core.mistakes.domain.entities.mistake_exercise import MistakeExercise
 from core.mistakes.domain.entities.mistake_session import MistakeSession
+from core.mistakes.domain.entities.parted_mistake_exercise import MistakeDocument
+from core.mistakes.domain.exceptions import MistakeLayoutMismatchException
 from core.mistakes.domain.repository import MistakeSessionRepository
+from core.mistakes.domain.services.part_checks import require_parts
 from core.mistakes.domain.services.sources import resolve_source
 from core.mistakes.domain.values.difficulty import Difficulty
+from core.mistakes.domain.values.layout import Layout
 from core.mistakes.domain.values.mistake_source import MistakeSource
 from core.shared.domain.clock import Clock
 from core.shared.domain.ids import SessionId
@@ -20,13 +24,21 @@ class MistakeSessionStarterInput(BaseModel):
     difficulty: Difficulty = "normal"
     fresh: bool = False  # generate a new document even if some are ready, when the provider may generate
     avoid_id: str | None = Field(default=None, max_length=40)  # document just seen: prefer another one
+    layout: Layout = "sencer"
 
 
 class StartedMistakeSession(BaseModel):
     session: MistakeSession
     source: MistakeSource
-    exercise: MistakeExercise
+    document: MistakeDocument  # of the session's layout
     generated_now: bool
+
+    @property
+    def exercise(self) -> MistakeExercise:
+        """The document of a "sencer" session. Raises MistakeLayoutMismatchException for a per-parts one."""
+        if not isinstance(self.document, MistakeExercise):
+            raise MistakeLayoutMismatchException(self.session.id, self.session.layout)
+        return self.document
 
 
 class MistakeSessionStarter:
@@ -40,14 +52,17 @@ class MistakeSessionStarter:
 
     async def needs_generation(self, request: MistakeSessionStarterInput) -> bool:
         """Whether `start(request)` will call the model (the API checks the provider key first)."""
-        source = resolve_source(self._course, request.exercise_id, request.theory_id)
-        return await self._provider.will_generate(source, request.difficulty, request.fresh)
+        source = self._source(request)
+        return await self._provider.will_generate(source, request.difficulty, request.fresh, request.layout)
 
     async def start(self, request: MistakeSessionStarterInput) -> StartedMistakeSession:
-        source = resolve_source(self._course, request.exercise_id, request.theory_id)
+        """Raises MistakePartsUnavailableException for "per_parts" on a source that cannot make 2 parts."""
+        source = self._source(request)
         session_id = SessionId.generate()
         with call_scope(session_id):
-            provided = await self._provider.get_or_generate(source, request.difficulty, request.fresh, request.avoid_id)
+            provided = await self._provider.get_or_generate(
+                source, request.difficulty, request.fresh, request.avoid_id, request.layout
+            )
         session = MistakeSession(
             id=session_id,
             source_kind=source.kind,
@@ -55,8 +70,15 @@ class MistakeSessionStarter:
             exercise_id=provided.exercise.id,
             difficulty=request.difficulty,
             created_at=self._clock.now(),
+            layout=request.layout,
         )
         await self._sessions.add(session)
         return StartedMistakeSession(
-            session=session, source=source, exercise=provided.exercise, generated_now=provided.generated_now
+            session=session, source=source, document=provided.exercise, generated_now=provided.generated_now
         )
+
+    def _source(self, request: MistakeSessionStarterInput) -> MistakeSource:
+        source = resolve_source(self._course, request.exercise_id, request.theory_id)
+        if request.layout == "per_parts":
+            require_parts(source)
+        return source

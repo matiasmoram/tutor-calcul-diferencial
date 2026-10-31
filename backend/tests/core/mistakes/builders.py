@@ -207,6 +207,17 @@ def exercise_generator(llm: LLMClient, clock: Clock | None = None) -> MistakeExe
     return MistakeExerciseGenerator(LLMMistakeGenerator(llm), LLMMistakeVerifier(llm), clock or FixedClock())
 
 
+def seed_choosing(*first: int, n_parts: int = 3) -> int:
+    """A seed for `parted_generator` whose choice of a problem's parts starts with `first`, in that order: the parts
+    to corrupt, then the unused ones a failing part is swapped for."""
+    for seed in range(1000):
+        parts = list(range(1, n_parts + 1))
+        random.Random(seed).shuffle(parts)
+        if parts[: len(first)] == list(first):
+            return seed
+    raise AssertionError(f"no seed starts with {first}")
+
+
 def parted_generator(
     llm: LLMClient, clock: Clock | None = None, seed: int = 0, deadline_s: float = 300.0
 ) -> PartedMistakeExerciseGenerator:

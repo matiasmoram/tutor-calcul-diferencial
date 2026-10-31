@@ -1,5 +1,4 @@
 import asyncio
-import random
 import re
 from collections.abc import Mapping, Sequence
 
@@ -25,6 +24,7 @@ from tests.core.mistakes.builders import (
     parted_generator,
     problem_source,
     resolution_checked,
+    seed_choosing,
     theory_source,
     theory_written,
     written,
@@ -96,9 +96,9 @@ def chain(*steps: tuple[JsonObject, JsonObject | None]) -> dict[Stage, Outputs]:
     }
 
 
-async def test_a_per_parts_document_from_the_correct_resolution(seed_for: dict[str, int]) -> None:
+async def test_a_per_parts_document_from_the_correct_resolution() -> None:
     llm = PartRouter(stage_a(), {2: chain((PART2_ERROR, PART2_FOUND)), 3: chain((PART3_ERROR, PART3_FOUND))})
-    doc = await parted_generator(llm, seed=seed_for["2,3"]).generate(problem_source(), "normal")
+    doc = await parted_generator(llm, seed=seed_choosing(2, 3)).generate(problem_source(), "normal")
     assert isinstance(doc, PartedMistakeExercise) and doc.layout == "per_parts"
     assert doc.flawed_parts == [2, 3] and [m.id for m in doc.mistakes] == ["e1", "e2"]
     assert [m.fragment for m in doc.mistakes] == [3, 6] and doc.fragments == [x for _, fs in PARTS for x in fs]
@@ -117,20 +117,7 @@ async def test_a_per_parts_document_from_the_correct_resolution(seed_for: dict[s
     assert PARTS[1][1][0] not in check2.user and PARTS[2][1][0] not in check2.user
 
 
-@pytest.fixture
-def seed_for() -> dict[str, int]:
-    """Seeds of the generator's choice for a 3-part problem: "2,3" picks parts 2 and 3 (normal); "2>1" picks part 2
-    first and part 1 as the first unused one (facil)."""
-    found: dict[str, int] = {}
-    for seed in range(200):
-        parts = [1, 2, 3]
-        random.Random(seed).shuffle(parts)
-        found.setdefault(",".join(map(str, sorted(parts[:2]))), seed)
-        found.setdefault(f"{parts[0]}>{parts[1]}", seed)
-    return found
-
-
-async def test_stage_a_regenerates_with_the_gates_and_blind_check_reasons(seed_for: dict[str, int]) -> None:
+async def test_stage_a_regenerates_with_the_gates_and_blind_check_reasons() -> None:
     unordered = written([PARTS[1], PARTS[0], PARTS[2]])
     llm = PartRouter(
         {
@@ -142,7 +129,7 @@ async def test_stage_a_regenerates_with_the_gates_and_blind_check_reasons(seed_f
         },
         {2: chain((PART2_ERROR, PART2_FOUND)), 3: chain((PART3_ERROR, PART3_FOUND))},
     )
-    doc = await parted_generator(llm, seed=seed_for["2,3"]).generate(problem_source(), "normal")
+    doc = await parted_generator(llm, seed=seed_choosing(2, 3)).generate(problem_source(), "normal")
     attempts = doc.verification.attempts or []
     assert len(attempts) == 3 and attempts[0].validation and attempts[0].verification is None
     assert attempts[1].discrepancies == ["hi ha un error a la part 2, fragment 1: «x^4 \\le» — fals"]
@@ -160,10 +147,10 @@ async def test_a_resolution_that_never_passes_fails_the_generation() -> None:
     assert e.value.error_code == 502 and llm.log == []
 
 
-async def test_a_corruption_refused_by_the_gates_is_retried_with_the_reasons(seed_for: dict[str, int]) -> None:
+async def test_a_corruption_refused_by_the_gates_is_retried_with_the_reasons() -> None:
     missing = corruption([edit(1, "no hi és", "x")], "x")
     llm = PartRouter(stage_a(), {2: chain((missing, None), (PART2_ERROR, PART2_FOUND))})
-    doc = await parted_generator(llm, seed=seed_for["2>1"]).generate(problem_source(), "facil")
+    doc = await parted_generator(llm, seed=seed_choosing(2, 1)).generate(problem_source(), "facil")
     assert doc.flawed_parts == [2]
     attempts = (doc.parts[1].verification and doc.parts[1].verification.attempts) or []
     assert (
@@ -173,40 +160,40 @@ async def test_a_corruption_refused_by_the_gates_is_retried_with_the_reasons(see
     assert "<correccio>" not in corruptions[0] and "exactament una vegada" in corruptions[1]
 
 
-async def test_a_part_the_blind_check_keeps_refusing_is_swapped_for_an_unused_one(seed_for: dict[str, int]) -> None:
+async def test_a_part_the_blind_check_keeps_refusing_is_swapped_for_an_unused_one() -> None:
     unintended = part_checked(finding(1, "x^4 \\ge"), finding(2, "Per tant", "error", "salt"))
     llm = PartRouter(stage_a(), {2: chain(*[(PART2_ERROR, unintended)] * 3), 1: chain((PART1_ERROR, PART1_FOUND))})
-    doc = await parted_generator(llm, seed=seed_for["2>1"]).generate(problem_source(), "facil")
+    doc = await parted_generator(llm, seed=seed_choosing(2, 1)).generate(problem_source(), "facil")
     assert doc.flawed_parts == [1] and doc.mistakes[0].id == "e1" and doc.mistakes[0].fragment == 1
     assert [(stage, part) for stage, part in llm.log].count((Stage.MISTAKES_VERIFICATION, 2)) == 3
     retries = [r.user for r in llm.by_part[2] if r.user.startswith("Introdueix")]
     assert "NO intencionat" in retries[1] and "NO intencionat" in retries[2]
 
 
-async def test_an_unfit_part_is_swapped_at_once(seed_for: dict[str, int]) -> None:
+async def test_an_unfit_part_is_swapped_at_once() -> None:
     llm = PartRouter(
         stage_a(), {2: chain((corruption([], "", apte=False), None)), 1: chain((PART1_ERROR, PART1_FOUND))}
     )
-    doc = await parted_generator(llm, seed=seed_for["2>1"]).generate(problem_source(), "facil")
+    doc = await parted_generator(llm, seed=seed_choosing(2, 1)).generate(problem_source(), "facil")
     assert doc.flawed_parts == [1] and llm.log[:2] == [(Stage.MISTAKES_GENERATION, 2), (Stage.MISTAKES_GENERATION, 1)]
 
 
-async def test_with_no_unused_part_left_the_generation_fails(seed_for: dict[str, int]) -> None:
+async def test_with_no_unused_part_left_the_generation_fails() -> None:
     unfit = chain((corruption([], "", apte=False), None))
     llm = PartRouter(stage_a(), {1: unfit, 2: unfit, 3: unfit})
     with pytest.raises(MistakeGenerationFailedException):
-        await parted_generator(llm, seed=seed_for["2>1"]).generate(problem_source(), "facil")
+        await parted_generator(llm, seed=seed_choosing(2, 1)).generate(problem_source(), "facil")
     assert sorted(part for _, part in llm.log) == [1, 2, 3]
 
 
-async def test_the_parts_are_corrupted_in_parallel_and_independently(seed_for: dict[str, int]) -> None:
+async def test_the_parts_are_corrupted_in_parallel_and_independently() -> None:
     refused = part_checked(finding(1, "Com que", "consequencia"), finding(1, "x^4 \\ge"))
     llm = PartRouter(
         stage_a(),
         {2: chain((PART2_ERROR, refused), (PART2_ERROR, PART2_FOUND)), 3: chain((PART3_ERROR, PART3_FOUND))},
         delay=0.01,
     )
-    doc = await parted_generator(llm, seed=seed_for["2,3"]).generate(problem_source(), "normal")
+    doc = await parted_generator(llm, seed=seed_choosing(2, 3)).generate(problem_source(), "normal")
     assert doc.flawed_parts == [2, 3]
     # Both corruptions are asked before either check: the chains run side by side.
     assert {llm.log[0], llm.log[1]} == {(Stage.MISTAKES_GENERATION, 2), (Stage.MISTAKES_GENERATION, 3)}
@@ -216,9 +203,9 @@ async def test_the_parts_are_corrupted_in_parallel_and_independently(seed_for: d
     assert all("<correccio>" not in r.user for r in llm.by_part[3])
 
 
-async def test_a_generation_past_its_deadline_fails(seed_for: dict[str, int]) -> None:
+async def test_a_generation_past_its_deadline_fails() -> None:
     llm = PartRouter(stage_a(), {2: chain((PART2_ERROR, PART2_FOUND))}, delay=30)
-    generator = parted_generator(llm, seed=seed_for["2>1"], deadline_s=0.05)
+    generator = parted_generator(llm, seed=seed_choosing(2, 1), deadline_s=0.05)
     with pytest.raises(MistakeGenerationTimeoutException) as e:
         await asyncio.wait_for(generator.generate(problem_source(), "facil"), 10)
     assert e.value.error_code == 502

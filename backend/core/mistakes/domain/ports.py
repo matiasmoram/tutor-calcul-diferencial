@@ -1,7 +1,7 @@
 from typing import Protocol
 
 from core.mistakes.domain.entities.gradable_text import GradableText
-from core.mistakes.domain.entities.mistake_exercise import MistakeExercise
+from core.mistakes.domain.entities.parted_mistake_exercise import MistakeDocument
 from core.mistakes.domain.values.difficulty import Difficulty
 from core.mistakes.domain.values.llm_outputs import (
     CorruptionDraft,
@@ -75,4 +75,6 @@ class AnnotationGrader(Protocol):
 class PregeneratedMistakeSource(Protocol):
     """Documents generated and verified offline (the JSON files in the repository): the seed of the database."""
 
-    def load(self) -> list[MistakeExercise]: ...
+    def load_all(self) -> list[MistakeDocument]:
+        """The documents of both layouts."""
+        ...

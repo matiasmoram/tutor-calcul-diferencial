@@ -1,10 +1,15 @@
+from pathlib import Path
+
 import pytest
 
+from core.mistakes.application.pregenerated_importer import PregeneratedImporter
 from core.mistakes.domain.entities.annotation import Annotation
-from core.mistakes.domain.entities.mistake_grading import MistakeGrading
+from core.mistakes.domain.entities.mistake_exercise import MistakeExercise
+from core.mistakes.domain.entities.mistake_grading import MistakeGrading, PartGrading
 from core.mistakes.domain.entities.mistake_session import MistakeSession
 from core.mistakes.domain.exceptions import (
     MistakeExerciseNotFoundException,
+    MistakePartAlreadyGradedException,
     MistakeSessionAlreadyGradedException,
     MistakeSessionNotFoundException,
 )
@@ -18,7 +23,7 @@ from core.mistakes.infra.sqlmodel_repository import (
 from core.shared.domain.ids import SessionId
 from core.shared.storage.session_provider import SQLModelSessionProvider
 from settings import BACKEND_DIR
-from tests.core.mistakes.builders import solution
+from tests.core.mistakes.builders import parted, solution
 
 
 def session_of(exercise_id: str = "0000000000aa") -> MistakeSession:
@@ -115,3 +120,78 @@ async def test_a_session_is_graded_once_in_storage(session_provider: SQLModelSes
         await sessions.save_grading(s.id, [], second, 12.0)
     assert e.value.error_code == 409
     assert (await sessions.get(s.id)).grading == first
+
+
+async def test_each_layout_is_served_and_counted_on_its_own(session_provider: SQLModelSessionProvider) -> None:
+    repo = SQLModelMistakeExerciseRepository(session_provider)
+    await repo.save(solution("aaaaaaaaaaaa"))
+    doc = parted("bbbbbbbbbbbb")
+    await repo.save(doc)
+    assert [d.id for d in await repo.of_source("t2-4c", "normal")] == ["aaaaaaaaaaaa"]
+    assert await repo.of_source("t2-4c", "normal", "per_parts") == [doc]
+    assert await repo.get(doc.id) == doc
+    assert isinstance(await repo.get(MistakeExerciseId("aaaaaaaaaaaa")), MistakeExercise)
+    assert await repo.availability() == {"t2-4c": {"normal": 1}}
+    await repo.save(parted("cccccccccccc", difficulty="facil"))
+    assert await repo.availability("per_parts") == {"t2-4c": {"normal": 1, "facil": 1}}
+    assert await repo.availability() == {"t2-4c": {"normal": 1}}
+
+
+def parted_session_of(exercise_id: str = "0000000000bb") -> MistakeSession:
+    return session_of(exercise_id).model_copy(update={"layout": "per_parts"})
+
+
+def part_grading(part: int, hint_used: bool = False) -> PartGrading:
+    return PartGrading(part=part, hint_used=hint_used, grading=grade(parted().view(part), [], None, None))
+
+
+async def test_a_part_is_graded_once_and_the_session_reads_back_its_parts_and_hints(
+    session_provider: SQLModelSessionProvider,
+) -> None:
+    exercises = SQLModelMistakeExerciseRepository(session_provider)
+    sessions = SQLModelMistakeSessionRepository(session_provider)
+    await exercises.save(parted())
+    s = parted_session_of()
+    await sessions.add(s)
+    assert await sessions.get(s.id) == s
+    await sessions.add_hint(s.id, 3, 11.0)
+    await sessions.add_hint(s.id, 3, 12.0)
+    await sessions.save_part_grading(s.id, [], part_grading(3, hint_used=True), 13.0)
+    annotations = [Annotation(id="a1", fragment=3, start=0, end=3, comment="?")]
+    await sessions.save_part_grading(s.id, annotations, part_grading(2), 14.0)
+    stored = await sessions.get(s.id)
+    assert stored.layout == "per_parts" and stored.hinted_parts == [3] and stored.grading is None
+    assert stored.part_gradings == [part_grading(2), part_grading(3, hint_used=True)]
+    with pytest.raises(MistakePartAlreadyGradedException) as e:
+        await sessions.save_part_grading(s.id, [], part_grading(2, hint_used=True), 15.0)
+    assert e.value.error_code == 409
+    assert (await sessions.get(s.id)).part_grading(2) == part_grading(2)
+
+
+async def test_a_part_claim_is_the_session_claim_and_refuses_a_graded_part(
+    session_provider: SQLModelSessionProvider,
+) -> None:
+    exercises = SQLModelMistakeExerciseRepository(session_provider)
+    sessions = SQLModelMistakeSessionRepository(session_provider)
+    await exercises.save(parted())
+    s = parted_session_of()
+    await sessions.add(s)
+    assert await sessions.claim_part(s.id, 2, now=100.0, stale_before=0.0)
+    assert not await sessions.claim_part(s.id, 3, now=101.0, stale_before=1.0)  # one claim per session
+    await sessions.save_part_grading(s.id, [], part_grading(2), 102.0)
+    await sessions.release_grading(s.id, claimed_at=100.0)
+    assert not await sessions.claim_part(s.id, 2, now=103.0, stale_before=3.0)  # graded: never again
+    assert await sessions.claim_part(s.id, 3, now=103.0, stale_before=3.0)
+
+
+async def test_both_layouts_are_files_in_the_same_tree_and_both_are_imported(
+    session_provider: SQLModelSessionProvider, tmp_path: Path
+) -> None:
+    files = JsonFileMistakeSource(tmp_path)
+    assert files.save(parted()) == tmp_path / "t2-4c" / "normal" / "0000000000bb.json"
+    files.save(solution())
+    assert [type(d).__name__ for d in files.load_all()] == ["MistakeExercise", "PartedMistakeExercise"]
+    assert files.load() == [solution()]
+    repo = SQLModelMistakeExerciseRepository(session_provider)
+    assert await PregeneratedImporter(files, repo).import_all() == 2
+    assert await repo.of_source("t2-4c", "normal", "per_parts") == [parted()]

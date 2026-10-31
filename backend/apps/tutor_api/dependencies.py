@@ -7,6 +7,7 @@ from fastapi import Depends, HTTPException, Request
 
 from apps.tutor_api.rate_limiter import RateLimiter
 from core.counterexamples.domain.entities.spec import SpecCatalog
+from core.counterexamples.infra.pool_property_checker import VerdictCache
 from core.course.domain.entities.course import Course
 from core.mistakes.application.mistake_exercise_provider import MistakeGenerations
 from core.quizzes.application.quiz_provider import QuizGenerations
@@ -29,6 +30,7 @@ class AppState:
     global_limiter: RateLimiter  # all clients together, for the endpoints that pay a model
     sympy: SympyCheckPool  # one long-lived pool of sympy worker processes for the whole server
     counterexamples: SpecCatalog
+    verdict_cache: VerdictCache  # the counterexample verdicts already decided, shared by every request
     quiz_generations: QuizGenerations  # one generation per source and difficulty at a time, process-wide
     mistake_generations: MistakeGenerations  # the same for "Troba l'error" documents
 

@@ -4,10 +4,11 @@ No model is called: every verdict comes from code."""
 from fastapi import APIRouter, Depends
 
 from apps.tutor_api.dependencies import (
+    AppState,
     domain_errors,
     get_counterexamples,
     get_course,
-    get_sympy_pool,
+    get_state,
     is_professor,
     rate_limited,
 )
@@ -22,15 +23,14 @@ from core.counterexamples.domain.entities.spec import SpecCatalog
 from core.counterexamples.domain.values.spec_id import spec_id_of
 from core.counterexamples.infra.pool_property_checker import PoolPropertyChecker
 from core.course.domain.entities.course import Course
-from core.shared.math.infra.sympy_pool import SympyCheckPool
 
 router = APIRouter()
 
 
 def _get_grader(
-    catalog: SpecCatalog = Depends(get_counterexamples), pool: SympyCheckPool = Depends(get_sympy_pool)
+    catalog: SpecCatalog = Depends(get_counterexamples), state: AppState = Depends(get_state)
 ) -> SubmissionGrader:
-    return SubmissionGrader(catalog, PoolPropertyChecker(pool))
+    return SubmissionGrader(catalog, PoolPropertyChecker(state.sympy, state.verdict_cache))
 
 
 @router.get("/api/contraexemples")

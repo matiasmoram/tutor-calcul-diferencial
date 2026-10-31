@@ -23,7 +23,7 @@ from apps.tutor_api.endpoints import quizzes as quiz_endpoints
 from apps.tutor_api.endpoints import tutoring as tutoring_endpoints
 from apps.tutor_api.rate_limiter import RateLimiter
 from core.counterexamples.domain.entities.spec import SpecCatalog
-from core.counterexamples.infra.pool_property_checker import PoolPropertyChecker
+from core.counterexamples.infra.pool_property_checker import PoolPropertyChecker, VerdictCache
 from core.counterexamples.infra.yaml_spec_source import YamlSpecSource
 from core.course.infra.yaml_course_source import YamlCourseSource
 from core.mistakes.domain.entities.mistake_exercise import MistakeExercise
@@ -112,11 +112,11 @@ def _on(flag: bool) -> str:
     return "on" if flag else "off"
 
 
-async def _warm_sympy(pool: SympyCheckPool, catalog: SpecCatalog, warm_cache: bool) -> None:
+async def _warm_sympy(pool: SympyCheckPool, verdicts: VerdictCache, catalog: SpecCatalog, warm_cache: bool) -> None:
     try:
         await pool.start()
         if warm_cache:
-            await PoolPropertyChecker(pool).warm(catalog)
+            await PoolPropertyChecker(pool, verdicts).warm(catalog)
     except Exception:  # best effort: the checks still run, only colder
         logger.exception("sympy warm-up failed")
     else:
@@ -168,8 +168,9 @@ def create_app(config: Config | None = None, llm: LLMClient | None = None) -> Fa
         await _seed_generated(sessions)
         logged = LoggedLLMClient(inner, SQLModelLLMCallRepository(sessions), log_prompts=cfg.LOG_PROMPTS)
         sympy = SympyCheckPool(max_workers=cfg.SYMPY_WORKERS, memory_limit_mb=cfg.SYMPY_WORKER_MEMORY_MB)
+        verdicts = VerdictCache()
         # Spawns the workers and decides the authored examples in the background: /health answers meanwhile.
-        warm_up = asyncio.create_task(_warm_sympy(sympy, counterexamples, cfg.SYMPY_WARM_CACHE))
+        warm_up = asyncio.create_task(_warm_sympy(sympy, verdicts, counterexamples, cfg.SYMPY_WARM_CACHE))
         app.state.tutor = AppState(
             config=cfg,
             sessions=sessions,
@@ -179,6 +180,7 @@ def create_app(config: Config | None = None, llm: LLMClient | None = None) -> Fa
             global_limiter=RateLimiter(cfg.MODEL_REQUESTS_PER_MINUTE_GLOBAL),
             sympy=sympy,
             counterexamples=counterexamples,
+            verdict_cache=verdicts,
             quiz_generations=SingleFlight(),
             mistake_generations=SingleFlight(),
         )

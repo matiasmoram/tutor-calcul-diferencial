@@ -15,7 +15,8 @@ CACHE_SIZE = 512
 
 class VerdictCache:
     """The verdicts already decided, by check (LRU). `check_property` is a pure function of the check, so a verdict
-    holds for every later identical check: the authored examples and the answers students share cost one decision."""
+    holds for every later identical check: the authored examples and the answers students share cost one decision.
+    One per process, built by the composition root: the checkers are built per request."""
 
     def __init__(self, size: int = CACHE_SIZE) -> None:
         self._size = size
@@ -38,19 +39,15 @@ class VerdictCache:
         return len(self._verdicts)
 
 
-# One per process: the graders are built per request.
-_VERDICTS = VerdictCache()
-
-
 class PoolPropertyChecker(PropertyChecker):
     """Each property in its own worker under the pool's deadline: one that hangs comes back 'indeterminat' and the
     others still get their verdict. Decided verdicts are cached; a property the pool gave up on (deadline, interrupted
     worker) is not, since another try may decide it."""
 
-    def __init__(self, pool: SympyCheckPool, timeout_s: float | None = None, cache: VerdictCache | None = None) -> None:
+    def __init__(self, pool: SympyCheckPool, cache: VerdictCache, timeout_s: float | None = None) -> None:
         self._pool = pool
+        self._cache = cache
         self._timeout_s = timeout_s
-        self._cache = _VERDICTS if cache is None else cache
 
     async def check(self, checks: Sequence[PropertyCheck]) -> list[PropertyVerdict]:
         keys = [c.model_dump_json() for c in checks]

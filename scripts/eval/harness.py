@@ -17,6 +17,7 @@ from google import genai
 
 from core.course.domain.entities.course import Course
 from core.course.infra.yaml_course_source import YamlCourseSource
+from core.shared.domain.clock import SystemClock
 from core.shared.domain.ids import ExerciseId, SessionId
 from core.shared.llm.client import LLMClient, Stage, StageConfig
 from core.shared.llm.infra.gemini_client import GeminiLLMClient
@@ -25,7 +26,7 @@ from core.shared.llm.infra.stage_router import StageRouter
 from core.shared.storage.session_provider import SQLModelSessionProvider, create_schema_if_sqlite, make_engine
 from core.shared.storage.table_registry import register_all_tables
 from core.tutoring.application.session_starter import SessionStarter
-from core.tutoring.application.turn_handler import TurnHandler, TurnInput, TurnResult
+from core.tutoring.application.turn_handler import TurnHandler, TurnHandlerInput, TurnResult
 from core.tutoring.infra.llm_diagnoser import LLMDiagnoser
 from core.tutoring.infra.llm_reply_judge import LLMReplyJudge
 from core.tutoring.infra.llm_reply_writer import LLMReplyWriter
@@ -199,13 +200,14 @@ class LocalTutor:
 
     def __init__(self, course: Course, provider: SQLModelSessionProvider, llm: LLMClient) -> None:
         sessions = SQLModelTutorSessionRepository(provider)
-        self._starter = SessionStarter(course, sessions)
+        clock = SystemClock()
+        self._starter = SessionStarter(course, sessions, clock)
         self._turns = TurnHandler(
-            course, sessions, LLMDiagnoser(llm, course), LLMReplyWriter(llm), LLMReplyJudge(llm, course)
+            course, sessions, LLMDiagnoser(llm, course), LLMReplyWriter(llm), LLMReplyJudge(llm, course), clock
         )
 
     async def start(self, exercise_id: str) -> SessionId:
         return (await self._starter.start(ExerciseId(exercise_id))).session.id
 
     async def turn(self, session_id: SessionId, text: str) -> TurnResult:
-        return await self._turns.handle(TurnInput(session_id=session_id, text=text))
+        return await self._turns.handle(TurnHandlerInput(session_id=session_id, text=text))

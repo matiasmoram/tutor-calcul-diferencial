@@ -4,8 +4,8 @@ import json
 
 from core.course.domain.entities.theory_item import TheoryItem
 from core.mistakes.domain.entities.mistake_exercise import MistakeExercise
-from core.mistakes.domain.grading import LocatedAnnotation
 from core.mistakes.domain.values.difficulty import MISTAKES_PER_DIFFICULTY, Difficulty
+from core.mistakes.domain.values.located_annotation import LocatedAnnotation
 from core.mistakes.domain.values.mistake_source import MistakeSource, ProblemSource, TheorySource
 from core.shared.domain.ids import TheoryItemId
 

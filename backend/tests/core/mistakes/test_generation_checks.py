@@ -1,7 +1,7 @@
 import pytest
 
-from core.mistakes.domain.generation_checks import compare_verification, validate_generation
-from core.mistakes.domain.locate import locate
+from core.mistakes.domain.services.generation_checks import compare_verification, validate_generation
+from core.mistakes.domain.services.locate import locate
 from core.mistakes.domain.values.llm_outputs import VerifierFinding
 from core.shared.llm.client import JsonObject
 from tests.core.mistakes.builders import FRAGS, draft, err, finding, gen, terr, tgen

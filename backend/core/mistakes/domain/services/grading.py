@@ -3,39 +3,20 @@ only judges the student's explanation (port AnnotationGrader). The score is comp
 
 from collections.abc import Mapping
 
-from pydantic import BaseModel
-
 from core.mistakes.domain.entities.annotation import Annotation
 from core.mistakes.domain.entities.mistake_exercise import DeclaredMistake, MistakeExercise
 from core.mistakes.domain.entities.mistake_grading import AnnotationResult, Location, MistakeGrading
 from core.mistakes.domain.exceptions import InvalidAnnotationsException
-from core.mistakes.domain.locate import overlap, selectable_span
+from core.mistakes.domain.services.locate import overlap, selectable_span
 from core.mistakes.domain.values.call_record import CallRecord
 from core.mistakes.domain.values.llm_outputs import GraderReport
+from core.mistakes.domain.values.located_annotation import LocatedAnnotation
 
 # Finding the error is worth something on its own; a wrong reason must never score below no reason at all.
 EXPLANATION_POINTS: Mapping[str, float] = {"correcta": 1.0, "parcial": 0.6, "incorrecta": 0.35, "absent": 0.3}
 APPROXIMATE_FACTOR = 0.8  # annotation in the right fragment but not on the quoted words
 FALSE_POSITIVE_PENALTY = 0.1
 NO_MISTAKE = "cap"
-
-
-class LocatedAnnotation(BaseModel):
-    """An annotation clipped to its fragment, with the declared errors it can be about."""
-
-    id: str  # the client's id, echoed in the result
-    # Our own id for it ("a1", "a2"... by position): what the grader sees and answers with, so a student-chosen id
-    # never reaches the prompt and one verdict can only ever score one annotation.
-    key: str
-    fragment: int
-    start: int
-    end: int
-    text: str  # the underlined passage
-    comment: str
-    candidates: list[str]  # errors of the same fragment
-    overlapping: list[str]  # candidates whose quote the underline touches
-    # Candidates hit on their quoted words, not by a highlight of the whole fragment that happens to contain them.
-    precise: list[str]
 
 
 def _storable(text: str) -> bool:

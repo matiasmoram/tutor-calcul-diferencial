@@ -2,7 +2,7 @@
 
 from core.mistakes.application.mistake_exercise_generator import MistakeExerciseGenerator
 from core.mistakes.domain.entities.mistake_exercise import MistakeExercise, Verification
-from core.mistakes.domain.generation_checks import validate_generation
+from core.mistakes.domain.services.generation_checks import validate_generation
 from core.mistakes.domain.values.llm_outputs import GenerationDraft
 from core.mistakes.domain.values.mistake_source import ProblemSource, TheorySource
 from core.mistakes.infra.llm_adapters import LLMMistakeGenerator, LLMMistakeVerifier

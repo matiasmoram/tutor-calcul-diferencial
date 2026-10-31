@@ -12,10 +12,10 @@ from core.mistakes.domain.exceptions import (
     MistakeGradingTimeoutException,
     MistakeSessionAlreadyGradedException,
 )
-from core.mistakes.domain.grading import check_annotations, grade, locate_annotations
 from core.mistakes.domain.ports import AnnotationGrader
 from core.mistakes.domain.repository import MistakeExerciseRepository, MistakeSessionRepository
-from core.mistakes.domain.sources import source_of
+from core.mistakes.domain.services.grading import check_annotations, grade, locate_annotations
+from core.mistakes.domain.services.sources import source_of
 from core.mistakes.domain.values.mistake_source import TheorySource
 from core.shared.domain.clock import Clock
 from core.shared.domain.ids import SessionId

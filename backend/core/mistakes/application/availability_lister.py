@@ -4,7 +4,7 @@ from core.course.domain.entities.course import Course
 from core.course.domain.entities.theory_item import TheoryItem
 from core.course.domain.entities.topic import Topic
 from core.mistakes.domain.repository import MistakeExerciseRepository, ReadyCounts
-from core.mistakes.domain.sources import theory_results
+from core.mistakes.domain.services.sources import theory_results
 
 
 class AvailableTheoryResult(BaseModel):

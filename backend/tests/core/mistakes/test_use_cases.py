@@ -18,7 +18,7 @@ from core.mistakes.domain.exceptions import (
     MistakeSourceRequiredException,
     UnknownTheoryResultException,
 )
-from core.mistakes.domain.sources import theory_results
+from core.mistakes.domain.services.sources import theory_results
 from core.mistakes.infra.llm_adapters import LLMAnnotationGrader
 from core.mistakes.infra.sqlmodel_repository import (
     SQLModelMistakeExerciseRepository,

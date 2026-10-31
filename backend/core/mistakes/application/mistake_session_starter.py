@@ -5,7 +5,7 @@ from core.mistakes.application.mistake_exercise_provider import MistakeExerciseP
 from core.mistakes.domain.entities.mistake_exercise import MistakeExercise
 from core.mistakes.domain.entities.mistake_session import MistakeSession
 from core.mistakes.domain.repository import MistakeSessionRepository
-from core.mistakes.domain.sources import resolve_source
+from core.mistakes.domain.services.sources import resolve_source
 from core.mistakes.domain.values.difficulty import Difficulty
 from core.mistakes.domain.values.mistake_source import MistakeSource
 from core.shared.domain.clock import Clock

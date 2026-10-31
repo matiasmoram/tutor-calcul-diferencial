@@ -1,10 +1,10 @@
 """The three model stages of "troba l'error" over the shared LLM client."""
 
 from core.mistakes.domain.entities.mistake_exercise import MistakeExercise
-from core.mistakes.domain.grading import LocatedAnnotation
 from core.mistakes.domain.values.call_record import CallRecord
 from core.mistakes.domain.values.difficulty import Difficulty
 from core.mistakes.domain.values.llm_outputs import GenerationDraft, GraderReport, VerificationReport
+from core.mistakes.domain.values.located_annotation import LocatedAnnotation
 from core.mistakes.domain.values.mistake_source import MistakeSource, TheorySource
 from core.mistakes.infra import prompts
 from core.mistakes.infra.llm_schemas import generation_schema, grading_schema, verification_schema

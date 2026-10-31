@@ -10,7 +10,7 @@ import re
 from pydantic import BaseModel
 
 from core.mistakes.domain.entities.mistake_exercise import DeclaredMistake
-from core.mistakes.domain.locate import locate, overlap
+from core.mistakes.domain.services.locate import locate, overlap
 from core.mistakes.domain.values.llm_outputs import GenerationDraft, VerifierFinding
 from core.mistakes.domain.values.mistake_kind import PROBLEM_MISTAKE_KINDS, THEORY_MISTAKE_KINDS
 from core.shared.math.latex_vocabulary import unknown_commands

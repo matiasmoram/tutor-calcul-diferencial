@@ -8,7 +8,7 @@ from core.mistakes.domain.exceptions import (
     MistakeSessionAlreadyGradedException,
     MistakeSessionNotFoundException,
 )
-from core.mistakes.domain.grading import grade
+from core.mistakes.domain.services.grading import grade
 from core.mistakes.domain.values.mistake_exercise_id import MistakeExerciseId
 from core.mistakes.infra.sqlmodel_repository import (
     SQLModelMistakeExerciseRepository,

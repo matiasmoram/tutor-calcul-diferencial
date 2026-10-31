@@ -1,26 +1,11 @@
 from fastapi import APIRouter, Depends
-from pydantic import BaseModel
 
-from apps.tutor_api.dependencies import KEY_VARIABLES, get_config, is_professor, may_generate
+from apps.tutor_api.dependencies import get_config, is_professor, may_generate
+from apps.tutor_api.schemas.config import ConfigResponse, StageResponse
 from core.shared.llm.infra.stage_configs import stage_configs
-from settings import Config
+from settings import Config, api_key_variable
 
 router = APIRouter()
-
-
-class StageResponse(BaseModel):
-    model: str
-    effort: str
-    max_tokens: int
-
-
-class ConfigResponse(BaseModel):
-    panell_professor: bool
-    # Whether this viewer may start a live generation (TUTOR_GENERACIO); otherwise only the ready ones open.
-    pot_generar: bool
-    provider: str
-    api_key: bool
-    stages: dict[str, StageResponse]
 
 
 @router.get("/api/config")
@@ -29,11 +14,13 @@ async def get_app_config(
     professor: bool = Depends(is_professor),
     generation_allowed: bool = Depends(may_generate),
 ) -> ConfigResponse:
+    if not (professor or config.DEMO_MODE):
+        return ConfigResponse(panell_professor=professor, pot_generar=generation_allowed)
     return ConfigResponse(
         panell_professor=professor,
         pot_generar=generation_allowed,
         provider=config.LLM_PROVIDER,
-        api_key=bool(config.api_key(KEY_VARIABLES.get(config.LLM_PROVIDER, "ANTHROPIC_API_KEY"))),
+        api_key=bool(config.api_key(api_key_variable(config))),
         stages={
             stage: StageResponse(model=c.model, effort=c.effort, max_tokens=c.max_tokens)
             for stage, c in stage_configs(config).items()

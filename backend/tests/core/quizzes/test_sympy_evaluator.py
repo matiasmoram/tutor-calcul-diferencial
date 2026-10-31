@@ -24,6 +24,12 @@ def test_evaluators_share_the_composition_roots_pool(pool: SympyCheckPool) -> No
     assert executor is not None and pool._executor is executor
 
 
+def test_without_a_pool_each_call_runs_in_its_own_workers() -> None:
+    evaluator = SympyCheckEvaluator()
+    assert [r.status for r in evaluator.evaluate([ITERATED, check("no_limit", "sin(1/x)")])] == ["ok", "ok"]
+    assert evaluator.evaluate([]) == []
+
+
 def test_in_process_evaluator_runs_inline() -> None:
     assert [r.status for r in SympyCheckEvaluator(in_process=True).evaluate([ITERATED])] == ["ok"]
 

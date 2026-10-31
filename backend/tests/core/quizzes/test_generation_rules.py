@@ -7,7 +7,7 @@ from core.quizzes.domain.values.drafts import StatementDraft
 from core.quizzes.domain.values.verification import AuditReview, SolverAnswer
 from core.quizzes.infra.prompts import GENERATION_SYSTEM
 from core.shared.llm.client import JsonObject
-from core.shared.math.sympy_checks import evaluate
+from core.shared.math.sympy_checks import evaluate_one
 from tests.core.quizzes.builders import ITERATED, check, item, source
 
 REFS = set(source().allowed_refs)
@@ -49,7 +49,7 @@ def test_failing_sympy_check_rejects_statement() -> None:
         draft(item("A.", checks=[ITERATED])),
         draft(item("B.", checks=[check("limit", "x*(m*x)/(x**2+(m*x)**2)", "0")])),
     ]
-    checked = with_results(drafts, evaluate(all_checks(drafts), in_process=True))
+    checked = with_results(drafts, [evaluate_one(c) for c in all_checks(drafts)])
     assert check_problems(checked[0]) == []
     assert any("FALSA segons sympy" in p and "m/(m**2 + 1)" in p for p in check_problems(checked[1]))
 

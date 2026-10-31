@@ -11,16 +11,13 @@ the prompt contract and of the stored quizzes:
 
 The strings come from a model that may have read student text, so they are never eval'ed as Python: only a
 whitelist of characters and names reaches sympy's parser, with empty builtins. sympy can hang on hard limits, so
-checks run in worker processes under a deadline; a check that times out is "indeterminat". Long-running processes
-(the server) use the long-lived `core.shared.math.infra.sympy_pool.SympyCheckPool`; `evaluate` spawns throwaway
-workers per call and suits only one-off scripts.
+checks run in worker processes under a deadline (`core.shared.math.infra.sympy_pool.SympyCheckPool`); a check that
+times out is "indeterminat".
 """
 
-import multiprocessing as mp
 import random
 import re
-import time
-from collections.abc import Mapping, Sequence
+from collections.abc import Mapping
 from typing import Literal
 
 import sympy as sp
@@ -203,29 +200,6 @@ def evaluate_one(check: MathCheck) -> CheckResult:
         return _undecided(str(e))
     except Exception as e:  # a sympy bug must not take the request down
         return _undecided(f"error de sympy ({type(e).__name__})")
-
-
-def evaluate(checks: Sequence[MathCheck], timeout_s: float = 25.0, in_process: bool = False) -> list[CheckResult]:
-    """Evaluates every check, in parallel throwaway worker processes under one shared deadline.
-    `in_process=True` runs them inline (tests; no hang protection)."""
-    if not checks:
-        return []
-    if in_process:
-        return [evaluate_one(c) for c in checks]
-    ctx = mp.get_context("spawn")
-    pool = ctx.Pool(processes=min(4, len(checks)))
-    try:
-        pending = [pool.apply_async(evaluate_one, (c,)) for c in checks]
-        deadline = time.monotonic() + timeout_s
-        out: list[CheckResult] = []
-        for p in pending:
-            try:
-                out.append(p.get(timeout=max(0.05, deadline - time.monotonic())))
-            except mp.TimeoutError:
-                out.append(_undecided("temps esgotat (sympy)"))
-        return out
-    finally:
-        pool.terminate()  # kills workers stuck in a hard limit
 
 
 CHECK_SCHEMA: Mapping[str, object] = {

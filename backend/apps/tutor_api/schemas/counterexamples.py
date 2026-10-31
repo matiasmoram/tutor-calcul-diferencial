@@ -5,13 +5,14 @@ from pydantic import BaseModel, Field
 from apps.tutor_api.schemas.course import TheoryItemResponse
 from apps.tutor_api.schemas.student_text import StudentText
 from core.counterexamples.domain.entities.spec import Spec, SpecCatalog
-from core.counterexamples.domain.properties import PROPERTIES, CertificateKind, PropertyKind
+from core.counterexamples.domain.values.properties import PROPERTIES, CertificateKind, PropertyKind
 from core.counterexamples.domain.values.submission import MAX_PATHS, Certificate, Direction, Path, Submission
 from core.counterexamples.domain.values.verdict import PropertyVerdict, RevealedExample, SubmissionResult
 from core.course.domain.entities.course import Course
 from core.shared.domain.ids import TheoryItemId
+from core.shared.math.sympy_checks import MAX_LENGTH
 
-MAX_EXPRESSION = 300  # the sympy parser's own limit
+MAX_EXPRESSION = MAX_LENGTH
 
 
 class PathRequest(BaseModel):
@@ -64,7 +65,7 @@ class PropertyResponse(BaseModel):
     teoria: list[TheoryItemResponse]  # where the notes define it ("Repassa" when it fails)
 
     @classmethod
-    def of(cls, kind: PropertyKind, catalog: SpecCatalog, course: Course) -> "PropertyResponse":
+    def from_entity(cls, kind: PropertyKind, catalog: SpecCatalog, course: Course) -> "PropertyResponse":
         info = PROPERTIES[kind]
         return cls(
             id=kind,
@@ -89,7 +90,7 @@ class SpecSummaryResponse(BaseModel):
             tema=spec.topic,
             titol=spec.title,
             dificultat=spec.difficulty,
-            propietats=[PropertyResponse.of(k, catalog, course) for k in spec.properties],
+            propietats=[PropertyResponse.from_entity(k, catalog, course) for k in spec.properties],
         )
 
 
@@ -118,7 +119,9 @@ class SpecResponse(SpecSummaryResponse):
     exemple: ExampleResponse | None  # professors only: students see it once they pass
 
     @classmethod
-    def build(cls, spec: Spec, catalog: SpecCatalog, course: Course, with_example: bool) -> "SpecResponse":
+    def from_entity(
+        cls, spec: Spec, catalog: SpecCatalog, course: Course, *, with_example: bool = False
+    ) -> "SpecResponse":
         example = RevealedExample(
             submission=spec.example, explanation=spec.explanation, reserved_theory=spec.reserved_theory
         )

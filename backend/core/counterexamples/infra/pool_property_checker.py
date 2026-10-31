@@ -4,6 +4,7 @@ from collections.abc import Sequence
 from loguru import logger
 
 from core.counterexamples.domain.entities.spec import SpecCatalog
+from core.counterexamples.domain.ports import PropertyChecker
 from core.counterexamples.domain.services.property_deciders import check_property, undecided
 from core.counterexamples.domain.values.submission import PropertyCheck
 from core.counterexamples.domain.values.verdict import PropertyVerdict
@@ -41,7 +42,7 @@ class VerdictCache:
 _VERDICTS = VerdictCache()
 
 
-class PoolPropertyChecker:
+class PoolPropertyChecker(PropertyChecker):
     """Each property in its own worker under the pool's deadline: one that hangs comes back 'indeterminat' and the
     others still get their verdict. Decided verdicts are cached; a property the pool gave up on (deadline, interrupted
     worker) is not, since another try may decide it."""

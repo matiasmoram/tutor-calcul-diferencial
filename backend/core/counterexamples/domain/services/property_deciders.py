@@ -16,7 +16,7 @@ from dataclasses import dataclass, field
 
 import sympy as sp
 
-from core.counterexamples.domain.properties import PROPERTIES, PropertyKind
+from core.counterexamples.domain.values.properties import PROPERTIES, PropertyKind
 from core.counterexamples.domain.values.submission import (
     MAX_CONSTANT,
     Certificate,

@@ -48,7 +48,7 @@ async def get_spec(
     professor: bool = Depends(is_professor),
 ) -> SpecResponse:
     with domain_errors():
-        return SpecResponse.build(catalog.spec(spec_id_of(spec_id)), catalog, course, with_example=professor)
+        return SpecResponse.from_entity(catalog.spec(spec_id_of(spec_id)), catalog, course, with_example=professor)
 
 
 @router.post("/api/contraexemples/{spec_id}/comprova", dependencies=[Depends(rate_limited)])

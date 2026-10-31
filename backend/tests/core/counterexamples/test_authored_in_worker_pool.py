@@ -7,8 +7,8 @@ from collections.abc import Iterator
 
 import pytest
 
-from core.counterexamples.domain.properties import PropertyKind
 from core.counterexamples.domain.services.property_deciders import check_property, undecided
+from core.counterexamples.domain.values.properties import PropertyKind
 from core.counterexamples.domain.values.spec_id import SpecId
 from core.counterexamples.domain.values.submission import Certificate, PropertyCheck
 from core.shared.math.infra.sympy_pool import SympyCheckPool

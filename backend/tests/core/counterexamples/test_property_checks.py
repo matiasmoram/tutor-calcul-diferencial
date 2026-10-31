@@ -1,7 +1,7 @@
 import pytest
 
-from core.counterexamples.domain.properties import PROPERTIES, PropertyKind
 from core.counterexamples.domain.services.property_deciders import check_property
+from core.counterexamples.domain.values.properties import PROPERTIES, PropertyKind
 from core.counterexamples.domain.values.submission import Certificate, PropertyCheck, validate_submission
 from core.counterexamples.domain.values.verdict import VerdictStatus
 from tests.fixtures.counterexamples import authored_challenges

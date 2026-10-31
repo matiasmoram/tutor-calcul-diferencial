@@ -330,7 +330,7 @@ async function viewLanding() {
   $("#fact-problems").textContent = llistes.reduce((n, l) => n + l.n_exercicis, 0);
   // Which model answers is for whoever runs the session, not for students.
   let status = "";
-  if (PROFESSOR) {
+  if (PROFESSOR && CONFIG.stages) {
     const models = [...new Set(Object.values(CONFIG.stages).map((s) => s.model))].join(", ");
     status = CONFIG.api_key ? `Model: ${CONFIG.provider} · ${models}` : `Sense clau d'API (${CONFIG.provider}): el tutor no pot respondre.`;
   }

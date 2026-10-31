@@ -8,7 +8,7 @@ from core.shared.domain.clock import Clock, SystemClock
 from core.shared.domain.ids import ExerciseId
 from core.tutoring.domain.entities.tutor_session import TutorSession
 from core.tutoring.domain.repository import TutorSessionRepository
-from core.tutoring.domain.theory_access import SheetTheoryUse, background_theory, sheet_theory
+from core.tutoring.domain.services.theory_access import SheetTheoryUse, background_theory, sheet_theory
 
 
 class StartedSession(BaseModel):

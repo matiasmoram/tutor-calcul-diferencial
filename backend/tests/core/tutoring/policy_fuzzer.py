@@ -17,9 +17,9 @@ from collections import Counter
 from core.course.domain.entities.course import Course
 from core.course.domain.entities.exercise import Exercise
 from core.shared.llm.client import JsonObject
-from core.tutoring.domain.fallback import fallback_message
-from core.tutoring.domain.guard import deterministic_check
-from core.tutoring.domain.policy import allowed_content, allowed_theory, decide
+from core.tutoring.domain.services.fallback import fallback_message
+from core.tutoring.domain.services.guard import deterministic_check
+from core.tutoring.domain.services.policy import allowed_content, allowed_theory, decide
 from core.tutoring.domain.values.diagnosis import Diagnosis
 from core.tutoring.domain.values.session_state import SessionState
 

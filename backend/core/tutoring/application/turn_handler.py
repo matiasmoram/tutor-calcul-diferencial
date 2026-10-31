@@ -17,12 +17,12 @@ from core.tutoring.domain.exceptions import (
     TruncatedModelOutputException,
     TurnTimeoutException,
 )
-from core.tutoring.domain.fallback import fallback_message
-from core.tutoring.domain.guard import citation_problems, deterministic_check
-from core.tutoring.domain.policy import allowed_content, allowed_theory, decide
 from core.tutoring.domain.ports import Diagnoser, ReplyJudge, ReplyWriter
 from core.tutoring.domain.repository import TutorSessionRepository
-from core.tutoring.domain.theory_access import concept_question_ids
+from core.tutoring.domain.services.fallback import fallback_message
+from core.tutoring.domain.services.guard import citation_problems, deterministic_check
+from core.tutoring.domain.services.policy import allowed_content, allowed_theory, decide
+from core.tutoring.domain.services.theory_access import concept_question_ids
 from core.tutoring.domain.values.chat_message import ChatMessage, TurnOrigin
 from core.tutoring.domain.values.guard_verdict import GuardVerdict
 from core.tutoring.domain.values.plan import Plan

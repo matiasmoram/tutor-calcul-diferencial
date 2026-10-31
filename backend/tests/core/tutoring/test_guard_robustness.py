@@ -3,10 +3,10 @@ LaTeX commands the reply may not use."""
 
 import pytest
 
-from core.tutoring.domain import guard
-from core.tutoring.domain.fallback import fallback_message
-from core.tutoring.domain.guard import CAS_ERROR_PROBLEM, citation_problems, deterministic_check
-from core.tutoring.domain.policy import allowed_content, allowed_theory, decide
+from core.tutoring.domain.services import guard
+from core.tutoring.domain.services.fallback import fallback_message
+from core.tutoring.domain.services.guard import CAS_ERROR_PROBLEM, citation_problems, deterministic_check
+from core.tutoring.domain.services.policy import allowed_content, allowed_theory, decide
 from core.tutoring.domain.values.plan import Plan
 from core.tutoring.domain.values.session_state import SessionState
 from tests.core.tutoring.builders import COURSE, EX4C, diagnosis

@@ -1,9 +1,9 @@
-"""Invariants of the policy state machine (see the docstring of core/tutoring/domain/policy.py)."""
+"""Invariants of the policy state machine (see the docstring of core/tutoring/domain/services/policy.py)."""
 
 import re
 from itertools import pairwise
 
-from core.tutoring.domain.policy import allowed_content, allowed_theory, decide
+from core.tutoring.domain.services.policy import allowed_content, allowed_theory, decide
 from core.tutoring.domain.values.session_state import SessionState
 from tests.core.tutoring.builders import COURSE, EX4C, diagnosis, run_policy
 

@@ -20,7 +20,7 @@ from core.tutoring.domain.exceptions import (
     TurnTimeoutException,
     TutorSessionNotFoundException,
 )
-from core.tutoring.domain.guard import deterministic_check
+from core.tutoring.domain.services.guard import deterministic_check
 from core.tutoring.domain.values.plan import Plan
 from core.tutoring.domain.values.session_state import SessionState
 from core.tutoring.infra.llm_diagnoser import LLMDiagnoser

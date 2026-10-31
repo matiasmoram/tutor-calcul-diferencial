@@ -1,6 +1,6 @@
 """The JSON contracts with the model: closed enums, Catalan keys, normalization of what comes back."""
 
-from core.tutoring.domain.theory_access import concept_question_ids
+from core.tutoring.domain.services.theory_access import concept_question_ids
 from core.tutoring.domain.values.guard_verdict import GuardVerdict
 from core.tutoring.domain.values.session_state import SessionState
 from core.tutoring.infra.llm_schemas import DIAGNOSIS_KEYS, diagnosis_schema, guard_schema

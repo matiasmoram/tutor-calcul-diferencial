@@ -9,7 +9,7 @@ from core.tutoring.application.photo_transcriber import PhotoTranscriber
 from core.tutoring.application.session_browser import SessionBrowser
 from core.tutoring.application.session_starter import SessionStarter
 from core.tutoring.application.turn_handler import TurnHandler
-from core.tutoring.domain.policy import decide
+from core.tutoring.domain.services.policy import decide
 from core.tutoring.domain.values.diagnosis import Diagnosis
 from core.tutoring.domain.values.plan import Plan
 from core.tutoring.domain.values.session_state import SessionState

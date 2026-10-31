@@ -25,11 +25,12 @@ def make_llm_client(config: Config) -> LLMClient:
         case "openai":
             return OpenAILLMClient(stages, openai.AsyncOpenAI(timeout=TIMEOUT_S, max_retries=MAX_RETRIES))
         case "openrouter":
+            # Never None: the OpenAI SDK would fall back to OPENAI_API_KEY and send it to openrouter.ai.
+            key = config.api_key("OPENROUTER_API_KEY")
+            if key is None:
+                raise ValueError("OPENROUTER_API_KEY is not set (LLM_PROVIDER=openrouter)")
             client = openai.AsyncOpenAI(
-                base_url=OPENROUTER_BASE_URL,
-                api_key=config.api_key("OPENROUTER_API_KEY"),
-                timeout=TIMEOUT_S,
-                max_retries=MAX_RETRIES,
+                base_url=OPENROUTER_BASE_URL, api_key=key, timeout=TIMEOUT_S, max_retries=MAX_RETRIES
             )
             # Only route to providers that honour every parameter sent (the JSON schema, when there is one).
             return OpenAILLMClient(stages, client, extra_body={"provider": {"require_parameters": True}})
@@ -38,5 +39,6 @@ def make_llm_client(config: Config) -> LLMClient:
             return GeminiLLMClient(
                 stages, genai.Client(api_key=config.api_key("GEMINI_API_KEY"), http_options=http_options)
             )
-        case _:
+        case "anthropic":
             return AnthropicLLMClient(stages, anthropic.AsyncAnthropic(timeout=TIMEOUT_S, max_retries=MAX_RETRIES))
+    raise ValueError(f"LLM_PROVIDER={config.LLM_PROVIDER!r}: no client for it")

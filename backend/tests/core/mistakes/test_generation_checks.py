@@ -3,6 +3,7 @@ import pytest
 from core.mistakes.domain.services.generation_checks import compare_verification, validate_generation
 from core.mistakes.domain.services.locate import locate
 from core.mistakes.domain.values.llm_outputs import VerifierFinding
+from core.mistakes.infra import prompts
 from core.shared.llm.client import JsonObject
 from tests.core.mistakes.builders import FRAGS, draft, err, finding, gen, terr, tgen
 
@@ -70,6 +71,31 @@ def test_a_different_problem_in_the_same_fragment_does_not_confirm_the_declared_
     assert "no l'ha detectat" in compare_verification(check.mistakes, elsewhere, check.fragments)[0]
     on_it = findings(finding(2, "x^4 \\ge"))
     assert compare_verification(check.mistakes, on_it, check.fragments) == []
+
+
+def test_with_two_errors_a_consequence_before_the_last_one_means_they_compound() -> None:
+    check = validate_generation(draft(gen([err(2, "$x^4 \\ge x^4+y^2$"), err(3, "demostra que el límit existeix")])), 2)
+    both = findings(finding(2, "x^4 \\ge"), finding(3, "demostra que"))
+
+    def issues(*extra: JsonObject) -> list[str]:
+        return compare_verification(check.mistakes, [*both, *findings(*extra)], check.fragments)
+
+    assert issues() == []
+    assert issues(finding(4, "sandvitx", "consequencia"), finding(5, "és $0$", "consequencia")) == []
+    # By fragment: the first error's wrong bound reaches the fragment of the second one.
+    (issue,) = issues(finding(2, "fitat per $|x|$", "consequencia"))
+    assert issue.startswith("un error es propaga fins a un altre error: la conseqüència del fragment 2")
+    # Same fragment as the last error: by offset.
+    assert len(issues(finding(3, "Això", "consequencia"))) == 1
+    assert issues(finding(3, "existeix", "consequencia")) == []
+    # One error may change later values: its consequences are not compounding.
+    one = validate_generation(draft(gen([err(2, "$x^4 \\ge x^4+y^2$")])), 1)
+    assert compare_verification(one.mistakes, findings(finding(2, "x^4"), finding(1, "Provem", "consequencia"))) == []
+
+
+def test_the_sencer_prompts_forbid_compounding_errors() -> None:
+    for system in (prompts.GENERATION_SYSTEM, prompts.THEORY_GENERATION_SYSTEM):
+        assert "Els errors no es poden encadenar: com a màxim UN error" in system and "ha de ser l'últim" in system
 
 
 def test_theory_validation_requires_statement_error_and_split() -> None:

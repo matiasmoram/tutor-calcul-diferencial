@@ -3,7 +3,8 @@
 1. VALIDATION   error count, one error per fragment, quotes located in their fragment, balanced $...$ so KaTeX
                 renders, no LaTeX command outside the known vocabulary; for theory, statement/proof split and at least one error in the statement.
 2. VERIFICATION an independent pass that never sees the declared errors lists every error it finds; code then
-                requires that every declared error is found and nothing else is wrong."""
+                requires that every declared error is found, nothing else is wrong and, with 2 or more errors, that
+                no error inherits the consequence of an earlier one."""
 
 import re
 
@@ -32,9 +33,25 @@ class GenerationCheck(BaseModel):
         return not self.problems
 
 
-def _unknown_message(commands: set[str]) -> str:
+def unknown_message(commands: set[str]) -> str:
     listed = ", ".join(sorted(f"\\{c}" for c in commands))
     return f"fa servir ordres LaTeX que no existeixen ({listed}); fes servir només ordres estàndard de LaTeX/KaTeX"
+
+
+def fragment_problems(fragments: list[str], where: str = "") -> list[str]:
+    """Each fragment not empty, with balanced $...$ so KaTeX renders, no $$, and no LaTeX command outside the known
+    vocabulary. `where` follows the fragment's number in the messages (" de la part 2")."""
+    problems: list[str] = []
+    for i, f in enumerate(fragments, 1):
+        if not f:
+            problems.append(f"el fragment {i}{where} és buit")
+        if len(re.findall(r"(?<!\\)\$", f)) % 2:
+            problems.append(f"el fragment {i}{where} té un nombre senar de '$' (LaTeX mal tancat)")
+        if "$$" in f:
+            problems.append(f"el fragment {i}{where} fa servir $$...$$; cal $...$")
+        if unknown := unknown_commands(f):
+            problems.append(f"el fragment {i}{where} {unknown_message(unknown)}")
+    return problems
 
 
 def validate_generation(draft: GenerationDraft, n: int, theory: bool = False) -> GenerationCheck:
@@ -43,15 +60,7 @@ def validate_generation(draft: GenerationDraft, n: int, theory: bool = False) ->
     problems: list[str] = []
     if not 4 <= len(fragments) <= 14:
         problems.append(f"el nombre de fragments ha de ser entre 4 i 14 (n'hi ha {len(fragments)})")
-    for i, f in enumerate(fragments, 1):
-        if not f:
-            problems.append(f"el fragment {i} és buit")
-        if len(re.findall(r"(?<!\\)\$", f)) % 2:
-            problems.append(f"el fragment {i} té un nombre senar de '$' (LaTeX mal tancat)")
-        if "$$" in f:
-            problems.append(f"el fragment {i} fa servir $$...$$; cal $...$")
-        if unknown := unknown_commands(f):
-            problems.append(f"el fragment {i} {_unknown_message(unknown)}")
+    problems += fragment_problems(fragments)
     n_statement = draft.statement_fragments if theory else 0
     if theory and (not isinstance(n_statement, int) or not 1 <= n_statement <= 3 or n_statement > len(fragments) - 3):
         problems.append(
@@ -71,7 +80,7 @@ def validate_generation(draft: GenerationDraft, n: int, theory: bool = False) ->
             ("pista", e.hint),
         ):
             if unknown := unknown_commands(value):
-                problems.append(f"el camp '{field}' de l'error {k} {_unknown_message(unknown)}")
+                problems.append(f"el camp '{field}' de l'error {k} {unknown_message(unknown)}")
         fi = e.fragment
         if not isinstance(fi, int) or not 1 <= fi <= len(fragments):
             problems.append(f"l'error {k} apunta a un fragment inexistent ({fi})")
@@ -115,32 +124,55 @@ def validate_generation(draft: GenerationDraft, n: int, theory: bool = False) ->
     )
 
 
+def same_problem(mistake: DeclaredMistake, finding: VerifierFinding, fragments: list[str] | None = None) -> bool:
+    """Whether a verifier's finding is the declared error. A different problem in the same fragment does not confirm
+    it: the quotes must overlap (fragment-only matching when the verifier gives no locatable quote)."""
+    if finding.fragment != mistake.fragment:
+        return False
+    quote = (finding.quote or "").strip()
+    if not quote:
+        return True
+    span = locate(fragments[mistake.fragment - 1], quote) if fragments else None
+    return span is None or overlap(span[0], span[1], mistake.start, mistake.end)
+
+
+def located_before(finding: VerifierFinding, mistake: DeclaredMistake, fragments: list[str] | None = None) -> bool:
+    """Whether the finding sits before the declared error: in an earlier fragment, or in the same one with its quote
+    located before the error's. A finding that cannot be placed is not before."""
+    fragment = finding.fragment
+    if not isinstance(fragment, int) or isinstance(fragment, bool):
+        return False
+    if fragment != mistake.fragment:
+        return fragment < mistake.fragment
+    span = locate(fragments[fragment - 1], finding.quote) if fragments else None
+    return span is not None and span[0] < mistake.start
+
+
 def compare_verification(
     mistakes: list[DeclaredMistake], findings: list[VerifierFinding], fragments: list[str] | None = None
 ) -> list[str]:
-    """The independent check must find every declared error and nothing else that is wrong."""
+    """The independent check must find every declared error and nothing else that is wrong. With 2 or more errors, a
+    consequence before the last one means an earlier error's wrong values reach a later error: errors must not
+    compound."""
     issues: list[str] = []
     real = [p for p in findings if p.severity in (SEVERITY_ERROR, SEVERITY_CONSEQUENCE)]
-
-    def same_problem(e: DeclaredMistake, p: VerifierFinding) -> bool:
-        # A different problem in the same fragment does not confirm the declared one: the quotes must overlap
-        # (fragment-only matching when the verifier gives no locatable quote).
-        if p.fragment != e.fragment:
-            return False
-        quote = (p.quote or "").strip()
-        if not quote:
-            return True
-        span = locate(fragments[e.fragment - 1], quote) if fragments else None
-        return span is None or overlap(span[0], span[1], e.start, e.end)
-
     for e in mistakes:
-        if not any(same_problem(e, p) for p in real):
+        if not any(same_problem(e, p, fragments) for p in real):
             issues.append(
                 f"l'error declarat al fragment {e.fragment} («{e.quote}») no l'ha detectat el verificador: "
                 "potser no és un error real o és ambigu"
             )
     for p in findings:
         # Inside a declared fragment too: a second, different error there is just as unintended.
-        if p.severity == SEVERITY_ERROR and not any(same_problem(e, p) for e in mistakes):
+        if p.severity == SEVERITY_ERROR and not any(same_problem(e, p, fragments) for e in mistakes):
             issues.append(f"hi ha un error NO intencionat al fragment {p.fragment}: «{p.quote}» — {p.explanation}")
+    if len(mistakes) >= 2:
+        last = max(mistakes, key=lambda e: (e.fragment, e.start))
+        for p in findings:
+            if p.severity == SEVERITY_CONSEQUENCE and located_before(p, last, fragments):
+                issues.append(
+                    f"un error es propaga fins a un altre error: la conseqüència del fragment {p.fragment} "
+                    f"(«{p.quote}») és anterior a l'últim error declarat (fragment {last.fragment}); només l'últim "
+                    "error pot canviar valors que es fan servir després"
+                )
     return issues

@@ -3,13 +3,12 @@
 __pycache__/
 .pytest_cache/
 .playwright-mcp/
-backend/registres/
 # local database and build leftovers
 data/
 *.db
 *.db-journal
-work/pylib/
-work/*.png
 .env.*
 !.env.example
-work/*.log
+# local scratch and tooling
+work/
+.claude/

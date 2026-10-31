@@ -51,7 +51,6 @@ timeout = 300
 line-length = 120
 target-version = "py313"
 src = ["backend"]
-extend-exclude = ["work"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM", "ASYNC", "RUF"]

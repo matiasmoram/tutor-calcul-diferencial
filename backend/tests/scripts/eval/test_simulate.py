@@ -1,6 +1,5 @@
 """Simulated-student harness: metrics with a scripted student, tutor and judge (no network)."""
 
-import sys
 from collections.abc import Sequence
 
 import pytest
@@ -12,14 +11,11 @@ from core.shared.storage.session_provider import SQLModelSessionProvider
 from core.tutoring.application.turn_handler import TurnResult
 from core.tutoring.domain.values.chat_message import ChatMessage
 from core.tutoring.domain.values.turn_trace import TurnTrace
-from settings import ROOT_DIR
 from tests.core.tutoring.builders import COURSE, OK, diagnosis_json
 from tests.fakes.llm import ScriptedLLMClient
+from tests.scripts.loader import load_script
 
-# scripts/ is not a package: its modules import each other by name, as when run from the command line.
-sys.path.insert(0, str(ROOT_DIR / "scripts"))
-import simulate as sim
-
+sim = load_script("eval/simulate")
 EX = COURSE.exercises
 
 

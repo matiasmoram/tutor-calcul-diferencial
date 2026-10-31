@@ -1,7 +1,7 @@
-"""Simulated-student evaluation harness for the Socratic tutor (design: work/research/architectures.md 8.2-8.3).
+"""Simulated-student evaluation of the Socratic tutor.
 
-    PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe scripts/simulate.py --exercicis t2-4c,t3-5 --personas competent,injector
-    PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe scripts/simulate.py --mostra 40 --config mini54 --out work/sim/run1
+    uv run python scripts/eval/simulate.py --exercicis t2-4c,t3-5 --personas competent,injector
+    uv run python scripts/eval/simulate.py --mostra 40 --config mini54 --out data/eval/sim/run1
 
 A STUDENT LLM (default gpt-5-mini, effort low) plays a persona against the real tutor use cases (SessionStarter +
 TurnHandler over a throwaway SQLite database). The student sees ONLY the statement, its persona and the conversation
@@ -13,12 +13,11 @@ A separate LEAK JUDGE (default gpt-5.4-mini) sees the full solution, the steps t
 had already shown) at that point, and ONLY the tutor message. Code decides whether what it reports is a leak.
 
 Outputs, under --out: one JSON per conversation (transcript, traces, metrics), summary.json and summary.md
-(per config x archetype, rates with Wilson 95% intervals, cost from token counts with model_study.PRICES).
+(per config x archetype, rates with Wilson 95% intervals, cost from token counts with harness.PRICES).
 
-Configs are keyed by `core.shared.llm.client.Stage` values, so summary.json's meta.configs lists the stages as
-diagnosis / reply / guard (they were diagnosi / resposta / guardia). The student's model is served as the `reply`
-stage of its own client and the judge's as `guard` (the Stage enum has no simulation stages); their calls are still
-recorded with stage "alumne" / "jutge".
+Configs are keyed by `core.shared.llm.client.Stage` values (summary.json's meta.configs lists them that way). The
+student's model is served as the `reply` stage of its own client and the judge's as `guard` (the Stage enum has no
+simulation stages); their calls are still recorded with stage "alumne" / "jutge".
 """
 
 from __future__ import annotations
@@ -35,11 +34,23 @@ from collections.abc import Awaitable, Callable, Mapping, Sequence
 from dataclasses import asdict, dataclass, replace
 from itertools import pairwise
 from pathlib import Path
-from typing import Any, Protocol
+from typing import Protocol
 
 from dotenv import load_dotenv
-from model_study import CONFIGS as STUDY_CONFIGS
-from model_study import PRICES, STAGES, LocalTutor, build, load_course, scratch_database, stage_client, stages_json
+from harness import (
+    CONFIGS,
+    PRICES,
+    STAGES,
+    Json,
+    LocalTutor,
+    TutorConfig,
+    build,
+    cost,
+    load_course,
+    scratch_database,
+    stage_client,
+    stages_json,
+)
 
 from core.course.domain.entities.exercise import Exercise
 from core.shared.domain.ids import SessionId
@@ -57,8 +68,7 @@ from core.tutoring.application.turn_handler import TurnResult
 from core.tutoring.domain.values.chat_message import ChatMessage
 from settings import ROOT_DIR
 
-type Json = dict[str, Any]  # a record of the JSON reports
-OUT_BASE = ROOT_DIR / "work" / "sim"
+OUT_BASE = ROOT_DIR / "data" / "eval" / "sim"
 FI = "[FI]"
 MAX_TORNS = 10
 CALL_TIMEOUT_S = 90  # per LLM request (the SDK retries twice on top)
@@ -66,9 +76,9 @@ CONV_TIMEOUT_S = 900  # wall clock per conversation, checked between turns
 STUDENT_STAGE = Stage.REPLY  # the student writes a plain-text chat message, like the reply stage
 JUDGE_STAGE = Stage.GUARD  # the judge audits one tutor message against the full solution, like the guard
 
-# name -> {stage: (provider, model, effort)}; every model_study config is available too.
-CONFIGS = {
-    **STUDY_CONFIGS,
+# name -> {stage: (provider, model, effort)}: every harness config, plus the default one.
+TUTOR_CONFIGS: dict[str, TutorConfig] = {
+    **CONFIGS,
     "default": dict.fromkeys(STAGES, ("openai", "gpt-5.4-mini", "low")),
 }
 
@@ -245,7 +255,7 @@ def leak_verdict(veredicte: Json, permesos: list[str], resultat_permes: bool) ->
 
 
 class Tutor(Protocol):
-    """What a conversation needs from the tutor (`model_study.LocalTutor` is the real one)."""
+    """What a conversation needs from the tutor (`harness.LocalTutor` is the real one)."""
 
     async def start(self, exercise_id: str) -> SessionId: ...
 
@@ -413,14 +423,6 @@ def loop_events(torns: list[Json]) -> list[int]:
     ]
 
 
-def call_cost(call: Json) -> float:
-    if call["model"] not in PRICES:
-        return 0.0
-    pi, po, pc = PRICES[call["model"]]
-    fresh = call["input_tokens"] - call["cached_tokens"]
-    return (fresh * pi + call["cached_tokens"] * pc + call["output_tokens"] * po) / 1e6
-
-
 def conversation_metrics(conv: Json) -> Json:
     torns = conv["torns"]
     ok = [t for t in torns if "error" not in t]
@@ -428,8 +430,8 @@ def conversation_metrics(conv: Json) -> Json:
     jutjats = [t for t in ok if "jutge" in t and "error" not in t["jutge"]]
     concept = [t for t in ok if t["intencio"] == "pregunta_conceptual"]
     tutor_calls = [c for t in ok for c in t["trace"]["crides"]]
-    cost_tutor = sum(map(call_cost, tutor_calls))
-    cost_sim = sum(map(call_cost, conv["crides_alumne"])) + sum(map(call_cost, conv["crides_jutge"]))
+    cost_tutor = sum(map(cost, tutor_calls))
+    cost_sim = sum(map(cost, conv["crides_alumne"])) + sum(map(cost, conv["crides_jutge"]))
     unpriced = sorted({c["model"] for c in tutor_calls + conv["crides_alumne"] + conv["crides_jutge"]} - set(PRICES))
     return {
         "torns": len(ok),
@@ -586,14 +588,16 @@ async def main(argv: list[str] | None = None) -> None:
         help=f"comma-separated; archetypes: {', '.join(ARQUETIPS)}; plus error (one seeded misconception per "
         "exercise), errors (all), error:<id>",
     )
-    ap.add_argument("--config", default="default", help=f"tutor stage config(s), comma-separated: {', '.join(CONFIGS)}")
+    ap.add_argument(
+        "--config", default="default", help=f"tutor stage config(s), comma-separated: {', '.join(TUTOR_CONFIGS)}"
+    )
     ap.add_argument("--alumne", default="gpt-5-mini:low", help="student model[:effort] (default gpt-5-mini:low)")
     ap.add_argument("--jutge", default="gpt-5.4-mini:low", help="leak judge model[:effort], or 'cap' to skip")
     ap.add_argument("--max-torns", type=int, default=MAX_TORNS)
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--timeout", type=float, default=CONV_TIMEOUT_S, help="wall-clock seconds per conversation")
-    ap.add_argument("--out", help="output directory (default work/sim/<config>-<timestamp>)")
+    ap.add_argument("--out", help="output directory (default data/eval/sim/<config>-<timestamp>)")
     args = ap.parse_args(argv)
 
     load_dotenv(ROOT_DIR / ".env")
@@ -604,8 +608,8 @@ async def main(argv: list[str] | None = None) -> None:
     if unknown:
         ap.error(f"unknown exercises: {unknown}")
     configs = args.config.split(",")
-    if any(c not in CONFIGS for c in configs):
-        ap.error(f"unknown config; known: {', '.join(CONFIGS)}")
+    if any(c not in TUTOR_CONFIGS for c in configs):
+        ap.error(f"unknown config; known: {', '.join(TUTOR_CONFIGS)}")
     specs = [p.strip() for p in args.personas.split(",") if p.strip()]
     jobs = [
         (cfg, exercicis[i], p)
@@ -622,7 +626,7 @@ async def main(argv: list[str] | None = None) -> None:
     print(f"{len(jobs)} conversations ({len(ids)} exercises x personas x {len(configs)} configs) -> {out}", flush=True)
 
     async with scratch_database() as provider:
-        tutors = {cfg: LocalTutor(course, provider, build(CONFIGS[cfg], CALL_TIMEOUT_S)) for cfg in configs}
+        tutors = {cfg: LocalTutor(course, provider, build(TUTOR_CONFIGS[cfg], CALL_TIMEOUT_S)) for cfg in configs}
         limit = asyncio.Semaphore(max(1, args.workers))
 
         async def one(job: tuple[str, Exercise, Persona]) -> Json:
@@ -666,7 +670,7 @@ async def main(argv: list[str] | None = None) -> None:
         for arq in dict.fromkeys(c["arquetip"] for c in cc):
             groups[f"{cfg} / {arq}"] = aggregate([c for c in cc if c["arquetip"] == arq])
     meta = {
-        "configs": {c: stages_json(CONFIGS[c]) for c in configs},
+        "configs": {c: stages_json(TUTOR_CONFIGS[c]) for c in configs},
         "alumne": args.alumne,
         "jutge": args.jutge,
         "max_torns": args.max_torns,

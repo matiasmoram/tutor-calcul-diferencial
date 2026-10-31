@@ -8,6 +8,7 @@ from dataclasses import dataclass, field
 from enum import StrEnum
 
 from core.shared.domain.exceptions import DomainException
+from core.shared.domain.model_usage import ModelUsage
 
 type JsonObject = dict[str, object]
 
@@ -60,6 +61,15 @@ class CallMeta:
     input_tokens: int = 0  # total prompt tokens, cached ones included
     output_tokens: int = 0
     cached_tokens: int = 0  # prompt tokens served from the provider's prompt cache
+
+    def usage(self) -> ModelUsage:
+        return ModelUsage(
+            model=self.model,
+            latency_ms=self.latency_ms,
+            input_tokens=self.input_tokens,
+            output_tokens=self.output_tokens,
+            cached_tokens=self.cached_tokens,
+        )
 
 
 @contextmanager
@@ -137,8 +147,8 @@ def repair_latex[T](value: T) -> T:
 
 
 # What may remain below U+0020 in model text once repair_latex has run: newlines only. A NUL comes from a corrupted
-# escape (gpt-5.4-mini wrote "\u0000ab" inside a formula): the text around it is already broken, and Postgres cannot
-# store it in a text or JSONB column. Lone surrogates cannot be encoded as UTF-8 at all.
+# escape: the text around it is already broken, and Postgres cannot store it in a text or JSONB column. Lone
+# surrogates cannot be encoded as UTF-8 at all.
 _UNUSABLE = re.compile("[\x00-\x09\x0b-\x1f\ud800-\udfff]")
 # Plain text never went through JSON escaping, so a tab or a carriage return in it is what the model meant (a table,
 # a CRLF line end) and Postgres stores both. NUL, the other C0 controls and lone surrogates stay unusable.

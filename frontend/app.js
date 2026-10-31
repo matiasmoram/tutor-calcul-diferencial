@@ -19,7 +19,7 @@ const LABELS = {
   estat: { no_iniciat: "no iniciat", en_curs: "en curs", completat: "completat", erroni: "erroni" },
 };
 
-const state = { session: null, sending: false, photo: null };
+const state = { session: null, photo: null };
 
 function el(tag, attrs = {}, ...children) {
   const node = document.createElement(tag);
@@ -117,7 +117,8 @@ async function api(path, options = {}) {
 
 /* ---------- Views & routing ---------- */
 
-const VIEWS = ["landing", "llistes", "llista", "exercici", "errades", "teoria", "professor", "visual", "afirmacions", "contraexemples"];
+const VIEWS = ["landing", "llistes", "llista", "exercici", "errades", "teoria", "professor", "visual", "afirmacions", "contraexemples", "error"];
+let CONFIG = null;  // /api/config, loaded once by route()
 let PROFESSOR = false;  // set from /api/config: only professors get the panel, solutions and traces
 let POT_GENERAR = false;  // set from /api/config: may this viewer start a paid generation (TUTOR_GENERACIO)
 const cache = { llistes: null, llista: {}, teoria: null };
@@ -127,6 +128,11 @@ const cache = { llistes: null, llista: {}, teoria: null };
 async function getTeoria() {
   cache.teoria ??= await api("/api/teoria");
   return cache.teoria;
+}
+
+function ensureTeoriaIndex() {
+  // Citations still render as plain text when the notes can't be loaded.
+  return getTeoria().then((t) => t.byKey || indexTeoria(t)).catch(() => null);
 }
 
 // "Teorema 12 del Tema 3", "Definició 6 (Tema 2)", "Proposició 10 del tema 2"; tema optional (defaults to the exercise's).
@@ -174,8 +180,9 @@ function indexTeoria(data) {
 async function viewTeoria() {
   show("teoria");
   crumbs([["Inici", "#/"], ["Teoria", null]]);
-  const data = await getTeoria();
   const root = $("#view-teoria");
+  root.replaceChildren(carregant());
+  const data = await getTeoria();
   const temes = data.temes.map((t) => {
     const seccions = new Map();
     for (const it of t.items) {
@@ -188,7 +195,7 @@ async function viewTeoria() {
         el("h4", { text: titols[sec] ? `${sec} ${titols[sec]}` : (sec || "") }),
         el("ul", {}, ...items.filter((it) => it.num != null).map((it) => el("li", {},
           el("a", { href: it.pdf, target: "_blank", rel: "noopener" },
-            el("span", { class: "theory-label", text: it.etiqueta.replace(/ \(Tema \d\)$/, "") }),
+            el("span", { class: "theory-label", text: etiquetaCurta(it.etiqueta) }),
             math(el("span", { class: "theory-name", text: it.nom ? ` — ${it.nom}` : "" })),
             el("span", { class: "small muted", text: ` · pàg. ${it.pagina}` }))))))));
     return el("details", { class: "teoria-tema" },
@@ -200,23 +207,26 @@ async function viewTeoria() {
   });
   root.replaceChildren(
     el("section", { class: "hero left" },
-      el("h2", { text: "Teoria del curs" }),
-      el("p", { class: "muted", text: "Apunts de Càlcul Diferencial (FME-UPC). Cada definició, teorema o exemple obre el PDF a la seva pàgina. Les cites del tutor porten aquí mateix." }),
+      el("div", { class: "eyebrow", text: "Teoria del curs" }),
+      el("h2", { text: "Apunts per temes" }),
+      el("p", { class: "muted", text: "Apunts de Càlcul Diferencial (FME-UPC). Cada definició, teorema o exemple obre el PDF a la seva pàgina; les cites del tutor també hi enllacen." }),
       el("a", { class: "btn ghost", href: data.problemes_pdf, target: "_blank", rel: "noopener", text: "Col·lecció de problemes (PDF) ↗" })),
     el("div", { class: "teoria-temes" }, ...temes));
 }
 
-// Two ways to practise the same exercise lists.
+// Two ways to practise the same exercise lists. `label` is the short crumb, `nom` the mode's name.
 const MODES = {
   exercicis: {
     label: "Exercicis",
-    title: "Exercicis amb tutor",
-    intro: "Tria una llista. El tutor et guiarà amb preguntes, sense donar-te la solució.",
+    nom: "Exercicis amb tutor",
+    title: "Tria una llista",
+    intro: "El tutor et guia amb preguntes i pistes graduades, sense donar-te la solució.",
   },
   errades: {
     label: "Troba l'error",
-    title: "Resolucions amb errors",
-    intro: "Tria un exercici: et donarem una resolució amb errors amagats. Subratlla'ls i explica per què estan malament.",
+    nom: "Troba l'error",
+    title: "Tria una llista",
+    intro: "De cada exercici tindràs una resolució amb errors amagats. Marca'ls sobre el text i explica per què són incorrectes.",
   },
 };
 
@@ -225,7 +235,8 @@ function show(view) {
   $("#toggle-wrap").classList.toggle("hidden", view !== "exercici" || !PROFESSOR);
   $("#view-exercici").classList.toggle("no-prof", !PROFESSOR || !$("#toggle-prof").checked);
   $(".nav-professor")?.classList.toggle("hidden", !PROFESSOR);
-  $("#sortir-prof")?.classList.toggle("hidden", !PROFESSOR);
+  // Demo mode makes everyone a professor without a key: there is nothing to sign out of.
+  $("#sortir-prof")?.classList.toggle("hidden", !(PROFESSOR && clauProfessor()));
 }
 
 function crumbs(items) {
@@ -314,13 +325,16 @@ async function viewLanding() {
     $("#to-how").addEventListener("click", () => $("#how").scrollIntoView({ behavior: "smooth" }));
     landingRendered = true;
   }
-  const [cfg, llistes] = await Promise.all([api("/api/config"), getLlistes()]);
+  const llistes = await getLlistes();
   $("#fact-lists").textContent = llistes.length;
   $("#fact-problems").textContent = llistes.reduce((n, l) => n + l.n_exercicis, 0);
-  const models = [...new Set(Object.values(cfg.stages).map((s) => s.model))].join(", ");
-  $("#api-status").textContent = cfg.api_key
-    ? `Model: ${cfg.provider} · ${models}`
-    : `Falta la clau d'API (${cfg.provider}) al fitxer .env`;
+  // Which model answers is for whoever runs the session, not for students.
+  let status = "";
+  if (PROFESSOR) {
+    const models = [...new Set(Object.values(CONFIG.stages).map((s) => s.model))].join(", ");
+    status = CONFIG.api_key ? `Model: ${CONFIG.provider} · ${models}` : `Sense clau d'API (${CONFIG.provider}): el tutor no pot respondre.`;
+  }
+  $("#api-status").textContent = status;
 }
 
 async function viewLlistes(mode) {
@@ -329,8 +343,10 @@ async function viewLlistes(mode) {
   crumbs(mode === "errades"
     ? [["Inici", "#/"], [m.label, "#/errades"], ["Resolucions", null]]
     : [["Inici", "#/"], [m.label, null]]);
+  $("#llistes-eyebrow").textContent = mode === "errades" ? `${m.nom} · Resolucions` : m.nom;
   $("#llistes-title").textContent = m.title;
   $("#llistes-intro").textContent = m.intro;
+  $("#lists").replaceChildren(carregant());
   const llistes = await getLlistes();
   $("#lists").replaceChildren(...llistes.map((l) =>
     el("a", { class: "list-card", href: `#/${mode}/${l.id}` },
@@ -347,12 +363,14 @@ async function viewLlistes(mode) {
 async function viewLlista(mode, id) {
   show("llista");
   const m = MODES[mode];
+  $("#llista-header").replaceChildren(carregant());
+  $("#problems").replaceChildren();
   const l = await getLlista(id);
   crumbs(mode === "errades"
     ? [["Inici", "#/"], [m.label, "#/errades"], ["Resolucions", "#/errades/problemes"], [l.etiqueta, null]]
     : [["Inici", "#/"], [m.label, `#/${mode}`], [l.etiqueta, null]]);
   $("#llista-header").replaceChildren(
-    el("div", { class: "eyebrow", text: `${m.label} · ${l.etiqueta} · ${TIPUS[l.tipus]}` }),
+    el("div", { class: "eyebrow", text: `${m.nom} · ${l.etiqueta} · ${TIPUS[l.tipus]}` }),
     el("h2", { text: l.titol }),
     el("p", { class: "muted", text: mode === "errades" ? m.intro : l.descripcio }));
   const byId = Object.fromEntries(l.exercicis.map((e) => [e.id, e]));
@@ -387,6 +405,10 @@ async function viewExercici(llistaId, exId) {
   const req = ++sessionReq;
   state.session = null;  // nothing is sent to (or lands in) the previous exercise while this one loads
   show("exercici");
+  $("#statement").replaceChildren(carregant("Preparant l'exercici…"));
+  $("#messages").replaceChildren();
+  $("#prof-summary").replaceChildren();
+  $("#prof-traces").replaceChildren();
   const l = await getLlista(llistaId);
   if (req !== sessionReq) return;
   crumbs([["Inici", "#/"], ["Exercicis", "#/exercicis"], [l.etiqueta, `#/exercicis/${llistaId}`],
@@ -408,7 +430,7 @@ async function startSession(id, req) {
   try {
     [data] = await Promise.all([
       api("/api/sessions", { method: "POST", body: JSON.stringify({ exercici_id: id }) }),
-      getTeoria().then((t) => t.byKey || indexTeoria(t)).catch(() => null),  // citations still render as text without it
+      ensureTeoriaIndex(),
     ]);
   } catch (err) {
     if (req !== sessionReq) return;  // the student already left: don't throw them back to the landing page
@@ -425,7 +447,7 @@ async function startSession(id, req) {
     el("div", { class: `statement-body ${ex.format}` }, statement(ex, true, true)),
     el("div", { class: "statement-tools" },
       data.teoria.length
-        ? theoryButton(`💡 Teoria útil (${data.teoria.length})`, "Teoria útil per a aquest problema", data.teoria)
+        ? theoryButton(`Teoria útil (${data.teoria.length})`, "Teoria útil per a aquest problema", data.teoria)
         : null,
       visualitzaExercici(ex)));
   $("#messages").replaceChildren(
@@ -434,19 +456,21 @@ async function startSession(id, req) {
   $("#input").focus();
 }
 
-let cfgLoaded = false;
-
 const FLAG_LABELS = { fallbacks: "fallbacks", rebutjos_guardia: "esborranys rebutjats", bucles: "bucles",
   mostrar_pas: "passos mostrats", frustracio: "frustració" };
+
+function nomesProfessorat(root) {
+  if (PROFESSOR) return false;
+  root.replaceChildren(el("p", { class: "muted", text: "Aquesta pàgina és només per al professorat." }));
+  return true;
+}
 
 async function viewProfessor() {
   show("professor");
   crumbs([["Inici", "#/"], ["Professorat", null]]);
   const root = $("#view-professor");
-  if (!PROFESSOR) {
-    root.replaceChildren(el("p", { class: "muted", text: "Aquesta pàgina és només per al professorat (obre l'app amb ?prof=<clau>)." }));
-    return;
-  }
+  if (nomesProfessorat(root)) return;
+  root.replaceChildren(carregant());
   const sessions = await api("/api/professor/sessions");
   const rows = sessions.map((s) => el("tr", {},
     el("td", {}, el("a", { href: `#/professor/${s.id}`, text: new Date(s.darrer * 1000).toLocaleString("ca") })),
@@ -457,6 +481,7 @@ async function viewProfessor() {
       .map((k) => badge(`${FLAG_LABELS[k]}: ${s[k]}`, k === "frustracio" || k === "bucles" || k === "fallbacks" ? "bad" : "warn")))));
   root.replaceChildren(
     el("section", { class: "hero left" },
+      el("div", { class: "eyebrow", text: "Professorat" }),
       el("h2", { text: "Revisió de converses" }),
       el("p", { class: "muted", text: "Sessions anònimes, de la més recent a la més antiga. Les marques indiquen què convé revisar." })),
     sessions.length
@@ -469,10 +494,14 @@ async function viewProfessor() {
 async function viewProfessorSessio(id) {
   show("professor");
   crumbs([["Inici", "#/"], ["Professorat", "#/professor"], [id.slice(0, 8), null]]);
-  const torns = await api(`/api/professor/sessions/${id}`);
   const root = $("#view-professor");
+  if (nomesProfessorat(root)) return;
+  root.replaceChildren(carregant());
+  const torns = await api(`/api/professor/sessions/${id}`);
   root.replaceChildren(
-    el("section", { class: "hero left" }, el("h2", { text: `Sessió ${id.slice(0, 8)} · ${torns[0]?.exercici || ""}` })),
+    el("section", { class: "hero left" },
+      el("div", { class: "eyebrow", text: "Professorat · Revisió de converses" }),
+      el("h2", { text: `Sessió ${id.slice(0, 8)}${torns[0]?.exercici ? ` · ${torns[0].exercici}` : ""}` })),
     el("div", { class: "prof-transcript" }, ...torns.map((t) => {
       const p = t.trace.pla;
       return el("div", { class: "prof-turn" },
@@ -489,19 +518,39 @@ async function viewProfessorSessio(id) {
     })));
 }
 
+function viewError(err) {
+  show("error");
+  crumbs([["Inici", "#/"], ["Error", null]]);
+  const retry = el("button", { type: "button", class: "btn primary", text: "Torna-ho a provar" });
+  retry.addEventListener("click", route);
+  const atHome = !location.hash.replace(/^#\/?/, "");
+  $("#view-error").replaceChildren(
+    el("section", { class: "hero left" },
+      el("h2", { text: "No s'ha pogut carregar la pàgina" }),
+      el("p", { class: "muted", text: err?.message || String(err) }),
+      el("div", { class: "cta-row error-actions" }, retry,
+        atHome ? null : el("a", { class: "btn ghost", href: "#/", text: "Torna a l'inici" }))));
+}
+
+// Each navigation gets a number: an error from a page the student already left is not shown.
+let routeReq = 0;
+
 async function route() {
-  let parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean);
-  // Old links: #/problemes and #/llista/<id>/<ex>.
-  if (parts[0] === "problemes") parts = ["exercicis"];
-  if (parts[0] === "llista") parts = ["exercicis", ...parts.slice(1)];
+  const parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean);
+  // Old links (#/problemes, #/llista/<id>/<ex>) are rewritten to the current address; replace() re-enters route().
+  if (parts[0] === "problemes" || parts[0] === "llista") {
+    location.replace(parts[0] === "problemes" ? "#/exercicis" : `#/${["exercicis", ...parts.slice(1)].join("/")}`);
+    return;
+  }
   const [mode, llista, ex] = parts;
+  const req = ++routeReq;
   sessionReq++;  // any exercise still loading belongs to the page we're leaving
   try {
-    if (!cfgLoaded) {
+    if (!CONFIG) {
       const cfg = await api("/api/config");
       PROFESSOR = cfg.panell_professor;
       POT_GENERAR = cfg.pot_generar;
-      cfgLoaded = true;
+      CONFIG = cfg;
     }
     if (mode === "teoria") await viewTeoria();
     else if (mode === "visual") await viewVisual(llista);
@@ -516,8 +565,8 @@ async function route() {
     else if (mode in MODES) await viewLlistes(mode);
     else await viewLanding();
   } catch (err) {
-    show("landing");
-    $("#api-status").textContent = err.message;
+    if (req !== routeReq) return;
+    viewError(err);
   }
   window.scrollTo(0, 0);
 }
@@ -561,7 +610,7 @@ async function send(text) {
     linkCitations(node, sess.exercici.tema);
     if (data.referencies.length) {
       node.append(el("div", { class: "msg-refs" }, ...data.referencies.map((it) =>
-        theoryButton(`📖 ${it.etiqueta}`, it.nom || it.etiqueta, [it], "ref-chip"))));
+        theoryButton(it.etiqueta, it.nom || it.etiqueta, [it], "ref-chip"))));
     }
     sess.traces.push(data.trace);
     renderProf();
@@ -732,6 +781,93 @@ $("#toggle-prof").addEventListener("change", (e) => {
 
 function badge(text, cls = "") {
   return el("span", { class: `badge ${cls}`, text });
+}
+
+/* ---------- Pieces shared by the activity pages ---------- */
+
+// Features still in testing (Visualitzador, Construeix el contraexemple) carry the same badge everywhere.
+function betaBadge() {
+  return el("span", { class: "badge-beta", title: "Versió beta: en proves, pot contenir errors", text: "Beta" });
+}
+
+function betaNote() {
+  return el("p", { class: "beta-note", text: "Funcionalitat en proves: els resultats poden tenir errors." });
+}
+
+function carregant(text = "Carregant…") {
+  return el("p", { class: "muted loading-line", text });
+}
+
+// "Teorema 12 (Tema 3)" -> "Teorema 12", or "Teorema 12" + suffix.
+function etiquetaCurta(etiqueta, suffix = "") {
+  return etiqueta.replace(/ \(Tema \d+\)$/, suffix);
+}
+
+function pipelineStage(n, title, text, tag, cls) {
+  return el("li", {},
+    el("span", { class: "step-num", text: String(n) }), el("h4", { text: title }), math(el("p", { text })),
+    el("span", { class: `tag ${cls}`, text: tag }));
+}
+
+const DIFICULTATS = [
+  { id: "facil", label: "Fàcil" },
+  { id: "normal", label: "Normal" },
+  { id: "dificil", label: "Difícil" },
+];
+
+function etiquetaDificultat(id) {
+  return DIFICULTATS.find((d) => d.id === id)?.label || id;
+}
+
+function triaDificultat(disp, current) {
+  // Keep the student's choice when it is ready; otherwise open a ready one (no wait, no generation).
+  if (disp[current]) return current;
+  return ["normal", "facil", "dificil"].find((d) => disp[d]) || current;
+}
+
+function readyDots(disp, title) {
+  return el("span", { class: "ready-dots", title },
+    ...DIFICULTATS.map((d) => el("span", { class: disp?.[d.id] ? "on" : "", title: `${d.label}: ${disp?.[d.id] ? "a punt" : "no preparat"}` })));
+}
+
+function difficultyChips({ current, disp, sub, isBusy, onPick }) {
+  // `disp` counts the ready documents per difficulty; `sub(d)` is the small line under each label.
+  const wrap = el("div", { class: "diff-chips", role: "radiogroup", "aria-label": "Dificultat" });
+  for (const d of DIFICULTATS) {
+    const b = el("button", { type: "button", class: `chip${d.id === current ? " on" : ""}`, role: "radio",
+      "aria-checked": String(d.id === current), "data-dif": d.id,
+      title: disp[d.id] ? "Preparat: s'obre a l'instant" : "Encara no n'hi ha cap de preparat" },
+      el("span", { text: d.label }),
+      el("small", { text: `${sub(d)}${disp[d.id] ? "" : POT_GENERAR ? " · per generar" : " · no preparat"}` }));
+    b.addEventListener("click", () => {
+      if (b.classList.contains("on") || isBusy()) return;
+      wrap.querySelectorAll(".chip").forEach((c) => {
+        c.classList.toggle("on", c === b);
+        c.setAttribute("aria-checked", String(c === b));
+      });
+      onPick(d.id);
+    });
+    wrap.append(b);
+  }
+  return wrap;
+}
+
+function scoreRing(nota) {
+  const svg = (tag, attrs) => {
+    const node = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, String(v));
+    return node;
+  };
+  const value = Number(nota) || 0;
+  const R = 26, C = 2 * Math.PI * R;
+  const label = svg("text", { x: 32, y: 37, "text-anchor": "middle" });
+  label.textContent = String(value);
+  const ring = svg("svg", { viewBox: "0 0 64 64", class: "score-ring" });
+  ring.append(
+    svg("circle", { cx: 32, cy: 32, r: R, class: "track" }),
+    svg("circle", { cx: 32, cy: 32, r: R, class: "value", "stroke-dasharray": `${(C * value) / 100} ${C}`, transform: "rotate(-90 32 32)" }),
+    label);
+  return ring;
 }
 
 function meter(level) {

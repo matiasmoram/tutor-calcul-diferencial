@@ -1,4 +1,4 @@
-"""The dependency rules of backend/AGENTS.md, checked on every module's imports (TYPE_CHECKING blocks exempt)."""
+"""The dependency rules of docs/architecture.md, checked on every module's imports (TYPE_CHECKING blocks exempt)."""
 
 import ast
 import sys

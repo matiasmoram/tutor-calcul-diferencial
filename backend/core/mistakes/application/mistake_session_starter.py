@@ -18,7 +18,7 @@ class MistakeSessionStarterInput(BaseModel):
     exercise_id: str | None = None
     theory_id: str | None = None
     difficulty: Difficulty = "normal"
-    fresh: bool = False  # generate a new document even if some are ready
+    fresh: bool = False  # generate a new document even if some are ready, when the provider may generate
     avoid_id: str | None = Field(default=None, max_length=40)  # document just seen: prefer another one
 
 
@@ -41,7 +41,7 @@ class MistakeSessionStarter:
     async def needs_generation(self, request: MistakeSessionStarterInput) -> bool:
         """Whether `start(request)` will call the model (the API checks the provider key first)."""
         source = resolve_source(self._course, request.exercise_id, request.theory_id)
-        return request.fresh or not await self._provider.is_ready(source, request.difficulty)
+        return await self._provider.will_generate(source, request.difficulty, request.fresh)
 
     async def start(self, request: MistakeSessionStarterInput) -> StartedMistakeSession:
         source = resolve_source(self._course, request.exercise_id, request.theory_id)

@@ -48,17 +48,13 @@ from settings import Config
 
 router = APIRouter()
 
-NOT_READY = (
-    "Encara no hi ha cap document preparat per a aquest tema i dificultat. "
-    "Prova una altra dificultat o demana-ho al professorat."
-)
-
 
 def _get_starter(
     state: AppState = Depends(get_state),
     course: Course = Depends(get_course),
     sessions: SQLModelSessionProvider = Depends(get_session_provider),
     llm: LLMClient = Depends(get_llm),
+    generation_allowed: bool = Depends(may_generate),
 ) -> MistakeSessionStarter:
     clock = SystemClock()
     generator = MistakeExerciseGenerator(
@@ -68,7 +64,10 @@ def _get_starter(
         deadline_s=state.config.MISTAKES_GENERATION_DEADLINE_S,
     )
     provider = MistakeExerciseProvider(
-        SQLModelMistakeExerciseRepository(sessions), generator, generations=state.mistake_generations
+        SQLModelMistakeExerciseRepository(sessions),
+        generator,
+        generations=state.mistake_generations,
+        may_generate=generation_allowed,
     )
     return MistakeSessionStarter(course, provider, SQLModelMistakeSessionRepository(sessions), clock)
 
@@ -112,23 +111,20 @@ async def start_session(
     course: Course = Depends(get_course),
     starter: MistakeSessionStarter = Depends(_get_starter),
     config: Config = Depends(get_config),
-    generation_allowed: bool = Depends(may_generate),
 ) -> MistakeSessionResponse:
-    """Without `generation_allowed` (the cost policy), "nova" picks another ready document (`excepte`), and a
-    source and difficulty with none ready is a 409: a student never starts a generation."""
-    data = MistakeSessionStarterInput(
+    """Without the cost policy's permission (`may_generate`, applied by the provider), "nova" picks another ready
+    document (`excepte`), and a source and difficulty with none ready is a 409: a student never starts a generation."""
+    request = MistakeSessionStarterInput(
         exercise_id=body.exercici_id,
         theory_id=body.teoria_id,
         difficulty=body.dificultat,
-        fresh=body.nova and generation_allowed,
+        fresh=body.nova,
         avoid_id=body.excepte,
     )
     with domain_errors("La generació"):
-        if await starter.needs_generation(data):
-            if not generation_allowed:
-                raise HTTPException(409, NOT_READY)
+        if await starter.needs_generation(request):
             ensure_api_key(config)
-        started = await starter.start(data)
+        started = await starter.start(request)
     out = MistakeSessionResponse(
         session_id=started.session.id,
         font=started.source.kind,

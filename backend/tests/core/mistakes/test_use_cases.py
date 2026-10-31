@@ -13,6 +13,7 @@ from core.mistakes.domain.entities.mistake_grading import MistakeGrading
 from core.mistakes.domain.exceptions import (
     GradingInProgressException,
     InvalidAnnotationsException,
+    MistakeExerciseNotReadyException,
     MistakeGradingTimeoutException,
     MistakeSessionNotFoundException,
     MistakeSourceRequiredException,
@@ -41,11 +42,13 @@ from tests.fakes.llm import ScriptedLLMClient
 
 
 class Wiring:
-    def __init__(self, provider: SQLModelSessionProvider, llm: ScriptedLLMClient) -> None:
+    def __init__(self, provider: SQLModelSessionProvider, llm: ScriptedLLMClient, may_generate: bool = True) -> None:
         self.clock = FixedClock()
         self.exercises = SQLModelMistakeExerciseRepository(provider)
         self.sessions = SQLModelMistakeSessionRepository(provider)
-        self.provider = MistakeExerciseProvider(self.exercises, exercise_generator(llm, self.clock))
+        self.provider = MistakeExerciseProvider(
+            self.exercises, exercise_generator(llm, self.clock), may_generate=may_generate
+        )
         self.starter = MistakeSessionStarter(COURSE, self.provider, self.sessions, self.clock)
         self.grader = AnnotationsGrader(COURSE, self.sessions, self.exercises, LLMAnnotationGrader(llm), self.clock)
         self.lister = AvailabilityLister(COURSE, self.exercises)
@@ -102,6 +105,26 @@ async def test_fresh_generates_and_stores_even_with_ready_documents(session_prov
     assert await w.lister.availability() == {"t2-4c": {"normal": 1, "facil": 1}}
     assert not await w.starter.needs_generation(data)
     assert await w.starter.needs_generation(data.model_copy(update={"fresh": True}))
+
+
+async def test_without_permission_to_generate_only_ready_documents_are_served(
+    session_provider: SQLModelSessionProvider,
+) -> None:
+    """The cost policy: `fresh` picks a ready document, and a source and difficulty with none ready is a 409."""
+    llm = ScriptedLLMClient({})
+    w = Wiring(session_provider, llm, may_generate=False)
+    await w.exercises.save(solution("aaaaaaaaaaaa"))
+    fresh = MistakeSessionStarterInput(exercise_id="t2-4c", fresh=True)
+    assert not await w.starter.needs_generation(fresh)
+    started = await w.starter.start(fresh)
+    assert started.exercise.id == "aaaaaaaaaaaa" and not started.generated_now
+
+    missing = fresh.model_copy(update={"difficulty": "facil"})
+    assert not await w.starter.needs_generation(missing)
+    with pytest.raises(MistakeExerciseNotReadyException) as e:
+        await w.starter.start(missing)
+    assert e.value.error_code == 409
+    assert llm.calls(Stage.MISTAKES_GENERATION) == 0
 
 
 async def test_session_start_validates_its_source(session_provider: SQLModelSessionProvider) -> None:

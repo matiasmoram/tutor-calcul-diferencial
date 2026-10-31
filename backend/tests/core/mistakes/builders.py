@@ -1,6 +1,9 @@
 """Shared test data for the "troba l'error" context: the legacy test documents and the wiring of the use cases."""
 
+import random
+
 from core.mistakes.application.mistake_exercise_generator import MistakeExerciseGenerator
+from core.mistakes.application.parted_mistake_exercise_generator import PartedMistakeExerciseGenerator
 from core.mistakes.domain.entities.mistake_exercise import MistakeExercise, Verification
 from core.mistakes.domain.entities.parted_mistake_exercise import MistakePart, PartedMistakeExercise
 from core.mistakes.domain.services.generation_checks import validate_generation
@@ -11,6 +14,10 @@ from core.mistakes.domain.values.mistake_source import ProblemSource, TheorySour
 from core.mistakes.domain.values.resolution import Resolution
 from core.mistakes.infra.llm_mistake_generator import LLMMistakeGenerator
 from core.mistakes.infra.llm_mistake_verifier import LLMMistakeVerifier
+from core.mistakes.infra.llm_part_corrupter import LLMPartCorrupter
+from core.mistakes.infra.llm_part_verifier import LLMPartVerifier
+from core.mistakes.infra.llm_resolution_verifier import LLMResolutionVerifier
+from core.mistakes.infra.llm_resolution_writer import LLMResolutionWriter
 from core.shared.domain.clock import Clock
 from core.shared.llm.client import JsonObject, LLMClient
 from tests.fixtures.course import authored_course
@@ -198,3 +205,17 @@ class FixedClock(Clock):
 
 def exercise_generator(llm: LLMClient, clock: Clock | None = None) -> MistakeExerciseGenerator:
     return MistakeExerciseGenerator(LLMMistakeGenerator(llm), LLMMistakeVerifier(llm), clock or FixedClock())
+
+
+def parted_generator(
+    llm: LLMClient, clock: Clock | None = None, seed: int = 0, deadline_s: float = 300.0
+) -> PartedMistakeExerciseGenerator:
+    return PartedMistakeExerciseGenerator(
+        LLMResolutionWriter(llm),
+        LLMResolutionVerifier(llm),
+        LLMPartCorrupter(llm),
+        LLMPartVerifier(llm),
+        clock or FixedClock(),
+        random.Random(seed),
+        deadline_s,
+    )

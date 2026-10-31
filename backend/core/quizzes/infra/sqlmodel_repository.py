@@ -67,7 +67,7 @@ class SQLModelQuizRepository(QuizRepository, BaseSQLModelRepository):
                 source_id=quiz.source_id,
                 difficulty=quiz.difficulty,
                 topic=quiz.topic,
-                created_at=quiz.created,
+                created_at=quiz.created_at,
                 data=quiz.model_dump(mode="json"),
             )
         )

@@ -120,7 +120,7 @@ def quiz() -> Quiz:
             statement("a3", "C.", "fals", "z"),
             statement("a4", "D.", "cert"),
         ],
-        created=1.0,
+        created_at=1.0,
     )
 
 

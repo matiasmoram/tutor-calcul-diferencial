@@ -18,7 +18,7 @@ async def test_quizzes_round_trip_and_are_counted_per_source(session_provider: S
     repo = SQLModelQuizRepository(session_provider)
     assert await repo.availability() == {} and await repo.of_source("tema-2", "facil") == []
     q = quiz()
-    later = q.model_copy(update={"id": QuizId("bbbbbbbbbbbb"), "created": 2.0})
+    later = q.model_copy(update={"id": QuizId("bbbbbbbbbbbb"), "created_at": 2.0})
     other = q.model_copy(update={"id": QuizId("cccccccccccc"), "source_id": "T2.12", "difficulty": "normal"})
     for x in (later, q, other):
         await repo.add(x)

@@ -74,7 +74,7 @@ class Quiz(BaseModel):
     verification: QuizVerification | None = Field(
         default=None, validation_alias=catalan_alias("verificacio", "verification"), serialization_alias="verificacio"
     )
-    created: float = Field(validation_alias=catalan_alias("creat", "created"), serialization_alias="creat")
+    created_at: float = Field(validation_alias=catalan_alias("creat", "created_at"), serialization_alias="creat")
 
     @field_validator("verification", mode="before")
     @classmethod

@@ -2,7 +2,7 @@
 
 import random
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 
 from apps.tutor_api.dependencies import (
     AppState,
@@ -34,7 +34,6 @@ from core.quizzes.application.quiz_provider import QuizProvider
 from core.quizzes.application.quiz_session_starter import QuizSessionStarter, QuizSessionStarterInput
 from core.quizzes.application.source_lister import SourceLister
 from core.quizzes.domain.exceptions import QuizSessionNotFoundException
-from core.quizzes.domain.services.sources import quiz_source
 from core.quizzes.infra.llm_answer_grader import LLMAnswerGrader
 from core.quizzes.infra.llm_blind_solver import LLMBlindSolver
 from core.quizzes.infra.llm_claim_extractor import LLMClaimExtractor
@@ -122,20 +121,16 @@ async def quiz_sources(lister: SourceLister = Depends(_get_lister)) -> QuizSourc
 @router.post("/api/afirmacions/sessions", dependencies=[Depends(model_rate_limited)])
 async def start_quiz(
     body: NewQuizRequest,
-    course: Course = Depends(get_course),
-    provider: QuizProvider = Depends(_get_provider),
     starter: QuizSessionStarter = Depends(_get_starter),
     config: Config = Depends(get_config),
 ) -> QuizSessionResponse:
+    request = QuizSessionStarterInput(
+        source_id=body.font, difficulty=body.dificultat, fresh=body.nova, avoid_id=body.excepte
+    )
     with domain_errors("La generació"):
-        source = quiz_source(course, body.font)
-        if await provider.will_generate(source, body.dificultat, body.nova):
+        if await starter.needs_generation(request):
             ensure_api_key(config)
-        started = await starter.start(
-            QuizSessionStarterInput(
-                source_id=body.font, difficulty=body.dificultat, new=body.nova, except_id=body.excepte
-            )
-        )
+        started = await starter.start(request)
     focus = started.source.focus
     return QuizSessionResponse(
         session_id=started.session.id,
@@ -175,8 +170,7 @@ async def grade_answers(
 
 
 def _session_id(raw: str) -> SessionId:
-    with domain_errors():
-        try:
-            return SessionId(raw)
-        except ValueError:
-            raise QuizSessionNotFoundException(raw) from None
+    try:
+        return SessionId(raw)
+    except ValueError:
+        raise HTTPException(404, QuizSessionNotFoundException(raw).message) from None

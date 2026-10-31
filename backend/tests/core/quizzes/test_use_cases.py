@@ -1,4 +1,4 @@
-"""The use cases the API calls (the old endpoint test, minus HTTP: that layer is built in phase 6)."""
+"""The use cases the API calls, without the HTTP layer."""
 
 from pathlib import Path
 from random import Random
@@ -98,9 +98,19 @@ async def test_the_provider_prefers_a_quiz_not_just_seen(session_provider: SQLMo
     await repo.add(quiz().model_copy(update={"id": QuizId("bbbbbbbbbbbb")}))
     provider = QuizProvider(repo, generator(ScriptedLLMClient({})), Random(0))
     for _ in range(5):
-        provided = await provider.get_or_generate(source(), "facil", except_id=QUIZ_ID)
+        provided = await provider.get_or_generate(source(), "facil", avoid_id=QUIZ_ID)
         assert provided.quiz.id == "bbbbbbbbbbbb" and not provided.generated_now
     assert await provider.is_ready(source(), "facil") and not await provider.is_ready(source(), "dificil")
+
+
+async def test_the_starter_tells_when_a_start_needs_the_model(session_provider: SQLModelSessionProvider) -> None:
+    await SQLModelQuizRepository(session_provider).add(quiz())
+    s = starter(session_provider)
+    assert not await s.needs_generation(QuizSessionStarterInput(source_id="tema-2", difficulty="facil"))
+    assert await s.needs_generation(QuizSessionStarterInput(source_id="tema-2", difficulty="facil", fresh=True))
+    assert await s.needs_generation(QuizSessionStarterInput(source_id="tema-2", difficulty="dificil"))
+    with pytest.raises(UnknownQuizSourceException):
+        await s.needs_generation(QuizSessionStarterInput(source_id="tema-9"))
 
 
 async def test_pregenerated_quizzes_seed_the_store(session_provider: SQLModelSessionProvider, tmp_path: Path) -> None:

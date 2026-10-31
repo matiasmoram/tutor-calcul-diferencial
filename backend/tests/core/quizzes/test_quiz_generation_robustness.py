@@ -169,9 +169,9 @@ async def test_without_generation_rights_new_picks_another_stored_quiz(
     await repo.add(quiz().model_copy(update={"id": QuizId("bbbbbbbbbbbb")}))
     llm = ScriptedLLMClient({})
     provider = QuizProvider(repo, generator(llm), Random(0), may_generate=False)
-    assert not await provider.will_generate(source(), "facil", new=True)
+    assert not await provider.needs_generation(source(), "facil", fresh=True)
     for _ in range(5):
-        provided = await provider.get_or_generate(source(), "facil", new=True, except_id=QUIZ_ID)
+        provided = await provider.get_or_generate(source(), "facil", fresh=True, avoid_id=QUIZ_ID)
         assert provided.quiz.id == "bbbbbbbbbbbb" and not provided.generated_now
     assert llm.calls(Stage.QUIZ_GENERATION) == 0
 
@@ -179,7 +179,7 @@ async def test_without_generation_rights_new_picks_another_stored_quiz(
 async def test_without_generation_rights_a_new_source_is_a_409(session_provider: SQLModelSessionProvider) -> None:
     llm = ScriptedLLMClient({})
     provider = QuizProvider(SQLModelQuizRepository(session_provider), generator(llm), Random(0), may_generate=False)
-    assert not await provider.will_generate(source(), "facil")
+    assert not await provider.needs_generation(source(), "facil")
     with pytest.raises(QuizNotReadyException) as e:
         await provider.get_or_generate(source(), "facil")
     assert e.value.error_code == 409 and "demana-ho al professorat" in e.value.message

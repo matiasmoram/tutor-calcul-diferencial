@@ -21,7 +21,7 @@ class ProvidedQuiz(BaseModel):
 class QuizProvider:
     """A stored quiz of the source and difficulty when there is one; otherwise a new one, generated and stored.
 
-    `may_generate` is the cost policy: without it, `new` only picks another stored quiz, and a source and difficulty
+    `may_generate` is the cost policy: without it, `fresh` only picks another stored quiz, and a source and difficulty
     with nothing stored is a QuizNotReadyException. `generations` is shared by the whole process, so concurrent
     requests for the same source and difficulty wait for one generation instead of paying for several."""
 
@@ -40,13 +40,13 @@ class QuizProvider:
         self._may_generate = may_generate
 
     async def get_or_generate(
-        self, source: QuizSource, difficulty: Difficulty, new: bool = False, except_id: str | None = None
+        self, source: QuizSource, difficulty: Difficulty, fresh: bool = False, avoid_id: str | None = None
     ) -> ProvidedQuiz:
-        """`new` forces a generation; `except_id` (the quiz just seen) is avoided when there is another one."""
-        new = new and self._may_generate
-        pool = [] if new else await self._quizzes.of_source(source.id, difficulty)
-        if len(pool) > 1 and except_id:
-            pool = [q for q in pool if q.id != except_id] or pool
+        """`fresh` forces a generation; `avoid_id` (the quiz just seen) is avoided when there is another one."""
+        fresh = fresh and self._may_generate
+        pool = [] if fresh else await self._quizzes.of_source(source.id, difficulty)
+        if len(pool) > 1 and avoid_id:
+            pool = [q for q in pool if q.id != avoid_id] or pool
         if pool:
             return ProvidedQuiz(quiz=self._rng.choice(pool), generated_now=False)
         if not self._may_generate:
@@ -54,11 +54,11 @@ class QuizProvider:
         quiz = await self._generations.run((source.id, difficulty), lambda: self._generate(source, difficulty))
         return ProvidedQuiz(quiz=quiz, generated_now=True)
 
-    async def will_generate(self, source: QuizSource, difficulty: Difficulty, new: bool = False) -> bool:
-        """Whether `get_or_generate` will call the model (the API checks the provider key first)."""
+    async def needs_generation(self, source: QuizSource, difficulty: Difficulty, fresh: bool = False) -> bool:
+        """Whether `get_or_generate` will call the model."""
         if not self._may_generate:
             return False
-        return new or not await self.is_ready(source, difficulty)
+        return fresh or not await self.is_ready(source, difficulty)
 
     async def is_ready(self, source: QuizSource, difficulty: Difficulty) -> bool:
         """Whether a quiz can be served without calling the model."""

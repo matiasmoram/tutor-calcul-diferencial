@@ -24,8 +24,10 @@ from collections.abc import Mapping, Sequence
 from typing import Literal
 
 import sympy as sp
-from pydantic import AliasChoices, BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field
 from sympy.parsing.sympy_parser import convert_xor, parse_expr, standard_transformations
+
+from core.shared.domain.contract import catalan_alias
 
 CheckKind = Literal["limit", "no_limit", "igualtat"]
 Side = Literal["ambdos", "dreta", "esquerra"]
@@ -68,36 +70,34 @@ class InvalidExpression(ValueError):
     pass
 
 
-def _ca(catalan: str, english: str) -> AliasChoices:
-    return AliasChoices(catalan, english)
-
-
 class MathCheck(BaseModel):
     """Validated from the model's Catalan keys; serialized back to them (`serialize_by_alias`)."""
 
     model_config = ConfigDict(serialize_by_alias=True)
 
     description: str = Field(
-        default="", validation_alias=_ca("descripcio", "description"), serialization_alias="descripcio"
+        default="", validation_alias=catalan_alias("descripcio", "description"), serialization_alias="descripcio"
     )
     kind: str = Field(
-        validation_alias=_ca("tipus", "kind"), serialization_alias="tipus"
+        validation_alias=catalan_alias("tipus", "kind"), serialization_alias="tipus"
     )  # unknown kind -> "indeterminat"
     expression: str = Field(
-        default="", validation_alias=_ca("expressio", "expression"), serialization_alias="expressio"
+        default="", validation_alias=catalan_alias("expressio", "expression"), serialization_alias="expressio"
     )
     variable: str = ""
-    point: str = Field(default="", validation_alias=_ca("punt", "point"), serialization_alias="punt")
-    side: str = Field(default="ambdos", validation_alias=_ca("costat", "side"), serialization_alias="costat")
-    value: str = Field(default="", validation_alias=_ca("valor", "value"), serialization_alias="valor")
+    point: str = Field(default="", validation_alias=catalan_alias("punt", "point"), serialization_alias="punt")
+    side: str = Field(default="ambdos", validation_alias=catalan_alias("costat", "side"), serialization_alias="costat")
+    value: str = Field(default="", validation_alias=catalan_alias("valor", "value"), serialization_alias="valor")
 
 
 class CheckResult(BaseModel):
     model_config = ConfigDict(serialize_by_alias=True)
 
-    status: CheckStatus = Field(validation_alias=_ca("estat", "status"), serialization_alias="estat")
-    computed: str = Field(default="", validation_alias=_ca("calculat", "computed"), serialization_alias="calculat")
-    detail: str = Field(default="", validation_alias=_ca("detall", "detail"), serialization_alias="detall")
+    status: CheckStatus = Field(validation_alias=catalan_alias("estat", "status"), serialization_alias="estat")
+    computed: str = Field(
+        default="", validation_alias=catalan_alias("calculat", "computed"), serialization_alias="calculat"
+    )
+    detail: str = Field(default="", validation_alias=catalan_alias("detall", "detail"), serialization_alias="detall")
 
 
 def parse(text: str, evaluate: bool = True) -> sp.Expr:

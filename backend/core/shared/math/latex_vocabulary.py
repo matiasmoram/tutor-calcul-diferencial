@@ -1,14 +1,14 @@
 """Which LaTeX commands generated text may use: a closed vocabulary instead of trusting the model.
 
-Small models invent commands when they write LaTeX inside JSON (gpt-5.6-luna wrote ``\\fterm{0.2}``, ``\\term{·}``,
-``\\blink``, ``\\freelance``), and neither the verifier model nor the ``$``-balance check notices: KaTeX shows them as
-red errors to the student. Every command used by the course notes and the solution sheets is here, plus the common
-KaTeX commands a correct text about this course may reasonably need; anything else is treated as a typo.
+Small models invent commands when they write LaTeX inside JSON, and neither the verifier model nor the ``$``-balance
+check notices: KaTeX shows them as red errors to the student. Every command used by the course notes and the solution
+sheets is here, plus the common KaTeX commands a correct text about this course may reasonably need; anything else is
+treated as a typo.
 """
 
 import re
 
-# Every command in backend/teoria/*.yaml and backend/exercicis/*.yaml (leak regexes excluded), October 2026.
+# Every command in backend/teoria/*.yaml and backend/exercicis/*.yaml (leak regexes excluded).
 _COURSE = frozenset(
     [
         "Big",

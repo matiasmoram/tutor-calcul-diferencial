@@ -2,10 +2,10 @@ import asyncio
 
 from pydantic import BaseModel
 
-from core.course.domain.citations import cited_items
 from core.course.domain.entities.course import Course
 from core.course.domain.entities.exercise import Exercise
 from core.course.domain.entities.theory_item import TheoryItem
+from core.course.domain.services.citations import cited_items
 from core.shared.domain.claims import claim_timeout
 from core.shared.domain.clock import Clock
 from core.shared.domain.ids import SessionId, TheoryItemId

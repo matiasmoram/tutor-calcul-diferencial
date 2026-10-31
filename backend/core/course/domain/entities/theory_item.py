@@ -26,8 +26,7 @@ KIND_NAMES: Mapping[str, str] = {
 class TheoryItem(BaseModel):
     """One item of the course notes (Temes 1-6), transcribed to Markdown + LaTeX.
 
-    Sheets cite items by id ("T3.12"); each stage receives only the cited items, never the whole notes: a
-    typical exercise needs 2-6 items (~0.3-1.5k tokens) instead of a whole topic (~15-20k tokens)."""
+    Sheets cite items by id ("T3.12"); each stage receives only the cited items, never the whole notes."""
 
     id: TheoryItemId
     topic: int

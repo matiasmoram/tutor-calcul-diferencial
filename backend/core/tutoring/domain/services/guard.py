@@ -5,8 +5,8 @@ The problems are Catalan: they are fed back to the writer as the reason a draft 
 import re
 from collections.abc import Sequence
 
-from core.course.domain.citations import CITATION
 from core.course.domain.entities.theory_item import KIND_NAMES, TheoryItem
+from core.course.domain.services.citations import CITATION
 from core.shared.math.latex_cas import explain, literal_tokens
 from core.shared.math.latex_vocabulary import unknown_commands
 from core.tutoring.domain.values.plan import Plan

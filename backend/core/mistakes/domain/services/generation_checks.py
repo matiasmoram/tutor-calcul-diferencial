@@ -11,7 +11,12 @@ from pydantic import BaseModel
 
 from core.mistakes.domain.entities.mistake_exercise import DeclaredMistake
 from core.mistakes.domain.services.locate import locate, overlap
-from core.mistakes.domain.values.llm_outputs import GenerationDraft, VerifierFinding
+from core.mistakes.domain.values.llm_outputs import (
+    SEVERITY_CONSEQUENCE,
+    SEVERITY_ERROR,
+    GenerationDraft,
+    VerifierFinding,
+)
 from core.mistakes.domain.values.mistake_kind import PROBLEM_MISTAKE_KINDS, THEORY_MISTAKE_KINDS
 from core.shared.math.latex_vocabulary import unknown_commands
 
@@ -115,7 +120,7 @@ def compare_verification(
 ) -> list[str]:
     """The independent check must find every declared error and nothing else that is wrong."""
     issues: list[str] = []
-    real = [p for p in findings if p.severity in ("error", "consequencia")]
+    real = [p for p in findings if p.severity in (SEVERITY_ERROR, SEVERITY_CONSEQUENCE)]
 
     def same_problem(e: DeclaredMistake, p: VerifierFinding) -> bool:
         # A different problem in the same fragment does not confirm the declared one: the quotes must overlap
@@ -136,6 +141,6 @@ def compare_verification(
             )
     for p in findings:
         # Inside a declared fragment too: a second, different error there is just as unintended.
-        if p.severity == "error" and not any(same_problem(e, p) for e in mistakes):
+        if p.severity == SEVERITY_ERROR and not any(same_problem(e, p) for e in mistakes):
             issues.append(f"hi ha un error NO intencionat al fragment {p.fragment}: «{p.quote}» — {p.explanation}")
     return issues

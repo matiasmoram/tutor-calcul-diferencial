@@ -10,12 +10,14 @@ from core.mistakes.domain.exceptions import (
 )
 from core.mistakes.domain.services.grading import grade
 from core.mistakes.domain.values.mistake_exercise_id import MistakeExerciseId
+from core.mistakes.infra.json_file_source import JsonFileMistakeSource
 from core.mistakes.infra.sqlmodel_repository import (
     SQLModelMistakeExerciseRepository,
     SQLModelMistakeSessionRepository,
 )
 from core.shared.domain.ids import SessionId
 from core.shared.storage.session_provider import SQLModelSessionProvider
+from settings import BACKEND_DIR
 from tests.core.mistakes.builders import solution
 
 
@@ -32,6 +34,16 @@ def session_of(exercise_id: str = "0000000000aa") -> MistakeSession:
 
 def empty_grading() -> MistakeGrading:
     return grade(solution(), [], None, None)
+
+
+def test_every_stored_document_loads_and_writes_back_the_same_json() -> None:
+    """The committed documents are a stored contract: each one loads and serializes to exactly its file."""
+    directory = BACKEND_DIR / "generats" / "errades"
+    paths = sorted(directory.glob("*/*/*.json"))
+    documents = JsonFileMistakeSource(directory).load()
+    assert paths and len(documents) == len(paths)
+    for path, document in zip(paths, documents, strict=True):
+        assert document.model_dump_json(indent=2) == path.read_text(encoding="utf-8"), path
 
 
 async def test_documents_round_trip_and_are_replaced_by_id(session_provider: SQLModelSessionProvider) -> None:

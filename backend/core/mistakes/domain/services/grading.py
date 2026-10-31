@@ -8,15 +8,15 @@ from core.mistakes.domain.entities.mistake_exercise import DeclaredMistake, Mist
 from core.mistakes.domain.entities.mistake_grading import AnnotationResult, Location, MistakeGrading
 from core.mistakes.domain.exceptions import InvalidAnnotationsException
 from core.mistakes.domain.services.locate import overlap, selectable_span
-from core.mistakes.domain.values.call_record import CallRecord
-from core.mistakes.domain.values.llm_outputs import GraderReport
+from core.mistakes.domain.values.llm_outputs import EXPLANATION_GRADES, NO_EXPLANATION, NO_MISTAKE, GraderReport
 from core.mistakes.domain.values.located_annotation import LocatedAnnotation
+from core.shared.domain.model_usage import ModelUsage
 
-# Finding the error is worth something on its own; a wrong reason must never score below no reason at all.
-EXPLANATION_POINTS: Mapping[str, float] = {"correcta": 1.0, "parcial": 0.6, "incorrecta": 0.35, "absent": 0.3}
+# The points of each grade, in the order of EXPLANATION_GRADES. Finding the error is worth something on its own; a
+# wrong reason must never score below no reason at all.
+EXPLANATION_POINTS: Mapping[str, float] = dict(zip(EXPLANATION_GRADES, (1.0, 0.6, 0.35, 0.3), strict=True))
 APPROXIMATE_FACTOR = 0.8  # annotation in the right fragment but not on the quoted words
 FALSE_POSITIVE_PENALTY = 0.1
-NO_MISTAKE = "cap"
 
 
 def _storable(text: str) -> bool:
@@ -74,7 +74,7 @@ def grade(
     exercise: MistakeExercise,
     located: list[LocatedAnnotation],
     report: GraderReport | None,
-    call: CallRecord | None,
+    call: ModelUsage | None,
 ) -> MistakeGrading:
     verdicts = {v.annotation: v for v in report.verdicts} if report else {}  # by key
     results: list[AnnotationResult] = []
@@ -83,11 +83,11 @@ def grade(
     for a in located:
         verdict = verdicts.get(a.key)
         claimed = verdict.mistake if verdict else NO_MISTAKE
-        explanation = verdict.explanation if verdict else "absent"
+        explanation = verdict.explanation if verdict else NO_EXPLANATION
         if explanation not in EXPLANATION_POINTS:
-            explanation = "absent"
+            explanation = NO_EXPLANATION
         # Where the highlight lands is decided by code: an annotation on an error's quoted words finds that error
-        # even if the model's verdict is missing or says "cap". The model only grades the explanation.
+        # even if the model's verdict is missing or says NO_MISTAKE. The model only grades the explanation.
         if a.overlapping:
             mistake_id = claimed if claimed in a.overlapping else a.overlapping[0]
         else:

@@ -17,20 +17,18 @@ from core.mistakes.domain.repository import MistakeExerciseRepository, MistakeSe
 from core.mistakes.domain.services.grading import check_annotations, grade, locate_annotations
 from core.mistakes.domain.services.sources import source_of
 from core.mistakes.domain.values.mistake_source import TheorySource
+from core.shared.domain.claims import claim_timeout
 from core.shared.domain.clock import Clock
 from core.shared.domain.ids import SessionId
 from core.shared.llm.call_scope import call_scope
 
 GRADING_DEADLINE_S = 240.0  # the whole grading, every model call and retry included
-# A claim older than this belongs to a grading that died without releasing it. Strictly above GRADING_DEADLINE_S: a
-# live grading is cancelled by its deadline before its claim can go stale, so a takeover never runs (and pays) beside
-# the grading it replaces.
-GRADING_CLAIM_TIMEOUT_S = GRADING_DEADLINE_S + 60.0
+GRADING_CLAIM_TIMEOUT_S = claim_timeout(GRADING_DEADLINE_S)
 
 
 class AnnotationsGrading(BaseModel):
     grading: MistakeGrading
-    # Theory documents: the original item of the notes, shown with the result (it was the answer key until now).
+    # Theory documents: the original item of the notes, revealed with the grading.
     original: TheoryItem | None
 
 

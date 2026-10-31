@@ -101,7 +101,7 @@ async def test_concurrent_requests_share_one_generation(session_provider: SQLMod
         for i in range(3)
     ]
     provided = await asyncio.gather(*(p.get_or_generate(problem_source(), "facil") for p in providers))
-    assert len({p.exercise.id for p in provided}) == 1 and all(p.freshly_generated for p in provided)
+    assert len({p.exercise.id for p in provided}) == 1 and all(p.generated_now for p in provided)
     assert llm.calls(Stage.MISTAKES_GENERATION) == 1
     assert len(await repo.of_source("t2-4c", "facil")) == 1
     assert not generations.in_flight(("problema", "t2-4c", "facil"))

@@ -13,7 +13,7 @@ from core.mistakes.domain.exceptions import (
     MistakeSessionAlreadyGradedException,
     MistakeSessionNotFoundException,
 )
-from core.mistakes.domain.repository import MistakeExerciseRepository, MistakeSessionRepository, ReadyCounts
+from core.mistakes.domain.repository import Availability, MistakeExerciseRepository, MistakeSessionRepository
 from core.mistakes.domain.values.difficulty import Difficulty
 from core.mistakes.domain.values.mistake_exercise_id import MistakeExerciseId
 from core.shared.domain.ids import SessionId
@@ -86,13 +86,13 @@ class SQLModelMistakeExerciseRepository(MistakeExerciseRepository, BaseSQLModelR
         return [MistakeExercise.model_validate(r.data) for r in rows]
 
     @with_session
-    async def ready_counts(self, db: AsyncSession) -> ReadyCounts:
+    async def availability(self, db: AsyncSession) -> Availability:
         rows = await db.exec(
             select(MistakeExerciseRecord.source_id, MistakeExerciseRecord.difficulty, func.count()).group_by(
                 col(MistakeExerciseRecord.source_id), col(MistakeExerciseRecord.difficulty)
             )
         )
-        out: ReadyCounts = {}
+        out: Availability = {}
         for source_id, difficulty, n in rows:
             out.setdefault(source_id, {})[difficulty] = n
         return out

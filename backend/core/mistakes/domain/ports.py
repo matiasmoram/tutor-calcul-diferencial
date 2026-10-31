@@ -32,7 +32,7 @@ class AnnotationGrader(Protocol):
         ...
 
 
-class GeneratedMistakesSource(Protocol):
+class PregeneratedMistakeSource(Protocol):
     """Documents generated and verified offline (the JSON files in the repository): the seed of the database."""
 
     def load(self) -> list[MistakeExercise]: ...

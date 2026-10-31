@@ -15,16 +15,19 @@ class UnknownTheoryResultException(MistakesException):
 
     def __init__(self, item_id: str) -> None:
         super().__init__("Resultat dels apunts desconegut o sense demostració", 404)
+        self.item_id = item_id
 
 
 class MistakeExerciseNotFoundException(MistakesException):
     def __init__(self, exercise_id: str) -> None:
         super().__init__("Document desconegut", 404)
+        self.exercise_id = exercise_id
 
 
 class MistakeSessionNotFoundException(MistakesException):
     def __init__(self, session_id: str) -> None:
         super().__init__("Sessió desconeguda", 404)
+        self.session_id = session_id
 
 
 class InvalidAnnotationsException(MistakesException):

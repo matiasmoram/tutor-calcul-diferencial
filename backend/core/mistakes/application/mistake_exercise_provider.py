@@ -14,7 +14,7 @@ type MistakeGenerations = SingleFlight[tuple[str, str, Difficulty], MistakeExerc
 
 class ProvidedMistakeExercise(BaseModel):
     exercise: MistakeExercise
-    freshly_generated: bool
+    generated_now: bool
 
 
 class MistakeExerciseProvider:
@@ -35,23 +35,23 @@ class MistakeExerciseProvider:
         self._rng = rng or random.Random()
         self._generations: MistakeGenerations = generations if generations is not None else SingleFlight()
 
-    async def has_ready(self, source: MistakeSource, difficulty: Difficulty) -> bool:
+    async def is_ready(self, source: MistakeSource, difficulty: Difficulty) -> bool:
         """Whether `get_or_generate(..., fresh=False)` can answer without calling the model."""
         return bool(await self._exercises.of_source(source.id, difficulty))
 
     async def get_or_generate(
-        self, source: MistakeSource, difficulty: Difficulty, fresh: bool = False, avoid: str | None = None
+        self, source: MistakeSource, difficulty: Difficulty, fresh: bool = False, avoid_id: str | None = None
     ) -> ProvidedMistakeExercise:
-        """`fresh`: always generate a new one. `avoid`: a document id not to repeat when the pool has others
+        """`fresh`: always generate a new one. `avoid_id`: a document not to repeat when the pool has others
         ("another one" without generating)."""
         pool = [] if fresh else await self._exercises.of_source(source.id, difficulty)
-        if len(pool) > 1 and avoid:
-            pool = [e for e in pool if e.id != avoid] or pool
+        if len(pool) > 1 and avoid_id:
+            pool = [e for e in pool if e.id != avoid_id] or pool
         if pool:
-            return ProvidedMistakeExercise(exercise=self._rng.choice(pool), freshly_generated=False)
+            return ProvidedMistakeExercise(exercise=self._rng.choice(pool), generated_now=False)
         key = (source.kind, str(source.id), difficulty)
         exercise = await self._generations.run(key, lambda: self._generate(source, difficulty))
-        return ProvidedMistakeExercise(exercise=exercise, freshly_generated=True)
+        return ProvidedMistakeExercise(exercise=exercise, generated_now=True)
 
     async def _generate(self, source: MistakeSource, difficulty: Difficulty) -> MistakeExercise:
         exercise = await self._generator.generate(source, difficulty)

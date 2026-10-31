@@ -9,7 +9,7 @@ from core.mistakes.domain.values.mistake_exercise_id import MistakeExerciseId
 from core.shared.domain.ids import SessionId
 
 # {source id: {difficulty: number of ready documents}}, only non-zero counts.
-type ReadyCounts = dict[str, dict[str, int]]
+type Availability = dict[str, dict[str, int]]
 
 
 class MistakeExerciseRepository(ABC):
@@ -26,7 +26,7 @@ class MistakeExerciseRepository(ABC):
         """Ready documents of one source and difficulty, ordered by id."""
 
     @abstractmethod
-    async def ready_counts(self) -> ReadyCounts: ...
+    async def availability(self) -> Availability: ...
 
 
 class MistakeSessionRepository(ABC):

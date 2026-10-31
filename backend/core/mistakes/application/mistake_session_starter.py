@@ -19,14 +19,14 @@ class MistakeSessionStarterInput(BaseModel):
     theory_id: str | None = None
     difficulty: Difficulty = "normal"
     fresh: bool = False  # generate a new document even if some are ready
-    avoid: str | None = Field(default=None, max_length=40)  # document just seen: prefer another one
+    avoid_id: str | None = Field(default=None, max_length=40)  # document just seen: prefer another one
 
 
 class StartedMistakeSession(BaseModel):
     session: MistakeSession
     source: MistakeSource
     exercise: MistakeExercise
-    freshly_generated: bool
+    generated_now: bool
 
 
 class MistakeSessionStarter:
@@ -38,25 +38,25 @@ class MistakeSessionStarter:
         self._sessions = sessions
         self._clock = clock
 
-    async def needs_generation(self, data: MistakeSessionStarterInput) -> bool:
-        """Whether `start(data)` will call the model (the API checks the provider key first)."""
-        source = resolve_source(self._course, data.exercise_id, data.theory_id)
-        return data.fresh or not await self._provider.has_ready(source, data.difficulty)
+    async def needs_generation(self, request: MistakeSessionStarterInput) -> bool:
+        """Whether `start(request)` will call the model (the API checks the provider key first)."""
+        source = resolve_source(self._course, request.exercise_id, request.theory_id)
+        return request.fresh or not await self._provider.is_ready(source, request.difficulty)
 
-    async def start(self, data: MistakeSessionStarterInput) -> StartedMistakeSession:
-        source = resolve_source(self._course, data.exercise_id, data.theory_id)
+    async def start(self, request: MistakeSessionStarterInput) -> StartedMistakeSession:
+        source = resolve_source(self._course, request.exercise_id, request.theory_id)
         session_id = SessionId.generate()
         with call_scope(session_id):
-            provided = await self._provider.get_or_generate(source, data.difficulty, data.fresh, data.avoid)
+            provided = await self._provider.get_or_generate(source, request.difficulty, request.fresh, request.avoid_id)
         session = MistakeSession(
             id=session_id,
             source_kind=source.kind,
             source_id=source.id,
             exercise_id=provided.exercise.id,
-            difficulty=data.difficulty,
+            difficulty=request.difficulty,
             created_at=self._clock.now(),
         )
         await self._sessions.add(session)
         return StartedMistakeSession(
-            session=session, source=source, exercise=provided.exercise, freshly_generated=provided.freshly_generated
+            session=session, source=source, exercise=provided.exercise, generated_now=provided.generated_now
         )

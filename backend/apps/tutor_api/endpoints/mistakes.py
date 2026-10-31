@@ -103,7 +103,7 @@ async def theory_results(lister: AvailabilityLister = Depends(_get_lister)) -> T
 @router.get("/api/errades/disponibles")
 async def ready_documents(lister: AvailabilityLister = Depends(_get_lister)) -> dict[str, dict[str, int]]:
     """{source id: {difficulty: n}} of documents ready without calling the API."""
-    return await lister.ready_counts()
+    return await lister.availability()
 
 
 @router.post("/api/errades/sessions", response_model_exclude_unset=True, dependencies=[Depends(model_rate_limited)])
@@ -121,7 +121,7 @@ async def start_session(
         theory_id=body.teoria_id,
         difficulty=body.dificultat,
         fresh=body.nova and generation_allowed,
-        avoid=body.excepte,
+        avoid_id=body.excepte,
     )
     with domain_errors("La generació"):
         if await starter.needs_generation(data):
@@ -133,7 +133,7 @@ async def start_session(
         session_id=started.session.id,
         font=started.source.kind,
         solucio=MistakeDocumentResponse.from_entity(started.exercise),
-        generada_ara=started.freshly_generated,
+        generada_ara=started.generated_now,
     )
     if isinstance(started.source, ProblemSource):
         ex = started.source.exercise
@@ -153,8 +153,9 @@ async def grade_annotations(
     config: Config = Depends(get_config),
 ) -> dict[str, object]:
     ensure_api_key(config)
+    sid = _session_id(session_id)
     with domain_errors("La correcció"):
-        outcome = await grader.grade(_session_id(session_id), body.anotacions)
+        outcome = await grader.grade(sid, body.anotacions)
     result: dict[str, object] = outcome.grading.model_dump()
     if outcome.original is not None:
         result["original"] = TheoryItemResponse.from_entity(outcome.original).model_dump()
@@ -162,8 +163,7 @@ async def grade_annotations(
 
 
 def _session_id(raw: str) -> SessionId:
-    with domain_errors():
-        try:
-            return SessionId(raw)
-        except ValueError:
-            raise MistakeSessionNotFoundException(raw) from None
+    try:
+        return SessionId(raw)
+    except ValueError:
+        raise HTTPException(404, MistakeSessionNotFoundException(raw).message) from None

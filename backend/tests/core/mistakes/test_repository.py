@@ -54,7 +54,7 @@ async def test_documents_round_trip_and_are_replaced_by_id(session_provider: SQL
     edited = doc.model_copy(update={"fragments": [*doc.fragments[:-1], "Per tant el límit val $0$."]})
     await repo.save(edited)
     assert await repo.get(doc.id) == edited
-    assert await repo.ready_counts() == {"t2-4c": {"normal": 1}}
+    assert await repo.availability() == {"t2-4c": {"normal": 1}}
     with pytest.raises(MistakeExerciseNotFoundException):
         await repo.get(MistakeExerciseId("ffffffffffff"))
 
@@ -66,7 +66,7 @@ async def test_documents_of_a_source_are_ordered_by_id_and_counted(session_provi
     await repo.save(solution("dddddddddddd").model_copy(update={"source_id": "T3.21", "source_kind": "teoria"}))
     assert [d.id for d in await repo.of_source("t2-4c", "normal")] == ["aaaaaaaaaaaa", "bbbbbbbbbbbb"]
     assert await repo.of_source("t2-4c", "facil") == []
-    assert await repo.ready_counts() == {"t2-4c": {"normal": 2, "dificil": 1}, "T3.21": {"normal": 1}}
+    assert await repo.availability() == {"t2-4c": {"normal": 2, "dificil": 1}, "T3.21": {"normal": 1}}
 
 
 async def test_sessions_round_trip_with_their_grading(session_provider: SQLModelSessionProvider) -> None:

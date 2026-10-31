@@ -2,7 +2,7 @@
 
 import random
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 
 from apps.tutor_api.dependencies import (
     AppState,
@@ -144,8 +144,7 @@ async def start_quiz(
 @router.post("/api/afirmacions/sessions/{session_id}/pista/{statement_id}")
 async def reveal_hint(session_id: str, statement_id: str, hints: HintRevealer = Depends(_get_hints)) -> HintResponse:
     """Hints are served one at a time and recorded: a used hint lowers that statement's score."""
-    with domain_errors():
-        revealed = await hints.reveal(_session_id(session_id), statement_id)
+    revealed = await hints.reveal(_session_id(session_id), statement_id)
     return HintResponse(id=revealed.statement_id, pista=revealed.hint)
 
 
@@ -170,4 +169,4 @@ def _session_id(raw: str) -> SessionId:
     try:
         return SessionId(raw)
     except ValueError:
-        raise HTTPException(404, QuizSessionNotFoundException(raw).message) from None
+        raise QuizSessionNotFoundException(raw) from None

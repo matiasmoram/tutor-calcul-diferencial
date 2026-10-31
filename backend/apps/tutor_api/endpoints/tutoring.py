@@ -1,9 +1,8 @@
 """The Socratic tutor: sessions on an exercise, turns, notebook photos, and the professor's review."""
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 
 from apps.tutor_api.dependencies import (
-    domain_errors,
     ensure_api_key,
     get_config,
     get_course,
@@ -86,8 +85,7 @@ async def start_session(
     starter: SessionStarter = Depends(_get_starter),
     professor: bool = Depends(is_professor),
 ) -> SessionResponse:
-    with domain_errors():
-        started = await starter.start(_exercise_id(body.exercici_id))
+    started = await starter.start(_exercise_id(body.exercici_id))
     return SessionResponse.from_entity(started, professor)
 
 
@@ -101,8 +99,7 @@ async def send_message(
 ) -> TurnResponse:
     sid = _session_id(session_id)
     ensure_api_key(config)
-    with domain_errors():
-        result = await handler.handle(TurnHandlerInput(session_id=sid, text=body.text, origin=body.origen))
+    result = await handler.handle(TurnHandlerInput(session_id=sid, text=body.text, origin=body.origen))
     trace: dict[str, object] = (
         result.trace.model_dump(mode="json") if professor else {"fallback": result.trace.fallback}
     )
@@ -119,10 +116,7 @@ async def transcribe_photo(
 ) -> TranscriptionResponse:
     sid = _session_id(session_id)
     ensure_api_key(config)
-    with domain_errors():
-        result = await transcriber.transcribe(
-            PhotoTranscriberInput(session_id=sid, photo=Photo.from_data_url(body.imatge))
-        )
+    result = await transcriber.transcribe(PhotoTranscriberInput(session_id=sid, photo=Photo.from_data_url(body.imatge)))
     return TranscriptionResponse.from_entity(result)
 
 
@@ -135,8 +129,7 @@ async def professor_sessions(browser: SessionBrowser = Depends(_get_browser)) ->
 async def professor_session(
     session_id: str, browser: SessionBrowser = Depends(_get_browser)
 ) -> list[ProfessorTurnResponse]:
-    with domain_errors():
-        transcript = await browser.transcript(_session_id(session_id))
+    transcript = await browser.transcript(_session_id(session_id))
     return [ProfessorTurnResponse.from_entity(t, transcript.exercise_id) for t in transcript.turns]
 
 
@@ -144,11 +137,11 @@ def _session_id(raw: str) -> SessionId:
     try:
         return SessionId(raw)
     except ValueError:
-        raise HTTPException(status_code=404, detail=TutorSessionNotFoundException(raw).message) from None
+        raise TutorSessionNotFoundException(raw) from None
 
 
 def _exercise_id(raw: str) -> ExerciseId:
     try:
         return ExerciseId(raw)
     except ValueError:
-        raise HTTPException(status_code=404, detail=ExerciseNotFoundException(raw).message) from None
+        raise ExerciseNotFoundException(raw) from None

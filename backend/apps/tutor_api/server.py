@@ -33,6 +33,7 @@ from core.quizzes.domain.entities.quiz import Quiz
 from core.quizzes.domain.values.difficulty import Difficulty
 from core.quizzes.infra.json_quiz_files import JsonQuizFiles
 from core.quizzes.infra.sqlmodel_repository import SQLModelQuizRepository
+from core.shared.domain.exceptions import DomainException
 from core.shared.domain.single_flight import SingleFlight
 from core.shared.llm.client import LLMClient
 from core.shared.llm.infra.factory import make_llm_client
@@ -130,6 +131,12 @@ def _grouped[T: (MistakeExercise, Quiz)](items: list[T]) -> dict[tuple[str, Diff
     return out
 
 
+def _domain_error(request: Request, exc: Exception) -> JSONResponse:
+    """A domain exception's `error_code` is its HTTP status."""
+    assert isinstance(exc, DomainException)
+    return JSONResponse({"detail": exc.message}, status_code=exc.error_code)
+
+
 def _validation_error(request: Request, exc: Exception) -> JSONResponse:
     """Location and message only: FastAPI's default 422 echoes the invalid input, and a lone surrogate in it cannot
     be encoded (a 500 instead of the 422). A surrogate in a dict key is replaced, so `loc` is always printable."""
@@ -199,6 +206,7 @@ def create_app(config: Config | None = None, llm: LLMClient | None = None) -> Fa
         redoc_url="/redoc" if docs else None,
         openapi_url="/openapi.json" if docs else None,
     )
+    app.add_exception_handler(DomainException, _domain_error)
     app.add_exception_handler(RequestValidationError, _validation_error)
     app.add_middleware(BodySizeLimit, default=MAX_BODY, by_path=[(PHOTO_ROUTE, MAX_PHOTO_BODY)])
     for module in (

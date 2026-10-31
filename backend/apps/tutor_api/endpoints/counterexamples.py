@@ -5,7 +5,6 @@ from fastapi import APIRouter, Depends
 
 from apps.tutor_api.dependencies import (
     AppState,
-    domain_errors,
     get_counterexamples,
     get_course,
     get_state,
@@ -47,8 +46,7 @@ async def get_spec(
     course: Course = Depends(get_course),
     professor: bool = Depends(is_professor),
 ) -> SpecResponse:
-    with domain_errors():
-        return SpecResponse.from_entity(catalog.spec(spec_id_of(spec_id)), catalog, course, with_example=professor)
+    return SpecResponse.from_entity(catalog.spec(spec_id_of(spec_id)), catalog, course, with_example=professor)
 
 
 @router.post("/api/contraexemples/{spec_id}/comprova", dependencies=[Depends(rate_limited)])
@@ -60,8 +58,7 @@ async def check_submission(
     professor: bool = Depends(is_professor),
 ) -> SubmissionResponse:
     """Rate limited like the model calls: each submission keeps sympy workers busy for up to the pool's deadline."""
-    with domain_errors():
-        result = await grader.grade(
-            SubmissionGraderInput(spec_id=spec_id_of(spec_id), submission=body.to_domain(), reveal_example=professor)
-        )
+    result = await grader.grade(
+        SubmissionGraderInput(spec_id=spec_id_of(spec_id), submission=body.to_domain(), reveal_example=professor)
+    )
     return SubmissionResponse.from_entity(result, course)

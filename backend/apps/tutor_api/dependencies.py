@@ -120,10 +120,12 @@ def ensure_api_key(config: Config) -> None:
 
 
 @contextmanager
-def domain_errors(action: str | None = None) -> Iterator[None]:
-    """Translates a domain exception into its HTTP status. `action` prefixes model failures ("La diagnosi")."""
+def domain_errors(action: str) -> Iterator[None]:
+    """Names the action a model failure (a 502 domain exception) interrupted: "La generació ha fallat: ...". Any
+    other domain exception goes on to the app's handler unchanged."""
     try:
         yield
     except DomainException as exc:
-        detail = f"{action} ha fallat: {exc.message}" if action and exc.error_code == 502 else exc.message
-        raise HTTPException(status_code=exc.error_code, detail=detail) from exc
+        if exc.error_code != 502:
+            raise
+        raise HTTPException(status_code=502, detail=f"{action} ha fallat: {exc.message}") from exc

@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Index, func, or_, update
+from sqlalchemy.engine import CursorResult
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import Field, SQLModel, col, select
 from sqlmodel.ext.asyncio.session import AsyncSession
@@ -56,8 +57,8 @@ class MistakeGradingRecord(SQLModel, table=True):
 
 class SQLModelMistakeExerciseRepository(MistakeExerciseRepository, BaseSQLModelRepository):
     @with_session
-    async def save(self, session: AsyncSession, exercise: MistakeExercise) -> None:
-        await session.merge(
+    async def save(self, db: AsyncSession, exercise: MistakeExercise) -> None:
+        await db.merge(
             MistakeExerciseRecord(
                 id=exercise.id,
                 source_kind=exercise.source_kind,
@@ -69,15 +70,15 @@ class SQLModelMistakeExerciseRepository(MistakeExerciseRepository, BaseSQLModelR
         )
 
     @with_session
-    async def get(self, session: AsyncSession, exercise_id: MistakeExerciseId) -> MistakeExercise:
-        record = await session.get(MistakeExerciseRecord, exercise_id)
+    async def get(self, db: AsyncSession, exercise_id: MistakeExerciseId) -> MistakeExercise:
+        record = await db.get(MistakeExerciseRecord, exercise_id)
         if record is None:
             raise MistakeExerciseNotFoundException(exercise_id)
         return MistakeExercise.model_validate(record.data)
 
     @with_session
-    async def of_source(self, session: AsyncSession, source_id: str, difficulty: Difficulty) -> list[MistakeExercise]:
-        rows = await session.exec(
+    async def of_source(self, db: AsyncSession, source_id: str, difficulty: Difficulty) -> list[MistakeExercise]:
+        rows = await db.exec(
             select(MistakeExerciseRecord)
             .where(MistakeExerciseRecord.source_id == source_id, MistakeExerciseRecord.difficulty == difficulty)
             .order_by(col(MistakeExerciseRecord.id))
@@ -85,8 +86,8 @@ class SQLModelMistakeExerciseRepository(MistakeExerciseRepository, BaseSQLModelR
         return [MistakeExercise.model_validate(r.data) for r in rows]
 
     @with_session
-    async def ready_counts(self, session: AsyncSession) -> ReadyCounts:
-        rows = await session.exec(
+    async def ready_counts(self, db: AsyncSession) -> ReadyCounts:
+        rows = await db.exec(
             select(MistakeExerciseRecord.source_id, MistakeExerciseRecord.difficulty, func.count()).group_by(
                 col(MistakeExerciseRecord.source_id), col(MistakeExerciseRecord.difficulty)
             )
@@ -99,25 +100,25 @@ class SQLModelMistakeExerciseRepository(MistakeExerciseRepository, BaseSQLModelR
 
 class SQLModelMistakeSessionRepository(MistakeSessionRepository, BaseSQLModelRepository):
     @with_session
-    async def add(self, session: AsyncSession, mistake_session: MistakeSession) -> None:
-        session.add(
+    async def add(self, db: AsyncSession, session: MistakeSession) -> None:
+        db.add(
             MistakeSessionRecord(
-                id=mistake_session.id,
-                source_kind=mistake_session.source_kind,
-                source_id=mistake_session.source_id,
-                exercise_id=mistake_session.exercise_id,
-                difficulty=mistake_session.difficulty,
-                created_at=mistake_session.created_at,
+                id=session.id,
+                source_kind=session.source_kind,
+                source_id=session.source_id,
+                exercise_id=session.exercise_id,
+                difficulty=session.difficulty,
+                created_at=session.created_at,
             )
         )
 
     @with_session
-    async def get(self, session: AsyncSession, session_id: SessionId) -> MistakeSession:
-        record = await session.get(MistakeSessionRecord, session_id)
+    async def get(self, db: AsyncSession, session_id: SessionId) -> MistakeSession:
+        record = await db.get(MistakeSessionRecord, session_id)
         if record is None:
             raise MistakeSessionNotFoundException(session_id)
         grading = (
-            await session.exec(select(MistakeGradingRecord).where(MistakeGradingRecord.session_id == session_id))
+            await db.exec(select(MistakeGradingRecord).where(MistakeGradingRecord.session_id == session_id))
         ).first()
         return MistakeSession.model_validate(
             record.model_dump(exclude={"grading_started_at"})
@@ -125,11 +126,9 @@ class SQLModelMistakeSessionRepository(MistakeSessionRepository, BaseSQLModelRep
         )
 
     @with_session
-    async def claim_grading(
-        self, session: AsyncSession, session_id: SessionId, now: float, stale_before: float
-    ) -> bool:
+    async def claim_grading(self, db: AsyncSession, session_id: SessionId, now: float, stale_before: float) -> bool:
         graded = select(MistakeGradingRecord.id).where(MistakeGradingRecord.session_id == session_id).exists()
-        result = await session.exec(
+        result = await db.exec(
             update(MistakeSessionRecord)  # type: ignore[call-overload]
             .where(
                 col(MistakeSessionRecord.id) == session_id,
@@ -141,11 +140,11 @@ class SQLModelMistakeSessionRepository(MistakeSessionRepository, BaseSQLModelRep
             )
             .values(grading_started_at=now)
         )
-        return result.rowcount == 1
+        return isinstance(result, CursorResult) and result.rowcount == 1
 
     @with_session
-    async def release_grading(self, session: AsyncSession, session_id: SessionId, claimed_at: float) -> None:
-        await session.exec(
+    async def release_grading(self, db: AsyncSession, session_id: SessionId, claimed_at: float) -> None:
+        await db.exec(
             update(MistakeSessionRecord)  # type: ignore[call-overload]
             .where(
                 col(MistakeSessionRecord.id) == session_id, col(MistakeSessionRecord.grading_started_at) == claimed_at
@@ -156,13 +155,13 @@ class SQLModelMistakeSessionRepository(MistakeSessionRepository, BaseSQLModelRep
     @with_session
     async def save_grading(
         self,
-        session: AsyncSession,
+        db: AsyncSession,
         session_id: SessionId,
         annotations: list[Annotation],
         grading: MistakeGrading,
         now: float,
     ) -> None:
-        session.add(
+        db.add(
             MistakeGradingRecord(
                 session_id=session_id,
                 created_at=now,
@@ -171,7 +170,7 @@ class SQLModelMistakeSessionRepository(MistakeSessionRepository, BaseSQLModelRep
             )
         )
         try:
-            await session.flush()
+            await db.flush()
         except IntegrityError as e:
             # The one constraint a grading of an existing session can break: session_id is unique, so another
             # grading of it was stored first. Raising rolls this transaction back.

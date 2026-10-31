@@ -31,7 +31,7 @@ class MistakeExerciseRepository(ABC):
 
 class MistakeSessionRepository(ABC):
     @abstractmethod
-    async def add(self, mistake_session: MistakeSession) -> None: ...
+    async def add(self, session: MistakeSession) -> None: ...
 
     @abstractmethod
     async def get(self, session_id: SessionId) -> MistakeSession:

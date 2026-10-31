@@ -36,7 +36,9 @@ from core.mistakes.application.mistake_exercise_provider import MistakeExerciseP
 from core.mistakes.application.mistake_session_starter import MistakeSessionStarter, MistakeSessionStarterInput
 from core.mistakes.domain.exceptions import MistakeSessionNotFoundException
 from core.mistakes.domain.values.mistake_source import ProblemSource
-from core.mistakes.infra.llm_adapters import LLMAnnotationGrader, LLMMistakeGenerator, LLMMistakeVerifier
+from core.mistakes.infra.llm_annotation_grader import LLMAnnotationGrader
+from core.mistakes.infra.llm_mistake_generator import LLMMistakeGenerator
+from core.mistakes.infra.llm_mistake_verifier import LLMMistakeVerifier
 from core.mistakes.infra.sqlmodel_repository import SQLModelMistakeExerciseRepository, SQLModelMistakeSessionRepository
 from core.shared.domain.clock import SystemClock
 from core.shared.domain.ids import SessionId

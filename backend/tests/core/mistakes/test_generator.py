@@ -8,7 +8,8 @@ from core.mistakes.application.mistake_exercise_generator import MistakeExercise
 from core.mistakes.application.mistake_exercise_provider import MistakeExerciseProvider, MistakeGenerations
 from core.mistakes.domain.exceptions import MistakeGenerationFailedException, MistakeGenerationTimeoutException
 from core.mistakes.infra.json_file_source import JsonFileMistakeSource
-from core.mistakes.infra.llm_adapters import LLMMistakeGenerator, LLMMistakeVerifier
+from core.mistakes.infra.llm_mistake_generator import LLMMistakeGenerator
+from core.mistakes.infra.llm_mistake_verifier import LLMMistakeVerifier
 from core.mistakes.infra.llm_schemas import generation_schema
 from core.mistakes.infra.sqlmodel_repository import SQLModelMistakeExerciseRepository
 from core.shared.domain.single_flight import SingleFlight

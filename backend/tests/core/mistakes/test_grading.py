@@ -10,7 +10,7 @@ from core.mistakes.domain.exceptions import InvalidAnnotationsException
 from core.mistakes.domain.services.grading import check_annotations, grade, locate_annotations
 from core.mistakes.domain.services.locate import selectable_span
 from core.mistakes.domain.values.mistake_source import MistakeSource
-from core.mistakes.infra.llm_adapters import LLMAnnotationGrader
+from core.mistakes.infra.llm_annotation_grader import LLMAnnotationGrader
 from core.shared.llm.client import LLMClient, Stage
 from settings import BACKEND_DIR
 from tests.core.mistakes.builders import problem_source, solution

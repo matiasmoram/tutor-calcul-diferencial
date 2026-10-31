@@ -5,7 +5,8 @@ from core.mistakes.domain.entities.mistake_exercise import MistakeExercise, Veri
 from core.mistakes.domain.services.generation_checks import validate_generation
 from core.mistakes.domain.values.llm_outputs import GenerationDraft
 from core.mistakes.domain.values.mistake_source import ProblemSource, TheorySource
-from core.mistakes.infra.llm_adapters import LLMMistakeGenerator, LLMMistakeVerifier
+from core.mistakes.infra.llm_mistake_generator import LLMMistakeGenerator
+from core.mistakes.infra.llm_mistake_verifier import LLMMistakeVerifier
 from core.shared.domain.clock import Clock
 from core.shared.llm.client import JsonObject, LLMClient
 from tests.fixtures.course import authored_course

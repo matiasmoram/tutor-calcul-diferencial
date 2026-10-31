@@ -22,7 +22,8 @@ def test_a_session_shows_background_theory_and_the_outline_only_to_professors(
     student = api.post("/api/sessions", json={"exercici_id": "t2-4c"}).json()
     assert "passos" not in student and "resultat" not in student and "teoria" in student
     assert api.post("/api/sessions", json={"exercici_id": "t9-9"}).status_code == 404
-    assert api.post("/api/sessions", json={"exercici_id": "../x"}).status_code == 404
+    malformed = api.post("/api/sessions", json={"exercici_id": "../x"})
+    assert malformed.status_code == 404 and malformed.json()["detail"] == "Exercici desconegut"
 
 
 def test_a_turn_is_stored_and_logged_and_students_get_no_trace(
@@ -57,7 +58,8 @@ def test_a_failed_diagnosis_leaves_the_session_unchanged(api: TestClient, script
 
 
 def test_unknown_sessions(api: TestClient) -> None:
-    assert api.post("/api/sessions/nope/missatges", json={"text": "x"}).status_code == 404
+    malformed = api.post("/api/sessions/nope/missatges", json={"text": "x"})
+    assert malformed.status_code == 404 and malformed.json()["detail"] == "Sessió desconeguda"
     assert api.post(f"/api/sessions/{'0' * 32}/missatges", json={"text": "x"}).status_code == 404
     assert api.get(f"/api/professor/sessions/{'0' * 32}").status_code == 404
 

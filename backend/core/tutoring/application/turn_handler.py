@@ -7,7 +7,7 @@ from core.course.domain.entities.course import Course
 from core.course.domain.entities.exercise import Exercise
 from core.course.domain.entities.theory_item import TheoryItem
 from core.shared.domain.claims import claim_timeout
-from core.shared.domain.clock import Clock, SystemClock
+from core.shared.domain.clock import Clock
 from core.shared.domain.ids import SessionId, TheoryItemId
 from core.shared.llm.call_scope import call_scope
 from core.tutoring.domain.entities.tutor_session import TutorSession
@@ -38,7 +38,7 @@ GUARD_DEADLINE_S = 20.0
 GUARD_TIMEOUT_PROBLEM = "comprovació CAS: temps esgotat"
 
 
-class TurnInput(BaseModel):
+class TurnHandlerInput(BaseModel):
     session_id: SessionId
     text: str
     origin: TurnOrigin = "text"
@@ -68,16 +68,16 @@ class TurnHandler:
         diagnoser: Diagnoser,
         writer: ReplyWriter,
         judge: ReplyJudge,
-        clock: Clock | None = None,
+        clock: Clock,
     ) -> None:
         self._course = course
         self._sessions = sessions
         self._diagnoser = diagnoser
         self._writer = writer
         self._judge = judge
-        self._clock = clock or SystemClock()
+        self._clock = clock
 
-    async def handle(self, request: TurnInput) -> TurnResult:
+    async def handle(self, request: TurnHandlerInput) -> TurnResult:
         claimed_at = self._clock.now()
         # A second message while one is being answered is refused before any model is called (two tabs, a retry).
         # Claimed before the session is read, so the turn runs on the version no other turn can change meanwhile.
@@ -95,7 +95,7 @@ class TurnHandler:
         finally:
             await self._sessions.release_turn(request.session_id, claimed_at)
 
-    async def _handle(self, session: TutorSession, request: TurnInput, claimed_at: float) -> TurnResult:
+    async def _handle(self, session: TutorSession, request: TurnHandlerInput, claimed_at: float) -> TurnResult:
         ex = self._course.exercise(session.exercise_id)
         text = request.text.strip()
         with call_scope(session.id, session.next_turn):

@@ -5,7 +5,7 @@ import pytest
 from core.shared.domain.ids import ExerciseId, SessionId
 from core.shared.llm.client import Stage
 from core.shared.storage.session_provider import SQLModelSessionProvider
-from core.tutoring.application.turn_handler import TurnInput
+from core.tutoring.application.turn_handler import TurnHandlerInput
 from core.tutoring.domain.entities.tutor_session import TutorSession
 from core.tutoring.domain.exceptions import ConcurrentTurnException, TutorSessionNotFoundException
 from core.tutoring.infra.sqlmodel_repository import SQLModelTutorSessionRepository
@@ -38,7 +38,7 @@ async def test_session_turns_and_professor_flags(session_provider: SQLModelSessi
     t = tutoring(_stuck_student_llm(2), session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
     for text in ("no sé", "res"):
-        await t.turns.handle(TurnInput(session_id=sid, text=text))
+        await t.turns.handle(TurnHandlerInput(session_id=sid, text=text))
     await t.starter.start(EX4C.id)  # a session without turns is not listed
 
     stored = await t.sessions.get(sid)
@@ -65,7 +65,7 @@ async def test_saving_a_turn_on_a_stale_version_is_a_conflict(session_provider: 
     t = tutoring(_stuck_student_llm(1), session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
     stale = await t.sessions.get(sid)
-    await t.turns.handle(TurnInput(session_id=sid, text="no sé"))
+    await t.turns.handle(TurnHandlerInput(session_id=sid, text="no sé"))
     [turn] = await t.sessions.turns(sid)
 
     assert await t.sessions.claim_turn(sid, now=5.0, stale_before=0.0)
@@ -84,7 +84,7 @@ async def test_a_turn_claim_is_released_or_used_only_by_its_owner(session_provid
     """A turn whose claim went stale and was taken over can neither drop the new claim nor store its turn."""
     t = tutoring(_stuck_student_llm(1), session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
-    await t.turns.handle(TurnInput(session_id=sid, text="no sé"))
+    await t.turns.handle(TurnHandlerInput(session_id=sid, text="no sé"))
     [turn] = await t.sessions.turns(sid)
     current = await t.sessions.get(sid)
     current.record_turn("tard", "...", current.state, now=1.0)

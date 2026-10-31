@@ -1,11 +1,10 @@
-from typing import Literal
-
 from pydantic import BaseModel, Field
 
 from apps.tutor_api.schemas.course import ExerciseResponse, SheetSummaryResponse, TheoryItemResponse
 from apps.tutor_api.schemas.student_text import StudentText
 from core.tutoring.application.session_starter import StartedSession
 from core.tutoring.domain.entities.tutor_turn import TutorTurn
+from core.tutoring.domain.values.chat_message import TurnOrigin
 
 
 class NewSessionRequest(BaseModel):
@@ -14,7 +13,7 @@ class NewSessionRequest(BaseModel):
 
 class MessageRequest(BaseModel):
     text: StudentText = Field(min_length=1, max_length=4000)
-    origen: Literal["text", "foto"] = "text"
+    origen: TurnOrigin = "text"
 
 
 class PhotoRequest(BaseModel):
@@ -48,7 +47,7 @@ class SessionResponse(BaseModel):
     teoria_fitxa: list[SheetTheoryResponse] | None = None
 
     @classmethod
-    def from_started(cls, started: StartedSession, professor: bool) -> "SessionResponse":
+    def from_entity(cls, started: StartedSession, professor: bool) -> "SessionResponse":
         out = cls(
             session_id=started.session.id,
             exercici=ExerciseResponse.from_entity(started.exercise),

@@ -5,7 +5,7 @@ from sqlmodel import select
 
 from core.shared.llm.client import Image, Stage
 from core.shared.storage.session_provider import SQLModelSessionProvider
-from core.tutoring.application.photo_transcriber import TranscriptionInput
+from core.tutoring.application.photo_transcriber import PhotoTranscriberInput
 from core.tutoring.domain.exceptions import InvalidPhotoException
 from core.tutoring.domain.values.photo import Photo
 from core.tutoring.infra.sqlmodel_repository import TranscriptionRecord
@@ -53,7 +53,7 @@ async def test_transcription_sends_the_photo_and_keeps_the_student_text_verbatim
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
     photo = Photo(b"PNG", "image/png")
-    out = await t.transcriber.transcribe(TranscriptionInput(session_id=sid, photo=photo))
+    out = await t.transcriber.transcribe(PhotoTranscriberInput(session_id=sid, photo=photo))
     assert out.transcription.text == "$y=kx$ dona 0, per tant el límit és 0"
     assert out.transcription.model_dump()["llegibilitat"] == "bona" and out.call.stage == "transcription"
     [request] = llm.requests[Stage.TRANSCRIPTION]

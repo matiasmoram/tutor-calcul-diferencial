@@ -122,8 +122,8 @@ class SQLModelTutorSessionRepository(TutorSessionRepository, BaseSQLModelReposit
         )
 
     @with_session
-    async def get(self, session: AsyncSession, session_id: SessionId) -> TutorSession:
-        record = await session.get(TutorSessionRecord, session_id)
+    async def get(self, db: AsyncSession, session_id: SessionId) -> TutorSession:
+        record = await db.get(TutorSessionRecord, session_id)
         if record is None:
             raise TutorSessionNotFoundException(session_id)
         return _session(record)
@@ -180,8 +180,8 @@ class SQLModelTutorSessionRepository(TutorSessionRepository, BaseSQLModelReposit
         return session.model_copy(update={"version": session.version + 1})
 
     @with_session
-    async def turns(self, session: AsyncSession, session_id: SessionId) -> list[TutorTurn]:
-        rows = await session.exec(
+    async def turns(self, db: AsyncSession, session_id: SessionId) -> list[TutorTurn]:
+        rows = await db.exec(
             select(TutorTurnRecord)
             .where(TutorTurnRecord.session_id == session_id)
             .order_by(col(TutorTurnRecord.number), col(TutorTurnRecord.id))
@@ -189,15 +189,13 @@ class SQLModelTutorSessionRepository(TutorSessionRepository, BaseSQLModelReposit
         return [_turn(r) for r in rows]
 
     @with_session
-    async def recent_with_turns(self, session: AsyncSession, limit: int) -> list[tuple[TutorSession, list[TutorTurn]]]:
+    async def recent_with_turns(self, db: AsyncSession, limit: int) -> list[tuple[TutorSession, list[TutorTurn]]]:
         sessions = (
-            await session.exec(
-                select(TutorSessionRecord).order_by(col(TutorSessionRecord.updated_at).desc()).limit(limit)
-            )
+            await db.exec(select(TutorSessionRecord).order_by(col(TutorSessionRecord.updated_at).desc()).limit(limit))
         ).all()
         by_session: dict[str, list[TutorTurn]] = {s.id: [] for s in sessions}
         if by_session:
-            rows = await session.exec(
+            rows = await db.exec(
                 select(TutorTurnRecord)
                 .where(col(TutorTurnRecord.session_id).in_(list(by_session)))
                 .order_by(col(TutorTurnRecord.number), col(TutorTurnRecord.id))
@@ -208,9 +206,9 @@ class SQLModelTutorSessionRepository(TutorSessionRepository, BaseSQLModelReposit
 
     @with_session
     async def add_transcription(
-        self, session: AsyncSession, session_id: SessionId, transcription: Transcription, created_at: float
+        self, db: AsyncSession, session_id: SessionId, transcription: Transcription, created_at: float
     ) -> None:
-        session.add(
+        db.add(
             TranscriptionRecord(
                 session_id=session_id, created_at=created_at, result=transcription.model_dump(mode="json")
             )

@@ -1,6 +1,6 @@
 """The Socratic tutor: sessions on an exercise, turns, notebook photos, and the professor's review."""
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 
 from apps.tutor_api.dependencies import (
     domain_errors,
@@ -25,13 +25,14 @@ from apps.tutor_api.schemas.tutoring import (
 )
 from core.course.domain.entities.course import Course
 from core.course.domain.exceptions import ExerciseNotFoundException
+from core.shared.domain.clock import SystemClock
 from core.shared.domain.ids import ExerciseId, SessionId
 from core.shared.llm.client import LLMClient
 from core.shared.storage.session_provider import SQLModelSessionProvider
-from core.tutoring.application.photo_transcriber import PhotoTranscriber, TranscriptionInput
+from core.tutoring.application.photo_transcriber import PhotoTranscriber, PhotoTranscriberInput
 from core.tutoring.application.session_browser import SessionBrowser
 from core.tutoring.application.session_starter import SessionStarter
-from core.tutoring.application.turn_handler import TurnHandler, TurnInput
+from core.tutoring.application.turn_handler import TurnHandler, TurnHandlerInput
 from core.tutoring.domain.exceptions import TutorSessionNotFoundException
 from core.tutoring.domain.values.photo import Photo
 from core.tutoring.infra.llm_diagnoser import LLMDiagnoser
@@ -47,7 +48,7 @@ router = APIRouter()
 def _get_starter(
     course: Course = Depends(get_course), sessions: SQLModelSessionProvider = Depends(get_session_provider)
 ) -> SessionStarter:
-    return SessionStarter(course, SQLModelTutorSessionRepository(sessions))
+    return SessionStarter(course, SQLModelTutorSessionRepository(sessions), SystemClock())
 
 
 def _get_turn_handler(
@@ -61,6 +62,7 @@ def _get_turn_handler(
         LLMDiagnoser(llm, course),
         LLMReplyWriter(llm),
         LLMReplyJudge(llm, course),
+        SystemClock(),
     )
 
 
@@ -69,7 +71,7 @@ def _get_transcriber(
     sessions: SQLModelSessionProvider = Depends(get_session_provider),
     llm: LLMClient = Depends(get_llm),
 ) -> PhotoTranscriber:
-    return PhotoTranscriber(course, SQLModelTutorSessionRepository(sessions), LLMTranscriber(llm))
+    return PhotoTranscriber(course, SQLModelTutorSessionRepository(sessions), LLMTranscriber(llm), SystemClock())
 
 
 def _get_browser(sessions: SQLModelSessionProvider = Depends(get_session_provider)) -> SessionBrowser:
@@ -84,7 +86,7 @@ async def start_session(
 ) -> SessionResponse:
     with domain_errors():
         started = await starter.start(_exercise_id(body.exercici_id))
-    return SessionResponse.from_started(started, professor)
+    return SessionResponse.from_entity(started, professor)
 
 
 @router.post("/api/sessions/{session_id}/missatges", dependencies=[Depends(model_rate_limited)])
@@ -98,7 +100,7 @@ async def send_message(
     sid = _session_id(session_id)
     ensure_api_key(config)
     with domain_errors():
-        result = await handler.handle(TurnInput(session_id=sid, text=body.text, origin=body.origen))
+        result = await handler.handle(TurnHandlerInput(session_id=sid, text=body.text, origin=body.origen))
     trace: dict[str, object] = (
         result.trace.model_dump(mode="json") if professor else {"fallback": result.trace.fallback}
     )
@@ -117,7 +119,7 @@ async def transcribe_photo(
     ensure_api_key(config)
     with domain_errors():
         result = await transcriber.transcribe(
-            TranscriptionInput(session_id=sid, photo=Photo.from_data_url(body.imatge))
+            PhotoTranscriberInput(session_id=sid, photo=Photo.from_data_url(body.imatge))
         )
     out: dict[str, object] = result.transcription.model_dump()
     out["crida"] = result.call.model_dump()
@@ -142,13 +144,11 @@ def _session_id(raw: str) -> SessionId:
     try:
         return SessionId(raw)
     except ValueError:
-        with domain_errors():
-            raise TutorSessionNotFoundException(raw) from None
+        raise HTTPException(status_code=404, detail=TutorSessionNotFoundException(raw).message) from None
 
 
 def _exercise_id(raw: str) -> ExerciseId:
     try:
         return ExerciseId(raw)
     except ValueError:
-        with domain_errors():
-            raise ExerciseNotFoundException(raw) from None
+        raise HTTPException(status_code=404, detail=ExerciseNotFoundException(raw).message) from None

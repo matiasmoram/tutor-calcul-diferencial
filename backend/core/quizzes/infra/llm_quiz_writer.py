@@ -1,5 +1,5 @@
-from core.quizzes.domain.sources import QuizSource
 from core.quizzes.domain.values.drafts import BatchRequest, StatementDraft, WrittenBatch
+from core.quizzes.domain.values.quiz_source import QuizSource
 from core.quizzes.infra.llm_outputs import objects, parse_all
 from core.quizzes.infra.llm_schemas import generation_schema
 from core.quizzes.infra.prompts import GENERATION_SYSTEM, generation_request, source_context

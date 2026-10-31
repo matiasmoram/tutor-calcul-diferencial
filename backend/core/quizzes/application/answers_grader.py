@@ -11,9 +11,10 @@ from core.quizzes.domain.exceptions import ConcurrentQuizGradingException, QuizG
 from core.quizzes.domain.ports import AnswerGrader, CheckEvaluator, ClaimExtractor
 from core.quizzes.domain.repository import QuizRepository, QuizSessionRepository
 from core.quizzes.domain.services.scoring import MAX_STUDENT_CHECKS, grade_quiz, quoted_claims
-from core.quizzes.domain.sources import QuizSource, quiz_source
+from core.quizzes.domain.services.sources import quiz_source
 from core.quizzes.domain.values.grading_claim import GRADING_CLAIM_TIMEOUT_S, GRADING_DEADLINE_S
 from core.quizzes.domain.values.grading_inputs import AnsweredStatement, GraderEvaluation, StudentClaims
+from core.quizzes.domain.values.quiz_source import QuizSource
 from core.shared.domain.clock import Clock
 from core.shared.domain.exceptions import DomainException
 from core.shared.domain.model_usage import ModelUsage

@@ -1,7 +1,7 @@
 from collections.abc import Sequence
 
-from core.quizzes.domain.sources import QuizSource
 from core.quizzes.domain.values.drafts import StatementDraft
+from core.quizzes.domain.values.quiz_source import QuizSource
 from core.quizzes.domain.values.verification import AuditReview, AuditReviews
 from core.quizzes.infra.llm_outputs import objects, parse_all
 from core.quizzes.infra.llm_schemas import audit_schema

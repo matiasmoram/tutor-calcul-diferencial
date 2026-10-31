@@ -4,10 +4,10 @@ from collections.abc import Mapping, Sequence
 
 from core.course.domain.entities.theory_item import TheoryItem
 from core.quizzes.domain.entities.quiz import RejectedStatement
-from core.quizzes.domain.sources import QuizSource
 from core.quizzes.domain.values.difficulty import Difficulty
 from core.quizzes.domain.values.drafts import BatchRequest, StatementDraft
 from core.quizzes.domain.values.grading_inputs import AnsweredStatement
+from core.quizzes.domain.values.quiz_source import QuizSource
 from core.shared.math.sympy_checks import CHECK_SYNTAX
 
 GENERATION_SYSTEM = f"""Ets un professor de Càlcul Diferencial (FME-UPC, primer curs de grau) que prepara un qüestionari "Cert o fals" en català.

@@ -1,31 +1,13 @@
 import re
 
-from pydantic import BaseModel, ConfigDict
-
 from core.course.domain.entities.course import Course
 from core.course.domain.entities.theory_item import TheoryItem
 from core.quizzes.domain.exceptions import UnknownQuizSourceException
-from core.shared.domain.ids import TheoryItemId
+from core.quizzes.domain.values.quiz_source import QuizSource
 
 # Results that can anchor a focused quiz.
 FOCUS_KINDS: tuple[str, ...] = ("teorema", "proposicio", "lema", "corollari", "definicio")
 _TOPIC_SOURCE = re.compile(r"tema-([1-6])")
-
-
-class QuizSource(BaseModel):
-    """A whole topic, or one result of the notes as the focus (then most statements turn around it)."""
-
-    model_config = ConfigDict(frozen=True)
-
-    topic: int
-    topic_title: str
-    notes: tuple[TheoryItem, ...]  # every item of the topic, in the order of the notes
-    allowed_refs: tuple[TheoryItemId, ...]  # numbered items the solutions may cite: this topic and earlier ones
-    focus: TheoryItem | None = None
-
-    @property
-    def id(self) -> str:
-        return self.focus.id if self.focus else f"tema-{self.topic}"
 
 
 def focus_items(course: Course) -> list[TheoryItem]:

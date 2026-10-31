@@ -34,7 +34,7 @@ from core.quizzes.application.quiz_provider import QuizProvider
 from core.quizzes.application.quiz_session_starter import QuizSessionStarter, QuizSessionStarterInput
 from core.quizzes.application.source_lister import SourceLister
 from core.quizzes.domain.exceptions import QuizSessionNotFoundException
-from core.quizzes.domain.sources import quiz_source
+from core.quizzes.domain.services.sources import quiz_source
 from core.quizzes.infra.llm_answer_grader import LLMAnswerGrader
 from core.quizzes.infra.llm_blind_solver import LLMBlindSolver
 from core.quizzes.infra.llm_claim_extractor import LLMClaimExtractor

@@ -25,9 +25,9 @@ from core.quizzes.domain.services.validation import (
     validate_draft,
     with_results,
 )
-from core.quizzes.domain.sources import QuizSource
 from core.quizzes.domain.values.difficulty import QUIZ_SIZES, Difficulty
 from core.quizzes.domain.values.drafts import BatchRequest, StatementDraft
+from core.quizzes.domain.values.quiz_source import QuizSource
 from core.shared.domain.clock import Clock
 from core.shared.domain.ids import TheoryItemId
 from core.shared.domain.model_usage import ModelUsage

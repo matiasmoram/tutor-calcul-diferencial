@@ -12,8 +12,9 @@ from core.quizzes.application.quiz_session_starter import QuizSessionStarter, Qu
 from core.quizzes.domain.entities.grading import Answer
 from core.quizzes.domain.entities.quiz import Quiz
 from core.quizzes.domain.entities.statement import Statement
-from core.quizzes.domain.sources import QuizSource, quiz_source
+from core.quizzes.domain.services.sources import quiz_source
 from core.quizzes.domain.values.quiz_id import QuizId
+from core.quizzes.domain.values.quiz_source import QuizSource
 from core.quizzes.infra.llm_answer_grader import LLMAnswerGrader
 from core.quizzes.infra.llm_blind_solver import LLMBlindSolver
 from core.quizzes.infra.llm_claim_extractor import LLMClaimExtractor

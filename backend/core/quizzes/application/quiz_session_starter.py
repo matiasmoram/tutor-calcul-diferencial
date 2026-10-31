@@ -5,8 +5,9 @@ from core.quizzes.application.quiz_provider import QuizProvider
 from core.quizzes.domain.entities.quiz import Quiz
 from core.quizzes.domain.entities.quiz_session import QuizSession
 from core.quizzes.domain.repository import QuizSessionRepository
-from core.quizzes.domain.sources import QuizSource, quiz_source
+from core.quizzes.domain.services.sources import quiz_source
 from core.quizzes.domain.values.difficulty import Difficulty
+from core.quizzes.domain.values.quiz_source import QuizSource
 from core.shared.domain.clock import Clock
 from core.shared.domain.ids import SessionId
 from core.shared.llm.call_scope import call_scope

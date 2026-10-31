@@ -1,7 +1,7 @@
 import pytest
 
 from core.quizzes.domain.exceptions import UnknownQuizSourceException
-from core.quizzes.domain.sources import focus_items, quiz_source
+from core.quizzes.domain.services.sources import focus_items, quiz_source
 from core.quizzes.infra.prompts import source_context
 from tests.fixtures.course import authored_course
 

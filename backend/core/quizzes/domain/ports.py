@@ -3,9 +3,9 @@ from typing import Protocol
 
 from core.quizzes.domain.entities.grading import StudentCheck
 from core.quizzes.domain.entities.quiz import Quiz
-from core.quizzes.domain.sources import QuizSource
 from core.quizzes.domain.values.drafts import BatchRequest, StatementDraft, WrittenBatch
 from core.quizzes.domain.values.grading_inputs import AnsweredStatement, GraderVerdict, StudentClaims
+from core.quizzes.domain.values.quiz_source import QuizSource
 from core.quizzes.domain.values.verification import AuditReviews, SolverAnswers
 from core.shared.math.sympy_checks import CheckResult, MathCheck
 

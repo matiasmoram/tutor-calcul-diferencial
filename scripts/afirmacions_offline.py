@@ -36,6 +36,7 @@ from core.quizzes.domain.ports import CheckEvaluator
 from core.quizzes.domain.services.assembly import build_quiz
 from core.quizzes.domain.services.balance import false_range, is_complete, trim
 from core.quizzes.domain.services.judging import judge
+from core.quizzes.domain.services.sources import quiz_source
 from core.quizzes.domain.services.validation import (
     all_checks,
     check_problems,
@@ -43,9 +44,9 @@ from core.quizzes.domain.services.validation import (
     validate_draft,
     with_results,
 )
-from core.quizzes.domain.sources import QuizSource, quiz_source
 from core.quizzes.domain.values.difficulty import QUIZ_SIZES, Difficulty, difficulty_of
 from core.quizzes.domain.values.drafts import BatchRequest, StatementDraft
+from core.quizzes.domain.values.quiz_source import QuizSource
 from core.quizzes.domain.values.verification import AuditReview, SolverAnswer
 from core.quizzes.infra.json_quiz_files import JsonQuizFiles
 from core.quizzes.infra.llm_schemas import audit_schema, generation_schema, solver_schema

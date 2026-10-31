@@ -1,12 +1,12 @@
 from collections.abc import Sequence
 
-from core.quizzes.domain.sources import QuizSource
 from core.quizzes.domain.values.grading_inputs import (
     AnsweredStatement,
     GraderEvaluation,
     GraderVerdict,
     IdeaCitation,
 )
+from core.quizzes.domain.values.quiz_source import QuizSource
 from core.quizzes.infra.llm_outputs import objects, parse_all
 from core.quizzes.infra.llm_schemas import grading_schema
 from core.quizzes.infra.prompts import GRADING_SYSTEM, grading_request, source_context

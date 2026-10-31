@@ -6,8 +6,8 @@ from core.quizzes.application.quiz_generator import QuizGenerator
 from core.quizzes.domain.entities.quiz import Quiz
 from core.quizzes.domain.exceptions import QuizException
 from core.quizzes.domain.repository import QuizRepository
-from core.quizzes.domain.sources import QuizSource
 from core.quizzes.domain.values.difficulty import Difficulty
+from core.quizzes.domain.values.quiz_source import QuizSource
 from core.shared.domain.single_flight import SingleFlight
 
 type QuizGenerations = SingleFlight[tuple[str, Difficulty], Quiz]

@@ -1,4 +1,4 @@
-from collections.abc import Mapping
+from collections.abc import Collection, Mapping, Sequence
 from typing import Literal
 
 from pydantic import BaseModel, Field
@@ -61,3 +61,8 @@ class TheoryItem(BaseModel):
 
     def index_line(self) -> str:
         return f"{self.id} {self.label}: {self.name}"
+
+
+def render_items(items: Sequence[TheoryItem], with_proof: Collection[TheoryItemId] = frozenset()) -> str:
+    """The items as the prompts show them, the ones in `with_proof` with their proof; "(cap)" when there are none."""
+    return "\n\n".join(it.render(with_proof=it.id in with_proof) for it in items) or "(cap)"

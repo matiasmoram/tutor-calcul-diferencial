@@ -2,7 +2,7 @@
 
 from collections.abc import Mapping, Sequence
 
-from core.course.domain.entities.theory_item import TheoryItem
+from core.course.domain.entities.theory_item import render_items
 from core.quizzes.domain.entities.quiz import RejectedStatement
 from core.quizzes.domain.services.validation import MAX_CHECKS
 from core.quizzes.domain.values.difficulty import Difficulty
@@ -83,13 +83,9 @@ LEVELS: Mapping[Difficulty, str] = {
 }
 
 
-def _notes_text(items: Sequence[TheoryItem]) -> str:
-    return "\n\n".join(it.render() for it in items) or "(cap)"
-
-
 def source_context(source: QuizSource) -> str:
     """Static per source (cached by the provider across rounds and gradings): the topic's notes."""
-    out = f'<apunts tema="{source.topic}" titol="{source.topic_title}">\n{_notes_text(source.notes)}\n</apunts>'
+    out = f'<apunts tema="{source.topic}" titol="{source.topic_title}">\n{render_items(source.notes)}\n</apunts>'
     if source.focus:
         out += f"\n\n<resultat_focus>\n{source.focus.render(with_proof=True)}\n</resultat_focus>"
     return out

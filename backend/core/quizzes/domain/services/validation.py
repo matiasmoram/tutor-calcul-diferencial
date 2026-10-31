@@ -11,7 +11,7 @@ from core.shared.math.sympy_checks import CheckResult, MathCheck
 
 # A hint that names the verdict or the tool gives the answer away.
 _REVEALS_VERDICT = re.compile(r"\b(cert[ae]?|fals[ae]?|contraexemples?|falsedat|veritat)\b", re.IGNORECASE)
-MAX_CHECKS = 6
+MAX_CHECKS = 4
 
 
 def normal_key(text: str) -> str:
@@ -61,7 +61,7 @@ def validate_draft(d: StatementDraft, refs: Collection[str]) -> list[str]:
     if bad:
         problems.append(f"cita ítems inexistents: {', '.join(bad)}")
     if len(d.checks) > MAX_CHECKS:
-        problems.append("massa comprovacions (màxim 4)")
+        problems.append(f"massa comprovacions (màxim {MAX_CHECKS})")
     return problems
 
 

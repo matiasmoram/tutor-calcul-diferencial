@@ -5,6 +5,7 @@ from core.quizzes.domain.services.judging import judge
 from core.quizzes.domain.services.validation import all_checks, check_problems, validate_draft, with_results
 from core.quizzes.domain.values.drafts import StatementDraft
 from core.quizzes.domain.values.verification import AuditReview, SolverAnswer
+from core.quizzes.infra.prompts import GENERATION_SYSTEM
 from core.shared.llm.client import JsonObject
 from core.shared.math.sympy_checks import evaluate
 from tests.core.quizzes.builders import ITERATED, check, item, source
@@ -35,6 +36,12 @@ def test_valid_item_passes() -> None:
 def test_item_validation_rejects(changes: JsonObject, expected: str) -> None:
     problems = validate_draft(draft(item("A.") | changes), REFS)
     assert any(expected in p for p in problems), problems
+
+
+def test_at_most_four_checks_per_statement_as_the_prompt_asks() -> None:
+    assert validate_draft(draft(item("A.", checks=[ITERATED] * 4)), REFS) == []
+    assert validate_draft(draft(item("A.", checks=[ITERATED] * 5)), REFS) == ["massa comprovacions (màxim 4)"]
+    assert "d'1 a 4;" in GENERATION_SYSTEM
 
 
 def test_failing_sympy_check_rejects_statement() -> None:

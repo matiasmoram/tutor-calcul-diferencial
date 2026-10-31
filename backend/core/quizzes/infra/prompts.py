@@ -4,6 +4,7 @@ from collections.abc import Mapping, Sequence
 
 from core.course.domain.entities.theory_item import TheoryItem
 from core.quizzes.domain.entities.quiz import RejectedStatement
+from core.quizzes.domain.services.validation import MAX_CHECKS
 from core.quizzes.domain.values.difficulty import Difficulty
 from core.quizzes.domain.values.drafts import BatchRequest, StatementDraft
 from core.quizzes.domain.values.grading_inputs import AnsweredStatement
@@ -30,7 +31,7 @@ Camps:
 - "idees_clau": 1-4 punts que una resposta correcta ha de contenir (rúbrica per corregir), p. ex. "els dos iterats valen 0", "sobre $y=mx$ el límit depèn de $m$".
 - "pista": una pregunta socràtica que ajudi a pensar-hi SENSE revelar el veredicte (no diguis "cert", "fals" ni "contraexemple").
 - "teoria": els ítems dels apunts que fa servir la resolució (pot ser buida).
-- "comprovacions": per a les falses, TOTS els càlculs concrets del contraexemple que es puguin comprovar amb sympy (límits sobre camins, límits que no existeixen, derivades, igualtats), d'1 a 4; si el contraexemple no té cap càlcul comprovable (p. ex. topologia), []. Per a les certes, normalment []. Es comproven automàticament: una comprovació falsa fa descartar l'afirmació.
+- "comprovacions": per a les falses, TOTS els càlculs concrets del contraexemple que es puguin comprovar amb sympy (límits sobre camins, límits que no existeixen, derivades, igualtats), d'1 a {MAX_CHECKS}; si el contraexemple no té cap càlcul comprovable (p. ex. topologia), []. Per a les certes, normalment []. Es comproven automàticament: una comprovació falsa fa descartar l'afirmació.
 
 {CHECK_SYNTAX}
 """

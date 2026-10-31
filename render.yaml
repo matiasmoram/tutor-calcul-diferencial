@@ -1,20 +1,35 @@
 # Render blueprint (https://render.com/docs/blueprint-spec): one Docker web service.
-# The database is Supabase (external). Secrets marked `sync: false` are entered in the Render dashboard.
+# The database is Supabase (external). `sync: false` values are asked for once, when the blueprint is first applied;
+# a `sync: false` key added later must be set in the dashboard.
 services:
   - type: web
     name: tutor-calcul
     runtime: docker
+    # Same region as the Supabase project. Fixed at creation: changing it means a new service.
+    region: frankfurt
     # Free: 512 MB, one instance, sleeps when idle. A paid plan here would upgrade the service on a blueprint sync.
     plan: free
     healthCheckPath: /health
-    autoDeploy: true
+    # Deploy a commit only once its CI checks pass.
+    autoDeployTrigger: checksPass
+    # Pushes touching nothing else skip the build. Keep in step with the Dockerfile's COPY lines.
+    buildFilter:
+      paths:
+        - backend/**
+        - frontend/**
+        - sources/**
+        - Dockerfile
+        - .dockerignore
+        - pyproject.toml
+        - uv.lock
+      ignoredPaths:
+        - backend/tests/**
+        - "**/*.md"
     envVars:
       - key: LLM_PROVIDER
         value: openai
-      # No global TUTOR_MODEL: it would also force the generation/verification stages (quiz_*, mistakes_generation,
-      # mistakes_verification), which keep their defaults (stage_configs.py). Measured: gpt-5.6-luna does well on
-      # the tutor stages and gradings at ~1/5 the cost of gpt-5.4-mini; gpt-5.4-mini for quiz generation hit
-      # max_tokens and emitted NUL bytes in the JSON.
+      # Per-stage models for the tutor and grading stages; the others keep their defaults (stage_configs.py).
+      # No global TUTOR_MODEL: it would also override the generation and verification stages.
       - key: TUTOR_MODEL_DIAGNOSIS
         value: gpt-5.6-luna
       - key: TUTOR_MODEL_REPLY
@@ -33,13 +48,15 @@ services:
         value: gpt-5.6-luna
       - key: TUTOR_MODEL_QUIZ_GRADING
         value: gpt-5.6-luna
-      # Who may trigger live (paid) generation of "Troba l'error" documents / "Cert o fals" quizzes. Students get
-      # pre-generated content only (409 when none is ready).
+      # Who may trigger live (paid) generation; students get pre-generated content only.
       - key: TUTOR_GENERACIO
         value: professor
+      - key: TUTOR_DEMO
+        value: "0"
       - key: OPENAI_API_KEY
         sync: false
       - key: DATABASE_URL
         sync: false
+      # Entered by hand, not generateValue: Render generates base64, and a '+' in ?prof=<key> arrives as a space.
       - key: TUTOR_CLAU_PROFESSOR
         sync: false

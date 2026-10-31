@@ -5,7 +5,7 @@ from loguru import logger
 
 from core.counterexamples.domain.entities.spec import SpecCatalog
 from core.counterexamples.domain.ports import PropertyChecker
-from core.counterexamples.domain.services.property_deciders import check_property, undecided
+from core.counterexamples.domain.services.deciders import check_property, undecided
 from core.counterexamples.domain.values.submission import PropertyCheck
 from core.counterexamples.domain.values.verdict import PropertyVerdict
 from core.shared.math.infra.sympy_pool import POOL_UNAVAILABLE, UNAVAILABLE_DETAIL, SympyCheckPool

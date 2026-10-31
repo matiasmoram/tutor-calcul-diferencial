@@ -26,11 +26,11 @@ from core.quizzes.domain.services.validation import (
     with_results,
 )
 from core.quizzes.domain.sources import QuizSource
-from core.quizzes.domain.values.call_summary import CallSummary
 from core.quizzes.domain.values.difficulty import QUIZ_SIZES, Difficulty
 from core.quizzes.domain.values.drafts import BatchRequest, StatementDraft
 from core.shared.domain.clock import Clock
 from core.shared.domain.ids import TheoryItemId
+from core.shared.domain.model_usage import ModelUsage
 from core.shared.llm.client import LLMError, LLMProviderError, TruncatedOutputError
 
 # A request must not hang for tens of minutes: past this the generation fails (the rounds paid are in the call log).
@@ -213,12 +213,12 @@ class _Written:
     candidates: list[StatementDraft]
     rejected: list[tuple[StatementDraft, list[str]]]
     received: int
-    call: CallSummary
+    call: ModelUsage
 
 
 @dataclass
 class _Verified:
-    solver: CallSummary
-    audit: CallSummary
+    solver: ModelUsage
+    audit: ModelUsage
     accepted: list[StatementDraft] = field(default_factory=list)
     rejected: list[tuple[StatementDraft, list[str]]] = field(default_factory=list)

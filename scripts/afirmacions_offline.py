@@ -44,7 +44,6 @@ from core.quizzes.domain.services.validation import (
     with_results,
 )
 from core.quizzes.domain.sources import QuizSource, quiz_source
-from core.quizzes.domain.values.call_summary import CallSummary
 from core.quizzes.domain.values.difficulty import QUIZ_SIZES, Difficulty, difficulty_of
 from core.quizzes.domain.values.drafts import BatchRequest, StatementDraft
 from core.quizzes.domain.values.verification import AuditReview, SolverAnswer
@@ -60,6 +59,7 @@ from core.quizzes.infra.prompts import (
     source_context,
 )
 from core.quizzes.infra.sympy_check_evaluator import SympyCheckEvaluator
+from core.shared.domain.model_usage import ModelUsage
 from settings import BACKEND_DIR
 
 GENERATED_DIR = BACKEND_DIR / "generats" / "afirmacions"
@@ -171,8 +171,8 @@ def cmd_blind(path: Path, checks: CheckEvaluator) -> int:
     return 0
 
 
-def offline_call(name: str) -> CallSummary:
-    return CallSummary(model=f"offline:{name}", latency_ms=0)
+def offline_call(name: str) -> ModelUsage:
+    return ModelUsage(model=f"offline:{name}", latency_ms=0)
 
 
 def cmd_import(path: Path, checks: CheckEvaluator, directory: Path = GENERATED_DIR) -> int:

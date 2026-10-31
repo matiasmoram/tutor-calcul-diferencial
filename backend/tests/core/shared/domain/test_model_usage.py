@@ -1,6 +1,5 @@
 import pytest
 
-from core.quizzes.domain.values.call_summary import CallSummary
 from core.shared.domain.model_usage import ModelUsage
 from core.shared.llm.client import CallMeta, Stage
 from core.tutoring.domain.values.turn_trace import ModelCall
@@ -35,7 +34,6 @@ def test_unreported_token_counts_are_zero() -> None:
 def test_usage_writes_the_same_json_as_the_per_context_copies(data: dict[str, object]) -> None:
     expected = ModelUsage.model_validate(data).model_dump_json()
 
-    assert CallSummary.model_validate(data).model_dump_json() == expected
     assert ModelCall.model_validate({"stage": "diagnosis", **data}).model_dump_json(exclude={"stage"}) == expected
 
 

@@ -1,8 +1,8 @@
 from pydantic import BaseModel
 
-from core.quizzes.application.answers_grader import GRADING_CLAIM_TIMEOUT_S
 from core.quizzes.domain.exceptions import ConcurrentQuizGradingException
 from core.quizzes.domain.repository import QuizRepository, QuizSessionRepository
+from core.quizzes.domain.values.grading_claim import GRADING_CLAIM_TIMEOUT_S
 from core.shared.domain.clock import Clock
 
 

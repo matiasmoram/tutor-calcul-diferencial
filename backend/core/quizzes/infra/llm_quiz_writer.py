@@ -1,6 +1,6 @@
 from core.quizzes.domain.sources import QuizSource
 from core.quizzes.domain.values.drafts import BatchRequest, StatementDraft, WrittenBatch
-from core.quizzes.infra.llm_outputs import call_summary, objects, parse_all
+from core.quizzes.infra.llm_outputs import objects, parse_all
 from core.quizzes.infra.llm_schemas import generation_schema
 from core.quizzes.infra.prompts import GENERATION_SYSTEM, generation_request, source_context
 from core.shared.llm.client import LLMClient, LLMRequest, Stage
@@ -21,4 +21,4 @@ class LLMQuizWriter:
             ),
         )
         drafts = parse_all(StatementDraft, objects(data, "afirmacions"), Stage.QUIZ_GENERATION)
-        return WrittenBatch(drafts=drafts, call=call_summary(meta))
+        return WrittenBatch(drafts=drafts, call=meta.usage())

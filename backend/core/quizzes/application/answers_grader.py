@@ -12,17 +12,12 @@ from core.quizzes.domain.ports import AnswerGrader, CheckEvaluator, ClaimExtract
 from core.quizzes.domain.repository import QuizRepository, QuizSessionRepository
 from core.quizzes.domain.services.scoring import MAX_STUDENT_CHECKS, grade_quiz, quoted_claims
 from core.quizzes.domain.sources import QuizSource, quiz_source
-from core.quizzes.domain.values.call_summary import CallSummary
+from core.quizzes.domain.values.grading_claim import GRADING_CLAIM_TIMEOUT_S, GRADING_DEADLINE_S
 from core.quizzes.domain.values.grading_inputs import AnsweredStatement, GraderEvaluation, StudentClaims
 from core.shared.domain.clock import Clock
 from core.shared.domain.exceptions import DomainException
+from core.shared.domain.model_usage import ModelUsage
 from core.shared.llm.call_scope import call_scope
-
-GRADING_DEADLINE_S = 240.0  # the whole grading, every model call and retry included
-# A claim older than this belongs to a grading that died without releasing it. Strictly above GRADING_DEADLINE_S: a
-# live grading is cancelled by its deadline before its claim can go stale, so a takeover never runs (and pays) beside
-# the grading it replaces.
-GRADING_CLAIM_TIMEOUT_S = GRADING_DEADLINE_S + 60.0
 
 
 class AnswersGraderInput(BaseModel):
@@ -107,7 +102,7 @@ class AnswersGrader:
         evaluations: dict[str, GraderEvaluation] = {}
         transcribed: dict[str, list[StudentCheck]] = {}
         summary: str = ""
-        call: CallSummary | None = None
+        call: ModelUsage | None = None
         if answered:
             verdict, claims = await asyncio.gather(self._grader.grade(source, answered), self._extract(answered))
             evaluations = {e.statement_id: e for e in verdict.evaluations}

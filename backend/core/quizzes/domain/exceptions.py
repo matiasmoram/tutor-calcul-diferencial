@@ -1,6 +1,6 @@
 from core.shared.domain.exceptions import DomainException
 
-# Messages are the ones the API has always returned (the frontend shows them).
+# Messages are shown to the student.
 
 
 class QuizException(DomainException):

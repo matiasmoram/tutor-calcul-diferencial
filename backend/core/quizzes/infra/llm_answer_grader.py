@@ -7,7 +7,7 @@ from core.quizzes.domain.values.grading_inputs import (
     GraderVerdict,
     IdeaCitation,
 )
-from core.quizzes.infra.llm_outputs import call_summary, objects, parse_all
+from core.quizzes.infra.llm_outputs import objects, parse_all
 from core.quizzes.infra.llm_schemas import grading_schema
 from core.quizzes.infra.prompts import GRADING_SYSTEM, grading_request, source_context
 from core.shared.llm.client import LLMClient, LLMRequest, Stage
@@ -40,7 +40,7 @@ class LLMAnswerGrader:
             if raw.get("id")
         ]
         summary = data.get("resum", "")
-        return GraderVerdict(evaluations=evaluations, summary=str(summary), call=call_summary(meta))
+        return GraderVerdict(evaluations=evaluations, summary=str(summary), call=meta.usage())
 
 
 def _text(value: object) -> str | None:

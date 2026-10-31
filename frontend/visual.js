@@ -10,9 +10,12 @@
    Shares el(), math(), tex(), api(), crumbs(), show(), theoryPopup(), linkCitations() with app.js.
    The tools live in visual-eines.js and register with eina({...}). */
 
+// Pinned versions with their Subresource Integrity hashes: a changed file on the CDN is refused, not run.
 const VIS_LIBS = [
-  "https://cdnjs.cloudflare.com/ajax/libs/mathjs/14.0.1/math.min.js",
-  "https://cdnjs.cloudflare.com/ajax/libs/plotly.js/3.1.1/plotly.min.js",
+  { src: "https://cdnjs.cloudflare.com/ajax/libs/mathjs/14.0.1/math.min.js",
+    integrity: "sha512-PbOEC/cOHBQKshG/XgYoI+kff08IraowCgPlDT8NL91+ZPaeuvWVtC7jYTDua9Kow5QTpX+EMIM0RBKAA2Hsmg==" },
+  { src: "https://cdnjs.cloudflare.com/ajax/libs/plotly.js/3.1.1/plotly.min.js",
+    integrity: "sha512-QaIUFweb9pyRnQZEYIujSDTHndibSwqsTSb69aedsfAAUpJRUE5yyYfaNAJIbTDuNECyHR/Cc0N7lQJrp0IEpA==" },
 ];
 const EINES = [];
 let M = null;          // math.js instance with real-valued results (sqrt(-1) = NaN, not a complex)
@@ -20,10 +23,12 @@ let visLibs = null;    // Promise of the loaded libraries
 
 function eina(def) { EINES.push(def); }
 
-function loadScript(src) {
+function loadScript({ src, integrity }) {
   return new Promise((resolve, reject) => {
     const s = document.createElement("script");
     s.src = src;
+    s.integrity = integrity;
+    s.crossOrigin = "anonymous";
     s.onload = resolve;
     s.onerror = () => reject(new Error(`No s'ha pogut carregar ${src.split("/").pop()} (cal connexió a internet)`));
     document.head.append(s);

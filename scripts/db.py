@@ -1,6 +1,6 @@
 """Database utilities (a composition root: builds the infra concretes).
 
-Schema changes: edit the SQLModel records, run `make db-schema` (refreshes the snapshot supabase/schema.sql), and add
+Schema changes: edit the SQLModel records, run `uv run poe schema` (refreshes the snapshot supabase/schema.sql), and add
 a NEW timestamped migration in supabase/migrations/ with the ALTER statements. Applied migrations are never edited.
 CI runs `schema --check`, applies every migration to an empty Postgres and runs `check-migrations`.
 

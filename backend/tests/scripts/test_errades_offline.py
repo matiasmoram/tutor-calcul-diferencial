@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 
+from core.mistakes.infra import prompts
 from core.shared.llm.client import JsonObject
 from tests.core.mistakes.builders import finding, gen, tgen
 from tests.scripts.builders import PROBLEM_ERRORS, PROBLEM_FINDINGS, THEORY_ERRORS, THEORY_FINDINGS, stored
@@ -48,13 +49,60 @@ def test_offline_validate_reports_each_bad_document(tmp_path: Path, capsys: pyte
     assert "0 ok, 4 with problems" in out
 
 
-def test_offline_blind_hides_the_declared_errors(tmp_path: Path) -> None:
-    batch = write_json(tmp_path / "lot.json", [batch_doc(PROBLEM_ERRORS), theory_doc()])
+def test_offline_brief_gives_the_writer_the_generation_prompt_reference_and_schema(tmp_path: Path) -> None:
+    out = tmp_path / "brief.md"
+    assert errades_offline.cmd_brief("problema", "t2-4c", "normal", out) == 0
+    text = out.read_text(encoding="utf-8")
+    source = errades_offline.source_of({"font": "problema", "id": "t2-4c"})
+    assert prompts.GENERATION_SYSTEM in text and prompts.context(source) in text
+    assert prompts.generation_user(source, "normal", []) in text
+    assert '{"font": "problema", "id": "t2-4c", "dificultat": "normal"}' in text
+    assert '"cita"' in text and '"n_enunciat"' not in text
+
+    assert errades_offline.cmd_brief("teoria", "T3.21", "facil", out) == 0
+    text = out.read_text(encoding="utf-8")
+    assert prompts.THEORY_GENERATION_SYSTEM in text and "<apunts>" in text and '"n_enunciat"' in text
+
+
+@pytest.mark.parametrize(
+    ("font", "source_id", "difficulty"),
+    [
+        ("problema", "nope", "normal"),
+        ("teoria", "t2-4c", "normal"),
+        ("problema", "t2-4c", "extrema"),
+        ("x", "t2-4c", "normal"),
+    ],
+)
+def test_offline_brief_refuses_an_unknown_source_or_difficulty(
+    tmp_path: Path, font: str, source_id: str, difficulty: str
+) -> None:
+    with pytest.raises(SystemExit):
+        errades_offline.cmd_brief(font, source_id, difficulty, tmp_path / "brief.md")
+    assert not (tmp_path / "brief.md").exists()
+
+
+def test_offline_blind_gives_the_reviewer_instructions_and_schema_but_not_the_declared_errors(tmp_path: Path) -> None:
+    declared = [
+        e | {"explicacio": f"EXPLICACIO-{i}", "correccio": f"CORRECCIO-{i}", "pista": f"PISTA-{i}"}
+        for i, e in enumerate(PROBLEM_ERRORS)
+    ]
+    batch = write_json(tmp_path / "lot.json", [batch_doc(declared), theory_doc()])
     assert errades_offline.cmd_blind(batch) == 0
     text = (tmp_path / "lot.blind.md").read_text(encoding="utf-8")
     assert "## t2-4c:normal" in text and "<solucio_de_referencia>" in text and "[2] $x^4" not in text
     assert "## T3.21:normal" in text and "<apunts>" in text and "[1] (enunciat) Sigui" in text
-    assert "[3] (demostració)" in text and "explicacio" not in text
+    assert "[3] (demostració)" in text
+    assert not any(f"{field}-" in text for field in ("EXPLICACIO", "CORRECCIO", "PISTA"))
+    assert prompts.VERIFICATION_SYSTEM in text and prompts.THEORY_VERIFICATION_SYSTEM in text
+    assert "Write lot.ver.json" in text
+    schema = json.loads(text.split("```json\n")[-1].split("\n```")[0])
+    assert schema["propertyNames"]["enum"] == ["t2-4c:normal", "T3.21:normal"]
+    assert schema["additionalProperties"]["required"] == ["problemes", "valoracio"]
+
+    only_problems = write_json(tmp_path / "problemes.json", [batch_doc(PROBLEM_ERRORS)])
+    assert errades_offline.cmd_blind(only_problems) == 0
+    text = (tmp_path / "problemes.blind.md").read_text(encoding="utf-8")
+    assert prompts.VERIFICATION_SYSTEM in text and prompts.THEORY_VERIFICATION_SYSTEM not in text
 
 
 def test_offline_import_saves_only_reviewed_documents_and_check_cache_accepts_them(

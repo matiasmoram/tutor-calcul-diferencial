@@ -14,7 +14,7 @@ from core.shared.math.infra.sympy_pool import (
     limit_memory,
 )
 from core.shared.math.sympy_checks import MathCheck
-from tests.core.shared.math.test_sympy_checks import ITERATED, check
+from tests.core.shared.math.builders import ITERATED, check
 from tests.core.shared.math.workers import (
     address_space_limit,
     allocate_mb,

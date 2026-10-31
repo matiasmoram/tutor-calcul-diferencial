@@ -1,21 +1,9 @@
 """The authoring validator (scripts/check_fitxes.py) over the authored sheets."""
 
-import importlib.util
-from types import ModuleType
-
-from settings import ROOT_DIR
 from tests.fixtures.course import authored_course
+from tests.scripts.loader import load_script
 
-
-def _load_script(name: str) -> ModuleType:
-    spec = importlib.util.spec_from_file_location(name, ROOT_DIR / "scripts" / f"{name}.py")
-    assert spec is not None and spec.loader is not None
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
-
-
-check_fitxes = _load_script("check_fitxes")
+check_fitxes = load_script("check_fitxes")
 
 
 def test_every_sheet_passes_the_authoring_checks() -> None:

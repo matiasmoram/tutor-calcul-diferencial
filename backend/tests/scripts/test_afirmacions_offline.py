@@ -6,14 +6,16 @@ from pathlib import Path
 from core.quizzes.infra.json_quiz_files import JsonQuizFiles
 from core.quizzes.infra.sympy_check_evaluator import SympyCheckEvaluator
 from settings import BACKEND_DIR
-from tests.scripts.test_pregenerate import load_script
+from tests.scripts.loader import load_script
 
 afirmacions_offline = load_script("afirmacions_offline")
 CHECKS = SympyCheckEvaluator(in_process=True)
 
 
 def stored_quiz_batch(tmp_path: Path) -> Path:
-    """A batch made of the statements of the cached T2.12 quiz (already verified), as an agent would write it."""
+    """A batch made of the statements of the cached T2.12 quiz (already verified), as an agent would write it.
+
+    Reads the committed quiz in backend/generats/afirmacions: regenerating that cache can change these tests' data."""
     quizzes = JsonQuizFiles(BACKEND_DIR / "generats" / "afirmacions").load_all()
     quiz = next(q for q in quizzes if q.source_id == "T2.12" and q.difficulty == "facil")
     statements = [s.model_dump(exclude={"id", "verification"}) for s in quiz.statements]

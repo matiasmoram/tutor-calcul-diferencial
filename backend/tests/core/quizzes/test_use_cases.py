@@ -1,16 +1,14 @@
 """The use cases the API calls (the old endpoint test, minus HTTP: that layer is built in phase 6)."""
 
-from collections.abc import Coroutine
 from pathlib import Path
 from random import Random
 
 import pytest
 
 from core.quizzes.application.answers_grader import GRADING_CLAIM_TIMEOUT_S, AnswersGraderInput
-from core.quizzes.application.hint_revealer import HintRevealer
 from core.quizzes.application.pregenerated_importer import PregeneratedImporter
 from core.quizzes.application.quiz_provider import QuizProvider
-from core.quizzes.application.quiz_session_starter import QuizSessionStarter, QuizSessionStarterInput
+from core.quizzes.application.quiz_session_starter import QuizSessionStarterInput
 from core.quizzes.application.source_lister import SourceLister
 from core.quizzes.domain.entities.grading import Answer, QuizGrading
 from core.quizzes.domain.exceptions import (
@@ -21,35 +19,29 @@ from core.quizzes.domain.exceptions import (
 )
 from core.quizzes.domain.values.quiz_id import QuizId
 from core.quizzes.infra.json_quiz_files import JsonQuizFiles
-from core.quizzes.infra.sqlmodel_repository import SQLModelQuizRepository, SQLModelQuizSessionRepository
-from core.shared.llm.client import CallMeta, JsonObject, LLMClient, LLMError, LLMRequest, Stage
+from core.quizzes.infra.sqlmodel_repository import SQLModelQuizRepository
+from core.shared.llm.client import LLMError, Stage
 from core.shared.storage.session_provider import SQLModelSessionProvider
 from tests.core.quizzes.builders import (
+    ANSWERS,
     QUIZ_ID,
     FixedClock,
+    InterleavingLLM,
     answers_grader,
     generator,
-    grader,
-    idea,
+    graded,
+    hints,
     item,
     ok_audit,
     ok_solver,
     quiz,
     source,
+    started_session,
+    starter,
     transcriber,
 )
 from tests.fakes.llm import ScriptedLLMClient
 from tests.fixtures.course import authored_course
-
-
-def starter(provider: SQLModelSessionProvider, llm: LLMClient | None = None) -> QuizSessionStarter:
-    quizzes = SQLModelQuizRepository(provider)
-    quiz_provider = QuizProvider(quizzes, generator(llm or ScriptedLLMClient({})), Random(0))
-    return QuizSessionStarter(authored_course(), quiz_provider, SQLModelQuizSessionRepository(provider), FixedClock())
-
-
-def hints(provider: SQLModelSessionProvider) -> HintRevealer:
-    return HintRevealer(SQLModelQuizSessionRepository(provider), SQLModelQuizRepository(provider), FixedClock())
 
 
 async def test_a_session_on_a_stored_quiz_never_calls_the_model(session_provider: SQLModelSessionProvider) -> None:
@@ -118,31 +110,6 @@ async def test_pregenerated_quizzes_seed_the_store(session_provider: SQLModelSes
     importer = PregeneratedImporter(files, repo)
     assert await importer.import_all() == 1 and await importer.import_all() == 1
     assert await repo.of_source("tema-2", "facil") == [quiz()]
-
-
-ANSWERS = AnswersGraderInput(answers=[Answer(statement_id="a1", verdict="fals", justification="sobre $y=x$")])
-
-
-def graded(feedback: str = "f") -> JsonObject:
-    return grader({"id": "a1", "idees": [idea(1, "sobre $y=x$")], "justificacio": "correcta", "feedback": feedback})
-
-
-async def started_session(provider: SQLModelSessionProvider) -> str:
-    await SQLModelQuizRepository(provider).add(quiz())
-    started = await starter(provider).start(QuizSessionStarterInput(source_id="tema-2", difficulty="facil"))
-    return started.session.id
-
-
-class InterleavingLLM(ScriptedLLMClient):
-    """While the first grading waits for its grader call, `meanwhile` runs (a second submission)."""
-
-    meanwhile: Coroutine[object, object, None] | None = None
-
-    async def structured(self, stage: Stage, request: LLMRequest) -> tuple[JsonObject, CallMeta]:
-        if stage == Stage.QUIZ_GRADING and self.meanwhile is not None:
-            pending, self.meanwhile = self.meanwhile, None
-            await pending
-        return await super().structured(stage, request)
 
 
 async def test_a_second_submission_while_grading_is_refused_before_any_model_call(

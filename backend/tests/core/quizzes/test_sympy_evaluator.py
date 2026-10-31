@@ -6,7 +6,7 @@ import pytest
 from core.quizzes.domain.entities.grading import StudentCheck
 from core.quizzes.infra.sympy_check_evaluator import SympyCheckEvaluator
 from core.shared.math.infra.sympy_pool import UNAVAILABLE_DETAIL, SympyCheckPool
-from tests.core.shared.math.test_sympy_checks import ITERATED, check
+from tests.core.shared.math.builders import ITERATED, check
 
 
 @pytest.fixture

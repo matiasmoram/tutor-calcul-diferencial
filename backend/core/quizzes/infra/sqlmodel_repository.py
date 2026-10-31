@@ -60,7 +60,7 @@ class QuizGradingRecord(SQLModel, table=True):
 
 class SQLModelQuizRepository(QuizRepository, BaseSQLModelRepository):
     @with_session
-    async def add(self, db: AsyncSession, quiz: Quiz) -> None:
+    async def save(self, db: AsyncSession, quiz: Quiz) -> None:
         await db.merge(
             QuizRecord(
                 id=quiz.id,

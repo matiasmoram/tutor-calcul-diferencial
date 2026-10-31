@@ -72,7 +72,7 @@ async def _seed_generated(sessions: SQLModelSessionProvider) -> None:
         stored = {q.id for q in await quizzes.of_source(source_id, difficulty)}
         for quiz in group:
             if quiz.id not in stored:
-                await quizzes.add(quiz)
+                await quizzes.save(quiz)
 
 
 def _check_startup(cfg: Config) -> None:

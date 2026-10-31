@@ -13,7 +13,7 @@ class QuizRepository(ABC):
     """Generated and verified quizzes, served again to later students."""
 
     @abstractmethod
-    async def add(self, quiz: Quiz) -> None:
+    async def save(self, quiz: Quiz) -> None:
         """Stores the quiz, replacing a stored one with the same id."""
 
     @abstractmethod

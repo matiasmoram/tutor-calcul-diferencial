@@ -46,7 +46,7 @@ from tests.fixtures.course import authored_course
 
 
 async def test_a_session_on_a_stored_quiz_never_calls_the_model(session_provider: SQLModelSessionProvider) -> None:
-    await SQLModelQuizRepository(session_provider).add(quiz())
+    await SQLModelQuizRepository(session_provider).save(quiz())
     index = await SourceLister(authored_course(), SQLModelQuizRepository(session_provider)).list_sources()
     assert {t.source_id for t in index.topics} >= {"tema-1", "tema-2"}
     assert any(f.item.id == "T2.12" for t in index.topics for f in t.focus)
@@ -94,8 +94,8 @@ async def test_a_missing_quiz_is_generated_and_stored(session_provider: SQLModel
 
 async def test_the_provider_prefers_a_quiz_not_just_seen(session_provider: SQLModelSessionProvider) -> None:
     repo = SQLModelQuizRepository(session_provider)
-    await repo.add(quiz())
-    await repo.add(quiz().model_copy(update={"id": QuizId("bbbbbbbbbbbb")}))
+    await repo.save(quiz())
+    await repo.save(quiz().model_copy(update={"id": QuizId("bbbbbbbbbbbb")}))
     provider = QuizProvider(repo, generator(ScriptedLLMClient({})), Random(0))
     for _ in range(5):
         provided = await provider.get_or_generate(source(), "facil", avoid_id=QUIZ_ID)
@@ -104,7 +104,7 @@ async def test_the_provider_prefers_a_quiz_not_just_seen(session_provider: SQLMo
 
 
 async def test_the_starter_tells_when_a_start_needs_the_model(session_provider: SQLModelSessionProvider) -> None:
-    await SQLModelQuizRepository(session_provider).add(quiz())
+    await SQLModelQuizRepository(session_provider).save(quiz())
     s = starter(session_provider)
     assert not await s.needs_generation(QuizSessionStarterInput(source_id="tema-2", difficulty="facil"))
     assert await s.needs_generation(QuizSessionStarterInput(source_id="tema-2", difficulty="facil", fresh=True))

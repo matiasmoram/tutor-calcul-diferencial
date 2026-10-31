@@ -165,8 +165,8 @@ async def test_without_generation_rights_new_picks_another_stored_quiz(
     session_provider: SQLModelSessionProvider,
 ) -> None:
     repo = SQLModelQuizRepository(session_provider)
-    await repo.add(quiz())
-    await repo.add(quiz().model_copy(update={"id": QuizId("bbbbbbbbbbbb")}))
+    await repo.save(quiz())
+    await repo.save(quiz().model_copy(update={"id": QuizId("bbbbbbbbbbbb")}))
     llm = ScriptedLLMClient({})
     provider = QuizProvider(repo, generator(llm), Random(0), may_generate=False)
     assert not await provider.needs_generation(source(), "facil", fresh=True)

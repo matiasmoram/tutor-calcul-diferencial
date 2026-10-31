@@ -66,5 +66,5 @@ class QuizProvider:
 
     async def _generate(self, source: QuizSource, difficulty: Difficulty) -> Quiz:
         quiz = await self._generator.generate(source, difficulty)
-        await self._quizzes.add(quiz)
+        await self._quizzes.save(quiz)
         return quiz

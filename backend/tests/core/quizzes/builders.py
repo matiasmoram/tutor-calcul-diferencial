@@ -158,7 +158,7 @@ def hints(provider: SQLModelSessionProvider) -> HintRevealer:
 
 
 async def started_session(provider: SQLModelSessionProvider) -> SessionId:
-    await SQLModelQuizRepository(provider).add(quiz())
+    await SQLModelQuizRepository(provider).save(quiz())
     started = await starter(provider).start(QuizSessionStarterInput(source_id="tema-2", difficulty="facil"))
     return started.session.id
 

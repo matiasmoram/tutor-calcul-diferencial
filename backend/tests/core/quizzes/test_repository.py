@@ -21,7 +21,7 @@ async def test_quizzes_round_trip_and_are_counted_per_source(session_provider: S
     later = q.model_copy(update={"id": QuizId("bbbbbbbbbbbb"), "created_at": 2.0})
     other = q.model_copy(update={"id": QuizId("cccccccccccc"), "source_id": "T2.12", "difficulty": "normal"})
     for x in (later, q, other):
-        await repo.add(x)
+        await repo.save(x)
     assert await repo.get(QuizId(QUIZ_ID)) == q
     assert [x.id for x in await repo.of_source("tema-2", "facil")] == [QUIZ_ID, "bbbbbbbbbbbb"]  # oldest first
     assert await repo.availability() == {"tema-2": {"facil": 2}, "T2.12": {"normal": 1}}
@@ -29,12 +29,12 @@ async def test_quizzes_round_trip_and_are_counted_per_source(session_provider: S
         await repo.get(QuizId("ffffffffffff"))
 
 
-async def test_adding_a_quiz_again_replaces_it(session_provider: SQLModelSessionProvider) -> None:
+async def test_saving_a_quiz_again_replaces_it(session_provider: SQLModelSessionProvider) -> None:
     repo = SQLModelQuizRepository(session_provider)
-    await repo.add(quiz())
+    await repo.save(quiz())
     changed = quiz()
     changed.statements[0].hint = "nova pista"
-    await repo.add(changed)
+    await repo.save(changed)
     assert (await repo.get(QUIZ_ID)).statements[0].hint == "nova pista"
     assert await repo.availability() == {"tema-2": {"facil": 1}}
 
@@ -55,7 +55,7 @@ def _grading() -> QuizGrading:
 
 
 async def test_sessions_keep_hints_and_their_one_grading(session_provider: SQLModelSessionProvider) -> None:
-    await SQLModelQuizRepository(session_provider).add(quiz())
+    await SQLModelQuizRepository(session_provider).save(quiz())
     repo = SQLModelQuizSessionRepository(session_provider)
     s = _session()
     await repo.add(s)
@@ -74,7 +74,7 @@ async def test_sessions_keep_hints_and_their_one_grading(session_provider: SQLMo
 
 
 async def test_a_stale_session_cannot_be_saved(session_provider: SQLModelSessionProvider) -> None:
-    await SQLModelQuizRepository(session_provider).add(quiz())
+    await SQLModelQuizRepository(session_provider).save(quiz())
     repo = SQLModelQuizSessionRepository(session_provider)
     s = _session()
     await repo.add(s)
@@ -90,7 +90,7 @@ async def test_a_stale_session_cannot_be_saved(session_provider: SQLModelSession
 async def test_grading_claims_are_exclusive_owned_and_end_with_the_grading(
     session_provider: SQLModelSessionProvider,
 ) -> None:
-    await SQLModelQuizRepository(session_provider).add(quiz())
+    await SQLModelQuizRepository(session_provider).save(quiz())
     repo = SQLModelQuizSessionRepository(session_provider)
     s = _session()
     await repo.add(s)

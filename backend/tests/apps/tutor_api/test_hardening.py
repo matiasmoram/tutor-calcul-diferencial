@@ -201,8 +201,8 @@ async def test_seeding_imports_files_by_missing_id(
     quizzes = SQLModelQuizRepository(session_provider)
     mistakes = SQLModelMistakeExerciseRepository(session_provider)
     # Rows generated at run time, more than the files: the import still adds the missing ones.
-    await quizzes.add(quiz().model_copy(update={"id": QuizId("bbbbbbbbbbbb")}))
-    await quizzes.add(quiz().model_copy(update={"id": QuizId("cccccccccccc")}))
+    await quizzes.save(quiz().model_copy(update={"id": QuizId("bbbbbbbbbbbb")}))
+    await quizzes.save(quiz().model_copy(update={"id": QuizId("cccccccccccc")}))
     real = JsonFileMistakeSource(BACKEND_DIR / "generats" / "errades").load()
     for document in real[1:3]:
         await mistakes.save(document)

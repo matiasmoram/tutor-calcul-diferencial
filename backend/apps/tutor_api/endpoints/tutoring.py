@@ -21,6 +21,7 @@ from apps.tutor_api.schemas.tutoring import (
     PhotoRequest,
     ProfessorTurnResponse,
     SessionResponse,
+    TranscriptionResponse,
     TurnResponse,
 )
 from core.course.domain.entities.course import Course
@@ -35,6 +36,7 @@ from core.tutoring.application.session_starter import SessionStarter
 from core.tutoring.application.turn_handler import TurnHandler, TurnHandlerInput
 from core.tutoring.domain.exceptions import TutorSessionNotFoundException
 from core.tutoring.domain.values.photo import Photo
+from core.tutoring.domain.values.session_summary import SessionSummary
 from core.tutoring.infra.llm_diagnoser import LLMDiagnoser
 from core.tutoring.infra.llm_reply_judge import LLMReplyJudge
 from core.tutoring.infra.llm_reply_writer import LLMReplyWriter
@@ -114,21 +116,19 @@ async def transcribe_photo(
     body: PhotoRequest,
     transcriber: PhotoTranscriber = Depends(_get_transcriber),
     config: Config = Depends(get_config),
-) -> dict[str, object]:
+) -> TranscriptionResponse:
     sid = _session_id(session_id)
     ensure_api_key(config)
     with domain_errors():
         result = await transcriber.transcribe(
             PhotoTranscriberInput(session_id=sid, photo=Photo.from_data_url(body.imatge))
         )
-    out: dict[str, object] = result.transcription.model_dump()
-    out["crida"] = result.call.model_dump()
-    return out
+    return TranscriptionResponse.from_entity(result)
 
 
 @router.get("/api/professor/sessions", dependencies=[Depends(require_professor)])
-async def professor_sessions(browser: SessionBrowser = Depends(_get_browser)) -> list[dict[str, object]]:
-    return [s.model_dump(mode="json") for s in await browser.list_sessions()]
+async def professor_sessions(browser: SessionBrowser = Depends(_get_browser)) -> list[SessionSummary]:
+    return await browser.list_sessions()
 
 
 @router.get("/api/professor/sessions/{session_id}", dependencies=[Depends(require_professor)])

@@ -17,12 +17,13 @@ from apps.tutor_api.dependencies import (
     may_generate,
     model_rate_limited,
 )
-from apps.tutor_api.schemas.course import TheoryIndexEntryResponse, TheoryItemResponse
+from apps.tutor_api.schemas.course import TheoryIndexEntryResponse
 from apps.tutor_api.schemas.quizzes import (
     AnswersRequest,
     HintResponse,
     NewQuizRequest,
     PublicQuizResponse,
+    QuizGradingResponse,
     QuizSessionResponse,
     QuizSourcesResponse,
 )
@@ -155,18 +156,14 @@ async def grade_answers(
     course: Course = Depends(get_course),
     grader: AnswersGrader = Depends(_get_grader),
     config: Config = Depends(get_config),
-) -> dict[str, object]:
+) -> QuizGradingResponse:
     sid = _session_id(session_id)
     if any(a.verdict for a in body.respostes):
         ensure_api_key(config)
     with domain_errors("La correcció"):
         grading = await grader.grade(sid, AnswersGraderInput(answers=body.respostes))
         quiz_items = await grader.cited_theory(sid)
-    result: dict[str, object] = grading.model_dump()
-    result["teoria"] = {
-        i: TheoryItemResponse.from_entity(course.theory[i]).model_dump() for i in quiz_items if i in course.theory
-    }
-    return result
+    return QuizGradingResponse.from_entity(grading, [course.theory[i] for i in quiz_items if i in course.theory])
 
 
 def _session_id(raw: str) -> SessionId:

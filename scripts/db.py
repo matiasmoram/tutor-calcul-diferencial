@@ -20,7 +20,7 @@ import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
-from sqlalchemy import func, inspect
+from sqlalchemy import Connection, func, inspect
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.schema import CreateIndex, CreateTable
 from sqlmodel import SQLModel, select
@@ -132,7 +132,7 @@ async def check_migrations() -> None:
         sys.exit(1)
 
 
-def _reflect(sync_conn: object) -> dict[str, dict[str, bool]]:
+def _reflect(sync_conn: Connection) -> dict[str, dict[str, bool]]:
     inspector = inspect(sync_conn)
     return {t: {c["name"]: c["nullable"] for c in inspector.get_columns(t)} for t in inspector.get_table_names()}
 

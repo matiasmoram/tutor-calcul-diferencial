@@ -32,8 +32,8 @@ from typing import Any
 from core.course.domain.entities.course import Course
 from core.course.infra.yaml_course_source import YamlCourseSource
 from core.mistakes.domain.entities.mistake_exercise import MistakeExercise, Verification
-from core.mistakes.domain.generation_checks import GenerationCheck, compare_verification, validate_generation
-from core.mistakes.domain.sources import theory_results
+from core.mistakes.domain.services.generation_checks import GenerationCheck, compare_verification, validate_generation
+from core.mistakes.domain.services.sources import theory_results
 from core.mistakes.domain.values.difficulty import DIFFICULTIES, MISTAKES_PER_DIFFICULTY, Difficulty
 from core.mistakes.domain.values.llm_outputs import GenerationDraft, VerifierFinding
 from core.mistakes.domain.values.mistake_exercise_id import MistakeExerciseId
@@ -100,10 +100,10 @@ def load(path: Path) -> list[BatchDoc]:
 
 
 def parse_difficulty(name: str) -> Difficulty:
-    difficulty = next((d for d in DIFFICULTIES if d == name), None)
-    if difficulty is None:
-        raise SystemExit(f"unknown difficulty {name!r}")
-    return difficulty
+    for difficulty in DIFFICULTIES:
+        if difficulty == name:
+            return difficulty
+    raise SystemExit(f"unknown difficulty {name!r}")
 
 
 def cmd_brief(font: str, source_id: str, difficulty_name: str, out: Path) -> int:

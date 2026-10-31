@@ -46,10 +46,10 @@ def deterministic_check(message: str, plan: Plan, permitted: Sequence[str] = ())
     if plan.forbidden_texts:
         try:
             hits = explain(message, plan.forbidden_texts, list(permitted))
-        except Exception:
+        except Exception as e:
             # Fail closed, like a timeout: a draft the CAS could not verify never reaches the student.
             hits = []
-            problems.append(CAS_ERROR_PROBLEM)
+            problems.append(f"{CAS_ERROR_PROBLEM} ({type(e).__name__})")
         literal = _literal_sides(permitted) if hits else set()
         for side, forbidden in hits:
             # A formula copied literally from allowed text (e.g. an integrand sympy cannot read) is never a leak.

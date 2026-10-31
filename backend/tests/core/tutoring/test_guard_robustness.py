@@ -21,7 +21,7 @@ def test_a_cas_error_rejects_the_draft(monkeypatch: pytest.MonkeyPatch) -> None:
         raise MemoryError
 
     monkeypatch.setattr(guard, "explain", boom)
-    assert CAS_ERROR_PROBLEM in deterministic_check(r"Mira $x^2$. Ho veus?", _plan([r"$x^2+1$"]))
+    assert f"{CAS_ERROR_PROBLEM} (MemoryError)" in deterministic_check(r"Mira $x^2$. Ho veus?", _plan([r"$x^2+1$"]))
 
 
 def test_a_formula_is_whitelisted_only_as_a_whole_piece_of_allowed_text() -> None:

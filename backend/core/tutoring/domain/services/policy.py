@@ -58,6 +58,26 @@ class Decision(NamedTuple):
     state: SessionState
 
 
+class _TurnFacts(NamedTuple):
+    """The last message read against the session state: what the plan and the state transition are decided on."""
+
+    known_mistakes: list[str]
+    has_mistake: bool
+    justified: bool
+    target: str | None
+    completed: list[str]
+    new_steps: list[str]
+    states_now: dict[str, StepState]
+    current: int
+    repeats: int
+    stuck: bool
+    no_progress: bool
+    attempt: bool
+    level: int
+    reasoned: bool
+    proposes: bool
+
+
 def _merge_completed(ex: Exercise, previous: Sequence[str], diagnosis: Diagnosis, upto: str | None) -> list[str]:
     """Steps completed after this message. A step the diagnosis marks completed is only accepted when the message
     shows work, and only up to `upto` (the target before this message): the diagnosis' word is not evidence."""
@@ -79,7 +99,8 @@ def _states_result(ex: Exercise, text: str) -> bool:
         own = explain(ex.result.value, [ex.result.value], [])
         return bool(own) and len(explain(ex.result.value, [ex.result.value], [text])) < len(own)
     except Exception:
-        return False  # not verified: the result gate stays closed
+        # Any type: explain() lets every CAS error through. Not verified, so the result gate stays closed.
+        return False
 
 
 def _level(current: int, disorientation: Disorientation, escalate: bool) -> int:
@@ -162,6 +183,13 @@ def _concept_plan(ex: Exercise, diagnosis: Diagnosis, target: str, current: int)
 
 
 def decide(ex: Exercise, diagnosis: Diagnosis, state: SessionState, student_texts: Sequence[str] = ()) -> Decision:
+    facts = _read_turn(ex, diagnosis, state)
+    plan = _choose_plan(ex, diagnosis, state, student_texts, facts)
+    new_state = _next_state(ex, state, plan, facts)
+    return Decision(_with_gates(ex, diagnosis, plan, new_state, student_texts), new_state)
+
+
+def _read_turn(ex: Exercise, diagnosis: Diagnosis, state: SessionState) -> _TurnFacts:
     d = diagnosis
     known_mistakes = [m for m in d.detected_mistakes if m in ex.mistake_ids]
     has_mistake = bool(known_mistakes) or (OTHER_MISTAKE in d.detected_mistakes and bool(d.other_mistake.strip()))
@@ -201,7 +229,34 @@ def decide(ex: Exercise, diagnosis: Diagnosis, state: SessionState, student_text
     # A result only drives the turn when this message is about it: a request for help, a question or
     # frustration is answered as such even if the diagnosis also reports a result.
     proposes = d.proposed_result != "cap" and d.intent in ("proposa_resultat", "mostra_treball")
-    already_said = state.result_confirmed
+    return _TurnFacts(
+        known_mistakes=known_mistakes,
+        has_mistake=has_mistake,
+        justified=justified,
+        target=target,
+        completed=completed,
+        new_steps=new_steps,
+        states_now=states_now,
+        current=current,
+        repeats=repeats,
+        stuck=stuck,
+        no_progress=no_progress,
+        attempt=attempt,
+        level=level,
+        reasoned=reasoned,
+        proposes=proposes,
+    )
+
+
+def _choose_plan(
+    ex: Exercise, diagnosis: Diagnosis, state: SessionState, student_texts: Sequence[str], facts: _TurnFacts
+) -> Plan:
+    """The first branch that applies decides the action: the order of the branches is their priority."""
+    d = diagnosis
+    known_mistakes, has_mistake, justified = facts.known_mistakes, facts.has_mistake, facts.justified
+    target, new_steps, current, repeats = facts.target, facts.new_steps, facts.current, facts.repeats
+    stuck, no_progress, attempt, level = facts.stuck, facts.no_progress, facts.attempt, facts.level
+    reasoned, proposes = facts.reasoned, facts.proposes
 
     plan: Plan
     if state.closed:
@@ -380,30 +435,13 @@ def decide(ex: Exercise, diagnosis: Diagnosis, state: SessionState, student_text
         reason = f"Desorientació '{d.disorientation}', intenció '{d.intent}', nivell previ {current}"
         reason += ", sense progrés des de l'última pista." if no_progress else "."
         plan = Plan(action="pista", reason=reason, target_step=target, hint_level=level)
+    return plan
 
-    tone = "empatic" if (d.intent == "frustracio" or d.disorientation == "perdut") else plan.tone
-    move = "Telling" if (plan.action == "pista" and plan.hint_level >= 3) else TEACHER_MOVES[plan.action]
 
-    # ---- state transition ----
+def _next_state(ex: Exercise, state: SessionState, plan: Plan, facts: _TurnFacts) -> SessionState:
     closes = plan.action in CLOSING_ACTIONS
-    closed = state.closed or closes
-    if closes:
-        completed = list(ex.step_ids)
+    target = facts.target
     shown = [*state.shown, *([target] if plan.action == "mostrar_pas" and target and target not in state.shown else [])]
-    confirmed = already_said or plan.action == "tancar" or plan.result_stated_by_student
-
-    allow_result = plan.may_state_result or confirmed
-    plan = plan.model_copy(
-        update={
-            "tone": tone,
-            "move": move,
-            "forbidden_patterns": _forbidden_patterns(
-                ex, plan.target_step, plan.hint_level, allow_result, completed, shown, student_texts
-            ),
-            "forbidden_texts": _forbidden_texts(ex, plan.target_step, plan.hint_level, allow_result, completed, shown),
-        }
-    )
-
     level_per_step = dict(state.level_per_step)
     repetitions = dict(state.repetitions)
     hint_step = plan.target_step if plan.action in HINT_ACTIONS else None
@@ -416,21 +454,41 @@ def decide(ex: Exercise, diagnosis: Diagnosis, state: SessionState, student_text
     if plan.target_mistake:
         mistakes_seen[plan.target_mistake] = mistakes_seen.get(plan.target_mistake, 0) + 1
 
-    new_state = SessionState(
-        completed=completed,
+    return SessionState(
+        completed=list(ex.step_ids) if closes else facts.completed,
         level_per_step=level_per_step,
         turns=state.turns + 1,
-        closed=closed,
+        closed=state.closed or closes,
         last_step=hint_step if hint_step is not None else state.last_step,
         last_action=plan.action,
-        step_states=states_now,
+        step_states=facts.states_now,
         shown=shown,
         mistakes_seen=mistakes_seen,
         repetitions=repetitions,
-        result_confirmed=confirmed,
-        student_attempts=state.student_attempts + (1 if attempt else 0),
+        result_confirmed=state.result_confirmed or plan.action == "tancar" or plan.result_stated_by_student,
+        student_attempts=state.student_attempts + (1 if facts.attempt else 0),
     )
-    return Decision(plan, new_state)
+
+
+def _with_gates(
+    ex: Exercise, diagnosis: Diagnosis, plan: Plan, after: SessionState, student_texts: Sequence[str]
+) -> Plan:
+    """The chosen plan with its tone, its teacher move and the leak gates of what it opens (``after``: the state
+    this turn leads to)."""
+    d = diagnosis
+    allow_result = plan.may_state_result or after.result_confirmed
+    return plan.model_copy(
+        update={
+            "tone": "empatic" if (d.intent == "frustracio" or d.disorientation == "perdut") else plan.tone,
+            "move": "Telling" if (plan.action == "pista" and plan.hint_level >= 3) else TEACHER_MOVES[plan.action],
+            "forbidden_patterns": _forbidden_patterns(
+                ex, plan.target_step, plan.hint_level, allow_result, after.completed, after.shown, student_texts
+            ),
+            "forbidden_texts": _forbidden_texts(
+                ex, plan.target_step, plan.hint_level, allow_result, after.completed, after.shown
+            ),
+        }
+    )
 
 
 def _mistake_exhausted(state: SessionState, known: Sequence[str], attempt: bool, gives_up: bool) -> bool:

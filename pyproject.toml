@@ -81,7 +81,7 @@ unfixable = ["F401"]
 extend-immutable-calls = ["fastapi.Depends", "fastapi.Query", "fastapi.Path", "fastapi.Body"]
 
 [tool.pyright]
-include = ["backend/core", "backend/apps", "backend/settings"]
+include = ["backend/core", "backend/apps", "backend/settings", "scripts"]
 extraPaths = ["backend"]
 venvPath = "."
 venv = ".venv"

@@ -8,6 +8,12 @@ treated as a typo.
 
 import re
 
+
+def dollars_balanced(text: str) -> bool:
+    """An even number of unescaped `$`: every math span is closed."""
+    return len(re.findall(r"(?<!\\)\$", text)) % 2 == 0
+
+
 # Every command in backend/teoria/*.yaml and backend/exercicis/*.yaml (leak regexes excluded).
 _COURSE = frozenset(
     [
@@ -269,7 +275,7 @@ KNOWN_COMMANDS = _COURSE | _KATEX
 
 # "\\" is a row break, not a command: consume it first, or "\\y^2" would read as a command "\y". A row may start
 # with a variable ("\\x=0" in \substack, "\\y^2" in pmatrix), but "\\subseteq" outside an environment is a command
-# whose backslash the model escaped twice (seen in gpt-5.6-luna output), which KaTeX shows as a break + plain text.
+# whose backslash was escaped twice, which KaTeX shows as a row break plus plain text.
 _TOKEN = re.compile(r"\\begin\{[^}]*\}|\\end\{[^}]*\}|\\\\([A-Za-z]+)?|\\([A-Za-z]+)")
 
 

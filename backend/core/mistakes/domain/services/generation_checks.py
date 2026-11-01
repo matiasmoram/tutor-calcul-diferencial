@@ -5,8 +5,6 @@
 2. VERIFICATION an independent pass that never sees the declared errors lists every error it finds; code then
                 requires that every declared error is found and nothing else is wrong."""
 
-import re
-
 from pydantic import BaseModel
 
 from core.mistakes.domain.entities.mistake_exercise import DeclaredMistake
@@ -18,7 +16,7 @@ from core.mistakes.domain.values.llm_outputs import (
     VerifierFinding,
 )
 from core.mistakes.domain.values.mistake_kind import PROBLEM_MISTAKE_KINDS, THEORY_MISTAKE_KINDS
-from core.shared.math.latex_vocabulary import unknown_commands
+from core.shared.math.latex_vocabulary import dollars_balanced, unknown_commands
 
 
 class GenerationCheck(BaseModel):
@@ -46,7 +44,7 @@ def validate_generation(draft: GenerationDraft, n: int, theory: bool = False) ->
     for i, f in enumerate(fragments, 1):
         if not f:
             problems.append(f"el fragment {i} és buit")
-        if len(re.findall(r"(?<!\\)\$", f)) % 2:
+        if not dollars_balanced(f):
             problems.append(f"el fragment {i} té un nombre senar de '$' (LaTeX mal tancat)")
         if "$$" in f:
             problems.append(f"el fragment {i} fa servir $$...$$; cal $...$")

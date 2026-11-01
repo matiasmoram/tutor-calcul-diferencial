@@ -6,7 +6,7 @@ from collections.abc import Collection, Sequence
 
 from core.quizzes.domain.entities.statement import VERDICTS
 from core.quizzes.domain.values.drafts import StatementDraft
-from core.shared.math.latex_vocabulary import unknown_commands
+from core.shared.math.latex_vocabulary import dollars_balanced, unknown_commands
 from core.shared.math.sympy_checks import CheckResult, MathCheck
 
 # A hint that names the verdict or the tool gives the answer away.
@@ -18,10 +18,6 @@ def normal_key(text: str) -> str:
     """Duplicate detection key: accents, case, spacing and punctuation ignored."""
     text = unicodedata.normalize("NFKD", text.lower())
     return re.sub(r"[^a-z0-9]+", "", text)
-
-
-def dollars_balanced(text: str) -> bool:
-    return len(re.findall(r"(?<!\\)\$", text)) % 2 == 0 and "$$" not in text
 
 
 def validate_draft(d: StatementDraft, refs: Collection[str]) -> list[str]:
@@ -49,7 +45,7 @@ def validate_draft(d: StatementDraft, refs: Collection[str]) -> list[str]:
         ("pista", d.hint),
         ("concepte", d.concept),
     ):
-        if not dollars_balanced(value):
+        if not dollars_balanced(value) or "$$" in value:
             problems.append(f"'{name}' té el LaTeX mal tancat o fa servir $$")
         if unknown := unknown_commands(value):
             problems.append(f"'{name}' fa servir ordres LaTeX que no existeixen: {', '.join(sorted(unknown))}")

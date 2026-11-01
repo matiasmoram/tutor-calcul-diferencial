@@ -148,9 +148,9 @@ PART2_ERROR = corruption([edit(1, "x^4 \\le", "x^4 \\ge")], "$x^4 \\ge x^4+y^2$"
 PART3_ERROR = corruption([edit(2, "és $0$", "és $1$")], "el límit és $1$", tipus="calcul", pista="pista 3")
 
 
-def part_checked(*problems: JsonObject, alert: str = "") -> JsonObject:
+def part_checked(*problems: JsonObject, context_ok: bool = True, alert: str = "") -> JsonObject:
     """The blind check of one corrupted part."""
-    return {"problemes": list(problems), "valoracio": "", "alerta_context": alert}
+    return {"problemes": list(problems), "valoracio": "", "context_correcte": context_ok, "alerta_context": alert}
 
 
 def resolution(parts: list[tuple[str, list[str]]] = PARTS) -> Resolution:

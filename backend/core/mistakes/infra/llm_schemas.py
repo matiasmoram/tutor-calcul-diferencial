@@ -162,10 +162,11 @@ def part_verification_schema(n_fragments: int) -> JsonObject:
     return {
         "type": "object",
         "additionalProperties": False,
-        "required": ["problemes", "valoracio", "alerta_context"],
+        "required": ["problemes", "valoracio", "context_correcte", "alerta_context"],
         "properties": {
             "problemes": _findings(n_fragments),
             "valoracio": {"type": "string"},
+            "context_correcte": {"type": "boolean"},
             "alerta_context": {"type": "string"},
         },
     }

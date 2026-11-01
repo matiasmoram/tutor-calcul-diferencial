@@ -241,11 +241,11 @@ def test_an_edit_larger_than_half_the_part_is_refused() -> None:
     assert any("massa grans" in p for p in check.problems)
 
 
-def checked_part(*findings: JsonObject, alert: str = "") -> list[str]:
+def checked_part(*findings: JsonObject, context_ok: bool = True, alert: str = "") -> list[str]:
     doc = parted()
     part = doc.parts[1]
     assert part.mistake is not None and part.flawed_fragments is not None
-    report = PartReport.model_validate(part_checked(*findings, alert=alert))
+    report = PartReport.model_validate(part_checked(*findings, context_ok=context_ok, alert=alert))
     return part_verification_problems(part.mistake, 3, part.flawed_fragments, report)
 
 
@@ -253,17 +253,31 @@ def test_the_blind_part_check_must_find_exactly_the_declared_error() -> None:
     assert checked_part(finding(1, "x^4 \\ge")) == []
     assert checked_part(finding(1, ""), finding(1, "Com que", "imprecisio")) == []
     assert "no l'ha detectat" in checked_part(finding(1, "el quocient està fitat per $|x|$"))[0]
-    assert "no l'ha detectat" in checked_part()[0]
-    unintended = checked_part(finding(1, "x^4 \\ge"), finding(2, "Per tant", "error", "salt"))
-    assert unintended == ["hi ha un error NO intencionat al fragment 2: «Per tant» — salt"]
+    (missing,) = checked_part()
+    assert missing.endswith("Fes que sigui clarament incorrecte amb el que se sap fins aquí, o tria'n un altre.")
+    unintended = checked_part(finding(1, "x^4 \\ge"), finding(2, "Per tant", "error", "Salt injustificat."))
+    assert unintended == [
+        "hi ha un error NO intencionat al fragment 2: «Per tant» — Salt injustificat. Si és un pas que depèn del teu "
+        "error, actualitza'l amb un canvi posterior; si no, tria un altre error."
+    ]
     assert "més d'un error" in checked_part(finding(1, "x^4 \\ge"), finding(1, "\\ge x^4"))[0]
 
 
-def test_consequences_come_after_the_error_and_the_context_is_not_questioned() -> None:
+def test_consequences_come_after_the_error() -> None:
     assert checked_part(finding(1, "x^4 \\ge"), finding(2, "|f(x,y)|", "consequencia")) == []
     before = checked_part(finding(1, "x^4 \\ge"), finding(1, "Com que", "consequencia"))
     assert before == [
         "la conseqüència del fragment 1 («Com que») és anterior a l'error: les conseqüències han de venir després de l'error"
     ]
-    alert = checked_part(finding(1, "x^4 \\ge"), alert="el candidat de la part 1 és fals")
-    assert alert == ["el verificador creu que les parts anteriors tenen un error: el candidat de la part 1 és fals"]
+
+
+def test_the_earlier_parts_must_be_judged_correct_and_only_the_verdict_counts() -> None:
+    assert checked_part(finding(1, "x^4 \\ge"), alert="Cap.") == []
+    (alert,) = checked_part(finding(1, "x^4 \\ge"), context_ok=False, alert="el candidat de la part 1 és fals")
+    assert alert == (
+        "el verificador creu que les parts anteriors tenen un error (el candidat de la part 1 és fals): segurament el "
+        "teu canvi contradiu un valor o una afirmació de les parts anteriors. Fes que l'error sigui un pas mal fet "
+        "dins d'aquesta part, coherent amb el que ja s'ha establert."
+    )
+    (unexplained,) = checked_part(finding(1, "x^4 \\ge"), context_ok=False)
+    assert unexplained.startswith("el verificador creu que les parts anteriors tenen un error: segurament")

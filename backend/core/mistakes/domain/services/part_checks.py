@@ -301,8 +301,9 @@ def check_corruption(
 def part_verification_problems(
     mistake: DeclaredMistake, first_fragment: int, flawed: list[str], report: PartReport
 ) -> list[str]:
-    """Stage C passes with exactly one error, the declared one, every consequence after it and no alert about the
-    earlier parts. The verifier numbers the part's fragments from 1; imprecisions are ignored."""
+    """Stage C passes with exactly one error, the declared one, every consequence after it and the earlier parts
+    judged correct. The verifier numbers the part's fragments from 1; imprecisions are ignored. The reasons go back
+    to stage B, so they say what to change."""
     local = mistake.model_copy(update={"fragment": mistake.fragment - first_fragment + 1})
     errors = [p for p in report.findings if p.severity == SEVERITY_ERROR]
     found = [p for p in errors if same_problem(local, p, flawed)]
@@ -310,19 +311,29 @@ def part_verification_problems(
     if not found:
         issues.append(
             f"l'error declarat al fragment {local.fragment} («{local.quote}») no l'ha detectat el verificador: "
-            "potser no és un error real o és ambigu"
+            "potser no és un error real o és ambigu. Fes que sigui clarament incorrecte amb el que se sap fins aquí, "
+            "o tria'n un altre."
         )
     elif len(found) > 1:
         issues.append("el verificador hi veu més d'un error a la cita: l'error ha de ser un de sol i local")
     for p in errors:
         if p not in found:
-            issues.append(f"hi ha un error NO intencionat al fragment {p.fragment}: «{p.quote}» — {p.explanation}")
+            issues.append(
+                f"hi ha un error NO intencionat al fragment {p.fragment}: «{p.quote}» — "
+                f"{p.explanation.strip().rstrip('.')}. Si és un pas que depèn del teu error, actualitza'l amb un "
+                "canvi posterior; si no, tria un altre error."
+            )
     for p in report.findings:
         if p.severity == SEVERITY_CONSEQUENCE and located_before(p, local, flawed):
             issues.append(
                 f"la conseqüència del fragment {p.fragment} («{p.quote}») és anterior a l'error: "
                 "les conseqüències han de venir després de l'error"
             )
-    if alert := report.context_alert.strip():
-        issues.append(f"el verificador creu que les parts anteriors tenen un error: {alert}")
+    if report.context_correct is not True:
+        alert = report.context_alert.strip()
+        issues.append(
+            f"el verificador creu que les parts anteriors tenen un error{f' ({alert})' if alert else ''}: segurament "
+            "el teu canvi contradiu un valor o una afirmació de les parts anteriors. Fes que l'error sigui un pas mal "
+            "fet dins d'aquesta part, coherent amb el que ja s'ha establert."
+        )
     return issues

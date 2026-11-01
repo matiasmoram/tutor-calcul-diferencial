@@ -153,12 +153,12 @@ Les parts anteriors, si n'hi ha, són correctes i ja s'han revisat: són només 
 Llista TOTS els errors matemàtics que trobis a la part: càlculs incorrectes, desigualtats falses, teoremes aplicats sense les hipòtesis, raonaments que no se segueixen, conclusions no justificades, casos oblidats; si la part és un enunciat, hipòtesis eliminades, afeblides o canviades, conclusions més fortes o diferents, quantificadors o implicacions canviats respecte dels apunts.
 
 Per a cada problema indica la gravetat:
-- "error": el raonament o el càlcul és incorrecte en aquest punt.
+- "error": el raonament o el càlcul és incorrecte en aquest punt, o (si la part és un enunciat) l'enunciat queda fals o diferent del dels apunts. Ha de ser incorrecte amb el que se sap fins aquí (l'enunciat, la teoria, les parts anteriors i aquesta part): una tria o una omissió que només seria un problema en passos posteriors no és un error d'aquesta part.
 - "consequencia": el pas és correcte donat un error anterior de la mateixa part, però hereta un resultat erroni.
 - "imprecisio": manca de rigor menor o d'estil que no invalida el raonament.
 
-"fragment": el número del fragment dins la part a revisar. "cita": text copiat exactament del fragment. Una reformulació equivalent NO és cap error.
-"alerta_context": si creus que alguna de les parts anteriors té un error, explica-ho; si no, deixa-ho buit.
+"fragment": el número del fragment dins la part a revisar. "cita": text copiat exactament del fragment. Una reformulació equivalent, un camí correcte diferent del de la referència o un càlcul rutinari condensat NO són errors (com a molt, "imprecisio"); marca "error" només si pots dir què és fals o quin pas no se segueix.
+"context_correcte": true si les parts anteriors et semblen correctes; false només si hi veus un error clar. "alerta_context": si "context_correcte" és false, explica quin error hi veus; si és true, deixa-ho buit ("").
 Sigues exhaustiu i estricte, però no inventis errors en passos correctes.
 """
 

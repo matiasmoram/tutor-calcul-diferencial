@@ -177,7 +177,13 @@ class ResolutionReport(VerificationReport):
 class PartReport(VerificationReport):
     """The blind check of one corrupted part (stage C)."""
 
-    # Non-empty: the verifier thinks the earlier parts, given to it as correct context, are wrong.
+    # Not true: the verifier thinks the earlier parts, given to it as correct context, are wrong.
+    context_correct: bool | JsonScalar = Field(
+        default=True,
+        validation_alias=catalan_alias("context_correcte", "context_correct"),
+        serialization_alias="context_correcte",
+    )
+    # Why, when the context is not correct; anything written here otherwise is ignored.
     context_alert: str = Field(
         default="",
         validation_alias=catalan_alias("alerta_context", "context_alert"),

@@ -104,9 +104,9 @@ async def test_the_part_check_sees_the_earlier_parts_as_context_and_never_the_cl
     doc = parted()
     clean = resolution()
     flawed = ResolutionPart(title=clean.parts[1].title, step="acotar", fragments=doc.parts[1].flawed_fragments or [])
-    llm = ScriptedLLMClient({Stage.MISTAKES_VERIFICATION: [part_checked(alert="res")]})
+    llm = ScriptedLLMClient({Stage.MISTAKES_VERIFICATION: [part_checked(context_ok=False, alert="res")]})
     report, _ = await LLMPartVerifier(llm).verify(problem_source(), clean.parts[:1], flawed)
-    assert report.context_alert == "res"
+    assert report.context_correct is False and report.context_alert == "res"
     request = llm.requests[Stage.MISTAKES_VERIFICATION][0]
     assert request.system == prompts.PART_VERIFICATION_SYSTEM and request.context == prompts.context(problem_source())
     earlier = f"<parts_anteriors>\nTrobar un candidat\n{PARTS[0][1][0]}\n{PARTS[0][1][1]}\n</parts_anteriors>"
@@ -117,7 +117,16 @@ async def test_the_part_check_sees_the_earlier_parts_as_context_and_never_the_cl
     assert PARTS[1][1][0] not in request.user and PARTS[2][1][0] not in request.user
     assert "error" not in request.user.lower()
     schema = json.dumps(request.schema)
-    assert '"enum": [1, 2]' in schema and '"alerta_context": {"type": "string"}' in schema
+    assert '"enum": [1, 2]' in schema and '"context_correcte": {"type": "boolean"}' in schema
+    assert request.schema is not None and "context_correcte" in request.schema["required"]
+
+
+def test_the_part_check_judges_the_context_with_a_boolean_and_errors_by_what_is_known_so_far() -> None:
+    system = prompts.PART_VERIFICATION_SYSTEM
+    assert '"context_correcte": true si les parts anteriors et semblen correctes' in system
+    assert 'si és true, deixa-ho buit ("")' in system
+    assert "Ha de ser incorrecte amb el que se sap fins aquí" in system
+    assert "un camí correcte diferent del de la referència o un càlcul rutinari condensat NO són errors" in system
 
 
 async def test_a_part_check_without_earlier_parts_says_so() -> None:

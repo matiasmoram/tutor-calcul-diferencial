@@ -7,6 +7,7 @@ attempts per stage, its model calls and tokens, the cost at the evaluation harne
 
 import argparse
 import asyncio
+import sys
 import time
 from collections import Counter
 from dataclasses import asdict
@@ -32,7 +33,7 @@ from core.mistakes.infra.llm_part_verifier import LLMPartVerifier
 from core.mistakes.infra.llm_resolution_verifier import LLMResolutionVerifier
 from core.mistakes.infra.llm_resolution_writer import LLMResolutionWriter
 from core.shared.domain.clock import SystemClock
-from core.shared.llm.client import CallMeta, JsonObject, LLMClient, LLMError, LLMRequest, Stage
+from core.shared.llm.client import CallMeta, JsonObject, LLMClient, LLMError, LLMQuotaExhaustedError, LLMRequest, Stage
 from core.shared.llm.infra.factory import make_llm_client
 from settings import BACKEND_DIR, ROOT_DIR, Config
 
@@ -152,6 +153,8 @@ async def pregenerate(
             document = await generator.generate(source_of(course, source_id), difficulty)
         except Exception as e:  # report and continue with the next spec
             print(f"  FAILED: {e}", flush=True)
+            if isinstance(e, LLMQuotaExhaustedError):
+                print(f"  provider: {e.detail}", flush=True)
             print_usage(calls, first_call, t0)
             continue
         files.save(document)
@@ -177,4 +180,5 @@ if __name__ == "__main__":
         "--format", choices=LAYOUTS, default="sencer", help="sencer: the whole document; per_parts: step by step"
     )
     args = parser.parse_args()
+    sys.stdout.reconfigure(encoding="utf-8")  # type: ignore[union-attr]  # the Windows console defaults to cp1252
     asyncio.run(main(args.specs, args.format))

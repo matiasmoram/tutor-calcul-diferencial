@@ -11,7 +11,7 @@ from core.mistakes.domain.entities.parted_mistake_exercise import PartedMistakeE
 from core.mistakes.infra.json_file_source import JsonFileMistakeSource
 from core.quizzes.domain.entities.quiz import Quiz
 from core.quizzes.infra.json_quiz_files import JsonQuizFiles
-from core.shared.llm.client import CallMeta, LLMError, LLMRequest, Stage
+from core.shared.llm.client import CallMeta, LLMError, LLMQuotaExhaustedError, LLMRequest, Stage
 from tests.core.mistakes.builders import (
     COURSE,
     exercise_generator,
@@ -122,6 +122,30 @@ async def test_call_log_keeps_billed_failures_and_prices_them_with_the_harness()
     assert pregenerate_errades.usage(calls.calls) == (
         f"calls 1 (mistakes_generation 1); tokens in 1000000 (cached 200000), out 100000; cost ${usd:.4f}"
     )
+
+
+async def test_pregenerate_errades_prints_the_rejection_reasons_of_a_failed_document(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    calls = pregenerate_errades.CallLog(
+        ScriptedLLMClient(
+            {Stage.MISTAKES_GENERATION: [written()] * 3, Stage.MISTAKES_VERIFICATION: [resolution_checked(False)] * 3}
+        )
+    )
+    files = JsonFileMistakeSource(tmp_path)
+    await pregenerate_errades.pregenerate(["t2-4c:normal"], COURSE, parted_generator(calls), files, calls)
+    out = capsys.readouterr().out
+    assert "FAILED:" in out and "resolució, intent 1:" in out and "resolució, intent 3:" in out
+    assert not stored(tmp_path)
+
+
+async def test_pregenerate_errades_names_an_exhausted_quota(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    quota = LLMQuotaExhaustedError("insufficient_quota: no credit")
+    calls = pregenerate_errades.CallLog(ScriptedLLMClient({Stage.MISTAKES_GENERATION: [quota]}))
+    files = JsonFileMistakeSource(tmp_path)
+    await pregenerate_errades.pregenerate(["t2-4c:normal"], COURSE, parted_generator(calls), files, calls)
+    out = capsys.readouterr().out
+    assert "FAILED:" in out and "provider: insufficient_quota: no credit" in out
 
 
 def test_pregenerate_errades_builds_the_generator_of_the_format() -> None:

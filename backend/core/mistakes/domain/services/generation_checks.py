@@ -3,8 +3,9 @@
 1. VALIDATION   error count, one error per fragment, quotes located in their fragment, balanced $...$ so KaTeX
                 renders, no LaTeX command outside the known vocabulary; for theory, statement/proof split and at least one error in the statement.
 2. VERIFICATION an independent pass that never sees the declared errors lists every error it finds; code then
-                requires that every declared error is found, nothing else is wrong and, with 2 or more errors, that
-                no error inherits the consequence of an earlier one."""
+                requires that every declared error is found as an error (not as the consequence of an earlier one),
+                nothing else is wrong and, with 2 or more errors, that no error inherits the consequence of an
+                earlier one."""
 
 import re
 
@@ -151,25 +152,33 @@ def located_before(finding: VerifierFinding, mistake: DeclaredMistake, fragments
 def compare_verification(
     mistakes: list[DeclaredMistake], findings: list[VerifierFinding], fragments: list[str] | None = None
 ) -> list[str]:
-    """The independent check must find every declared error and nothing else that is wrong. With 2 or more errors, a
-    consequence before the last one means an earlier error's wrong values reach a later error: errors must not
-    compound."""
+    """The independent check must find every declared error, as an error, and nothing else that is wrong. A declared
+    error the verifier only sees as a consequence inherits an earlier error; with 2 or more errors, a consequence
+    before the last one means an earlier error's wrong values reach a later error: errors must not compound."""
     issues: list[str] = []
-    real = [p for p in findings if p.severity in (SEVERITY_ERROR, SEVERITY_CONSEQUENCE)]
+    errors = [p for p in findings if p.severity == SEVERITY_ERROR]
+    consequences = [p for p in findings if p.severity == SEVERITY_CONSEQUENCE]
     for e in mistakes:
-        if not any(same_problem(e, p, fragments) for p in real):
+        if any(same_problem(e, p, fragments) for p in errors):
+            continue
+        if any(same_problem(e, p, fragments) for p in consequences):
+            issues.append(
+                f"l'error declarat al fragment {e.fragment} («{e.quote}») només hereta un error anterior (el "
+                "verificador el veu com una conseqüència): els errors no es poden encadenar"
+            )
+        else:
             issues.append(
                 f"l'error declarat al fragment {e.fragment} («{e.quote}») no l'ha detectat el verificador: "
                 "potser no és un error real o és ambigu"
             )
-    for p in findings:
+    for p in errors:
         # Inside a declared fragment too: a second, different error there is just as unintended.
-        if p.severity == SEVERITY_ERROR and not any(same_problem(e, p, fragments) for e in mistakes):
+        if not any(same_problem(e, p, fragments) for e in mistakes):
             issues.append(f"hi ha un error NO intencionat al fragment {p.fragment}: «{p.quote}» — {p.explanation}")
     if len(mistakes) >= 2:
         last = max(mistakes, key=lambda e: (e.fragment, e.start))
-        for p in findings:
-            if p.severity == SEVERITY_CONSEQUENCE and located_before(p, last, fragments):
+        for p in consequences:
+            if located_before(p, last, fragments):
                 issues.append(
                     f"un error es propaga fins a un altre error: la conseqüència del fragment {p.fragment} "
                     f"(«{p.quote}») és anterior a l'últim error declarat (fragment {last.fragment}); només l'últim "

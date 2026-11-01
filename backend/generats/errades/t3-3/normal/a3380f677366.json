@@ -1,0 +1,172 @@
+{
+  "id": "a3380f677366",
+  "exercici": "t3-3",
+  "font": "problema",
+  "dificultat": "normal",
+  "format": "per_parts",
+  "n_enunciat": 0,
+  "parts": [
+    {
+      "titol": "Plantejar la definició",
+      "pas": "definicio",
+      "fragments": [
+        "Prenem una direcció qualsevol $u=(u_1,u_2)\\neq(0,0)$ i apliquem la definició de derivada direccional a l'origen. Com que $f(0,0)=0$, tenim $D_uf(0,0)=\\lim_{t\\to0}\\frac{f(tu_1,tu_2)-0}{t}$, si aquest límit existeix.",
+        "Per a $t\\neq0$, el punt $(tu_1,tu_2)$ no és l'origen, perquè $u\\neq0$. Per tant $f(tu_1,tu_2)=\\frac{(tu_1)^2(tu_2)}{(tu_1)^2+(tu_2)^2}=\\frac{t^3u_1^2u_2}{t^2(u_1^2+u_2^2)}$.",
+        "Així, el límit que cal calcular és $D_uf(0,0)=\\lim_{t\\to0}\\frac{1}{t}\\cdot\\frac{t^3u_1^2u_2}{t^2(u_1^2+u_2^2)}$. El resultat intermedi és aquest quocient incremental expressat en funció de $t$ i de $u$."
+      ],
+      "fragments_errats": [
+        "Prenem una direcció qualsevol $u=(u_1,u_2)\\neq(0,0)$ i apliquem la definició de derivada direccional a l'origen. Com que $f(0,0)=0$, tenim $D_uf(0,0)=\\lim_{t\\to0}\\frac{f(tu_1,tu_2)-0}{t}$, si aquest límit existeix.",
+        "Per a tot $t$, el punt $(tu_1,tu_2)$ no és l'origen, perquè $u\\neq0$. Per tant $f(tu_1,tu_2)=\\frac{(tu_1)^2(tu_2)}{(tu_1)^2+(tu_2)^2}=\\frac{t^3u_1^2u_2}{t^2(u_1^2+u_2^2)}$.",
+        "Així, el límit que cal calcular és $D_uf(0,0)=\\lim_{t\\to0}\\frac{1}{t}\\cdot\\frac{t^3u_1^2u_2}{t^2(u_1^2+u_2^2)}$. El resultat intermedi és aquest quocient incremental expressat en funció de $t$ i de $u$."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 2,
+        "cita": "Per a tot $t$, el punt $(tu_1,tu_2)$ no és l'origen",
+        "inici": 0,
+        "fi": 51,
+        "tipus": "logica",
+        "explicacio": "Aquesta afirmació és falsa: si $t=0$, aleshores $(tu_1,tu_2)=(0,0)$ encara que $u\\neq0$. La fórmula de la branca no nul·la de $f$ només es pot aplicar quan el punt no és l'origen.",
+        "correccio": "Ha de dir: «Per a $t\\neq0$, el punt $(tu_1,tu_2)$ no és l'origen, perquè $u\\neq0$».",
+        "pista": "Quin punt s’obté exactament quan es posa $t=0$ a $(tu_1,tu_2)$?"
+      },
+      "verificacio": {
+        "origen": "llm",
+        "valoracio": "El plantejament de la definició és essencialment correcte, però al fragment 2 hi ha una afirmació falsa sobre el cas $t=0$. Cal restringir l'ús de la fórmula de $f$ a $t\\neq0$.",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "Per a tot $t$, el punt $(tu_1,tu_2)$ no és l'origen, perquè $u\\neq0$.",
+            "gravetat": "error",
+            "explicacio": "Això és fals per a $t=0$: aleshores $(tu_1,tu_2)=(0,0)$ encara que $u\\neq0$. La fórmula de $f$ amb el quocient només es pot aplicar per a $t\\neq0$ en aquest context. Com que en el límit del quocient incremental es consideren valors $t\\neq0$, el càlcul posterior es pot salvar substituint «per a tot $t$» per «per a tot $t\\neq0$»."
+          }
+        ],
+        "intents": [
+          {
+            "intent": 1,
+            "generacio": {
+              "model": "gpt-5.5",
+              "latency_ms": 21328,
+              "input_tokens": 3289,
+              "output_tokens": 1721,
+              "cached_tokens": 0
+            },
+            "validacio": [],
+            "verificacio": {
+              "model": "gpt-5.5",
+              "latency_ms": 7316,
+              "input_tokens": 2247,
+              "output_tokens": 550,
+              "cached_tokens": 0
+            },
+            "problemes_verificador": [
+              {
+                "fragment": 2,
+                "cita": "Per a tot $t$, el punt $(tu_1,tu_2)$ no és l'origen, perquè $u\\neq0$.",
+                "gravetat": "error",
+                "explicacio": "Això és fals per a $t=0$: aleshores $(tu_1,tu_2)=(0,0)$ encara que $u\\neq0$. La fórmula de $f$ amb el quocient només es pot aplicar per a $t\\neq0$ en aquest context. Com que en el límit del quocient incremental es consideren valors $t\\neq0$, el càlcul posterior es pot salvar substituint «per a tot $t$» per «per a tot $t\\neq0$»."
+              }
+            ],
+            "discrepancies": []
+          }
+        ]
+      }
+    },
+    {
+      "titol": "Simplificar i calcular el límit",
+      "pas": "calcular",
+      "fragments": [
+        "Simplifiquem les potències de $t$ en el quocient incremental, sempre per a $t\\neq0$. S'obté $\\frac{1}{t}\\cdot\\frac{t^3u_1^2u_2}{t^2(u_1^2+u_2^2)}=\\frac{u_1^2u_2}{u_1^2+u_2^2}$, que ja no depèn de $t$.",
+        "Com que $u\\neq0$, el denominador $u_1^2+u_2^2$ és positiu, i per tant l'expressió està ben definida. Així el límit existeix per a tota direcció no nul·la i val $D_uf(0,0)=\\frac{u_1^2u_2}{u_1^2+u_2^2}$.",
+        "Si $u$ és unitari, aleshores $u_1^2+u_2^2=1$ i queda $D_uf(0,0)=u_1^2u_2$. En particular, per a $u=(1,0)$ i $u=(0,1)$ s'obté $\\partial_x f(0,0)=0$ i $\\partial_y f(0,0)=0$.",
+        "Finalment, l'aplicació $u\\mapsto D_uf(0,0)$ no és lineal; per exemple, tot i que les dues parcials són nul·les, per a $u=(1/\\sqrt2,1/\\sqrt2)$ surt $D_uf(0,0)=1/(2\\sqrt2)\\neq0$. El resultat final és que existeixen totes les derivades direccionals i valen $\\frac{u_1^2u_2}{u_1^2+u_2^2}$, però $f$ no és diferenciable a l'origen."
+      ],
+      "fragments_errats": [
+        "Simplifiquem les potències de $t$ en el quocient incremental, sempre per a $t\\neq0$. S'obté $\\frac{1}{t}\\cdot\\frac{t^3u_1^2u_2}{t^2(u_1^2+u_2^2)}=\\frac{u_1^2u_2}{u_1^2+u_2^2}$, que ja no depèn de $t$.",
+        "Com que $u\\neq0$, el denominador $u_1^2+u_2^2$ és positiu, i per tant l'expressió està ben definida. Així el límit existeix per a tota direcció no nul·la i val $D_uf(0,0)=\\frac{u_1^2u_2}{u_1^2+u_2^2}$.",
+        "Si $u$ és unitari, aleshores $u_1^2+u_2^2=1$ i queda $D_uf(0,0)=u_1^2u_2$. En particular, per a $u=(1,0)$ i $u=(0,1)$ s'obté $\\partial_x f(0,0)=0$ i $\\partial_y f(0,0)=0$.",
+        "Finalment, l'aplicació $u\\mapsto D_uf(0,0)$ no és lineal; per exemple, tot i que les dues parcials són nul·les, per a $u=(1/\\sqrt2,1/\\sqrt2)$ surt $D_uf(0,0)=1/(2\\sqrt2)\\neq0$. El resultat final és que existeixen totes les derivades direccionals i valen $\\frac{u_1^2u_2}{u_1^2+u_2^2}$, i $f$ és diferenciable a l'origen."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 7,
+        "cita": "i $f$ és diferenciable a l'origen",
+        "inici": 286,
+        "fi": 319,
+        "tipus": "conclusio",
+        "explicacio": "Aquesta conclusió no se segueix de l'existència de totes les derivades direccionals. De fet, si $f$ fos diferenciable, l'aplicació $u\\mapsto D_uf(0,0)$ hauria de ser lineal, i aquí s'acaba de veure que no ho és.",
+        "correccio": "Hauria de dir: «però $f$ no és diferenciable a l'origen».",
+        "pista": "Si una funció és diferenciable en un punt, com depenen les seves derivades direccionals del vector direcció $u$?"
+      },
+      "verificacio": {
+        "origen": "llm",
+        "valoracio": "La simplificació i el càlcul de les derivades direccionals són correctes. L'únic error és la conclusió final sobre la diferenciabilitat: la funció no és diferenciable a l'origen.",
+        "problemes": [
+          {
+            "fragment": 4,
+            "cita": "El resultat final és que existeixen totes les derivades direccionals i valen $\\frac{u_1^2u_2}{u_1^2+u_2^2}$, i $f$ és diferenciable a l'origen.",
+            "gravetat": "error",
+            "explicacio": "La primera part de la frase és correcta, però la conclusió que $f$ és diferenciable a l'origen és falsa. De fet, just abans s'ha observat correctament que l'aplicació $u\\mapsto D_uf(0,0)$ no és lineal; si $f$ fos diferenciable a l'origen, les derivades direccionals vindrien donades per una aplicació lineal en $u$. Per tant, la conclusió correcta és que $f$ no és diferenciable a l'origen."
+          }
+        ],
+        "intents": [
+          {
+            "intent": 1,
+            "generacio": {
+              "model": "gpt-5.5",
+              "latency_ms": 28532,
+              "input_tokens": 3292,
+              "output_tokens": 2279,
+              "cached_tokens": 0
+            },
+            "validacio": [],
+            "verificacio": {
+              "model": "gpt-5.5",
+              "latency_ms": 7297,
+              "input_tokens": 2675,
+              "output_tokens": 511,
+              "cached_tokens": 0
+            },
+            "problemes_verificador": [
+              {
+                "fragment": 4,
+                "cita": "El resultat final és que existeixen totes les derivades direccionals i valen $\\frac{u_1^2u_2}{u_1^2+u_2^2}$, i $f$ és diferenciable a l'origen.",
+                "gravetat": "error",
+                "explicacio": "La primera part de la frase és correcta, però la conclusió que $f$ és diferenciable a l'origen és falsa. De fet, just abans s'ha observat correctament que l'aplicació $u\\mapsto D_uf(0,0)$ no és lineal; si $f$ fos diferenciable a l'origen, les derivades direccionals vindrien donades per una aplicació lineal en $u$. Per tant, la conclusió correcta és que $f$ no és diferenciable a l'origen."
+              }
+            ],
+            "discrepancies": []
+          }
+        ]
+      }
+    }
+  ],
+  "verificacio": {
+    "origen": "llm",
+    "valoracio": "La resolució és correcta i completa: planteja adequadament el quocient incremental, simplifica bé les potències de t, obté la fórmula general per a tota direcció no nul·la, tracta el cas unitari i justifica correctament que la no-linealitat de l'aplicació direccional impedeix la diferenciabilitat a l'origen.",
+    "problemes": [],
+    "intents": [
+      {
+        "intent": 1,
+        "generacio": {
+          "model": "gpt-5.5",
+          "latency_ms": 17189,
+          "input_tokens": 1637,
+          "output_tokens": 1257,
+          "cached_tokens": 0
+        },
+        "validacio": [],
+        "verificacio": {
+          "model": "gpt-5.5",
+          "latency_ms": 5339,
+          "input_tokens": 2395,
+          "output_tokens": 309,
+          "cached_tokens": 0
+        },
+        "problemes_verificador": [],
+        "discrepancies": []
+      }
+    ]
+  },
+  "creat": 1793541622.3462627
+}

@@ -46,7 +46,7 @@ def test_every_stored_document_loads_and_writes_back_the_same_json() -> None:
     """The committed documents are a stored contract: each one loads and serializes to exactly its file."""
     directory = BACKEND_DIR / "generats" / "errades"
     paths = sorted(directory.glob("*/*/*.json"))
-    documents = JsonFileMistakeSource(directory).load()
+    documents = JsonFileMistakeSource(directory).load_all()
     assert paths and len(documents) == len(paths)
     for path, document in zip(paths, documents, strict=True):
         assert document.model_dump_json(indent=2) == path.read_text(encoding="utf-8"), path

@@ -42,8 +42,30 @@ function math(node) {
       ],
       throwOnError: false,
     });
+    italics(node);
   }
   return node;
+}
+
+// Content marks emphasis as _term_. Applied after KaTeX has taken the formulas, to the plain text only, so an
+// underscore inside math (x_1, a_n) is never touched; the underscores must sit at word boundaries.
+const EMPHASIS = /(^|[^\p{L}\p{N}_])_([^_\s](?:[^_]*[^_\s])?)_(?![\p{L}\p{N}_])/gu;
+function italics(node) {
+  const texts = [];
+  const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, {
+    acceptNode: (t) => t.parentElement?.closest(".katex, code, pre") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT,
+  });
+  for (let t = walker.nextNode(); t; t = walker.nextNode()) if (t.data.includes("_")) texts.push(t);
+  for (const t of texts) {
+    const parts = [];
+    let last = 0;
+    for (const m of t.data.matchAll(EMPHASIS)) {
+      const start = m.index + m[1].length;
+      parts.push(t.data.slice(last, start), el("em", { text: m[2] }));
+      last = start + m[2].length + 2;
+    }
+    if (parts.length) t.replaceWith(...parts, t.data.slice(last));
+  }
 }
 
 function tex(src, display = false) {
@@ -352,7 +374,7 @@ async function viewLlistes(mode) {
     el("a", { class: "list-card", href: `#/${mode}/${l.id}` },
       el("span", { class: "list-num", text: l.etiqueta }),
       el("div", { class: "list-body" },
-        el("h3", { text: l.titol }),
+        math(el("h3", { text: l.titol })),
         el("p", { class: "muted", text: l.descripcio }),
         el("div", {},
           el("span", { class: `badge ${l.tipus === "teoric" ? "warn" : "accent"}`, text: TIPUS[l.tipus] }),
@@ -371,7 +393,7 @@ async function viewLlista(mode, id) {
     : [["Inici", "#/"], [m.label, `#/${mode}`], [l.etiqueta, null]]);
   $("#llista-header").replaceChildren(
     el("div", { class: "eyebrow", text: `${m.nom} · ${l.etiqueta} · ${TIPUS[l.tipus]}` }),
-    el("h2", { text: l.titol }),
+    math(el("h2", { text: l.titol })),
     el("p", { class: "muted", text: mode === "errades" ? m.intro : l.descripcio }));
   const byId = Object.fromEntries(l.exercicis.map((e) => [e.id, e]));
   const go = mode === "errades" ? "Troba l'error →" : "→";
@@ -414,7 +436,7 @@ async function viewExercici(llistaId, exId) {
   crumbs([["Inici", "#/"], ["Exercicis", "#/exercicis"], [l.etiqueta, `#/exercicis/${llistaId}`],
     [l.exercicis.find((e) => e.id === exId)?.etiqueta || exId, null]]);
   $("#back-to-list").href = `#/exercicis/${llistaId}`;
-  $("#grup-titol").textContent = `${l.etiqueta} · ${l.titol}`;
+  $("#grup-titol").replaceChildren(math(el("span", { text: `${l.etiqueta} · ${l.titol}` })));
   $("#exercise-list").replaceChildren(...l.exercicis.map((ex) =>
     el("li", {},
       el("a", { class: `side-ex ${ex.format}${ex.id === exId ? " active" : ""}`, href: `#/exercicis/${llistaId}/${ex.id}` },

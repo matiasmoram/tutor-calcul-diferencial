@@ -7,8 +7,6 @@ from contextlib import contextmanager
 from dataclasses import dataclass, field
 from enum import StrEnum
 
-from loguru import logger
-
 from core.shared.domain.exceptions import DomainException
 from core.shared.domain.model_usage import ModelUsage
 from core.shared.domain.text import UNSTORABLE
@@ -39,23 +37,6 @@ class MalformedOutputError(LLMError):
 class LLMProviderError(LLMError):
     """The provider rejected or could not serve the call (bad key 401, rate limit 429, outage 502).
     Clients translate their SDK's exceptions into this, so no other layer depends on an SDK."""
-
-
-PROVIDER_UNAVAILABLE = "El servei del model no està disponible ara mateix. Torna-ho a provar d'aquí a una estona."
-PROVIDER_BUSY = "El model està molt ocupat ara mateix. Espera un moment i torna-ho a provar."
-PROVIDER_UNREACHABLE = "No s'ha pogut connectar amb el model. Torna-ho a provar d'aquí a una estona."
-
-
-def provider_failure(provider: str, status: int | None, detail: str) -> LLMProviderError:
-    """The error that reaches the client for a provider failure: a neutral message and a status, never the
-    provider's own text (it can carry a key fragment or an endpoint). A rejected key or any other provider-side
-    failure is a 503, a rate limit a 429, an unreachable provider a 502. The raw detail goes to the log only."""
-    logger.warning("{} call failed (status {}): {}", provider, status, detail)
-    if status == 429:
-        return LLMProviderError(PROVIDER_BUSY, 429)
-    if status is None:
-        return LLMProviderError(PROVIDER_UNREACHABLE, 502)
-    return LLMProviderError(PROVIDER_UNAVAILABLE, 503)
 
 
 class Stage(StrEnum):

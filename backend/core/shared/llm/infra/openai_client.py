@@ -19,8 +19,8 @@ from core.shared.llm.client import (
     billed,
     parse_json,
     plain_text,
-    provider_failure,
 )
+from core.shared.llm.infra.provider_errors import provider_failure
 
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 

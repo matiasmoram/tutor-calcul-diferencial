@@ -16,8 +16,8 @@ from core.shared.llm.client import (
     billed,
     parse_json,
     plain_text,
-    provider_failure,
 )
+from core.shared.llm.infra.provider_errors import provider_failure
 
 
 class AnthropicLLMClient(LLMClient):

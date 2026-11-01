@@ -4,8 +4,9 @@ import httpx
 import openai
 import pytest
 
-from core.shared.llm.client import PROVIDER_BUSY, PROVIDER_UNAVAILABLE, PROVIDER_UNREACHABLE, LLMProviderError
+from core.shared.llm.client import LLMProviderError
 from core.shared.llm.infra.openai_client import _translated
+from core.shared.llm.infra.provider_errors import PROVIDER_BUSY, PROVIDER_UNAVAILABLE, PROVIDER_UNREACHABLE
 
 SECRET = "sk-place**lder"
 

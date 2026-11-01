@@ -16,7 +16,8 @@ from core.mistakes.infra.sqlmodel_repository import SQLModelMistakeExerciseRepos
 from core.quizzes.domain.values.quiz_id import QuizId
 from core.quizzes.infra.json_quiz_files import JsonQuizFiles
 from core.quizzes.infra.sqlmodel_repository import SQLModelQuizRepository
-from core.shared.llm.client import Stage, provider_failure
+from core.shared.llm.client import Stage
+from core.shared.llm.infra.provider_errors import provider_failure
 from core.shared.storage.session_provider import SQLModelSessionProvider
 from settings import BACKEND_DIR
 from tests.core.quizzes.builders import quiz

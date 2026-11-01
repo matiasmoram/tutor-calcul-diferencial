@@ -29,7 +29,7 @@ CREATE TABLE mistake_exercises (
 	difficulty VARCHAR(16) NOT NULL, 
 	created_at FLOAT NOT NULL, 
 	data JSONB NOT NULL, 
-	layout VARCHAR(16) NOT NULL, 
+	layout VARCHAR(16) DEFAULT 'sencer' NOT NULL, 
 	PRIMARY KEY (id)
 );
 CREATE INDEX ix_mistake_exercises_source ON mistake_exercises (source_id, difficulty);
@@ -71,7 +71,7 @@ CREATE TABLE mistake_sessions (
 	difficulty VARCHAR(16) NOT NULL, 
 	created_at FLOAT NOT NULL, 
 	grading_started_at FLOAT, 
-	layout VARCHAR(16) NOT NULL, 
+	layout VARCHAR(16) DEFAULT 'sencer' NOT NULL, 
 	PRIMARY KEY (id), 
 	FOREIGN KEY(exercise_id) REFERENCES mistake_exercises (id)
 );

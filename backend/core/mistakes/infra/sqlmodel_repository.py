@@ -33,7 +33,7 @@ class MistakeExerciseRecord(SQLModel, table=True):
     difficulty: str = Field(max_length=16)
     created_at: float
     data: dict[str, object] = Field(sa_column=Column(JsonColumn, nullable=False))  # the document, Catalan keys
-    layout: str = Field(default="sencer", max_length=16)
+    layout: str = Field(default="sencer", max_length=16, sa_column_kwargs={"server_default": "sencer"})
 
 
 class MistakeSessionRecord(SQLModel, table=True):
@@ -47,7 +47,7 @@ class MistakeSessionRecord(SQLModel, table=True):
     difficulty: str = Field(max_length=16)
     created_at: float
     grading_started_at: float | None = None  # claim of a grading in progress (of the session, or of one part)
-    layout: str = Field(default="sencer", max_length=16)
+    layout: str = Field(default="sencer", max_length=16, sa_column_kwargs={"server_default": "sencer"})
 
 
 class MistakeGradingRecord(SQLModel, table=True):

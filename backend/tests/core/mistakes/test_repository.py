@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pytest
+from sqlalchemy import bindparam, text
 
 from core.mistakes.application.pregenerated_importer import PregeneratedImporter
 from core.mistakes.domain.entities.annotation import Annotation
@@ -21,7 +22,7 @@ from core.mistakes.infra.sqlmodel_repository import (
     SQLModelMistakeSessionRepository,
 )
 from core.shared.domain.ids import SessionId
-from core.shared.storage.session_provider import SQLModelSessionProvider
+from core.shared.storage.session_provider import JsonColumn, SQLModelSessionProvider
 from settings import BACKEND_DIR
 from tests.core.mistakes.builders import parted, solution
 
@@ -135,6 +136,29 @@ async def test_each_layout_is_served_and_counted_on_its_own(session_provider: SQ
     await repo.save(parted("cccccccccccc", difficulty="facil"))
     assert await repo.availability("per_parts") == {"t2-4c": {"normal": 1, "facil": 1}}
     assert await repo.availability() == {"t2-4c": {"normal": 1}}
+
+
+async def test_rows_written_without_a_layout_are_sencer(session_provider: SQLModelSessionProvider) -> None:
+    """What every row written before layouts existed gets from the database."""
+    doc, sid = solution(), SessionId.generate()
+    async with session_provider.begin() as db:
+        connection = await db.connection()  # raw SQL: the records' Python-side default would fill the layout
+        await connection.execute(
+            text(
+                "INSERT INTO mistake_exercises (id, source_kind, source_id, difficulty, created_at, data) "
+                "VALUES (:id, 'problema', 't2-4c', 'normal', 1.0, :data)"
+            ).bindparams(bindparam("data", type_=JsonColumn)),
+            {"id": doc.id, "data": doc.model_dump(mode="json")},
+        )
+        await connection.execute(
+            text(
+                "INSERT INTO mistake_sessions (id, source_kind, source_id, exercise_id, difficulty, created_at) "
+                "VALUES (:sid, 'problema', 't2-4c', :id, 'normal', 1.0)"
+            ),
+            {"sid": str(sid), "id": doc.id},
+        )
+    assert await SQLModelMistakeExerciseRepository(session_provider).of_source("t2-4c", "normal") == [doc]
+    assert (await SQLModelMistakeSessionRepository(session_provider).get(sid)).layout == "sencer"
 
 
 def parted_session_of(exercise_id: str = "0000000000bb") -> MistakeSession:

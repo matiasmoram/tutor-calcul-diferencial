@@ -1,9 +1,18 @@
+from collections.abc import Iterable
+
 from pydantic import BaseModel, Field, field_validator
 
-from apps.tutor_api.schemas.course import THEORY_PDF, TheoryIndexEntryResponse, TopicSectionResponse, pdf_url
+from apps.tutor_api.schemas.course import (
+    THEORY_PDF,
+    TheoryIndexEntryResponse,
+    TheoryItemResponse,
+    TopicSectionResponse,
+    pdf_url,
+)
 from apps.tutor_api.schemas.student_text import StudentText, check_text
+from core.course.domain.entities.theory_item import TheoryItem
 from core.quizzes.application.source_lister import QuizSourceIndex, TopicSources
-from core.quizzes.domain.entities.grading import Answer
+from core.quizzes.domain.entities.grading import Answer, QuizGrading
 from core.quizzes.domain.entities.quiz import Quiz
 from core.quizzes.domain.values.difficulty import Difficulty
 
@@ -25,6 +34,16 @@ class AnswersRequest(BaseModel):
             check_text(a.statement_id)
             check_text(a.justification)
         return answers
+
+
+class QuizGradingResponse(QuizGrading):
+    """The grading's own contract keys, plus the items of the notes its solutions cite."""
+
+    teoria: dict[str, TheoryItemResponse]
+
+    @classmethod
+    def from_entity(cls, grading: QuizGrading, cited: Iterable[TheoryItem]) -> "QuizGradingResponse":
+        return cls(**dict(grading), teoria={it.id: TheoryItemResponse.from_entity(it) for it in cited})
 
 
 class PublicStatementResponse(BaseModel):

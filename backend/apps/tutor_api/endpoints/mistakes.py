@@ -1,6 +1,6 @@
 """'Troba l'error': documents with deliberate errors (a worked solution or a result of the notes) to annotate."""
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, Query
 
 from apps.tutor_api.dependencies import (
     AppState,
@@ -18,11 +18,11 @@ from apps.tutor_api.schemas.course import (
     ExerciseResponse,
     SheetSummaryResponse,
     TheoryIndexEntryResponse,
-    TheoryItemResponse,
 )
 from apps.tutor_api.schemas.mistakes import (
     GradingRequest,
     MistakeDocumentResponse,
+    MistakeGradingResponse,
     MistakeSessionResponse,
     NewMistakeSessionRequest,
     PartedMistakeDocumentResponse,
@@ -197,15 +197,12 @@ async def grade_annotations(
     body: GradingRequest,
     grader: AnnotationsGrader = Depends(_get_grader),
     config: Config = Depends(get_config),
-) -> dict[str, object]:
+) -> MistakeGradingResponse:
     ensure_api_key(config)
     sid = _session_id(session_id)
     with domain_errors("La correcció"):
         outcome = await grader.grade(sid, body.anotacions)
-    result: dict[str, object] = outcome.grading.model_dump()
-    if outcome.original is not None:
-        result["original"] = TheoryItemResponse.from_entity(outcome.original).model_dump()
-    return result
+    return MistakeGradingResponse.from_entity(outcome)
 
 
 @router.post("/api/errades/sessions/{session_id}/parts/{part}/pista")
@@ -214,7 +211,7 @@ async def reveal_part_hint(
 ) -> PartHintResponse:
     """Per parts: the hint of the part under review, recorded once; that part then scores x0.85."""
     sid = _session_id(session_id)
-    with domain_errors():
+    with domain_errors("La pista"):
         revealed = await hints.reveal(sid, part)
     return PartHintResponse(pista=revealed.hint)
 
@@ -241,4 +238,4 @@ def _session_id(raw: str) -> SessionId:
     try:
         return SessionId(raw)
     except ValueError:
-        raise HTTPException(404, MistakeSessionNotFoundException(raw).message) from None
+        raise MistakeSessionNotFoundException(raw) from None

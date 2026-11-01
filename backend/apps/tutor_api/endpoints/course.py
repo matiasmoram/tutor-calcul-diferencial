@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 
-from apps.tutor_api.dependencies import domain_errors, get_course
+from apps.tutor_api.dependencies import get_course
 from apps.tutor_api.schemas.course import (
     PROBLEMS_PDF,
     SheetResponse,
@@ -22,8 +22,7 @@ async def list_sheets(course: Course = Depends(get_course)) -> list[SheetSummary
 
 @router.get("/api/llistes/{sheet_id}")
 async def get_sheet(sheet_id: str, course: Course = Depends(get_course)) -> SheetResponse:
-    with domain_errors():
-        sheet = course.sheet(sheet_id)
+    sheet = course.sheet(sheet_id)
     return SheetResponse.from_entity(sheet, [course.exercise(e) for e in sheet.exercise_ids])
 
 
@@ -39,5 +38,4 @@ async def theory_index(course: Course = Depends(get_course)) -> TheoryIndexRespo
 
 @router.get("/api/teoria/{item_id}")
 async def get_theory_item(item_id: str, course: Course = Depends(get_course)) -> TheoryItemResponse:
-    with domain_errors():
-        return TheoryItemResponse.from_entity(course.theory_item(item_id))
+    return TheoryItemResponse.from_entity(course.theory_item(item_id))

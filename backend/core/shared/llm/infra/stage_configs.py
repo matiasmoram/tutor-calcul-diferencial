@@ -9,7 +9,7 @@ DEFAULT_MODELS: Mapping[str, str] = {
     "openai": "gpt-5.5",
     "openrouter": "openai/gpt-oss-20b",
 }
-# Free-tier Gemini quotas are per model: spreading stages over models triples throughput.
+# Gemini quotas are per model: the stages are spread over several models.
 GEMINI_STAGE_MODELS: Mapping[Stage, str] = {
     Stage.DIAGNOSIS: "gemini-3.5-flash",
     Stage.REPLY: "gemini-3.5-flash-lite",
@@ -56,9 +56,8 @@ DEFAULT_EFFORT: Mapping[Stage, str] = {
     # Transcribes the student's computations for sympy: no judgment, never sees the solutions.
     Stage.QUIZ_EXTRACTION: "low",
 }
-# 20000 is the most Anthropic accepts without streaming. The tutor stages are capped near their real size
-# (work/study/*.json, reasoning tokens included: diagnosis max 1251, reply 1102, guard 765 over the OpenAI models
-# in use), so a small model stuck in a repetition loop stops within a few seconds instead of burning 16k tokens.
+# 20000 is the most Anthropic accepts without streaming. The tutor stages are capped a little above their real output
+# size (reasoning included), so a model stuck in a repetition loop stops within seconds.
 MAX_TOKENS: Mapping[Stage, int] = {
     Stage.DIAGNOSIS: 3000,
     Stage.REPLY: 1500,

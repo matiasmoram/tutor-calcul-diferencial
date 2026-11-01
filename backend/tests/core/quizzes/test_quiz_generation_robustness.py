@@ -8,8 +8,8 @@ from random import Random
 import pytest
 
 from core.quizzes.application.quiz_generator import QuizGenerator
-from core.quizzes.application.quiz_provider import QuizNotReadyException, QuizProvider
-from core.quizzes.domain.exceptions import QuizGenerationException
+from core.quizzes.application.quiz_provider import QuizProvider
+from core.quizzes.domain.exceptions import QuizGenerationTimeoutException, QuizNotReadyException
 from core.quizzes.domain.values.quiz_id import QuizId
 from core.quizzes.infra.llm_blind_solver import LLMBlindSolver
 from core.quizzes.infra.llm_quiz_auditor import LLMQuizAuditor
@@ -143,9 +143,10 @@ async def test_the_generation_has_a_deadline() -> None:
         Random(0),
         deadline_s=0.05,
     )
-    with pytest.raises(QuizGenerationException) as e:
+    with pytest.raises(QuizGenerationTimeoutException) as e:
         await gen.generate(source(), "facil")
-    assert e.value.error_code == 502 and "no s'ha pogut generar el qüestionari en" in e.value.message
+    assert e.value.error_code == 502
+    assert e.value.message == "no s'ha pogut generar el qüestionari en 0 s: torna-ho a provar més tard"
 
 
 async def test_concurrent_requests_share_one_generation(session_provider: SQLModelSessionProvider) -> None:
@@ -164,13 +165,13 @@ async def test_without_generation_rights_new_picks_another_stored_quiz(
     session_provider: SQLModelSessionProvider,
 ) -> None:
     repo = SQLModelQuizRepository(session_provider)
-    await repo.add(quiz())
-    await repo.add(quiz().model_copy(update={"id": QuizId("bbbbbbbbbbbb")}))
+    await repo.save(quiz())
+    await repo.save(quiz().model_copy(update={"id": QuizId("bbbbbbbbbbbb")}))
     llm = ScriptedLLMClient({})
     provider = QuizProvider(repo, generator(llm), Random(0), may_generate=False)
-    assert not await provider.will_generate(source(), "facil", new=True)
+    assert not await provider.needs_generation(source(), "facil", fresh=True)
     for _ in range(5):
-        provided = await provider.get_or_generate(source(), "facil", new=True, except_id=QUIZ_ID)
+        provided = await provider.get_or_generate(source(), "facil", fresh=True, avoid_id=QUIZ_ID)
         assert provided.quiz.id == "bbbbbbbbbbbb" and not provided.generated_now
     assert llm.calls(Stage.QUIZ_GENERATION) == 0
 
@@ -178,7 +179,7 @@ async def test_without_generation_rights_new_picks_another_stored_quiz(
 async def test_without_generation_rights_a_new_source_is_a_409(session_provider: SQLModelSessionProvider) -> None:
     llm = ScriptedLLMClient({})
     provider = QuizProvider(SQLModelQuizRepository(session_provider), generator(llm), Random(0), may_generate=False)
-    assert not await provider.will_generate(source(), "facil")
+    assert not await provider.needs_generation(source(), "facil")
     with pytest.raises(QuizNotReadyException) as e:
         await provider.get_or_generate(source(), "facil")
     assert e.value.error_code == 409 and "demana-ho al professorat" in e.value.message

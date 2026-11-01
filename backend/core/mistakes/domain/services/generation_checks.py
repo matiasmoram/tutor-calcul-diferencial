@@ -7,8 +7,6 @@
                 nothing else is wrong and, with 2 or more errors, that no error inherits the consequence of an
                 earlier one."""
 
-import re
-
 from pydantic import BaseModel
 
 from core.mistakes.domain.entities.mistake_exercise import DeclaredMistake
@@ -20,7 +18,7 @@ from core.mistakes.domain.values.llm_outputs import (
     VerifierFinding,
 )
 from core.mistakes.domain.values.mistake_kind import PROBLEM_MISTAKE_KINDS, THEORY_MISTAKE_KINDS
-from core.shared.math.latex_vocabulary import unknown_commands
+from core.shared.math.latex_vocabulary import dollars_balanced, unknown_commands
 
 
 class GenerationCheck(BaseModel):
@@ -46,7 +44,7 @@ def fragment_problems(fragments: list[str], where: str = "") -> list[str]:
     for i, f in enumerate(fragments, 1):
         if not f:
             problems.append(f"el fragment {i}{where} és buit")
-        if len(re.findall(r"(?<!\\)\$", f)) % 2:
+        if not dollars_balanced(f):
             problems.append(f"el fragment {i}{where} té un nombre senar de '$' (LaTeX mal tancat)")
         if "$$" in f:
             problems.append(f"el fragment {i}{where} fa servir $$...$$; cal $...$")

@@ -34,7 +34,7 @@ def test_invalid_json_is_an_llm_error() -> None:
 
 
 def test_text_no_column_can_store_is_malformed_output() -> None:
-    # Real gpt-5.4-mini output that crashed the Postgres save of a whole quiz: a NUL inside a formula.
+    # A NUL inside a formula: Postgres cannot store it, so the output is malformed.: a NUL inside a formula.
     with pytest.raises(MalformedOutputError, match=r"U\+0000"):
         parse_json("quiz_verification", r'{"r": [{"j": "Si $f\\neq$ \u00e9s $\u0000ab$"}]}')
     with pytest.raises(MalformedOutputError, match=r"U\+D800"):

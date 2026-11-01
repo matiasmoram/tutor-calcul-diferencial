@@ -4,9 +4,10 @@ They seed the quiz store; at run time the database is the store."""
 from pathlib import Path
 
 from core.quizzes.domain.entities.quiz import Quiz
+from core.quizzes.domain.ports import PregeneratedQuizSource
 
 
-class JsonQuizFiles:
+class JsonQuizFiles(PregeneratedQuizSource):
     def __init__(self, directory: Path) -> None:
         self._directory = directory
 

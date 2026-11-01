@@ -2,15 +2,17 @@
 
 The problems are Catalan: they are fed back to the writer as the reason a draft was rejected."""
 
+import logging
 import re
 from collections.abc import Sequence
 
-from core.course.domain.citations import CITATION
-from core.course.domain.entities.theory_item import KIND_NAMES, TheoryItem
+from core.course.domain.entities.theory_item import TheoryItem
+from core.course.domain.services.citations import CITATION, CitationKey, citation_key, citation_keys
 from core.shared.math.latex_cas import explain, literal_tokens
 from core.shared.math.latex_vocabulary import unknown_commands
 from core.tutoring.domain.values.plan import Plan
 
+_log = logging.getLogger(__name__)
 _DISPLAY = re.compile(r"\$\$.*?\$\$", re.DOTALL)
 _MATH = re.compile(r"\$[^$]*\$")
 _NOT_ENDS = re.compile(r"\b(p\. ?ex|etc|vs|cf|pàg|núm)\.|^\s*\d+\.\s", re.IGNORECASE | re.MULTILINE)
@@ -49,7 +51,8 @@ def deterministic_check(message: str, plan: Plan, permitted: Sequence[str] = ())
         except Exception as e:
             # Fail closed, like a timeout: a draft the CAS could not verify never reaches the student.
             hits = []
-            problems.append(f"{CAS_ERROR_PROBLEM} ({type(e).__name__})")
+            _log.warning("CAS check failed: %s", type(e).__name__)
+            problems.append(CAS_ERROR_PROBLEM)
         literal = _literal_sides(permitted) if hits else set()
         for side, forbidden in hits:
             # A formula copied literally from allowed text (e.g. an integrand sympy cannot read) is never a leak.
@@ -75,13 +78,10 @@ def citation_problems(
     A citation is fine when it names an allowed item or when a permitted text (allowed content, statement) cites
     the same item. A citation without a topic refers to `topic`, as the web's linker reads it."""
 
-    def keys(text: str) -> list[tuple[tuple[str, int, int], str]]:
-        return [
-            ((m.group(1), int(m.group(3) or m.group(4) or (topic or 0)), int(m.group(2))), m.group(0))
-            for m in CITATION.finditer(text)
-        ]
+    def keys(text: str) -> list[tuple[CitationKey, str]]:
+        return [(citation_key(m, topic), m.group(0)) for m in CITATION.finditer(text)]
 
-    allowed = {(KIND_NAMES[it.kind], it.topic, it.number) for it in theory if it.number is not None}
+    allowed = set(citation_keys(theory))
     allowed |= {key for text in permitted for key, _ in keys(text)}
     bad = list(dict.fromkeys(cited for key, cited in keys(message) if key not in allowed))
     return [f"cita teoria que no és a la llista permesa: «{c}»" for c in bad]

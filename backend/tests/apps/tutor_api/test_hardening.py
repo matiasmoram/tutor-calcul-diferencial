@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
+from loguru import logger
 
 from apps.tutor_api import server
 from apps.tutor_api.rate_limiter import RateLimiter
@@ -16,6 +17,7 @@ from core.quizzes.domain.values.quiz_id import QuizId
 from core.quizzes.infra.json_quiz_files import JsonQuizFiles
 from core.quizzes.infra.sqlmodel_repository import SQLModelQuizRepository
 from core.shared.llm.client import Stage
+from core.shared.llm.infra.provider_errors import provider_failure
 from core.shared.storage.session_provider import SQLModelSessionProvider
 from settings import BACKEND_DIR
 from tests.core.quizzes.builders import quiz
@@ -139,6 +141,7 @@ def production_api(tmp_path, monkeypatch: pytest.MonkeyPatch) -> Iterator[TestCl
     monkeypatch.setenv("TUTOR_CLAU_PROFESSOR", "secret")
     monkeypatch.delenv("TUTOR_DEMO", raising=False)
     monkeypatch.delenv("TUTOR_GENERACIO", raising=False)
+    monkeypatch.delenv("RENDER", raising=False)
     with TestClient(create_app(llm=ScriptedLLMClient({}))) as client:
         yield client
 
@@ -198,9 +201,9 @@ async def test_seeding_imports_files_by_missing_id(
 ) -> None:
     quizzes = SQLModelQuizRepository(session_provider)
     mistakes = SQLModelMistakeExerciseRepository(session_provider)
-    # Rows generated at run time: more than the files, which used to skip the import altogether.
-    await quizzes.add(quiz().model_copy(update={"id": QuizId("bbbbbbbbbbbb")}))
-    await quizzes.add(quiz().model_copy(update={"id": QuizId("cccccccccccc")}))
+    # Rows generated at run time, more than the files: the import still adds the missing ones.
+    await quizzes.save(quiz().model_copy(update={"id": QuizId("bbbbbbbbbbbb")}))
+    await quizzes.save(quiz().model_copy(update={"id": QuizId("cccccccccccc")}))
     real = JsonFileMistakeSource(BACKEND_DIR / "generats" / "errades").load()
     for document in real[1:3]:
         await mistakes.save(document)
@@ -210,3 +213,78 @@ async def test_seeding_imports_files_by_missing_id(
     await server._seed_generated(session_provider)
     assert {q.id for q in await quizzes.of_source("tema-2", "facil")} == {quiz().id, "bbbbbbbbbbbb", "cccccccccccc"}
     assert real[0].id in {e.id for e in await mistakes.of_source(real[0].source_id, real[0].difficulty)}
+
+
+@pytest.fixture
+def startup_env(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+    """A complete production environment on a throwaway SQLite file; each test removes one piece."""
+    db = tmp_path / "api.db"
+    monkeypatch.setenv("RENDER", "true")
+    monkeypatch.setenv("DATABASE_URL", f"sqlite+aiosqlite:///{db.as_posix()}")
+    monkeypatch.setenv("LLM_PROVIDER", "openai")
+    monkeypatch.setenv("OPENAI_API_KEY", "test")
+    monkeypatch.setenv("TUTOR_CLAU_PROFESSOR", "secret")
+    monkeypatch.delenv("TUTOR_DEMO", raising=False)
+    return db
+
+
+@pytest.mark.parametrize("missing", ["OPENAI_API_KEY", "TUTOR_CLAU_PROFESSOR"])
+def test_production_refuses_to_start_before_any_database_work(
+    startup_env: Path, monkeypatch: pytest.MonkeyPatch, missing: str
+) -> None:
+    monkeypatch.delenv(missing)
+    with pytest.raises(RuntimeError, match=missing), TestClient(create_app(llm=ScriptedLLMClient({}))):
+        pass
+    assert not startup_env.exists()
+
+
+def test_production_refuses_demo_mode(startup_env: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("TUTOR_DEMO", "1")
+    with pytest.raises(RuntimeError, match="TUTOR_DEMO=1"), TestClient(create_app(llm=ScriptedLLMClient({}))):
+        pass
+
+
+def test_a_local_start_without_a_key_warns_and_logs_its_configuration(
+    startup_env: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.delenv("RENDER")
+    monkeypatch.delenv("OPENAI_API_KEY")
+    lines: list[str] = []
+    sink = logger.add(lambda message: lines.append(message.strip()), level="INFO", format="{level} {message}")
+    try:
+        with TestClient(create_app(llm=ScriptedLLMClient({}))) as client:
+            assert client.get("/health").status_code == 200
+    finally:
+        logger.remove(sink)
+    assert "WARNING OPENAI_API_KEY is not set (LLM_PROVIDER=openai)" in lines
+    [config] = [line for line in lines if line.startswith("INFO config: ")]
+    assert "provider=openai models=diagnosis=" in config and "production=off demo=off" in config
+    assert f"database=sqlite:{startup_env.as_posix()}" in config and "secret" not in config
+
+
+@pytest.mark.parametrize("provider", ["openai", "gemini", "openrouter", "anthropic"])
+def test_a_local_start_builds_the_real_client_without_a_key(
+    startup_env: Path, monkeypatch: pytest.MonkeyPatch, provider: str
+) -> None:
+    monkeypatch.delenv("RENDER")
+    for variable in ("OPENAI_API_KEY", "GEMINI_API_KEY", "OPENROUTER_API_KEY", "ANTHROPIC_API_KEY"):
+        monkeypatch.delenv(variable, raising=False)
+    monkeypatch.setenv("LLM_PROVIDER", provider)
+    with TestClient(create_app()) as client:  # no llm=: the factory runs
+        assert client.get("/health").status_code == 200
+
+
+def test_the_logged_database_has_no_credentials() -> None:
+    url = "postgresql+psycopg://postgres.abcd:s3cr3t@aws-0-eu-central-1.pooler.supabase.com:6543/postgres"
+    assert server._database_label(url) == "postgresql@aws-0-eu-central-1.pooler.supabase.com:6543/postgres"
+
+
+def test_a_rejected_provider_key_reaches_the_student_as_a_neutral_503(
+    api: TestClient, scripted_llm: ScriptedLLMClient
+) -> None:
+    secret = "sk-place**lder"
+    scripted_llm.then(Stage.DIAGNOSIS, provider_failure("OpenAI", 401, f"Incorrect API key provided: {secret}"))
+    sid = _tutor_session(api)
+    response = api.post(f"/api/sessions/{sid}/missatges", json={"text": "hola"})
+    assert response.status_code == 503
+    assert secret not in response.text and "OpenAI" not in response.text

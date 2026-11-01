@@ -3,7 +3,7 @@
 from collections.abc import Sequence
 
 from core.quizzes.domain.entities.grading import JUSTIFICATIONS
-from core.quizzes.domain.entities.statement import TRAPS
+from core.quizzes.domain.entities.statement import CONFIDENCES, TRAPS, VERDICTS
 from core.shared.llm.client import JsonObject
 from core.shared.math.sympy_checks import CHECK_SCHEMA
 
@@ -32,7 +32,7 @@ def generation_schema(refs: Sequence[str]) -> JsonObject:
          "comprovacions"],
         {
             "enunciat": {"type": "string"},
-            "veredicte": {"type": "string", "enum": ["cert", "fals"]},
+            "veredicte": {"type": "string", "enum": list(VERDICTS)},
             "trampa": {"type": "string", "enum": list(TRAPS)},
             "concepte": {"type": "string"},
             "contraexemple": {"type": "string"},
@@ -52,8 +52,8 @@ def solver_schema() -> JsonObject:
         {
             "num": {"type": "integer"},
             "justificacio": {"type": "string"},
-            "veredicte": {"type": "string", "enum": ["cert", "fals"]},
-            "confianca": {"type": "string", "enum": ["alta", "mitjana", "baixa"]},
+            "veredicte": {"type": "string", "enum": list(VERDICTS)},
+            "confianca": {"type": "string", "enum": list(CONFIDENCES)},
             "ben_plantejada": {"type": "boolean"},
         },
     )

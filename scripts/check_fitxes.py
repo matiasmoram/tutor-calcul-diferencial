@@ -1,25 +1,21 @@
 """Validate solution sheets: structure, theory references, leak regexes, LaTeX delimiters.
 
-    python scripts/check_fitxes.py                      # every list in backend/exercicis/
-    python scripts/check_fitxes.py chunk.yaml --tema 3  # a file holding only `problemes:` (authoring chunks)
+    python scripts/check_fitxes.py   # every list in backend/exercicis/
 
 Problems name the authored (Catalan) YAML fields. Exit code 1 if any problem is found, or if the content does
 not load (the course loader rejects duplicate ids and unknown theory references outright).
 """
 
-import argparse
 import re
 import sys
-import tempfile
-from pathlib import Path
 
-import yaml
 from pydantic import ValidationError
 
 from core.course.domain.entities.course import Course
 from core.course.domain.entities.exercise import Exercise
 from core.course.domain.exceptions import InvalidCourseContentException
 from core.course.infra.yaml_course_source import YamlCourseSource
+from core.shared.math.latex_vocabulary import dollars_balanced
 from settings import BACKEND_DIR
 
 EXERCISES_DIR = BACKEND_DIR / "exercicis"
@@ -28,10 +24,6 @@ ID = re.compile(r"^t[1-6]-\d+[a-z]?$")
 # Step fields as the YAML names them -> entity attribute.
 STEP_FIELDS = {"titol": "title", "objectiu": "objective", "idea": "idea", "detall": "detail"}
 HINT_FIELDS = ("objectiu", "idea")
-
-
-def _dollars_balanced(text: str) -> bool:
-    return len(re.findall(r"(?<!\\)\$", text)) % 2 == 0
 
 
 def problems_of(ex: Exercise, course: Course) -> list[str]:
@@ -63,7 +55,7 @@ def problems_of(ex: Exercise, course: Course) -> list[str]:
                 if re.search(r, m.question, re.IGNORECASE):
                     out.append(f"error {m.id}: Socratic question matches banned regex of step {p.id} ({r!r})")
     for name, text in texts.items():
-        if not _dollars_balanced(text):
+        if not dollars_balanced(text):
             out.append(f"{name}: unbalanced $")
     for r in ex.all_refs():
         if r.item_id not in course.theory:
@@ -73,26 +65,9 @@ def problems_of(ex: Exercise, course: Course) -> list[str]:
     return out
 
 
-def _load_chunk(path: Path, topic: int | None) -> Course:
-    data = yaml.safe_load(path.read_text(encoding="utf-8"))
-    if "llista" not in data:
-        header = {"id": f"tema-{topic}", "etiqueta": f"Tema {topic}", "titol": "chunk", "tema": topic}
-        data = {"llista": header, "problemes": data["problemes"]}
-    with tempfile.TemporaryDirectory() as d:
-        (Path(d) / "chunk.yaml").write_text(yaml.safe_dump(data, allow_unicode=True), encoding="utf-8")
-        return YamlCourseSource(Path(d), THEORY_DIR).load()
-
-
 def main() -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("file", nargs="?")
-    ap.add_argument("--tema", type=int)
-    args = ap.parse_args()
-
     try:
-        course = (
-            _load_chunk(Path(args.file), args.tema) if args.file else YamlCourseSource(EXERCISES_DIR, THEORY_DIR).load()
-        )
+        course = YamlCourseSource(EXERCISES_DIR, THEORY_DIR).load()
     except (InvalidCourseContentException, ValidationError) as e:
         print(f"the content does not load: {e}")
         return 1

@@ -13,11 +13,12 @@ from core.course.domain.entities.problem_sheet import Problem, ProblemSheet
 from core.course.domain.entities.theory_item import TheoryItem
 from core.course.domain.entities.topic import Topic, TopicSection
 from core.course.domain.exceptions import InvalidCourseContentException
+from core.course.domain.ports import CourseSource
 
 type Raw = Mapping[str, object]
 
 
-class YamlCourseSource:
+class YamlCourseSource(CourseSource):
     def __init__(self, exercises_dir: Path, theory_dir: Path) -> None:
         self._exercises_dir = exercises_dir
         self._theory_dir = theory_dir

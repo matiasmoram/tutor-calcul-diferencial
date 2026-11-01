@@ -107,7 +107,7 @@ async def test_an_unavailable_guard_or_writer_fails_closed(session_provider: SQL
     out = await t.turns.handle(TurnHandlerInput(session_id=sid, text="no sé què fer"))
     attempts = out.trace.model_dump()["intents"]
     assert attempts[0] == {"missatge": None, "error": "reply: truncated"}
-    assert attempts[1] == {"missatge": None, "error": "reply: empty response"}
+    assert attempts[1] == {"missatge": None, "error": "resposta: empty message"}
     assert attempts[2]["llm"]["veredicte"] == "rebutjat"
     assert attempts[2]["llm"]["explicacio"].startswith("guardià no disponible:")
     assert out.trace.fallback

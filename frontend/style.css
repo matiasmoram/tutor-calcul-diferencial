@@ -563,7 +563,7 @@ pre.block {
 .calls { font-size: 12px; color: var(--muted); }
 
 @media (max-width: 1180px) {
-  .layout, .layout.no-prof { grid-template-columns: 1fr; grid-auto-rows: min-content; overflow-y: auto; }
+  .layout, .layout.no-prof { grid-template-columns: minmax(0, 1fr); grid-auto-rows: min-content; overflow-y: auto; }
   .exercises, .prof { border: 0; border-bottom: 1px solid var(--line); }
   .chat { min-height: 70vh; }
 }
@@ -571,6 +571,8 @@ pre.block {
   .modes { grid-template-columns: 1fr; }
   .list-card, .problem { flex-direction: column; align-items: flex-start; gap: 8px; }
   .problem-go { display: none; }
+  .problem { min-width: 0; }
+  .problem-statement { align-self: stretch; max-width: 100%; }
 }
 @media (max-width: 600px) {
   .composer-tools .small { display: none; }
@@ -949,3 +951,9 @@ a.theory-src:hover { text-decoration: underline; }
   .ce-row-label { min-width: 0; width: 100%; }
   .ce-input { width: 130px; }
 }
+
+/* Wide display formulas scroll inside their own box instead of stretching the grid column (and the page). */
+.problem-group { grid-template-columns: minmax(0, 1fr); }
+.exercises ul { grid-template-columns: minmax(0, 1fr); }
+.exercises, .exercises li, .side-ex, .problem-head, .problem-font, .problem-parts > li { min-width: 0; }
+.katex-display, .problem-preambul { overflow-x: auto; overflow-y: hidden; max-width: 100%; }

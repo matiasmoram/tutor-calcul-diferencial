@@ -15,9 +15,9 @@ breaks, the whole executor is retired: shut down without waiting, its live proce
 way, or never started, are resubmitted once to the fresh executor; a second interruption comes back "indeterminat".
 A check still queued when its call gives up is only cancelled; the executor is kept.
 
-On POSIX each worker's address space is capped (`TUTOR_SYMPY_WORKER_MEMORY_MB`, default 256; 0 = no cap): on a small
-container a runaway check must fail inside its worker (a MemoryError, which `evaluate_one` turns into "indeterminat", or
-a dead worker, which breaks and retires the executor) instead of growing until the OOM killer takes the server.
+On POSIX each worker's address space is capped (`memory_limit_mb`; 0 = no cap): on a small container a runaway check
+must fail inside its worker (a MemoryError, which `evaluate_one` turns into "indeterminat", or a dead worker, which
+breaks and retires the executor) instead of growing until the OOM killer takes the server.
 """
 
 import asyncio
@@ -45,9 +45,8 @@ _POLL_S = 0.1
 # Spawning a worker and importing sympy in it, on a slow (0.1 CPU) instance.
 _SPAWN_GRACE_S = 10.0
 _START_TIMEOUT_S = 120.0
-MEMORY_LIMIT_ENV = "TUTOR_SYMPY_WORKER_MEMORY_MB"
-# Address space, not resident memory: an idle spawned worker with sympy imported maps ~77 MB (~70 MB resident), so
-# a check gets ~180 MB to work with. With the ~170 MB server, one capped worker fits a 512 MB instance.
+# Address space, not resident memory: an idle worker with sympy imported maps about 80 MB of it, so a check gets the
+# rest. With the server itself, one capped worker fits a 512 MB instance.
 DEFAULT_MEMORY_LIMIT_MB = 256
 
 type CheckWorker = Callable[[MathCheck], CheckResult]
@@ -56,8 +55,7 @@ type CheckWorker = Callable[[MathCheck], CheckResult]
 class SympyCheckPool:
     """`worker` must be a picklable module-level function (it is the seam tests use to simulate a hung check).
     `in_process=True` runs the checks inline: no processes, no hang protection (tests).
-    `memory_limit_mb` caps each worker's address space on POSIX (None: `TUTOR_SYMPY_WORKER_MEMORY_MB` or the default;
-    0: no cap)."""
+    `memory_limit_mb` caps each worker's address space on POSIX (0: no cap)."""
 
     def __init__(
         self,
@@ -65,12 +63,10 @@ class SympyCheckPool:
         timeout_s: float = 25.0,
         in_process: bool = False,
         worker: CheckWorker = evaluate_one,
-        memory_limit_mb: int | None = None,
+        memory_limit_mb: int = DEFAULT_MEMORY_LIMIT_MB,
     ) -> None:
         if max_workers < 1:
             raise ValueError("max_workers must be at least 1")
-        if memory_limit_mb is None:
-            memory_limit_mb = int(os.getenv(MEMORY_LIMIT_ENV) or DEFAULT_MEMORY_LIMIT_MB)
         self._memory_limit_mb = memory_limit_mb
         self._max_workers = max_workers
         self._timeout_s = timeout_s

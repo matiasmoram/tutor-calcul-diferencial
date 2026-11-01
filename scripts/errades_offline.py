@@ -1,4 +1,4 @@
-"""'Find the error' documents written offline (by an agent or by hand), gated like the LLM pipeline.
+"""'Find the error' documents written outside the app (by hand or with an external model), gated like the LLM pipeline.
 
 Whole documents ("sencer", the gates of MistakeExerciseGenerator). A batch file (JSON) is a list of documents, each in
 the generator's output format plus its source:
@@ -577,9 +577,9 @@ def check_parted(doc: BatchDoc, nets: dict[str, BatchDoc], net_name: str) -> Par
     def rejected(*problems: str) -> PartedCheck:
         return PartedCheck(net=None, flawed=[], problems=list(problems))
 
-    difficulty = doc.get("dificultat")
-    if difficulty not in MISTAKES_PER_DIFFICULTY:
-        return rejected(f"dificultat invàlida: {difficulty}")
+    difficulty: Difficulty | None = next((d for d in DIFFICULTIES if d == doc.get("dificultat")), None)
+    if difficulty is None:
+        return rejected(f"dificultat invàlida: {doc.get('dificultat')}")
     if not isinstance(doc.get("llavor"), int):
         return rejected("no llavor: per_parts documents come from assign")
     net_doc = nets.get(doc.get("id", ""))

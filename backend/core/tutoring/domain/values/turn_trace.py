@@ -6,7 +6,6 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from core.shared.domain.contract import catalan_alias
 from core.shared.domain.ids import TheoryItemId
-from core.shared.domain.model_usage import ModelUsage
 from core.tutoring.domain.values.chat_message import TurnOrigin
 from core.tutoring.domain.values.diagnosis import Diagnosis
 from core.tutoring.domain.values.guard_verdict import GuardVerdict
@@ -14,10 +13,18 @@ from core.tutoring.domain.values.plan import Plan
 from core.tutoring.domain.values.session_state import SessionState
 
 
-class ModelCall(ModelUsage):
-    """One model call of a stage, as the trace records it (cost and latency accounting)."""
+class ModelCall(BaseModel):
+    """One model call of a stage, as the trace records it (cost and latency accounting). The fields of `ModelUsage`
+    with `stage` first: that is the key order of the stored traces and of the API."""
+
+    model_config = ConfigDict(frozen=True)
 
     stage: str
+    model: str
+    latency_ms: int
+    input_tokens: int = 0
+    output_tokens: int = 0
+    cached_tokens: int = 0
 
 
 class FailedDraft(BaseModel):

@@ -1,12 +1,16 @@
 from typing import Literal, Self
 
-from pydantic import AliasChoices, BaseModel, ConfigDict, Field, field_serializer, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_serializer, field_validator
 
+from core.shared.domain.contract import catalan_alias
 from core.shared.domain.ids import TheoryItemId
 from core.shared.math.sympy_checks import CheckResult, MathCheck
 
 # Contract values (LLM schemas, stored quizzes, HTTP): Catalan.
 Verdict = Literal["cert", "fals"]
+VERDICTS: tuple[Verdict, ...] = ("cert", "fals")
+Confidence = Literal["alta", "mitjana", "baixa"]  # the blind solver's
+CONFIDENCES: tuple[Confidence, ...] = ("alta", "mitjana", "baixa")
 TRAPS: tuple[str, ...] = (
     "reciproc",  # the converse of a theorem
     "hipotesi_eliminada",  # a theorem without one of its hypotheses
@@ -22,11 +26,11 @@ TRAPS: tuple[str, ...] = (
 class VerifiedCheck(MathCheck):
     """A sympy check with the result code computed for it (empty until it is evaluated)."""
 
-    status: str = Field(default="", validation_alias=AliasChoices("estat", "status"), serialization_alias="estat")
+    status: str = Field(default="", validation_alias=catalan_alias("estat", "status"), serialization_alias="estat")
     computed: str = Field(
-        default="", validation_alias=AliasChoices("calculat", "computed"), serialization_alias="calculat"
+        default="", validation_alias=catalan_alias("calculat", "computed"), serialization_alias="calculat"
     )
-    detail: str = Field(default="", validation_alias=AliasChoices("detall", "detail"), serialization_alias="detall")
+    detail: str = Field(default="", validation_alias=catalan_alias("detall", "detail"), serialization_alias="detall")
 
     @property
     def failed(self) -> bool:
@@ -42,10 +46,10 @@ class StatementVerification(BaseModel):
     model_config = ConfigDict(serialize_by_alias=True)
 
     solver_justification: str = Field(
-        validation_alias=AliasChoices("solucionador", "solver_justification"), serialization_alias="solucionador"
+        validation_alias=catalan_alias("solucionador", "solver_justification"), serialization_alias="solucionador"
     )
-    confidence: str = Field(validation_alias=AliasChoices("confianca", "confidence"), serialization_alias="confianca")
-    round: int = Field(validation_alias=AliasChoices("ronda", "round"), serialization_alias="ronda")
+    confidence: str = Field(validation_alias=catalan_alias("confianca", "confidence"), serialization_alias="confianca")
+    round: int = Field(validation_alias=catalan_alias("ronda", "round"), serialization_alias="ronda")
 
 
 class Statement(BaseModel):
@@ -54,30 +58,30 @@ class Statement(BaseModel):
     model_config = ConfigDict(serialize_by_alias=True)
 
     id: str  # "a1", "a2", ... in the order shown
-    statement: str = Field(validation_alias=AliasChoices("enunciat", "statement"), serialization_alias="enunciat")
-    verdict: Verdict = Field(validation_alias=AliasChoices("veredicte", "verdict"), serialization_alias="veredicte")
-    concept: str = Field(validation_alias=AliasChoices("concepte", "concept"), serialization_alias="concepte")
-    trap: str = Field(validation_alias=AliasChoices("trampa", "trap"), serialization_alias="trampa")
+    statement: str = Field(validation_alias=catalan_alias("enunciat", "statement"), serialization_alias="enunciat")
+    verdict: Verdict = Field(validation_alias=catalan_alias("veredicte", "verdict"), serialization_alias="veredicte")
+    concept: str = Field(validation_alias=catalan_alias("concepte", "concept"), serialization_alias="concepte")
+    trap: str = Field(validation_alias=catalan_alias("trampa", "trap"), serialization_alias="trampa")
     counterexample: str = Field(
         default="",
-        validation_alias=AliasChoices("contraexemple", "counterexample"),
+        validation_alias=catalan_alias("contraexemple", "counterexample"),
         serialization_alias="contraexemple",
     )
-    solution: str = Field(validation_alias=AliasChoices("resolucio", "solution"), serialization_alias="resolucio")
+    solution: str = Field(validation_alias=catalan_alias("resolucio", "solution"), serialization_alias="resolucio")
     key_ideas: list[str] = Field(
-        validation_alias=AliasChoices("idees_clau", "key_ideas"), serialization_alias="idees_clau"
+        validation_alias=catalan_alias("idees_clau", "key_ideas"), serialization_alias="idees_clau"
     )
-    hint: str = Field(validation_alias=AliasChoices("pista", "hint"), serialization_alias="pista")
+    hint: str = Field(validation_alias=catalan_alias("pista", "hint"), serialization_alias="pista")
     theory: list[TheoryItemId] = Field(
-        default_factory=list, validation_alias=AliasChoices("teoria", "theory"), serialization_alias="teoria"
+        default_factory=list, validation_alias=catalan_alias("teoria", "theory"), serialization_alias="teoria"
     )
     checks: list[VerifiedCheck] = Field(
         default_factory=list,
-        validation_alias=AliasChoices("comprovacions", "checks"),
+        validation_alias=catalan_alias("comprovacions", "checks"),
         serialization_alias="comprovacions",
     )
     verification: StatementVerification | None = Field(
-        default=None, validation_alias=AliasChoices("verificacio", "verification"), serialization_alias="verificacio"
+        default=None, validation_alias=catalan_alias("verificacio", "verification"), serialization_alias="verificacio"
     )
 
     @field_validator("verification", mode="before")

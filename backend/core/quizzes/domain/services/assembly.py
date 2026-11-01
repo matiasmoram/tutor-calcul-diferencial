@@ -45,5 +45,5 @@ def build_quiz(
         difficulty=difficulty,
         statements=statements,
         verification=QuizVerification(rounds=rounds),
-        created=now,
+        created_at=now,
     )

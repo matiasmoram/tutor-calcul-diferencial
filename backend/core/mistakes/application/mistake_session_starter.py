@@ -53,7 +53,7 @@ class MistakeSessionStarter:
     async def needs_generation(self, request: MistakeSessionStarterInput) -> bool:
         """Whether `start(request)` will call the model (the API checks the provider key first)."""
         source = self._source(request)
-        return await self._provider.will_generate(source, request.difficulty, request.fresh, request.layout)
+        return await self._provider.needs_generation(source, request.difficulty, request.fresh, request.layout)
 
     async def start(self, request: MistakeSessionStarterInput) -> StartedMistakeSession:
         """Raises MistakePartsUnavailableException for "per_parts" on a source that cannot make 2 parts."""

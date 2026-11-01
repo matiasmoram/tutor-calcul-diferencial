@@ -7,14 +7,14 @@ from core.counterexamples.domain.exceptions import InvalidSubmissionException, U
 from core.counterexamples.domain.values.spec_id import SpecId
 from core.counterexamples.domain.values.submission import Submission
 from core.counterexamples.domain.values.verdict import SubmissionResult
-from core.counterexamples.infra.pool_property_checker import PoolPropertyChecker
+from core.counterexamples.infra.pool_property_checker import PoolPropertyChecker, VerdictCache
 from core.shared.math.infra.sympy_pool import SympyCheckPool
 from tests.fixtures.counterexamples import authored_challenges
 
 
 @pytest.fixture
 def grader() -> SubmissionGrader:
-    return SubmissionGrader(authored_challenges(), PoolPropertyChecker(SympyCheckPool(in_process=True)))
+    return SubmissionGrader(authored_challenges(), PoolPropertyChecker(SympyCheckPool(in_process=True), VerdictCache()))
 
 
 def submission(function: str, value: str = "0", **certificates: object) -> Submission:

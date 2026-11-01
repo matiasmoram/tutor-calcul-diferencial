@@ -5,6 +5,7 @@ import time
 import pytest
 
 from core.shared.math import latex_cas as cas
+from core.shared.math.latex_cas import leaks
 
 HUGE = [
     r"$9^{9^{9}}$",
@@ -63,6 +64,6 @@ def test_an_unexpected_error_propagates_instead_of_meaning_no_leak(monkeypatch: 
     def boom(*_: object) -> object:
         raise MemoryError
 
-    monkeypatch.setattr(cas, "_compare", boom)
+    monkeypatch.setattr(leaks, "_compare", boom)
     with pytest.raises(MemoryError):
         cas.explain(r"Mira $(x+1)^2$.", [r"$x^2+2x+1$"], [])

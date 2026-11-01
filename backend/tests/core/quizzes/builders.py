@@ -12,8 +12,9 @@ from core.quizzes.application.quiz_session_starter import QuizSessionStarter, Qu
 from core.quizzes.domain.entities.grading import Answer
 from core.quizzes.domain.entities.quiz import Quiz
 from core.quizzes.domain.entities.statement import Statement
-from core.quizzes.domain.sources import QuizSource, quiz_source
+from core.quizzes.domain.services.sources import quiz_source
 from core.quizzes.domain.values.quiz_id import QuizId
+from core.quizzes.domain.values.quiz_source import QuizSource
 from core.quizzes.infra.llm_answer_grader import LLMAnswerGrader
 from core.quizzes.infra.llm_blind_solver import LLMBlindSolver
 from core.quizzes.infra.llm_claim_extractor import LLMClaimExtractor
@@ -22,6 +23,7 @@ from core.quizzes.infra.llm_quiz_writer import LLMQuizWriter
 from core.quizzes.infra.sqlmodel_repository import SQLModelQuizRepository, SQLModelQuizSessionRepository
 from core.quizzes.infra.sympy_check_evaluator import SympyCheckEvaluator
 from core.shared.domain.clock import Clock
+from core.shared.domain.ids import SessionId
 from core.shared.llm.client import CallMeta, JsonObject, LLMClient, LLMRequest, Stage
 from core.shared.storage.session_provider import SQLModelSessionProvider
 from tests.fakes.llm import ScriptedLLMClient
@@ -118,7 +120,7 @@ def quiz() -> Quiz:
             statement("a3", "C.", "fals", "z"),
             statement("a4", "D.", "cert"),
         ],
-        created=1.0,
+        created_at=1.0,
     )
 
 
@@ -155,8 +157,8 @@ def hints(provider: SQLModelSessionProvider) -> HintRevealer:
     return HintRevealer(SQLModelQuizSessionRepository(provider), SQLModelQuizRepository(provider), FixedClock())
 
 
-async def started_session(provider: SQLModelSessionProvider) -> str:
-    await SQLModelQuizRepository(provider).add(quiz())
+async def started_session(provider: SQLModelSessionProvider) -> SessionId:
+    await SQLModelQuizRepository(provider).save(quiz())
     started = await starter(provider).start(QuizSessionStarterInput(source_id="tema-2", difficulty="facil"))
     return started.session.id
 

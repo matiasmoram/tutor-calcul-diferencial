@@ -17,12 +17,13 @@ from apps.tutor_api.dependencies import (
     may_generate,
     model_rate_limited,
 )
-from apps.tutor_api.schemas.course import TheoryIndexEntryResponse, TheoryItemResponse
+from apps.tutor_api.schemas.course import TheoryIndexEntryResponse
 from apps.tutor_api.schemas.quizzes import (
     AnswersRequest,
     HintResponse,
     NewQuizRequest,
     PublicQuizResponse,
+    QuizGradingResponse,
     QuizSessionResponse,
     QuizSourcesResponse,
 )
@@ -34,7 +35,6 @@ from core.quizzes.application.quiz_provider import QuizProvider
 from core.quizzes.application.quiz_session_starter import QuizSessionStarter, QuizSessionStarterInput
 from core.quizzes.application.source_lister import SourceLister
 from core.quizzes.domain.exceptions import QuizSessionNotFoundException
-from core.quizzes.domain.sources import quiz_source
 from core.quizzes.infra.llm_answer_grader import LLMAnswerGrader
 from core.quizzes.infra.llm_blind_solver import LLMBlindSolver
 from core.quizzes.infra.llm_claim_extractor import LLMClaimExtractor
@@ -122,20 +122,16 @@ async def quiz_sources(lister: SourceLister = Depends(_get_lister)) -> QuizSourc
 @router.post("/api/afirmacions/sessions", dependencies=[Depends(model_rate_limited)])
 async def start_quiz(
     body: NewQuizRequest,
-    course: Course = Depends(get_course),
-    provider: QuizProvider = Depends(_get_provider),
     starter: QuizSessionStarter = Depends(_get_starter),
     config: Config = Depends(get_config),
 ) -> QuizSessionResponse:
+    request = QuizSessionStarterInput(
+        source_id=body.font, difficulty=body.dificultat, fresh=body.nova, avoid_id=body.excepte
+    )
     with domain_errors("La generació"):
-        source = quiz_source(course, body.font)
-        if await provider.will_generate(source, body.dificultat, body.nova):
+        if await starter.needs_generation(request):
             ensure_api_key(config)
-        started = await starter.start(
-            QuizSessionStarterInput(
-                source_id=body.font, difficulty=body.dificultat, new=body.nova, except_id=body.excepte
-            )
-        )
+        started = await starter.start(request)
     focus = started.source.focus
     return QuizSessionResponse(
         session_id=started.session.id,
@@ -148,8 +144,7 @@ async def start_quiz(
 @router.post("/api/afirmacions/sessions/{session_id}/pista/{statement_id}")
 async def reveal_hint(session_id: str, statement_id: str, hints: HintRevealer = Depends(_get_hints)) -> HintResponse:
     """Hints are served one at a time and recorded: a used hint lowers that statement's score."""
-    with domain_errors():
-        revealed = await hints.reveal(_session_id(session_id), statement_id)
+    revealed = await hints.reveal(_session_id(session_id), statement_id)
     return HintResponse(id=revealed.statement_id, pista=revealed.hint)
 
 
@@ -160,23 +155,18 @@ async def grade_answers(
     course: Course = Depends(get_course),
     grader: AnswersGrader = Depends(_get_grader),
     config: Config = Depends(get_config),
-) -> dict[str, object]:
+) -> QuizGradingResponse:
     sid = _session_id(session_id)
     if any(a.verdict for a in body.respostes):
         ensure_api_key(config)
     with domain_errors("La correcció"):
         grading = await grader.grade(sid, AnswersGraderInput(answers=body.respostes))
         quiz_items = await grader.cited_theory(sid)
-    result: dict[str, object] = grading.model_dump()
-    result["teoria"] = {
-        i: TheoryItemResponse.from_entity(course.theory[i]).model_dump() for i in quiz_items if i in course.theory
-    }
-    return result
+    return QuizGradingResponse.from_entity(grading, [course.theory[i] for i in quiz_items if i in course.theory])
 
 
 def _session_id(raw: str) -> SessionId:
-    with domain_errors():
-        try:
-            return SessionId(raw)
-        except ValueError:
-            raise QuizSessionNotFoundException(raw) from None
+    try:
+        return SessionId(raw)
+    except ValueError:
+        raise QuizSessionNotFoundException(raw) from None

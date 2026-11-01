@@ -2,7 +2,7 @@ import pytest
 
 from core.counterexamples.domain.entities.spec import SpecCatalog
 from core.counterexamples.domain.exceptions import InvalidSpecContentException
-from core.counterexamples.domain.properties import PROPERTIES
+from core.counterexamples.domain.values.properties import PROPERTIES
 from tests.fixtures.counterexamples import authored_challenges
 from tests.fixtures.course import authored_course
 

@@ -1,4 +1,4 @@
-from core.course.domain.citations import cited_items
+from core.course.domain.services.citations import cited_items
 from core.course.domain.values.theory_ref import TheoryRef
 from tests.fixtures.course import authored_course
 

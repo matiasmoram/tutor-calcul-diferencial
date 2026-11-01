@@ -1,4 +1,4 @@
-"""The offline 'Cert o fals' pipeline: an agent-written batch through the same gates as QuizGenerator."""
+"""The offline 'Cert o fals' pipeline: an offline-written batch through the same gates as QuizGenerator."""
 
 import json
 from pathlib import Path
@@ -13,7 +13,7 @@ CHECKS = SympyCheckEvaluator(in_process=True)
 
 
 def stored_quiz_batch(tmp_path: Path) -> Path:
-    """A batch made of the statements of the cached T2.12 quiz (already verified), as an agent would write it.
+    """A batch made of the statements of the cached T2.12 quiz (already verified), as an offline author would write it.
 
     Reads the committed quiz in backend/generats/afirmacions: regenerating that cache can change these tests' data."""
     quizzes = JsonQuizFiles(BACKEND_DIR / "generats" / "afirmacions").load_all()

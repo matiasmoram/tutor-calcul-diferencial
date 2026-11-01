@@ -1,8 +1,9 @@
-from pydantic import AliasChoices, BaseModel, Field
+from pydantic import BaseModel, Field
 
 from core.quizzes.domain.entities.grading import Answer, StudentCheck
 from core.quizzes.domain.entities.statement import Statement
-from core.quizzes.domain.values.call_summary import CallSummary
+from core.shared.domain.contract import catalan_alias
+from core.shared.domain.model_usage import ModelUsage
 
 
 class AnsweredStatement(BaseModel):
@@ -14,20 +15,20 @@ class IdeaCitation(BaseModel):
     """The grader's claim that the answer contains key idea ``num`` (1-based), with the student's words."""
 
     num: int
-    quote: str = Field(default="", validation_alias=AliasChoices("cita", "quote"))
+    quote: str = Field(default="", validation_alias=catalan_alias("cita", "quote"))
 
 
 class GraderEvaluation(BaseModel):
-    statement_id: str = Field(validation_alias=AliasChoices("id", "statement_id"))
-    ideas: list[IdeaCitation] = Field(default_factory=list, validation_alias=AliasChoices("idees", "ideas"))
-    justification: str | None = Field(default=None, validation_alias=AliasChoices("justificacio", "justification"))
+    statement_id: str = Field(validation_alias=catalan_alias("id", "statement_id"))
+    ideas: list[IdeaCitation] = Field(default_factory=list, validation_alias=catalan_alias("idees", "ideas"))
+    justification: str | None = Field(default=None, validation_alias=catalan_alias("justificacio", "justification"))
     feedback: str = ""
 
 
 class GraderVerdict(BaseModel):
     evaluations: list[GraderEvaluation]
     summary: str
-    call: CallSummary
+    call: ModelUsage
 
 
 class StudentClaims(BaseModel):

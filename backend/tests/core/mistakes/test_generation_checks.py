@@ -183,7 +183,7 @@ def test_an_empty_fragment_is_rejected_and_never_renumbers_the_errors() -> None:
 
 
 def test_invented_latex_commands_are_rejected_wherever_they_appear() -> None:
-    """What gpt-5.6-luna produced and both the old validation and the verifier let through."""
+    """Invented LaTeX commands are rejected in the fragments and in every text field of an error."""
     frags = [*FRAGS[:4], r"Per tant el límit és $e^{\fterm{0.2}}\blink$."]
     bad = err(5, r"$e^{\fterm{0.2}}\blink$") | {"explicacio": r"cal $\term{x}$", "pista": r"i el \freelance?"}
     problems = validate_generation(draft(gen([bad], frags)), 1).problems

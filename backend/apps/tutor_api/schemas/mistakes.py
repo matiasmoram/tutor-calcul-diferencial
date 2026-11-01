@@ -1,6 +1,6 @@
-from typing import Literal
+from typing import Any, Literal
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, SerializerFunctionWrapHandler, field_validator, model_serializer
 
 from apps.tutor_api.schemas.course import (
     THEORY_PDF,
@@ -12,11 +12,12 @@ from apps.tutor_api.schemas.course import (
     pdf_url,
 )
 from apps.tutor_api.schemas.student_text import StudentText, check_text
+from core.mistakes.application.annotations_grader import AnnotationsGrading
 from core.mistakes.application.availability_lister import TopicTheoryResults
 from core.mistakes.application.part_annotations_grader import PartGradingOutcome
 from core.mistakes.domain.entities.annotation import Annotation
 from core.mistakes.domain.entities.mistake_exercise import DeclaredMistake, MistakeExercise
-from core.mistakes.domain.entities.mistake_grading import AnnotationResult, PartScore
+from core.mistakes.domain.entities.mistake_grading import AnnotationResult, MistakeGrading, PartScore
 from core.mistakes.domain.entities.parted_mistake_exercise import (
     PartedMistakeExercise,
     PartOutline,
@@ -138,6 +139,25 @@ class PartedMistakeDocumentResponse(BaseModel):
             parts=[PartOutlineResponse.from_entity(p) for p in doc.outline()],
             actual=PartToReviewResponse.from_entity(first),
         )
+
+
+class MistakeGradingResponse(MistakeGrading):
+    """The grading as stored, plus the original item of the notes for a theory document (revealed with the grade)."""
+
+    original: TheoryItemResponse | None = None
+
+    @model_serializer(mode="wrap")
+    def _omit_absent_original(self, handler: SerializerFunctionWrapHandler) -> dict[str, Any]:
+        data: dict[str, Any] = handler(self)
+        if data.get("original") is None:
+            data.pop("original", None)
+        return data
+
+    @classmethod
+    def from_entity(cls, graded: AnnotationsGrading) -> "MistakeGradingResponse":
+        original = TheoryItemResponse.from_entity(graded.original) if graded.original is not None else None
+        fields = {name: getattr(graded.grading, name) for name in MistakeGrading.model_fields}
+        return cls(**fields, original=original)
 
 
 class MistakeSessionResponse(BaseModel):

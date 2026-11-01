@@ -6,7 +6,7 @@ from core.course.domain.entities.course import Course
 from core.course.domain.entities.theory_item import TheoryItem
 from core.course.domain.entities.topic import Topic
 from core.quizzes.domain.repository import QuizRepository
-from core.quizzes.domain.sources import focus_items
+from core.quizzes.domain.services.sources import focus_items
 from core.quizzes.domain.values.difficulty import QUIZ_SIZES, Difficulty
 
 

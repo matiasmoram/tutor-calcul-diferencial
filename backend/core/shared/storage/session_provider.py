@@ -35,17 +35,6 @@ class SQLModelSessionProvider:
             yield session
 
 
-class BoundSQLModelSessionProvider(SQLModelSessionProvider):
-    """Every repository built on it joins one already-open session (multi-repository atomicity, test fixtures)."""
-
-    def __init__(self, session: AsyncSession) -> None:
-        self._session = session
-
-    @asynccontextmanager
-    async def begin(self) -> AsyncIterator[AsyncSession]:
-        yield self._session
-
-
 class BaseSQLModelRepository:
     def __init__(self, provider: SQLModelSessionProvider) -> None:
         self._provider = provider

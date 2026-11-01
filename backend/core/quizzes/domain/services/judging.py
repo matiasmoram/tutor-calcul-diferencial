@@ -1,8 +1,10 @@
 from collections.abc import Sequence
 
+from core.quizzes.domain.entities.statement import Confidence
 from core.quizzes.domain.values.drafts import StatementDraft
 from core.quizzes.domain.values.verification import AuditReview, SolverAnswer
 
+_UNSURE: Confidence = "baixa"
 _AUDIT_FLAGS: tuple[tuple[str, str], ...] = (
     ("solution_correct", "la resolució o el contraexemple no és correcte"),
     ("theory_correct", "la teoria citada no és correcta"),
@@ -30,7 +32,7 @@ def judge(
                 p.append(f"el solucionador independent diu que està mal plantejada: {s.justification}")
             if s.verdict != d.verdict:
                 p.append(f"el solucionador independent diu que és {s.verdict}, no {d.verdict}: {s.justification}")
-            elif s.confidence == "baixa":
+            elif s.confidence == _UNSURE:
                 p.append(f"el solucionador independent no n'està segur: {s.justification}")
         r = audited.get(i)
         if r is None:

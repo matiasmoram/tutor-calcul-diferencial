@@ -5,8 +5,9 @@ from core.quizzes.domain.services.judging import judge
 from core.quizzes.domain.services.validation import all_checks, check_problems, validate_draft, with_results
 from core.quizzes.domain.values.drafts import StatementDraft
 from core.quizzes.domain.values.verification import AuditReview, SolverAnswer
+from core.quizzes.infra.prompts import GENERATION_SYSTEM
 from core.shared.llm.client import JsonObject
-from core.shared.math.sympy_checks import evaluate
+from core.shared.math.sympy_checks import evaluate_one
 from tests.core.quizzes.builders import ITERATED, check, item, source
 
 REFS = set(source().allowed_refs)
@@ -37,12 +38,18 @@ def test_item_validation_rejects(changes: JsonObject, expected: str) -> None:
     assert any(expected in p for p in problems), problems
 
 
+def test_at_most_four_checks_per_statement_as_the_prompt_asks() -> None:
+    assert validate_draft(draft(item("A.", checks=[ITERATED] * 4)), REFS) == []
+    assert validate_draft(draft(item("A.", checks=[ITERATED] * 5)), REFS) == ["massa comprovacions (màxim 4)"]
+    assert "d'1 a 4;" in GENERATION_SYSTEM
+
+
 def test_failing_sympy_check_rejects_statement() -> None:
     drafts = [
         draft(item("A.", checks=[ITERATED])),
         draft(item("B.", checks=[check("limit", "x*(m*x)/(x**2+(m*x)**2)", "0")])),
     ]
-    checked = with_results(drafts, evaluate(all_checks(drafts), in_process=True))
+    checked = with_results(drafts, [evaluate_one(c) for c in all_checks(drafts)])
     assert check_problems(checked[0]) == []
     assert any("FALSA segons sympy" in p and "m/(m**2 + 1)" in p for p in check_problems(checked[1]))
 

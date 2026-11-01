@@ -8,7 +8,7 @@
 
 const CF_LOADING = [
   "Escrivint afirmacions i les seves resolucions…",
-  "Comprovant els contraexemples amb sympy…",
+  "Comprovant els contraexemples…",
   "Un segon model les resol a cegues, sense saber si són certes o falses…",
   "Un revisor comprova cada demostració i cada contraexemple…",
   "Substituint les afirmacions que no han passat la verificació…",
@@ -54,10 +54,10 @@ async function viewAfirmacionsInici() {
       el("h2", { text: "Demostra-ho o troba'n un contraexemple" }),
       math(el("p", { class: "muted", text: "Afirmacions sobre un tema que semblen certes i potser no ho són: límits iterats que coincideixen sense límit doble, continuïtat en cada variable que no és continuïtat, un teorema sense una hipòtesi. Decideix, i justifica-ho: una demostració o un contraexemple." }))),
     el("ol", { class: "pipeline cf-pipeline" },
-      pipelineStage(1, "Generació", "Un model escriu les afirmacions amb la resolució, les idees clau i els càlculs del contraexemple.", "LLM · sortida estructurada", "llm"),
-      pipelineStage(2, "Comprovació", "Cada càlcul del contraexemple (límits, derivades) es comprova amb sympy. Si un falla, l'afirmació es descarta.", "CAS · sympy", "rule"),
-      pipelineStage(3, "Verificació", "Un segon model les resol a cegues i un tercer audita les solucions. Només queden les que tots dos accepten.", "2 LLM independents", "llm"),
-      pipelineStage(4, "Correcció", "El veredicte el corregeix el codi; la justificació, un model amb la rúbrica, i els teus càlculs, sympy.", "LLM + CAS + regles", "rule")),
+      pipelineStage(1, "Generació", "Un model escriu les afirmacions amb la resolució, les idees clau i els càlculs del contraexemple.", "Model de llenguatge", "llm"),
+      pipelineStage(2, "Comprovació", "Cada càlcul del contraexemple (límits, derivades) es comprova amb càlcul simbòlic. Si un falla, l'afirmació es descarta.", "Càlcul simbòlic", "rule"),
+      pipelineStage(3, "Verificació", "Un segon model les resol a cegues i un tercer audita les solucions. Només queden les que tots dos accepten.", "2 models independents", "llm"),
+      pipelineStage(4, "Correcció", "El veredicte el corregeix el codi; la justificació, un model amb la rúbrica, i els teus càlculs, el càlcul simbòlic.", "Model, càlcul i regles", "rule")),
     el("div", { class: "teoria-temes" }, ...data.temes.map((t, i) => {
       const d = el("details", { class: "teoria-tema" },
         el("summary", {}, el("strong", { text: `Tema ${t.tema}` }), math(el("span", { text: ` · ${t.titol}` }))),
@@ -154,7 +154,7 @@ function cfOferirGenerar(altre = false) {
   gen.addEventListener("click", () => cfCarregar(true));
   $("#cf-list").replaceChildren(el("div", { class: "er-paper er-generate" },
     el("strong", { text: altre ? "No n'hi ha cap altre de preparat en aquesta dificultat." : "Encara no hi ha cap qüestionari preparat en aquesta dificultat." }),
-    POT_GENERAR ? el("p", { class: "muted", text: "Se'n pot generar un de nou: un model escriu les afirmacions, sympy en comprova els càlculs i dos models més les verifiquen." }) : null,
+    POT_GENERAR ? el("p", { class: "muted", text: "Se'n pot generar un de nou: un model escriu les afirmacions, el càlcul simbòlic en comprova els resultats i dos models més les verifiquen." }) : null,
     ready.length ? el("p", { class: "muted", text: `Hi ha qüestionaris preparats per a: ${ready.join(", ")}.` }) : null,
     POT_GENERAR ? gen : el("p", { class: "muted", text: "Prova una altra dificultat, o demana al professorat que en prepari un." })));
 }
@@ -300,7 +300,7 @@ function cfCard(a, i) {
   }
   if (res.feedback) card.append(math(el("p", { class: "note-feedback", text: res.feedback })));
   if (res.nota_cas) card.append(el("p", { class: "note-hint", text: res.nota_cas }));
-  if (res.comprovacions_alumne?.length) card.append(cfChecks("Els teus càlculs, comprovats amb sympy", res.comprovacions_alumne));
+  if (res.comprovacions_alumne?.length) card.append(cfChecks("Els teus càlculs, comprovats amb càlcul simbòlic", res.comprovacions_alumne));
 
   const s = res.solucio;
   const sol = el("details", { class: "cf-solution" }, el("summary", { text: "Resolució de referència" }));
@@ -308,7 +308,7 @@ function cfCard(a, i) {
   sol.append(math(el("p", { class: "cf-res", text: s.resolucio })));
   sol.append(el("div", { class: "cf-ideas" }, el("span", { class: "note-tag", text: "Idees clau" }),
     el("ul", {}, ...s.idees_clau.map((t) => math(el("li", { text: t }))))));
-  if (s.comprovacions?.length) sol.append(cfChecks("Contraexemple verificat amb sympy", s.comprovacions));
+  if (s.comprovacions?.length) sol.append(cfChecks("Contraexemple verificat amb càlcul simbòlic", s.comprovacions));
   const items = (s.teoria || []).map((id) => CF.resultat.teoria?.[id]).filter(Boolean);
   if (items.length) sol.append(theoryButton(`Teoria (${items.length})`, "Resultats dels apunts que fa servir", items));
   if (!res.encert) sol.open = true;
@@ -325,7 +325,7 @@ function cfChecks(title, checks) {
         el("code", { text: c.tipus === "igualtat" ? `${c.expressio} = ${c.valor}`
           : c.tipus === "no_limit" ? `lim ${c.variable}→${c.punt} ${c.expressio} no existeix`
           : `lim ${c.variable}→${c.punt} ${c.expressio} = ${c.valor}` }),
-        c.estat === "falla" && c.calculat ? el("span", { class: "muted", text: ` (sympy: ${c.calculat})` }) : null)))));
+        c.estat === "falla" && c.calculat ? el("span", { class: "muted", text: ` (calculat: ${c.calculat})` }) : null)))));
 }
 
 function cfBar() {
@@ -353,7 +353,7 @@ async function cfEnviar() {
   const hash = location.hash;
   const bar = $("#cf-bar");
   bar.replaceChildren(el("div", { class: "er-progress" }, el("span", { class: "spinner" }),
-    el("span", { text: "Corregint: el model valora els arguments i sympy comprova els teus càlculs…" })));
+    el("span", { text: "Corregint: el model valora els arguments i el càlcul simbòlic comprova els teus càlculs…" })));
   cfBusy(true);
   try {
     const resultat = await api(`/api/afirmacions/sessions/${CF.sessionId}/correccio`, {

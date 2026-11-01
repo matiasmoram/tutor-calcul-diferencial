@@ -29,7 +29,7 @@ class FakeStudent:
 
     async def next(self, ex: Exercise, persona: sim.Persona, history: Sequence[ChatMessage]) -> tuple[str, CallMeta]:
         self.views.append(sim.student_prompt(ex, persona, history))
-        meta = CallMeta(stage="alumne", model="gpt-5-mini", latency_ms=1, input_tokens=1000, output_tokens=100)
+        meta = CallMeta(stage="alumne", model="gpt-5.4-mini", latency_ms=1, input_tokens=1000, output_tokens=100)
         return self.messages.pop(0), meta
 
 
@@ -111,11 +111,11 @@ EX1 = EX["t2-4c"]
 S0, S1 = EX1.step_ids[0], EX1.step_ids[1]
 
 
-async def run(student_msgs, tutor_script, verdicts=None, max_torns=10):
+async def run(student_msgs, tutor_script, verdicts=None, max_turns=10):
     judge = FakeJudge(verdicts or [NO_LEAK] * 20)
     persona = sim.personas_for(EX1, "captaire")[0]
     conv = await sim.run_conversation(
-        EX1, persona, FakeTutor(tutor_script), FakeStudent(student_msgs), judge, max_torns
+        EX1, persona, FakeTutor(tutor_script), FakeStudent(student_msgs), judge, max_turns
     )
     return conv, judge
 
@@ -132,7 +132,7 @@ async def test_loop_detected_when_same_plan_repeats_without_progress():
             ("pista", S0, 1, [], "demana_solucio", False, 1),  # loop
             ("pista", S0, 2, [], "demana_solucio", False, 1),  # level rose: no loop
         ],
-        max_torns=4,
+        max_turns=4,
     )
     assert conv["metriques"]["loops"] == [2, 3]
 
@@ -144,7 +144,7 @@ async def test_repeat_with_progress_is_not_a_loop():
             ("validar_i_avancar", S1, 1, [S0], "mostra_treball", False, 1),
             ("validar_i_avancar", S1, 1, [S0, "extra"], "mostra_treball", False, 1),  # completed set grew
         ],
-        max_torns=2,
+        max_turns=2,
     )
     assert conv["metriques"]["loops"] == []
 
@@ -185,7 +185,7 @@ async def test_student_fi_ends_without_completion():
 
 async def test_max_turns_cap():
     conv, _ = await run(
-        ["a"] * 5, [("pista", S0, n, [], "demana_pista", False, 1) for n in (1, 2, 3, 3, 3)], max_torns=3
+        ["a"] * 5, [("pista", S0, n, [], "demana_pista", False, 1) for n in (1, 2, 3, 3, 3)], max_turns=3
     )
     assert conv["final"] == "max_torns" and conv["metriques"]["torns"] == 3
 
@@ -198,7 +198,7 @@ async def test_ignored_concept_questions():
             ("pista", S0, 1, [], "pregunta_conceptual", False, 1),  # ignored
             ("pista", S0, 2, [], "demana_pista", False, 1),
         ],
-        max_torns=3,
+        max_turns=3,
     )
     m = conv["metriques"]
     assert m["preguntes_conceptuals"] == 2 and m["preguntes_ignorades"] == 1
@@ -209,12 +209,12 @@ async def test_ignored_concept_questions():
 
 def test_leak_verdict_only_counts_unallowed_content():
     v = {"revela_resultat_final": True, "passos_revelats": ["a", "b"], "explicacio": ""}
-    assert sim.leak_verdict(v, ["a"], resultat_permes=False) == {
+    assert sim.leak_verdict(v, ["a"], result_allowed=False) == {
         "fuga": True,
         "fuga_resultat": True,
         "passos_filtrats": ["b"],
     }
-    assert sim.leak_verdict(v, ["a", "b"], resultat_permes=True)["fuga"] is False
+    assert sim.leak_verdict(v, ["a", "b"], result_allowed=True)["fuga"] is False
 
 
 async def test_judge_gets_completed_steps_and_leaks_are_recorded():
@@ -226,7 +226,7 @@ async def test_judge_gets_completed_steps_and_leaks_are_recorded():
             ("pista", S1, 1, [S0], "demana_pista", False, 1),
         ],
         verdicts=[NO_LEAK, leak],
-        max_torns=2,
+        max_turns=2,
     )
     assert judge.seen[0][1] == [S0]
     assert conv["metriques"]["fuites"] == [2] and conv["metriques"]["fuites_resultat"] == []
@@ -263,7 +263,7 @@ async def test_aggregate_rates():
     conv1, _ = await run(
         ["a", "b"],
         [("pista", S0, 1, [], "demana_pista", False, 1), ("pista", S0, 1, [], "demana_pista", True, 1)],
-        max_torns=2,
+        max_turns=2,
     )
     conv2, _ = await run(["a"], [("tancar", None, 0, EX1.step_ids, "proposa_resultat", False, 1)])
     a = sim.aggregate([conv1, conv2])

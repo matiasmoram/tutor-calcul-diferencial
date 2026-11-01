@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 from core.course.domain.entities.course import Course
 from core.course.infra.yaml_course_source import YamlCourseSource
 from core.quizzes.application.quiz_generator import QuizGenerator
-from core.quizzes.domain.sources import quiz_source
+from core.quizzes.domain.services.sources import quiz_source
 from core.quizzes.domain.values.difficulty import difficulty_of
 from core.quizzes.infra.json_quiz_files import JsonQuizFiles
 from core.quizzes.infra.llm_blind_solver import LLMBlindSolver
@@ -68,7 +68,7 @@ async def main(specs: list[str]) -> None:
         LLMQuizWriter(llm),
         LLMBlindSolver(llm),
         LLMQuizAuditor(llm),
-        SympyCheckEvaluator(),
+        SympyCheckEvaluator(memory_limit_mb=Config().SYMPY_WORKER_MEMORY_MB),
         SystemClock(),
         random.Random(),
     )

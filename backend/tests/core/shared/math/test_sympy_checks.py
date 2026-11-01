@@ -1,6 +1,6 @@
 import pytest
 
-from core.shared.math.sympy_checks import MathCheck, evaluate, evaluate_one
+from core.shared.math.sympy_checks import MathCheck, evaluate_one
 from tests.core.shared.math.builders import ITERATED, check
 
 
@@ -31,11 +31,6 @@ def test_checks_never_eval_untrusted_python(expr: str) -> None:
 
 def test_unknown_kind_is_undecided_not_an_error() -> None:
     assert evaluate_one(check("derivada", "x")).status == "indeterminat"
-
-
-def test_checks_in_worker_processes() -> None:
-    out = evaluate([ITERATED, check("no_limit", "sin(1/x)")])
-    assert [r.status for r in out] == ["ok", "ok"]
 
 
 def test_results_serialize_to_the_stored_catalan_keys() -> None:

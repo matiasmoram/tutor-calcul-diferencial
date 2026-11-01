@@ -54,6 +54,13 @@ class Course(BaseModel):
     def items(self, refs: list[TheoryRef]) -> list[TheoryItem]:
         return [self.theory[r.item_id] for r in refs]
 
+    def cited_theory(self, ex: Exercise) -> tuple[list[TheoryItem], frozenset[TheoryItemId]]:
+        """Every item the sheet cites (reserved ones included), in order, and the ids of those cited with their proof
+        ("+dem"): for the stages that see the full solution."""
+        refs = ex.all_refs()
+        ids = dict.fromkeys(r.item_id for r in refs)
+        return [self.theory[i] for i in ids], frozenset(r.item_id for r in refs if r.with_proof)
+
     def citable_items(self, topic: int) -> list[TheoryItem]:
         """Citable items of one topic, for the diagnosis to pick from on concept questions."""
         return [it for it in self.theory.values() if it.topic == topic and it.citable]

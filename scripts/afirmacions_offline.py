@@ -1,4 +1,4 @@
-"""'Cert o fals' quizzes written offline (by an agent or by hand), gated like the LLM pipeline (QuizGenerator).
+"""'Cert o fals' quizzes written outside the app (by hand or with an external model), gated like the LLM pipeline (QuizGenerator).
 
 A batch file (JSON) is one quiz's candidate statements in the writer's output format, plus its source:
   {"font": "tema-2" | "T2.12", "dificultat": "facil" | "normal" | "dificil", "autor": "<who wrote it>",
@@ -61,7 +61,7 @@ from core.quizzes.infra.prompts import (
 )
 from core.quizzes.infra.sympy_check_evaluator import SympyCheckEvaluator
 from core.shared.domain.model_usage import ModelUsage
-from settings import BACKEND_DIR
+from settings import BACKEND_DIR, Config
 
 GENERATED_DIR = BACKEND_DIR / "generats" / "afirmacions"
 EXTRA = 3  # statements asked for beyond the quiz size, so a few rejections still leave a full quiz
@@ -209,7 +209,7 @@ def cmd_import(path: Path, checks: CheckEvaluator, directory: Path = GENERATED_D
             f"with {lo}-{hi} false"
         )
         return 1
-    author = str(data.get("autor") or "agent")
+    author = str(data.get("autor") or "author")
     round_log = GenerationRound(
         round=1,
         requested=len(drafts),
@@ -238,6 +238,6 @@ if __name__ == "__main__":
         if len(args.args) != 3:
             parser.error("brief needs <font> <dificultat> <out.md>")
         sys.exit(cmd_brief(args.args[0], args.args[1], Path(args.args[2])))
-    evaluator = SympyCheckEvaluator(timeout_s=60.0)
+    evaluator = SympyCheckEvaluator(timeout_s=60.0, memory_limit_mb=Config().SYMPY_WORKER_MEMORY_MB)
     command = {"validate": cmd_validate, "blind": cmd_blind, "import": cmd_import}[args.command]
     sys.exit(max(command(Path(p), evaluator) for p in args.args))

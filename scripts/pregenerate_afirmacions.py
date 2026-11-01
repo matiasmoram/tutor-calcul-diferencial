@@ -68,7 +68,7 @@ async def main(specs: list[str]) -> None:
         LLMQuizWriter(llm),
         LLMBlindSolver(llm),
         LLMQuizAuditor(llm),
-        SympyCheckEvaluator(),
+        SympyCheckEvaluator(memory_limit_mb=Config().SYMPY_WORKER_MEMORY_MB),
         SystemClock(),
         random.Random(),
     )

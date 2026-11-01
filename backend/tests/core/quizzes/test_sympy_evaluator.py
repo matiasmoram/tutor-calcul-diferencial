@@ -1,5 +1,6 @@
 from collections.abc import Iterator
 from concurrent.futures.process import BrokenProcessPool
+from typing import Any
 
 import pytest
 
@@ -55,3 +56,16 @@ def test_workers_that_keep_dying_leave_the_checks_undecided(monkeypatch: pytest.
 
     monkeypatch.setattr(pool, "_submit", broken)
     assert [r.status for r in SympyCheckEvaluator(pool).evaluate([ITERATED, ITERATED])] == ["indeterminat"] * 2
+
+
+def test_a_throwaway_pool_gets_the_configured_memory_cap(monkeypatch: pytest.MonkeyPatch) -> None:
+    caps: list[int] = []
+
+    class Spy(SympyCheckPool):
+        def __init__(self, *args: Any, memory_limit_mb: int, **kwargs: Any) -> None:
+            caps.append(memory_limit_mb)
+            super().__init__(*args, memory_limit_mb=memory_limit_mb, **kwargs)
+
+    monkeypatch.setattr("core.quizzes.infra.sympy_check_evaluator.SympyCheckPool", Spy)
+    SympyCheckEvaluator(memory_limit_mb=777).evaluate([ITERATED])
+    assert caps == [777]

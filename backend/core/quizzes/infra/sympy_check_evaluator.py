@@ -6,7 +6,12 @@ from loguru import logger
 from core.quizzes.domain.entities.grading import StudentCheck
 from core.quizzes.domain.ports import CheckEvaluator
 from core.quizzes.domain.services.scoring import faithful
-from core.shared.math.infra.sympy_pool import POOL_UNAVAILABLE, UNAVAILABLE_DETAIL, SympyCheckPool
+from core.shared.math.infra.sympy_pool import (
+    DEFAULT_MEMORY_LIMIT_MB,
+    POOL_UNAVAILABLE,
+    UNAVAILABLE_DETAIL,
+    SympyCheckPool,
+)
 from core.shared.math.sympy_checks import CheckResult, MathCheck, evaluate_one
 
 
@@ -18,9 +23,16 @@ class SympyCheckEvaluator(CheckEvaluator):
     A pool that cannot take the checks (workers dying at start-up, closed at shutdown) gives every check the result
     of one that timed out: the paid model work around them still stands, as when a single check fails."""
 
-    def __init__(self, pool: SympyCheckPool | None = None, timeout_s: float = 25.0, in_process: bool = False) -> None:
+    def __init__(
+        self,
+        pool: SympyCheckPool | None = None,
+        timeout_s: float = 25.0,
+        in_process: bool = False,
+        memory_limit_mb: int = DEFAULT_MEMORY_LIMIT_MB,
+    ) -> None:
         self._pool = pool
         self._timeout_s = timeout_s
+        self._memory_limit_mb = memory_limit_mb  # of the throwaway pools only
         self._in_process = in_process
 
     def evaluate(self, checks: Sequence[MathCheck]) -> list[CheckResult]:
@@ -40,7 +52,9 @@ class SympyCheckEvaluator(CheckEvaluator):
         if self._pool is not None:
             yield self._pool
             return
-        pool = SympyCheckPool(max_workers=min(4, max(1, items)), timeout_s=self._timeout_s)
+        pool = SympyCheckPool(
+            max_workers=min(4, max(1, items)), timeout_s=self._timeout_s, memory_limit_mb=self._memory_limit_mb
+        )
         try:
             yield pool
         finally:

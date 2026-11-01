@@ -259,7 +259,7 @@ def test_blind_splits_the_parts_by_rank_and_never_shows_one_part_both_ways(tmp_p
     assert FLAWED_2 not in second and CLEAN_3 not in second
     assert "Write lot.ver.2.json" in second
     schema = schema_of(second)["properties"]["t2-4c:normal:3"]
-    assert schema["required"] == ["problemes", "valoracio", "alerta_context"]
+    assert schema["required"] == ["problemes", "valoracio", "context_correcte", "alerta_context"]
 
 
 def test_blind_gives_two_difficulties_of_one_source_separate_files(tmp_path: Path) -> None:

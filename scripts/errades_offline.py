@@ -41,7 +41,7 @@ Step by step ("per_parts", the gates of PartedMistakeExerciseGenerator), two fil
                                    correct and the flawed part, never its correct text, the later parts nor the errors.
                                    One reviewer per file, none of them the writer nor the reviewer of blind-net.
                                    Answers: <batch>.ver.<j>.json, {"<id>:<dificultat>:<part>": {"problemes": [...],
-                                   "valoracio": "", "alerta_context": ""}}
+                                   "valoracio": "", "context_correcte": true, "alerta_context": ""}}
   import <batch.json>              saves a document only if its resolution passes stage A and every flawed part
                                    stages B and C
 validate, blind and import take each document by its "format" ("sencer" when absent).

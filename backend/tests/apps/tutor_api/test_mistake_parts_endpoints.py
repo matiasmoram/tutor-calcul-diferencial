@@ -11,13 +11,11 @@ from core.mistakes.infra.json_file_source import JsonFileMistakeSource
 from core.mistakes.infra.sqlmodel_repository import SQLModelMistakeExerciseRepository
 from core.shared.llm.client import JsonObject, Stage
 from core.shared.storage.session_provider import SQLModelSessionProvider
-from tests.core.mistakes.builders import PARTS, parted, solution
+from tests.core.mistakes.builders import PARTS, parted, solution, theory_parted
 from tests.fakes.llm import ScriptedLLMClient
 
 DOC = parted()  # t2-4c, normal: part 1 clean, parts 2 and 3 with one error each ("pista 2", "pista 3")
-THEORY_DOC = PartedMistakeExercise.model_validate(
-    DOC.model_dump(mode="json") | {"id": "0000000000cc", "font": "teoria", "exercici": "T3.21", "n_enunciat": 2}
-)
+THEORY_DOC = PartedMistakeExercise.model_validate(theory_parted().model_dump(mode="json") | {"id": "0000000000cc"})
 START = {"exercici_id": "t2-4c", "dificultat": "normal", "format": "per_parts"}
 GRADING_KEYS = {"nota", "trobats", "total", "falsos_positius", "anotacions", "errors", "resum", "crida"}
 
@@ -147,7 +145,8 @@ def test_parts_are_graded_in_order_up_to_the_final_result(api: TestClient, scrip
 
     # A graded part is graded once: a resubmission gets the stored result.
     again = api.post(f"{url}/2/correccio", json={"anotacions": []}).json()
-    assert again | {"final": None} == first and again["final"] == last["final"]
+    assert again | {"final": None, "seguent": first["seguent"]} == first and again["final"] == last["final"]
+    assert again["seguent"] is None
     assert scripted_llm.calls(Stage.MISTAKES_GRADING) == 1
 
 
@@ -191,7 +190,7 @@ def test_a_theory_session_reveals_the_notes_only_with_the_final_result(api: Test
     assert out["teoria"]["id"] == "T3.21" and "exercici" not in out
     assert out["solucio"]["font"] == "teoria" and out["solucio"]["n_enunciat"] == 2
     url = f"/api/errades/sessions/{out['session_id']}/parts"
-    first = api.post(f"{url}/2/correccio", json={"anotacions": []}).json()
+    first = api.post(f"{url}/1/correccio", json={"anotacions": []}).json()
     assert "original" not in first and first["final"] is None
     last = api.post(f"{url}/3/correccio", json={"anotacions": []}).json()
     assert "original" not in last and last["final"]["original"]["id"] == "T3.21"

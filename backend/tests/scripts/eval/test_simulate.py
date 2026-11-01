@@ -29,7 +29,7 @@ class FakeStudent:
 
     async def next(self, ex: Exercise, persona: sim.Persona, history: Sequence[ChatMessage]) -> tuple[str, CallMeta]:
         self.views.append(sim.student_prompt(ex, persona, history))
-        meta = CallMeta(stage="alumne", model="gpt-5-mini", latency_ms=1, input_tokens=1000, output_tokens=100)
+        meta = CallMeta(stage="alumne", model="gpt-5.4-mini", latency_ms=1, input_tokens=1000, output_tokens=100)
         return self.messages.pop(0), meta
 
 

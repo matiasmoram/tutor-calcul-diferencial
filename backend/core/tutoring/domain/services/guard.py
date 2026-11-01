@@ -2,10 +2,9 @@
 
 The problems are Catalan: they are fed back to the writer as the reason a draft was rejected."""
 
+import logging
 import re
 from collections.abc import Sequence
-
-from loguru import logger
 
 from core.course.domain.entities.theory_item import TheoryItem
 from core.course.domain.services.citations import CITATION, CitationKey, citation_key, citation_keys
@@ -13,6 +12,7 @@ from core.shared.math.latex_cas import explain, literal_tokens
 from core.shared.math.latex_vocabulary import unknown_commands
 from core.tutoring.domain.values.plan import Plan
 
+_log = logging.getLogger(__name__)
 _DISPLAY = re.compile(r"\$\$.*?\$\$", re.DOTALL)
 _MATH = re.compile(r"\$[^$]*\$")
 _NOT_ENDS = re.compile(r"\b(p\. ?ex|etc|vs|cf|pàg|núm)\.|^\s*\d+\.\s", re.IGNORECASE | re.MULTILINE)
@@ -51,7 +51,7 @@ def deterministic_check(message: str, plan: Plan, permitted: Sequence[str] = ())
         except Exception as e:
             # Fail closed, like a timeout: a draft the CAS could not verify never reaches the student.
             hits = []
-            logger.warning("CAS check failed: {}", type(e).__name__)
+            _log.warning("CAS check failed: %s", type(e).__name__)
             problems.append(CAS_ERROR_PROBLEM)
         literal = _literal_sides(permitted) if hits else set()
         for side, forbidden in hits:

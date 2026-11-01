@@ -10,7 +10,7 @@ practice modes reuse the same content. The interface is in Catalan; code and doc
 | Mode | Route | What the student does | Model use | Status | Spec |
 |---|---|---|---|---|---|
 | Tutor socràtic | `#/exercicis` | Explains their work on one exercise, typed or as a photo of the notebook | Diagnosis, reply and guard on every turn | Available | [docs/tutor.md](docs/tutor.md) |
-| Troba l'error | `#/errades` | Highlights and explains the errors planted in a worked solution or in a result of the notes | Documents generated and verified in advance; one grading call per submission | Available | [docs/troba-l-error.md](docs/troba-l-error.md) |
+| Troba l'error | `#/errades` | Highlights and explains the errors planted in a worked solution or in a result of the notes, one part at a time (Pas a pas) or in the whole text (Document sencer) | Documents generated and verified in advance; one grading call per submission, or per part | Available | [docs/troba-l-error.md](docs/troba-l-error.md) |
 | Cert o fals | `#/afirmacions` | Decides whether 6–10 statements are true or false and justifies each one | Quizzes generated and verified in advance; grading plus sympy | Available | [docs/cert-o-fals.md](docs/cert-o-fals.md) |
 | Construeix el contraexemple | `#/contraexemples` | Writes a function whose properties at the origin look incompatible, with certificates | None: sympy only | Beta | [docs/contraexemples.md](docs/contraexemples.md) |
 | Visualitzador | `#/visual` | Plots and analyses functions of two variables, opened from an exercise statement | None: runs in the browser | Beta | [docs/visualitzador.md](docs/visualitzador.md) |
@@ -80,7 +80,7 @@ adapters, SQLModel repositories, file sources).
 |---|---|---|
 | `course` | Authored content: topics, theory items, problem sheets, exercises with their hidden solution sheets | none (read-only aggregate loaded from YAML) |
 | `tutoring` | The Socratic tutor | `SessionStarter`, `TurnHandler`, `PhotoTranscriber`, `SessionBrowser` |
-| `mistakes` | Troba l'error | `MistakeSessionStarter`, `MistakeExerciseProvider`, `MistakeExerciseGenerator`, `AnnotationsGrader`, `AvailabilityLister`, `PregeneratedImporter` |
+| `mistakes` | Troba l'error | `MistakeSessionStarter`, `MistakeExerciseProvider`, `MistakeExerciseGenerator`, `PartedMistakeExerciseGenerator`, `AnnotationsGrader`, `PartAnnotationsGrader`, `PartHintRevealer`, `AvailabilityLister`, `PregeneratedImporter` |
 | `quizzes` | Cert o fals | `QuizSessionStarter`, `QuizProvider`, `QuizGenerator`, `HintRevealer`, `AnswersGrader`, `SourceLister`, `PregeneratedImporter` |
 | `counterexamples` | Construeix el contraexemple | `SubmissionGrader` |
 | `shared` | Kernel: ids, exceptions, clock, contract aliases; the LLM port, provider clients and call log; async storage; the LaTeX-to-sympy CAS, sympy checks and worker pool | — |
@@ -107,7 +107,7 @@ JSON can replace it. JSON keys are Catalan, as the frontend reads them.
 | Course and config | `GET /api/llistes`, `GET /api/llistes/{sheet_id}`, `GET /api/teoria`, `GET /api/teoria/{item_id}`, `GET /api/config` |
 | Tutor | `POST /api/sessions` `{exercici_id}`; `POST /api/sessions/{id}/missatges` `{text, origen}` → `{missatge, referencies, trace}`; `POST /api/sessions/{id}/transcripcio` `{imatge}` |
 | Tutor, professors | `GET /api/professor/sessions`, `GET /api/professor/sessions/{id}` |
-| Troba l'error | `GET /api/errades/teoria`, `GET /api/errades/disponibles`, `POST /api/errades/sessions`, `POST /api/errades/sessions/{id}/correccio` |
+| Troba l'error | `GET /api/errades/teoria`, `GET /api/errades/disponibles` (both take `?format=sencer\|per_parts`), `POST /api/errades/sessions`, `POST /api/errades/sessions/{id}/correccio`, `POST /api/errades/sessions/{id}/parts/{part}/pista`, `POST /api/errades/sessions/{id}/parts/{part}/correccio` |
 | Cert o fals | `GET /api/afirmacions/fonts`, `POST /api/afirmacions/sessions`, `POST /api/afirmacions/sessions/{id}/pista/{statement_id}`, `POST /api/afirmacions/sessions/{id}/correccio` |
 | Contraexemples | `GET /api/contraexemples`, `GET /api/contraexemples/{id}`, `POST /api/contraexemples/{id}/comprova` |
 | Operations | `GET /health`; `/pdf/...` serves the course PDFs |

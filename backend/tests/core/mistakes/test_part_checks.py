@@ -142,6 +142,18 @@ def test_an_unfit_part_is_not_a_failed_attempt() -> None:
     assert check.unfit and check.mistake is None and check.problems
 
 
+def test_an_unfit_answer_for_a_part_that_cannot_be_swapped_is_a_rejection() -> None:
+    unfit = CorruptionDraft.model_validate(corruption([], "", apte=False))
+    part = check_corruption(CLEAN, unfit, 3, "e1", False, required=True)
+    assert not part.unfit and part.mistake is None
+    assert part.problems == [
+        "aquesta part ha de tenir un error («apte» ha de ser true): fes un error versemblant en un càlcul, una regla "
+        "o una justificació d'aquesta part"
+    ]
+    statement = check_corruption(THEORY_STATEMENT, unfit, 1, "e1", True, required=True)
+    assert not statement.unfit and statement.problems[0].startswith("l'enunciat sempre admet un error")
+
+
 @pytest.mark.parametrize(
     ("data", "expected"),
     [

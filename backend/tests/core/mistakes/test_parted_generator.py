@@ -39,6 +39,11 @@ PART3_FOUND = part_checked(finding(2, "és $1$"))
 PART1_ERROR = corruption([edit(1, "tendeix a $0$", "tendeix a $1$")], "tendeix a $1$", tipus="calcul")
 PART1_FOUND = part_checked(finding(1, "tendeix a $1$"))
 TITLES = {"Trobar un candidat": 1, "Acotar el quocient": 2, "Concloure amb el sandvitx": 3}
+STATEMENT_ERROR = corruption(
+    [edit(1, "de classe $\\mathcal{C}^1$", "diferenciable")], "diferenciable", tipus="hipotesi"
+)
+STATEMENT_FOUND = part_checked(finding(1, "diferenciable"))
+THEORY_TITLES = {"Enunciat": 1, **{t: i for i, (t, _) in enumerate(THEORY_PARTS, 2)}}
 
 
 class PartRouter(ScriptedLLMClient):
@@ -86,6 +91,11 @@ class PartRouter(ScriptedLLMClient):
 def stage_a() -> dict[Stage, Outputs]:
     """Stage A written right at once and checked clean."""
     return {Stage.MISTAKES_GENERATION: [written()], Stage.MISTAKES_VERIFICATION: [resolution_checked(True)]}
+
+
+def theory_a() -> dict[Stage, Outputs]:
+    """A theory resolution written right at once and checked clean."""
+    return {Stage.MISTAKES_GENERATION: [theory_written()], Stage.MISTAKES_VERIFICATION: [resolution_checked(True)]}
 
 
 def chain(*steps: tuple[JsonObject, JsonObject | None]) -> dict[Stage, Outputs]:
@@ -178,12 +188,30 @@ async def test_an_unfit_part_is_swapped_at_once() -> None:
     assert doc.flawed_parts == [1] and llm.log[:2] == [(Stage.MISTAKES_GENERATION, 2), (Stage.MISTAKES_GENERATION, 1)]
 
 
-async def test_with_no_unused_part_left_the_generation_fails() -> None:
-    unfit = chain((corruption([], "", apte=False), None))
-    llm = PartRouter(stage_a(), {1: unfit, 2: unfit, 3: unfit})
+async def test_with_no_unused_part_left_an_unfit_answer_is_retried_and_then_fails() -> None:
+    unfit = (corruption([], "", apte=False), None)
+    llm = PartRouter(stage_a(), {1: chain(unfit), 2: chain(unfit), 3: chain(*[unfit] * 3)})
     with pytest.raises(MistakeGenerationFailedException):
-        await parted_generator(llm, seed=seed_choosing(2, 1)).generate(problem_source(), "facil")
-    assert sorted(part for _, part in llm.log) == [1, 2, 3]
+        await parted_generator(llm, seed=seed_choosing(2, 1, 3)).generate(problem_source(), "facil")
+    assert [part for _, part in llm.log] == [2, 1, 3, 3, 3]
+    retries = [r.user for r in llm.by_part[3][1:]]
+    assert all("aquesta part ha de tenir un error («apte» ha de ser true)" in r for r in retries)
+
+
+async def test_when_every_part_is_chosen_an_unfit_part_is_asked_again() -> None:
+    unfit = corruption([], "", apte=False)
+    llm = PartRouter(
+        stage_a(),
+        {
+            1: chain((PART1_ERROR, PART1_FOUND)),
+            2: chain((unfit, None), (PART2_ERROR, PART2_FOUND)),
+            3: chain((PART3_ERROR, PART3_FOUND)),
+        },
+    )
+    doc = await parted_generator(llm).generate(problem_source(), "dificil")
+    assert doc.flawed_parts == [1, 2, 3]
+    attempts = (doc.parts[1].verification and doc.parts[1].verification.attempts) or []
+    assert len(attempts) == 2 and attempts[0].validation[0].startswith("aquesta part ha de tenir un error")
 
 
 async def test_the_parts_are_corrupted_in_parallel_and_independently() -> None:
@@ -212,27 +240,25 @@ async def test_a_generation_past_its_deadline_fails() -> None:
 
 
 async def test_theory_always_puts_an_error_in_the_statement_and_never_swaps_it() -> None:
-    statement_error = corruption(
-        [edit(1, "de classe $\\mathcal{C}^1$", "diferenciable")], "diferenciable", tipus="hipotesi"
-    )
-    titles = {"Enunciat": 1, **{t: i for i, (t, _) in enumerate(THEORY_PARTS, 2)}}
-    theory_a = {Stage.MISTAKES_GENERATION: [theory_written()], Stage.MISTAKES_VERIFICATION: [resolution_checked(True)]}
-    llm = PartRouter(theory_a, {1: chain((statement_error, part_checked(finding(1, "diferenciable"))))}, titles)
+    llm = PartRouter(theory_a(), {1: chain((STATEMENT_ERROR, STATEMENT_FOUND))}, THEORY_TITLES)
     doc = await parted_generator(llm).generate(theory_source(), "facil")
     assert doc.source_kind == "teoria" and doc.statement_fragments == 1 and doc.flawed_parts == [1]
     assert doc.parts[0].title == "Enunciat" and doc.mistakes[0].kind == "hipotesi"
     (check,) = [r for r in llm.by_part[1] if "<part_a_revisar>" in r.user]
     assert check.user.startswith("<parts_anteriors>\n(cap)\n</parts_anteriors>")
 
-    unfit = chain((corruption([], "", apte=False), None))
-    llm = PartRouter(
-        {Stage.MISTAKES_GENERATION: [theory_written()], Stage.MISTAKES_VERIFICATION: [resolution_checked(True)]},
-        {1: unfit},
-        titles,
-    )
+
+async def test_an_unfit_statement_is_asked_again_within_its_attempts() -> None:
+    unfit = (corruption([], "", apte=False), None)
+    llm = PartRouter(theory_a(), {1: chain(unfit, (STATEMENT_ERROR, STATEMENT_FOUND))}, THEORY_TITLES)
+    doc = await parted_generator(llm).generate(theory_source(), "facil")
+    assert doc.flawed_parts == [1] and [part for _, part in llm.log] == [1, 1, 1]
+    assert "l'enunciat sempre admet un error" in llm.by_part[1][1].user
+
+    llm = PartRouter(theory_a(), {1: chain(*[unfit] * 3)}, THEORY_TITLES)
     with pytest.raises(MistakeGenerationFailedException):
         await parted_generator(llm).generate(theory_source(), "facil")
-    assert [part for _, part in llm.log] == [1]
+    assert [part for _, part in llm.log] == [1, 1, 1]
 
 
 async def test_a_source_without_two_parts_is_refused_before_any_call() -> None:

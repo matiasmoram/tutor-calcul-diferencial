@@ -143,7 +143,7 @@ def resolution_verification_problems(resolution: Resolution, report: ResolutionR
 
 
 class CorruptionCheck(BaseModel):
-    unfit: bool  # the model found no believable error in the part: another part is chosen
+    unfit: bool  # the model found no believable error in a part that can be swapped: another part is chosen
     flawed_fragments: list[str]
     mistake: DeclaredMistake | None
     problems: list[str]  # empty: valid
@@ -223,14 +223,30 @@ def _on_edit(span: tuple[int, int], start: int, end: int) -> bool:
 
 
 def check_corruption(
-    clean: list[str], draft: CorruptionDraft, first_fragment: int, mistake_id: str, theory: bool
+    clean: list[str],
+    draft: CorruptionDraft,
+    first_fragment: int,
+    mistake_id: str,
+    theory: bool,
+    required: bool = False,
 ) -> CorruptionCheck:
     """Stage B, by code. `clean`: the part's correct fragments; `first_fragment`: the document-wide number of its
-    first one, which numbers the declared error like every fragment of the document."""
+    first one, which numbers the declared error like every fragment of the document. `required`: the part cannot be
+    swapped (theory's statement, or no unused part is left), so answering it unfit is a rejected attempt."""
     if draft.fit is False:
-        return CorruptionCheck(
-            unfit=True, flawed_fragments=clean, mistake=None, problems=["la part no és apta per a un error"]
+        if not required:
+            return CorruptionCheck(
+                unfit=True, flawed_fragments=clean, mistake=None, problems=["la part no és apta per a un error"]
+            )
+        statement = theory and first_fragment == 1
+        reason = (
+            "l'enunciat sempre admet un error («apte» ha de ser true): fes-lo fals canviant-ne una hipòtesi, la "
+            "conclusió, un quantificador o una desigualtat"
+            if statement
+            else "aquesta part ha de tenir un error («apte» ha de ser true): fes un error versemblant en un càlcul, "
+            "una regla o una justificació d'aquesta part"
         )
+        return CorruptionCheck(unfit=False, flawed_fragments=clean, mistake=None, problems=[reason])
     edits, problems = _edits(clean, draft)
     if problems:
         return CorruptionCheck(unfit=False, flawed_fragments=clean, mistake=None, problems=problems)

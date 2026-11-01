@@ -166,7 +166,7 @@ class PartedMistakeExerciseGenerator:
     ) -> _FlawedPart:
         """One chosen part's error; `reserve` is shared by the k chains."""
         while True:
-            flawed = await self._corrupt(source, resolution, difficulty, part)
+            flawed = await self._corrupt(source, resolution, difficulty, part, reserve, swappable)
             if flawed is not None:
                 return flawed
             if not swappable or not reserve:
@@ -175,9 +175,16 @@ class PartedMistakeExerciseGenerator:
             part = reserve.pop(0)
 
     async def _corrupt(
-        self, source: MistakeSource, resolution: Resolution, difficulty: Difficulty, part: int
+        self,
+        source: MistakeSource,
+        resolution: Resolution,
+        difficulty: Difficulty,
+        part: int,
+        reserve: list[int],
+        swappable: bool,
     ) -> _FlawedPart | None:
-        """Stages B and C on one part, retried with the reasons; None when the part gives no verified error."""
+        """Stages B and C on one part, retried with the reasons; None when the part gives no verified error. A part
+        answered unfit is given up at once only when it can be swapped; otherwise that answer is a rejected attempt."""
         clean = resolution.parts[part - 1]
         first = resolution.first_fragment(part)
         theory = isinstance(source, TheorySource)
@@ -185,7 +192,9 @@ class PartedMistakeExerciseGenerator:
         attempts: list[GenerationAttempt] = []
         for attempt in range(1, MAX_ATTEMPTS + 1):
             draft, generation_call = await self._corrupter.corrupt(source, resolution, part, difficulty, rejections)
-            check = check_corruption(clean.fragments, draft, first, "e1", theory)
+            # Read after the call: the other chains may have used the reserve up meanwhile.
+            required = not (swappable and reserve)
+            check = check_corruption(clean.fragments, draft, first, "e1", theory, required)
             if check.unfit:
                 return None
             if check.mistake is None:

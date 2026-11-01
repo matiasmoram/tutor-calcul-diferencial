@@ -147,7 +147,7 @@ run `docker compose up --build` (see [docs/deploy.md](docs/deploy.md)).
 uv run poe check          # ruff (lint + format check), pyright, pytest
 ```
 
-The suite has 2856 tests. It makes no network calls: the LLM is a scripted fake (`backend/tests/fakes/llm.py`), and
+The suite makes no network calls: the LLM is a scripted fake (`backend/tests/fakes/llm.py`), and
 each storage test gets its own real SQLite database. Other tasks: `uv run poe lint`, `format`, `types`, `test`,
 `schema` (regenerate `supabase/schema.sql`). CI (`.github/workflows/ci.yml`) also validates the solution sheets
 (`scripts/check_fitxes.py`), checks the schema snapshot (`scripts/db.py schema --check`), applies every migration to

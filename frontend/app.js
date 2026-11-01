@@ -537,11 +537,6 @@ let routeReq = 0;
 
 async function route() {
   const parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean);
-  // Old links (#/problemes, #/llista/<id>/<ex>) are rewritten to the current address; replace() re-enters route().
-  if (parts[0] === "problemes" || parts[0] === "llista") {
-    location.replace(parts[0] === "problemes" ? "#/exercicis" : `#/${["exercicis", ...parts.slice(1)].join("/")}`);
-    return;
-  }
   const [mode, llista, ex] = parts;
   const req = ++routeReq;
   sessionReq++;  // any exercise still loading belongs to the page we're leaving

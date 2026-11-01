@@ -1,4 +1,4 @@
-"""Shared test data for the "troba l'error" context: the legacy test documents and the wiring of the use cases."""
+"""Shared test data for the "troba l'error" context: the reference document and the wiring of the use cases."""
 
 from core.mistakes.application.mistake_exercise_generator import MistakeExerciseGenerator
 from core.mistakes.domain.entities.mistake_exercise import MistakeExercise, Verification
@@ -69,7 +69,7 @@ def theory_source(item_id: str = "T3.21") -> TheorySource:
 
 
 def solution(exercise_id: str = "0000000000aa") -> MistakeExercise:
-    """The legacy tests' document: two errors, in fragments 2 and 3."""
+    """The reference document: two errors, in fragments 2 and 3."""
     check = validate_generation(draft(gen([err(2, "$x^4 \\ge x^4+y^2$"), err(3, "demostra que el límit existeix")])), 2)
     return MistakeExercise(
         id=exercise_id,

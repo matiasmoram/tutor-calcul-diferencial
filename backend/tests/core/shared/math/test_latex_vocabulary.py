@@ -31,11 +31,11 @@ def test_the_course_and_every_cached_document_use_only_known_commands() -> None:
 
 
 def test_invented_commands_are_caught_and_row_breaks_are_not_commands() -> None:
-    # Real gpt-5.6-luna output that passed both the code checks and the verifier model.
+    # Commands that do not exist, inside math.
     garbage = r"$R_3=\frac{1}{6}\bigl(e^{\tau\fterm{0.2}}(0.2)^3\bigr)$ per a algun $\tau\blink\text{ entre }0$"
     assert unknown_commands(garbage) == {"fterm", "blink"}
     assert unknown_commands(r"$\begin{pmatrix}0&e\\e&0\end{pmatrix}$, $\det\begin{pmatrix}1\\y\end{pmatrix}$") == set()
-    # A backslash escaped twice outside any environment (gpt-5.6-luna): a row break followed by plain text.
+    # A backslash escaped twice outside any environment: a row break followed by plain text.
     assert unknown_commands(r"Si $A\\subseteq\\overline{B}$") == {"\\subseteq", "\\overline"}
 
 

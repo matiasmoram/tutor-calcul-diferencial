@@ -1,4 +1,4 @@
-"""'Find the error' documents written offline (by an agent or by hand), gated like the LLM pipeline.
+"""'Find the error' documents written outside the app (by hand or with an external model), gated like the LLM pipeline.
 
 A batch file (JSON) is a list of documents, each in the generator's output format plus its source:
   {"font": "teoria" | "problema", "id": "T3.21" | "t3-5", "dificultat": "facil" | "normal" | "dificil",
@@ -17,7 +17,7 @@ Steps (the same gates as MistakeExerciseGenerator):
                           found, nothing else wrong) and saves only the documents that pass.
   check-cache             re-validates every cached document against the current sheets / notes and re-applies the
                           verification gate to its stored review; reports documents whose reference (sheet or
-                          notes) changed since import, and counts the older ones that carry no reference hash
+                          notes) changed since import, and counts the documents without a reference hash
 """
 
 import argparse

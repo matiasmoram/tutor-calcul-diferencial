@@ -76,7 +76,7 @@ Two further rules are conventions:
   intention-revealing and `async`. An input DTO, when needed, is colocated as `<UseCase>Input` (`TurnHandlerInput`).
 - **Failures** raise a `<Context>Exception(message, error_code)` subclass (`domain/exceptions.py`, base
   `core.shared.domain.exceptions.DomainException`), where `error_code` is the HTTP status. The API translates them in
-  one place (`domain_errors`). No `None` or `(ok, err)` returns for failures.
+  one place (the app's `DomainException` handler); `domain_errors` only prefixes a 502 with the action. No `None` or `(ok, err)` returns for failures.
 - **Types.** No `dict[str, Any]` carries domain data across layers: typed pydantic models. Ids are value objects
   (`core.shared.domain.ids`).
 - **Async** for all I/O (model calls, repositories). CPU-heavy pure code (sympy) stays synchronous. Application code
@@ -121,8 +121,8 @@ never edited:
 
 ## Tests
 
-- `tests/` mirrors `core/`, `apps/` and `scripts/`. Shared helpers live in a `builders.py` next to the tests that use
-  them, never in test modules.
+- `tests/` mirrors `core/`, `apps/` and `scripts/`. Shared helpers live in a `builders.py` or a named helper module next to
+  the tests that use them, never in test modules.
 - `tests/fakes/llm.py` (`ScriptedLLMClient`) is the LLM boundary fake. `tests/fixtures/course.py` and
   `tests/fixtures/counterexamples.py` load the real authored content.
 - `tests/conftest.py` gives each test a real, empty database: SQLite in a temporary directory, or the Postgres of
@@ -144,8 +144,8 @@ never edited:
 3. Implement the ports in `infra/` (an `LLM*` adapter with its prompt and schema, a SQLModel repository), subclassing
    the port.
 4. Wire it in `apps/tutor_api/endpoints/<context>.py`: a `_get_<use case>` provider that builds the concretes, an
-   endpoint that maps the wire DTO (`schemas/<context>.py`) to the input and the result back, wrapped in
-   `domain_errors()`. Add `Depends(model_rate_limited)` if it calls a model and `ensure_api_key(config)` before the
+   endpoint that maps the wire DTO (`schemas/<context>.py`) to the input and the result back (generation and
+   grading endpoints wrap the call in `domain_errors()` to name the action in a 502). Add `Depends(model_rate_limited)` if it calls a model and `ensure_api_key(config)` before the
    first model call. Add an endpoint test under `tests/apps/tutor_api/`.
 
 ## Adding a context

@@ -106,7 +106,7 @@ def test_found_by_simulated_students() -> None:
     assert verdict("parcials_existeixen", "x*y", "1/0")[0] == "falla"
 
 
-# Attacks a simulated student found to game the checker: none of them may pass.
+# Functions built to game the checker: none of them may pass.
 LINES_1E15 = (
     "1+x*y*(y-x)*(y+x)*(y-2*x)*(y+3*x)*(2*y-x)*(2*y+x)*(3*y-x)*(y-3*x)*(3*y+x)*(2*y-3*x)*(3*y-2*x)*(7*y+5*x)"
     "/(10**15*(x**2+y**2)**7)"
@@ -188,7 +188,7 @@ def test_a_quotient_that_blows_up_has_no_limit(
     assert status == "ok", detail
 
 
-# Found by an auditor: none of them may pass.
+# A discontinuity hidden below every sampled radius: it must not pass.
 HIDDEN = "exp(-10**32*(x**2+y**2))"
 
 

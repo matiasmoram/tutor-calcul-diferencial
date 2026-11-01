@@ -35,5 +35,5 @@ class LLMReplyWriter(ReplyWriter):
         text = data.get("text")
         message = text.strip() if isinstance(text, str) else ""
         if not message:
-            raise ModelOutputException(STAGE_NAME, f"{Stage.REPLY}: empty response", call)
+            raise ModelOutputException(STAGE_NAME, "resposta: empty message", call)
         return message, call

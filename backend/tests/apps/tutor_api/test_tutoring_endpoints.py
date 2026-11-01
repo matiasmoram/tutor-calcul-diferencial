@@ -89,8 +89,8 @@ def test_the_transcription_and_session_list_json_is_pinned(
     scripted_llm.then(Stage.TRANSCRIPTION, transcription | {"dubtes": ["línia 2"]})
     assert api.post(f"/api/sessions/{sid}/transcripcio", json={"imatge": png}).text == (
         '{"transcripcio":"$x^2$","llegibilitat":"parcial","contingut":"treball_matematic","dubtes":["línia 2"],'
-        '"crida":{"model":"scripted","latency_ms":1,"input_tokens":10,"output_tokens":2,"cached_tokens":0,'
-        '"stage":"transcription"}}'
+        '"crida":{"stage":"transcription","model":"scripted","latency_ms":1,"input_tokens":10,"output_tokens":2,'
+        '"cached_tokens":0}}'
     )
     scripted_llm.then(Stage.DIAGNOSIS, diagnosis_json())
     scripted_llm.then(Stage.REPLY, {"text": "Què has provat?"})

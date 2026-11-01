@@ -5,6 +5,8 @@ The problems are Catalan: they are fed back to the writer as the reason a draft 
 import re
 from collections.abc import Sequence
 
+from loguru import logger
+
 from core.course.domain.entities.theory_item import TheoryItem
 from core.course.domain.services.citations import CITATION, CitationKey, citation_key, citation_keys
 from core.shared.math.latex_cas import explain, literal_tokens
@@ -49,7 +51,8 @@ def deterministic_check(message: str, plan: Plan, permitted: Sequence[str] = ())
         except Exception as e:
             # Fail closed, like a timeout: a draft the CAS could not verify never reaches the student.
             hits = []
-            problems.append(f"{CAS_ERROR_PROBLEM} ({type(e).__name__})")
+            logger.warning("CAS check failed: {}", type(e).__name__)
+            problems.append(CAS_ERROR_PROBLEM)
         literal = _literal_sides(permitted) if hits else set()
         for side, forbidden in hits:
             # A formula copied literally from allowed text (e.g. an integrand sympy cannot read) is never a leak.

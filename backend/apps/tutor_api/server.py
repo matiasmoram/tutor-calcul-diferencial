@@ -162,7 +162,7 @@ def create_app(config: Config | None = None, llm: LLMClient | None = None) -> Fa
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         _check_startup(cfg)
-        inner = llm or make_llm_client(cfg)
+        inner = llm or make_llm_client(cfg, allow_missing_key=not cfg.PRODUCTION)
         engine = make_engine(cfg.async_database_url)
         register_all_tables()
         await create_schema_if_sqlite(engine)

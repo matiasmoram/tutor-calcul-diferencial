@@ -261,6 +261,18 @@ def test_a_local_start_without_a_key_warns_and_logs_its_configuration(
     assert f"database=sqlite:{startup_env.as_posix()}" in config and "secret" not in config
 
 
+@pytest.mark.parametrize("provider", ["openai", "gemini", "openrouter", "anthropic"])
+def test_a_local_start_builds_the_real_client_without_a_key(
+    startup_env: Path, monkeypatch: pytest.MonkeyPatch, provider: str
+) -> None:
+    monkeypatch.delenv("RENDER")
+    for variable in ("OPENAI_API_KEY", "GEMINI_API_KEY", "OPENROUTER_API_KEY", "ANTHROPIC_API_KEY"):
+        monkeypatch.delenv(variable, raising=False)
+    monkeypatch.setenv("LLM_PROVIDER", provider)
+    with TestClient(create_app()) as client:  # no llm=: the factory runs
+        assert client.get("/health").status_code == 200
+
+
 def test_the_logged_database_has_no_credentials() -> None:
     url = "postgresql+psycopg://postgres.abcd:s3cr3t@aws-0-eu-central-1.pooler.supabase.com:6543/postgres"
     assert server._database_label(url) == "postgresql@aws-0-eu-central-1.pooler.supabase.com:6543/postgres"

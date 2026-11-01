@@ -445,7 +445,7 @@
         "demanades": 13,
         "rebudes": 13,
         "generacio": {
-          "model": "offline:author",
+          "model": "offline:claude-subagent",
           "latency_ms": 0,
           "input_tokens": 0,
           "output_tokens": 0,
@@ -460,14 +460,14 @@
           }
         ],
         "solucionador": {
-          "model": "offline:solver",
+          "model": "offline:claude-solver",
           "latency_ms": 0,
           "input_tokens": 0,
           "output_tokens": 0,
           "cached_tokens": 0
         },
         "auditoria": {
-          "model": "offline:auditor",
+          "model": "offline:claude-auditor",
           "latency_ms": 0,
           "input_tokens": 0,
           "output_tokens": 0,

@@ -18,3 +18,11 @@ def test_openrouter_without_its_key_never_sends_the_openai_one(monkeypatch: pyte
     monkeypatch.delenv("OPENROUTER_API_KEY", raising=False)
     with pytest.raises(ValueError, match="OPENROUTER_API_KEY is not set"):
         make_llm_client(Config())
+
+
+def test_a_missing_key_can_be_allowed_for_a_local_server(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("LLM_PROVIDER", "openai")
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    assert make_llm_client(Config(), allow_missing_key=True) is not None
+    with pytest.raises(Exception, match="api_key"):
+        make_llm_client(Config())

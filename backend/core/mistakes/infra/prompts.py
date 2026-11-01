@@ -89,6 +89,8 @@ Requisits:
 - Una part per a cada pas de la solució de referència, en el mateix ordre. "pas" és l'identificador del pas (entre claudàtors a la referència). Si el «detall» d'un pas és llarg, el pots repartir en dues parts consecutives amb el mateix "pas".
 - Cada part té d'1 a 4 fragments; cada fragment, d'1 a 3 frases en prosa d'alumne. Fórmules en LaTeX entre $...$ (mai $$). Fes servir només ordres estàndard de LaTeX/KaTeX.
 - Cada part acaba dient explícitament el resultat intermedi que obté.
+- Cada part ha de contenir almenys un pas matemàtic (un càlcul, una desigualtat, una deducció o l'aplicació d'un resultat), no només narració ni un resum del que ja s'ha dit.
+- Derivades parcials d'ordre superior: segueix els apunts. $\\frac{\\partial^2 f}{\\partial x\\partial y}=f_{xy}$ vol dir derivar primer respecte de $x$ i després respecte de $y$, és a dir $\\frac{\\partial}{\\partial y}\\left(\\frac{\\partial f}{\\partial x}\\right)$; fes servir sempre aquest ordre i, quan importi, escriu-lo explícitament així.
 - Segueix l'estructura de la solució de referència amb les teves paraules i arriba al seu resultat.
 - Tot ha de ser matemàticament correcte i rigorós: no hi posis cap error.
 - No escriguis el títol del pas als fragments: la interfície ja el mostra.
@@ -101,8 +103,14 @@ Requisits:
 - "enunciat": d'1 a 3 fragments (p. ex. hipòtesis / conclusió). No escriguis "Enunciat:": la interfície ja ho indica.
 - "parts": la demostració dividida en etapes (entre 2 i 5), en ordre. Cada etapa té un "titol" curt i neutre que no reveli el contingut (p. ex. "Reducció al cas escalar") i d'1 a 4 fragments, cadascun d'1 a 3 frases.
 - Cada etapa acaba dient explícitament què ha establert.
+- Cada etapa ha de contenir almenys un pas matemàtic (un càlcul, una desigualtat, una deducció o l'aplicació d'un resultat), no només narració ni un resum del que ja s'ha dit.
+- Derivades parcials d'ordre superior: segueix els apunts. $\\frac{\\partial^2 f}{\\partial x\\partial y}=f_{xy}$ vol dir derivar primer respecte de $x$ i després respecte de $y$, és a dir $\\frac{\\partial}{\\partial y}\\left(\\frac{\\partial f}{\\partial x}\\right)$; fes servir sempre aquest ordre.
 - Fidel als apunts: mateixa notació, mateixes hipòtesis, mateixa estructura de demostració. Pots condensar els càlculs rutinaris, però cap pas lògic important pot desaparèixer. Fórmules en LaTeX entre $...$ (mai $$; per a fraccions grans, $\\displaystyle ...$). Fes servir només ordres estàndard de LaTeX/KaTeX.
 - Tot ha de ser matemàticament correcte i coincidir amb els apunts: no hi posis cap error. Si els apunts tenen una errata evident, escriu la versió correcta.
+"""
+
+# One bullet appended to both corrupters (problem and theory): an error a teacher would really mark.
+IMPACT_RULE = """- L'error ha de comptar per a l'argument: un resultat que canvia, una hipòtesi d'un teorema que falta o una inferència que deixa de ser vàlida. Res de casos límit ni de lliscades que no canvien cap resultat (t=0, $\\varepsilon>1$, un quantificador banal): un professor les diria imprecisions, no errors. Dolent: «Per a tot $t$, el punt $(tu_1,tu_2)$ no és l'origen» (només falla a $t=0$ i no canvia res). Bo: «Aquests camins demostren l'existència del límit, perquè donen el mateix valor» (dos camins només donen un candidat).
 """
 
 REACHES_RESULT = """
@@ -167,6 +175,10 @@ Per a cada problema indica la gravetat:
 "context_correcte": true si les parts anteriors et semblen correctes; false només si hi veus un error clar. "alerta_context": si "context_correcte" és false, explica quin error hi veus; si és true, deixa-ho buit ("").
 Sigues exhaustiu i estricte, però no inventis errors en passos correctes.
 """
+
+
+PART_CORRUPTION_SYSTEM += IMPACT_RULE
+THEORY_PART_CORRUPTION_SYSTEM += IMPACT_RULE
 
 
 def theory_text(items: list[TheoryItem], with_proof: frozenset[TheoryItemId] = frozenset()) -> str:

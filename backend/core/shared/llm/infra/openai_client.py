@@ -2,6 +2,7 @@ from collections.abc import Awaitable, Mapping
 from typing import cast
 
 import openai
+from loguru import logger
 from openai.types.chat import ChatCompletionMessageParam
 from openai.types.chat.chat_completion import Choice
 
@@ -13,6 +14,7 @@ from core.shared.llm.client import (
     LLMClient,
     LLMError,
     LLMProviderError,
+    LLMQuotaExhaustedError,
     LLMRequest,
     Stage,
     StageConfig,
@@ -113,6 +115,9 @@ async def _translated[T](call: Awaitable[T]) -> T:
     except openai.AuthenticationError as e:
         raise LLMProviderError(f"Clau d'API invàlida o absent: {e.message}", 401) from e
     except openai.RateLimitError as e:
+        if e.code == "insufficient_quota":
+            logger.error("LLM quota exhausted, not retrying: {}", e.message)
+            raise LLMQuotaExhaustedError(e.message) from e
         raise LLMProviderError(f"Límit de l'API: {e.message}", 429) from e
     except openai.APIStatusError as e:
         raise LLMProviderError(f"Error de l'API ({e.status_code}): {e.message}") from e

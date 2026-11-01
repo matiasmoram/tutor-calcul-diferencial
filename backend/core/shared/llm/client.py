@@ -38,6 +38,15 @@ class LLMProviderError(LLMError):
     Clients translate their SDK's exceptions into this, so no other layer depends on an SDK."""
 
 
+class LLMQuotaExhaustedError(LLMProviderError):
+    """The account has no credit or quota left (OpenAI 429 `insufficient_quota`). Unlike a rate limit it does not
+    clear by waiting: never retried. `message` is generic, safe for any user; the provider's text is in `detail`."""
+
+    def __init__(self, detail: str) -> None:
+        super().__init__("El servei d'IA no està disponible ara mateix. Torna-ho a provar més tard.", 503)
+        self.detail = detail
+
+
 class Stage(StrEnum):
     DIAGNOSIS = "diagnosis"
     REPLY = "reply"

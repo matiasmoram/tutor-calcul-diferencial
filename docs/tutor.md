@@ -3,6 +3,8 @@
 Code: `backend/core/tutoring/` (use cases, policy, guard) on top of `backend/core/course/` (the authored content).
 Route: `#/exercicis` → `#/exercicis/<list>/<exercise>`.
 
+Paths below are relative to the code directory named above, unless they start with `backend/` or `frontend/`.
+
 ## Purpose
 
 The student works on one exercise of the problem collection and explains, in their own words or with a photo of the

@@ -2,7 +2,7 @@
 
 The backend follows domain-driven design with a clean architecture. This page is the standing rulebook.
 `backend/tests/test_import_restrictions.py` enforces its layer rules on every module, and the rest is checked in
-review. All paths below are relative to `backend/`, which is the import root (`core`, `apps` and `settings` are
+review. All paths on this page are relative to `backend/`, which is the import root (`core`, `apps` and `settings` are
 importable from the server, the scripts and the tests). The reference implementations to copy are `core/tutoring/`
 (a full context) and `core/shared/`.
 

@@ -4,6 +4,8 @@ Code: `backend/core/counterexamples/`. Challenges: `backend/contraexemples/repte
 
 Beta: the checker is in testing and its verdicts may contain errors. The UI marks the mode accordingly.
 
+Paths below are relative to the code directory named above, unless they start with `backend/` or `frontend/`.
+
 ## Purpose
 
 The student builds the pathological function instead of reading it. A challenge asks for $f$ with properties at the
@@ -60,8 +62,6 @@ Statuses (`domain/values/verdict.py`):
 The response reports `superat` (all properties pass) and `rigoros` (all are `ok`).
 
 ## Hardening
-
-The checker was tested against a simulated student trying to game it.
 
 - Input is parsed with the shared whitelisted parser, never evaluated as Python, at most 300 characters per
   expression. Nested exponentials deeper than 2, numeric exponents above 1000, and constants outside

@@ -3,6 +3,8 @@
 Code: `backend/core/mistakes/`. Routes: `#/errades` → `#/errades/problemes` (worked solutions) or
 `#/errades/teoria` (results of the notes).
 
+Paths below are relative to the code directory named above, unless they start with `backend/` or `frontend/`.
+
 ## Purpose
 
 The student reads a mathematical text with deliberate errors and has to find them and say why they are wrong. Two

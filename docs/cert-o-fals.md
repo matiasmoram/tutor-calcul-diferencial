@@ -2,6 +2,8 @@
 
 Code: `backend/core/quizzes/`. Route: `#/afirmacions`.
 
+Paths below are relative to the code directory named above, unless they start with `backend/` or `frontend/`.
+
 ## Purpose
 
 A quiz of statements that look true and may not be ("if the iterated limits agree, the double limit exists" is false:

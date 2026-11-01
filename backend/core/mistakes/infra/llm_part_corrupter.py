@@ -1,4 +1,5 @@
 from core.mistakes.domain.ports import PartCorrupter
+from core.mistakes.domain.services.corruption_plan import CorruptionPlan
 from core.mistakes.domain.values.difficulty import Difficulty
 from core.mistakes.domain.values.llm_outputs import CorruptionDraft
 from core.mistakes.domain.values.mistake_source import MistakeSource, TheorySource
@@ -14,11 +15,17 @@ class LLMPartCorrupter(PartCorrupter):
         self._llm = llm
 
     async def corrupt(
-        self, source: MistakeSource, resolution: Resolution, part: int, difficulty: Difficulty, rejections: list[str]
+        self,
+        source: MistakeSource,
+        resolution: Resolution,
+        part: int,
+        difficulty: Difficulty,
+        rejections: list[str],
+        plan: CorruptionPlan | None = None,
     ) -> tuple[CorruptionDraft, ModelUsage]:
         request = LLMRequest(
             system=prompts.corruption_system(source),
-            user=prompts.corruption_user(resolution, part, difficulty, rejections),
+            user=prompts.corruption_user(resolution, part, difficulty, rejections, plan),
             schema=corruption_schema(len(resolution.parts[part - 1].fragments), isinstance(source, TheorySource)),
             # The same for every part and retry: the clean resolution is cached with the reference.
             context=prompts.corruption_context(source, resolution),

@@ -128,5 +128,9 @@ class MistakeGenerationFailedException(MistakesException):
     """Every attempt was rejected by validation or verification. 502 like any failed model stage, so the API
     reports it as "La generació ha fallat: ..."."""
 
-    def __init__(self, attempts: int) -> None:
+    def __init__(self, attempts: int, reasons: list[str] | None = None) -> None:
         super().__init__(f"no s'ha pogut generar un document amb errors verificats després de {attempts} intents", 502)
+        # Why each attempt was rejected: for professors and logs (`str(e)`), never in `message`, which the API shows.
+        self.reasons = reasons or []
+        if self.reasons:
+            self.args = ("\n".join([self.message, *(f"  - {r}" for r in self.reasons)]),)

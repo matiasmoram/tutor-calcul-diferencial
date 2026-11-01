@@ -4,6 +4,7 @@ import json
 
 from core.course.domain.entities.theory_item import TheoryItem
 from core.mistakes.domain.entities.gradable_text import GradableText
+from core.mistakes.domain.services.corruption_plan import CorruptionPlan
 from core.mistakes.domain.values.difficulty import MISTAKES_PER_DIFFICULTY, Difficulty
 from core.mistakes.domain.values.located_annotation import LocatedAnnotation
 from core.mistakes.domain.values.mistake_source import MistakeSource, ProblemSource, TheorySource
@@ -301,13 +302,30 @@ def corruption_system(source: MistakeSource) -> str:
     return THEORY_PART_CORRUPTION_SYSTEM if isinstance(source, TheorySource) else PART_CORRUPTION_SYSTEM
 
 
-def corruption_user(resolution: Resolution, part: int, difficulty: Difficulty, rejections: list[str]) -> str:
+def corruption_user(
+    resolution: Resolution,
+    part: int,
+    difficulty: Difficulty,
+    rejections: list[str],
+    plan: CorruptionPlan | None = None,
+) -> str:
     p = resolution.parts[part - 1]
     n = len(p.fragments)
     user = (
         f"Introdueix UN error a la part {part} («{p.title}»), que té {n} fragment{'s' if n > 1 else ''}. "
         f"Dificultat: {difficulty}."
     )
+    if plan is not None:
+        user += (
+            f"\nTipus d'error preferit: {plan.kind}; planta aquest tipus tret que no es pugui fer de manera natural "
+            "en aquesta part (aleshores tria'n un altre de vàlid)."
+        )
+        if plan.others:
+            others = ", ".join(f"part {p} ({k})" for p, k in plan.others)
+            user += (
+                f"\nEls altres errors del document són a: {others}. L'error d'aquesta part ha de ser de naturalesa "
+                "diferent."
+            )
     return user + _rejected(rejections)
 
 

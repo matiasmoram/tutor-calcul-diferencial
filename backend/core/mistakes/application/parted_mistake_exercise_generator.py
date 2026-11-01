@@ -9,6 +9,7 @@ from core.mistakes.domain.entities.mistake_exercise import DeclaredMistake, Gene
 from core.mistakes.domain.entities.parted_mistake_exercise import MistakePart, PartedMistakeExercise
 from core.mistakes.domain.exceptions import MistakeGenerationFailedException, MistakeGenerationTimeoutException
 from core.mistakes.domain.ports import PartCorrupter, PartVerifier, ResolutionVerifier, ResolutionWriter
+from core.mistakes.domain.services.corruption_plan import CorruptionPlan, plan_corruptions
 from core.mistakes.domain.services.part_checks import (
     check_corruption,
     check_resolution,
@@ -68,12 +69,20 @@ class PartedMistakeExerciseGenerator:
     async def _generate(self, source: MistakeSource, difficulty: Difficulty) -> PartedMistakeExercise:
         resolution, verification = await self._resolution(source)
         chosen, reserve = self._choose(source, len(resolution.parts), difficulty)
+        # Decided before the chains run in parallel: each corrupter prefers a distinct kind.
+        plans = plan_corruptions(self._rng, chosen, isinstance(source, TheorySource))
         try:
             async with asyncio.TaskGroup() as group:
                 tasks = [
                     group.create_task(
                         self._flawed_part(
-                            source, resolution, difficulty, part, reserve, swappable=not _is_statement(source, part)
+                            source,
+                            resolution,
+                            difficulty,
+                            part,
+                            reserve,
+                            swappable=not _is_statement(source, part),
+                            plan=plans[part],
                         )
                     )
                     for part in chosen
@@ -115,6 +124,7 @@ class PartedMistakeExerciseGenerator:
         """Stage A, regenerating with the reasons."""
         rejections: list[str] = []
         attempts: list[GenerationAttempt] = []
+        failures: list[str] = []
         for attempt in range(1, MAX_ATTEMPTS + 1):
             draft, generation_call = await self._writer.write(source, rejections)
             check = check_resolution(draft, source)
@@ -123,6 +133,7 @@ class PartedMistakeExerciseGenerator:
                     GenerationAttempt(attempt=attempt, generation=generation_call, validation=check.problems)
                 )
                 rejections = check.problems
+                failures += _reasons("resolució", attempt, rejections)
                 continue
             report, verification_call = await self._resolution_verifier.verify(source, check.resolution)
             issues = resolution_verification_problems(check.resolution, report, isinstance(source, TheorySource))
@@ -138,11 +149,12 @@ class PartedMistakeExerciseGenerator:
             )
             if issues:
                 rejections = issues
+                failures += _reasons("resolució", attempt, rejections)
                 continue
             return check.resolution, Verification(
                 origin="llm", assessment=report.assessment, findings=report.findings, attempts=attempts
             )
-        raise MistakeGenerationFailedException(MAX_ATTEMPTS)
+        raise MistakeGenerationFailedException(MAX_ATTEMPTS, failures)
 
     def _choose(self, source: MistakeSource, n_parts: int, difficulty: Difficulty) -> tuple[list[int], list[int]]:
         """The k parts to corrupt, and the unused ones in the order a failing part is swapped for them."""
@@ -163,14 +175,16 @@ class PartedMistakeExerciseGenerator:
         part: int,
         reserve: list[int],
         swappable: bool,
+        plan: CorruptionPlan,
     ) -> _FlawedPart:
         """One chosen part's error; `reserve` is shared by the k chains."""
+        failures: list[str] = []
         while True:
-            flawed = await self._corrupt(source, resolution, difficulty, part, reserve, swappable)
+            flawed = await self._corrupt(source, resolution, difficulty, part, reserve, swappable, plan, failures)
             if flawed is not None:
                 return flawed
             if not swappable or not reserve:
-                raise MistakeGenerationFailedException(MAX_ATTEMPTS)
+                raise MistakeGenerationFailedException(MAX_ATTEMPTS, failures)
             logger.info("mistakes: part {} of {} failed, trying part {}", part, source.id, reserve[0])
             part = reserve.pop(0)
 
@@ -182,6 +196,8 @@ class PartedMistakeExerciseGenerator:
         part: int,
         reserve: list[int],
         swappable: bool,
+        plan: CorruptionPlan,
+        failures: list[str],
     ) -> _FlawedPart | None:
         """Stages B and C on one part, retried with the reasons; None when the part gives no verified error. A part
         answered unfit is given up at once only when it can be swapped; otherwise that answer is a rejected attempt."""
@@ -191,17 +207,21 @@ class PartedMistakeExerciseGenerator:
         rejections: list[str] = []
         attempts: list[GenerationAttempt] = []
         for attempt in range(1, MAX_ATTEMPTS + 1):
-            draft, generation_call = await self._corrupter.corrupt(source, resolution, part, difficulty, rejections)
+            draft, generation_call = await self._corrupter.corrupt(
+                source, resolution, part, difficulty, rejections, plan
+            )
             # Read after the call: the other chains may have used the reserve up meanwhile.
             required = not (swappable and reserve)
             check = check_corruption(clean.fragments, draft, first, "e1", theory, required)
             if check.unfit:
+                failures.append(f"part {part}: la part no és apta per a un error")
                 return None
             if check.mistake is None:
                 attempts.append(
                     GenerationAttempt(attempt=attempt, generation=generation_call, validation=check.problems)
                 )
                 rejections = check.problems
+                failures += _reasons(f"part {part}", attempt, rejections)
                 continue
             shown = clean.model_copy(update={"fragments": check.flawed_fragments})
             report, verification_call = await self._part_verifier.verify(source, resolution.parts[: part - 1], shown)
@@ -218,6 +238,7 @@ class PartedMistakeExerciseGenerator:
             )
             if issues:
                 rejections = issues
+                failures += _reasons(f"part {part}", attempt, rejections)
                 continue
             return _FlawedPart(
                 part=part,
@@ -228,6 +249,10 @@ class PartedMistakeExerciseGenerator:
                 ),
             )
         return None
+
+
+def _reasons(stage: str, attempt: int, rejections: list[str]) -> list[str]:
+    return [f"{stage}, intent {attempt}: {r}" for r in rejections]
 
 
 def _is_statement(source: MistakeSource, part: int) -> bool:

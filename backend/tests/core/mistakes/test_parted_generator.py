@@ -268,3 +268,42 @@ async def test_a_source_without_two_parts_is_refused_before_any_call() -> None:
     with pytest.raises(MistakePartsUnavailableException):
         await parted_generator(llm).generate(ProblemSource(exercise=single, theory=[], with_proof=frozenset()), "facil")
     assert llm.calls(Stage.MISTAKES_GENERATION) == 0
+
+
+async def test_each_corrupter_gets_a_distinct_preferred_kind_decided_before_the_chains_run() -> None:
+    llm = PartRouter(stage_a(), {2: chain((PART2_ERROR, PART2_FOUND)), 3: chain((PART3_ERROR, PART3_FOUND))})
+    await parted_generator(llm, seed=seed_choosing(2, 3)).generate(problem_source(), "normal")
+    preferred = {}
+    for part in (2, 3):
+        (request,) = [r for r in llm.by_part[part] if r.user.startswith("Introdueix")]
+        m = re.search(r"Tipus d'error preferit: (\w+)", request.user)
+        assert m is not None
+        preferred[part] = m.group(1)
+        other = 5 - part
+        assert f"part {other} (" in request.user
+    assert preferred[2] != preferred[3]
+
+    again = PartRouter(stage_a(), {2: chain((PART2_ERROR, PART2_FOUND)), 3: chain((PART3_ERROR, PART3_FOUND))})
+    await parted_generator(again, seed=seed_choosing(2, 3)).generate(problem_source(), "normal")
+    assert [r.user for r in again.by_part[2] if r.user.startswith("Introdueix")] == [
+        r.user for r in llm.by_part[2] if r.user.startswith("Introdueix")
+    ]
+
+
+async def test_a_failed_generation_carries_the_rejection_reasons_only_in_its_text() -> None:
+    llm = PartRouter(
+        {Stage.MISTAKES_GENERATION: [written()] * 3, Stage.MISTAKES_VERIFICATION: [resolution_checked(False)] * 3},
+        {},
+    )
+    with pytest.raises(MistakeGenerationFailedException) as e:
+        await parted_generator(llm).generate(problem_source(), "normal")
+    assert "resolució, intent 3" in str(e.value) and e.value.reasons
+    assert "intent 1" not in e.value.message and "\n" not in e.value.message
+
+
+async def test_a_part_that_never_passes_names_its_reasons() -> None:
+    bad = {Stage.MISTAKES_GENERATION: [corruption([edit(1, "no hi és", "x")], "x")] * 3}
+    llm = PartRouter(stage_a(), {1: bad, 2: bad, 3: bad})
+    with pytest.raises(MistakeGenerationFailedException) as e:
+        await parted_generator(llm, seed=seed_choosing(2, 1, 3)).generate(problem_source(), "facil")
+    assert "part 2, intent 3" in str(e.value) and "part 3, intent 3" in str(e.value)

@@ -2,6 +2,7 @@ from typing import Protocol
 
 from core.mistakes.domain.entities.gradable_text import GradableText
 from core.mistakes.domain.entities.parted_mistake_exercise import MistakeDocument
+from core.mistakes.domain.services.corruption_plan import CorruptionPlan
 from core.mistakes.domain.values.difficulty import Difficulty
 from core.mistakes.domain.values.llm_outputs import (
     CorruptionDraft,
@@ -49,9 +50,16 @@ class ResolutionVerifier(Protocol):
 
 class PartCorrupter(Protocol):
     async def corrupt(
-        self, source: MistakeSource, resolution: Resolution, part: int, difficulty: Difficulty, rejections: list[str]
+        self,
+        source: MistakeSource,
+        resolution: Resolution,
+        part: int,
+        difficulty: Difficulty,
+        rejections: list[str],
+        plan: CorruptionPlan | None = None,
     ) -> tuple[CorruptionDraft, ModelUsage]:
-        """One error put into part `part` of the correct resolution, as small edits of its text."""
+        """One error put into part `part` of the correct resolution, as small edits of its text. `plan`: the kind to
+        prefer and the kinds planned for the other flawed parts."""
         ...
 
 

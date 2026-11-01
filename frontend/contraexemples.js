@@ -33,12 +33,12 @@ async function viewContraexemplesInici() {
     el("section", { class: "hero left" },
       el("div", { class: "eyebrow" }, "Construeix el contraexemple", betaBadge()),
       el("h2", { text: "Fabrica la funció que trenca la intuïció" }),
-      math(el("p", { class: "muted", text: "Cada repte demana una funció amb unes propietats a l'origen que semblen incompatibles: parcials sense continuïtat, el mateix límit per totes les rectes però sense límit… Escriu-la, dona el certificat que ho demostra i el càlcul simbòlic (sympy) ho comprova. Cap model de llenguatge: el veredicte és càlcul." })),
+      math(el("p", { class: "muted", text: "Cada repte demana una funció amb unes propietats a l'origen que semblen incompatibles: parcials sense continuïtat, el mateix límit per totes les rectes però sense límit… Escriu-la, dona el certificat que ho demostra i el càlcul simbòlic ho comprova. Cap model de llenguatge: el veredicte és càlcul." })),
       betaNote()),
     el("ol", { class: "pipeline cf-pipeline" },
       pipelineStage(1, "Construeix", "Escrius $f(x,y)$ fora de l'origen i el valor $f(0,0)$.", "Tu", "student"),
       pipelineStage(2, "Certifica", "Per a «no existeix» dones camins; per a «és contínua» o «és diferenciable», una fita $G(r)\\to0$.", "Tu", "student"),
-      pipelineStage(3, "Comprovació", "Derivades i límits per camins: límits d'una variable, exactes. Fites: $G(r)\\to0$ exacte i la desigualtat mostrejada.", "CAS · sympy", "rule"),
+      pipelineStage(3, "Comprovació", "Derivades i límits per camins: límits d'una variable, exactes. Fites: $G(r)\\to0$ exacte i la desigualtat mostrejada.", "Càlcul simbòlic", "rule"),
       pipelineStage(4, "Veredicte", "Demostrat, plausible (mostreig), no es compleix o indeterminat, propietat per propietat.", "Regles", "rule")),
     ...temes.map((t) => el("section", { class: "teoria-tema ce-tema" },
       el("h3", { text: `Tema ${t}` }),
@@ -229,7 +229,7 @@ async function ceComprova() {
   }
   CE.enviant = r;
   $("#ce-comprova").disabled = true;
-  $("#ce-status").textContent = "Comprovant amb sympy…";
+  $("#ce-status").textContent = "Comprovant el càlcul simbòlic…";
   try {
     const resultat = await api(`/api/contraexemples/${r.id}/comprova`, {
       method: "POST",

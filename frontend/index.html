@@ -138,25 +138,25 @@
           <span class="step-num">1</span>
           <h4>Diagnosi</h4>
           <p>Compara el que has escrit amb la solució de referència: quins passos has fet, quins errors hi ha, com d'encallat estàs.</p>
-          <span class="tag llm">LLM · sortida estructurada</span>
+          <span class="tag llm">Model de llenguatge</span>
         </li>
         <li>
           <span class="step-num">2</span>
           <h4>Pla</h4>
           <p>Unes regles decideixen què fer: qüestionar un error, validar i avançar, o donar una pista del nivell que toca.</p>
-          <span class="tag rule">Regles deterministes</span>
+          <span class="tag rule">Regles fixes</span>
         </li>
         <li>
           <span class="step-num">3</span>
           <h4>Redacció</h4>
           <p>El redactor només veu el contingut permès: ni els passos següents ni el resultat. No pot filtrar el que no sap.</p>
-          <span class="tag llm">LLM · contingut limitat</span>
+          <span class="tag llm">Model de llenguatge</span>
         </li>
         <li>
           <span class="step-num">4</span>
           <h4>Guardià</h4>
           <p>Abans d'arribar-te, el missatge es revisa: si revela massa o conté un error, es reescriu.</p>
-          <span class="tag rule">Regles + LLM</span>
+          <span class="tag rule">Regles i model</span>
         </li>
       </ol>
 
@@ -164,11 +164,11 @@
       <ul class="how-modes">
         <li>
           <strong>Troba l'error i Cert o fals</strong>
-          Un model escriu els documents i les afirmacions; un segon model els resol a cegues, sense saber on són els errors ni quines afirmacions són falses. Només es publiquen els que superen la verificació, i els càlculs dels contraexemples es comproven amb sympy.
+          Un model escriu els documents i les afirmacions; un segon model els resol a cegues, sense saber on són els errors ni quines afirmacions són falses. Només es publiquen els que superen la verificació, i els càlculs dels contraexemples es comproven amb càlcul simbòlic.
         </li>
         <li>
           <strong>Construeix el contraexemple <span class="badge-beta" title="Versió beta: en proves, pot contenir errors">Beta</span></strong>
-          Sense cap model de llenguatge: el veredicte de cada propietat el dona el càlcul simbòlic (sympy) a partir de la funció i el certificat que escrius.
+          Sense cap model de llenguatge: el veredicte de cada propietat el dona el càlcul simbòlic a partir de la funció i el certificat que escrius.
         </li>
         <li>
           <strong>Visualitzador <span class="badge-beta" title="Versió beta: en proves, pot contenir errors">Beta</span></strong>

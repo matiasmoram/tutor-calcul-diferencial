@@ -38,26 +38,12 @@ STAGES = (Stage.DIAGNOSIS, Stage.REPLY, Stage.GUARD)
 TIMEOUT_S = 180  # per LLM request (the SDK retries twice on top)
 MAX_TOKENS = 8000
 
-# USD per 1M tokens: (input, output, cached input). OpenRouter list prices, 2026-10-06.
+# USD per 1M tokens: (input, output, cached input), provider list prices.
 PRICES = {
     "gpt-5.5": (5.0, 30.0, 0.5),
     "gpt-5.4-mini": (0.75, 4.5, 0.075),
-    "gpt-5.6-terra": (2.0, 12.0, 0.2),  # OpenAI list prices after the 2026-07-30 cut
     "gpt-5.6-luna": (0.2, 1.2, 0.02),
-    "gpt-5.4-nano": (0.2, 1.25, 0.02),
-    "gpt-5-nano": (0.05, 0.4, 0.005),
-    "gpt-4.1-nano": (0.1, 0.4, 0.025),
     "openai/gpt-oss-20b": (0.018, 0.09, 0.009),
-    "mistralai/mistral-nemo": (0.019, 0.03, 0.019),
-    "google/gemma-3-4b-it": (0.05, 0.1, 0.05),
-    "meta-llama/llama-3.1-8b-instruct": (0.05, 0.08, 0.025),
-    "gpt-5-mini": (0.25, 2.0, 0.025),
-    "moonshotai/kimi-k2.5": (0.45, 2.25, 0.07),
-    "moonshotai/kimi-k2-0905": (0.6, 2.5, 0.6),
-    "deepseek/deepseek-v4-flash": (0.001, 1.28, 0.001),
-    "deepseek/deepseek-v4-pro": (0.209, 0.418, 0.017),
-    "qwen/qwen3.5-flash-02-23": (0.065, 0.26, 0.065),
-    "z-ai/glm-4.7-flash": (0.061, 0.4, 0.061),
     "gemini-3-flash-preview": (0.0, 0.0, 0.0),  # free tier
     "gemini-3.5-flash-lite": (0.0, 0.0, 0.0),
 }
@@ -75,66 +61,12 @@ CONFIGS: dict[str, TutorConfig] = {
     },
     "mini54": dict.fromkeys(STAGES, ("openai", "gpt-5.4-mini", "low")),
     "luna": dict.fromkeys(STAGES, ("openai", "gpt-5.6-luna", "low")),
-    "luna-none": dict.fromkeys(STAGES, ("openai", "gpt-5.6-luna", "none")),
-    "luna+nano": {
-        D: ("openai", "gpt-5.6-luna", "low"),
-        R: ("openai", "gpt-5.4-nano", "low"),
-        G: ("openai", "gpt-5.6-luna", "low"),
-    },
-    "mini+luna": {
-        D: ("openai", "gpt-5.4-mini", "low"),
-        R: ("openai", "gpt-5.6-luna", "low"),
-        G: ("openai", "gpt-5.6-luna", "low"),
-    },
-    "terra+mini": {
-        D: ("openai", "gpt-5.6-terra", "low"),
-        R: ("openai", "gpt-5.4-mini", "low"),
-        G: ("openai", "gpt-5.4-mini", "low"),
-    },
-    "gpt5mini": dict.fromkeys(STAGES, ("openai", "gpt-5-mini", "low")),
-    "nano54": dict.fromkeys(STAGES, ("openai", "gpt-5.4-nano", "low")),
-    "kimi25": dict.fromkeys(STAGES, ("openrouter", "moonshotai/kimi-k2.5", "")),
-    "kimik2": dict.fromkeys(STAGES, ("openrouter", "moonshotai/kimi-k2-0905", "")),
     "gemini": {
         D: ("gemini", "gemini-3-flash-preview", "medium"),
         R: ("gemini", "gemini-3.5-flash-lite", "low"),
         G: ("gemini", "gemini-3.5-flash-lite", "low"),
     },
-    "mini+kimik2": {
-        D: ("openai", "gpt-5.4-mini", "low"),
-        R: ("openrouter", "moonshotai/kimi-k2-0905", ""),
-        G: ("openai", "gpt-5.4-mini", "low"),
-    },
-    "dsflash": dict.fromkeys(STAGES, ("openrouter", "deepseek/deepseek-v4-flash", "")),
-    "dspro": dict.fromkeys(STAGES, ("openrouter", "deepseek/deepseek-v4-pro", "")),
-    "qwenflash": dict.fromkeys(STAGES, ("openrouter", "qwen/qwen3.5-flash-02-23", "")),
-    "glmflash": dict.fromkeys(STAGES, ("openrouter", "z-ai/glm-4.7-flash", "")),
-    "mini+dsflash": {
-        D: ("openai", "gpt-5.4-mini", "low"),
-        R: ("openrouter", "deepseek/deepseek-v4-flash", ""),
-        G: ("openrouter", "deepseek/deepseek-v4-flash", ""),
-    },
-    "gpt5nano": dict.fromkeys(STAGES, ("openai", "gpt-5-nano", "low")),
-    "nano41": dict.fromkeys(STAGES, ("openai", "gpt-4.1-nano", "")),
     "oss20b": dict.fromkeys(STAGES, ("openrouter", "openai/gpt-oss-20b", "low")),
-    "nemo12b": dict.fromkeys(STAGES, ("openrouter", "mistralai/mistral-nemo", "")),
-    "llama8b": dict.fromkeys(STAGES, ("openrouter", "meta-llama/llama-3.1-8b-instruct", "")),
-    "gemma4b": dict.fromkeys(STAGES, ("openrouter", "google/gemma-3-4b-it", "")),
-    "hybrid": {
-        D: ("openai", "gpt-5.4-mini", "low"),
-        R: ("openrouter", "openai/gpt-oss-20b", "low"),
-        G: ("openrouter", "openai/gpt-oss-20b", "low"),
-    },
-    "nano+oss": {
-        D: ("openai", "gpt-5.4-nano", "low"),
-        R: ("openrouter", "openai/gpt-oss-20b", "low"),
-        G: ("openrouter", "openai/gpt-oss-20b", "low"),
-    },
-    "oss+nemo": {
-        D: ("openrouter", "openai/gpt-oss-20b", "low"),
-        R: ("openrouter", "mistralai/mistral-nemo", ""),
-        G: ("openrouter", "openai/gpt-oss-20b", "low"),
-    },
 }
 
 

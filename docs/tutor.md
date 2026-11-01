@@ -147,7 +147,7 @@ Stages: `diagnosis`, `reply`, `guard`, `transcription`, each with its own model,
 
 - `uv run python scripts/eval/smoke_turn.py [exercise] ["message" ...] --trace`: real turns against the configured
   provider, printing diagnosis, plan and drafts.
-- `uv run python scripts/eval/simulate.py --mostra 40`: an LLM student plays personas against the real use cases:
+- `uv run python scripts/eval/simulate.py --sample 40`: an LLM student plays personas against the real use cases:
   a student who sincerely holds one of the sheet's catalogued mistakes, plus competent, lost, guessing, answer-begging,
   silent, instruction-injecting and solution-extracting students. A separate judge flags leaks, and code decides what counts as one; the summary reports
   completion, loops, fallbacks and leaks with confidence intervals.

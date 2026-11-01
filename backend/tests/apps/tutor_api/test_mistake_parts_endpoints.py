@@ -15,7 +15,9 @@ from tests.core.mistakes.builders import PARTS, parted, solution, theory_parted
 from tests.fakes.llm import ScriptedLLMClient
 
 DOC = parted()  # t2-4c, normal: part 1 clean, parts 2 and 3 with one error each ("pista 2", "pista 3")
-THEORY_DOC = PartedMistakeExercise.model_validate(theory_parted().model_dump(mode="json") | {"id": "0000000000cc"})
+THEORY_DOC = PartedMistakeExercise.model_validate(
+    theory_parted().model_dump(mode="json") | {"id": "0000000000cc", "exercici": "T3.13"}
+)
 START = {"exercici_id": "t2-4c", "dificultat": "normal", "format": "per_parts"}
 GRADING_KEYS = {"nota", "trobats", "total", "falsos_positius", "anotacions", "errors", "resum", "crida"}
 
@@ -186,23 +188,22 @@ def test_each_layout_answers_only_on_its_own_endpoints(api: TestClient) -> None:
 
 def test_a_theory_session_reveals_the_notes_only_with_the_final_result(api: TestClient) -> None:
     _store(api, THEORY_DOC)
-    out = api.post("/api/errades/sessions", json={"teoria_id": "T3.21", "format": "per_parts"}).json()
-    assert out["teoria"]["id"] == "T3.21" and "exercici" not in out
+    out = api.post("/api/errades/sessions", json={"teoria_id": "T3.13", "format": "per_parts"}).json()
+    assert out["teoria"]["id"] == "T3.13" and "exercici" not in out
     assert out["solucio"]["font"] == "teoria" and out["solucio"]["n_enunciat"] == 2
     url = f"/api/errades/sessions/{out['session_id']}/parts"
     first = api.post(f"{url}/1/correccio", json={"anotacions": []}).json()
     assert "original" not in first and first["final"] is None
     last = api.post(f"{url}/3/correccio", json={"anotacions": []}).json()
-    assert "original" not in last and last["final"]["original"]["id"] == "T3.21"
+    assert "original" not in last and last["final"]["original"]["id"] == "T3.13"
 
 
 def test_availability_is_listed_by_layout(api: TestClient) -> None:
     _store(api, DOC, THEORY_DOC)
     whole = api.get("/api/errades/disponibles").json()
     assert whole and api.get("/api/errades/disponibles?format=sencer").json() == whole
-    # The committed per-parts documents seed the database too: T3.21 also has one committed document beside the test's own.
     per_parts_ready = api.get("/api/errades/disponibles?format=per_parts").json()
-    assert per_parts_ready["t2-4c"] == {"normal": 1} and per_parts_ready["T3.21"] == {"normal": 2}
+    assert per_parts_ready["t2-4c"] == {"normal": 1} and per_parts_ready["T3.13"] == {"normal": 1}
     assert api.get("/api/errades/disponibles?format=tot").status_code == 422
 
     def theory(query: str) -> dict[str, dict[str, int]]:
@@ -210,7 +211,7 @@ def test_availability_is_listed_by_layout(api: TestClient) -> None:
         return {i["id"]: i["disponibles"] for t in temes for i in t["items"]}
 
     per_parts = theory("?format=per_parts")
-    assert per_parts["T3.21"] == {"normal": 2} and per_parts["T2.12"] == {"normal": 1}
+    assert per_parts["T3.13"] == {"normal": 1} and per_parts["T2.12"] == {"normal": 1}
     assert theory("") == theory("?format=sencer") and theory("")["T2.12"]
     assert api.get("/api/errades/teoria?format=tot").status_code == 422
 

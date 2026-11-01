@@ -87,7 +87,7 @@
             "fragment": 4,
             "cita": "$y=h(x,\\Phi(x,y))$ per a $(x,y)\\in G$",
             "gravetat": "error",
-            "explicacio": "f^{-1}∘f = id_U nomes val sobre U, no sobre G: f|_U es injectiva i f^{-1} esta definida nomes a V=f(U). Per a (x,y) a G\\U, f(x,y) pot no ser a V (h no esta definida) i f no es injectiva a G. La igualtat correcta es per a (x,y) a U (com a l'Observacio 14)."
+            "explicacio": "f^{-1}∘f = id_U nomes val sobre U, no sobre G: f|_U es injectiva i f^{-1} esta definida nomes a V=f(U). Per a (x,y) a G∖U, f(x,y) pot no ser a V (h no esta definida) i f no es injectiva a G. La igualtat correcta es per a (x,y) a U (com a l'Observacio 14)."
           }
         ],
         "hash_referencia": "f4d9884c79dd5418ab805565abbbef046b6fed15c7c228fa2fab424e8d11133c"

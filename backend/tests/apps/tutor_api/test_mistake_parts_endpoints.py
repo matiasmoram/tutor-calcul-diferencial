@@ -200,9 +200,9 @@ def test_availability_is_listed_by_layout(api: TestClient) -> None:
     _store(api, DOC, THEORY_DOC)
     whole = api.get("/api/errades/disponibles").json()
     assert whole and api.get("/api/errades/disponibles?format=sencer").json() == whole
-    # The committed per-parts documents seed the database too: only these two are the test's own.
+    # The committed per-parts documents seed the database too: T3.21 also has one committed document beside the test's own.
     per_parts_ready = api.get("/api/errades/disponibles?format=per_parts").json()
-    assert per_parts_ready["t2-4c"] == {"normal": 1} and per_parts_ready["T3.21"] == {"normal": 1}
+    assert per_parts_ready["t2-4c"] == {"normal": 1} and per_parts_ready["T3.21"] == {"normal": 2}
     assert api.get("/api/errades/disponibles?format=tot").status_code == 422
 
     def theory(query: str) -> dict[str, dict[str, int]]:
@@ -210,7 +210,7 @@ def test_availability_is_listed_by_layout(api: TestClient) -> None:
         return {i["id"]: i["disponibles"] for t in temes for i in t["items"]}
 
     per_parts = theory("?format=per_parts")
-    assert per_parts["T3.21"] == {"normal": 1} and per_parts["T2.12"] == {}
+    assert per_parts["T3.21"] == {"normal": 2} and per_parts["T2.12"] == {"normal": 1}
     assert theory("") == theory("?format=sencer") and theory("")["T2.12"]
     assert api.get("/api/errades/teoria?format=tot").status_code == 422
 

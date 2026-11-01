@@ -1,0 +1,98 @@
+{
+  "id": "728c876ebbad",
+  "exercici": "t2-4a",
+  "font": "problema",
+  "dificultat": "normal",
+  "format": "per_parts",
+  "n_enunciat": 0,
+  "parts": [
+    {
+      "titol": "Reconèixer la continuïtat",
+      "pas": "continuitat",
+      "fragments": [
+        "El numerador $2+3x+4y^2$ i el denominador $x+1$ són polinomis, per tant funcions contínues. A $(0,0)$ el denominador val $0+1=1\\neq0$.",
+        "Per l'àlgebra de funcions contínues, el quocient és continu allà on el denominador no s'anul·la; per tant $f$ és contínua en un entorn de $(0,0)$, i no hi ha cap indeterminació."
+      ],
+      "fragments_errats": [
+        "El numerador $2+3x+4y^2$ i el denominador $x+1$ són polinomis, per tant funcions contínues. A $(0,0)$ el denominador val $0+1=1\\neq0$.",
+        "Per l'àlgebra de funcions contínues, el quocient de funcions contínues és continu a tot $\\mathbb{R}^2$; per tant $f$ és contínua en un entorn de $(0,0)$, i no hi ha cap indeterminació."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 2,
+        "cita": "el quocient de funcions contínues és continu a tot $\\mathbb{R}^2$",
+        "inici": 37,
+        "fi": 102,
+        "tipus": "teorema_mal_aplicat",
+        "explicacio": "L'àlgebra de funcions contínues exigeix que el denominador no s'anul·li. Aquí $x+1=0$ a la recta $x=-1$, on el quocient no és ni definit, i per això cal comprovar el denominador al punt.",
+        "correccio": "El quocient és continu allà on el denominador no s'anul·la; com que val $1\\neq0$ a $(0,0)$, $f$ és contínua en un entorn d'aquest punt.",
+        "pista": "Quin requisit sobre el denominador té la proposició del quocient, i com es relaciona amb el càlcul que has fet a la frase anterior?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-1.json",
+        "valoracio": "El fragment 1 és correcte. Al fragment 2 s'afirma falsament que el quocient és continu a tot R^2, ometent la hipòtesi del denominador no nul.",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "el quocient de funcions contínues és continu a tot $\\mathbb{R}^2$",
+            "gravetat": "error",
+            "explicacio": "T2.20(iii) exigeix que el denominador no s'anul·li. El denominador x+1 s'anul·la a x=-1, així que el quocient no és continu (ni definit) a tot R^2, sinó només a {x≠-1}. La conclusió de continuïtat en un entorn de (0,0) és certa, però cal dir que és perquè x+1≠0 en un entorn del punt."
+          }
+        ],
+        "hash_referencia": "24c4f3261f7d0b2d4b1436a732f028f870a668ba31c53370bbad3ec6fac5631f"
+      }
+    },
+    {
+      "titol": "Avaluar al punt",
+      "pas": "avaluar",
+      "fragments": [
+        "Com que $f$ és contínua a $(0,0)$, el límit és el valor de la funció: $f(0,0)=\\dfrac{2+3\\cdot0+4\\cdot0^2}{0+1}=\\dfrac{2}{1}=2$.",
+        "Per tant $\\displaystyle\\lim_{(x,y)\\to(0,0)}\\frac{2+3x+4y^2}{x+1}=2$."
+      ],
+      "fragments_errats": [
+        "Com que $f$ és contínua a $(0,0)$, el límit és el valor de la funció: $f(0,0)=\\dfrac{2+3\\cdot0+4\\cdot0^2}{0+1}=\\dfrac{2}{0}=\\infty$.",
+        "Per tant $\\displaystyle\\lim_{(x,y)\\to(0,0)}\\frac{2+3x+4y^2}{x+1}=\\infty$."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 3,
+        "cita": "el límit és el valor de la funció: $f(0,0)=\\dfrac{2+3\\cdot0+4\\cdot0^2}{0+1}=\\dfrac{2}{0}=\\infty$",
+        "inici": 35,
+        "fi": 131,
+        "tipus": "calcul",
+        "explicacio": "El denominador a $(0,0)$ val $0+1=1$, no $0$; la fracció és $\\frac21=2$, així que el límit val $2$ i no $\\infty$.",
+        "correccio": "$f(0,0)=\\dfrac{2+3\\cdot0+4\\cdot0^2}{0+1}=\\dfrac{2}{1}=2$, i el límit val $2$.",
+        "pista": "Quant val el denominador $x+1$ quan substitueixes $x=0$? Coincideix amb el que s'ha escrit a la fracció?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-1.json",
+        "valoracio": "Mètode correcte (continuïtat, substituir), però la substitució és errònia i dóna un resultat fals (infinit en comptes de 2).",
+        "problemes": [
+          {
+            "fragment": 1,
+            "cita": "\\dfrac{2+3\\cdot0+4\\cdot0^2}{0+1}=\\dfrac{2}{0}=\\infty",
+            "gravetat": "error",
+            "explicacio": "El denominador és 0+1=1, no 0 (la part anterior ho diu). Per tant f(0,0)=2/1=2, no 2/0. Error aritmètic que contradiu la continuïtat que s'acaba d'invocar."
+          },
+          {
+            "fragment": 2,
+            "cita": "\\lim_{(x,y)\\to(0,0)}\\frac{2+3x+4y^2}{x+1}=\\infty",
+            "gravetat": "consequencia",
+            "explicacio": "Conclusió heretada de l'error anterior: el límit és 2 (f contínua a (0,0)), no infinit."
+          }
+        ],
+        "hash_referencia": "24c4f3261f7d0b2d4b1436a732f028f870a668ba31c53370bbad3ec6fac5631f"
+      }
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-1.json",
+    "valoracio": "Continuïtat justificada correctament (denominador 1 a l'origen) i avaluació f(0,0)=2 correcta.",
+    "problemes": [],
+    "hash_referencia": "24c4f3261f7d0b2d4b1436a732f028f870a668ba31c53370bbad3ec6fac5631f"
+  },
+  "creat": 1793548241.965202
+}

@@ -1,0 +1,115 @@
+{
+  "id": "996685f0616c",
+  "exercici": "t5-3",
+  "font": "problema",
+  "dificultat": "normal",
+  "format": "per_parts",
+  "n_enunciat": 0,
+  "parts": [
+    {
+      "titol": "Polinomi de grau 2",
+      "pas": "polinomi",
+      "fragments": [
+        "Calculem les derivades fins a ordre $2$ a l'origen. $f(0,0)=1+1=2$, $D_1f=e^x\\to 1$, $D_2f=e^y\\to 1$, $D_{11}f=e^x\\to 1$, $D_{22}f=e^y\\to 1$ i $D_{12}f=D_{21}f=0$.",
+        "Així $P_2(x,y)=2+x+y+\\frac{1}{2}\\left(x^2+y^2\\right)$, que coincideix amb la suma dels desenvolupaments de $e^x$ i $e^y$."
+      ]
+    },
+    {
+      "titol": "Valor aproximat",
+      "pas": "aproximacio",
+      "fragments": [
+        "Avaluem $P_2$ en $(0.2,-0.1)$: $P_2(0.2,-0.1)=2+0.2-0.1+\\frac{0.04+0.01}{2}=2.1+0.025$.",
+        "Per tant $f(0.2,-0.1)\\approx 2.125$."
+      ],
+      "fragments_errats": [
+        "Avaluem $P_2$ en $(0.2,-0.1)$: $P_2(0.2,-0.1)=2+0.2-0.1+0.04+0.01=2.1+0.05$.",
+        "Per tant $f(0.2,-0.1)\\approx 2.15$."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 3,
+        "cita": "0.2-0.1+0.04+0.01=2.1+0.05",
+        "inici": 48,
+        "fi": 74,
+        "tipus": "calcul",
+        "explicacio": "Els termes quadràtics de $P_2$ porten el factor $\\frac12$, és a dir $\\frac{x^2+y^2}{2}$; aquí s'ha avaluat sense dividir per $2$, i el valor aproximat surt $2.15$ en lloc de $2.125$.",
+        "correccio": "$P_2(0.2,-0.1)=2+0.2-0.1+\\frac{0.04+0.01}{2}=2.1+0.025$, per tant $f(0.2,-0.1)\\approx 2.125$.",
+        "pista": "Compara els termes quadràtics que has escrit amb el polinomi $P_2$ de la part anterior: hi falta algun coeficient?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-3.json",
+        "valoracio": "El polinomi de les parts anteriors és correcte, però l'avaluació oblida el factor 1/2 dels termes quadràtics i dona 2.15 en lloc de 2.125.",
+        "problemes": [
+          {
+            "fragment": 1,
+            "cita": "P_2(0.2,-0.1)=2+0.2-0.1+0.04+0.01=2.1+0.05",
+            "gravetat": "error",
+            "explicacio": "El polinomi és P_2=2+x+y+(x^2+y^2)/2, així que els termes quadràtics són (0.04+0.01)/2=0.025, no 0.04+0.01=0.05. Falta el factor 1/2. El valor correcte és P_2(0.2,-0.1)=2.125."
+          },
+          {
+            "fragment": 2,
+            "cita": "f(0.2,-0.1)\\approx 2.15",
+            "gravetat": "consequencia",
+            "explicacio": "Hereta l'error del fragment 1 (factor 1/2 oblidat); el valor correcte de l'aproximació és 2.125."
+          }
+        ],
+        "hash_referencia": "4fe6fecb762299f84990fd486a28db57c5f33181208486c078723f142d45cbb9"
+      }
+    },
+    {
+      "titol": "Expressió del residu",
+      "pas": "residu",
+      "fragments": [
+        "El residu usa les derivades d'ordre $3$ en un punt intermedi del segment. Com $e^x$ només depèn de $x$ i $e^y$ només de $y$, qualsevol derivada tercera amb algun índex mixt és $0$; només queden $D_{111}f=e^x$ i $D_{222}f=e^y$.",
+        "Aleshores $R_3=\\frac{1}{3!}\\left(e^{\\xi_1}(0.2)^3+e^{\\xi_2}(-0.1)^3\\right)$ amb $(\\xi_1,\\xi_2)=\\tau(0.2,-0.1)$, $\\tau\\in(0,1)$, és a dir $0<\\xi_1<0.2$ i $-0.1<\\xi_2<0$."
+      ],
+      "fragments_errats": [
+        "El residu usa les derivades d'ordre $3$ en un punt intermedi del segment. Com $e^x$ només depèn de $x$ i $e^y$ només de $y$, qualsevol derivada tercera amb algun índex mixt és $0$; només queden $D_{111}f=e^x$ i $D_{222}f=e^y$.",
+        "Aleshores $R_3=\\frac{1}{3!}\\left(e^{\\xi_1}(0.2)^3+e^{\\xi_2}(-0.1)^3\\right)$ amb $(\\xi_1,\\xi_2)=\\tau(0.2,-0.1)$, $\\tau\\in(0,1)$, és a dir $0<\\xi_1<0.2$ i $0<\\xi_2<0.1$."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 6,
+        "cita": "és a dir $0<\\xi_1<0.2$ i $0<\\xi_2<0.1$",
+        "inici": 128,
+        "fi": 166,
+        "tipus": "logica",
+        "explicacio": "Com $(\\xi_1,\\xi_2)=\\tau(0.2,-0.1)$ amb $\\tau\\in(0,1)$, la segona coordenada és negativa: $\\xi_2$ és entre $-0.1$ i $0$, no entre $0$ i $0.1$.",
+        "correccio": "és a dir $0<\\xi_1<0.2$ i $-0.1<\\xi_2<0$.",
+        "pista": "Entre quins valors es mou la segona coordenada de $\\tau(0.2,-0.1)$ quan $\\tau$ recorre $(0,1)$?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-3.json",
+        "valoracio": "El fragment 1 és correcte (només D_111 i D_222 no nul·les). El fragment 2 té la fórmula del residu correcta però l'interval de xi_2 és erroni (signe).",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "0<\\xi_1<0.2$ i $0<\\xi_2<0.1$",
+            "gravetat": "error",
+            "explicacio": "Amb (xi_1,xi_2)=tau(0.2,-0.1), tau in (0,1), xi_2=-0.1 tau cau a (-0.1,0), no a (0,0.1). L'interval correcte és -0.1<xi_2<0; el que s'escriu contradiu la definició de xi_2 donada a la mateixa frase."
+          }
+        ],
+        "hash_referencia": "4fe6fecb762299f84990fd486a28db57c5f33181208486c078723f142d45cbb9"
+      }
+    },
+    {
+      "titol": "Fitar l'error",
+      "pas": "fita",
+      "fragments": [
+        "Fitem les exponencials al segment: $e^{\\xi_1}<e^{0.2}<1.25$, perquè $e^{0.2}<1.25$ equival a $e<1.25^5\\approx 3.05$, que és cert. A més $e^{\\xi_2}<e^0=1$.",
+        "Per la desigualtat triangular, $|R_3|\\leq\\frac{1}{6}\\left(1.25\\cdot 0.008+1\\cdot 0.001\\right)=\\frac{0.011}{6}\\approx 1.83\\cdot 10^{-3}$.",
+        "Així l'error és menor que $2\\cdot 10^{-3}$."
+      ]
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-3.json",
+    "valoracio": "P2 correcte, valor 2.125 correcte, residu amb només D111 i D222, fita e^0.2<1.25 justificada amb 1.25^5≈3.05>e, fita final 0.011/6≈1.83e-3<2e-3 correcta.",
+    "problemes": [],
+    "hash_referencia": "4fe6fecb762299f84990fd486a28db57c5f33181208486c078723f142d45cbb9"
+  },
+  "creat": 1793558045.9290688
+}

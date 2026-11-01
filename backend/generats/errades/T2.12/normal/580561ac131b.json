@@ -1,0 +1,118 @@
+{
+  "id": "580561ac131b",
+  "exercici": "T2.12",
+  "font": "teoria",
+  "dificultat": "normal",
+  "format": "per_parts",
+  "n_enunciat": 2,
+  "parts": [
+    {
+      "titol": "Enunciat",
+      "pas": "",
+      "fragments": [
+        "Sigui $f:\\Omega\\subseteq\\mathbb{R}^2\\to\\mathbb{R}^m$ i $(a,b)\\in\\Omega$ tals que $(a-\\eta,a+\\eta)\\times(b-\\eta,b+\\eta)\\subseteq\\Omega$ per a un cert $\\eta>0$. Suposem que $\\lim_{(x,y)\\to(a,b)}f(x,y)=L$, que per a tot $x\\in(a-\\eta,a+\\eta)$ existeix $\\lim_{y\\to b}f(x,y)$ i que per a tot $y\\in(b-\\eta,b+\\eta)$ existeix $\\lim_{x\\to a}f(x,y)$.",
+        "Llavors $\\displaystyle\\lim_{x\\to a}\\lim_{y\\to b}f(x,y)=L=\\lim_{y\\to b}\\lim_{x\\to a}f(x,y)$."
+      ],
+      "fragments_errats": [
+        "Sigui $f:\\Omega\\subseteq\\mathbb{R}^2\\to\\mathbb{R}^m$ i $(a,b)\\in\\Omega$ tals que $(a-\\eta,a+\\eta)\\times(b-\\eta,b+\\eta)\\subseteq\\Omega$ per a un cert $\\eta>0$. Suposem que $\\lim_{(x,y)\\to(a,b)}f(x,y)=L$, que per a tot $x\\in(a-\\eta,a+\\eta)$ existeix $\\lim_{y\\to b}f(x,y)$.",
+        "Llavors $\\displaystyle\\lim_{x\\to a}\\lim_{y\\to b}f(x,y)=L=\\lim_{y\\to b}\\lim_{x\\to a}f(x,y)$."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 1,
+        "cita": "per a tot $x\\in(a-\\eta,a+\\eta)$ existeix $\\lim_{y\\to b}f(x,y)$.",
+        "inici": 207,
+        "fi": 270,
+        "tipus": "hipotesi",
+        "explicacio": "Sense l'existència de $\\lim_{x\\to a}f(x,y)$ el segon límit iterat pot no existir. Contraexemple: $f(x,y)=y\\sin(1/x)$ per a $x\\neq 0$ i $f(0,y)=0$, al punt $(0,0)$: el límit doble és $0$ i $\\lim_{y\\to 0}f(x,y)=0$ per a tot $x$, però per a $y\\neq0$ no existeix $\\lim_{x\\to 0}f(x,y)$.",
+        "correccio": "Cal suposar també que per a tot $y\\in(b-\\eta,b+\\eta)$ existeix $\\lim_{x\\to a}f(x,y)$.",
+        "pista": "Perquè tingui sentit el límit iterat en l'ordre $\\lim_{y\to b}\\lim_{x\to a}$, què cal que existeixi abans? On ho assegura l'enunciat?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-5.json",
+        "valoracio": "Hipotesi omesa: l'existencia dels limits lim_{x->a} f(x,y) per a cada y; la conclusio sobre el segon limit iterat no te sentit sense ella.",
+        "problemes": [
+          {
+            "fragment": 1,
+            "cita": "que per a tot $x\\in(a-\\eta,a+\\eta)$ existeix $\\lim_{y\\to b}f(x,y)$.",
+            "gravetat": "error",
+            "explicacio": "Falta la hipotesi que per a tot y in (b-eta,b+eta) existeix lim_{x->a} f(x,y). Sense ella el segon limit iterat de la conclusio, lim_{y->b} lim_{x->a} f(x,y), pot no estar ni definit (la funcio y -> lim_{x->a} f(x,y) pot no existir). L'enunciat queda mal format/mes fort que el dels apunts."
+          }
+        ],
+        "hash_referencia": "4631fa8da5cbb6e3ada64f80a1b755e5f89b62288057120133beabc036234591"
+      }
+    },
+    {
+      "titol": "Reducció i dades de partida",
+      "pas": "",
+      "fragments": [
+        "Provem només el primer límit iterat; l'altre és anàleg intercanviant els papers de $x$ i $y$. Podem suposar $m=1$ (el cas general es fa component a component).",
+        "Sigui $g(x):=\\lim_{y\\to b}f(x,y)$. Com que $\\lim_{(x,y)\\to(a,b)}f(x,y)=L$, per a tot $\\epsilon>0$ existeix $\\delta_1(\\epsilon)>0$ tal que si $\\|(x,y)-(a,b)\\|<\\delta_1(\\epsilon)$ (i $(x,y)\\neq(a,b)$), aleshores $|f(x,y)-L|<\\epsilon$.",
+        "Per a cada $x\\in(a-\\eta,a+\\eta)$ i cada $\\epsilon>0$ existeix $\\delta_2(\\epsilon,x)>0$ tal que si $0<|y-b|<\\delta_2(\\epsilon,x)$, aleshores $|f(x,y)-g(x)|<\\epsilon$. Cal veure que $\\lim_{x\\to a}g(x)=L$."
+      ]
+    },
+    {
+      "titol": "Elecció de $\\delta$",
+      "pas": "",
+      "fragments": [
+        "Donat $\\epsilon>0$, si $|f(x,y)-L|<\\epsilon/2$ i $|g(x)-f(x,y)|<\\epsilon/2$, llavors $|g(x)-L|\\leq|g(x)-f(x,y)|+|f(x,y)-L|<\\epsilon$.",
+        "Per aconseguir-ho prenem $\\delta=\\min\\left\\{\\dfrac{\\delta_1(\\epsilon/2)}{\\sqrt{2}},\\eta\\right\\}$. Si $0<|x-a|<\\delta$, escollim $y$ amb $0<|y-b|<\\min\\left\\{\\delta_2(\\epsilon/2,x),\\dfrac{\\delta_1(\\epsilon/2)}{\\sqrt{2}},\\eta\\right\\}$, que existeix. Aleshores $(x,y)\\in\\Omega$ i $(x,y)\\neq(a,b)$.",
+        "Hem establert l'elecció de $\\delta$ i d'un $y$ associat a cada $x$ amb $0<|x-a|<\\delta$."
+      ],
+      "fragments_errats": [
+        "Donat $\\epsilon>0$, si $|f(x,y)-L|<\\epsilon/2$ i $|g(x)-f(x,y)|<\\epsilon/2$, llavors $|g(x)-L|\\leq|g(x)-f(x,y)|+|f(x,y)-L|<\\epsilon$.",
+        "Per aconseguir-ho prenem $\\delta=\\min\\left\\{\\delta_1(\\epsilon/2),\\eta\\right\\}$. Si $0<|x-a|<\\delta$, escollim $y$ amb $0<|y-b|<\\min\\left\\{\\delta_2(\\epsilon/2,x),\\delta_1(\\epsilon/2),\\eta\\right\\}$, que existeix. Aleshores $(x,y)\\in\\Omega$ i $(x,y)\\neq(a,b)$.",
+        "Hem establert l'elecció de $\\delta$ i d'un $y$ associat a cada $x$ amb $0<|x-a|<\\delta$."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 7,
+        "cita": "prenem $\\delta=\\min\\left\\{\\delta_1(\\epsilon/2),\\eta\\right\\}$",
+        "inici": 18,
+        "fi": 78,
+        "tipus": "calcul",
+        "explicacio": "Amb $|x-a|<\\delta_1(\\epsilon/2)$ i $|y-b|<\\delta_1(\\epsilon/2)$ només se sap $\\|(x,y)-(a,b)\\|<\\sqrt{2}\\,\\delta_1(\\epsilon/2)$, que no assegura $\\|(x,y)-(a,b)\\|<\\delta_1(\\epsilon/2)$ ni, per tant, $|f(x,y)-L|<\\epsilon/2$.",
+        "correccio": "Cal prendre $\\delta=\\min\\left\\{\\delta_1(\\epsilon/2)/\\sqrt{2},\\eta\\right\\}$ i $|y-b|<\\min\\left\\{\\delta_2(\\epsilon/2,x),\\delta_1(\\epsilon/2)/\\sqrt{2},\\eta\\right\\}$.",
+        "pista": "Si $|x-a|$ i $|y-b|$ són menors que $\\delta_1(\\epsilon/2)$, quant pot valer $\\|(x,y)-(a,b)\\|$? Arriba a ser menor que $\\delta_1(\\epsilon/2)$?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-5.json",
+        "valoracio": "El fragment 1 és correcte; l'elecció de delta del fragment 2 no assegura la norma euclidiana menor que delta1.",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "Per aconseguir-ho prenem $\\delta=\\min\\left\\{\\delta_1(\\epsilon/2),\\eta\\right\\}$.",
+            "gravetat": "error",
+            "explicacio": "Amb |x-a|<delta1(eps/2) i |y-b|<delta1(eps/2) només es té ||(x,y)-(a,b)||<sqrt(2)*delta1(eps/2), no <delta1(eps/2). Per tant no es pot aplicar la hipòtesi del límit doble; cal delta=delta1(eps/2)/sqrt(2) (i igual per a |y-b|)."
+          },
+          {
+            "fragment": 3,
+            "cita": "Hem establert l'elecció de $\\delta$ i d'un $y$ associat a cada $x$",
+            "gravetat": "consequencia",
+            "explicacio": "La conclusió hereda l'elecció errònia de delta, amb la qual no es garanteix ||(x,y)-(a,b)||<delta1(eps/2)."
+          }
+        ],
+        "hash_referencia": "4631fa8da5cbb6e3ada64f80a1b755e5f89b62288057120133beabc036234591"
+      }
+    },
+    {
+      "titol": "Comprovació de les dues desigualtats",
+      "pas": "",
+      "fragments": [
+        "Amb aquestes eleccions, $\\|(x,y)-(a,b)\\|=\\sqrt{(x-a)^2+(y-b)^2}<\\sqrt{\\dfrac{\\delta_1(\\epsilon/2)^2}{2}+\\dfrac{\\delta_1(\\epsilon/2)^2}{2}}=\\delta_1(\\epsilon/2)$, i per tant $|f(x,y)-L|<\\epsilon/2$.",
+        "A més, $|y-b|<\\delta_2(\\epsilon/2,x)$, i per tant $|f(x,y)-g(x)|<\\epsilon/2$.",
+        "Per la desigualtat triangular, $|g(x)-L|<\\epsilon$ per a tot $x$ amb $0<|x-a|<\\delta$. Això és $\\lim_{x\\to a}g(x)=L$, és a dir $\\lim_{x\\to a}\\lim_{y\\to b}f(x,y)=L$; l'altre límit iterat s'obté igual."
+      ]
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-5.json",
+    "valoracio": "Enunciat idèntic als apunts. L'elecció de delta = min{delta1/sqrt2, eta} i de y amb 0<|y-b|<min{...} és correcta i garanteix (x,y) a Omega, (x,y)!=(a,b) i la norma menor que delta1. La conclusió per desigualtat triangular és vàlida.",
+    "problemes": [],
+    "hash_referencia": "4631fa8da5cbb6e3ada64f80a1b755e5f89b62288057120133beabc036234591"
+  },
+  "creat": 1793547999.1314893
+}

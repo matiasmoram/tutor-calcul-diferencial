@@ -1,0 +1,160 @@
+{
+  "id": "a83ca117c253",
+  "exercici": "t3-5",
+  "font": "problema",
+  "dificultat": "dificil",
+  "format": "per_parts",
+  "n_enunciat": 0,
+  "parts": [
+    {
+      "titol": "Continuïtat fora de l'eix",
+      "pas": "continuitat_obert",
+      "fragments": [
+        "Considerem l'obert $U=\\{(x,y)\\mid y\\ne0\\}$. Allà $f(x,y)=\\frac{x^2}{y}$ és el quocient del polinomi $x^2$ i del polinomi $y$, que no s'anul·la a $U$.",
+        "Per l'àlgebra de funcions contínues, $f$ és contínua a $U$. Resultat: $f$ és contínua en tots els punts amb $y\\ne0$."
+      ],
+      "fragments_errats": [
+        "Considerem l'obert $U=\\{(x,y)\\mid y\\ne0\\}$. Allà $f(x,y)=\\frac{x^2}{y}$ és el quocient del polinomi $x^2$ i del polinomi $y$, que no s'anul·la a $U$.",
+        "Per l'àlgebra de funcions contínues, $f$ és contínua a $U$ i, com que $f=0$ sobre l'eix $y=0$, també hi és contínua. Resultat: $f$ és contínua a tot $\\mathbb{R}^2$."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 2,
+        "cita": "com que $f=0$ sobre l'eix $y=0$, també hi és contínua",
+        "inici": 62,
+        "fi": 115,
+        "tipus": "conclusio",
+        "explicacio": "Que $f$ valgui $0$ sobre l'eix només defineix $f$ allà; no n'assegura la continuïtat, que depèn del comportament del quocient $x^2/y$ prop de l'eix.",
+        "correccio": "$f$ és contínua a $U$; sobre l'eix $y=0$ cal estudiar la continuïtat a part.",
+        "pista": "Per a ser contínua en un punt de l'eix, n'hi ha prou que $f$ hi tingui un valor definit? Què cal comprovar del límit?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-4.json",
+        "valoracio": "El fragment 1 és correcte (contínua a U per quocient de polinomis amb denominador no nul). El fragment 2 conclou falsament continuïtat a tot R^2.",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "i, com que $f=0$ sobre l'eix $y=0$, també hi és contínua. Resultat: $f$ és contínua a tot $\\mathbb{R}^2$.",
+            "gravetat": "error",
+            "explicacio": "Que f valgui 0 sobre l'eix no dona continuïtat als seus punts: cal que el límit existeixi i valgui f=0. Però f(x0,y)=x0^2/y no té límit a (x0,0) amb x0!=0 (tendeix a +-infinit) i a l'origen f(x,x^2)=1 !=0. f és discontínua a tot l'eix y=0; és contínua només a {y!=0}."
+          }
+        ],
+        "hash_referencia": "8b26b7dcb20a8a6d3d00a67117b61426580e6023dcd9b589dcc7c732a2bf09ad"
+      }
+    },
+    {
+      "titol": "Discontinuïtat a l'eix, fora de l'origen",
+      "pas": "discontinuitat_eix",
+      "fragments": [
+        "Sigui $(x_0,0)$ amb $x_0\\ne0$ i restringim $f$ a la recta vertical $x=x_0$: $f(x_0,y)=\\frac{x_0^2}{y}$ per a $y\\ne0$.",
+        "Quan $y\\to0^+$ val $+\\infty$ i quan $y\\to0^-$ val $-\\infty$ (perquè $x_0^2>0$), de manera que no té límit finit, mentre que $f(x_0,0)=0$. Si existís $\\lim_{(x,y)\\to(x_0,0)}f$, el límit per camins hauria de coincidir amb aquest, i no hi és.",
+        "Per tant no existeix el límit a $(x_0,0)$ i $f$ no hi és contínua. Resultat: $f$ és discontínua en tots els punts $(x_0,0)$ amb $x_0\\ne0$."
+      ]
+    },
+    {
+      "titol": "Discontinuïtat a l'origen",
+      "pas": "discontinuitat_origen",
+      "fragments": [
+        "Les rectes per l'origen no ho decideixen: sobre $y=mx$ amb $m\\ne0$, $f(x,mx)=\\frac{x}{m}\\to0$, i sobre $y=0$ val $0$. Provem un camí on numerador i denominador siguin del mateix ordre, la paràbola $y=x^2$.",
+        "Per a $x\\ne0$, $f(x,x^2)=\\frac{x^2}{x^2}=1$, de manera que $\\lim_{x\\to0}f(x,x^2)=1$, però $f(0,0)=0$. El límit per camins, si existís, hauria de ser $0$ (valor sobre les rectes), i no ho és.",
+        "Per tant $f$ no és contínua a l'origen. Resultat: $f$ és contínua exactament a $\\{y\\ne0\\}$."
+      ]
+    },
+    {
+      "titol": "Direccionals fora de l'eix",
+      "pas": "direccionals_obert",
+      "fragments": [
+        "Sigui $(x_0,y_0)$ amb $y_0\\ne0$ i $v=(v_1,v_2)\\ne(0,0)$. Considerem $g(t)=f(x_0+tv_1,y_0+tv_2)=\\frac{(x_0+tv_1)^2}{y_0+tv_2}$, definida i derivable prop de $t=0$ perquè el denominador és $y_0\\ne0$ a $t=0$.",
+        "Derivant: $g'(t)=\\frac{2v_1(x_0+tv_1)(y_0+tv_2)-(x_0+tv_1)^2v_2}{(y_0+tv_2)^2}$, i per a $t=0$ queda $D_vf(x_0,y_0)=g'(0)=\\frac{2x_0y_0v_1-x_0^2v_2}{y_0^2}$.",
+        "Resultat: a tots els punts amb $y_0\\ne0$ existeixen les derivades direccionals en totes les direccions."
+      ],
+      "fragments_errats": [
+        "Sigui $(x_0,y_0)$ amb $y_0\\ne0$ i $v=(v_1,v_2)\\ne(0,0)$. Considerem $g(t)=f(x_0+tv_1,y_0+tv_2)=\\frac{(x_0+tv_1)^2}{y_0+tv_2}$, definida i derivable prop de $t=0$ perquè $f$ és contínua en $(x_0,y_0)$.",
+        "Derivant: $g'(t)=\\frac{2v_1(x_0+tv_1)(y_0+tv_2)-(x_0+tv_1)^2v_2}{(y_0+tv_2)^2}$, i per a $t=0$ queda $D_vf(x_0,y_0)=g'(0)=\\frac{2x_0y_0v_1-x_0^2v_2}{y_0^2}$.",
+        "Resultat: a tots els punts amb $y_0\\ne0$ existeixen les derivades direccionals en totes les direccions."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 9,
+        "cita": "derivable prop de $t=0$ perquè $f$ és contínua en $(x_0,y_0)$",
+        "inici": 138,
+        "fi": 199,
+        "tipus": "logica",
+        "explicacio": "La continuïtat no implica derivabilitat; $g$ és derivable perquè és un quocient de polinomis en $t$ amb denominador no nul a $t=0$.",
+        "correccio": "$g$ és definida i derivable prop de $t=0$ perquè el denominador val $y_0\\ne0$ a $t=0$.",
+        "pista": "La continuïtat de $f$ en un punt basta per assegurar que $g$ és derivable? Quina propietat de $g$ ho garanteix?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-4.json",
+        "valoracio": "La derivada i el resultat són correctes; només la justificació de la derivabilitat és errònia.",
+        "problemes": [
+          {
+            "fragment": 1,
+            "cita": "definida i derivable prop de $t=0$ perquè $f$ és contínua en $(x_0,y_0)$",
+            "gravetat": "error",
+            "explicacio": "La continuïtat no implica derivabilitat. La derivabilitat de g prop de t=0 ve de ser quocient de funcions derivables (polinomis en t) amb denominador y0+t*v2 no nul prop de t=0."
+          }
+        ],
+        "hash_referencia": "8b26b7dcb20a8a6d3d00a67117b61426580e6023dcd9b589dcc7c732a2bf09ad"
+      }
+    },
+    {
+      "titol": "Direccionals a l'eix, fora de l'origen",
+      "pas": "direccionals_eix",
+      "fragments": [
+        "Sigui $(x_0,0)$ amb $x_0\\ne0$. Si $v_2\\ne0$, per a $t\\ne0$ tenim $\\frac{f(x_0+tv_1,tv_2)-f(x_0,0)}{t}=\\frac{(x_0+tv_1)^2}{t^2v_2}$.",
+        "El numerador tendeix a $x_0^2>0$ i el denominador $t^2v_2\\to0$, així que el quocient no està fitat quan $t\\to0$. El límit no existeix, i no hi ha derivada direccional.",
+        "Si $v_2=0$, el segment $(x_0+tv_1,0)$ és sobre l'eix i $f=0$ allà, per tant $\\frac{f(x_0+tv_1,0)-f(x_0,0)}{t}=0$ i $D_vf(x_0,0)=0$. Resultat: a $(x_0,0)$ només existeixen les direccionals horitzontals, i valen $0$."
+      ]
+    },
+    {
+      "titol": "Direccionals a l'origen",
+      "pas": "direccionals_origen",
+      "fragments": [
+        "A l'origen, $f(0,0)=0$. Si $v_2\\ne0$, per a $t\\ne0$ el punt $(tv_1,tv_2)$ té $y\\ne0$ i $\\frac{f(tv_1,tv_2)-f(0,0)}{t}=\\frac{t^2v_1^2}{t\\cdot tv_2}=\\frac{v_1^2}{v_2}$, constant, de manera que el límit és $\\frac{v_1^2}{v_2}$.",
+        "Si $v_2=0$, el punt $(tv_1,0)$ és sobre l'eix i $f=0$, per tant el quocient val $0$ i $D_vf(0,0)=0$.",
+        "Resultat: a l'origen existeixen totes les derivades direccionals, $D_vf(0,0)=\\frac{v_1^2}{v_2}$ si $v_2\\ne0$ i $0$ si $v_2=0$, tot i que $f$ no és contínua a l'origen. Així, l'existència de totes les derivades direccionals no implica continuïtat."
+      ],
+      "fragments_errats": [
+        "A l'origen, $f(0,0)=0$. Si $v_2\\ne0$, per a $t\\ne0$ el punt $(tv_1,tv_2)$ té $y\\ne0$ i $\\frac{f(tv_1,tv_2)-f(0,0)}{t}=\\frac{t^2v_1^2}{t\\cdot tv_2}=\\frac{v_1^2}{v_2}$, constant, de manera que el límit és $\\frac{v_1^2}{v_2}$.",
+        "Si $v_2=0$, el punt $(tv_1,0)$ és sobre l'eix i $f=0$, per tant el quocient val $0$ i $D_vf(0,0)=0$.",
+        "Resultat: a l'origen existeixen totes les derivades direccionals, $D_vf(0,0)=\\frac{v_1^2}{v_2}$ si $v_2\\ne0$ i $0$ si $v_2=0$, tot i que $f$ no és contínua a l'origen. Així, la continuïtat no implica l'existència de totes les derivades direccionals."
+      ],
+      "error": {
+        "id": "e3",
+        "fragment": 17,
+        "cita": "Així, la continuïtat no implica l'existència de totes les derivades direccionals.",
+        "inici": 168,
+        "fi": 249,
+        "tipus": "conclusio",
+        "explicacio": "L'exemple mostra una funció amb totes les direccionals però discontínua; això prova que direccionals no implica continuïtat, no el sentit contrari.",
+        "correccio": "Així, l'existència de totes les derivades direccionals no implica continuïtat.",
+        "pista": "Quina propietat té la funció a l'origen i quina no? Quina implicació refuta aquest exemple?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-4.json",
+        "valoracio": "Els calculs dels fragments 1 i 2 i el resultat de les derivades direccionals a l'origen son correctes; nomes la frase final conte la implicacio invertida.",
+        "problemes": [
+          {
+            "fragment": 3,
+            "cita": "Així, la continuïtat no implica l'existència de totes les derivades direccionals.",
+            "gravetat": "error",
+            "explicacio": "La conclusio extreta de l'exemple esta invertida. L'exemple (derivades direccionals existents a l'origen i f discontinua) mostra que l'existencia de totes les derivades direccionals NO implica la continuitat, no el contrari."
+          }
+        ],
+        "hash_referencia": "8b26b7dcb20a8a6d3d00a67117b61426580e6023dcd9b589dcc7c732a2bf09ad"
+      }
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-4.json",
+    "valoracio": "Continuïtat a y!=0, discontinuïtat a (x0,0) per la recta vertical i a l'origen per y=x^2 correctes; derivades direccionals calculades correctament (fórmula de g'(0), no existència per v2!=0 a (x0,0), v1^2/v2 a l'origen).",
+    "problemes": [],
+    "hash_referencia": "8b26b7dcb20a8a6d3d00a67117b61426580e6023dcd9b589dcc7c732a2bf09ad"
+  },
+  "creat": 1793547996.6462831
+}

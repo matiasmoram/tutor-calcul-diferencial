@@ -1,0 +1,120 @@
+{
+  "id": "d9e425d54be2",
+  "exercici": "t6-5",
+  "font": "problema",
+  "dificultat": "normal",
+  "format": "per_parts",
+  "n_enunciat": 0,
+  "parts": [
+    {
+      "titol": "Plantejar el problema",
+      "pas": "plantejament",
+      "fragments": [
+        "La distància entre $(0,b)$ i un punt $(x,y)$ de la paràbola és l'arrel de $D(x,y)=x^2+(y-b)^2$, i com que l'arrel és creixent, la distància és mínima exactament on ho és $D$. Així que cal minimitzar $D$ sobre $P=\\{x^2=4y\\}$.",
+        "La paràbola no és fitada, per tant no és compacta i Weierstrass no s'hi pot aplicar directament. Però $D(x,y)=x^2+(y-b)^2\\to+\\infty$ quan $\\|(x,y)\\|\\to\\infty$, de manera que existeix $R$ gran amb $D>D(0,0)=b^2$ fora de $\\overline{B}(0,R)$.",
+        "El mínim de $D$ sobre $P$ coincideix llavors amb el mínim sobre $P\\cap\\overline{B}(0,R)$, que és tancat i fitat, o sigui compacte (Heine-Borel), i $D$ és contínua: per Weierstrass el mínim existeix. Conclusió: el mínim de $D$ sobre $P$ existeix i cal trobar-lo."
+      ]
+    },
+    {
+      "titol": "Mètode 1: substitució",
+      "pas": "substitucio",
+      "fragments": [
+        "Sobre la paràbola $x^2=4y$, amb $y\\ge0$ (perquè $x^2\\ge0$), tenim $g(y)=D=4y+(y-b)^2=y^2+(4-2b)y+b^2$ per a $y\\in[0,\\infty)$. És una paràbola en $y$ oberta cap amunt amb vèrtex a $y=-\\frac{4-2b}{2}=b-2$.",
+        "Si $b\\ge2$, el vèrtex $y=b-2\\ge0$ és admissible i $g(b-2)=(b-2)^2-2(b-2)^2+b^2=b^2-(b-2)^2=4b-4$. El mínim s'assoleix als punts amb $x^2=4(b-2)$, és a dir $\\left(\\pm2\\sqrt{b-2},\\,b-2\\right)$.",
+        "Si $b<2$, el vèrtex és a $y=b-2<0$, fora del domini, i $g$ és creixent a $[0,\\infty)$. Per tant el mínim és $g(0)=b^2$, al punt $(0,0)$. Resultat: $\\min D=4b-4$ si $b\\ge2$ i $\\min D=b^2$ si $b<2$."
+      ]
+    },
+    {
+      "titol": "Mètode 2: multiplicadors de Lagrange",
+      "pas": "lagrange",
+      "fragments": [
+        "Prenem $\\Phi(x,y)=x^2-4y$, de manera que $P=\\{\\Phi=0\\}$. Com que $\\nabla\\Phi=(2x,-4)\\ne(0,0)$ en tot punt, $P$ és una 1-varietat i es pot aplicar el teorema de Lagrange.",
+        "El sistema $\\nabla D=\\lambda\\nabla\\Phi$, $\\Phi=0$ és $2x=2\\lambda x$, $2(y-b)=-4\\lambda$, $x^2=4y$. De la primera, $2x(1-\\lambda)=0$, és a dir $x=0$ o $\\lambda=1$ (sense dividir per $x$, per no perdre el cas $x=0$).",
+        "Si $x=0$, de $x^2=4y$ surt $y=0$, el punt $(0,0)$ i $D=b^2$. Si $\\lambda=1$, la segona dona $y-b=-2$, o sigui $y=b-2$, i la tercera exigeix $x^2=4(b-2)\\ge0$, és a dir $b\\ge2$; llavors $D=4(b-2)+4=4b-4$.",
+        "Per a $b\\ge2$ comparem: $b^2-(4b-4)=(b-2)^2\\ge0$, així que el mínim és $4b-4$. Per a $b<2$ l'únic candidat és $(0,0)$ amb valor $b^2$; com que hem vist que el mínim existeix, és ell. Això coincideix amb la substitució."
+      ],
+      "fragments_errats": [
+        "Prenem $\\Phi(x,y)=x^2-4y$, de manera que $P=\\{\\Phi=0\\}$. Com que $\\nabla\\Phi=(2x,-4)\\ne(0,0)$ en tot punt, $P$ és una 1-varietat i es pot aplicar el teorema de Lagrange.",
+        "El sistema $\\nabla D=\\lambda\\nabla\\Phi$, $\\Phi=0$ és $2x=2\\lambda x$, $2(y-b)=-4\\lambda$, $x^2=4y$. De la primera, $2x(1-\\lambda)=0$, és a dir $x=0$ o $\\lambda=1$ (sense dividir per $x$, per no perdre el cas $x=0$).",
+        "Si $x=0$, de $x^2=4y$ surt $y=0$, el punt $(0,0)$ i $D=b^2$. Si $\\lambda=1$, la segona dona $y-b=-2$, o sigui $y=b-2$, i la tercera exigeix $x^2=4(b-2)\\ge0$, és a dir $b\\ge2$; llavors $D=4(b-2)+4=4b-4$.",
+        "Per a $b\\ge2$ comparem: $b^2-(4b-4)=(b-2)^2\\ge0$, així que el mínim és $b^2$. Per a $b<2$ l'únic candidat és $(0,0)$ amb valor $b^2$; com que hem vist que el mínim existeix, és ell."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 10,
+        "cita": "així que el mínim és $b^2$",
+        "inici": 50,
+        "fi": 76,
+        "tipus": "desigualtat",
+        "explicacio": "Com que $b^2-(4b-4)=(b-2)^2\\ge0$, tenim $b^2\\ge4b-4$, i el valor més petit és $4b-4$, no $b^2$: la conclusió inverteix el sentit de la desigualtat.",
+        "correccio": "Per a $b\\ge2$, $b^2\\ge4b-4$, així que el mínim és $4b-4$.",
+        "pista": "Si la diferència $b^2-(4b-4)$ és positiva, quin dels dos valors és el més petit?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-4.json",
+        "valoracio": "Fragments 1-3 correctes (Phi, sistema, casos x=0 i lambda=1, valors D). El fragment 4 fa bé la comparació però en treu la conclusió invertida.",
+        "problemes": [
+          {
+            "fragment": 4,
+            "cita": "així que el mínim és $b^2$",
+            "gravetat": "error",
+            "explicacio": "Si b^2-(4b-4)=(b-2)^2>=0, llavors b^2 >= 4b-4, per tant el valor menor és 4b-4 i el mínim és 4b-4 (no b^2). La conclusió contradiu la comparació feta i el resultat de la part anterior (min D = 4b-4 per b>=2)."
+          }
+        ],
+        "hash_referencia": "4ce5e3f7b1e32f88f57f0ebd8b4662ae7b9060ad25b16d6a942e6d9f7752a394"
+      }
+    },
+    {
+      "titol": "Concloure",
+      "pas": "conclusio",
+      "fragments": [
+        "La distància és l'arrel del mínim de $D$. Si $b<2$, $d=\\sqrt{b^2}=|b|$, amb punt més proper $(0,0)$; si $b\\ge2$, $d=\\sqrt{4b-4}=2\\sqrt{b-1}$, amb punts més propers $\\left(\\pm2\\sqrt{b-2},\\,b-2\\right)$.",
+        "Per a $b=2$ les dues fórmules coincideixen: $|2|=2$ i $2\\sqrt{1}=2$. Resultat final: $d=|b|$ si $b\\le2$ i $d=2\\sqrt{b-1}$ si $b\\ge2$."
+      ],
+      "fragments_errats": [
+        "La distància és l'arrel del mínim de $D$. Si $b<2$, $d=\\sqrt{b^2}=b$, amb punt més proper $(0,0)$; si $b\\ge2$, $d=\\sqrt{4b-4}=2\\sqrt{b-1}$, amb punts més propers $\\left(\\pm2\\sqrt{b-2},\\,b-2\\right)$.",
+        "Per a $b=2$ les dues fórmules coincideixen: $|2|=2$ i $2\\sqrt{1}=2$. Resultat final: $d=b$ si $b\\le2$ i $d=2\\sqrt{b-1}$ si $b\\ge2$."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 11,
+        "cita": "Si $b<2$, $d=\\sqrt{b^2}=b$, amb punt",
+        "inici": 42,
+        "fi": 78,
+        "tipus": "calcul",
+        "explicacio": "L'arrel quadrada de $b^2$ és $|b|$, no $b$: per a $b<0$ (que entra dins $b<2$) donaria una distància negativa.",
+        "correccio": "$d=\\sqrt{b^2}=|b|$ si $b<2$.",
+        "pista": "Pot ser negativa una distància? Què val $\\sqrt{b^2}$ si $b<0$?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-4.json",
+        "valoracio": "Conclusió correcta per a b>=2, però per a b<2 es dona d=b en lloc de d=|b|, fals per a b negatiu.",
+        "problemes": [
+          {
+            "fragment": 1,
+            "cita": "Si $b<2$, $d=\\sqrt{b^2}=b$",
+            "gravetat": "error",
+            "explicacio": "sqrt(b^2)=|b|, no b. Per a b<2 negatiu (p. ex. b=-1) la distància seria negativa; cal d=|b|."
+          },
+          {
+            "fragment": 2,
+            "cita": "Resultat final: $d=b$ si $b\\le2$ i $d=2\\sqrt{b-1}$ si $b\\ge2$.",
+            "gravetat": "consequencia",
+            "explicacio": "Hereta l'error de [1]: per a b<=2 el resultat correcte és d=|b|, no d=b (fals per b<0)."
+          }
+        ],
+        "hash_referencia": "4ce5e3f7b1e32f88f57f0ebd8b4662ae7b9060ad25b16d6a942e6d9f7752a394"
+      }
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-4.json",
+    "valoracio": "Existència justificada (D>b^2 fora d'una bola, Heine-Borel, Weierstrass), substitució i Lagrange correctes, cas x=0 no perdut, g(b-2)=4b-4 verificat, conclusió correcta per b<2, b>=2 i b=2.",
+    "problemes": [],
+    "hash_referencia": "4ce5e3f7b1e32f88f57f0ebd8b4662ae7b9060ad25b16d6a942e6d9f7752a394"
+  },
+  "creat": 1793548245.8960917
+}

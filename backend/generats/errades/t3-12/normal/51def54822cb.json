@@ -1,0 +1,116 @@
+{
+  "id": "51def54822cb",
+  "exercici": "t3-12",
+  "font": "problema",
+  "dificultat": "normal",
+  "format": "per_parts",
+  "n_enunciat": 0,
+  "parts": [
+    {
+      "titol": "Justificar la diferenciabilitat",
+      "pas": "diferenciable",
+      "fragments": [
+        "Prenem l'obert $U=\\{x>0,\\ y>0\\}$, que conté $(4,1)$. A $U$ les potències $x^{3/2}$, $y^{3/2}$, $x^{1/2}$ i $y^{1/2}$ són ben definides i derivables.",
+        "Les parcials són $\\frac{\\partial f_1}{\\partial x}=y^{3/2}$, $\\frac{\\partial f_1}{\\partial y}=\\frac32xy^{1/2}$, $\\frac{\\partial f_2}{\\partial x}=\\frac32x^{1/2}$ i $\\frac{\\partial f_2}{\\partial y}=-2y$. Existeixen a $U$ i són contínues, perquè són productes i composicions de funcions contínues.",
+        "Per la condició suficient de diferenciabilitat, $f$ és diferenciable a tot $U$, que és un entorn de $(4,1)$."
+      ],
+      "fragments_errats": [
+        "Prenem l'obert $U=\\{x>0,\\ y>0\\}$, que conté $(4,1)$. A $U$ les potències $x^{3/2}$, $y^{3/2}$, $x^{1/2}$ i $y^{1/2}$ són ben definides i derivables.",
+        "Les parcials són $\\frac{\\partial f_1}{\\partial x}=y^{3/2}$, $\\frac{\\partial f_1}{\\partial y}=\\frac32xy^{1/2}$, $\\frac{\\partial f_2}{\\partial x}=\\frac32x^{1/2}$ i $\\frac{\\partial f_2}{\\partial y}=-2y$. Existeixen a $U$, i per a la diferenciabilitat n'hi ha prou que existeixin.",
+        "Com que les parcials existeixen a $U$, $f$ és diferenciable a tot $U$, que és un entorn de $(4,1)$."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 2,
+        "cita": "Existeixen a $U$, i per a la diferenciabilitat n'hi ha prou que existeixin.",
+        "inici": 201,
+        "fi": 276,
+        "tipus": "hipotesi",
+        "explicacio": "Que existeixin les parcials no n'hi ha prou per a la diferenciabilitat: la condició suficient exigeix que a més siguin contínues. Hi ha funcions amb totes les parcials existents que no són ni contínues ni diferenciables.",
+        "correccio": "Cal comprovar que les parcials són contínues a $U$ (són productes i composicions de funcions contínues) i aplicar la condició suficient de diferenciabilitat.",
+        "pista": "Quines hipòtesis demana la condició suficient sobre les derivades parcials, a part que existeixin?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-2.json",
+        "valoracio": "L'obert U i les parcials són correctes, però la justificació és incorrecta: falta la continuïtat de les parcials, hipòtesi essencial de la condició suficient de diferenciabilitat.",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "per a la diferenciabilitat n'hi ha prou que existeixin",
+            "gravetat": "error",
+            "explicacio": "Fals: l'existença de les parcials no implica diferenciabilitat. El teorema T3.18 exigeix que les parcials existeixin i siguin contínues al punt. Cal justificar la continuïtat de les quatre parcials a U (productes i composicions de funcions contínues)."
+          },
+          {
+            "fragment": 3,
+            "cita": "Com que les parcials existeixen a $U$, $f$ és diferenciable a tot $U$",
+            "gravetat": "consequencia",
+            "explicacio": "La conclusió s'obté només de l'existència de les parcials, sense continuïtat; hereta l'error anterior. La conclusió és certa, però la justificació no se sosté."
+          }
+        ],
+        "hash_referencia": "5fa648337f7398d45fd90f02ba492510beaf8937aba8d9084e9571df319d55b6"
+      }
+    },
+    {
+      "titol": "Matriu jacobiana al punt",
+      "pas": "jacobiana",
+      "fragments": [
+        "Calculem $f(4,1)=(4\\cdot1^{3/2},\\ 4^{3/2}-1)=(4,\\ 8-1)=(4,7)$.",
+        "Avaluem les parcials a $(4,1)$: $\\frac{\\partial f_1}{\\partial x}=1$, $\\frac{\\partial f_1}{\\partial y}=\\frac32\\cdot4\\cdot1=6$, $\\frac{\\partial f_2}{\\partial x}=\\frac32\\sqrt4=3$, $\\frac{\\partial f_2}{\\partial y}=-2$. Cada fila correspon a una component, així que $Jf(4,1)=\\begin{pmatrix}1&6\\\\3&-2\\end{pmatrix}$."
+      ],
+      "fragments_errats": [
+        "Calculem $f(4,1)=(4\\cdot1^{3/2},\\ 4^{3/2}-1)=(4,\\ 8-1)=(4,7)$.",
+        "Avaluem les parcials a $(4,1)$: $\\frac{\\partial f_1}{\\partial x}=1$, $\\frac{\\partial f_1}{\\partial y}=\\frac32\\cdot4\\cdot1=6$, $\\frac{\\partial f_2}{\\partial x}=\\frac32\\sqrt4=3$, $\\frac{\\partial f_2}{\\partial y}=-2$. Cada fila correspon a una variable, així que $Jf(4,1)=\\begin{pmatrix}1&3\\\\6&-2\\end{pmatrix}$."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 5,
+        "cita": "Cada fila correspon a una variable, així que $Jf(4,1)=\\begin{pmatrix}1&3\\\\6&-2\\end{pmatrix}$.",
+        "inici": 215,
+        "fi": 308,
+        "tipus": "teorema_mal_aplicat",
+        "explicacio": "A la jacobiana cada fila conté les derivades parcials d'una component i cada columna correspon a una variable. La matriu escrita és la transposada.",
+        "correccio": "$Jf(4,1)=\\begin{pmatrix}1&6\\\\3&-2\\end{pmatrix}$, amb una fila per component.",
+        "pista": "Segons la definició de matriu jacobiana, quines derivades van a la primera fila?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-2.json",
+        "valoracio": "El fragment 1 és correcte: f(4,1)=(4,7). Les parcials avaluades al fragment 2 també són correctes (1, 6, 3, -2). L'error és col·locar-les transposades a la jacobiana.",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "Cada fila correspon a una variable, així que $Jf(4,1)=\\begin{pmatrix}1&3\\\\6&-2\\end{pmatrix}$.",
+            "gravetat": "error",
+            "explicacio": "Per T3.9(ii) la fila i correspon a la component f_i i la columna j a la variable x_j. Les parcials calculades donen Jf(4,1)=[[1,6],[3,-2]]. La matriu escrita és la transposada, per tant falsa. El raonament 'cada fila correspon a una variable' és l'error conceptual."
+          }
+        ],
+        "hash_referencia": "5fa648337f7398d45fd90f02ba492510beaf8937aba8d9084e9571df319d55b6"
+      }
+    },
+    {
+      "titol": "Escriure l'aproximació lineal",
+      "pas": "aproximacio_lineal",
+      "fragments": [
+        "L'aproximació lineal és el valor al punt més la diferencial aplicada a l'increment: $L(x,y)=f(4,1)+Jf(4,1)\\begin{pmatrix}x-4\\\\y-1\\end{pmatrix}$.",
+        "Fent el producte, $L(x,y)=(4,7)+\\begin{pmatrix}1&6\\\\3&-2\\end{pmatrix}\\begin{pmatrix}x-4\\\\y-1\\end{pmatrix}=\\big(4+(x-4)+6(y-1),\\ 7+3(x-4)-2(y-1)\\big)$."
+      ]
+    },
+    {
+      "titol": "Avaluar l'aproximació",
+      "pas": "avaluar",
+      "fragments": [
+        "L'increment respecte de $(4,1)$ és $(4.2-4,\\ 1.1-1)=(0.2,\\ 0.1)$. Substituint a $L$: primera component $4+0.2+6\\cdot0.1=4.8$, segona $7+3\\cdot0.2-2\\cdot0.1=7+0.6-0.2=7.4$.",
+        "Per tant $f(4.2,1.1)\\approx L(4.2,1.1)=(4.8,\\ 7.4)$. Per comparar, el valor exacte és $\\approx(4.8455,\\ 7.3974)$, prou proper."
+      ]
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-2.json",
+    "valoracio": "Diferenciabilitat justificada a l'obert x>0,y>0; f(4,1)=(4,7), jacobiana correcta, L correcta i f(4.2,1.1)≈(4.8,7.4) amb increment correcte.",
+    "problemes": [],
+    "hash_referencia": "5fa648337f7398d45fd90f02ba492510beaf8937aba8d9084e9571df319d55b6"
+  },
+  "creat": 1793548243.8902786
+}

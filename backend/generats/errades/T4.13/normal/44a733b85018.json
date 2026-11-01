@@ -1,0 +1,132 @@
+{
+  "id": "44a733b85018",
+  "exercici": "T4.13",
+  "font": "teoria",
+  "dificultat": "normal",
+  "format": "per_parts",
+  "n_enunciat": 2,
+  "parts": [
+    {
+      "titol": "Enunciat",
+      "pas": "",
+      "fragments": [
+        "Sigui $G\\subseteq\\mathbb{R}^{n+m}$ obert, $\\Phi:G\\to\\mathbb{R}^m$, $(x,y)\\mapsto\\Phi(x,y)$, de classe $\\mathcal{C}^r(G)$ amb $r\\geq 1$, i $(a,b)\\in G$ tal que $\\Phi(a,b)=0$ i $\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$.",
+        "Aleshores existeixen oberts $\\Omega\\subseteq\\mathbb{R}^n$ i $U\\subseteq G$ amb $a\\in\\Omega$, $(a,b)\\in U$, i una funció $\\varphi:\\Omega\\to\\mathbb{R}^m$ tals que: (i) $\\det\\big(\\partial\\Phi_i/\\partial y_j(z)\\big)\\neq 0$ per a tot $z\\in U$; (ii) $\\varphi\\in\\mathcal{C}^r(\\Omega)$ i $\\varphi(a)=b$; (iii) $\\{(x,y)\\in U\\mid\\Phi(x,y)=0\\}=\\{(u,\\varphi(u))\\mid u\\in\\Omega\\}$."
+      ],
+      "fragments_errats": [
+        "Sigui $G\\subseteq\\mathbb{R}^{n+m}$ obert, $\\Phi:G\\to\\mathbb{R}^m$, $(x,y)\\mapsto\\Phi(x,y)$, de classe $\\mathcal{C}^r(G)$ amb $r\\geq 1$, i $(a,b)\\in G$ tal que $\\Phi(a,b)=0$ i $\\det\\big(\\partial\\Phi_i/\\partial y_j(a,b)\\big)_{i,j=1,\\ldots,m}\\neq 0$.",
+        "Aleshores existeixen oberts $\\Omega\\subseteq\\mathbb{R}^n$ i $U\\subseteq G$ amb $a\\in\\Omega$, $(a,b)\\in U$, i una funció $\\varphi:\\Omega\\to\\mathbb{R}^m$ tals que: (i) $\\det\\big(\\partial\\Phi_i/\\partial y_j(z)\\big)\\neq 0$ per a tot $z\\in G$; (ii) $\\varphi\\in\\mathcal{C}^r(\\Omega)$ i $\\varphi(a)=b$; (iii) $\\{(x,y)\\in U\\mid\\Phi(x,y)=0\\}=\\{(u,\\varphi(u))\\mid u\\in\\Omega\\}$."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 2,
+        "cita": "per a tot $z\\in G$",
+        "inici": 219,
+        "fi": 237,
+        "tipus": "quantificador",
+        "explicacio": "El determinant només és no nul en un entorn $U$ de $(a,b)$, no a tot $G$. Contraexemple: $\\Phi(x,y)=x^2+y^2-1$ a $G=\\mathbb{R}^2$, $(a,b)=(0,1)$; $\\partial\\Phi/\\partial y=2y$ s'anul·la en $(\\pm1,0)\\in G$.",
+        "correccio": "El determinant no s'anul·la per a tot $z\\in U$, on $U\\subseteq G$ és un obert que conté $(a,b)$.",
+        "pista": "Si la condició fos certa a tot $G$, com seria la corba $\\Phi=0$ en els punts on la tangent és vertical?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-6.json",
+        "valoracio": "La hipòtesi i els apartats (ii) i (iii) són correctes; només (i) té el quantificador sobre el conjunt equivocat (G en comptes de U), cosa que fa l'enunciat fals.",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "(i) $\\det\\big(\\partial\\Phi_i/\\partial y_j(z)\\big)\\neq 0$ per a tot $z\\in G$",
+            "gravetat": "error",
+            "explicacio": "Als apunts el determinant és no nul per a tot z de U, no de G. Per a tot z de G és fals en general (a l'el·lipse, als extrems el determinant s'anul·la dins G); és una conclusió més forta que la del teorema."
+          }
+        ],
+        "hash_referencia": "f4d9884c79dd5418ab805565abbbef046b6fed15c7c228fa2fab424e8d11133c"
+      }
+    },
+    {
+      "titol": "Funció auxiliar",
+      "pas": "",
+      "fragments": [
+        "Considerem $f:G\\to\\mathbb{R}^{n+m}$, $f(x,y)=(x,\\Phi(x,y))$. Clarament $f\\in\\mathcal{C}^r(G)$ i $f(a,b)=(a,0)$.",
+        "La matriu jacobiana de $f$ té les $n$ primeres files $(I_n\\,|\\,0)$ i les $m$ últimes $\\big(\\partial\\Phi_i/\\partial x_j\\,|\\,\\partial\\Phi_i/\\partial y_j\\big)$; és triangular per blocs, i per tant $\\det Jf(z)=\\det\\big(\\partial\\Phi_i/\\partial y_j(z)\\big)_{i,j=1,\\ldots,m}$.",
+        "En particular, $\\det Jf(a,b)\\neq0$ per hipòtesi, de manera que es pot aplicar el teorema de la funció inversa a $f$ en $(a,b)$."
+      ]
+    },
+    {
+      "titol": "Conseqüències de la funció inversa",
+      "pas": "",
+      "fragments": [
+        "El teorema de la funció inversa dona un obert $U\\subseteq G$ amb $(a,b)\\in U$ tal que $f|_U$ és injectiva i $\\det Jf(z)\\neq0$ per a tot $z\\in U$; $V=f(U)$ és obert, i existeix $f^{-1}:V\\to U$ de classe $\\mathcal{C}^r(V)$.",
+        "Com que $\\det Jf(z)=\\det\\big(\\partial\\Phi_i/\\partial y_j(z)\\big)$, deduïm (i): aquest determinant no s'anul·la en cap $z\\in U$.",
+        "Com que $f$ conserva la primera component $x$, la inversa té la forma $f^{-1}(u,v)=(u,h(u,v))$ per a $(u,v)\\in V$, amb $h$ de classe $\\mathcal{C}^r$.",
+        "Aplicant $f^{-1}\\circ f=\\mathrm{id}_U$ i $f\\circ f^{-1}=\\mathrm{id}_V$ s'obtenen les igualtats: $y=h(x,\\Phi(x,y))$ per a $(x,y)\\in U$, i $\\Phi(u,h(u,v))=v$ per a $(u,v)\\in V$."
+      ],
+      "fragments_errats": [
+        "El teorema de la funció inversa dona un obert $U\\subseteq G$ amb $(a,b)\\in U$ tal que $f|_U$ és injectiva i $\\det Jf(z)\\neq0$ per a tot $z\\in U$; $V=f(U)$ és obert, i existeix $f^{-1}:V\\to U$ de classe $\\mathcal{C}^r(V)$.",
+        "Com que $\\det Jf(z)=\\det\\big(\\partial\\Phi_i/\\partial y_j(z)\\big)$, deduïm (i): aquest determinant no s'anul·la en cap $z\\in U$.",
+        "Com que $f$ conserva la primera component $x$, la inversa té la forma $f^{-1}(u,v)=(u,h(u,v))$ per a $(u,v)\\in V$, amb $h$ de classe $\\mathcal{C}^r$.",
+        "Aplicant $f^{-1}\\circ f=\\mathrm{id}_U$ i $f\\circ f^{-1}=\\mathrm{id}_V$ s'obtenen les igualtats: $y=h(x,\\Phi(x,y))$ per a $(x,y)\\in G$, i $\\Phi(u,h(u,v))=v$ per a $(u,v)\\in V$."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 9,
+        "cita": "$y=h(x,\\Phi(x,y))$ per a $(x,y)\\in G$",
+        "inici": 96,
+        "fi": 133,
+        "tipus": "pas_injustificat",
+        "explicacio": "La identitat $f^{-1}\\circ f=\\mathrm{id}$ només es té on $f$ és injectiva i té inversa, és a dir, a $U$, no a tot $G$. Per exemple, amb $\\Phi=x^2+y^2-1$ i $(x,y)=(0,-1)$, $h$ construïda prop de $(0,1)$ no retorna $y=-1$.",
+        "correccio": "La igualtat $y=h(x,\\Phi(x,y))$ val per a $(x,y)\\in U$, on $f|_U$ és injectiva.",
+        "pista": "On està definida $f^{-1}$ i on és injectiva $f$, perquè $f^{-1}\\circ f=\\mathrm{id}$ tingui sentit?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-6.json",
+        "valoracio": "Els fragments 1-3 son correctes. Al fragment 4 la primera igualtat s'enuncia per a (x,y) a G en comptes de U, cosa que es falsa/no justificada.",
+        "problemes": [
+          {
+            "fragment": 4,
+            "cita": "$y=h(x,\\Phi(x,y))$ per a $(x,y)\\in G$",
+            "gravetat": "error",
+            "explicacio": "f^{-1}∘f = id_U nomes val sobre U, no sobre G: f|_U es injectiva i f^{-1} esta definida nomes a V=f(U). Per a (x,y) a G\\U, f(x,y) pot no ser a V (h no esta definida) i f no es injectiva a G. La igualtat correcta es per a (x,y) a U (com a l'Observacio 14)."
+          }
+        ],
+        "hash_referencia": "f4d9884c79dd5418ab805565abbbef046b6fed15c7c228fa2fab424e8d11133c"
+      }
+    },
+    {
+      "titol": "L'obert $\\Omega$ i la funció $\\varphi$",
+      "pas": "",
+      "fragments": [
+        "Definim $\\Omega=\\{x\\in\\mathbb{R}^n:(x,0,\\ldots,0)\\in V\\}$ i $\\varphi(u)=h(u,0)$ per a $u\\in\\Omega$; està ben definida perquè $(u,0)\\in V$.",
+        "$\\Omega$ és obert: si $x_0\\in\\Omega$, com que $V$ és obert hi ha $\\varepsilon>0$ amb $B((x_0,0),\\varepsilon)\\subseteq V$. Si $x\\in B(x_0,\\varepsilon)$, llavors $d((x,0),(x_0,0))=d(x,x_0)<\\varepsilon$, de manera que $(x,0)\\in V$ i $x\\in\\Omega$; per tant $B(x_0,\\varepsilon)\\subseteq\\Omega$.",
+        "A més, $f^{-1}(u,0)=(u,h(u,0))=(u,\\varphi(u))$, de manera que $\\varphi$ és una component de $f^{-1}$ i, per tant, és de classe $\\mathcal{C}^r$ en $\\Omega$.",
+        "Hem establert que $\\Omega$ és obert i que $\\varphi\\in\\mathcal{C}^r(\\Omega)$."
+      ]
+    },
+    {
+      "titol": "Valor de $\\varphi$ en $a$",
+      "pas": "",
+      "fragments": [
+        "Apliquem la primera igualtat de l'observació al punt $(a,b)\\in U$, amb $\\Phi(a,b)=0$: $b=h(a,\\Phi(a,b))=h(a,0)$.",
+        "Per la definició de $\\varphi$, $h(a,0)=\\varphi(a)$; per tant $\\varphi(a)=b$. Això prova (ii) (a més, $a\\in\\Omega$ perquè $f(a,b)=(a,0)\\in V$)."
+      ]
+    },
+    {
+      "titol": "Descripció del conjunt de zeros",
+      "pas": "",
+      "fragments": [
+        "$\\subseteq$) Sigui $(x,y)\\in U$ amb $\\Phi(x,y)=0$. Llavors $f(x,y)=(x,0)\\in V$, de manera que $x\\in\\Omega$ per la definició d'$\\Omega$. Per la primera igualtat de l'observació, $y=h(x,\\Phi(x,y))=h(x,0)=\\varphi(x)$; per tant $(x,y)=(x,\\varphi(x))$ amb $x\\in\\Omega$.",
+        "$\\supseteq$) Sigui $u\\in\\Omega$. Llavors $(u,0)\\in V$ i $f^{-1}(u,0)=(u,\\varphi(u))\\in U$. Per la segona igualtat de l'observació, $\\Phi(u,\\varphi(u))=\\Phi(u,h(u,0))=0$.",
+        "Així tenim la igualtat de conjunts (iii); en particular, $\\Phi(x,\\varphi(x))=0$ per a tot $x\\in\\Omega$."
+      ]
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-6.json",
+    "valoracio": "Enunciat idèntic al dels apunts. Demostració fidel i correcta: determinant triangular per blocs, aplicació de la funció inversa, forma de f^{-1}, Omega obert, phi de classe C^r, phi(a)=b i la doble inclusió de (iii) amb l'observació 14.",
+    "problemes": [],
+    "hash_referencia": "f4d9884c79dd5418ab805565abbbef046b6fed15c7c228fa2fab424e8d11133c"
+  },
+  "creat": 1793547907.205398
+}

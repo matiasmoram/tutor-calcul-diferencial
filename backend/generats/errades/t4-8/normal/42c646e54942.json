@@ -1,0 +1,125 @@
+{
+  "id": "42c646e54942",
+  "exercici": "t4-8",
+  "font": "problema",
+  "dificultat": "normal",
+  "format": "per_parts",
+  "n_enunciat": 0,
+  "parts": [
+    {
+      "titol": "Situar el punt i la seva imatge",
+      "pas": "punt_imatge",
+      "fragments": [
+        "La diferencial de la inversa s'avalua a la imatge del punt on invertim, així que cal veure quin punt es transforma en $(4,4,-1)$. Calculem $G(1,-1,2)=(1-1+2^2,\\ 1+1+2,\\ 2-1-2)=(4,4,-1)$.",
+        "Per tant $(4,4,-1)=G(1,-1,2)$, i $DG^{-1}(4,4,-1)$ és la diferencial de la inversa local definida al voltant de $(1,-1,2)$."
+      ]
+    },
+    {
+      "titol": "Jacobiana i hipòtesis del TFI",
+      "pas": "jacobiana",
+      "fragments": [
+        "$G$ és polinòmica, per tant de classe $\\mathcal{C}^\\infty$. La jacobiana és $JG(x,y,z)=\\begin{pmatrix}1&1&2z\\\\ 1&-1&1\\\\ 2&1&-1\\end{pmatrix}$.",
+        "Desenvolupant per la primera fila: $\\det JG=1\\cdot(1-1)-1\\cdot(-1-2)+2z\\cdot(1+2)=0+3+6z=3+6z$. En $(1,-1,2)$ val $3+12=15\\neq 0$.",
+        "Pel teorema de la funció inversa, existeix un entorn $U$ de $(1,-1,2)$ on $G$ és injectiva, $G(U)$ és obert i la inversa local és de classe $\\mathcal{C}^\\infty$. Per tant $G$ admet inversa local diferenciable al voltant del punt."
+      ],
+      "fragments_errats": [
+        "$G$ és polinòmica, per tant de classe $\\mathcal{C}^\\infty$. La jacobiana és $JG(x,y,z)=\\begin{pmatrix}1&1&2z\\\\ 1&-1&1\\\\ 2&1&-1\\end{pmatrix}$.",
+        "Desenvolupant per la primera fila: $\\det JG=1\\cdot(1-1)-1\\cdot(-1-2)+2z\\cdot(1+2)=0+3+6z=3+6z$. En $(4,4,-1)$ val $3-6=-3\\neq 0$.",
+        "Pel teorema de la funció inversa, existeix un entorn $U$ de $(1,-1,2)$ on $G$ és injectiva, $G(U)$ és obert i la inversa local és de classe $\\mathcal{C}^\\infty$. Per tant $G$ admet inversa local diferenciable al voltant del punt."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 4,
+        "cita": "En $(4,4,-1)$ val $3-6=-3\\neq 0$",
+        "inici": 96,
+        "fi": 128,
+        "tipus": "teorema_mal_aplicat",
+        "explicacio": "La hipòtesi del teorema de la funció inversa s'ha de comprovar al punt $(1,-1,2)$ on s'inverteix $G$, no a la seva imatge $(4,4,-1)$.",
+        "correccio": "En $(1,-1,2)$ val $3+12=15\\neq 0$.",
+        "pista": "En quin punt demana el teorema que el determinant de la jacobiana no s'anul·li?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-3.json",
+        "valoracio": "Calcul de la jacobiana i del determinant 3+6z correcte, pero la hipotesi s'avalua al punt equivocat (4,4,-1) en lloc de (1,-1,2).",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "En $(4,4,-1)$ val $3-6=-3\\neq 0$.",
+            "gravetat": "error",
+            "explicacio": "El TFI requereix det JG != 0 al punt (1,-1,2) on s'inverteix (z=2, det=15), no a la imatge (4,4,-1). Aqui s'avalua amb z=-1, que no te cap relacio amb el punt de la hipotesi."
+          },
+          {
+            "fragment": 3,
+            "cita": "Pel teorema de la funció inversa, existeix un entorn $U$ de $(1,-1,2)$ on $G$ és injectiva",
+            "gravetat": "consequencia",
+            "explicacio": "La hipotesi det JG(1,-1,2) != 0 no s'ha comprovat (s'ha comprovat al punt equivocat), de manera que la conclusio del TFI no queda justificada amb el que s'ha escrit, tot i que el resultat es cert."
+          }
+        ],
+        "hash_referencia": "64bbb9f37e9981aea38df565306bd85adf6d00f26c8d8453362b2edbf8b3fc43"
+      }
+    },
+    {
+      "titol": "Calcular la diferencial de la inversa",
+      "pas": "diferencial_inversa",
+      "fragments": [
+        "Pel mateix teorema, $DG^{-1}(4,4,-1)=\\big(JG(1,-1,2)\\big)^{-1}$, amb $JG(1,-1,2)=\\begin{pmatrix}1&1&4\\\\ 1&-1&1\\\\ 2&1&-1\\end{pmatrix}$ i determinant $15$.",
+        "La matriu d'adjunts (cofactors) és $\\begin{pmatrix}0&3&3\\\\ 5&-9&1\\\\ 5&3&-2\\end{pmatrix}$; la inversa és la seva transposada dividida pel determinant: $\\frac{1}{15}\\begin{pmatrix}0&5&5\\\\ 3&-9&3\\\\ 3&1&-2\\end{pmatrix}$.",
+        "Comprovem la primera fila de $JG$ per les columnes: $(1,1,4)\\cdot(0,3,3)=15$, $(1,1,4)\\cdot(5,-9,1)=0$, $(1,1,4)\\cdot(5,3,-2)=0$, com cal. Resultat: $DG^{-1}(4,4,-1)=\\begin{pmatrix}0&\\frac13&\\frac13\\\\ \\frac15&-\\frac35&\\frac15\\\\ \\frac15&\\frac1{15}&-\\frac2{15}\\end{pmatrix}$."
+      ],
+      "fragments_errats": [
+        "Pel mateix teorema, $DG^{-1}(4,4,-1)=\\big(JG(1,-1,2)\\big)^{-1}$, amb $JG(1,-1,2)=\\begin{pmatrix}1&1&4\\\\ 1&-1&1\\\\ 2&1&-1\\end{pmatrix}$ i determinant $15$.",
+        "La matriu d'adjunts (cofactors) és $\\begin{pmatrix}0&3&3\\\\ 5&-9&1\\\\ 5&3&-2\\end{pmatrix}$; la inversa és la seva transposada: $\\begin{pmatrix}0&5&5\\\\ 3&-9&3\\\\ 3&1&-2\\end{pmatrix}$.",
+        "Comprovem la primera fila de $JG$ per les columnes: $(1,1,4)\\cdot(0,3,3)=15$, $(1,1,4)\\cdot(5,-9,1)=0$, $(1,1,4)\\cdot(5,3,-2)=0$, com cal. Resultat: $DG^{-1}(4,4,-1)=\\begin{pmatrix}0&5&5\\\\ 3&-9&3\\\\ 3&1&-2\\end{pmatrix}$."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 7,
+        "cita": "la inversa és la seva transposada: $\\begin{pmatrix}0&5&5\\\\ 3&-9&3\\\\ 3&1&-2\\end{pmatrix}$",
+        "inici": 90,
+        "fi": 178,
+        "tipus": "calcul",
+        "explicacio": "La inversa és la matriu d'adjunts transposada dividida pel determinant; sense dividir per $15$ el producte amb $JG$ dona $15\\,I$ i no la identitat, com mostren els productes $15,0,0$ de la comprovació.",
+        "correccio": "$DG^{-1}(4,4,-1)=\\begin{pmatrix}0&\\frac13&\\frac13\\\\ \\frac15&-\\frac35&\\frac15\\\\ \\frac15&\\frac1{15}&-\\frac2{15}\\end{pmatrix}$",
+        "pista": "Quin valor haurien de donar els productes de la comprovació perquè la matriu fos realment la inversa?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-3.json",
+        "valoracio": "Els adjunts i la transposada són correctes, però s'oblida dividir pel determinant 15, de manera que el resultat final és 15 vegades massa gran.",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "la inversa és la seva transposada: $\\begin{pmatrix}0&5&5\\\\ 3&-9&3\\\\ 3&1&-2\\end{pmatrix}$",
+            "gravetat": "error",
+            "explicacio": "La matriu d'adjunts i la seva transposada són correctes, però la inversa és (1/det) per la transposada de la matriu d'adjunts, és a dir (1/15)·adj. Se n'ha oblidat la divisió pel determinant 15; la matriu escrita no és la inversa (multiplicada per JG dona 15·I)."
+          },
+          {
+            "fragment": 3,
+            "cita": "Resultat: $DG^{-1}(4,4,-1)=\\begin{pmatrix}0&5&5\\\\ 3&-9&3\\\\ 3&1&-2\\end{pmatrix}$",
+            "gravetat": "consequencia",
+            "explicacio": "La comprovació mostra que el producte dona 15 en lloc d'1 (en realitat 15·I), cosa que el text dona per bona ('com cal'). El resultat final hereta l'error: falta el factor 1/15; el correcte és (1/15)·la matriu escrita."
+          }
+        ],
+        "hash_referencia": "64bbb9f37e9981aea38df565306bd85adf6d00f26c8d8453362b2edbf8b3fc43"
+      }
+    },
+    {
+      "titol": "Inversa global",
+      "pas": "inversa_global",
+      "fragments": [
+        "El teorema de la funció inversa només dona una inversa local; una inversa global exigiria que $G$ fos injectiva a tot $\\mathbb{R}^3$. Resolem $G(x,y,z)=(u,v,w)$: sumant les dues darreres components, $v+w=3x$, així que $x=\\frac{v+w}{3}$, i de la segona $y=x+z-v$.",
+        "Substituint a la primera: $u=x+y+z^2=2x-v+z+z^2$, és a dir $z^2+z=u+v-2x$. Aquesta equació de segon grau en $z$ té, en general, dues solucions $z$ i $-1-z$, que donen dues antiimatges diferents.",
+        "Exemple explícit: $G(0,0,0)=(0,0,0)$ i $G(0,-1,-1)=(0-1+1,\\ 0+1-1,\\ 0-1+1)=(0,0,0)$. Com $G$ no és injectiva, no admet inversa global."
+      ]
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-3.json",
+    "valoracio": "Tots els càlculs verificats: G(1,-1,2)=(4,4,-1), det JG=3+6z=15, matriu d'adjunts i inversa correctes, comprovació de la primera fila correcta, no injectivitat amb l'exemple (0,0,0) i (0,-1,-1) correcta.",
+    "problemes": [],
+    "hash_referencia": "64bbb9f37e9981aea38df565306bd85adf6d00f26c8d8453362b2edbf8b3fc43"
+  },
+  "creat": 1793548122.394079
+}

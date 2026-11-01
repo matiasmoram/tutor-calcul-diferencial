@@ -1,0 +1,128 @@
+{
+  "id": "445c59037244",
+  "exercici": "t1-6",
+  "font": "problema",
+  "dificultat": "normal",
+  "format": "per_parts",
+  "n_enunciat": 0,
+  "parts": [
+    {
+      "titol": "$A$ fitat $\\Rightarrow$ $D_A$ fitat",
+      "pas": "fitat_implica",
+      "fragments": [
+        "Suposem que $A$ és fitat, és a dir, que existeixen $p$ i $L>0$ amb $A\\subseteq B_L(p)$. Aleshores, per a $x,y\\in A$ es té $d(x,p)<L$ i $d(p,y)<L$.",
+        "Per la desigualtat triangular, $0\\leq d(x,y)\\leq d(x,p)+d(p,y)<2L$. Per tant $D_A\\subseteq[0,2L]$, i $D_A$ és fitat."
+      ],
+      "fragments_errats": [
+        "Suposem que $A$ és fitat, és a dir, que existeixen $p$ i $L>0$ amb $A\\subseteq B_L(p)$. Aleshores, per a $x,y\\in A$ es té $d(x,p)<L$ i $d(p,y)<L$.",
+        "Per la desigualtat triangular, $0\\leq d(x,y)\\leq\\max\\{d(x,p),d(p,y)\\}<L$. Per tant $D_A\\subseteq[0,L]$, i $D_A$ és fitat."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 2,
+        "cita": "$0\\leq d(x,y)\\leq\\max\\{d(x,p),d(p,y)\\}<L$",
+        "inici": 31,
+        "fi": 72,
+        "tipus": "teorema_mal_aplicat",
+        "explicacio": "La desigualtat triangular dona $d(x,y)\\leq d(x,p)+d(p,y)$, no el màxim. Dos punts d'una bola de radi $L$ poden estar a distància propera a $2L$, de manera que la fita $L$ és falsa.",
+        "correccio": "$0\\leq d(x,y)\\leq d(x,p)+d(p,y)<2L$, per tant $D_A\\subseteq[0,2L]$.",
+        "pista": "Si dos punts són a la bola $B_L(p)$ però en costats oposats del centre, quina distància poden arribar a tenir entre ells?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-1.json",
+        "valoracio": "El fragment 1 es correcte. Al fragment 2 s'usa un maxim en lloc de la suma a la desigualtat triangular, i s'obte una fita falsa [0,L].",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "0\\leq d(x,y)\\leq\\max\\{d(x,p),d(p,y)\\}<L",
+            "gravetat": "error",
+            "explicacio": "La desigualtat triangular dona d(x,y) <= d(x,p)+d(p,y), no el maxim. La desigualtat amb el maxim es falsa (A=B_L(p), punts gairebe oposats a distancia gairebe 2L > L). La fita correcta es 2L."
+          },
+          {
+            "fragment": 2,
+            "cita": "Per tant $D_A\\subseteq[0,L]$, i $D_A$ és fitat.",
+            "gravetat": "consequencia",
+            "explicacio": "La fita L es falsa; D_A es nomes contingut en [0,2L]. La conclusio de fitacio es certa, pero la justificacio donada no."
+          }
+        ],
+        "hash_referencia": "6c54808ab5fa08c1ac2ade28e1d3b4b08218ef229d62a545a708fdabdaabfad5"
+      }
+    },
+    {
+      "titol": "$D_A$ fitat $\\Rightarrow$ $A$ fitat",
+      "pas": "reciproc",
+      "fragments": [
+        "Suposem que $D_A$ és fitat: existeix $K$ tal que $d(x,y)\\leq K$ per a tots $x,y\\in A$. Si $A=\\emptyset$ és trivialment fitat, així que podem agafar $a_0\\in A$ com a centre.",
+        "Per a tot $x\\in A$, $d(x,a_0)\\leq K<K+1$, de manera que $x\\in B_{K+1}(a_0)$. Així $A\\subseteq B_{K+1}(a_0)$ i $A$ és fitat; queda provat que $A$ és fitat si i només si ho és $D_A$."
+      ]
+    },
+    {
+      "titol": "Diàmetre de $B_2$",
+      "pas": "diam_B2",
+      "fragments": [
+        "Siguin $x,y\\in B_2$. Per la desigualtat triangular passant per l'origen, $\\|x-y\\|\\leq\\|x\\|+\\|y\\|<1+1=2$, així que $2$ és una fita superior de $D_{B_2}$.",
+        "Per a $0<t<1$, els punts $x_t=te_1$ i $y_t=-te_1$ són de $B_2$ i $\\|x_t-y_t\\|=2t\\to2$ quan $t\\to1^-$. Per tant cap fita menor que $2$ serveix, i $\\mathrm{diam}(B_2)=2$ (no s'assoleix, perquè $B_2$ és obert)."
+      ],
+      "fragments_errats": [
+        "Siguin $x,y\\in B_2$. Per la desigualtat triangular passant per l'origen, $\\|x-y\\|\\leq\\|x\\|+\\|y\\|<1+1=2$, així que $2$ és una fita superior de $D_{B_2}$.",
+        "Els punts $x=e_1$ i $y=-e_1$ són de $B_2$ i $\\|x-y\\|=2$. Per tant cap fita menor que $2$ serveix, i $\\mathrm{diam}(B_2)=2$ (que s'assoleix a $e_1,-e_1$)."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 6,
+        "cita": "Els punts $x=e_1$ i $y=-e_1$ són de $B_2$ i $\\|x-y\\|=2$",
+        "inici": 0,
+        "fi": 55,
+        "tipus": "hipotesi",
+        "explicacio": "Els punts $\\pm e_1$ tenen norma $1$, per tant no són de la bola oberta $B_2$. El suprem $2$ no s'assoleix i només s'hi arriba amb punts $\\pm te_1$, $t\\to1^-$.",
+        "correccio": "Cal prendre $x_t=te_1$, $y_t=-te_1$ amb $0<t<1$, de distància $2t\\to2$; el suprem és $2$ però no s'assoleix perquè $B_2$ és obert.",
+        "pista": "Pertanyen realment a la bola oberta els punts que has triat? Quina norma tenen?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-1.json",
+        "valoracio": "La fita superior (fragment 1) és correcta. L'optimalitat es basa en punts que no pertanyen al conjunt, de manera que el suprem queda sense demostrar i s'afirma erròniament que s'assoleix.",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "Els punts $x=e_1$ i $y=-e_1$ són de $B_2$ i $\\|x-y\\|=2$.",
+            "gravetat": "error",
+            "explicacio": "$\\|e_1\\|=1\\not<1$, per tant $\\pm e_1$ NO són de $B_2$ (bola oberta). La distància 2 no s'assoleix a $B_2$. Cal prendre $\\pm te_1$ amb $0<t<1$, distància $2t\\to2$."
+          },
+          {
+            "fragment": 2,
+            "cita": "(que s'assoleix a $e_1,-e_1$)",
+            "gravetat": "consequencia",
+            "explicacio": "El suprem 2 no s'assoleix perquè $B_2$ és obert; l'afirmació hereta el mal ús de punts de la vora. Sense parelles a distància arbitràriament propera a 2 la optimalitat de la fita no queda justificada."
+          }
+        ],
+        "hash_referencia": "6c54808ab5fa08c1ac2ade28e1d3b4b08218ef229d62a545a708fdabdaabfad5"
+      }
+    },
+    {
+      "titol": "Diàmetre de $B_1$",
+      "pas": "diam_B1",
+      "fragments": [
+        "Sempre fem servir la distància euclidiana. Per a $v\\in\\mathbb{R}^m$, $\\|v\\|^2=\\sum_i v_i^2\\leq\\left(\\sum_i|v_i|\\right)^2$, perquè al desenvolupar el quadrat de la suma apareixen els mateixos termes $|v_i|^2$ més productes no negatius. Per tant $\\|v\\|\\leq\\sum_i|v_i|$.",
+        "Per a $x,y\\in B_1$: $\\|x-y\\|\\leq\\sum_i|x_i-y_i|\\leq\\sum_i|x_i|+\\sum_i|y_i|<1+1=2$. Els punts $\\pm te_1$ amb $0<t<1$ són de $B_1$ (la suma de valors absoluts és $t<1$) i són a distància $2t\\to2$. Per tant $\\mathrm{diam}(B_1)=2$."
+      ]
+    },
+    {
+      "titol": "Diàmetre de $B_3$",
+      "pas": "diam_B3",
+      "fragments": [
+        "Siguin $x,y\\in B_3$. Per a cada component, $|x_i-y_i|\\leq|x_i|+|y_i|<2$, d'on $(x_i-y_i)^2<4$. Sumant, $\\|x-y\\|^2=\\sum_{i=1}^m(x_i-y_i)^2<4m$, és a dir $\\|x-y\\|<2\\sqrt m$.",
+        "Prenem $x_t=t(1,\\dots,1)$ i $y_t=-x_t$ amb $0<t<1$; són de $B_3$ perquè $\\max|x_i|=t<1$. Aleshores $\\|x_t-y_t\\|=\\|2x_t\\|=2t\\sqrt m\\to2\\sqrt m$ quan $t\\to1^-$. Per tant $\\mathrm{diam}(B_3)=2\\sqrt m$ (no assolit)."
+      ]
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-1.json",
+    "valoracio": "Totes les fites, desigualtats i optimalitats (B1, B2, B3) són correctes, amb distància euclidiana i el cas A buit tractat. Diàmetres 2, 2 i 2*sqrt(m).",
+    "problemes": [],
+    "hash_referencia": "6c54808ab5fa08c1ac2ade28e1d3b4b08218ef229d62a545a708fdabdaabfad5"
+  },
+  "creat": 1793547983.1111207
+}

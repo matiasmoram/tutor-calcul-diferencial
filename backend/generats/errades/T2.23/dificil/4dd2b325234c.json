@@ -1,0 +1,143 @@
+{
+  "id": "4dd2b325234c",
+  "exercici": "T2.23",
+  "font": "teoria",
+  "dificultat": "dificil",
+  "format": "per_parts",
+  "n_enunciat": 2,
+  "parts": [
+    {
+      "titol": "Enunciat",
+      "pas": "",
+      "fragments": [
+        "Sigui $f:\\Omega\\subseteq M\\to\\mathbb{R}$ contínua i sigui $K\\subseteq\\Omega$ compacte.",
+        "Llavors $f(K)$ és fitat i existeixen $x_0,x_1\\in K$ tals que $f(x_0)=\\min_{x\\in K}f(x)$ i $f(x_1)=\\max_{x\\in K}f(x)$."
+      ],
+      "fragments_errats": [
+        "Sigui $f:\\Omega\\subseteq M\\to\\mathbb{R}$ contínua i sigui $K\\subseteq\\Omega$ tancat i fitat.",
+        "Llavors $f(K)$ és fitat i existeixen $x_0,x_1\\in K$ tals que $f(x_0)=\\min_{x\\in K}f(x)$ i $f(x_1)=\\max_{x\\in K}f(x)$."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 1,
+        "cita": "sigui $K\\subseteq\\Omega$ tancat i fitat",
+        "inici": 52,
+        "fi": 91,
+        "tipus": "definicio",
+        "explicacio": "En un espai mètric $M$ qualsevol, tancat i fitat no és equivalent a compacte. Contraexemple: $M=K=\\mathbb{N}$ amb la mètrica discreta i $f(n)=n$, contínua, però $f(K)$ no és fitat.",
+        "correccio": "$K\\subseteq\\Omega$ ha de ser compacte.",
+        "pista": "En quins espais mètrics coincideixen compacte i tancat i fitat? Hi ha cap raó per esperar-ho a un espai mètric $M$ general?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-5.json",
+        "valoracio": "El fragment 2 (conclusió) coincideix amb els apunts. El fragment 1 canvia la hipòtesi 'compacte' per 'tancat i fitat', que és més feble en un espai mètric general, i el teorema deixa de ser cert.",
+        "problemes": [
+          {
+            "fragment": 1,
+            "cita": "sigui $K\\subseteq\\Omega$ tancat i fitat",
+            "gravetat": "error",
+            "explicacio": "Els apunts demanen K compacte. En un espai mètric M general, tancat i fitat no implica compacte (Heine-Borel només val a R^n). Amb la hipòtesi afeblida l'enunciat és fals: per exemple, a M=R amb la mètrica discreta, K=N és tancat i fitat, i f(n)=n és contínua però no és fitada ni té màxim. També falla amb la bola unitat tancada de l'espai l^2 i f(x)=<x,e_n> en algun cas, o amb f(x)=1/(1+d) en espais no compactes. L'enunciat queda fals."
+          }
+        ],
+        "hash_referencia": "01232e690e81143a3dc6642b333cabc56c3d88539b2bf35c6089ec7699b5ee96"
+      }
+    },
+    {
+      "titol": "Fitació de la imatge",
+      "pas": "",
+      "fragments": [
+        "Com que $f$ és contínua i $K$ és compacte, $f(K)\\subset\\mathbb{R}$ és compacte, i en particular és fitat.",
+        "Per tant existeixen $f_M:=\\sup_{x\\in K}f(x)$ i $f_m:=\\inf_{x\\in K}f(x)$, tots dos reals. Queda establert que $f(K)$ és fitat; falta veure que $f_M$ i $f_m$ s'atenyen. Ho fem per al màxim; el mínim és anàleg."
+      ],
+      "fragments_errats": [
+        "Com que $f$ és contínua i $K$ és fitat, $f(K)\\subset\\mathbb{R}$ és fitat.",
+        "Per tant existeixen $f_M:=\\sup_{x\\in K}f(x)$ i $f_m:=\\inf_{x\\in K}f(x)$, tots dos reals. Queda establert que $f(K)$ és fitat; falta veure que $f_M$ i $f_m$ s'atenyen. Ho fem per al màxim; el mínim és anàleg."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 3,
+        "cita": "$K$ és fitat, $f(K)\\subset\\mathbb{R}$ és fitat",
+        "inici": 26,
+        "fi": 72,
+        "tipus": "hipotesi",
+        "explicacio": "La imatge contínua d'un fitat no és fitada: $f(x)=1/x$ és contínua a $K=(0,1)$, que és fitat, però $f(K)=(1,\\infty)$ no ho és.",
+        "correccio": "La compacitat de $K$ i la continuïtat de $f$ donen que $f(K)$ és compacte i, per tant, fitat.",
+        "pista": "Quina propietat de $K$ es conserva per imatges contínues? Una funció contínua sobre un conjunt fitat és necessàriament fitada?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-5.json",
+        "valoracio": "El fragment 1 canvia la hipòtesi de compacte per fitat, cosa falsa en general; el fragment 2 hereta aquest error.",
+        "problemes": [
+          {
+            "fragment": 1,
+            "cita": "Com que $f$ és contínua i $K$ és fitat, $f(K)\\subset\\mathbb{R}$ és fitat.",
+            "gravetat": "error",
+            "explicacio": "Contínua i K fitat no implica f(K) fitat: cal K compacte (imatge contínua d'un compacte és compacte, per tant fitada). Contraexemple: f(x)=1/x a (0,1], K fitat però no compacte, f(K)=[1,∞) no fitat. La hipòtesi de compacitat (la de l'enunciat) ha estat substituïda per fitació."
+          },
+          {
+            "fragment": 2,
+            "cita": "Queda establert que $f(K)$ és fitat",
+            "gravetat": "consequencia",
+            "explicacio": "La fitació de f(K) i l'existència de sup i inf reals depenen del fragment 1, que és incorrecte; amb la compacitat de K el pas seria vàlid, però tal com està justificat no queda establert."
+          }
+        ],
+        "hash_referencia": "01232e690e81143a3dc6642b333cabc56c3d88539b2bf35c6089ec7699b5ee96"
+      }
+    },
+    {
+      "titol": "Successió maximitzant",
+      "pas": "",
+      "fragments": [
+        "Per definició de suprem, per a cada $n\\geq 1$ existeix $x_n\\in K$ amb $f_M-\\frac{1}{n}<f(x_n)\\leq f_M$. Per tant $f(x_n)\\to f_M$.",
+        "Com que $K$ és compacte (seqüencialment), existeix una parcial $(x_{n_k})_k$ amb $x_{n_k}\\to x^*\\in K$. Hem establert un punt $x^*\\in K$ límit d'una parcial de la successió maximitzant."
+      ],
+      "fragments_errats": [
+        "Per definició de suprem, per a cada $n\\geq 1$ existeix $x_n\\in K$ amb $f_M-n<f(x_n)\\leq f_M$. Per tant $f(x_n)\\to f_M$.",
+        "Com que $K$ és compacte (seqüencialment), existeix una parcial $(x_{n_k})_k$ amb $x_{n_k}\\to x^*\\in K$. Hem establert un punt $x^*\\in K$ límit d'una parcial de la successió maximitzant."
+      ],
+      "error": {
+        "id": "e3",
+        "fragment": 5,
+        "cita": "amb $f_M-n<f(x_n)\\leq f_M$",
+        "inici": 66,
+        "fi": 92,
+        "tipus": "calcul",
+        "explicacio": "Amb la cota $f_M-n<f(x_n)\\leq f_M$ la distància de $f(x_n)$ a $f_M$ pot créixer amb $n$; no se'n deriva que $f(x_n)\\to f_M$.",
+        "correccio": "Cal triar $x_n$ amb $f_M-\\frac{1}{n}<f(x_n)\\leq f_M$.",
+        "pista": "Quan $n$ creix, la cota inferior $f_M-n$ s'apropa a $f_M$? Quin ha de ser el marge perquè $f(x_n)\\to f_M$?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-5.json",
+        "valoracio": "El fragment 1 conte un error: la desigualtat amb f_M-n no garanteix que la successio sigui maximitzant (hauria de ser f_M-1/n). El fragment 2 es correcte: compacitat seqüencial dona la parcial convergent a x* a K.",
+        "problemes": [
+          {
+            "fragment": 1,
+            "cita": "$f_M-n<f(x_n)\\leq f_M$. Per tant $f(x_n)\\to f_M$.",
+            "gravetat": "error",
+            "explicacio": "La cota f_M-n<f(x_n)<=f_M no implica f(x_n)->f_M: la cota inferior f_M-n tendeix a -infinit, per tant no forca la convergencia (qualsevol successio amb f(x_n)<=f_M i f(x_n)>f_M-n la compleix, p. ex. f(x_n) constant igual a un valor baix per a n gran). Cal prendre f_M-1/n<f(x_n)<=f_M (existeix per definicio de suprem), i llavors el teorema del sandvitx dona f(x_n)->f_M. La conclusio 'Per tant f(x_n)->f_M' no se segueix."
+          }
+        ],
+        "hash_referencia": "01232e690e81143a3dc6642b333cabc56c3d88539b2bf35c6089ec7699b5ee96"
+      }
+    },
+    {
+      "titol": "El màxim s'ateny",
+      "pas": "",
+      "fragments": [
+        "Per continuïtat de $f$ a $x^*$, $f(x_{n_k})\\to f(x^*)$. Però $(f(x_{n_k}))_k$ és una parcial de $(f(x_n))_n$, que tendeix a $f_M$, de manera que també $f(x_{n_k})\\to f_M$.",
+        "Per unicitat del límit, $f(x^*)=f_M$. Per tant $f$ ateny el màxim a $x_1:=x^*\\in K$; de manera anàloga, ateny el mínim a algun $x_0\\in K$."
+      ]
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-5.json",
+    "valoracio": "Enunciat idèntic als apunts. La demostració (compacte, fitat, successió maximitzant, parcial convergent, continuïtat i unicitat del límit) és correcta.",
+    "problemes": [],
+    "hash_referencia": "01232e690e81143a3dc6642b333cabc56c3d88539b2bf35c6089ec7699b5ee96"
+  },
+  "creat": 1793547999.1355264
+}

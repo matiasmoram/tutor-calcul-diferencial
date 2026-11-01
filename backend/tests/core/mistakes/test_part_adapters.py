@@ -4,7 +4,7 @@ import json
 
 from core.mistakes.domain.entities.annotation import Annotation
 from core.mistakes.domain.services.grading import locate_annotations
-from core.mistakes.domain.services.part_checks import check_resolution
+from core.mistakes.domain.services.part_checks import MAX_EDITED_CHARS, MAX_EDITS, check_resolution
 from core.mistakes.domain.values.llm_outputs import ResolutionDraft
 from core.mistakes.domain.values.resolution import ResolutionPart
 from core.mistakes.infra import prompts
@@ -119,6 +119,28 @@ async def test_the_part_check_sees_the_earlier_parts_as_context_and_never_the_cl
     schema = json.dumps(request.schema)
     assert '"enum": [1, 2]' in schema and '"context_correcte": {"type": "boolean"}' in schema
     assert request.schema is not None and "context_correcte" in request.schema["required"]
+
+
+def test_the_corruption_prompts_state_every_gate_rule_and_keep_the_error_local() -> None:
+    for system in (prompts.PART_CORRUPTION_SYSTEM, prompts.THEORY_PART_CORRUPTION_SYSTEM):
+        assert f'"canvis": d\'1 a {MAX_EDITS} substitucions' in system and "no es poden solapar" in system
+        assert f'el més llarg entre "original" i "nou", no més de {MAX_EDITED_CHARS} caràcters' in system
+        assert "Si toques una fórmula, copia-la sencera" in system
+        assert "tal com queda amb TOTS els canvis aplicats" in system and 'si "nou" és buit' in system
+        assert "L'error ha de néixer en aquesta part" in system and "seria buscar diferències" in system
+        assert "amb els canvis 2 i 3 perquè la part sigui coherent amb l'error" in system
+    assert "dificil = els càlculs poden ser correctes i falla la justificació" in prompts.PART_CORRUPTION_SYSTEM
+    theory = prompts.THEORY_PART_CORRUPTION_SYSTEM
+    assert "L'enunciat erroni ha de ser FALS: que hi hagi un contraexemple" in theory and "no demostrable" not in theory
+    assert 'per a la part 1 "apte" és true' in theory
+
+
+def test_stage_a_accepts_a_clean_check_and_fixes_the_typos_of_the_notes() -> None:
+    for system in (prompts.resolution_check_system(problem_source()), prompts.resolution_check_system(theory_source())):
+        assert 'si no en trobes cap, deixa "problemes" buit' in system
+    for system in (prompts.RESOLUTION_SYSTEM, prompts.THEORY_RESOLUTION_SYSTEM):
+        assert "Fes servir només ordres estàndard de LaTeX/KaTeX." in system
+    assert "Si els apunts tenen una errata evident, escriu la versió correcta." in prompts.THEORY_RESOLUTION_SYSTEM
 
 
 def test_the_part_check_judges_the_context_with_a_boolean_and_errors_by_what_is_known_so_far() -> None:

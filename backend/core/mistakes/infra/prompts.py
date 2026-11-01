@@ -86,66 +86,72 @@ RESOLUTION_SYSTEM = """Ets un redactor de resolucions de Càlcul Diferencial (ni
 Escrius la resolució COMPLETA i CORRECTA d'un exercici, com la que faria un alumne bo, dividida en parts que segueixen els passos de la solució de referència.
 
 Requisits:
-- Una part per a cada pas de la solució de referència, en el mateix ordre. "pas" és l'identificador del pas (entre claudàtors a la referència). Un pas amb un detall llarg es pot dividir en dues parts consecutives amb el mateix "pas".
-- Cada part té d'1 a 4 fragments; cada fragment, d'1 a 3 frases en prosa d'alumne. Fórmules en LaTeX entre $...$ (mai $$).
+- Una part per a cada pas de la solució de referència, en el mateix ordre. "pas" és l'identificador del pas (entre claudàtors a la referència). Si el «detall» d'un pas és llarg, el pots repartir en dues parts consecutives amb el mateix "pas".
+- Cada part té d'1 a 4 fragments; cada fragment, d'1 a 3 frases en prosa d'alumne. Fórmules en LaTeX entre $...$ (mai $$). Fes servir només ordres estàndard de LaTeX/KaTeX.
 - Cada part acaba dient explícitament el resultat intermedi que obté.
 - Segueix l'estructura de la solució de referència amb les teves paraules i arriba al seu resultat.
 - Tot ha de ser matemàticament correcte i rigorós: no hi posis cap error.
 - No escriguis el títol del pas als fragments: la interfície ja el mostra.
 """
 
-THEORY_RESOLUTION_SYSTEM = """Ets un redactor de Càlcul Diferencial (nivell universitari, en català).
+THEORY_RESOLUTION_SYSTEM = """Ets un redactor de textos de Càlcul Diferencial (nivell universitari, en català).
 Reescrius un resultat dels apunts del curs (teorema, proposició, lema o corol·lari): l'ENUNCIAT i la DEMOSTRACIÓ, complets i correctes.
 
 Requisits:
 - "enunciat": d'1 a 3 fragments (p. ex. hipòtesis / conclusió). No escriguis "Enunciat:": la interfície ja ho indica.
-- "parts": la demostració dividida en etapes (entre 2 i 5), en ordre. Cada etapa té un "titol" curt i neutre que no reveli el contingut (p. ex. "Reducció al cas escalar") i d'1 a 4 fragments d'1 a 3 frases.
+- "parts": la demostració dividida en etapes (entre 2 i 5), en ordre. Cada etapa té un "titol" curt i neutre que no reveli el contingut (p. ex. "Reducció al cas escalar") i d'1 a 4 fragments, cadascun d'1 a 3 frases.
 - Cada etapa acaba dient explícitament què ha establert.
-- Fidel als apunts: mateixa notació, mateixes hipòtesis, mateixa estructura de demostració. Pots condensar els càlculs rutinaris, però cap pas lògic important pot desaparèixer. Fórmules en LaTeX entre $...$ (mai $$; per a fraccions grans, $\\displaystyle ...$).
-- Tot ha de ser matemàticament correcte i coincidir amb els apunts: no hi posis cap error.
+- Fidel als apunts: mateixa notació, mateixes hipòtesis, mateixa estructura de demostració. Pots condensar els càlculs rutinaris, però cap pas lògic important pot desaparèixer. Fórmules en LaTeX entre $...$ (mai $$; per a fraccions grans, $\\displaystyle ...$). Fes servir només ordres estàndard de LaTeX/KaTeX.
+- Tot ha de ser matemàticament correcte i coincidir amb els apunts: no hi posis cap error. Si els apunts tenen una errata evident, escriu la versió correcta.
 """
 
 REACHES_RESULT = """
+Pot ser que no hi hagi cap error: si no en trobes cap, deixa "problemes" buit.
 Indica també a "arriba_al_resultat" si la resolució arriba al RESULTAT CORRECTE de la solució de referència (true) o no hi arriba / n'obté un altre (false).
 """
 
 THEORY_REACHES_RESULT = """
-Indica també a "arriba_al_resultat" si la demostració demostra l'enunciat complet tal com és als apunts (true) o no (false).
+Pot ser que no hi hagi cap error: si no en trobes cap, deixa "problemes" buit.
+Indica també a "arriba_al_resultat" si la demostració prova l'enunciat complet, tal com és als apunts (true), o no (false).
 """
 
 PART_CORRUPTION_SYSTEM = """Ets un generador d'exercicis "troba l'error" per a Càlcul Diferencial (nivell universitari, en català).
 Tens la resolució CORRECTA d'un exercici, dividida en parts. Introdueixes UN error real a la part indicada, amb canvis petits sobre el seu text correcte: no la reescriguis.
 
 Requisits dels canvis:
-- "canvis": d'1 a 3 substitucions. Cada canvi diu el "fragment" de la part on és (1 = el primer de la part), el text "original" copiat EXACTAMENT del fragment (caràcter per caràcter, incloent-hi els $; ha d'aparèixer una sola vegada al fragment) i el text "nou" que el substitueix.
-- El primer canvi és l'error, i és el primer de la part. Els altres només poden ser conseqüències locals d'aquest error més endavant dins de la MATEIXA part (p. ex. el resultat intermedi que en depèn). Les altres parts no canvien: les posteriors continuen partint dels valors correctes.
-- Canvis petits: en total no més de 240 caràcters ni de la meitat del text de la part.
+- "canvis": d'1 a 3 substitucions. Cada canvi indica el "fragment" de la part on es fa (1 = el primer de la part), l'"original", copiat EXACTAMENT del fragment (caràcter per caràcter, incloent-hi els $) i que hi aparegui una sola vegada (si es repeteix, allarga'l amb les paraules del costat), i el "nou" que el substitueix. Per esborrar, deixa "nou" buit; per afegir, inclou a "original" les paraules del costat. Si toques una fórmula, copia-la sencera, del $ d'obertura al de tancament. Els canvis no es poden solapar.
+- El primer canvi és l'error i ha d'estar abans que tots els altres dins la part. Els altres només poden ser conseqüències locals d'aquest error més endavant dins de la MATEIXA part (p. ex. el resultat intermedi que en depèn). Les altres parts no canvien: les posteriors continuen partint dels valors correctes.
+- Canvis petits: sumant per a cada canvi el més llarg entre "original" i "nou", no més de 240 caràcters ni de la meitat del text de la part.
 
 Requisits de l'error:
 - Ha de ser real i objectiu (no d'estil ni de notació), versemblant: el tipus d'error que fa un alumne (una desigualtat girada, un teorema aplicat sense les hipòtesis, una conclusió que no se segueix, un càlcul mal fet, un cas oblidat...). Inspira't en els errors comuns de la fitxa, però no els copiïs literalment.
-- Segons la dificultat: facil = error visible amb una lectura atenta; normal = cal entendre el pas; dificil = subtil, en el raonament més que en el càlcul.
+- L'error ha de néixer en aquesta part (un càlcul, una regla o un teorema aplicats aquí, una deducció que es fa aquí) i s'ha de poder detectar llegint només l'enunciat, les parts anteriors i aquesta part. No canviïs ni copiïs malament un valor o una fórmula que ja surt a les parts anteriors: l'alumne les té a sobre, correctes, i seria buscar diferències. Tampoc no val una tria o una omissió que només faria mal en parts posteriors.
+- Si l'error canvia un valor que la mateixa part fa servir després, actualitza'l amb els canvis 2 i 3 perquè la part sigui coherent amb l'error; si calen més canvis, tria un error més a prop del final de la part.
+- L'alumne sap que aquesta part té exactament un error i la llegirà sencera: evita errors que es vegin sense entendre el pas (un signe canviat a l'atzar, un nombre copiat malament). Segons la dificultat: facil = es detecta refent el càlcul o rellegint la definició (una potència, un factor, una regla aplicada malament); normal = cal entendre per què es fa el pas (una regla o un teorema aplicat on no toca, un cas o un sentit oblidat, un límit lateral ignorat); dificil = els càlculs poden ser correctes i falla la justificació (una hipòtesi no comprovada, una implicació en el sentit equivocat, una conclusió més forta del que s'ha provat).
 - No assenyalis l'error de cap manera (res de "compte", "(error)", "potser", "crec que"): el text ha de sonar convençut.
-- "cita": el text erroni tal com queda al fragment després del primer canvi, copiat exactament, el més curt possible que contingui l'error (entre 2 i 25 paraules); ha d'incloure text del "nou".
+- "cita": el text erroni copiat exactament del fragment tal com queda amb TOTS els canvis aplicats, el més curt possible que contingui l'error (entre 2 i 25 paraules) i que hi aparegui una sola vegada; ha d'incloure text del "nou" (si "nou" és buit, les paraules just abans i just després del que has esborrat).
 - "explicacio": per què és incorrecte (1-2 frases). "correccio": què hauria de dir. "pista": una pregunta socràtica que ajudi a trobar-lo sense dir-lo.
-- "apte": false si a aquesta part no hi cap cap error versemblant (p. ex. si només és una frase de transició); aleshores la resta de camps no es fan servir.
+- "apte": false només si la part és tan curta o mecànica que qualsevol error hi seria artificial (p. ex. una sola frase de transició); en una part amb un càlcul o una justificació sempre n'hi pot haver un. Si és false, la resta de camps no es fan servir.
 """
 
 THEORY_PART_CORRUPTION_SYSTEM = """Ets un generador d'exercicis "troba l'error" per a Càlcul Diferencial (nivell universitari, en català).
 Tens la versió CORRECTA d'un resultat dels apunts (part 1: l'enunciat; les altres: les etapes de la demostració). Introdueixes UN error real a la part indicada, amb canvis petits sobre el seu text correcte: no la reescriguis.
 
 Requisits dels canvis:
-- "canvis": d'1 a 3 substitucions. Cada canvi diu el "fragment" de la part on és (1 = el primer de la part), el text "original" copiat EXACTAMENT del fragment (caràcter per caràcter, incloent-hi els $; ha d'aparèixer una sola vegada al fragment) i el text "nou" que el substitueix.
-- El primer canvi és l'error, i és el primer de la part. Els altres només poden ser conseqüències locals d'aquest error més endavant dins de la MATEIXA part. Les altres parts no canvien: les posteriors continuen sent les dels apunts.
-- Canvis petits: en total no més de 240 caràcters ni de la meitat del text de la part.
+- "canvis": d'1 a 3 substitucions. Cada canvi indica el "fragment" de la part on es fa (1 = el primer de la part), l'"original", copiat EXACTAMENT del fragment (caràcter per caràcter, incloent-hi els $) i que hi aparegui una sola vegada (si es repeteix, allarga'l amb les paraules del costat), i el "nou" que el substitueix. Per esborrar, deixa "nou" buit; per afegir, inclou a "original" les paraules del costat. Si toques una fórmula, copia-la sencera, del $ d'obertura al de tancament. Els canvis no es poden solapar.
+- El primer canvi és l'error i ha d'estar abans que tots els altres dins la part. Els altres només poden ser conseqüències locals d'aquest error més endavant dins de la MATEIXA part. Les altres parts no canvien: les posteriors continuen sent les dels apunts.
+- Canvis petits: sumant per a cada canvi el més llarg entre "original" i "nou", no més de 240 caràcters ni de la meitat del text de la part.
 
 Requisits de l'error:
-- Si la part és l'enunciat: una hipòtesi eliminada o afeblida (p. ex. "de classe $\\mathcal{C}^1$" → "diferenciable"), una conclusió més forta o diferent de la certa, quantificadors canviats ("per a tot" ↔ "existeix", l'ordre), el recíproc o un "si i només si" que no és cert, una desigualtat estricta/no estricta canviada, un conjunt obert/tancat/compacte canviat. L'enunciat erroni ha de ser FALS (que existeixi un contraexemple) o no demostrable amb la demostració donada; no val un canvi que el deixi equivalent.
+- Si la part és l'enunciat: una hipòtesi eliminada o afeblida (p. ex. "de classe $\\mathcal{C}^1$" → "diferenciable"), una conclusió més forta o diferent de la certa, quantificadors canviats ("per a tot" ↔ "existeix", l'ordre), el recíproc o un "si i només si" que no és cert, una desigualtat estricta/no estricta canviada, un conjunt obert/tancat/compacte canviat. L'enunciat erroni ha de ser FALS: que hi hagi un contraexemple (dona'n un de senzill a "explicacio"). L'alumne el revisa sense veure la demostració: no val un enunciat cert però diferent del dels apunts, ni un canvi que el deixi equivalent.
 - Si la part és una etapa de la demostració: un pas que no se segueix, una hipòtesi usada que no es té, una desigualtat girada, un cas oblidat, un càlcul mal fet, un teorema citat fora de les seves hipòtesis.
+- L'error ha de néixer en aquesta part (a l'enunciat, una hipòtesi o la conclusió; a la demostració, un pas, una deducció o un càlcul que es fan aquí) i s'ha de poder detectar amb el que se sap del curs, llegint només les parts anteriors i aquesta part. No canviïs ni copiïs malament una fórmula o una afirmació que ja surt a les parts anteriors: l'alumne les té a sobre, correctes, i seria buscar diferències. Tampoc no val una tria o una omissió que només faria mal en etapes posteriors.
+- Si l'error canvia una fórmula o una afirmació que la mateixa part fa servir després, actualitza-la amb els canvis 2 i 3 perquè la part sigui coherent amb l'error; si calen més canvis, tria un error més a prop del final de la part.
 - Segons la dificultat: facil = visible comparant mentalment amb el que diuen els apunts; normal = cal entendre el paper de cada hipòtesi; dificil = subtil (un quantificador, una inclusió, un pas de la demostració que sembla raonable).
 - No assenyalis l'error de cap manera (res de "compte", "(error)", "potser", "crec que"): el text ha de sonar convençut, com un llibre.
-- "cita": el text erroni tal com queda al fragment després del primer canvi, copiat exactament, el més curt possible que contingui l'error (entre 2 i 25 paraules); ha d'incloure text del "nou".
-- "explicacio": per què és incorrecte (1-2 frases; per a un enunciat fals, indica un contraexemple si n'hi ha un de senzill). "correccio": què diuen els apunts. "pista": una pregunta socràtica que ajudi a trobar-lo sense dir-lo.
-- "apte": false si a aquesta part no hi cap cap error versemblant; aleshores la resta de camps no es fan servir.
+- "cita": el text erroni copiat exactament del fragment tal com queda amb TOTS els canvis aplicats, el més curt possible que contingui l'error (entre 2 i 25 paraules) i que hi aparegui una sola vegada; ha d'incloure text del "nou" (si "nou" és buit, les paraules just abans i just després del que has esborrat).
+- "explicacio": per què és incorrecte (1-2 frases; per a l'enunciat, amb el contraexemple). "correccio": què diuen els apunts. "pista": una pregunta socràtica que ajudi a trobar-lo sense dir-lo.
+- "apte": l'enunciat (part 1) sempre admet un error, i per a la part 1 "apte" és true. Per a una etapa de la demostració, false només si és tan curta que qualsevol error hi seria artificial; aleshores la resta de camps no es fan servir.
 """
 
 PART_VERIFICATION_SYSTEM = """Ets un corrector expert de Càlcul Diferencial. Revises, fragment a fragment, UNA part d'un document (una resolució d'un exercici, o l'enunciat i la demostració d'un resultat dels apunts), amb la referència al costat.

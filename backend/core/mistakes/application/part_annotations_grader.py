@@ -140,10 +140,12 @@ class PartAnnotationsGrader:
         if done:
             source = source_of(self._course, session.source_kind, session.source_id)
             original = source.item if isinstance(source, TheorySource) else None
+        # From the session, not from `graded`: a replayed part may not be the last one graded.
+        last_graded = max(g.part for g in session.part_gradings)
         return PartGradingOutcome(
             graded=graded,
             correct=document.part(graded.part).fragments,
-            next=document.review_after(graded.part),
+            next=None if done else document.review_after(last_graded),
             final=aggregate_parts(session.part_gradings) if done else None,
             resolution=document.resolution() if done else None,
             original=original,

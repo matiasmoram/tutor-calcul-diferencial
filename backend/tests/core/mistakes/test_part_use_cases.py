@@ -26,7 +26,18 @@ from core.mistakes.infra.sqlmodel_repository import (
 from core.shared.domain.ids import SessionId
 from core.shared.llm.client import CallMeta, JsonObject, LLMRequest, Stage
 from core.shared.storage.session_provider import SQLModelSessionProvider
-from tests.core.mistakes.builders import COURSE, PARTS, FixedClock, exercise_generator, parted, solution, theory_parted
+from tests.core.mistakes.builders import (
+    COURSE,
+    PART1_ERROR,
+    PART2_ERROR,
+    PART3_ERROR,
+    PARTS,
+    FixedClock,
+    exercise_generator,
+    parted,
+    solution,
+    theory_parted,
+)
 from tests.fakes.llm import ScriptedLLMClient
 
 
@@ -108,6 +119,21 @@ async def test_a_session_is_reviewed_part_by_part_in_order(session_provider: SQL
     assert again.graded == first.graded and again.final == last.final and llm.calls(Stage.MISTAKES_GRADING) == 1
     stored = await w.sessions.get(sid)
     assert [p.part for p in stored.part_gradings] == [2, 3] and stored.grading is None
+
+
+async def test_a_replayed_part_points_at_the_next_part_still_to_review(
+    session_provider: SQLModelSessionProvider,
+) -> None:
+    w = Wiring(session_provider, ScriptedLLMClient({}))
+    sid = await w.start(parted(errors={1: PART1_ERROR, 2: PART2_ERROR, 3: PART3_ERROR}))
+    await w.grader.grade(sid, 1, [])
+    await w.grader.grade(sid, 2, [])
+    replay = await w.grader.grade(sid, 1, [])
+    assert replay.graded.part == 1 and replay.final is None
+    assert replay.next is not None and replay.next.part == 3 and replay.next.earlier == []
+    await w.grader.grade(sid, 3, [])
+    after_the_end = await w.grader.grade(sid, 2, [])
+    assert after_the_end.next is None and after_the_end.final is not None
 
 
 async def test_a_hint_is_recorded_once_and_costs_its_part(session_provider: SQLModelSessionProvider) -> None:

@@ -14,7 +14,7 @@ from core.mistakes.domain.services.grading import HINT_FACTOR, aggregate_parts, 
 from core.mistakes.domain.values.llm_outputs import GraderReport
 from core.mistakes.domain.values.mistake_exercise_id import MistakeExerciseId
 from core.shared.domain.ids import SessionId
-from tests.core.mistakes.builders import PART3_ERROR, PARTS, corruption, edit, parted, solution
+from tests.core.mistakes.builders import PART1_ERROR, PART3_ERROR, PARTS, parted, solution, theory_parted
 
 
 def test_a_document_in_parts_numbers_its_errors_across_the_whole_document() -> None:
@@ -72,6 +72,8 @@ def _broken(update: dict[str, object], part: int = 2) -> dict[str, object]:
         (_broken({"error": None}), "go together"),
         (_broken({"error": parted().parts[1].mistake.model_dump() | {"fragment": 5}}), "outside the part"),  # type: ignore[union-attr]
         (_broken({"error": parted().parts[1].mistake.model_dump() | {"inici": 0}}), "offsets"),  # type: ignore[union-attr]
+        (_broken({"error": parted().parts[1].mistake.model_dump() | {"cita": "", "inici": 8, "fi": 8}}), "empty"),  # type: ignore[union-attr]
+        (_broken({"error": parted().parts[1].mistake.model_dump() | {"cita": "", "inici": 90, "fi": 95}}), "outside"),  # type: ignore[union-attr]
         (_broken({"fragments_errats": PARTS[1][1]}), "offsets"),
         (_broken({"error": None, "fragments_errats": None, "verificacio": None}, 3) | {"parts": []}, "at least 2"),
         (parted().model_dump(mode="json") | {"n_enunciat": 1}, "no statement"),
@@ -96,13 +98,16 @@ def test_a_document_without_errors_is_refused() -> None:
         parted(errors={})
 
 
-def test_theory_part_one_is_the_statement() -> None:
-    data = parted().model_dump(mode="json") | {"font": "teoria", "exercici": "T3.21", "n_enunciat": 2}
-    PartedMistakeExercise.model_validate(data)
+def test_theory_part_one_is_the_statement_and_always_has_an_error() -> None:
+    data = theory_parted().model_dump(mode="json")
+    assert PartedMistakeExercise.model_validate(data).flawed_parts == [1, 3]
     with pytest.raises(ValidationError, match="statement"):
         PartedMistakeExercise.model_validate(data | {"n_enunciat": 1})
     with pytest.raises(ValidationError, match="statement"):
         PartedMistakeExercise.model_validate(data | {"n_enunciat": 0})
+    clean_statement = parted().model_dump(mode="json") | {"font": "teoria", "exercici": "T3.21", "n_enunciat": 2}
+    with pytest.raises(ValidationError, match=r"the statement \(part 1\) always has an error"):
+        PartedMistakeExercise.model_validate(clean_statement)
 
 
 def test_the_view_of_a_part_shows_the_earlier_parts_correct_and_nothing_after() -> None:
@@ -136,8 +141,7 @@ def test_the_roadmap_and_the_parts_to_review_in_order() -> None:
 
 
 def test_a_clean_part_between_two_flawed_ones_comes_with_the_next_review() -> None:
-    first_error = corruption([edit(1, "tendeix a $0$", "tendeix a $1$")], "tendeix a $1$", tipus="calcul")
-    doc = parted(errors={1: first_error, 3: PART3_ERROR})
+    doc = parted(errors={1: PART1_ERROR, 3: PART3_ERROR})
     after = doc.review_after(1)
     assert after is not None and after.part == 3 and [p.part for p in after.earlier] == [2]
     assert after.earlier[0].fragments == PARTS[1][1]

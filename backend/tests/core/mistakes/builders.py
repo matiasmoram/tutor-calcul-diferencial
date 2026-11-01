@@ -141,7 +141,9 @@ def corruption(
     }
 
 
-# The errors of the test documents: part 2 gets a reversed inequality, part 3 a wrong limit.
+# The errors of the test documents: part 2 gets a reversed inequality, part 3 a wrong limit; part 1, when chosen, a
+# wrong candidate.
+PART1_ERROR = corruption([edit(1, "tendeix a $0$", "tendeix a $1$")], "tendeix a $1$", tipus="calcul")
 PART2_ERROR = corruption([edit(1, "x^4 \\le", "x^4 \\ge")], "$x^4 \\ge x^4+y^2$", pista="pista 2")
 PART3_ERROR = corruption([edit(2, "és $0$", "és $1$")], "el límit és $1$", tipus="calcul", pista="pista 3")
 
@@ -190,6 +192,12 @@ def parted(
         verification=Verification(origin="test"),
         created_at=1.0,
     )
+
+
+def theory_parted() -> PartedMistakeExercise:
+    """The per-parts test document read as theory: part 1 is the statement (2 fragments), so it has an error."""
+    data = parted(errors={1: PART1_ERROR, 3: PART3_ERROR}).model_dump(mode="json")
+    return PartedMistakeExercise.model_validate(data | {"font": "teoria", "exercici": "T3.21", "n_enunciat": 2})
 
 
 class FixedClock(Clock):

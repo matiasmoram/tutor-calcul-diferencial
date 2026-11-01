@@ -131,6 +131,8 @@ class PartedMistakeExercise(BaseModel):
         if self.source_kind == "teoria":
             if self.statement_fragments < 1 or self.statement_fragments != len(self.parts[0].fragments):
                 raise ValueError("theory: part 1 is the statement, n_enunciat is its number of fragments")
+            if 1 not in self.flawed_parts:
+                raise ValueError("theory: the statement (part 1) always has an error")
         elif self.statement_fragments != 0:
             raise ValueError("problems have no statement fragments")
         ids = [m.id for m in self.mistakes]
@@ -159,6 +161,11 @@ class PartedMistakeExercise(BaseModel):
         if not 1 <= local <= len(flawed):
             raise ValueError(f"part {i}: the error's fragment {mistake.fragment} is outside the part")
         text = flawed[local - 1]
+        # An empty span is an error no annotation can ever overlap.
+        if not 0 <= mistake.start < mistake.end <= len(text):
+            raise ValueError(
+                f"part {i}: the error's span [{mistake.start}, {mistake.end}) is empty or outside its text"
+            )
         if text[mistake.start : mistake.end] != mistake.quote:
             raise ValueError(f"part {i}: the error's quote is not at its offsets")
         if text == part.fragments[local - 1]:

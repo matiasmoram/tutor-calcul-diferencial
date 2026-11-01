@@ -26,7 +26,7 @@ from core.mistakes.infra.sqlmodel_repository import (
 from core.shared.domain.ids import SessionId
 from core.shared.llm.client import CallMeta, JsonObject, LLMRequest, Stage
 from core.shared.storage.session_provider import SQLModelSessionProvider
-from tests.core.mistakes.builders import COURSE, PARTS, FixedClock, exercise_generator, parted, solution
+from tests.core.mistakes.builders import COURSE, PARTS, FixedClock, exercise_generator, parted, solution, theory_parted
 from tests.fakes.llm import ScriptedLLMClient
 
 
@@ -135,12 +135,9 @@ async def test_a_hint_is_recorded_once_and_costs_its_part(session_provider: SQLM
 
 
 async def test_theory_reveals_the_original_item_only_at_the_end(session_provider: SQLModelSessionProvider) -> None:
-    doc = PartedMistakeExercise.model_validate(
-        parted().model_dump(mode="json") | {"font": "teoria", "exercici": "T3.21", "n_enunciat": 2}
-    )
     w = Wiring(session_provider, ScriptedLLMClient({}))
-    sid = await w.start(doc, theory=True)
-    assert (await w.grader.grade(sid, 2, [])).original is None
+    sid = await w.start(theory_parted(), theory=True)
+    assert (await w.grader.grade(sid, 1, [])).original is None
     last = await w.grader.grade(sid, 3, [])
     assert last.original == COURSE.theory_item("T3.21") and last.final is not None
 

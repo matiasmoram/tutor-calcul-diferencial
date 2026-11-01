@@ -47,6 +47,7 @@ from tests.core.mistakes.builders import (
     resolution_checked,
     seed_choosing,
     solution,
+    theory_parted,
     written,
 )
 from tests.fakes.llm import ScriptedLLMClient
@@ -333,7 +334,7 @@ async def test_a_session_is_served_a_document_of_its_layout_only(session_provide
     w = Wiring(session_provider, ScriptedLLMClient({}))
     await w.exercises.save(solution("aaaaaaaaaaaa"))
     await w.exercises.save(parted("bbbbbbbbbbbb"))
-    await w.exercises.save(parted("cccccccccccc").model_copy(update={"source_id": "T3.21", "source_kind": "teoria"}))
+    await w.exercises.save(theory_parted().model_copy(update={"id": "cccccccccccc"}))
     started = await w.starter.start(MistakeSessionStarterInput(exercise_id="t2-4c", layout="per_parts"))
     assert isinstance(started.document, PartedMistakeExercise) and started.document.id == "bbbbbbbbbbbb"
     assert started.session.layout == "per_parts" and (await w.sessions.get(started.session.id)).layout == "per_parts"

@@ -13,6 +13,7 @@ from core.mistakes.domain.exceptions import (
 from core.mistakes.domain.values.mistake_source import ProblemSource
 from core.shared.llm.client import CallMeta, JsonObject, LLMError, LLMRequest, Stage
 from tests.core.mistakes.builders import (
+    PART1_ERROR,
     PART2_ERROR,
     PART3_ERROR,
     PARTS,
@@ -36,7 +37,6 @@ type Outputs = list[JsonObject | Exception]
 # What the blind part check answers when it finds exactly the declared error.
 PART2_FOUND = part_checked(finding(1, "x^4 \\ge"))
 PART3_FOUND = part_checked(finding(2, "és $1$"))
-PART1_ERROR = corruption([edit(1, "tendeix a $0$", "tendeix a $1$")], "tendeix a $1$", tipus="calcul")
 PART1_FOUND = part_checked(finding(1, "tendeix a $1$"))
 TITLES = {"Trobar un candidat": 1, "Acotar el quocient": 2, "Concloure amb el sandvitx": 3}
 STATEMENT_ERROR = corruption(

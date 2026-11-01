@@ -16,7 +16,7 @@ from core.mistakes.infra.sqlmodel_repository import SQLModelMistakeExerciseRepos
 from core.quizzes.domain.values.quiz_id import QuizId
 from core.quizzes.infra.json_quiz_files import JsonQuizFiles
 from core.quizzes.infra.sqlmodel_repository import SQLModelQuizRepository
-from core.shared.llm.client import Stage
+from core.shared.llm.client import Stage, provider_failure
 from core.shared.storage.session_provider import SQLModelSessionProvider
 from settings import BACKEND_DIR
 from tests.core.quizzes.builders import quiz
@@ -276,3 +276,14 @@ def test_a_local_start_builds_the_real_client_without_a_key(
 def test_the_logged_database_has_no_credentials() -> None:
     url = "postgresql+psycopg://postgres.abcd:s3cr3t@aws-0-eu-central-1.pooler.supabase.com:6543/postgres"
     assert server._database_label(url) == "postgresql@aws-0-eu-central-1.pooler.supabase.com:6543/postgres"
+
+
+def test_a_rejected_provider_key_reaches_the_student_as_a_neutral_503(
+    api: TestClient, scripted_llm: ScriptedLLMClient
+) -> None:
+    secret = "sk-place**lder"
+    scripted_llm.then(Stage.DIAGNOSIS, provider_failure("OpenAI", 401, f"Incorrect API key provided: {secret}"))
+    sid = _tutor_session(api)
+    response = api.post(f"/api/sessions/{sid}/missatges", json={"text": "hola"})
+    assert response.status_code == 503
+    assert secret not in response.text and "OpenAI" not in response.text

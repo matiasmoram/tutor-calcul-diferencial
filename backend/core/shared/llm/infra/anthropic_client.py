@@ -9,7 +9,6 @@ from core.shared.llm.client import (
     JsonObject,
     LLMClient,
     LLMError,
-    LLMProviderError,
     LLMRequest,
     Stage,
     StageConfig,
@@ -17,6 +16,7 @@ from core.shared.llm.client import (
     billed,
     parse_json,
     plain_text,
+    provider_failure,
 )
 
 
@@ -87,11 +87,7 @@ def _content(user: str, image: Image | None, context: str | None) -> str | list[
 async def _translated[T](call: Awaitable[T]) -> T:
     try:
         return await call
-    except anthropic.AuthenticationError as e:
-        raise LLMProviderError("Clau d'API d'Anthropic invàlida o absent (ANTHROPIC_API_KEY).", 401) from e
-    except anthropic.RateLimitError as e:
-        raise LLMProviderError("Límit de peticions de l'API. Torna-ho a provar en uns segons.", 429) from e
     except anthropic.APIStatusError as e:
-        raise LLMProviderError(f"Error de l'API d'Anthropic ({e.status_code}): {e.message}") from e
+        raise provider_failure("Anthropic", e.status_code, e.message) from e
     except anthropic.APIConnectionError as e:
-        raise LLMProviderError("No s'ha pogut connectar amb l'API d'Anthropic.") from e
+        raise provider_failure("Anthropic", None, str(e)) from e

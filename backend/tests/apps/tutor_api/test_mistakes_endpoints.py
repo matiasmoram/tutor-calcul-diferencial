@@ -1,3 +1,6 @@
+import hashlib
+import json
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -58,3 +61,19 @@ def test_a_student_who_may_not_generate_gets_the_not_ready_409(
         "Prova una altra dificultat o demana-ho al professorat."
     )
     assert scripted_llm.calls(Stage.MISTAKES_GENERATION) == 0
+
+
+def _grading_bytes(api: TestClient, source: dict[str, str]) -> bytes:
+    sid = api.post("/api/errades/sessions", json=source).json()["session_id"]
+    return api.post(f"/api/errades/sessions/{sid}/correccio", json={"anotacions": []}).content
+
+
+def test_the_grading_response_keeps_its_exact_bytes(api: TestClient) -> None:
+    """The wire contract: key order and every value of the stored documents (a typed response must not move them)."""
+    theory = _grading_bytes(api, {"teoria_id": "T2.12"})
+    problem = _grading_bytes(api, {"exercici_id": "t1-10b"})
+    assert hashlib.sha256(theory).hexdigest() == "69e147ee7bdbaa3d319cd2499a93f1d8fa2cad697b1253879881a579287a2234"
+    assert hashlib.sha256(problem).hexdigest() == "f76f232214e53a34f9d1e4f0bb0a2d9bf3b3788ae08374f0f8f7906ad99897ff"
+    keys = ["nota", "trobats", "total", "falsos_positius", "anotacions", "errors", "resum", "crida"]
+    assert list(json.loads(theory)) == [*keys, "original"]
+    assert list(json.loads(problem)) == keys

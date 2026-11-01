@@ -43,7 +43,7 @@ class MistakeExerciseProvider:
         """Whether a document can be served without calling the model."""
         return bool(await self._exercises.of_source(source.id, difficulty))
 
-    async def will_generate(self, source: MistakeSource, difficulty: Difficulty, fresh: bool = False) -> bool:
+    async def needs_generation(self, source: MistakeSource, difficulty: Difficulty, fresh: bool = False) -> bool:
         """Whether `get_or_generate` will call the model (the API checks the provider key first)."""
         if not self._may_generate:
             return False

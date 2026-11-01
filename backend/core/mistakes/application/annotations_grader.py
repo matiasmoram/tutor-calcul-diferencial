@@ -16,14 +16,11 @@ from core.mistakes.domain.ports import AnnotationGrader
 from core.mistakes.domain.repository import MistakeExerciseRepository, MistakeSessionRepository
 from core.mistakes.domain.services.grading import check_annotations, grade, locate_annotations
 from core.mistakes.domain.services.sources import source_of
+from core.mistakes.domain.values.grading_claim import GRADING_CLAIM_TIMEOUT_S, GRADING_DEADLINE_S
 from core.mistakes.domain.values.mistake_source import TheorySource
-from core.shared.domain.claims import claim_timeout
 from core.shared.domain.clock import Clock
 from core.shared.domain.ids import SessionId
 from core.shared.llm.call_scope import call_scope
-
-GRADING_DEADLINE_S = 240.0  # the whole grading, every model call and retry included
-GRADING_CLAIM_TIMEOUT_S = claim_timeout(GRADING_DEADLINE_S)
 
 
 class AnnotationsGrading(BaseModel):

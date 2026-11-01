@@ -2,6 +2,7 @@ import pytest
 
 from core.course.domain.entities.exercise import Exercise
 from core.mistakes.domain.exceptions import MistakePartsUnavailableException
+from core.mistakes.domain.services.locate import locate_all, occurrences
 from core.mistakes.domain.services.part_checks import (
     CorruptionCheck,
     check_corruption,
@@ -175,6 +176,45 @@ def test_corruption_gates(data: JsonObject, expected: str) -> None:
     check = corrupt(data)
     assert not check.valid and check.mistake is None
     assert any(expected in p for p in check.problems), check.problems
+
+
+def test_locate_all_finds_every_occurrence() -> None:
+    assert locate_all("aba aba", "aba") == [(0, 3), (4, 7)]
+    assert locate_all("ababa", "aba") == [(0, 3), (2, 5)]
+    assert locate_all("a  b, a b", "a b") == [(6, 9)]
+    assert locate_all("a  b, a\nb", "a b") == [(0, 4), (6, 9)]
+    assert locate_all("abc", " ") == [] and occurrences("$+-+-+$", "+-+") == [1, 3]
+
+
+def test_a_quote_whose_text_also_appears_earlier_is_placed_on_the_edit() -> None:
+    clean = ["El valor és $2$ i el doble és $4$."]
+    check = check_corruption(
+        clean, CorruptionDraft.model_validate(corruption([edit(1, "$4$", "$2$")], "$2$")), 1, "e1", False
+    )
+    assert check.valid and check.mistake is not None
+    assert (check.mistake.start, check.mistake.end) == (30, 33) and check.flawed_fragments[0][30:33] == "$2$"
+
+
+def test_an_original_that_overlaps_itself_is_not_unique() -> None:
+    clean = ["Sumem $a+a+a$ i obtenim $3a$."]
+    check = check_corruption(
+        clean, CorruptionDraft.model_validate(corruption([edit(1, "a+a", "a-a")], "a-a")), 1, "e1", False
+    )
+    assert any("hi apareix 2 vegades" in p for p in check.problems), check.problems
+
+
+def test_edits_that_undo_each_other_are_refused() -> None:
+    check = corrupt(corruption([edit(1, "Com", "Com que"), edit(1, " que $x^4", " $x^4")], "Com que $x^4"))
+    assert check.flawed_fragments[0] == CLEAN[0] and check.mistake is None
+    assert "els canvis es desfan entre ells i el fragment 1 queda igual que el correcte" in check.problems
+
+
+def test_only_words_that_point_at_the_error_are_markers() -> None:
+    ordinary = corrupt(corruption([edit(1, "Com que", "Tenint en compte que")], "Tenint en compte que $x^4 \\le"))
+    assert ordinary.valid, ordinary.problems
+    for marker in ("Compte: com que", "Crec que com que", "Com que (error)"):
+        check = corrupt(corruption([edit(1, "Com que", marker)], marker))
+        assert any("assenyala l'error" in p for p in check.problems), marker
 
 
 def test_an_edit_larger_than_half_the_part_is_refused() -> None:

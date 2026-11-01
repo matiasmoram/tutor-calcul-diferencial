@@ -21,7 +21,7 @@ from core.mistakes.domain.services.generation_checks import (
     same_problem,
     unknown_message,
 )
-from core.mistakes.domain.services.locate import locate, overlap
+from core.mistakes.domain.services.locate import locate_all, occurrences, overlap
 from core.mistakes.domain.values.llm_outputs import (
     SEVERITY_CONSEQUENCE,
     SEVERITY_ERROR,
@@ -43,8 +43,8 @@ MIN_PROOF_PARTS, MAX_PROOF_PARTS = 2, 5
 MAX_EDITS = 3
 MAX_EDITED_CHARS = 240
 MAX_EDITED_SHARE = 0.5  # of the part's characters
-# Words that would point the student at the error.
-_MARKERS = re.compile(r"\(error\)|compte|potser|crec que", re.IGNORECASE)
+# Words that would point the student at the error ("tenir en compte" is ordinary prose).
+_MARKERS = re.compile(r"\(error\)|(?<!en )\bcompte\b|\bpotser\b|\bcrec que\b", re.IGNORECASE)
 
 
 def require_parts(source: MistakeSource) -> None:
@@ -177,16 +177,14 @@ def _edits(clean: list[str], draft: CorruptionDraft) -> tuple[list[_Edit], list[
             continue
         if e.new == e.original:
             problems.append(f"el canvi {k} no canvia res («nou» és igual que «original»)")
-        count = clean[fi - 1].count(e.original) if e.original else 0
-        if count != 1:
+        starts = occurrences(clean[fi - 1], e.original)
+        if len(starts) != 1:
             problems.append(
                 f"l'«original» del canvi {k} ha d'aparèixer exactament una vegada, copiat literalment, al fragment "
-                f"{fi} (hi apareix {count} vegades): «{e.original}»"
+                f"{fi} (hi apareix {len(starts)} vegades): «{e.original}»"
             )
             continue
-        edits.append(
-            _Edit(number=k, fragment=fi, start=clean[fi - 1].index(e.original), original=e.original, new=e.new)
-        )
+        edits.append(_Edit(number=k, fragment=fi, start=starts[0], original=e.original, new=e.new))
     for a in edits:
         for b in edits:
             if a.number < b.number and a.fragment == b.fragment and overlap(a.start, a.end, b.start, b.end):
@@ -215,6 +213,13 @@ def _apply(clean: list[str], edits: list[_Edit]) -> list[str]:
         text = flawed[e.fragment - 1]
         flawed[e.fragment - 1] = text[: e.start] + e.new + text[e.end :]
     return flawed
+
+
+def _on_edit(span: tuple[int, int], start: int, end: int) -> bool:
+    """Whether a quote's span covers the edited text [start, end); an empty one (a deletion) is a point to reach."""
+    if end > start:
+        return overlap(span[0], span[1], start, end)
+    return span[0] <= start <= span[1]
 
 
 def check_corruption(
@@ -251,19 +256,18 @@ def check_corruption(
 
     error = edits[0]
     text = flawed[error.fragment - 1]
+    if text == clean[error.fragment - 1]:
+        problems.append(f"els canvis es desfan entre ells i el fragment {error.fragment} queda igual que el correcte")
     new_start, new_end = error.start, error.start + len(error.new)
-    span = locate(text, draft.quote)
-    # An empty `nou` (a deletion) leaves a point: the quote must reach it.
-    on_new = span is not None and (
-        overlap(span[0], span[1], new_start, new_end) if new_end > new_start else span[0] <= new_start <= span[1]
-    )
-    if not on_new:
+    # The quote's text may also appear elsewhere in the fragment: the occurrence on the edit is the error.
+    span = next((s for s in locate_all(text, draft.quote) if _on_edit(s, new_start, new_end)), None)
+    if span is None:
         problems.append(
-            f"la cita ha de ser el text erroni del primer canvi, copiat literalment del fragment {error.fragment} ja "
-            f"canviat: «{draft.quote}»"
+            f"la cita ha de ser el text erroni del primer canvi, copiat literalment del fragment {error.fragment} amb "
+            f"tots els canvis aplicats (si el canvi esborra, les paraules just abans i just després): «{draft.quote}»"
         )
     mistake = None
-    if span is not None and on_new and not problems:
+    if span is not None and not problems:
         mistake = DeclaredMistake(
             id=mistake_id,
             fragment=first_fragment + error.fragment - 1,

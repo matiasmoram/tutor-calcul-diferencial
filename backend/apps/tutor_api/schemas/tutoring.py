@@ -1,11 +1,13 @@
-from typing import Literal
-
 from pydantic import BaseModel, Field
 
 from apps.tutor_api.schemas.course import ExerciseResponse, SheetSummaryResponse, TheoryItemResponse
 from apps.tutor_api.schemas.student_text import StudentText
+from core.tutoring.application.photo_transcriber import TranscriptionResult
 from core.tutoring.application.session_starter import StartedSession
 from core.tutoring.domain.entities.tutor_turn import TutorTurn
+from core.tutoring.domain.values.chat_message import TurnOrigin
+from core.tutoring.domain.values.transcription import Transcription
+from core.tutoring.domain.values.turn_trace import ModelCall
 
 
 class NewSessionRequest(BaseModel):
@@ -14,7 +16,7 @@ class NewSessionRequest(BaseModel):
 
 class MessageRequest(BaseModel):
     text: StudentText = Field(min_length=1, max_length=4000)
-    origen: Literal["text", "foto"] = "text"
+    origen: TurnOrigin = "text"
 
 
 class PhotoRequest(BaseModel):
@@ -48,7 +50,7 @@ class SessionResponse(BaseModel):
     teoria_fitxa: list[SheetTheoryResponse] | None = None
 
     @classmethod
-    def from_started(cls, started: StartedSession, professor: bool) -> "SessionResponse":
+    def from_entity(cls, started: StartedSession, professor: bool) -> "SessionResponse":
         out = cls(
             session_id=started.session.id,
             exercici=ExerciseResponse.from_entity(started.exercise),
@@ -85,6 +87,16 @@ class ProfessorTurnResponse(BaseModel):
             tutor=turn.tutor_text,
             trace=turn.trace.model_dump(mode="json"),
         )
+
+
+class TranscriptionResponse(Transcription):
+    """The transcription's own contract keys, plus the call that produced it."""
+
+    crida: ModelCall
+
+    @classmethod
+    def from_entity(cls, result: TranscriptionResult) -> "TranscriptionResponse":
+        return cls(**dict(result.transcription), crida=result.call)
 
 
 class TurnResponse(BaseModel):

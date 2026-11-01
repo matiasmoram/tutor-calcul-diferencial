@@ -7,12 +7,15 @@
    - Canvis: a map F: R² → R² deforming a grid, det JF, local invertibility.
    Exercises open them with the functions of their statement (visual-latex.js reads the LaTeX).
    Plotly.js draws, math.js parses and differentiates; both load lazily from cdnjs.
-   Shares el(), math(), tex(), api(), crumbs(), show(), theoryPopup(), linkCitations() with app.js.
+   Shares el(), math(), tex(), api(), crumbs(), show(), theoryPopup(), linkCitations() and betaBadge() with app.js.
    The tools live in visual-eines.js and register with eina({...}). */
 
+// Pinned versions with their Subresource Integrity hashes: a changed file on the CDN is refused, not run.
 const VIS_LIBS = [
-  "https://cdnjs.cloudflare.com/ajax/libs/mathjs/14.0.1/math.min.js",
-  "https://cdnjs.cloudflare.com/ajax/libs/plotly.js/3.1.1/plotly.min.js",
+  { src: "https://cdnjs.cloudflare.com/ajax/libs/mathjs/14.0.1/math.min.js",
+    integrity: "sha512-PbOEC/cOHBQKshG/XgYoI+kff08IraowCgPlDT8NL91+ZPaeuvWVtC7jYTDua9Kow5QTpX+EMIM0RBKAA2Hsmg==" },
+  { src: "https://cdnjs.cloudflare.com/ajax/libs/plotly.js/3.1.1/plotly.min.js",
+    integrity: "sha512-QaIUFweb9pyRnQZEYIujSDTHndibSwqsTSb69aedsfAAUpJRUE5yyYfaNAJIbTDuNECyHR/Cc0N7lQJrp0IEpA==" },
 ];
 const EINES = [];
 let M = null;          // math.js instance with real-valued results (sqrt(-1) = NaN, not a complex)
@@ -20,10 +23,12 @@ let visLibs = null;    // Promise of the loaded libraries
 
 function eina(def) { EINES.push(def); }
 
-function loadScript(src) {
+function loadScript({ src, integrity }) {
   return new Promise((resolve, reject) => {
     const s = document.createElement("script");
     s.src = src;
+    s.integrity = integrity;
+    s.crossOrigin = "anonymous";
     s.onload = resolve;
     s.onerror = () => reject(new Error(`No s'ha pogut carregar ${src.split("/").pop()} (cal connexió a internet)`));
     document.head.append(s);
@@ -124,7 +129,6 @@ const tfmt = (v, d = 3) => (Number.isFinite(v) ? fmt(v, d) : "\\text{—}");  //
 const vfmt = (a, d = 3) => `(${a.map((v) => tfmt(v, d)).join(",\\,")})`;
 const norm = (a) => Math.hypot(...a);
 const dot = (a, b) => a.reduce((s, v, i) => s + v * b[i], 0);
-const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
 
 function grid(f, [x0, x1], [y0, y1], n = 71, m = n) {
   // Plotly convention: z[j][i] = f(xs[i], ys[j]).
@@ -522,7 +526,7 @@ async function viewVisual(part) {
   crumbs([["Inici", "#/"], ["Visualitzador", "#/visual"], [def.titol, null]]);
   root.replaceChildren(el("p", { class: "muted center", text: "Carregant les eines de visualització…" }));
   await loadVisLibs();
-  await getTeoria().then((t) => t.byKey || indexTeoria(t)).catch(() => null);
+  await ensureTeoriaIndex();
 
   const teoria = el("button", { type: "button", class: "btn ghost vt-teoria", text: "Teoria" });
   teoria.addEventListener("click", async () => {
@@ -534,6 +538,7 @@ async function viewVisual(part) {
     el("a", { href: `#/visual/${t.id}`, class: t.id === id ? "on" : "", text: t.titol })));
   const head = el("header", { class: "vt-head" },
     el("div", {},
+      el("div", { class: "eyebrow" }, "Visualitzador", betaBadge()),
       tabs,
       math(el("p", { class: "vt-sub", text: def.resum })),
       ex ? el("p", { class: "vt-from" }, el("span", { text: "Funcions llegides de l'enunciat de l'exercici " }), el("strong", { text: ex }),
@@ -544,7 +549,7 @@ async function viewVisual(part) {
   try {
     def.mount(body, params);
   } catch (err) {
-    body.replaceChildren(verdict(`Error dibuixant: ${err.message}`, "bad"));
+    body.replaceChildren(verdict(`No s'ha pogut dibuixar la funció: ${err.message}`, "bad"));
     console.error(err);
   }
 }
@@ -554,9 +559,10 @@ function viewVisualInici() {
   const root = $("#view-visual");
   root.replaceChildren(
     el("section", { class: "hero left" },
-      el("div", { class: "eyebrow", text: "Visualitzador" }),
+      el("div", { class: "eyebrow" }, "Visualitzador", betaBadge()),
       el("h2", { text: "Mira la funció abans de calcular" }),
-      math(el("p", { class: "muted", text: "Tres eines per als exercicis. Escriu la funció o obre-la des d'un exercici amb el botó «Visualitza» de l'enunciat: les fórmules es llegeixen soles." }))),
+      math(el("p", { class: "muted", text: "Tres eines per als exercicis. Escriu la funció o obre-la des d'un exercici amb el botó «Visualitza» de l'enunciat: les fórmules es llegeixen soles." })),
+      betaNote()),
     el("div", { class: "vt-home" }, ...EINES.map((t) =>
       el("a", { class: "mode vt-home-card", href: `#/visual/${t.id}` },
         el("span", { class: "mode-icon", text: t.icon }),
@@ -576,7 +582,8 @@ function visualitzaExercici(ex) {
   else if (r.f && r.a && !r.constraints.length) href = visualLink("punt", { f: r.f, a: r.a, fa: r.fa, ex: ex.id });
   else if (r.f) href = visualLink("explorador", { f: r.f, g: r.constraints, ex: ex.id });
   if (!href) return null;
-  return el("a", { class: "hint-btn vt-open", href, target: "_blank", rel: "noopener", title: "Obre la funció de l'enunciat al visualitzador (pestanya nova)", text: "📈 Visualitza" });
+  return el("a", { class: "hint-btn vt-open", href, target: "_blank", rel: "noopener",
+    title: "Obre la funció de l'enunciat al visualitzador (pestanya nova)" }, "Visualitza", betaBadge());
 }
 
 // Re-draw with the new palette when the system switches between light and dark.

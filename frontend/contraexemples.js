@@ -2,9 +2,9 @@
 
 /* "Construeix el contraexemple": the student writes f(x,y) off the origin and f(0,0), plus a certificate for each
    property that needs one (paths, a radial bound, a direction). Every verdict comes from sympy on the server; no
-   model is called. Shares el(), math(), api(), crumbs(), show() with app.js and visualLink() with visual.js. */
+   model is called. Shares el(), math(), api(), crumbs(), show() and the beta, pipeline and difficulty helpers with
+   app.js, and visualLink() with visual.js. */
 
-const CE_DIFICULTATS = { facil: "Fàcil", normal: "Normal", dificil: "Difícil" };
 const CE_ESTATS = {
   ok: ["ok", "Demostrat"],
   plausible: ["warn", "Plausible"],
@@ -13,7 +13,8 @@ const CE_ESTATS = {
 };
 const CE_SINTAXI = "Sintaxi: multiplicació explícita (2*x, x*y), potències x**2 o x^2, Abs(x), sqrt, cbrt (arrel cúbica real; les arrels d'índex senar com (x*y)**(1/3) també són les reals), sin, cos, exp, log. Les constants numèriques han de tenir valor absolut entre 10^-6 i 10^6 (o ser 0). Variables: x, y; als camins t; a la fita r.";
 
-const CE = { reptes: null, repte: null, entrada: null, resultat: null, enviant: false };
+// `enviant` is the challenge whose check is in flight (null when none).
+const CE = { reptes: null, repte: null, entrada: null, resultat: null, enviant: null };
 
 async function getCeReptes() {
   CE.reptes ??= await api("/api/contraexemples");
@@ -25,27 +26,26 @@ async function getCeReptes() {
 async function viewContraexemplesInici() {
   show("contraexemples");
   crumbs([["Inici", "#/"], ["Contraexemples", null]]);
+  $("#view-contraexemples").replaceChildren(carregant());
   const reptes = await getCeReptes();
   const temes = [...new Set(reptes.map((r) => r.tema))].sort();
-  const stage = (n, title, text, tag, cls) => el("li", {},
-    el("span", { class: "step-num", text: String(n) }), el("h4", { text: title }), math(el("p", { text })),
-    el("span", { class: `tag ${cls}`, text: tag }));
   $("#view-contraexemples").replaceChildren(
     el("section", { class: "hero left" },
-      el("div", { class: "eyebrow", text: "Construeix el contraexemple" }),
+      el("div", { class: "eyebrow" }, "Construeix el contraexemple", betaBadge()),
       el("h2", { text: "Fabrica la funció que trenca la intuïció" }),
-      math(el("p", { class: "muted", text: "Cada repte demana una funció amb unes propietats a l'origen que semblen incompatibles: parcials sense continuïtat, totes les rectes d'acord però sense límit… Escriu-la, dona el certificat que ho demostra i el codi ho comprova amb sympy. Cap model de llenguatge: el veredicte és càlcul." }))),
+      math(el("p", { class: "muted", text: "Cada repte demana una funció amb unes propietats a l'origen que semblen incompatibles: parcials sense continuïtat, el mateix límit per totes les rectes però sense límit… Escriu-la, dona el certificat que ho demostra i el càlcul simbòlic ho comprova. Cap model de llenguatge: el veredicte és càlcul." })),
+      betaNote()),
     el("ol", { class: "pipeline cf-pipeline" },
-      stage(1, "Construeix", "Escrius $f(x,y)$ fora de l'origen i el valor $f(0,0)$.", "Tu", "llm"),
-      stage(2, "Certifica", "Per a «no existeix» dones camins; per a «és contínua» o «és diferenciable», una fita $G(r)\\to0$.", "Tu", "llm"),
-      stage(3, "Comprovació", "Derivades i límits per camins: límits d'una variable, exactes. Fites: $G(r)\\to0$ exacte i la desigualtat mostrejada.", "CAS · sympy", "rule"),
-      stage(4, "Veredicte", "Demostrat, plausible (mostreig), no es compleix o indeterminat, propietat per propietat.", "Regles", "rule")),
+      pipelineStage(1, "Construeix", "Escrius $f(x,y)$ fora de l'origen i el valor $f(0,0)$.", "Tu", "student"),
+      pipelineStage(2, "Certifica", "Per a «no existeix» dones camins; per a «és contínua» o «és diferenciable», una fita $G(r)\\to0$.", "Tu", "student"),
+      pipelineStage(3, "Comprovació", "Derivades i límits per camins: límits d'una variable, exactes. Fites: $G(r)\\to0$ exacte i la desigualtat mostrejada.", "Càlcul simbòlic", "rule"),
+      pipelineStage(4, "Veredicte", "Demostrat, plausible (mostreig), no es compleix o indeterminat, propietat per propietat.", "Regles", "rule")),
     ...temes.map((t) => el("section", { class: "teoria-tema ce-tema" },
       el("h3", { text: `Tema ${t}` }),
       el("ul", { class: "er-items" }, ...reptes.filter((r) => r.tema === t).map((r) => el("li", {},
         el("a", { class: "er-item ce-item", href: `#/contraexemples/${r.id}` },
           math(el("span", { class: "theory-name", text: r.titol })),
-          el("span", { class: "pill neutral", text: CE_DIFICULTATS[r.dificultat] || r.dificultat }))))))));
+          el("span", { class: "pill neutral", text: etiquetaDificultat(r.dificultat) }))))))));
 }
 
 /* ---------- a challenge ---------- */
@@ -65,10 +65,10 @@ function ceCert(prop) {
 
 async function viewContraexemple(id) {
   show("contraexemples");
-  const [repte] = await Promise.all([
-    api(`/api/contraexemples/${id}`),
-    getTeoria().then((t) => t.byKey || indexTeoria(t)).catch(() => null),  // citations still render as text without it
-  ]);
+  const hash = location.hash;
+  $("#view-contraexemples").replaceChildren(carregant());
+  const [repte] = await Promise.all([api(`/api/contraexemples/${id}`), ensureTeoriaIndex()]);
+  if (location.hash !== hash) return;  // a slower load must not replace the challenge opened since
   crumbs([["Inici", "#/"], ["Contraexemples", "#/contraexemples"], [repte.titol.replace(/\$/g, ""), null]]);
   CE.repte = repte;
   CE.resultat = null;
@@ -119,7 +119,7 @@ function ceTheoryChips(items, prefix = "") {
   if (!items?.length) return null;
   return el("div", { class: "ce-teoria" },
     prefix ? el("span", { class: "small muted", text: prefix }) : null,
-    ...items.map((it) => theoryButton(`📖 ${it.etiqueta}`, it.nom || it.etiqueta, [it], "ref-chip")));
+    ...items.map((it) => theoryButton(it.etiqueta, it.nom || it.etiqueta, [it], "ref-chip")));
 }
 
 function ceVerdict(v, prop) {
@@ -141,7 +141,7 @@ function ceVisualLink() {
   const mathjs = f.replace(/\*\*/g, "^").replace(/\bAbs\(/g, "abs(");
   const valor = Number(CE.entrada.valor);
   return el("a", { class: "btn ghost small-btn", target: "_blank", rel: "noopener",
-    href: visualLink("punt", { f: mathjs, a: "0,0", fa: Number.isFinite(valor) ? valor : null }), text: "📈 Visualitza" });
+    href: visualLink("punt", { f: mathjs, a: "0,0", fa: Number.isFinite(valor) ? valor : null }) }, "Visualitza", betaBadge());
 }
 
 function ceRender() {
@@ -169,7 +169,7 @@ function ceRender() {
   $("#view-contraexemples").replaceChildren(...[
     el("header", { class: "er-head" },
       el("div", { class: "er-title" },
-        el("div", { class: "eyebrow", text: `Construeix el contraexemple · Tema ${r.tema} · ${CE_DIFICULTATS[r.dificultat] || ""}` }),
+        el("div", { class: "eyebrow" }, `Construeix el contraexemple · Tema ${r.tema} · ${etiquetaDificultat(r.dificultat)}`, betaBadge()),
         math(el("h2", { text: r.titol })),
         ceNotes(r, math(el("p", { class: "ce-enunciat", text: r.enunciat }))),
         ceTheoryChips(r.teoria, "Als apunts:"))),
@@ -213,8 +213,8 @@ function ceExemple(ex, superat) {
 }
 
 async function ceComprova() {
-  if (CE.enviant) return;
   const r = CE.repte;
+  if (CE.enviant === r) return;
   const certificats = {};
   for (const p of r.propietats) {
     if (p.certificat === "cap") continue;
@@ -227,20 +227,26 @@ async function ceComprova() {
     if (p.certificat === "direccio" && (c.direccio.u.trim() || c.direccio.w.trim())) cert.direccio = c.direccio;
     certificats[p.id] = cert;
   }
-  CE.enviant = true;
+  CE.enviant = r;
   $("#ce-comprova").disabled = true;
-  $("#ce-status").textContent = "Comprovant amb sympy…";
+  $("#ce-status").textContent = "Comprovant el càlcul simbòlic…";
   try {
-    CE.resultat = await api(`/api/contraexemples/${r.id}/comprova`, {
+    const resultat = await api(`/api/contraexemples/${r.id}/comprova`, {
       method: "POST",
       body: JSON.stringify({ funcio: CE.entrada.funcio, valor: CE.entrada.valor || "0", certificats }),
     });
+    // Verdicts are indexed by property position: they must never be painted onto another challenge.
+    if (CE.repte !== r) return;
+    CE.resultat = resultat;
     ceRender();
   } catch (err) {
+    if (CE.repte !== r) return;
     $("#ce-status").textContent = err.message;
   } finally {
-    CE.enviant = false;
-    const b = $("#ce-comprova");
-    if (b) b.disabled = false;
+    if (CE.enviant === r) {
+      CE.enviant = null;
+      const b = $("#ce-comprova");
+      if (b) b.disabled = false;
+    }
   }
 }

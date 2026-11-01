@@ -4,7 +4,7 @@ from collections.abc import Mapping, Sequence
 
 from core.course.domain.entities.course import Course
 from core.course.domain.entities.exercise import Exercise
-from core.course.domain.entities.theory_item import TheoryItem
+from core.course.domain.entities.theory_item import TheoryItem, render_items
 from core.shared.domain.ids import TheoryItemId
 from core.tutoring.domain.values.chat_message import ChatMessage
 from core.tutoring.domain.values.plan import Action, Plan
@@ -124,17 +124,6 @@ def transcript(history: Sequence[ChatMessage]) -> str:
     return text
 
 
-def theory_text(items: Sequence[TheoryItem], with_proof: frozenset[TheoryItemId] = frozenset()) -> str:
-    return "\n\n".join(it.render(with_proof=it.id in with_proof) for it in items) or "(cap)"
-
-
-def exercise_theory(course: Course, ex: Exercise) -> str:
-    """Every item the sheet cites (reserved ones included): for the stages that already see the full solution."""
-    refs = ex.all_refs()
-    ids = [i for i in dict.fromkeys(r.item_id for r in refs) if i in course.theory]
-    return theory_text([course.theory[i] for i in ids], frozenset(r.item_id for r in refs if r.with_proof))
-
-
 def diagnosis_context(course: Course, ex: Exercise) -> str:
     """Static for the whole session: cached by the provider after the first turn."""
     index = "\n".join(it.index_line() for it in course.citable_items(ex.topic or 0)) or "(cap)"
@@ -143,7 +132,7 @@ def diagnosis_context(course: Course, ex: Exercise) -> str:
 </fitxa>
 
 <teoria_de_l_exercici>
-{exercise_theory(course, ex)}
+{render_items(*course.cited_theory(ex))}
 </teoria_de_l_exercici>
 
 <index_apunts_tema>
@@ -214,7 +203,7 @@ def reply_user(
 </pla>
 
 <teoria_permesa>
-{theory_text(theory)}
+{render_items(theory)}
 </teoria_permesa>
 
 Redacta el següent missatge del TUTOR."""
@@ -236,7 +225,7 @@ def guard_context(course: Course, ex: Exercise) -> str:
 </fitxa_completa>
 
 <teoria_de_l_exercici>
-{exercise_theory(course, ex)}
+{render_items(*course.cited_theory(ex))}
 </teoria_de_l_exercici>"""
 
 
@@ -253,7 +242,7 @@ def guard_user(
 </pla>
 
 <teoria_permesa>
-{theory_text(theory)}
+{render_items(theory)}
 </teoria_permesa>
 
 <conversa>

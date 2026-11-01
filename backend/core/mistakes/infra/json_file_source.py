@@ -1,9 +1,10 @@
 from pathlib import Path
 
 from core.mistakes.domain.entities.mistake_exercise import MistakeExercise
+from core.mistakes.domain.ports import PregeneratedMistakeSource
 
 
-class JsonFileMistakeSource:
+class JsonFileMistakeSource(PregeneratedMistakeSource):
     """Documents as JSON files, ``<directory>/<source id>/<difficulty>/<id>.json`` (``backend/generats/errades``).
     Written by the offline scripts and committed; the database is seeded from them."""
 

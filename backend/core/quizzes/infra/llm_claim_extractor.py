@@ -1,6 +1,7 @@
 from collections.abc import Sequence
 
 from core.quizzes.domain.entities.grading import StudentCheck
+from core.quizzes.domain.ports import ClaimExtractor
 from core.quizzes.domain.values.grading_inputs import AnsweredStatement, StudentClaims
 from core.quizzes.infra.llm_outputs import objects, parse_all
 from core.quizzes.infra.llm_schemas import extraction_schema
@@ -8,7 +9,7 @@ from core.quizzes.infra.prompts import EXTRACTION_SYSTEM, extraction_request
 from core.shared.llm.client import LLMClient, LLMRequest, Stage
 
 
-class LLMClaimExtractor:
+class LLMClaimExtractor(ClaimExtractor):
     def __init__(self, llm: LLMClient) -> None:
         self._llm = llm
 

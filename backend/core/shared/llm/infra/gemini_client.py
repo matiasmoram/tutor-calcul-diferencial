@@ -11,7 +11,6 @@ from core.shared.llm.client import (
     JsonObject,
     LLMClient,
     LLMError,
-    LLMProviderError,
     LLMRequest,
     Stage,
     StageConfig,
@@ -20,6 +19,7 @@ from core.shared.llm.client import (
     parse_json,
     plain_text,
 )
+from core.shared.llm.infra.provider_errors import provider_failure
 
 # Anthropic-style effort names mapped onto Gemini thinking levels.
 THINKING: Mapping[str, types.ThinkingLevel] = {
@@ -62,11 +62,9 @@ class GeminiLLMClient(LLMClient):
         try:
             response = await self._generate_with_retry(cfg.model, contents, config)
         except errors.APIError as e:
-            raise LLMProviderError(
-                f"Error de l'API de Gemini ({e.code}): {e.message}", 429 if e.code == 429 else 502
-            ) from e
+            raise provider_failure("Gemini", e.code, e.message or "") from e
         except httpx.TransportError as e:
-            raise LLMProviderError("No s'ha pogut connectar amb l'API de Gemini.") from e
+            raise provider_failure("Gemini", None, str(e)) from e
         usage = response.usage_metadata
         meta = CallMeta(
             stage=stage,

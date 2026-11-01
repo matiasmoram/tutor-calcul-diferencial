@@ -1,4 +1,4 @@
-"""'Cert o fals' quizzes written offline (by an agent or by hand), gated like the LLM pipeline (QuizGenerator).
+"""'Cert o fals' quizzes written outside the app (by hand or with an external model), gated like the LLM pipeline (QuizGenerator).
 
 A batch file (JSON) is one quiz's candidate statements in the writer's output format, plus its source:
   {"font": "tema-2" | "T2.12", "dificultat": "facil" | "normal" | "dificil", "autor": "<who wrote it>",
@@ -36,6 +36,7 @@ from core.quizzes.domain.ports import CheckEvaluator
 from core.quizzes.domain.services.assembly import build_quiz
 from core.quizzes.domain.services.balance import false_range, is_complete, trim
 from core.quizzes.domain.services.judging import judge
+from core.quizzes.domain.services.sources import quiz_source
 from core.quizzes.domain.services.validation import (
     all_checks,
     check_problems,
@@ -43,10 +44,9 @@ from core.quizzes.domain.services.validation import (
     validate_draft,
     with_results,
 )
-from core.quizzes.domain.sources import QuizSource, quiz_source
-from core.quizzes.domain.values.call_summary import CallSummary
 from core.quizzes.domain.values.difficulty import QUIZ_SIZES, Difficulty, difficulty_of
 from core.quizzes.domain.values.drafts import BatchRequest, StatementDraft
+from core.quizzes.domain.values.quiz_source import QuizSource
 from core.quizzes.domain.values.verification import AuditReview, SolverAnswer
 from core.quizzes.infra.json_quiz_files import JsonQuizFiles
 from core.quizzes.infra.llm_schemas import audit_schema, generation_schema, solver_schema
@@ -60,7 +60,8 @@ from core.quizzes.infra.prompts import (
     source_context,
 )
 from core.quizzes.infra.sympy_check_evaluator import SympyCheckEvaluator
-from settings import BACKEND_DIR
+from core.shared.domain.model_usage import ModelUsage
+from settings import BACKEND_DIR, Config
 
 GENERATED_DIR = BACKEND_DIR / "generats" / "afirmacions"
 EXTRA = 3  # statements asked for beyond the quiz size, so a few rejections still leave a full quiz
@@ -171,8 +172,8 @@ def cmd_blind(path: Path, checks: CheckEvaluator) -> int:
     return 0
 
 
-def offline_call(name: str) -> CallSummary:
-    return CallSummary(model=f"offline:{name}", latency_ms=0)
+def offline_call(name: str) -> ModelUsage:
+    return ModelUsage(model=f"offline:{name}", latency_ms=0)
 
 
 def cmd_import(path: Path, checks: CheckEvaluator, directory: Path = GENERATED_DIR) -> int:
@@ -208,7 +209,7 @@ def cmd_import(path: Path, checks: CheckEvaluator, directory: Path = GENERATED_D
             f"with {lo}-{hi} false"
         )
         return 1
-    author = str(data.get("autor") or "agent")
+    author = str(data.get("autor") or "author")
     round_log = GenerationRound(
         round=1,
         requested=len(drafts),
@@ -226,7 +227,7 @@ def cmd_import(path: Path, checks: CheckEvaluator, directory: Path = GENERATED_D
 
 
 if __name__ == "__main__":
-    # Statements are Catalan with math symbols; a Windows console is cp1252.
+    # Statements are Catalan with maths symbols: UTF-8 output whatever the console's default encoding.
     if isinstance(sys.stdout, io.TextIOWrapper):
         sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -237,6 +238,6 @@ if __name__ == "__main__":
         if len(args.args) != 3:
             parser.error("brief needs <font> <dificultat> <out.md>")
         sys.exit(cmd_brief(args.args[0], args.args[1], Path(args.args[2])))
-    evaluator = SympyCheckEvaluator(timeout_s=60.0)
+    evaluator = SympyCheckEvaluator(timeout_s=60.0, memory_limit_mb=Config().SYMPY_WORKER_MEMORY_MB)
     command = {"validate": cmd_validate, "blind": cmd_blind, "import": cmd_import}[args.command]
     sys.exit(max(command(Path(p), evaluator) for p in args.args))

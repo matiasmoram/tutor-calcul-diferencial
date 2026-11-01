@@ -1,3 +1,4 @@
+from core.mistakes.domain.values.difficulty import Difficulty
 from core.shared.domain.exceptions import DomainException
 
 
@@ -15,16 +16,32 @@ class UnknownTheoryResultException(MistakesException):
 
     def __init__(self, item_id: str) -> None:
         super().__init__("Resultat dels apunts desconegut o sense demostració", 404)
+        self.item_id = item_id
 
 
 class MistakeExerciseNotFoundException(MistakesException):
     def __init__(self, exercise_id: str) -> None:
         super().__init__("Document desconegut", 404)
+        self.exercise_id = exercise_id
+
+
+class MistakeExerciseNotReadyException(MistakesException):
+    """Nothing ready for the source and difficulty, and this caller may not start a generation."""
+
+    def __init__(self, source_id: str, difficulty: Difficulty) -> None:
+        super().__init__(
+            "Encara no hi ha cap document preparat per a aquest tema i dificultat. "
+            "Prova una altra dificultat o demana-ho al professorat.",
+            409,
+        )
+        self.source_id = source_id
+        self.difficulty = difficulty
 
 
 class MistakeSessionNotFoundException(MistakesException):
     def __init__(self, session_id: str) -> None:
         super().__init__("Sessió desconeguda", 404)
+        self.session_id = session_id
 
 
 class InvalidAnnotationsException(MistakesException):

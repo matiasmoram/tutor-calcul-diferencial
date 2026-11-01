@@ -7,10 +7,11 @@ from pydantic import ValidationError
 
 from core.counterexamples.domain.entities.spec import Spec, SpecCatalog
 from core.counterexamples.domain.exceptions import InvalidSpecContentException
+from core.counterexamples.domain.ports import SpecSource
 from core.counterexamples.domain.values.spec_id import SpecId
 
 
-class YamlSpecSource:
+class YamlSpecSource(SpecSource):
     def __init__(self, path: Path) -> None:
         self._path = path
 

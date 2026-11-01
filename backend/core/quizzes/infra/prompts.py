@@ -2,12 +2,13 @@
 
 from collections.abc import Mapping, Sequence
 
-from core.course.domain.entities.theory_item import TheoryItem
+from core.course.domain.entities.theory_item import render_items
 from core.quizzes.domain.entities.quiz import RejectedStatement
-from core.quizzes.domain.sources import QuizSource
+from core.quizzes.domain.services.validation import MAX_CHECKS
 from core.quizzes.domain.values.difficulty import Difficulty
 from core.quizzes.domain.values.drafts import BatchRequest, StatementDraft
 from core.quizzes.domain.values.grading_inputs import AnsweredStatement
+from core.quizzes.domain.values.quiz_source import QuizSource
 from core.shared.math.sympy_checks import CHECK_SYNTAX
 
 GENERATION_SYSTEM = f"""Ets un professor de Càlcul Diferencial (FME-UPC, primer curs de grau) que prepara un qüestionari "Cert o fals" en català.
@@ -30,7 +31,7 @@ Camps:
 - "idees_clau": 1-4 punts que una resposta correcta ha de contenir (rúbrica per corregir), p. ex. "els dos iterats valen 0", "sobre $y=mx$ el límit depèn de $m$".
 - "pista": una pregunta socràtica que ajudi a pensar-hi SENSE revelar el veredicte (no diguis "cert", "fals" ni "contraexemple").
 - "teoria": els ítems dels apunts que fa servir la resolució (pot ser buida).
-- "comprovacions": per a les falses, TOTS els càlculs concrets del contraexemple que es puguin comprovar amb sympy (límits sobre camins, límits que no existeixen, derivades, igualtats), d'1 a 4; si el contraexemple no té cap càlcul comprovable (p. ex. topologia), []. Per a les certes, normalment []. Es comproven automàticament: una comprovació falsa fa descartar l'afirmació.
+- "comprovacions": per a les falses, TOTS els càlculs concrets del contraexemple que es puguin comprovar amb sympy (límits sobre camins, límits que no existeixen, derivades, igualtats), d'1 a {MAX_CHECKS}; si el contraexemple no té cap càlcul comprovable (p. ex. topologia), []. Per a les certes, normalment []. Es comproven automàticament: una comprovació falsa fa descartar l'afirmació.
 
 {CHECK_SYNTAX}
 """
@@ -82,13 +83,9 @@ LEVELS: Mapping[Difficulty, str] = {
 }
 
 
-def _notes_text(items: Sequence[TheoryItem]) -> str:
-    return "\n\n".join(it.render() for it in items) or "(cap)"
-
-
 def source_context(source: QuizSource) -> str:
     """Static per source (cached by the provider across rounds and gradings): the topic's notes."""
-    out = f'<apunts tema="{source.topic}" titol="{source.topic_title}">\n{_notes_text(source.notes)}\n</apunts>'
+    out = f'<apunts tema="{source.topic}" titol="{source.topic_title}">\n{render_items(source.notes)}\n</apunts>'
     if source.focus:
         out += f"\n\n<resultat_focus>\n{source.focus.render(with_proof=True)}\n</resultat_focus>"
     return out

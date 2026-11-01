@@ -4,18 +4,7 @@
 from loguru import logger
 from pydantic import BaseModel, ValidationError
 
-from core.quizzes.domain.values.call_summary import CallSummary
-from core.shared.llm.client import CallMeta, JsonObject
-
-
-def call_summary(meta: CallMeta) -> CallSummary:
-    return CallSummary(
-        model=meta.model,
-        latency_ms=meta.latency_ms,
-        input_tokens=meta.input_tokens,
-        output_tokens=meta.output_tokens,
-        cached_tokens=meta.cached_tokens,
-    )
+from core.shared.llm.client import JsonObject
 
 
 def objects(data: JsonObject, key: str) -> list[dict[str, object]]:

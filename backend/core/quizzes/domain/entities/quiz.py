@@ -1,26 +1,18 @@
-from pydantic import (
-    AliasChoices,
-    BaseModel,
-    ConfigDict,
-    Field,
-    SerializerFunctionWrapHandler,
-    field_serializer,
-    field_validator,
-    model_serializer,
-)
+from pydantic import BaseModel, ConfigDict, Field, field_serializer, field_validator
 
 from core.quizzes.domain.entities.statement import Statement
 from core.quizzes.domain.exceptions import StatementNotFoundException
-from core.quizzes.domain.values.call_summary import CallSummary
 from core.quizzes.domain.values.difficulty import Difficulty
 from core.quizzes.domain.values.quiz_id import QuizId
+from core.shared.domain.contract import catalan_alias, omit_none
+from core.shared.domain.model_usage import ModelUsage
 
 
 class RejectedStatement(BaseModel):
     model_config = ConfigDict(serialize_by_alias=True)
 
-    statement: str = Field(validation_alias=AliasChoices("enunciat", "statement"), serialization_alias="enunciat")
-    reasons: list[str] = Field(validation_alias=AliasChoices("motius", "reasons"), serialization_alias="motius")
+    statement: str = Field(validation_alias=catalan_alias("enunciat", "statement"), serialization_alias="enunciat")
+    reasons: list[str] = Field(validation_alias=catalan_alias("motius", "reasons"), serialization_alias="motius")
 
 
 class GenerationRound(BaseModel):
@@ -28,42 +20,40 @@ class GenerationRound(BaseModel):
 
     model_config = ConfigDict(serialize_by_alias=True)
 
-    round: int = Field(validation_alias=AliasChoices("ronda", "round"), serialization_alias="ronda")
-    requested: int = Field(validation_alias=AliasChoices("demanades", "requested"), serialization_alias="demanades")
-    received: int = Field(validation_alias=AliasChoices("rebudes", "received"), serialization_alias="rebudes")
-    generation: CallSummary | None = Field(
-        default=None, validation_alias=AliasChoices("generacio", "generation"), serialization_alias="generacio"
+    round: int = Field(validation_alias=catalan_alias("ronda", "round"), serialization_alias="ronda")
+    requested: int = Field(validation_alias=catalan_alias("demanades", "requested"), serialization_alias="demanades")
+    received: int = Field(validation_alias=catalan_alias("rebudes", "received"), serialization_alias="rebudes")
+    generation: ModelUsage | None = Field(
+        default=None, validation_alias=catalan_alias("generacio", "generation"), serialization_alias="generacio"
     )
     rejected: list[RejectedStatement] = Field(
-        default_factory=list, validation_alias=AliasChoices("rebutjades", "rejected"), serialization_alias="rebutjades"
+        default_factory=list, validation_alias=catalan_alias("rebutjades", "rejected"), serialization_alias="rebutjades"
     )
     # Absent from the stored document when no statement reached the verification.
-    solver: CallSummary | None = Field(
-        default=None, validation_alias=AliasChoices("solucionador", "solver"), serialization_alias="solucionador"
+    solver: ModelUsage | None = Field(
+        default=None,
+        validation_alias=catalan_alias("solucionador", "solver"),
+        serialization_alias="solucionador",
+        exclude_if=omit_none,
     )
-    audit: CallSummary | None = Field(
-        default=None, validation_alias=AliasChoices("auditoria", "audit"), serialization_alias="auditoria"
+    audit: ModelUsage | None = Field(
+        default=None,
+        validation_alias=catalan_alias("auditoria", "audit"),
+        serialization_alias="auditoria",
+        exclude_if=omit_none,
     )
     accepted_total: int = Field(
         default=0,
-        validation_alias=AliasChoices("acceptades_total", "accepted_total"),
+        validation_alias=catalan_alias("acceptades_total", "accepted_total"),
         serialization_alias="acceptades_total",
     )
-
-    @model_serializer(mode="wrap")
-    def _omit_unverified(self, handler: SerializerFunctionWrapHandler) -> dict[str, object]:
-        data: dict[str, object] = handler(self)
-        for key in ("solucionador", "solver", "auditoria", "audit"):
-            if key in data and data[key] is None:
-                del data[key]
-        return data
 
 
 class QuizVerification(BaseModel):
     model_config = ConfigDict(serialize_by_alias=True)
 
     rounds: list[GenerationRound] = Field(
-        default_factory=list, validation_alias=AliasChoices("rondes", "rounds"), serialization_alias="rondes"
+        default_factory=list, validation_alias=catalan_alias("rondes", "rounds"), serialization_alias="rondes"
     )
 
 
@@ -73,18 +63,18 @@ class Quiz(BaseModel):
     model_config = ConfigDict(serialize_by_alias=True)
 
     id: QuizId
-    source_id: str = Field(validation_alias=AliasChoices("font", "source_id"), serialization_alias="font")
-    topic: int = Field(validation_alias=AliasChoices("tema", "topic"), serialization_alias="tema")
+    source_id: str = Field(validation_alias=catalan_alias("font", "source_id"), serialization_alias="font")
+    topic: int = Field(validation_alias=catalan_alias("tema", "topic"), serialization_alias="tema")
     difficulty: Difficulty = Field(
-        validation_alias=AliasChoices("dificultat", "difficulty"), serialization_alias="dificultat"
+        validation_alias=catalan_alias("dificultat", "difficulty"), serialization_alias="dificultat"
     )
     statements: list[Statement] = Field(
-        validation_alias=AliasChoices("afirmacions", "statements"), serialization_alias="afirmacions"
+        validation_alias=catalan_alias("afirmacions", "statements"), serialization_alias="afirmacions"
     )
     verification: QuizVerification | None = Field(
-        default=None, validation_alias=AliasChoices("verificacio", "verification"), serialization_alias="verificacio"
+        default=None, validation_alias=catalan_alias("verificacio", "verification"), serialization_alias="verificacio"
     )
-    created: float = Field(validation_alias=AliasChoices("creat", "created"), serialization_alias="creat")
+    created_at: float = Field(validation_alias=catalan_alias("creat", "created_at"), serialization_alias="creat")
 
     @field_validator("verification", mode="before")
     @classmethod

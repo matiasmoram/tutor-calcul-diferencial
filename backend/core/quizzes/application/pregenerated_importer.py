@@ -12,5 +12,5 @@ class PregeneratedImporter:
     async def import_all(self) -> int:
         quizzes = self._source.load_all()
         for quiz in quizzes:
-            await self._quizzes.add(quiz)
+            await self._quizzes.save(quiz)
         return len(quizzes)

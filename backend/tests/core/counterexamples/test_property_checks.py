@@ -1,7 +1,7 @@
 import pytest
 
-from core.counterexamples.domain.properties import PROPERTIES, PropertyKind
-from core.counterexamples.domain.services.property_deciders import check_property
+from core.counterexamples.domain.services.deciders import check_property
+from core.counterexamples.domain.values.properties import PROPERTIES, PropertyKind
 from core.counterexamples.domain.values.submission import Certificate, PropertyCheck, validate_submission
 from core.counterexamples.domain.values.verdict import VerdictStatus
 from tests.fixtures.counterexamples import authored_challenges
@@ -106,7 +106,7 @@ def test_found_by_simulated_students() -> None:
     assert verdict("parcials_existeixen", "x*y", "1/0")[0] == "falla"
 
 
-# Attacks found by a simulated student trying to game the checker: each one used to pass.
+# Functions built to game the checker: none of them may pass.
 LINES_1E15 = (
     "1+x*y*(y-x)*(y+x)*(y-2*x)*(y+3*x)*(2*y-x)*(2*y+x)*(3*y-x)*(y-3*x)*(3*y+x)*(2*y-3*x)*(3*y-2*x)*(7*y+5*x)"
     "/(10**15*(x**2+y**2)**7)"
@@ -169,8 +169,8 @@ def test_odd_roots_are_the_real_roots() -> None:
     assert status == "falla" and "no és real" in detail
 
 
-# A quotient that blows up (sign or cube root over h) has no limit: simplify used to turn sign(h^2)/h into a
-# Piecewise whose sympy limit is 0, so each of these came back "exists".
+# A quotient that blows up (sign or cube root over h) has no limit, although sympy's simplify turns sign(h^2)/h
+# into a Piecewise whose sympy limit is 0.
 @pytest.mark.parametrize(
     ("kind", "function", "certificate"),
     [
@@ -188,7 +188,7 @@ def test_a_quotient_that_blows_up_has_no_limit(
     assert status == "ok", detail
 
 
-# Found by an auditor: each one used to pass.
+# A discontinuity hidden below every sampled radius: it must not pass.
 HIDDEN = "exp(-10**32*(x**2+y**2))"
 
 

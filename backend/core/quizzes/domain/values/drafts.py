@@ -1,9 +1,10 @@
-from pydantic import AliasChoices, BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from core.quizzes.domain.entities.quiz import RejectedStatement
 from core.quizzes.domain.entities.statement import StatementVerification, VerifiedCheck
-from core.quizzes.domain.values.call_summary import CallSummary
 from core.quizzes.domain.values.difficulty import Difficulty
+from core.shared.domain.contract import catalan_alias
+from core.shared.domain.model_usage import ModelUsage
 
 
 class StatementDraft(BaseModel):
@@ -12,33 +13,35 @@ class StatementDraft(BaseModel):
     model_config = ConfigDict(serialize_by_alias=True)
 
     statement: str = Field(
-        default="", validation_alias=AliasChoices("enunciat", "statement"), serialization_alias="enunciat"
+        default="", validation_alias=catalan_alias("enunciat", "statement"), serialization_alias="enunciat"
     )
     verdict: str = Field(
-        default="", validation_alias=AliasChoices("veredicte", "verdict"), serialization_alias="veredicte"
+        default="", validation_alias=catalan_alias("veredicte", "verdict"), serialization_alias="veredicte"
     )
-    trap: str = Field(default="", validation_alias=AliasChoices("trampa", "trap"), serialization_alias="trampa")
+    trap: str = Field(default="", validation_alias=catalan_alias("trampa", "trap"), serialization_alias="trampa")
     concept: str = Field(
-        default="", validation_alias=AliasChoices("concepte", "concept"), serialization_alias="concepte"
+        default="", validation_alias=catalan_alias("concepte", "concept"), serialization_alias="concepte"
     )
     counterexample: str = Field(
         default="",
-        validation_alias=AliasChoices("contraexemple", "counterexample"),
+        validation_alias=catalan_alias("contraexemple", "counterexample"),
         serialization_alias="contraexemple",
     )
     solution: str = Field(
-        default="", validation_alias=AliasChoices("resolucio", "solution"), serialization_alias="resolucio"
+        default="", validation_alias=catalan_alias("resolucio", "solution"), serialization_alias="resolucio"
     )
     key_ideas: list[str] = Field(
-        default_factory=list, validation_alias=AliasChoices("idees_clau", "key_ideas"), serialization_alias="idees_clau"
+        default_factory=list,
+        validation_alias=catalan_alias("idees_clau", "key_ideas"),
+        serialization_alias="idees_clau",
     )
-    hint: str = Field(default="", validation_alias=AliasChoices("pista", "hint"), serialization_alias="pista")
+    hint: str = Field(default="", validation_alias=catalan_alias("pista", "hint"), serialization_alias="pista")
     theory: list[str] = Field(
-        default_factory=list, validation_alias=AliasChoices("teoria", "theory"), serialization_alias="teoria"
+        default_factory=list, validation_alias=catalan_alias("teoria", "theory"), serialization_alias="teoria"
     )
     checks: list[VerifiedCheck] = Field(
         default_factory=list,
-        validation_alias=AliasChoices("comprovacions", "checks"),
+        validation_alias=catalan_alias("comprovacions", "checks"),
         serialization_alias="comprovacions",
     )
     verification: StatementVerification | None = None
@@ -57,4 +60,4 @@ class BatchRequest(BaseModel):
 
 class WrittenBatch(BaseModel):
     drafts: list[StatementDraft]
-    call: CallSummary
+    call: ModelUsage

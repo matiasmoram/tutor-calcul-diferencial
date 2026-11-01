@@ -3,16 +3,12 @@
 /* "Cert o fals": a quiz of statements about one tema (or centred on one result of the notes).
    The student decides true / false and justifies: a proof, or a counterexample. Statements are generated
    and verified server-side (blind solver + audit + sympy checks); grading is LLM + sympy + code.
-   Shares el(), math(), api(), crumbs(), show(), theoryButton() with app.js. */
+   Shares el(), math(), api(), crumbs(), show(), theoryButton() and the difficulty, ready-dot, pipeline and score
+   helpers with app.js. */
 
-const CF_DIFICULTATS = [
-  { id: "facil", label: "Fàcil" },
-  { id: "normal", label: "Normal" },
-  { id: "dificil", label: "Difícil" },
-];
 const CF_LOADING = [
   "Escrivint afirmacions i les seves resolucions…",
-  "Comprovant els contraexemples amb sympy…",
+  "Comprovant els contraexemples…",
   "Un segon model les resol a cegues, sense saber si són certes o falses…",
   "Un revisor comprova cada demostració i cada contraexemple…",
   "Substituint les afirmacions que no han passat la verificació…",
@@ -37,29 +33,31 @@ async function getCfFonts(fresh = false) {
 }
 
 function cfDots(disp) {
-  return el("span", { class: "ready-dots", title: "Qüestionaris preparats per dificultat" },
-    ...CF_DIFICULTATS.map((d) => el("span", { class: disp?.[d.id] ? "on" : "", title: `${d.label}: ${disp?.[d.id] ? "a punt" : "es generarà"}` })));
+  return readyDots(disp, "Qüestionaris preparats per dificultat");
 }
+
+const cfTeQuestionaris = (disp) => Object.values(disp || {}).some(Boolean);
 
 /* ---------- choosing a tema ---------- */
 
 async function viewAfirmacionsInici() {
   show("afirmacions");
   crumbs([["Inici", "#/"], ["Cert o fals", null]]);
+  $("#view-afirmacions").replaceChildren(carregant());
   const data = await getCfFonts(true);
-  const stage = (n, title, text, tag, cls) => el("li", {},
-    el("span", { class: "step-num", text: String(n) }), el("h4", { text: title }), el("p", { text }),
-    el("span", { class: `tag ${cls}`, text: tag }));
+  // Open the first tema with a ready quiz, so the student lands where something opens without waiting.
+  const obert = Math.max(0, data.temes.findIndex((t) => cfTeQuestionaris(t.disponibles)
+    || t.items.some((it) => cfTeQuestionaris(it.disponibles))));
   $("#view-afirmacions").replaceChildren(
     el("section", { class: "hero left" },
-      el("div", { class: "eyebrow", text: "Cert o fals · contraexemples" }),
+      el("div", { class: "eyebrow", text: "Cert o fals" }),
       el("h2", { text: "Demostra-ho o troba'n un contraexemple" }),
       math(el("p", { class: "muted", text: "Afirmacions sobre un tema que semblen certes i potser no ho són: límits iterats que coincideixen sense límit doble, continuïtat en cada variable que no és continuïtat, un teorema sense una hipòtesi. Decideix, i justifica-ho: una demostració o un contraexemple." }))),
     el("ol", { class: "pipeline cf-pipeline" },
-      stage(1, "Generació", "Un model escriu les afirmacions amb la resolució, les idees clau i els càlculs del contraexemple.", "LLM · sortida estructurada", "llm"),
-      stage(2, "Comprovació", "Cada càlcul del contraexemple (límits, derivades) es comprova amb sympy. Si un falla, l'afirmació es descarta.", "CAS · sympy", "rule"),
-      stage(3, "Verificació", "Un segon model les resol a cegues i un tercer audita les solucions. Només queden les que tots dos accepten.", "2 LLM independents", "llm"),
-      stage(4, "Correcció", "El veredicte el corregeix el codi; la justificació, un model amb la rúbrica, i els teus càlculs, sympy.", "LLM + CAS + regles", "rule")),
+      pipelineStage(1, "Generació", "Un model escriu les afirmacions amb la resolució, les idees clau i els càlculs del contraexemple.", "Model de llenguatge", "llm"),
+      pipelineStage(2, "Comprovació", "Cada càlcul del contraexemple (límits, derivades) es comprova amb càlcul simbòlic. Si un falla, l'afirmació es descarta.", "Càlcul simbòlic", "rule"),
+      pipelineStage(3, "Verificació", "Un segon model les resol a cegues i un tercer audita les solucions. Només queden les que tots dos accepten.", "2 models independents", "llm"),
+      pipelineStage(4, "Correcció", "El veredicte el corregeix el codi; la justificació, un model amb la rúbrica, i els teus càlculs, el càlcul simbòlic.", "Model, càlcul i regles", "rule")),
     el("div", { class: "teoria-temes" }, ...data.temes.map((t, i) => {
       const d = el("details", { class: "teoria-tema" },
         el("summary", {}, el("strong", { text: `Tema ${t.tema}` }), math(el("span", { text: ` · ${t.titol}` }))),
@@ -70,10 +68,10 @@ async function viewAfirmacionsInici() {
         el("p", { class: "small muted cf-sub", text: "O centra-ho en un resultat: recíprocs, hipòtesis que falten, conclusions massa fortes." }),
         el("ul", { class: "er-items" }, ...t.items.map((it) => el("li", {},
           el("a", { class: "er-item", href: `#/afirmacions/${it.id}` },
-            el("span", { class: "theory-label", text: it.etiqueta.replace(/ \(Tema \d\)$/, "") }),
+            el("span", { class: "theory-label", text: etiquetaCurta(it.etiqueta) }),
             math(el("span", { class: "theory-name", text: it.nom || "" })),
             cfDots(it.disponibles))))));
-      if (i === 1) d.open = true;
+      if (i === obert) d.open = true;
       return d;
     })));
 }
@@ -82,46 +80,37 @@ async function viewAfirmacionsInici() {
 
 async function viewAfirmacions(fontId) {
   show("afirmacions");
+  $("#view-afirmacions").replaceChildren(carregant());
   const data = await getCfFonts();
   const tema = data.temes.find((t) => t.id === fontId);
   const item = tema ? null : data.temes.flatMap((t) => t.items).find((it) => it.id === fontId);
   if (!tema && !item) throw new Error("Tema o resultat desconegut");
   const temaN = tema ? tema.tema : item.tema;
   crumbs([["Inici", "#/"], ["Cert o fals", "#/afirmacions"],
-    [tema ? `Tema ${temaN}` : item.etiqueta.replace(/ \(Tema \d\)$/, ` · T${temaN}`), null]]);
+    [tema ? `Tema ${temaN}` : etiquetaCurta(item.etiqueta, ` · T${temaN}`), null]]);
   Object.assign(CF, { font: fontId, item, tema: temaN, disp: (tema || item).disponibles || {}, mida: data.mida });
-  if (!CF.disp[CF.dificultat]) CF.dificultat = ["normal", "facil", "dificil"].find((d) => CF.disp[d]) || CF.dificultat;
+  CF.dificultat = triaDificultat(CF.disp, CF.dificultat);
   cfShell(tema);
   await cfCarregar(false);
 }
 
 function cfShell(tema) {
   const root = $("#view-afirmacions");
-  const chips = el("div", { class: "diff-chips", role: "radiogroup", "aria-label": "Dificultat" },
-    ...CF_DIFICULTATS.map((d) => {
-      const b = el("button", { type: "button", class: `chip${d.id === CF.dificultat ? " on" : ""}`, role: "radio",
-        "aria-checked": String(d.id === CF.dificultat), "data-dif": d.id,
-        title: CF.disp[d.id] ? "Preparat: s'obre a l'instant" : "Encara no n'hi ha cap de preparat: es generarà (cal l'API)" },
-        el("span", { text: d.label }), el("small", { text: `${CF.mida[d.id]} afirmacions${CF.disp[d.id] ? "" : " · nou"}` }));
-      b.addEventListener("click", () => {
-        if (CF.dificultat === d.id || CF.busy) return;
-        CF.dificultat = d.id;
-        root.querySelectorAll(".chip").forEach((c) => {
-          c.classList.toggle("on", c.dataset.dif === d.id);
-          c.setAttribute("aria-checked", String(c.dataset.dif === d.id));
-        });
-        cfCarregar(false);
-      });
-      return b;
-    }));
+  const chips = difficultyChips({
+    current: CF.dificultat,
+    disp: CF.disp,
+    sub: (d) => `${CF.mida[d.id]} afirmacions`,
+    isBusy: () => CF.busy,
+    onPick: (id) => { CF.dificultat = id; cfCarregar(false); },
+  });
   const nova = el("button", { type: "button", class: "btn ghost small-btn", id: "cf-nova", text: "↻ Un altre qüestionari" });
   nova.addEventListener("click", cfUnAltre);
   root.replaceChildren(
     el("header", { class: "er-head" },
       el("div", { class: "er-title" },
         el("div", { class: "eyebrow", text: `Cert o fals · Tema ${CF.tema}` }),
-        el("h2", {}, tema ? math(el("span", { text: `Tema ${CF.tema}: ${tema.titol}` }))
-          : math(el("span", { text: `${CF.item.etiqueta.replace(/ \(Tema \d\)$/, "")} — ${CF.item.nom}` }))),
+        el("h2", {}, math(el("span", { text: tema ? `Tema ${CF.tema}: ${tema.titol}`
+          : CF.item.nom ? `${etiquetaCurta(CF.item.etiqueta)} — ${CF.item.nom}` : etiquetaCurta(CF.item.etiqueta) }))),
         el("p", { class: "muted", text: "Per a cada afirmació: és certa o falsa? Si és certa, demostra-la; si és falsa, dona un contraexemple i comprova que funciona. Fórmules entre $...$." })),
       el("div", { class: "er-controls" }, chips, nova)),
     el("div", { class: "er-bar", id: "cf-bar" }),
@@ -160,12 +149,12 @@ function cfOferirGenerar(altre = false) {
   cfBusy(false);
   Object.assign(CF, { sessionId: null, q: null, respostes: {}, pistes: {}, resultat: null });
   $("#cf-bar").replaceChildren();
-  const ready = CF_DIFICULTATS.filter((d) => CF.disp[d.id]).map((d) => d.label);
+  const ready = DIFICULTATS.filter((d) => CF.disp[d.id]).map((d) => d.label);
   const gen = el("button", { type: "button", class: "btn primary", text: "Genera'n un de nou (pot trigar uns minuts)" });
   gen.addEventListener("click", () => cfCarregar(true));
   $("#cf-list").replaceChildren(el("div", { class: "er-paper er-generate" },
     el("strong", { text: altre ? "No n'hi ha cap altre de preparat en aquesta dificultat." : "Encara no hi ha cap qüestionari preparat en aquesta dificultat." }),
-    POT_GENERAR ? el("p", { class: "muted", text: "Se'n pot generar un de nou: un model escriu les afirmacions, sympy en comprova els càlculs i dos models més les verifiquen." }) : null,
+    POT_GENERAR ? el("p", { class: "muted", text: "Se'n pot generar un de nou: un model escriu les afirmacions, el càlcul simbòlic en comprova els resultats i dos models més les verifiquen." }) : null,
     ready.length ? el("p", { class: "muted", text: `Hi ha qüestionaris preparats per a: ${ready.join(", ")}.` }) : null,
     POT_GENERAR ? gen : el("p", { class: "muted", text: "Prova una altra dificultat, o demana al professorat que en prepari un." })));
 }
@@ -311,7 +300,7 @@ function cfCard(a, i) {
   }
   if (res.feedback) card.append(math(el("p", { class: "note-feedback", text: res.feedback })));
   if (res.nota_cas) card.append(el("p", { class: "note-hint", text: res.nota_cas }));
-  if (res.comprovacions_alumne?.length) card.append(cfChecks("Els teus càlculs, comprovats amb sympy", res.comprovacions_alumne));
+  if (res.comprovacions_alumne?.length) card.append(cfChecks("Els teus càlculs, comprovats amb càlcul simbòlic", res.comprovacions_alumne));
 
   const s = res.solucio;
   const sol = el("details", { class: "cf-solution" }, el("summary", { text: "Resolució de referència" }));
@@ -319,7 +308,7 @@ function cfCard(a, i) {
   sol.append(math(el("p", { class: "cf-res", text: s.resolucio })));
   sol.append(el("div", { class: "cf-ideas" }, el("span", { class: "note-tag", text: "Idees clau" }),
     el("ul", {}, ...s.idees_clau.map((t) => math(el("li", { text: t }))))));
-  if (s.comprovacions?.length) sol.append(cfChecks("Contraexemple verificat amb sympy", s.comprovacions));
+  if (s.comprovacions?.length) sol.append(cfChecks("Contraexemple verificat amb càlcul simbòlic", s.comprovacions));
   const items = (s.teoria || []).map((id) => CF.resultat.teoria?.[id]).filter(Boolean);
   if (items.length) sol.append(theoryButton(`Teoria (${items.length})`, "Resultats dels apunts que fa servir", items));
   if (!res.encert) sol.open = true;
@@ -336,7 +325,7 @@ function cfChecks(title, checks) {
         el("code", { text: c.tipus === "igualtat" ? `${c.expressio} = ${c.valor}`
           : c.tipus === "no_limit" ? `lim ${c.variable}→${c.punt} ${c.expressio} no existeix`
           : `lim ${c.variable}→${c.punt} ${c.expressio} = ${c.valor}` }),
-        c.estat === "falla" && c.calculat ? el("span", { class: "muted", text: ` (sympy: ${c.calculat})` }) : null)))));
+        c.estat === "falla" && c.calculat ? el("span", { class: "muted", text: ` (calculat: ${c.calculat})` }) : null)))));
 }
 
 function cfBar() {
@@ -364,7 +353,7 @@ async function cfEnviar() {
   const hash = location.hash;
   const bar = $("#cf-bar");
   bar.replaceChildren(el("div", { class: "er-progress" }, el("span", { class: "spinner" }),
-    el("span", { text: "Corregint: el model valora els arguments i sympy comprova els teus càlculs…" })));
+    el("span", { text: "Corregint: el model valora els arguments i el càlcul simbòlic comprova els teus càlculs…" })));
   cfBusy(true);
   try {
     const resultat = await api(`/api/afirmacions/sessions/${CF.sessionId}/correccio`, {
@@ -388,17 +377,10 @@ async function cfEnviar() {
 
 function cfScore() {
   const r = CF.resultat;
-  const R = 26, C = 2 * Math.PI * R;
-  const ring = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  ring.setAttribute("viewBox", "0 0 64 64");
-  ring.setAttribute("class", "score-ring");
-  ring.innerHTML = `<circle cx="32" cy="32" r="${R}" class="track"/>
-    <circle cx="32" cy="32" r="${R}" class="value" stroke-dasharray="${(C * r.nota) / 100} ${C}" transform="rotate(-90 32 32)"/>
-    <text x="32" y="37" text-anchor="middle">${r.nota}</text>`;
   const again = el("button", { type: "button", class: "btn primary", text: "Un altre qüestionari" });
   again.addEventListener("click", cfUnAltre);
   $("#cf-bar").replaceChildren(
-    el("div", { class: "er-score" }, ring,
+    el("div", { class: "er-score" }, scoreRing(r.nota),
       el("div", {},
         el("strong", { text: `${r.encerts} de ${r.total} veredictes encertats` }),
         r.resum ? math(el("p", { class: "muted", text: r.resum })) : null)),

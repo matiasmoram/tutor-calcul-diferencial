@@ -4,7 +4,7 @@ import pytest
 
 from core.shared.llm.client import CallMeta, JsonObject, LLMError, LLMProviderError, Stage, TruncatedOutputError
 from core.shared.storage.session_provider import SQLModelSessionProvider
-from core.tutoring.application.turn_handler import TurnInput
+from core.tutoring.application.turn_handler import TurnHandlerInput
 from core.tutoring.domain.exceptions import ModelOutputException
 from tests.core.tutoring.builders import COURSE, EX4C, OK, diagnosis_json, tutoring
 from tests.fakes.llm import ScriptedLLMClient
@@ -28,7 +28,7 @@ async def test_a_truncated_diagnosis_is_asked_again_once_and_both_calls_are_trac
     )
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
-    out = await t.turns.handle(TurnInput(session_id=sid, text="no sé què fer"))
+    out = await t.turns.handle(TurnHandlerInput(session_id=sid, text="no sé què fer"))
     assert llm.calls(Stage.DIAGNOSIS) == 2
     diagnosis_calls = [c for c in out.trace.calls if c.stage == Stage.DIAGNOSIS]
     assert [c.output_tokens for c in diagnosis_calls] == [3000, 2]
@@ -39,7 +39,7 @@ async def test_a_diagnosis_truncated_twice_fails_the_turn(session_provider: SQLM
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
     with pytest.raises(ModelOutputException):
-        await t.turns.handle(TurnInput(session_id=sid, text="no sé què fer"))
+        await t.turns.handle(TurnHandlerInput(session_id=sid, text="no sé què fer"))
     assert llm.calls(Stage.DIAGNOSIS) == 2
 
 
@@ -51,7 +51,7 @@ async def test_other_diagnosis_failures_are_not_retried(
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
     with pytest.raises((ModelOutputException, LLMProviderError)):
-        await t.turns.handle(TurnInput(session_id=sid, text="no sé què fer"))
+        await t.turns.handle(TurnHandlerInput(session_id=sid, text="no sé què fer"))
     assert llm.calls(Stage.DIAGNOSIS) == 1
 
 
@@ -66,7 +66,7 @@ async def test_a_failed_draft_counts_its_billed_tokens(session_provider: SQLMode
     )
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
-    out = await t.turns.handle(TurnInput(session_id=sid, text="no sé què fer"))
+    out = await t.turns.handle(TurnHandlerInput(session_id=sid, text="no sé què fer"))
     assert [c.output_tokens for c in out.trace.calls if c.stage == Stage.REPLY] == [1500, 2]
 
 
@@ -84,7 +84,7 @@ async def test_the_concept_fallback_cites_the_answering_item_and_links_it(
     )
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
-    out = await t.turns.handle(TurnInput(session_id=sid, text="Què vol dir que existeixi el límit?"))
+    out = await t.turns.handle(TurnHandlerInput(session_id=sid, text="Què vol dir que existeixi el límit?"))
     assert out.trace.fallback
     assert COURSE.theory_item(background).label.split(" (")[0] in out.message
     assert [r.id for r in out.references] == [background]

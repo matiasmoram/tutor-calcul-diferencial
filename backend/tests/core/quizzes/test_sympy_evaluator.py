@@ -1,12 +1,13 @@
 from collections.abc import Iterator
 from concurrent.futures.process import BrokenProcessPool
+from typing import Any
 
 import pytest
 
 from core.quizzes.domain.entities.grading import StudentCheck
 from core.quizzes.infra.sympy_check_evaluator import SympyCheckEvaluator
 from core.shared.math.infra.sympy_pool import UNAVAILABLE_DETAIL, SympyCheckPool
-from tests.core.shared.math.test_sympy_checks import ITERATED, check
+from tests.core.shared.math.builders import ITERATED, check
 
 
 @pytest.fixture
@@ -22,6 +23,12 @@ def test_evaluators_share_the_composition_roots_pool(pool: SympyCheckPool) -> No
     executor = pool._executor
     assert [r.status for r in second.evaluate([check("no_limit", "sin(1/x)")])] == ["ok"]
     assert executor is not None and pool._executor is executor
+
+
+def test_without_a_pool_each_call_runs_in_its_own_workers() -> None:
+    evaluator = SympyCheckEvaluator()
+    assert [r.status for r in evaluator.evaluate([ITERATED, check("no_limit", "sin(1/x)")])] == ["ok", "ok"]
+    assert evaluator.evaluate([]) == []
 
 
 def test_in_process_evaluator_runs_inline() -> None:
@@ -49,3 +56,16 @@ def test_workers_that_keep_dying_leave_the_checks_undecided(monkeypatch: pytest.
 
     monkeypatch.setattr(pool, "_submit", broken)
     assert [r.status for r in SympyCheckEvaluator(pool).evaluate([ITERATED, ITERATED])] == ["indeterminat"] * 2
+
+
+def test_a_throwaway_pool_gets_the_configured_memory_cap(monkeypatch: pytest.MonkeyPatch) -> None:
+    caps: list[int] = []
+
+    class Spy(SympyCheckPool):
+        def __init__(self, *args: Any, memory_limit_mb: int, **kwargs: Any) -> None:
+            caps.append(memory_limit_mb)
+            super().__init__(*args, memory_limit_mb=memory_limit_mb, **kwargs)
+
+    monkeypatch.setattr("core.quizzes.infra.sympy_check_evaluator.SympyCheckPool", Spy)
+    SympyCheckEvaluator(memory_limit_mb=777).evaluate([ITERATED])
+    assert caps == [777]

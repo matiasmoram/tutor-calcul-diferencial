@@ -1,6 +1,6 @@
 import pytest
 
-from core.quizzes.domain.exceptions import QuizGenerationException
+from core.quizzes.domain.exceptions import QuizGenerationFailedException
 from core.shared.llm.client import Stage
 from tests.core.quizzes.builders import ITERATED, check, generator, item, ok_audit, ok_solver, source
 from tests.fakes.llm import ScriptedLLMClient
@@ -69,7 +69,8 @@ async def test_the_stored_document_keeps_its_catalan_shape() -> None:
 async def test_generation_gives_up_after_too_many_rounds() -> None:
     bad = {"afirmacions": [item(f"X{i}.", contraexemple="") for i in range(5)]}
     llm = ScriptedLLMClient({Stage.QUIZ_GENERATION: [bad] * 10})
-    with pytest.raises(QuizGenerationException) as e:
+    with pytest.raises(QuizGenerationFailedException) as e:
         await generator(llm).generate(source(), "facil")
     assert e.value.error_code == 502 and llm.calls(Stage.QUIZ_GENERATION) == 5
+    assert e.value.message == "no s'ha pogut generar un qüestionari verificat de 6 afirmacions després de 5 rondes"
     assert llm.calls(Stage.QUIZ_VERIFICATION) == 0  # nothing reached the verification

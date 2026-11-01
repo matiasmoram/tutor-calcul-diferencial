@@ -1,11 +1,11 @@
-from core.mistakes.domain.ports import GeneratedMistakesSource
+from core.mistakes.domain.ports import PregeneratedMistakeSource
 from core.mistakes.domain.repository import MistakeExerciseRepository
 
 
 class PregeneratedImporter:
     """Loads the documents generated offline into the database (idempotent: same id, same row)."""
 
-    def __init__(self, source: GeneratedMistakesSource, exercises: MistakeExerciseRepository) -> None:
+    def __init__(self, source: PregeneratedMistakeSource, exercises: MistakeExerciseRepository) -> None:
         self._source = source
         self._exercises = exercises
 

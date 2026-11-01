@@ -1,4 +1,4 @@
-"""Self-test of the CAS leak checker (backend/core/shared/math/latex_cas.py) over every solution sheet.
+"""Self-test of the CAS leak checker (backend/core/shared/math/latex_cas/) over every solution sheet.
 
     python scripts/check_cas.py            # summary + up to 40 hint hits
     python scripts/check_cas.py --all      # every hint hit

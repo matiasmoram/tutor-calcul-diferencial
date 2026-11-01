@@ -6,7 +6,7 @@ from loguru import logger
 
 from core.quizzes.domain.entities.quiz import GenerationRound, Quiz, RejectedStatement
 from core.quizzes.domain.entities.statement import StatementVerification
-from core.quizzes.domain.exceptions import QuizGenerationException
+from core.quizzes.domain.exceptions import QuizGenerationFailedException, QuizGenerationTimeoutException
 from core.quizzes.domain.ports import BlindSolver, CheckEvaluator, QuizAuditor, QuizWriter
 from core.quizzes.domain.services.assembly import build_quiz
 from core.quizzes.domain.services.balance import (
@@ -25,12 +25,12 @@ from core.quizzes.domain.services.validation import (
     validate_draft,
     with_results,
 )
-from core.quizzes.domain.sources import QuizSource
-from core.quizzes.domain.values.call_summary import CallSummary
 from core.quizzes.domain.values.difficulty import QUIZ_SIZES, Difficulty
 from core.quizzes.domain.values.drafts import BatchRequest, StatementDraft
+from core.quizzes.domain.values.quiz_source import QuizSource
 from core.shared.domain.clock import Clock
 from core.shared.domain.ids import TheoryItemId
+from core.shared.domain.model_usage import ModelUsage
 from core.shared.llm.client import LLMError, LLMProviderError, TruncatedOutputError
 
 # A request must not hang for tens of minutes: past this the generation fails (the rounds paid are in the call log).
@@ -69,9 +69,7 @@ class QuizGenerator:
         except TimeoutError:
             if not deadline.expired():
                 raise
-            raise QuizGenerationException(
-                f"no s'ha pogut generar el qüestionari en {self._deadline_s:.0f} s: torna-ho a provar més tard"
-            ) from None
+            raise QuizGenerationTimeoutException(self._deadline_s) from None
 
     async def _generate(self, source: QuizSource, difficulty: Difficulty) -> Quiz:
         n = QUIZ_SIZES[difficulty]
@@ -138,9 +136,7 @@ class QuizGenerator:
             if is_complete(kept, n):
                 return build_quiz(source.id, source.topic, difficulty, kept, rounds, self._rng, self._clock.now())
             feedback = round_log.rejected
-        raise QuizGenerationException(
-            f"no s'ha pogut generar un qüestionari verificat de {n} afirmacions després de {number} rondes"
-        )
+        raise QuizGenerationFailedException(n, number)
 
     async def _write(
         self,
@@ -213,12 +209,12 @@ class _Written:
     candidates: list[StatementDraft]
     rejected: list[tuple[StatementDraft, list[str]]]
     received: int
-    call: CallSummary
+    call: ModelUsage
 
 
 @dataclass
 class _Verified:
-    solver: CallSummary
-    audit: CallSummary
+    solver: ModelUsage
+    audit: ModelUsage
     accepted: list[StatementDraft] = field(default_factory=list)
     rejected: list[tuple[StatementDraft, list[str]]] = field(default_factory=list)

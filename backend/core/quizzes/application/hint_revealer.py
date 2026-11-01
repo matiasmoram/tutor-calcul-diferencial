@@ -1,9 +1,10 @@
 from pydantic import BaseModel
 
-from core.quizzes.application.answers_grader import GRADING_CLAIM_TIMEOUT_S
 from core.quizzes.domain.exceptions import ConcurrentQuizGradingException
 from core.quizzes.domain.repository import QuizRepository, QuizSessionRepository
+from core.quizzes.domain.values.grading_claim import GRADING_CLAIM_TIMEOUT_S
 from core.shared.domain.clock import Clock
+from core.shared.domain.ids import SessionId
 
 
 class RevealedHint(BaseModel):
@@ -22,7 +23,7 @@ class HintRevealer:
         self._quizzes = quizzes
         self._clock = clock
 
-    async def reveal(self, session_id: str, statement_id: str) -> RevealedHint:
+    async def reveal(self, session_id: SessionId, statement_id: str) -> RevealedHint:
         session = await self._sessions.get(session_id)
         statement = (await self._quizzes.get(session.quiz_id)).statement(statement_id)
         revealed = RevealedHint(statement_id=statement.id, hint=statement.hint)

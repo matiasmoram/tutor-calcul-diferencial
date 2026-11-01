@@ -1,5 +1,5 @@
 import hmac
-from collections.abc import Iterator, Mapping
+from collections.abc import Iterator
 from contextlib import contextmanager
 from dataclasses import dataclass
 
@@ -7,6 +7,7 @@ from fastapi import Depends, HTTPException, Request
 
 from apps.tutor_api.rate_limiter import RateLimiter
 from core.counterexamples.domain.entities.spec import SpecCatalog
+from core.counterexamples.infra.pool_property_checker import VerdictCache
 from core.course.domain.entities.course import Course
 from core.mistakes.application.mistake_exercise_provider import MistakeGenerations
 from core.quizzes.application.quiz_provider import QuizGenerations
@@ -14,7 +15,7 @@ from core.shared.domain.exceptions import DomainException
 from core.shared.llm.client import LLMClient
 from core.shared.math.infra.sympy_pool import SympyCheckPool
 from core.shared.storage.session_provider import SQLModelSessionProvider
-from settings import Config
+from settings import Config, api_key_variable
 
 
 @dataclass
@@ -29,6 +30,7 @@ class AppState:
     global_limiter: RateLimiter  # all clients together, for the endpoints that pay a model
     sympy: SympyCheckPool  # one long-lived pool of sympy worker processes for the whole server
     counterexamples: SpecCatalog
+    verdict_cache: VerdictCache  # the counterexample verdicts already decided, shared by every request
     quiz_generations: QuizGenerations  # one generation per source and difficulty at a time, process-wide
     mistake_generations: MistakeGenerations  # the same for "Troba l'error" documents
 
@@ -109,26 +111,21 @@ def require_professor(professor: bool = Depends(is_professor)) -> None:
         raise HTTPException(403, "Només per al professorat.")
 
 
-KEY_VARIABLES: Mapping[str, str] = {
-    "anthropic": "ANTHROPIC_API_KEY",
-    "gemini": "GEMINI_API_KEY",
-    "openai": "OPENAI_API_KEY",
-    "openrouter": "OPENROUTER_API_KEY",
-}
-
-
 def ensure_api_key(config: Config) -> None:
-    """Before an action that calls the model: a missing key is a clear 503, not a provider error mid-way."""
-    variable = KEY_VARIABLES.get(config.LLM_PROVIDER, "ANTHROPIC_API_KEY")
+    """Before an action that calls the model: a missing key is a clear 503, not a provider error mid-way. Only a
+    local server gets here without one: production refuses to start without it."""
+    variable = api_key_variable(config)
     if not config.api_key(variable):
         raise HTTPException(503, f"Falta la clau d'API: posa {variable} al fitxer .env i reinicia el servidor.")
 
 
 @contextmanager
-def domain_errors(action: str | None = None) -> Iterator[None]:
-    """Translates a domain exception into its HTTP status. `action` prefixes model failures ("La diagnosi")."""
+def domain_errors(action: str) -> Iterator[None]:
+    """Names the action a model failure (a 502 domain exception) interrupted: "La generació ha fallat: ...". Any
+    other domain exception goes on to the app's handler unchanged."""
     try:
         yield
     except DomainException as exc:
-        detail = f"{action} ha fallat: {exc.message}" if action and exc.error_code == 502 else exc.message
-        raise HTTPException(status_code=exc.error_code, detail=detail) from exc
+        if exc.error_code != 502:
+            raise
+        raise HTTPException(status_code=502, detail=f"{action} ha fallat: {exc.message}") from exc

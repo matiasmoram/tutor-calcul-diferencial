@@ -1,15 +1,16 @@
 from collections.abc import Sequence
 
-from core.quizzes.domain.sources import QuizSource
+from core.quizzes.domain.ports import QuizAuditor
 from core.quizzes.domain.values.drafts import StatementDraft
+from core.quizzes.domain.values.quiz_source import QuizSource
 from core.quizzes.domain.values.verification import AuditReview, AuditReviews
-from core.quizzes.infra.llm_outputs import call_summary, objects, parse_all
+from core.quizzes.infra.llm_outputs import objects, parse_all
 from core.quizzes.infra.llm_schemas import audit_schema
 from core.quizzes.infra.prompts import AUDIT_SYSTEM, audit_request, source_context
 from core.shared.llm.client import LLMClient, LLMRequest, Stage
 
 
-class LLMQuizAuditor:
+class LLMQuizAuditor(QuizAuditor):
     def __init__(self, llm: LLMClient) -> None:
         self._llm = llm
 
@@ -24,4 +25,4 @@ class LLMQuizAuditor:
             ),
         )
         reviews = parse_all(AuditReview, objects(data, "revisions"), Stage.QUIZ_AUDIT)
-        return AuditReviews(reviews=reviews, call=call_summary(meta))
+        return AuditReviews(reviews=reviews, call=meta.usage())

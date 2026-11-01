@@ -1,6 +1,6 @@
 """The authored course content: one YAML file per topic for the notes (`teoria/temaN.yaml`) and for the problem
-sheets (`exercicis/temaN.yaml`). The files keep their Catalan keys (they are written and validated by
-scripts/check_fitxes.py and merge_fitxes.py); this module maps them onto the English domain entities."""
+sheets (`exercicis/temaN.yaml`). The files keep their Catalan keys (they are edited by hand and validated by
+scripts/check_fitxes.py); this module maps them onto the English domain entities."""
 
 from collections.abc import Mapping
 from pathlib import Path
@@ -13,11 +13,12 @@ from core.course.domain.entities.problem_sheet import Problem, ProblemSheet
 from core.course.domain.entities.theory_item import TheoryItem
 from core.course.domain.entities.topic import Topic, TopicSection
 from core.course.domain.exceptions import InvalidCourseContentException
+from core.course.domain.ports import CourseSource
 
 type Raw = Mapping[str, object]
 
 
-class YamlCourseSource:
+class YamlCourseSource(CourseSource):
     def __init__(self, exercises_dir: Path, theory_dir: Path) -> None:
         self._exercises_dir = exercises_dir
         self._theory_dir = theory_dir

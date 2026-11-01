@@ -1,17 +1,7 @@
 import pytest
 
-from core.shared.math.sympy_checks import MathCheck, evaluate, evaluate_one
-
-
-def check(kind: str, expression: str, value: str = "", variable: str = "x", point: str = "0") -> MathCheck:
-    # The model writes the Catalan keys: validate from them, as production does.
-    return MathCheck.model_validate(
-        {"descripcio": "c", "tipus": kind, "expressio": expression, "variable": variable, "punt": point,
-         "costat": "ambdos", "valor": value}
-    )  # fmt: skip
-
-
-ITERATED = check("limit", "x*(m*x)/(x**2+(m*x)**2)", "m/(1+m**2)")
+from core.shared.math.sympy_checks import MathCheck, evaluate_one
+from tests.core.shared.math.builders import ITERATED, check
 
 
 @pytest.mark.parametrize(
@@ -41,11 +31,6 @@ def test_checks_never_eval_untrusted_python(expr: str) -> None:
 
 def test_unknown_kind_is_undecided_not_an_error() -> None:
     assert evaluate_one(check("derivada", "x")).status == "indeterminat"
-
-
-def test_checks_in_worker_processes() -> None:
-    out = evaluate([ITERATED, check("no_limit", "sin(1/x)")])
-    assert [r.status for r in out] == ["ok", "ok"]
 
 
 def test_results_serialize_to_the_stored_catalan_keys() -> None:

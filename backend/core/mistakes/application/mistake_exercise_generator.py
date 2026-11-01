@@ -2,8 +2,8 @@ import asyncio
 
 from core.mistakes.domain.entities.mistake_exercise import GenerationAttempt, MistakeExercise, Verification
 from core.mistakes.domain.exceptions import MistakeGenerationFailedException, MistakeGenerationTimeoutException
-from core.mistakes.domain.generation_checks import compare_verification, validate_generation
 from core.mistakes.domain.ports import MistakeGenerator, MistakeVerifier
+from core.mistakes.domain.services.generation_checks import compare_verification, validate_generation
 from core.mistakes.domain.values.difficulty import MISTAKES_PER_DIFFICULTY, Difficulty
 from core.mistakes.domain.values.mistake_exercise_id import MistakeExerciseId
 from core.mistakes.domain.values.mistake_source import MistakeSource, TheorySource

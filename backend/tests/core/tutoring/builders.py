@@ -3,13 +3,14 @@
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 
+from core.shared.domain.clock import SystemClock
 from core.shared.llm.client import JsonObject, LLMClient
 from core.shared.storage.session_provider import SQLModelSessionProvider
 from core.tutoring.application.photo_transcriber import PhotoTranscriber
 from core.tutoring.application.session_browser import SessionBrowser
 from core.tutoring.application.session_starter import SessionStarter
 from core.tutoring.application.turn_handler import TurnHandler
-from core.tutoring.domain.policy import decide
+from core.tutoring.domain.services.policy import decide
 from core.tutoring.domain.values.diagnosis import Diagnosis
 from core.tutoring.domain.values.plan import Plan
 from core.tutoring.domain.values.session_state import SessionState
@@ -69,10 +70,13 @@ class Tutoring:
 
 def tutoring(llm: LLMClient, provider: SQLModelSessionProvider) -> Tutoring:
     sessions = SQLModelTutorSessionRepository(provider)
+    clock = SystemClock()
     return Tutoring(
         sessions=sessions,
-        starter=SessionStarter(COURSE, sessions),
-        turns=TurnHandler(COURSE, sessions, LLMDiagnoser(llm, COURSE), LLMReplyWriter(llm), LLMReplyJudge(llm, COURSE)),
-        transcriber=PhotoTranscriber(COURSE, sessions, LLMTranscriber(llm)),
+        starter=SessionStarter(COURSE, sessions, clock),
+        turns=TurnHandler(
+            COURSE, sessions, LLMDiagnoser(llm, COURSE), LLMReplyWriter(llm), LLMReplyJudge(llm, COURSE), clock
+        ),
+        transcriber=PhotoTranscriber(COURSE, sessions, LLMTranscriber(llm), clock),
         browser=SessionBrowser(sessions),
     )

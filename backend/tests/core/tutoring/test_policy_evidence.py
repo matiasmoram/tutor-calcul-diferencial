@@ -1,11 +1,11 @@
-"""Policy invariants that do not trust the diagnosis' word alone (see the docstring of core/tutoring/domain/policy.py):
+"""Policy invariants that do not trust the diagnosis' word alone (see the docstring of core/tutoring/domain/services/policy.py):
 steps need evidence, closing needs reasoning in the message, no oracle for guesses, the result gate only lifts on
 the student's own words, and a repeated mistake has no dead end."""
 
 import re
 
-from core.tutoring.domain.fallback import fallback_message
-from core.tutoring.domain.policy import decide
+from core.tutoring.domain.services.fallback import fallback_message
+from core.tutoring.domain.services.policy import decide
 from core.tutoring.domain.values.session_state import SessionState
 from tests.core.tutoring.builders import COURSE, EX4C, diagnosis
 

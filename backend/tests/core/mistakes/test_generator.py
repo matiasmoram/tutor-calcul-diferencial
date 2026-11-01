@@ -8,7 +8,8 @@ from core.mistakes.application.mistake_exercise_generator import MistakeExercise
 from core.mistakes.application.mistake_exercise_provider import MistakeExerciseProvider, MistakeGenerations
 from core.mistakes.domain.exceptions import MistakeGenerationFailedException, MistakeGenerationTimeoutException
 from core.mistakes.infra.json_file_source import JsonFileMistakeSource
-from core.mistakes.infra.llm_adapters import LLMMistakeGenerator, LLMMistakeVerifier
+from core.mistakes.infra.llm_mistake_generator import LLMMistakeGenerator
+from core.mistakes.infra.llm_mistake_verifier import LLMMistakeVerifier
 from core.mistakes.infra.llm_schemas import generation_schema
 from core.mistakes.infra.sqlmodel_repository import SQLModelMistakeExerciseRepository
 from core.shared.domain.single_flight import SingleFlight
@@ -100,7 +101,7 @@ async def test_concurrent_requests_share_one_generation(session_provider: SQLMod
         for i in range(3)
     ]
     provided = await asyncio.gather(*(p.get_or_generate(problem_source(), "facil") for p in providers))
-    assert len({p.exercise.id for p in provided}) == 1 and all(p.freshly_generated for p in provided)
+    assert len({p.exercise.id for p in provided}) == 1 and all(p.generated_now for p in provided)
     assert llm.calls(Stage.MISTAKES_GENERATION) == 1
     assert len(await repo.of_source("t2-4c", "facil")) == 1
     assert not generations.in_flight(("problema", "t2-4c", "facil"))

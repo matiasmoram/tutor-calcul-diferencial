@@ -10,9 +10,11 @@
 .playwright-mcp/
 **/__pycache__/
 **/*.pyc
+**/*.md
 data/
 work/
 docs/
-# Not runtime: the Dockerfile copies backend/, frontend/, scripts/, sources/ (PDFs served under /pdf) and supabase/.
-backend/tests/
-backend/registres/
+# Not runtime: the image copies only backend/, frontend/ and sources/ (PDFs served under /pdf).
+**/tests/
+scripts/
+supabase/

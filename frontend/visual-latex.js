@@ -3,7 +3,7 @@
 /* Reads the functions of an exercise statement (LaTeX) so the visual tools can open with them:
    f(x,y)=…, limits at a point, maps F=(F1,F2), constraints and regions {(x,y) | …}.
    latexToExpr() turns LaTeX into math.js syntax; anything it cannot read is skipped, never guessed.
-   Pure functions, no DOM: also loaded by node for tests (module.exports at the end). */
+   Pure functions, no DOM. */
 
 const LX_FUNCS = new Set(["sin", "cos", "tan", "exp", "log", "sqrt", "abs", "asin", "acos", "atan",
   "sinh", "cosh", "tanh", "nthRoot", "sec", "csc", "cot", "max", "min"]);
@@ -291,5 +291,3 @@ function extractVisual(text) {
   if (out.map && out.map.some((c) => c == null)) delete out.map;
   return out;
 }
-
-if (typeof module !== "undefined") module.exports = { latexToExpr, extractVisual };

@@ -1,5 +1,6 @@
 """JSON schemas of the model stages. Keys and enum values are Catalan: the contract with the model."""
 
+from core.mistakes.domain.values.llm_outputs import EXPLANATION_GRADES, NO_MISTAKE, SEVERITIES
 from core.mistakes.domain.values.mistake_kind import PROBLEM_MISTAKE_KINDS, THEORY_MISTAKE_KINDS
 from core.shared.llm.client import JsonObject
 
@@ -52,7 +53,7 @@ def verification_schema() -> JsonObject:
                     "properties": {
                         "fragment": {"type": "integer"},
                         "cita": {"type": "string"},
-                        "gravetat": {"type": "string", "enum": ["error", "consequencia", "imprecisio"]},
+                        "gravetat": {"type": "string", "enum": list(SEVERITIES)},
                         "explicacio": {"type": "string"},
                     },
                 },
@@ -76,8 +77,8 @@ def grading_schema(annotation_ids: list[str], mistake_ids: list[str]) -> JsonObj
                     "required": ["anotacio", "error", "explicacio", "feedback"],
                     "properties": {
                         "anotacio": {"type": "string", "enum": annotation_ids},
-                        "error": {"type": "string", "enum": [*mistake_ids, "cap"]},
-                        "explicacio": {"type": "string", "enum": ["correcta", "parcial", "incorrecta", "absent"]},
+                        "error": {"type": "string", "enum": [*mistake_ids, NO_MISTAKE]},
+                        "explicacio": {"type": "string", "enum": list(EXPLANATION_GRADES)},
                         "feedback": {"type": "string"},
                     },
                 },

@@ -13,11 +13,12 @@ from dotenv import load_dotenv
 from core.course.domain.entities.course import Course
 from core.course.infra.yaml_course_source import YamlCourseSource
 from core.mistakes.application.mistake_exercise_generator import MistakeExerciseGenerator
-from core.mistakes.domain.sources import theory_result
+from core.mistakes.domain.services.sources import theory_result
 from core.mistakes.domain.values.difficulty import DIFFICULTIES, Difficulty
 from core.mistakes.domain.values.mistake_source import MistakeSource, ProblemSource, TheorySource
 from core.mistakes.infra.json_file_source import JsonFileMistakeSource
-from core.mistakes.infra.llm_adapters import LLMMistakeGenerator, LLMMistakeVerifier
+from core.mistakes.infra.llm_mistake_generator import LLMMistakeGenerator
+from core.mistakes.infra.llm_mistake_verifier import LLMMistakeVerifier
 from core.shared.domain.clock import SystemClock
 from core.shared.llm.infra.factory import make_llm_client
 from settings import BACKEND_DIR, ROOT_DIR, Config

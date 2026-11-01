@@ -3,6 +3,7 @@ import base64
 import pytest
 from fastapi.testclient import TestClient
 
+from core.shared.domain.clock import SystemClock
 from core.shared.llm.client import LLMError, Stage
 from tests.core.tutoring.builders import OK, diagnosis_json
 from tests.fakes.llm import ScriptedLLMClient
@@ -22,7 +23,8 @@ def test_a_session_shows_background_theory_and_the_outline_only_to_professors(
     student = api.post("/api/sessions", json={"exercici_id": "t2-4c"}).json()
     assert "passos" not in student and "resultat" not in student and "teoria" in student
     assert api.post("/api/sessions", json={"exercici_id": "t9-9"}).status_code == 404
-    assert api.post("/api/sessions", json={"exercici_id": "../x"}).status_code == 404
+    malformed = api.post("/api/sessions", json={"exercici_id": "../x"})
+    assert malformed.status_code == 404 and malformed.json()["detail"] == "Exercici desconegut"
 
 
 def test_a_turn_is_stored_and_logged_and_students_get_no_trace(
@@ -57,7 +59,8 @@ def test_a_failed_diagnosis_leaves_the_session_unchanged(api: TestClient, script
 
 
 def test_unknown_sessions(api: TestClient) -> None:
-    assert api.post("/api/sessions/nope/missatges", json={"text": "x"}).status_code == 404
+    malformed = api.post("/api/sessions/nope/missatges", json={"text": "x"})
+    assert malformed.status_code == 404 and malformed.json()["detail"] == "Sessió desconeguda"
     assert api.post(f"/api/sessions/{'0' * 32}/missatges", json={"text": "x"}).status_code == 404
     assert api.get(f"/api/professor/sessions/{'0' * 32}").status_code == 404
 
@@ -74,3 +77,26 @@ def test_photo_transcription(api: TestClient, scripted_llm: ScriptedLLMClient) -
     assert api.post(f"/api/sessions/{sid}/transcripcio", json={"imatge": "nope"}).status_code == 400
     gif = "data:image/gif;base64," + base64.b64encode(b"GIF").decode()
     assert api.post(f"/api/sessions/{sid}/transcripcio", json={"imatge": gif}).status_code == 400
+
+
+def test_the_transcription_and_session_list_json_is_pinned(
+    api: TestClient, scripted_llm: ScriptedLLMClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(SystemClock, "now", lambda _self: 1_700_000_000.0)
+    sid = _start(api)
+    png = "data:image/png;base64," + base64.b64encode(b"\x89PNG fake").decode()
+    transcription = {"transcripcio": "$x^2$", "llegibilitat": "parcial", "contingut": "treball_matematic"}
+    scripted_llm.then(Stage.TRANSCRIPTION, transcription | {"dubtes": ["línia 2"]})
+    assert api.post(f"/api/sessions/{sid}/transcripcio", json={"imatge": png}).text == (
+        '{"transcripcio":"$x^2$","llegibilitat":"parcial","contingut":"treball_matematic","dubtes":["línia 2"],'
+        '"crida":{"stage":"transcription","model":"scripted","latency_ms":1,"input_tokens":10,"output_tokens":2,'
+        '"cached_tokens":0}}'
+    )
+    scripted_llm.then(Stage.DIAGNOSIS, diagnosis_json())
+    scripted_llm.then(Stage.REPLY, {"text": "Què has provat?"})
+    scripted_llm.then(Stage.GUARD, OK)
+    api.post(f"/api/sessions/{sid}/missatges", json={"text": "hola"})
+    assert api.get("/api/professor/sessions").text == (
+        f'[{{"id":"{sid}","exercici":"t2-4c","inici":1700000000.0,"darrer":1700000000.0,"torns":1,"tancat":false,'
+        '"fallbacks":0,"rebutjos_guardia":0,"bucles":0,"mostrar_pas":0,"frustracio":0}]'
+    )

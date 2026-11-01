@@ -5,19 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tutor socràtic · Càlcul Diferencial</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23243b6b'/%3E%3Ctext x='32' y='47' font-family='Georgia,serif' font-size='44' font-style='italic' text-anchor='middle' fill='%23fff'%3E%E2%88%82%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.21/katex.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.21/katex.min.css" integrity="sha512-j+4buRc0VCpnAcYbe+UW/y6y3ySL9ORZGqzI9OnfQMfKnpwLP2V7Fm9fE+aaj7UKE5s7q87yCu7qGPD7zUFp+w==" crossorigin="anonymous" referrerpolicy="no-referrer">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.21/katex.min.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.21/contrib/auto-render.min.js"></script>
-  <link rel="stylesheet" href="/static/style.css?v=18">
-  <script defer src="/static/app.js?v=16"></script>
-  <script defer src="/static/errades.js?v=12"></script>
-  <script defer src="/static/afirmacions.js?v=2"></script>
-  <script defer src="/static/contraexemples.js?v=2"></script>
-  <script defer src="/static/visual-latex.js?v=1"></script>
-  <script defer src="/static/visual.js?v=2"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.21/katex.min.js" integrity="sha512-jGjq63XP3PrAcXF6lp4bnZIwrVLGoqwh/4Rur2olg2TLt55eNVLjLCgPrrT07aTXxb0UkuMKlhxzfh5TBTACgQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.21/contrib/auto-render.min.js" integrity="sha512-6bKDPShiPRjAcdeO8T6cedaVEi0pavPbzue/G/ZRiwVlurWZOSZ/vI9fr2lhk8IPXK7z51AZac+zBvZzgDJzDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="/static/style.css?v=19">
+  <script defer src="/static/app.js?v=18"></script>
+  <script defer src="/static/errades.js?v=13"></script>
+  <script defer src="/static/afirmacions.js?v=3"></script>
+  <script defer src="/static/contraexemples.js?v=3"></script>
+  <script defer src="/static/visual-latex.js?v=2"></script>
+  <script defer src="/static/visual.js?v=3"></script>
   <script defer src="/static/visual-eines.js?v=1"></script>
 </head>
 <body>
@@ -26,16 +26,16 @@
       <span class="brand-mark">∂</span>
       <div>
         <h1>Tutor socràtic</h1>
-        <p>Càlcul Diferencial · prototip</p>
+        <p>Càlcul Diferencial · FME-UPC</p>
       </div>
     </a>
     <nav class="crumbs" id="crumbs" aria-label="Ruta"></nav>
-    <a class="nav-teoria" href="#/visual">Visualitzador</a>
-    <a class="nav-teoria" href="#/teoria">Teoria</a>
-    <a class="nav-teoria nav-professor hidden" href="#/professor">Professorat</a>
-    <button type="button" class="nav-teoria nav-sortir hidden" id="sortir-prof" title="Oblida la clau de professor en aquest navegador">Sortir del mode professor</button>
+    <a class="nav-link" href="#/visual">Visualitzador <span class="badge-beta" title="Versió beta: en proves, pot contenir errors">Beta</span></a>
+    <a class="nav-link" href="#/teoria">Teoria</a>
+    <a class="nav-link nav-professor hidden" href="#/professor">Professorat</a>
+    <button type="button" class="nav-link nav-sortir hidden" id="sortir-prof" title="Oblida la clau de professor en aquest navegador">Sortir (professorat)</button>
     <div class="logos" aria-label="FME · UPC">
-      <img src="/static/assets/fme.png" alt="Facultat de Matemàtiques i Estadística" class="logo-fme" onerror="this.remove()">
+      <img src="/static/assets/fme.png" alt="Facultat de Matemàtiques i Estadística" class="logo-fme">
       <img src="/static/assets/upc.png" alt="Universitat Politècnica de Catalunya" class="logo-upc">
     </div>
     <label class="toggle hidden" id="toggle-wrap">
@@ -58,7 +58,7 @@
       <div class="hero-copy">
         <div class="eyebrow">Càlcul Diferencial · FME · UPC</div>
         <h2 class="display">Aprèn preguntant,<br><span class="accent-text">no copiant la solució.</span></h2>
-        <p class="lead">Un tutor socràtic per als problemes de la llista. Explica-li què has fet (o fes una foto de la llibreta) i et farà la pregunta justa per desencallar-te, sense resoldre-ho per tu.</p>
+        <p class="lead">Un tutor socràtic per als problemes de les llistes del curs. Explica-li què has fet (o fes una foto de la llibreta) i et farà la pregunta justa per desencallar-te, sense resoldre-ho per tu. A més, activitats per trobar errors, decidir si una afirmació és certa i construir contraexemples, i un visualitzador de funcions.</p>
         <div class="cta-row">
           <a class="btn primary" href="#/exercicis">Comença a practicar →</a>
           <button type="button" class="btn ghost" id="to-how">Com funciona</button>
@@ -89,83 +89,97 @@
     <section class="landing-section">
       <h3 class="section-heading">Què vols fer?</h3>
       <div class="modes">
-        <a class="mode" href="#/exercicis">
+        <a class="mode featured" href="#/exercicis">
           <span class="mode-icon">?</span>
-          <h3>Exercicis amb tutor</h3>
-          <p>Tria un exercici, explica què has fet (o fes-ne una foto) i on t'has encallat. El tutor et guia amb preguntes i pistes graduades.</p>
+          <h4>Exercicis amb tutor</h4>
+          <p>Tria un exercici de les llistes i explica què has fet, o fes una foto de la llibreta. El tutor et guia amb preguntes i pistes graduades, sense donar-te la solució.</p>
           <span class="mode-cta">Entrar →</span>
+        </a>
+        <a class="mode" href="#/errades">
+          <span class="mode-icon">≠</span>
+          <h4>Troba l'error</h4>
+          <p>Un resultat dels apunts o la resolució d'un problema amb errors amagats. Marca'ls sobre el text, explica per què són incorrectes i compara amb la correcció.</p>
+          <span class="mode-cta">Entrar →</span>
+        </a>
+        <a class="mode" href="#/afirmacions">
+          <span class="mode-icon">∃</span>
+          <h4>Cert o fals</h4>
+          <p>Afirmacions que semblen certes i potser no ho són. Decideix si són certes o falses i justifica-ho amb una demostració o un contraexemple.</p>
+          <span class="mode-cta">Entrar →</span>
+        </a>
+        <a class="mode" href="#/contraexemples">
+          <span class="mode-icon">∄</span>
+          <h4>Construeix el contraexemple</h4>
+          <p>Escriu una funció amb propietats que semblen incompatibles (parcials sense continuïtat, el mateix límit per totes les rectes però sense límit) i el certificat que ho prova. Ho comprova el càlcul simbòlic, sense IA.</p>
+          <span class="mode-cta">Entrar →</span>
+          <span class="badge-beta" title="Versió beta: en proves, pot contenir errors">Beta</span>
         </a>
         <a class="mode" href="#/visual">
           <span class="mode-icon">∇</span>
-          <h3>Visualitzador</h3>
-          <p>Mira la funció de l'exercici: gràfica, corbes de nivell, gradient, punts crítics, extrems en una regió, límits per camins i diferenciabilitat. Des de cada exercici, botó «Visualitza».</p>
+          <h4>Visualitzador</h4>
+          <p>Dibuixa la funció d'un exercici: gràfica, corbes de nivell, gradient, punts crítics, extrems en una regió i diferenciabilitat. S'obre des de cada exercici amb el botó «Visualitza».</p>
           <span class="mode-cta">Entrar →</span>
-          <span class="new">Nou</span>
+          <span class="badge-beta" title="Versió beta: en proves, pot contenir errors">Beta</span>
         </a>
-        <div class="mode disabled" aria-disabled="true">
-          <span class="mode-icon">∴</span>
-          <h3>Entendre una demostració</h3>
-          <p>Reconstrueix la demostració d'un teorema (p. ex. el de la funció inversa) justificant cada pas.</p>
-          <span class="soon">Aviat</span>
-        </div>
-        <a class="mode featured" href="#/errades">
-          <span class="mode-icon">≠</span>
-          <h3>Troba l'error</h3>
-          <p>Un teorema dels apunts o la resolució d'un problema, amb errors amagats verificats per IA. Subratlla'ls sobre el text, explica per què estan malament i envia la correcció.</p>
+        <a class="mode" href="#/teoria">
+          <span class="mode-icon">§</span>
+          <h4>Teoria del curs</h4>
+          <p>Consulta els apunts per temes: cada definició, teorema i exemple obre el PDF a la pàgina corresponent.</p>
           <span class="mode-cta">Entrar →</span>
-          <span class="new">Nou</span>
-        </a>
-        <a class="mode featured" href="#/afirmacions">
-          <span class="mode-icon">∃</span>
-          <h3>Cert o fals</h3>
-          <p>Afirmacions que semblen certes: límits iterats iguals sense límit doble, continuïtat en cada variable que no és continuïtat… Demostra-les o troba'n un contraexemple. Generades per IA, verificades a cegues i comprovades amb sympy.</p>
-          <span class="mode-cta">Entrar →</span>
-          <span class="new">Nou</span>
-        </a>
-        <a class="mode featured" href="#/contraexemples">
-          <span class="mode-icon">∄</span>
-          <h3>Construeix el contraexemple</h3>
-          <p>Fabrica la funció que trenca la intuïció: parcials sense continuïtat, totes les rectes d'acord sense límit, Schwarz trencat… Dona el certificat (camins, una fita) i sympy ho comprova. Sense IA: el veredicte és càlcul.</p>
-          <span class="mode-cta">Entrar →</span>
-          <span class="new">Nou</span>
         </a>
       </div>
     </section>
 
     <section class="landing-section" id="how">
-      <h3 class="section-heading">Com funciona</h3>
+      <h3 class="section-heading">Com funciona el tutor</h3>
       <p class="muted section-sub">Cada missatge passa per quatre etapes. El model de llenguatge només llegeix i redacta; què es pot dir ho decideixen regles fixes.</p>
       <ol class="pipeline">
         <li>
           <span class="step-num">1</span>
           <h4>Diagnosi</h4>
           <p>Compara el que has escrit amb la solució de referència: quins passos has fet, quins errors hi ha, com d'encallat estàs.</p>
-          <span class="tag llm">LLM · sortida estructurada</span>
+          <span class="tag llm">Model de llenguatge</span>
         </li>
         <li>
           <span class="step-num">2</span>
           <h4>Pla</h4>
           <p>Unes regles decideixen què fer: qüestionar un error, validar i avançar, o donar una pista del nivell que toca.</p>
-          <span class="tag rule">Regles deterministes</span>
+          <span class="tag rule">Regles fixes</span>
         </li>
         <li>
           <span class="step-num">3</span>
           <h4>Redacció</h4>
           <p>El redactor només veu el contingut permès: ni els passos següents ni el resultat. No pot filtrar el que no sap.</p>
-          <span class="tag llm">LLM · contingut limitat</span>
+          <span class="tag llm">Model de llenguatge</span>
         </li>
         <li>
           <span class="step-num">4</span>
           <h4>Guardià</h4>
           <p>Abans d'arribar-te, el missatge es revisa: si revela massa o conté un error, es reescriu.</p>
-          <span class="tag rule">Regles + LLM</span>
+          <span class="tag rule">Regles i model</span>
         </li>
       </ol>
+
+      <h4 class="how-subheading">I les altres activitats</h4>
+      <ul class="how-modes">
+        <li>
+          <strong>Troba l'error i Cert o fals</strong>
+          Un model escriu els documents i les afirmacions; un segon model els resol a cegues, sense saber on són els errors ni quines afirmacions són falses. Només es publiquen els que superen la verificació, i els càlculs dels contraexemples es comproven amb càlcul simbòlic.
+        </li>
+        <li>
+          <strong>Construeix el contraexemple <span class="badge-beta" title="Versió beta: en proves, pot contenir errors">Beta</span></strong>
+          Sense cap model de llenguatge: el veredicte de cada propietat el dona el càlcul simbòlic a partir de la funció i el certificat que escrius.
+        </li>
+        <li>
+          <strong>Visualitzador <span class="badge-beta" title="Versió beta: en proves, pot contenir errors">Beta</span></strong>
+          Els gràfics i els càlculs numèrics es fan al teu navegador, amb les funcions llegides de l'enunciat de l'exercici.
+        </li>
+      </ul>
     </section>
 
     <p class="muted small center" id="api-status"></p>
     <footer class="institution">
-      <img src="/static/assets/fme.png" alt="" class="logo-fme" onerror="this.remove()">
+      <img src="/static/assets/fme.png" alt="" class="logo-fme">
       <img src="/static/assets/upc.png" alt="" class="logo-upc">
       <div>
         <strong>Facultat de Matemàtiques i Estadística</strong>
@@ -177,6 +191,7 @@
   <!-- Problem lists -->
   <main class="page hidden" id="view-llistes">
     <section class="hero left">
+      <div class="eyebrow" id="llistes-eyebrow"></div>
       <h2 id="llistes-title">Exercicis</h2>
       <p class="muted" id="llistes-intro"></p>
     </section>
@@ -195,7 +210,7 @@
   <!-- Professor review of logged conversations -->
   <main class="page hidden" id="view-professor"></main>
 
-  <!-- Visual lab: interactive figures of the theory -->
+  <!-- Visualitzador (beta): explorer, analysis at a point, changes of variables -->
   <main class="page visual hidden" id="view-visual"></main>
 
   <!-- Find the error -->
@@ -204,12 +219,16 @@
   <!-- True or false: prove it or find a counterexample -->
   <main class="page errades hidden" id="view-afirmacions"></main>
 
+  <!-- Build the counterexample (beta): checked by sympy, no language model -->
   <main class="page errades hidden" id="view-contraexemples"></main>
+
+  <!-- A route that failed to load -->
+  <main class="page hidden" id="view-error"></main>
 
   <!-- Tutoring workspace -->
   <main class="layout hidden" id="view-exercici">
     <aside class="exercises">
-      <a class="back small" id="back-to-list" href="#/problemes">← Tota la llista</a>
+      <a class="back small" id="back-to-list" href="#/exercicis">← Tota la llista</a>
       <h2 id="grup-titol"></h2>
       <ul id="exercise-list"></ul>
     </aside>

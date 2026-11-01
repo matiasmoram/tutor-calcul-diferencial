@@ -19,6 +19,7 @@ def api(tmp_path, monkeypatch: pytest.MonkeyPatch, scripted_llm: ScriptedLLMClie
     monkeypatch.setenv("LLM_PROVIDER", "openai")
     monkeypatch.setenv("OPENAI_API_KEY", "test")
     monkeypatch.delenv("TUTOR_CLAU_PROFESSOR", raising=False)
+    monkeypatch.delenv("RENDER", raising=False)
     monkeypatch.setenv("TUTOR_DEMO", "1")  # tests see solutions unless they set a professor key
     with TestClient(create_app(llm=scripted_llm)) as client:
         yield client

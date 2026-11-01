@@ -1,4 +1,4 @@
-"""Random diagnosis sequences for the policy (no LLM), as scripts/fuzz_politica.py generates them.
+"""Random diagnosis sequences for the policy (no LLM), checked against its invariants.
 
 Invariants checked by `check` (any violation is reported with the exercise, seed and turn):
   I1 no identical plan (action, target, level) more than 3 turns in a row (except after closing, and answers to
@@ -17,9 +17,9 @@ from collections import Counter
 from core.course.domain.entities.course import Course
 from core.course.domain.entities.exercise import Exercise
 from core.shared.llm.client import JsonObject
-from core.tutoring.domain.fallback import fallback_message
-from core.tutoring.domain.guard import deterministic_check
-from core.tutoring.domain.policy import allowed_content, allowed_theory, decide
+from core.tutoring.domain.services.fallback import fallback_message
+from core.tutoring.domain.services.guard import deterministic_check
+from core.tutoring.domain.services.policy import allowed_content, allowed_theory, decide
 from core.tutoring.domain.values.diagnosis import Diagnosis
 from core.tutoring.domain.values.session_state import SessionState
 
@@ -38,7 +38,7 @@ STUDENT_TEXTS = ["(missatge de l'alumne)"]
 
 
 def random_diagnosis(ex: Exercise, rng: random.Random, done: set[str], profile: str) -> tuple[JsonObject, set[str]]:
-    """A diagnosis with the model's (Catalan) keys. Same random stream as the legacy fuzzer."""
+    """A diagnosis with the model's (Catalan) keys."""
     if profile == "stuck_trying":
         intent, disorientation = "mostra_treball", "encallat"
     elif profile == "beggar":

@@ -1,5 +1,5 @@
-from core.tutoring.domain.guard import deterministic_check
-from core.tutoring.domain.policy import allowed_content, decide
+from core.tutoring.domain.services.guard import deterministic_check
+from core.tutoring.domain.services.policy import allowed_content, decide
 from core.tutoring.domain.values.session_state import SessionState
 from tests.core.tutoring.builders import EX4C, diagnosis
 

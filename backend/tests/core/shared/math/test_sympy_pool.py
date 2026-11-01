@@ -8,13 +8,12 @@ import pytest
 
 from core.shared.math.infra.sympy_pool import (
     INTERRUPTED_DETAIL,
-    MEMORY_LIMIT_ENV,
     TIMEOUT_DETAIL,
     SympyCheckPool,
     limit_memory,
 )
 from core.shared.math.sympy_checks import MathCheck
-from tests.core.shared.math.test_sympy_checks import ITERATED, check
+from tests.core.shared.math.builders import ITERATED, check
 from tests.core.shared.math.workers import (
     address_space_limit,
     allocate_mb,
@@ -126,9 +125,8 @@ async def test_a_dead_worker_is_undecided_and_replaced() -> None:
 
 
 @posix_only
-async def test_workers_address_space_is_capped(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setenv(MEMORY_LIMIT_ENV, "300")
-    p = SympyCheckPool(max_workers=1, timeout_s=60)
+async def test_workers_address_space_is_capped() -> None:
+    p = SympyCheckPool(max_workers=1, timeout_s=60, memory_limit_mb=300)
     try:
         assert await p.map(address_space_limit, [0], lambda n, why: -1) == [300 * 1024 * 1024]
     finally:

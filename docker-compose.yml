@@ -1,15 +1,16 @@
-# Production-like local stack: the app + a Postgres with the same schema as Supabase.
-#   docker compose up --build        -> http://localhost:8000
-# Secrets come from .env (never committed). DATABASE_URL here points at the local Postgres container.
+# Production-like local stack: the app with demo mode off + a Postgres built from the Supabase migrations.
+#   docker compose up --build        -> http://localhost:8000 (professor view: ?prof=prof-local)
+# API keys come from .env when it exists (never committed). The settings under app.environment win over .env.
 services:
   db:
-    image: postgres:16
+    image: postgres:17 # same major as CI
     environment:
       POSTGRES_USER: tutor
       POSTGRES_PASSWORD: tutor
       POSTGRES_DB: tutor
     volumes:
       - pgdata:/var/lib/postgresql/data
+      # Run only on an empty volume. After pulling a new migration: docker compose down -v (local data is lost).
       - ./supabase/migrations:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U tutor"]
@@ -18,9 +19,13 @@ services:
 
   app:
     build: .
-    env_file: .env
+    env_file:
+      - path: .env
+        required: false
     environment:
       DATABASE_URL: postgresql+psycopg://tutor:tutor@db:5432/tutor
+      TUTOR_DEMO: "0"
+      TUTOR_CLAU_PROFESSOR: ${TUTOR_CLAU_PROFESSOR:-prof-local}
     ports:
       - "8000:8000"
     depends_on:

@@ -5,7 +5,9 @@ like any typed message."""
 
 from typing import Literal, get_args
 
-from pydantic import AliasChoices, BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field
+
+from core.shared.domain.contract import catalan_alias
 
 Legibility = Literal["bona", "parcial", "illegible"]
 PhotoContent = Literal["treball_matematic", "altre", "buit"]
@@ -14,16 +16,14 @@ LEGIBILITIES: tuple[Legibility, ...] = get_args(Legibility)
 PHOTO_CONTENTS: tuple[PhotoContent, ...] = get_args(PhotoContent)
 
 
-def _ca(catalan: str, english: str) -> AliasChoices:
-    return AliasChoices(catalan, english)
-
-
 class Transcription(BaseModel):
     model_config = ConfigDict(serialize_by_alias=True, frozen=True)
 
-    text: str = Field(validation_alias=_ca("transcripcio", "text"), serialization_alias="transcripcio")
+    text: str = Field(validation_alias=catalan_alias("transcripcio", "text"), serialization_alias="transcripcio")
     legibility: Legibility = Field(
-        validation_alias=_ca("llegibilitat", "legibility"), serialization_alias="llegibilitat"
+        validation_alias=catalan_alias("llegibilitat", "legibility"), serialization_alias="llegibilitat"
     )
-    content: PhotoContent = Field(validation_alias=_ca("contingut", "content"), serialization_alias="contingut")
-    doubts: list[str] = Field(validation_alias=_ca("dubtes", "doubts"), serialization_alias="dubtes")
+    content: PhotoContent = Field(
+        validation_alias=catalan_alias("contingut", "content"), serialization_alias="contingut"
+    )
+    doubts: list[str] = Field(validation_alias=catalan_alias("dubtes", "doubts"), serialization_alias="dubtes")

@@ -2,7 +2,15 @@ name: CI
 
 on:
   push:
+    branches: [main]
   pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   checks:
@@ -12,17 +20,15 @@ jobs:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
         with:
+          version: "0.11.15" # same uv as the Dockerfile's base image
           python-version: "3.13"
           enable-cache: true
       - run: uv sync --locked
-      - run: uv run ruff check backend scripts
-      - run: uv run ruff format --check backend scripts
-      - run: uv run pyright
+      - run: uv run poe lint
+      - run: uv run poe types
       - run: uv run python scripts/check_fitxes.py
       - name: Schema snapshot matches the code
-        run: |
-          uv run python scripts/db.py schema > /tmp/schema.sql
-          diff -u supabase/schema.sql /tmp/schema.sql
+        run: uv run python scripts/db.py schema --check
 
   tests:
     runs-on: ubuntu-latest
@@ -44,12 +50,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
         with:
+          version: "0.11.15"
           python-version: "3.13"
           enable-cache: true
       - run: uv sync --locked
       # No API keys: the suite uses scripted LLMs. First on SQLite (as in development), then the storage-backed
       # tests again on Postgres, the production engine.
-      - run: uv run pytest -q
+      - run: uv run poe test
       - name: Migrations, applied in order to an empty Postgres, match the code
         run: |
           psql -h localhost -U tutor -d tutor -c "create database migrated"
@@ -58,22 +65,37 @@ jobs:
       - name: Tests on Postgres
         env:
           TEST_DATABASE_URL: postgresql+psycopg://tutor:tutor@localhost:5432/tutor
-        run: uv run pytest -q backend/tests/core backend/tests/scripts
+        run: uv run poe test backend/tests/core backend/tests/scripts
 
   docker:
     runs-on: ubuntu-latest
     needs: [checks, tests]
     timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: tutor
+          POSTGRES_PASSWORD: tutor
+          POSTGRES_DB: tutor
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U tutor" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      PGPASSWORD: tutor
     steps:
       - uses: actions/checkout@v4
       - run: docker build -t tutor-calcul .
-      # The image must start: the start-up checks (course YAML, counterexample theory citations, seeding) run before
-      # /health answers. The key is a placeholder (the OpenAI client needs one to be built; nothing calls the model)
-      # and the database is a throwaway SQLite file in the container. 512 MB as on the Render free plan.
+      - name: Apply the migrations
+        run: for f in supabase/migrations/*.sql; do psql -v ON_ERROR_STOP=1 -h localhost -U tutor -d tutor -f "$f"; done
+      # The image must start as on Render: course YAML, counterexample theory citations and seeding into Postgres run
+      # before /health answers. PORT as Render injects it, 512 MB as on the free plan, a plain postgresql:// URL as
+      # Supabase gives it. The key is a placeholder: the OpenAI client needs one to be built; nothing calls the model.
       - name: Container starts and answers /health
         run: |
-          docker run -d --name app -m 512m -p 8000:8000 -e LLM_PROVIDER=openai -e OPENAI_API_KEY=sk-ci-placeholder \
-            -e DATABASE_URL=sqlite:////tmp/tutor.db tutor-calcul
+          docker run -d --name app -m 512m -p 8000:10000 -e PORT=10000 --add-host=host.docker.internal:host-gateway \
+            -e LLM_PROVIDER=openai -e OPENAI_API_KEY=sk-ci-placeholder \
+            -e DATABASE_URL=postgresql://tutor:tutor@host.docker.internal:5432/tutor tutor-calcul
           for i in $(seq 60); do
             if curl -fsS http://127.0.0.1:8000/health; then exit 0; fi
             if [ "$(docker inspect -f '{{.State.Running}}' app)" != "true" ]; then break; fi

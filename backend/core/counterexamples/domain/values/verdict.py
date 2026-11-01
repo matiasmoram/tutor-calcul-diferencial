@@ -1,9 +1,10 @@
 from typing import Literal
 
-from pydantic import AliasChoices, BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field
 
-from core.counterexamples.domain.properties import PropertyKind
+from core.counterexamples.domain.values.properties import PropertyKind
 from core.counterexamples.domain.values.submission import Submission
+from core.shared.domain.contract import catalan_alias
 from core.shared.domain.ids import TheoryItemId
 
 # "ok": decided exactly (one-variable limits, an equality sympy simplifies). "plausible": rests on sampling (a radial
@@ -13,19 +14,15 @@ VerdictStatus = Literal["ok", "plausible", "falla", "indeterminat"]
 PASSING: frozenset[VerdictStatus] = frozenset({"ok", "plausible"})
 
 
-def _ca(catalan: str, english: str) -> AliasChoices:
-    return AliasChoices(catalan, english)
-
-
 class PropertyVerdict(BaseModel):
     model_config = ConfigDict(serialize_by_alias=True)
 
-    kind: PropertyKind = Field(validation_alias=_ca("propietat", "kind"), serialization_alias="propietat")
-    status: VerdictStatus = Field(validation_alias=_ca("estat", "status"), serialization_alias="estat")
-    detail: str = Field(default="", validation_alias=_ca("detall", "detail"), serialization_alias="detall")
+    kind: PropertyKind = Field(validation_alias=catalan_alias("propietat", "kind"), serialization_alias="propietat")
+    status: VerdictStatus = Field(validation_alias=catalan_alias("estat", "status"), serialization_alias="estat")
+    detail: str = Field(default="", validation_alias=catalan_alias("detall", "detail"), serialization_alias="detall")
     # The computations behind the verdict, as LaTeX lines the student can read ("\partial_x f(0,0) = 0").
     computations: list[str] = Field(
-        default_factory=list, validation_alias=_ca("calculs", "computations"), serialization_alias="calculs"
+        default_factory=list, validation_alias=catalan_alias("calculs", "computations"), serialization_alias="calculs"
     )
 
 

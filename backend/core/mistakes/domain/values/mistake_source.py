@@ -4,10 +4,10 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
 
-from core.course.domain.citations import cited_items
 from core.course.domain.entities.course import Course
 from core.course.domain.entities.exercise import Exercise
 from core.course.domain.entities.theory_item import TheoryItem
+from core.course.domain.services.citations import cited_items
 from core.shared.domain.ids import ExerciseId, TheoryItemId
 
 

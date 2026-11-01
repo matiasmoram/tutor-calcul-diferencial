@@ -12,7 +12,6 @@ from core.shared.llm.client import (
     JsonObject,
     LLMClient,
     LLMError,
-    LLMProviderError,
     LLMRequest,
     Stage,
     StageConfig,
@@ -21,6 +20,7 @@ from core.shared.llm.client import (
     parse_json,
     plain_text,
 )
+from core.shared.llm.infra.provider_errors import provider_failure
 
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 
@@ -110,11 +110,7 @@ def _content(user: str, image: Image | None) -> str | list[dict[str, object]]:
 async def _translated[T](call: Awaitable[T]) -> T:
     try:
         return await call
-    except openai.AuthenticationError as e:
-        raise LLMProviderError(f"Clau d'API invàlida o absent: {e.message}", 401) from e
-    except openai.RateLimitError as e:
-        raise LLMProviderError(f"Límit de l'API: {e.message}", 429) from e
     except openai.APIStatusError as e:
-        raise LLMProviderError(f"Error de l'API ({e.status_code}): {e.message}") from e
+        raise provider_failure("OpenAI", e.status_code, e.message) from e
     except openai.APIConnectionError as e:
-        raise LLMProviderError("No s'ha pogut connectar amb l'API.") from e
+        raise provider_failure("OpenAI", None, str(e)) from e

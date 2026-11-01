@@ -1,16 +1,14 @@
-"""The use cases the API calls (the old endpoint test, minus HTTP: that layer is built in phase 6)."""
+"""The use cases the API calls, without the HTTP layer."""
 
-from collections.abc import Coroutine
 from pathlib import Path
 from random import Random
 
 import pytest
 
 from core.quizzes.application.answers_grader import GRADING_CLAIM_TIMEOUT_S, AnswersGraderInput
-from core.quizzes.application.hint_revealer import HintRevealer
 from core.quizzes.application.pregenerated_importer import PregeneratedImporter
 from core.quizzes.application.quiz_provider import QuizProvider
-from core.quizzes.application.quiz_session_starter import QuizSessionStarter, QuizSessionStarterInput
+from core.quizzes.application.quiz_session_starter import QuizSessionStarterInput
 from core.quizzes.application.source_lister import SourceLister
 from core.quizzes.domain.entities.grading import Answer, QuizGrading
 from core.quizzes.domain.exceptions import (
@@ -21,39 +19,34 @@ from core.quizzes.domain.exceptions import (
 )
 from core.quizzes.domain.values.quiz_id import QuizId
 from core.quizzes.infra.json_quiz_files import JsonQuizFiles
-from core.quizzes.infra.sqlmodel_repository import SQLModelQuizRepository, SQLModelQuizSessionRepository
-from core.shared.llm.client import CallMeta, JsonObject, LLMClient, LLMError, LLMRequest, Stage
+from core.quizzes.infra.sqlmodel_repository import SQLModelQuizRepository
+from core.shared.domain.ids import SessionId
+from core.shared.llm.client import LLMError, Stage
 from core.shared.storage.session_provider import SQLModelSessionProvider
 from tests.core.quizzes.builders import (
+    ANSWERS,
     QUIZ_ID,
     FixedClock,
+    InterleavingLLM,
     answers_grader,
     generator,
-    grader,
-    idea,
+    graded,
+    hints,
     item,
     ok_audit,
     ok_solver,
     quiz,
     source,
+    started_session,
+    starter,
     transcriber,
 )
 from tests.fakes.llm import ScriptedLLMClient
 from tests.fixtures.course import authored_course
 
 
-def starter(provider: SQLModelSessionProvider, llm: LLMClient | None = None) -> QuizSessionStarter:
-    quizzes = SQLModelQuizRepository(provider)
-    quiz_provider = QuizProvider(quizzes, generator(llm or ScriptedLLMClient({})), Random(0))
-    return QuizSessionStarter(authored_course(), quiz_provider, SQLModelQuizSessionRepository(provider), FixedClock())
-
-
-def hints(provider: SQLModelSessionProvider) -> HintRevealer:
-    return HintRevealer(SQLModelQuizSessionRepository(provider), SQLModelQuizRepository(provider), FixedClock())
-
-
 async def test_a_session_on_a_stored_quiz_never_calls_the_model(session_provider: SQLModelSessionProvider) -> None:
-    await SQLModelQuizRepository(session_provider).add(quiz())
+    await SQLModelQuizRepository(session_provider).save(quiz())
     index = await SourceLister(authored_course(), SQLModelQuizRepository(session_provider)).list_sources()
     assert {t.source_id for t in index.topics} >= {"tema-1", "tema-2"}
     assert any(f.item.id == "T2.12" for t in index.topics for f in t.focus)
@@ -68,7 +61,7 @@ async def test_a_session_on_a_stored_quiz_never_calls_the_model(session_provider
     with pytest.raises(StatementNotFoundException):
         await hints(session_provider).reveal(sid, "a9")
     with pytest.raises(QuizSessionNotFoundException):
-        await hints(session_provider).reveal("0" * 32, "a1")
+        await hints(session_provider).reveal(SessionId("0" * 32), "a1")
     with pytest.raises(UnknownQuizSourceException) as e:
         await starter(session_provider).start(QuizSessionStarterInput(source_id="tema-9"))
     assert e.value.error_code == 404
@@ -101,13 +94,23 @@ async def test_a_missing_quiz_is_generated_and_stored(session_provider: SQLModel
 
 async def test_the_provider_prefers_a_quiz_not_just_seen(session_provider: SQLModelSessionProvider) -> None:
     repo = SQLModelQuizRepository(session_provider)
-    await repo.add(quiz())
-    await repo.add(quiz().model_copy(update={"id": QuizId("bbbbbbbbbbbb")}))
+    await repo.save(quiz())
+    await repo.save(quiz().model_copy(update={"id": QuizId("bbbbbbbbbbbb")}))
     provider = QuizProvider(repo, generator(ScriptedLLMClient({})), Random(0))
     for _ in range(5):
-        provided = await provider.get_or_generate(source(), "facil", except_id=QUIZ_ID)
+        provided = await provider.get_or_generate(source(), "facil", avoid_id=QUIZ_ID)
         assert provided.quiz.id == "bbbbbbbbbbbb" and not provided.generated_now
     assert await provider.is_ready(source(), "facil") and not await provider.is_ready(source(), "dificil")
+
+
+async def test_the_starter_tells_when_a_start_needs_the_model(session_provider: SQLModelSessionProvider) -> None:
+    await SQLModelQuizRepository(session_provider).save(quiz())
+    s = starter(session_provider)
+    assert not await s.needs_generation(QuizSessionStarterInput(source_id="tema-2", difficulty="facil"))
+    assert await s.needs_generation(QuizSessionStarterInput(source_id="tema-2", difficulty="facil", fresh=True))
+    assert await s.needs_generation(QuizSessionStarterInput(source_id="tema-2", difficulty="dificil"))
+    with pytest.raises(UnknownQuizSourceException):
+        await s.needs_generation(QuizSessionStarterInput(source_id="tema-9"))
 
 
 async def test_pregenerated_quizzes_seed_the_store(session_provider: SQLModelSessionProvider, tmp_path: Path) -> None:
@@ -118,31 +121,6 @@ async def test_pregenerated_quizzes_seed_the_store(session_provider: SQLModelSes
     importer = PregeneratedImporter(files, repo)
     assert await importer.import_all() == 1 and await importer.import_all() == 1
     assert await repo.of_source("tema-2", "facil") == [quiz()]
-
-
-ANSWERS = AnswersGraderInput(answers=[Answer(statement_id="a1", verdict="fals", justification="sobre $y=x$")])
-
-
-def graded(feedback: str = "f") -> JsonObject:
-    return grader({"id": "a1", "idees": [idea(1, "sobre $y=x$")], "justificacio": "correcta", "feedback": feedback})
-
-
-async def started_session(provider: SQLModelSessionProvider) -> str:
-    await SQLModelQuizRepository(provider).add(quiz())
-    started = await starter(provider).start(QuizSessionStarterInput(source_id="tema-2", difficulty="facil"))
-    return started.session.id
-
-
-class InterleavingLLM(ScriptedLLMClient):
-    """While the first grading waits for its grader call, `meanwhile` runs (a second submission)."""
-
-    meanwhile: Coroutine[object, object, None] | None = None
-
-    async def structured(self, stage: Stage, request: LLMRequest) -> tuple[JsonObject, CallMeta]:
-        if stage == Stage.QUIZ_GRADING and self.meanwhile is not None:
-            pending, self.meanwhile = self.meanwhile, None
-            await pending
-        return await super().structured(stage, request)
 
 
 async def test_a_second_submission_while_grading_is_refused_before_any_model_call(

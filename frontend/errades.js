@@ -4,13 +4,10 @@
    - problema: a worked solution of an exercise ("resolució dolenta");
    - teoria: a result of the notes (statement + proof) with errors in the statement and in the proof.
    The student highlights spans on the document, comments why they're wrong, and submits for correction.
-   Shares el(), math(), tex(), api(), statement(), crumbs(), show(), theoryCard() with app.js. */
+   Shares el(), math(), tex(), api(), statement(), crumbs(), show(), theoryCard() and the difficulty, ready-dot and
+   score helpers with app.js. */
 
-const DIFICULTATS = [
-  { id: "facil", label: "Fàcil", n: 1 },
-  { id: "normal", label: "Normal", n: 2 },
-  { id: "dificil", label: "Difícil", n: 3 },
-];
+const ERRORS_PER_DIFICULTAT = { facil: 1, normal: 2, dificil: 3 };
 const TIPUS_ERROR = {
   calcul: "Càlcul", logica: "Lògica", hipotesi: "Hipòtesi", teorema_mal_aplicat: "Teorema mal aplicat",
   conclusio: "Conclusió", desigualtat: "Desigualtat", quantificador: "Quantificador", implicacio: "Implicació",
@@ -52,8 +49,9 @@ function viewErradesInici() {
     el("span", { class: "mode-cta", text: "Entrar →" }));
   $("#view-errades").replaceChildren(
     el("section", { class: "hero left" },
-      el("h2", { text: "Troba l'error" }),
-      el("p", { class: "muted", text: "Un document amb errors amagats, verificat per IA. Subratlla'ls sobre el text, explica per què estan malament i envia la correcció." })),
+      el("div", { class: "eyebrow", text: "Troba l'error" }),
+      el("h2", { text: "Tria què vols revisar" }),
+      el("p", { class: "muted", text: "Un resultat dels apunts o la resolució d'un problema amb errors amagats. Marca'ls sobre el text, explica per què són incorrectes i compara amb la correcció." })),
     el("div", { class: "modes two" },
       card("#/errades/teoria", "∀", "Teoremes i demostracions",
         "Un teorema, proposició, lema o corol·lari dels apunts amb errors: una hipòtesi que falta, una conclusió massa forta, un quantificador canviat, un pas de la demostració que no se segueix."),
@@ -68,15 +66,11 @@ async function getErradesTeoria() {
   return erTeoria;
 }
 
-function readyDots(disp) {
-  return el("span", { class: "ready-dots", title: "Documents preparats per dificultat" },
-    ...DIFICULTATS.map((d) => el("span", { class: disp?.[d.id] ? "on" : "", title: `${d.label}: ${disp?.[d.id] ? "a punt" : "es generarà"}` })));
-}
-
 async function viewErradesTeoriaLlista() {
   show("errades");
   crumbs([["Inici", "#/"], ["Troba l'error", "#/errades"], ["Teoremes", null]]);
   erTeoria = null;  // availability changes as documents are generated
+  $("#view-errades").replaceChildren(carregant());
   const data = await getErradesTeoria();
   $("#view-errades").replaceChildren(
     el("section", { class: "hero left" },
@@ -89,9 +83,9 @@ async function viewErradesTeoriaLlista() {
           el("span", { class: "small muted", text: ` · ${t.items.length} resultats` })),
         el("ul", { class: "er-items" }, ...t.items.map((it) => el("li", {},
           el("a", { class: "er-item", href: `#/errades/teoria/${it.id}` },
-            el("span", { class: "theory-label", text: it.etiqueta.replace(/ \(Tema \d\)$/, "") }),
+            el("span", { class: "theory-label", text: etiquetaCurta(it.etiqueta) }),
             math(el("span", { class: "theory-name", text: it.nom || "" })),
-            readyDots(it.disponibles))))));
+            readyDots(it.disponibles, "Documents preparats per dificultat"))))));
       if (i === 0) d.open = true;
       return d;
     })));
@@ -101,6 +95,7 @@ async function viewErradesTeoriaLlista() {
 
 async function viewErrades(llistaId, exId) {
   show("errades");
+  $("#view-errades").replaceChildren(carregant());
   const l = await getLlista(llistaId);
   const ex = l.exercicis.find((e) => e.id === exId);
   if (!ex) throw new Error("Exercici desconegut");
@@ -108,50 +103,35 @@ async function viewErrades(llistaId, exId) {
     [l.etiqueta, `#/errades/${llistaId}`], [ex.etiqueta, null]]);
   const disp = await api("/api/errades/disponibles").catch(() => ({}));
   Object.assign(E, { font: "problema", llista: l, ex, item: null, disp: disp[ex.id] || {} });
-  E.dificultat = triaDificultat(E.disp);
+  E.dificultat = triaDificultat(E.disp, E.dificultat);
   renderShell();
   await carregar(false);
 }
 
 async function viewErradesTeoria(itemId) {
   show("errades");
+  $("#view-errades").replaceChildren(carregant());
   const data = await getErradesTeoria();
   const item = data.temes.flatMap((t) => t.items).find((it) => it.id === itemId);
   if (!item) throw new Error("Resultat dels apunts desconegut");
   crumbs([["Inici", "#/"], ["Troba l'error", "#/errades"], ["Teoremes", "#/errades/teoria"],
-    [item.etiqueta.replace(/ \(Tema \d\)$/, ` · T${item.tema}`), null]]);
+    [etiquetaCurta(item.etiqueta, ` · T${item.tema}`), null]]);
   Object.assign(E, { font: "teoria", llista: null, ex: null, item, disp: item.disponibles || {} });
-  E.dificultat = triaDificultat(E.disp);
+  E.dificultat = triaDificultat(E.disp, E.dificultat);
   renderShell();
   await carregar(false);
-}
-
-function triaDificultat(disp) {
-  // Keep the student's choice when it is ready; otherwise open a ready one (no wait, no API call).
-  if (disp[E.dificultat]) return E.dificultat;
-  return ["normal", "facil", "dificil"].find((d) => disp[d]) || E.dificultat;
 }
 
 function renderShell() {
   const root = $("#view-errades");
   const teoria = E.font === "teoria";
-  const chips = el("div", { class: "diff-chips", role: "radiogroup", "aria-label": "Dificultat" },
-    ...DIFICULTATS.map((d) => {
-      const b = el("button", { type: "button", class: `chip${d.id === E.dificultat ? " on" : ""}`, role: "radio",
-        "aria-checked": String(d.id === E.dificultat), "data-dif": d.id,
-        title: E.disp[d.id] ? "Preparat: s'obre a l'instant" : "Encara no n'hi ha cap de preparat: es generarà (cal l'API)" },
-        el("span", { text: d.label }), el("small", { text: `${d.n} error${d.n > 1 ? "s" : ""}${E.disp[d.id] ? "" : " · nou"}` }));
-      b.addEventListener("click", () => {
-        if (E.dificultat === d.id || E.busy) return;
-        E.dificultat = d.id;
-        root.querySelectorAll(".chip").forEach((c) => {
-          c.classList.toggle("on", c.dataset.dif === d.id);
-          c.setAttribute("aria-checked", String(c.dataset.dif === d.id));
-        });
-        carregar(false);
-      });
-      return b;
-    }));
+  const chips = difficultyChips({
+    current: E.dificultat,
+    disp: E.disp,
+    sub: (d) => `${ERRORS_PER_DIFICULTAT[d.id]} error${ERRORS_PER_DIFICULTAT[d.id] > 1 ? "s" : ""}`,
+    isBusy: () => E.busy,
+    onPick: (id) => { E.dificultat = id; carregar(false); },
+  });
   const nova = el("button", { type: "button", class: "btn ghost small-btn", id: "er-nova", text: teoria ? "↻ Una altra versió" : "↻ Una altra resolució" });
   nova.addEventListener("click", unAltre);
 
@@ -523,17 +503,10 @@ function renderOriginal() {
 
 function renderScore() {
   const r = E.resultat;
-  const R = 26, C = 2 * Math.PI * R;
-  const ring = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  ring.setAttribute("viewBox", "0 0 64 64");
-  ring.setAttribute("class", "score-ring");
-  ring.innerHTML = `<circle cx="32" cy="32" r="${R}" class="track"/>
-    <circle cx="32" cy="32" r="${R}" class="value" stroke-dasharray="${(C * r.nota) / 100} ${C}" transform="rotate(-90 32 32)"/>
-    <text x="32" y="37" text-anchor="middle">${r.nota}</text>`;
   const again = el("button", { type: "button", class: "btn primary", text: E.font === "teoria" ? "Una altra versió" : "Una altra resolució" });
   again.addEventListener("click", unAltre);
   $("#er-bar").replaceChildren(
-    el("div", { class: "er-score" }, ring,
+    el("div", { class: "er-score" }, scoreRing(r.nota),
       el("div", {},
         el("strong", { text: `Has trobat ${r.trobats} de ${r.total} error${r.total > 1 ? "s" : ""}` }),
         r.falsos_positius ? el("span", { class: "muted", text: ` · ${r.falsos_positius} marca${r.falsos_positius > 1 ? "des" : "da"} en passos correctes` }) : null,

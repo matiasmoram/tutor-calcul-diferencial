@@ -14,8 +14,8 @@ from core.quizzes.domain.entities.grading import (
     StudentCheck,
 )
 from core.quizzes.domain.entities.quiz import Quiz
-from core.quizzes.domain.values.call_summary import CallSummary
 from core.quizzes.domain.values.grading_inputs import GraderEvaluation, IdeaCitation
+from core.shared.domain.model_usage import ModelUsage
 from core.shared.math import latex_cas
 from core.shared.math.sympy_checks import InvalidExpression, parse
 
@@ -96,7 +96,7 @@ def grade_quiz(
     evaluations: Mapping[str, GraderEvaluation],
     checked: Mapping[str, list[StudentCheck]],
     summary: str,
-    call: CallSummary | None,
+    call: ModelUsage | None,
 ) -> QuizGrading:
     """`answers` by statement id (statements of the quiz only); `checked` holds the evaluated student claims."""
     items: list[StatementGrading] = []

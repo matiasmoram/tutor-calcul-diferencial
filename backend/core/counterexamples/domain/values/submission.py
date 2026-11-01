@@ -10,17 +10,14 @@ from collections.abc import Mapping
 from typing import Literal
 
 import sympy as sp
-from pydantic import AliasChoices, BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from core.counterexamples.domain.exceptions import InvalidSubmissionException
-from core.counterexamples.domain.properties import PROPERTIES, PropertyKind
+from core.counterexamples.domain.values.properties import PROPERTIES, PropertyKind
+from core.shared.domain.contract import catalan_alias
 from core.shared.math.sympy_checks import InvalidExpression, parse
 
 MAX_PATHS = 2
-
-
-def _ca(catalan: str, english: str) -> AliasChoices:
-    return AliasChoices(catalan, english)
 
 
 class Path(BaseModel):
@@ -39,24 +36,28 @@ class Certificate(BaseModel):
     model_config = ConfigDict(serialize_by_alias=True)
 
     paths: list[Path] = Field(
-        default_factory=list, validation_alias=_ca("camins", "paths"), serialization_alias="camins"
+        default_factory=list, validation_alias=catalan_alias("camins", "paths"), serialization_alias="camins"
     )
-    bound: str = Field(default="", validation_alias=_ca("fita", "bound"), serialization_alias="fita")
+    bound: str = Field(default="", validation_alias=catalan_alias("fita", "bound"), serialization_alias="fita")
     direction: Direction | None = Field(
-        default=None, validation_alias=_ca("direccio", "direction"), serialization_alias="direccio"
+        default=None, validation_alias=catalan_alias("direccio", "direction"), serialization_alias="direccio"
     )
     partial: Literal["x", "y"] | None = Field(
-        default=None, validation_alias=_ca("parcial", "partial"), serialization_alias="parcial"
+        default=None, validation_alias=catalan_alias("parcial", "partial"), serialization_alias="parcial"
     )
 
 
 class Submission(BaseModel):
     model_config = ConfigDict(serialize_by_alias=True)
 
-    function: str = Field(validation_alias=_ca("funcio", "function"), serialization_alias="funcio")
-    origin_value: str = Field(default="0", validation_alias=_ca("valor", "origin_value"), serialization_alias="valor")
+    function: str = Field(validation_alias=catalan_alias("funcio", "function"), serialization_alias="funcio")
+    origin_value: str = Field(
+        default="0", validation_alias=catalan_alias("valor", "origin_value"), serialization_alias="valor"
+    )
     certificates: Mapping[PropertyKind, Certificate] = Field(
-        default_factory=dict, validation_alias=_ca("certificats", "certificates"), serialization_alias="certificats"
+        default_factory=dict,
+        validation_alias=catalan_alias("certificats", "certificates"),
+        serialization_alias="certificats",
     )
 
     def certificate(self, kind: PropertyKind) -> Certificate:

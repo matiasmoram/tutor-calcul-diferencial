@@ -11,18 +11,15 @@ from core.quizzes.domain.exceptions import ConcurrentQuizGradingException, QuizG
 from core.quizzes.domain.ports import AnswerGrader, CheckEvaluator, ClaimExtractor
 from core.quizzes.domain.repository import QuizRepository, QuizSessionRepository
 from core.quizzes.domain.services.scoring import MAX_STUDENT_CHECKS, grade_quiz, quoted_claims
-from core.quizzes.domain.sources import QuizSource, quiz_source
-from core.quizzes.domain.values.call_summary import CallSummary
+from core.quizzes.domain.services.sources import quiz_source
+from core.quizzes.domain.values.grading_claim import GRADING_CLAIM_TIMEOUT_S, GRADING_DEADLINE_S
 from core.quizzes.domain.values.grading_inputs import AnsweredStatement, GraderEvaluation, StudentClaims
+from core.quizzes.domain.values.quiz_source import QuizSource
 from core.shared.domain.clock import Clock
 from core.shared.domain.exceptions import DomainException
+from core.shared.domain.ids import SessionId
+from core.shared.domain.model_usage import ModelUsage
 from core.shared.llm.call_scope import call_scope
-
-GRADING_DEADLINE_S = 240.0  # the whole grading, every model call and retry included
-# A claim older than this belongs to a grading that died without releasing it. Strictly above GRADING_DEADLINE_S: a
-# live grading is cancelled by its deadline before its claim can go stale, so a takeover never runs (and pays) beside
-# the grading it replaces.
-GRADING_CLAIM_TIMEOUT_S = GRADING_DEADLINE_S + 60.0
 
 
 class AnswersGraderInput(BaseModel):
@@ -52,7 +49,7 @@ class AnswersGrader:
         self._checks = checks
         self._clock = clock
 
-    async def grade(self, session_id: str, request: AnswersGraderInput) -> QuizGrading:
+    async def grade(self, session_id: SessionId, request: AnswersGraderInput) -> QuizGrading:
         session = await self._sessions.get(session_id)
         if session.submission is not None:
             return session.submission.result
@@ -83,14 +80,14 @@ class AnswersGrader:
             await self._sessions.release_grading(session_id, claimed_at)
         return result
 
-    async def _stored_result(self, session_id: str) -> QuizGrading:
+    async def _stored_result(self, session_id: SessionId) -> QuizGrading:
         """The grading another submission stored; ConcurrentQuizGradingException while it is still running."""
         session = await self._sessions.get(session_id)
         if session.submission is None:
             raise ConcurrentQuizGradingException(session_id)
         return session.submission.result
 
-    async def cited_theory(self, session_id: str) -> set[str]:
+    async def cited_theory(self, session_id: SessionId) -> set[str]:
         """Items of the notes the session's solutions cite (shown with the grading)."""
         session = await self._sessions.get(session_id)
         return (await self._quizzes.get(session.quiz_id)).cited_theory()
@@ -107,7 +104,7 @@ class AnswersGrader:
         evaluations: dict[str, GraderEvaluation] = {}
         transcribed: dict[str, list[StudentCheck]] = {}
         summary: str = ""
-        call: CallSummary | None = None
+        call: ModelUsage | None = None
         if answered:
             verdict, claims = await asyncio.gather(self._grader.grade(source, answered), self._extract(answered))
             evaluations = {e.statement_id: e for e in verdict.evaluations}

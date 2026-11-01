@@ -6,6 +6,7 @@ from collections.abc import Sequence
 
 import pytest
 
+from core.shared.domain.clock import SystemClock
 from core.shared.domain.ids import SessionId
 from core.shared.llm.call_scope import current_scope
 from core.shared.llm.client import CallMeta, JsonObject, LLMError, LLMProviderError, LLMRequest, Stage
@@ -13,14 +14,14 @@ from core.shared.llm.infra.logged_client import LoggedLLMClient
 from core.shared.llm_calls.infra.sqlmodel_repository import SQLModelLLMCallRepository
 from core.shared.storage.session_provider import SQLModelSessionProvider
 from core.tutoring.application import turn_handler
-from core.tutoring.application.turn_handler import GUARD_TIMEOUT_PROBLEM, TurnHandler, TurnInput
+from core.tutoring.application.turn_handler import GUARD_TIMEOUT_PROBLEM, TurnHandler, TurnHandlerInput
 from core.tutoring.domain.exceptions import (
     ConcurrentTurnException,
     ModelOutputException,
     TurnTimeoutException,
     TutorSessionNotFoundException,
 )
-from core.tutoring.domain.guard import deterministic_check
+from core.tutoring.domain.services.guard import deterministic_check
 from core.tutoring.domain.values.plan import Plan
 from core.tutoring.domain.values.session_state import SessionState
 from core.tutoring.infra.llm_diagnoser import LLMDiagnoser
@@ -50,7 +51,7 @@ async def test_retries_after_rejection_and_the_writer_never_sees_the_solution(
     )
     t = tutoring(llm, session_provider)
     started = await t.starter.start(EX4C.id)
-    out = await t.turns.handle(TurnInput(session_id=started.session.id, text="He provat y=kx i y=kx^2 i dona 0"))
+    out = await t.turns.handle(TurnHandlerInput(session_id=started.session.id, text="He provat y=kx i y=kx^2 i dona 0"))
     assert out.message.startswith("Bona feina")
     trace = out.trace.model_dump()
     assert len(trace["intents"]) == 2 and trace["intents"][0]["determinista"]
@@ -75,7 +76,7 @@ async def test_falls_back_when_every_draft_is_rejected(session_provider: SQLMode
     )
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
-    out = await t.turns.handle(TurnInput(session_id=sid, text="dona 0 per tots els camins, per tant és 0"))
+    out = await t.turns.handle(TurnHandlerInput(session_id=sid, text="dona 0 per tots els camins, per tant és 0"))
     assert out.trace.fallback and out.references == []
     assert out.message == EX4C.mistake("camins_com_a_prova").question
 
@@ -90,7 +91,7 @@ async def test_guard_verdict_inconsistency_is_fail_closed(session_provider: SQLM
     )
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
-    assert (await t.turns.handle(TurnInput(session_id=sid, text="no sé què fer"))).trace.fallback
+    assert (await t.turns.handle(TurnHandlerInput(session_id=sid, text="no sé què fer"))).trace.fallback
 
 
 async def test_an_unavailable_guard_or_writer_fails_closed(session_provider: SQLModelSessionProvider) -> None:
@@ -103,7 +104,7 @@ async def test_an_unavailable_guard_or_writer_fails_closed(session_provider: SQL
     )
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
-    out = await t.turns.handle(TurnInput(session_id=sid, text="no sé què fer"))
+    out = await t.turns.handle(TurnHandlerInput(session_id=sid, text="no sé què fer"))
     attempts = out.trace.model_dump()["intents"]
     assert attempts[0] == {"missatge": None, "error": "reply: truncated"}
     assert attempts[1] == {"missatge": None, "error": "resposta: empty message"}
@@ -120,7 +121,7 @@ async def test_turn_is_atomic_on_any_failure(session_provider: SQLModelSessionPr
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
     with pytest.raises(LLMProviderError):
-        await t.turns.handle(TurnInput(session_id=sid, text="hola"))
+        await t.turns.handle(TurnHandlerInput(session_id=sid, text="hola"))
     stored = await t.sessions.get(sid)
     assert stored.history == [] and stored.state == SessionState() and stored.version == 0
     assert await t.sessions.turns(sid) == []
@@ -131,7 +132,7 @@ async def test_a_failed_diagnosis_does_not_record_the_turn(session_provider: SQL
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
     with pytest.raises(ModelOutputException) as e:
-        await t.turns.handle(TurnInput(session_id=sid, text="hola"))
+        await t.turns.handle(TurnHandlerInput(session_id=sid, text="hola"))
     assert e.value.error_code == 502 and e.value.message.startswith("La diagnosi ha fallat")
     stored = await t.sessions.get(sid)
     assert stored.history == [] and stored.state.turns == 0
@@ -149,7 +150,7 @@ async def test_fallback_delivers_the_planned_level(session_provider: SQLModelSes
     )
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
-    out = await t.turns.handle(TurnInput(session_id=sid, text="no sé res"))
+    out = await t.turns.handle(TurnHandlerInput(session_id=sid, text="no sé res"))
     assert out.trace.fallback and out.trace.plan.hint_level == 2
     assert EX4C.step("candidat").idea.strip()[:30] in out.message
 
@@ -171,7 +172,7 @@ async def test_reply_references_are_the_allowed_items_it_cites(session_provider:
     )
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
-    out = await t.turns.handle(TurnInput(session_id=sid, text="Què vol dir exactament que existeixi el límit?"))
+    out = await t.turns.handle(TurnHandlerInput(session_id=sid, text="Què vol dir exactament que existeixi el límit?"))
     first = out.trace.model_dump()["intents"][0]["determinista"]
     assert first == ["cita teoria que no és a la llista permesa: «Teorema 4 del Tema 6»"]
     assert not out.trace.fallback and "Teorema 4" not in out.message
@@ -191,8 +192,8 @@ async def test_static_context_is_identical_across_turns_for_caching(session_prov
     )
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
-    await t.turns.handle(TurnInput(session_id=sid, text="no sé per on començar"))
-    await t.turns.handle(TurnInput(session_id=sid, text="he provat rectes"))
+    await t.turns.handle(TurnHandlerInput(session_id=sid, text="no sé per on començar"))
+    await t.turns.handle(TurnHandlerInput(session_id=sid, text="he provat rectes"))
     diagnosis_ctx = [r.context for r in llm.requests[Stage.DIAGNOSIS]]
     guard_ctx = [r.context for r in llm.requests[Stage.GUARD]]
     assert diagnosis_ctx[0] == diagnosis_ctx[1] and guard_ctx[0] == guard_ctx[1]
@@ -207,7 +208,7 @@ async def test_a_photo_turn_is_traced_as_such(session_provider: SQLModelSessionP
     )
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
-    out = await t.turns.handle(TurnInput(session_id=sid, text="  no sé seguir ", origin="foto"))
+    out = await t.turns.handle(TurnHandlerInput(session_id=sid, text="  no sé seguir ", origin="foto"))
     assert out.trace.model_dump()["origen"] == "foto"
     [turn] = await t.sessions.turns(sid)
     assert turn.origin == "foto" and turn.student_text == "no sé seguir"
@@ -226,7 +227,9 @@ async def test_turns_are_persisted_logged_and_survive_a_restart(session_provider
     calls = SQLModelLLMCallRepository(session_provider)
     logged = LoggedLLMClient(llm, calls)
     sid = (await tutoring(logged, session_provider).starter.start(EX4C.id)).session.id
-    await tutoring(logged, session_provider).turns.handle(TurnInput(session_id=sid, text="no sé per on començar"))
+    await tutoring(logged, session_provider).turns.handle(
+        TurnHandlerInput(session_id=sid, text="no sé per on començar")
+    )
 
     [turn] = await tutoring(logged, session_provider).sessions.turns(sid)
     assert turn.student_text == "no sé per on començar" and turn.tutor_text == "Què has provat?"
@@ -238,7 +241,7 @@ async def test_turns_are_persisted_logged_and_survive_a_restart(session_provider
     }
 
     again = tutoring(logged, session_provider)
-    await again.turns.handle(TurnInput(session_id=sid, text="he provat rectes"))
+    await again.turns.handle(TurnHandlerInput(session_id=sid, text="he provat rectes"))
     assert [t.number for t in await again.sessions.turns(sid)] == [1, 2]
     stored = await again.sessions.get(sid)
     assert len(stored.history) == 4 and stored.state.turns == 2 and stored.version == 2
@@ -251,7 +254,7 @@ async def test_a_concurrent_turn_on_the_same_session_is_rejected(session_provide
     refused: list[ConcurrentTurnException] = []
 
     class InterleavingLLM(ScriptedLLMClient):
-        inner_turn: TurnInput | None = None
+        inner_turn: TurnHandlerInput | None = None
 
         async def structured(self, stage: Stage, request: LLMRequest) -> tuple[JsonObject, CallMeta]:
             pending, self.inner_turn = self.inner_turn, None
@@ -268,8 +271,8 @@ async def test_a_concurrent_turn_on_the_same_session_is_rejected(session_provide
     )
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
-    llm.inner_turn = TurnInput(session_id=sid, text="segona pestanya")
-    await t.turns.handle(TurnInput(session_id=sid, text="primera pestanya"))
+    llm.inner_turn = TurnHandlerInput(session_id=sid, text="segona pestanya")
+    await t.turns.handle(TurnHandlerInput(session_id=sid, text="primera pestanya"))
     assert [e.error_code for e in refused] == [409] and llm.calls(Stage.DIAGNOSIS) == 1
     [turn] = await t.sessions.turns(sid)
     assert turn.student_text == "primera pestanya"
@@ -277,7 +280,7 @@ async def test_a_concurrent_turn_on_the_same_session_is_rejected(session_provide
     assert [m.text for m in stored.history] == ["primera pestanya", "Què has provat?"] and stored.version == 1
     # The claim is released: the next message goes through.
     llm.then(Stage.DIAGNOSIS, diagnosis_json()).then(Stage.REPLY, {"text": "I ara?"}).then(Stage.GUARD, OK)
-    assert (await t.turns.handle(TurnInput(session_id=sid, text="segona"))).trace.turn == 2
+    assert (await t.turns.handle(TurnHandlerInput(session_id=sid, text="segona"))).trace.turn == 2
 
 
 async def test_a_failed_turn_releases_its_claim(session_provider: SQLModelSessionProvider) -> None:
@@ -285,15 +288,17 @@ async def test_a_failed_turn_releases_its_claim(session_provider: SQLModelSessio
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
     with pytest.raises(ModelOutputException):
-        await t.turns.handle(TurnInput(session_id=sid, text="hola"))
+        await t.turns.handle(TurnHandlerInput(session_id=sid, text="hola"))
     llm.then(Stage.DIAGNOSIS, diagnosis_json()).then(Stage.REPLY, {"text": "Què has provat?"}).then(Stage.GUARD, OK)
-    assert (await t.turns.handle(TurnInput(session_id=sid, text="hola"))).trace.turn == 1
+    assert (await t.turns.handle(TurnHandlerInput(session_id=sid, text="hola"))).trace.turn == 1
 
 
 async def test_a_turn_on_an_unknown_session_is_not_found(session_provider: SQLModelSessionProvider) -> None:
     llm = ScriptedLLMClient({})
     with pytest.raises(TutorSessionNotFoundException) as e:
-        await tutoring(llm, session_provider).turns.handle(TurnInput(session_id=SessionId.generate(), text="hola"))
+        await tutoring(llm, session_provider).turns.handle(
+            TurnHandlerInput(session_id=SessionId.generate(), text="hola")
+        )
     assert e.value.error_code == 404 and llm.calls(Stage.DIAGNOSIS) == 0
 
 
@@ -302,7 +307,7 @@ async def test_a_turn_reads_the_session_after_claiming_it(session_provider: SQLM
     session that turn stored, not on an older read (which would pay every model call and then fail the save)."""
 
     class AnotherTabFinishesFirst(SQLModelTutorSessionRepository):
-        other_turn: TurnInput | None = None
+        other_turn: TurnHandlerInput | None = None
 
         async def claim_turn(self, session_id: SessionId, now: float, stale_before: float) -> bool:
             pending, self.other_turn = self.other_turn, None
@@ -318,10 +323,12 @@ async def test_a_turn_reads_the_session_after_claiming_it(session_provider: SQLM
         }
     )
     sessions = AnotherTabFinishesFirst(session_provider)
-    handler = TurnHandler(COURSE, sessions, LLMDiagnoser(llm, COURSE), LLMReplyWriter(llm), LLMReplyJudge(llm, COURSE))
+    handler = TurnHandler(
+        COURSE, sessions, LLMDiagnoser(llm, COURSE), LLMReplyWriter(llm), LLMReplyJudge(llm, COURSE), SystemClock()
+    )
     sid = (await tutoring(llm, session_provider).starter.start(EX4C.id)).session.id
-    sessions.other_turn = TurnInput(session_id=sid, text="primera pestanya")
-    out = await handler.handle(TurnInput(session_id=sid, text="segona pestanya"))
+    sessions.other_turn = TurnHandlerInput(session_id=sid, text="primera pestanya")
+    out = await handler.handle(TurnHandlerInput(session_id=sid, text="segona pestanya"))
     assert out.trace.turn == 2
     stored = await sessions.get(sid)
     assert [m.text for m in stored.history] == ["primera pestanya", "Què has provat?", "segona pestanya", "I ara?"]
@@ -345,14 +352,14 @@ async def test_a_turn_past_its_deadline_is_a_timeout_and_stores_nothing(
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
     with pytest.raises(TurnTimeoutException) as e:
-        await t.turns.handle(TurnInput(session_id=sid, text="hola"))
+        await t.turns.handle(TurnHandlerInput(session_id=sid, text="hola"))
     assert e.value.error_code == 504 and e.value.message == "La resposta ha trigat massa. Torna-ho a provar."
     stored = await t.sessions.get(sid)
     assert stored.history == [] and stored.version == 0 and await t.sessions.turns(sid) == []
     # The claim is released: once the provider answers again, the student's resend goes through.
     llm.hung = False
     monkeypatch.setattr(turn_handler, "TURN_DEADLINE_S", 300.0)
-    assert (await t.turns.handle(TurnInput(session_id=sid, text="hola"))).trace.turn == 1
+    assert (await t.turns.handle(TurnHandlerInput(session_id=sid, text="hola"))).trace.turn == 1
 
 
 async def test_a_cas_check_past_its_deadline_rejects_the_draft(
@@ -372,7 +379,7 @@ async def test_a_cas_check_past_its_deadline_rejects_the_draft(
     t = tutoring(llm, session_provider)
     sid = (await t.starter.start(EX4C.id)).session.id
     try:
-        out = await t.turns.handle(TurnInput(session_id=sid, text="no sé què fer"))
+        out = await t.turns.handle(TurnHandlerInput(session_id=sid, text="no sé què fer"))
     finally:
         release.set()
     attempts = out.trace.model_dump()["intents"]

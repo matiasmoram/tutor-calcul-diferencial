@@ -1,14 +1,20 @@
-"""Builders for the quiz tests: the models' JSON outputs (Catalan keys, as the LLM writes them) and a small quiz."""
+"""Builders for the quiz tests: the models' JSON outputs (Catalan keys, as the LLM writes them), a small quiz and the
+wiring of the use cases."""
 
-from collections.abc import Sequence
+from collections.abc import Coroutine, Sequence
 from random import Random
 
-from core.quizzes.application.answers_grader import AnswersGrader
+from core.quizzes.application.answers_grader import AnswersGrader, AnswersGraderInput
+from core.quizzes.application.hint_revealer import HintRevealer
 from core.quizzes.application.quiz_generator import QuizGenerator
+from core.quizzes.application.quiz_provider import QuizProvider
+from core.quizzes.application.quiz_session_starter import QuizSessionStarter, QuizSessionStarterInput
+from core.quizzes.domain.entities.grading import Answer
 from core.quizzes.domain.entities.quiz import Quiz
 from core.quizzes.domain.entities.statement import Statement
-from core.quizzes.domain.sources import QuizSource, quiz_source
+from core.quizzes.domain.services.sources import quiz_source
 from core.quizzes.domain.values.quiz_id import QuizId
+from core.quizzes.domain.values.quiz_source import QuizSource
 from core.quizzes.infra.llm_answer_grader import LLMAnswerGrader
 from core.quizzes.infra.llm_blind_solver import LLMBlindSolver
 from core.quizzes.infra.llm_claim_extractor import LLMClaimExtractor
@@ -17,8 +23,10 @@ from core.quizzes.infra.llm_quiz_writer import LLMQuizWriter
 from core.quizzes.infra.sqlmodel_repository import SQLModelQuizRepository, SQLModelQuizSessionRepository
 from core.quizzes.infra.sympy_check_evaluator import SympyCheckEvaluator
 from core.shared.domain.clock import Clock
-from core.shared.llm.client import JsonObject, LLMClient
+from core.shared.domain.ids import SessionId
+from core.shared.llm.client import CallMeta, JsonObject, LLMClient, LLMRequest, Stage
 from core.shared.storage.session_provider import SQLModelSessionProvider
+from tests.fakes.llm import ScriptedLLMClient
 from tests.fixtures.course import authored_course
 
 QUIZ_ID = "0123456789ab"
@@ -112,7 +120,7 @@ def quiz() -> Quiz:
             statement("a3", "C.", "fals", "z"),
             statement("a4", "D.", "cert"),
         ],
-        created=1.0,
+        created_at=1.0,
     )
 
 
@@ -137,3 +145,38 @@ def answers_grader(llm: LLMClient, provider: SQLModelSessionProvider, clock: Clo
         SympyCheckEvaluator(in_process=True),
         clock or FixedClock(),
     )
+
+
+def starter(provider: SQLModelSessionProvider, llm: LLMClient | None = None) -> QuizSessionStarter:
+    quizzes = SQLModelQuizRepository(provider)
+    quiz_provider = QuizProvider(quizzes, generator(llm or ScriptedLLMClient({})), Random(0))
+    return QuizSessionStarter(authored_course(), quiz_provider, SQLModelQuizSessionRepository(provider), FixedClock())
+
+
+def hints(provider: SQLModelSessionProvider) -> HintRevealer:
+    return HintRevealer(SQLModelQuizSessionRepository(provider), SQLModelQuizRepository(provider), FixedClock())
+
+
+async def started_session(provider: SQLModelSessionProvider) -> SessionId:
+    await SQLModelQuizRepository(provider).save(quiz())
+    started = await starter(provider).start(QuizSessionStarterInput(source_id="tema-2", difficulty="facil"))
+    return started.session.id
+
+
+ANSWERS = AnswersGraderInput(answers=[Answer(statement_id="a1", verdict="fals", justification="sobre $y=x$")])
+
+
+def graded(feedback: str = "f") -> JsonObject:
+    return grader({"id": "a1", "idees": [idea(1, "sobre $y=x$")], "justificacio": "correcta", "feedback": feedback})
+
+
+class InterleavingLLM(ScriptedLLMClient):
+    """While the first grading waits for its grader call, `meanwhile` runs (a second submission)."""
+
+    meanwhile: Coroutine[object, object, None] | None = None
+
+    async def structured(self, stage: Stage, request: LLMRequest) -> tuple[JsonObject, CallMeta]:
+        if stage == Stage.QUIZ_GRADING and self.meanwhile is not None:
+            pending, self.meanwhile = self.meanwhile, None
+            await pending
+        return await super().structured(stage, request)

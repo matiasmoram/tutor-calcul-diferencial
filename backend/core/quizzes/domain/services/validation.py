@@ -4,13 +4,14 @@ import re
 import unicodedata
 from collections.abc import Collection, Sequence
 
+from core.quizzes.domain.entities.statement import VERDICTS
 from core.quizzes.domain.values.drafts import StatementDraft
-from core.shared.math.latex_vocabulary import unknown_commands
+from core.shared.math.latex_vocabulary import dollars_balanced, unknown_commands
 from core.shared.math.sympy_checks import CheckResult, MathCheck
 
 # A hint that names the verdict or the tool gives the answer away.
 _REVEALS_VERDICT = re.compile(r"\b(cert[ae]?|fals[ae]?|contraexemples?|falsedat|veritat)\b", re.IGNORECASE)
-MAX_CHECKS = 6
+MAX_CHECKS = 4
 
 
 def normal_key(text: str) -> str:
@@ -19,14 +20,10 @@ def normal_key(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "", text)
 
 
-def dollars_balanced(text: str) -> bool:
-    return len(re.findall(r"(?<!\\)\$", text)) % 2 == 0 and "$$" not in text
-
-
 def validate_draft(d: StatementDraft, refs: Collection[str]) -> list[str]:
     """Problems of one generated statement (structure only; the sympy checks run separately)."""
     problems: list[str] = []
-    if d.verdict not in ("cert", "fals"):
+    if d.verdict not in VERDICTS:
         problems.append("veredicte no vàlid")
     for name, value in (
         ("enunciat", d.statement),
@@ -48,7 +45,7 @@ def validate_draft(d: StatementDraft, refs: Collection[str]) -> list[str]:
         ("pista", d.hint),
         ("concepte", d.concept),
     ):
-        if not dollars_balanced(value):
+        if not dollars_balanced(value) or "$$" in value:
             problems.append(f"'{name}' té el LaTeX mal tancat o fa servir $$")
         if unknown := unknown_commands(value):
             problems.append(f"'{name}' fa servir ordres LaTeX que no existeixen: {', '.join(sorted(unknown))}")
@@ -60,7 +57,7 @@ def validate_draft(d: StatementDraft, refs: Collection[str]) -> list[str]:
     if bad:
         problems.append(f"cita ítems inexistents: {', '.join(bad)}")
     if len(d.checks) > MAX_CHECKS:
-        problems.append("massa comprovacions (màxim 4)")
+        problems.append(f"massa comprovacions (màxim {MAX_CHECKS})")
     return problems
 
 

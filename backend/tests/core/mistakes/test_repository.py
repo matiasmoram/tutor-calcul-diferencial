@@ -8,14 +8,16 @@ from core.mistakes.domain.exceptions import (
     MistakeSessionAlreadyGradedException,
     MistakeSessionNotFoundException,
 )
-from core.mistakes.domain.grading import grade
+from core.mistakes.domain.services.grading import grade
 from core.mistakes.domain.values.mistake_exercise_id import MistakeExerciseId
+from core.mistakes.infra.json_file_source import JsonFileMistakeSource
 from core.mistakes.infra.sqlmodel_repository import (
     SQLModelMistakeExerciseRepository,
     SQLModelMistakeSessionRepository,
 )
 from core.shared.domain.ids import SessionId
 from core.shared.storage.session_provider import SQLModelSessionProvider
+from settings import BACKEND_DIR
 from tests.core.mistakes.builders import solution
 
 
@@ -34,6 +36,16 @@ def empty_grading() -> MistakeGrading:
     return grade(solution(), [], None, None)
 
 
+def test_every_stored_document_loads_and_writes_back_the_same_json() -> None:
+    """The committed documents are a stored contract: each one loads and serializes to exactly its file."""
+    directory = BACKEND_DIR / "generats" / "errades"
+    paths = sorted(directory.glob("*/*/*.json"))
+    documents = JsonFileMistakeSource(directory).load()
+    assert paths and len(documents) == len(paths)
+    for path, document in zip(paths, documents, strict=True):
+        assert document.model_dump_json(indent=2) == path.read_text(encoding="utf-8"), path
+
+
 async def test_documents_round_trip_and_are_replaced_by_id(session_provider: SQLModelSessionProvider) -> None:
     repo = SQLModelMistakeExerciseRepository(session_provider)
     doc = solution()
@@ -42,7 +54,7 @@ async def test_documents_round_trip_and_are_replaced_by_id(session_provider: SQL
     edited = doc.model_copy(update={"fragments": [*doc.fragments[:-1], "Per tant el límit val $0$."]})
     await repo.save(edited)
     assert await repo.get(doc.id) == edited
-    assert await repo.ready_counts() == {"t2-4c": {"normal": 1}}
+    assert await repo.availability() == {"t2-4c": {"normal": 1}}
     with pytest.raises(MistakeExerciseNotFoundException):
         await repo.get(MistakeExerciseId("ffffffffffff"))
 
@@ -54,7 +66,7 @@ async def test_documents_of_a_source_are_ordered_by_id_and_counted(session_provi
     await repo.save(solution("dddddddddddd").model_copy(update={"source_id": "T3.21", "source_kind": "teoria"}))
     assert [d.id for d in await repo.of_source("t2-4c", "normal")] == ["aaaaaaaaaaaa", "bbbbbbbbbbbb"]
     assert await repo.of_source("t2-4c", "facil") == []
-    assert await repo.ready_counts() == {"t2-4c": {"normal": 2, "dificil": 1}, "T3.21": {"normal": 1}}
+    assert await repo.availability() == {"t2-4c": {"normal": 2, "dificil": 1}, "T3.21": {"normal": 1}}
 
 
 async def test_sessions_round_trip_with_their_grading(session_provider: SQLModelSessionProvider) -> None:

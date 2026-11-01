@@ -1,4 +1,4 @@
-from collections.abc import Mapping
+from collections.abc import Collection, Mapping, Sequence
 from typing import Literal
 
 from pydantic import BaseModel, Field
@@ -26,8 +26,7 @@ KIND_NAMES: Mapping[str, str] = {
 class TheoryItem(BaseModel):
     """One item of the course notes (Temes 1-6), transcribed to Markdown + LaTeX.
 
-    Sheets cite items by id ("T3.12"); each stage receives only the cited items, never the whole notes: a
-    typical exercise needs 2-6 items (~0.3-1.5k tokens) instead of a whole topic (~15-20k tokens)."""
+    Sheets cite items by id ("T3.12"); each stage receives only the cited items, never the whole notes."""
 
     id: TheoryItemId
     topic: int
@@ -62,3 +61,8 @@ class TheoryItem(BaseModel):
 
     def index_line(self) -> str:
         return f"{self.id} {self.label}: {self.name}"
+
+
+def render_items(items: Sequence[TheoryItem], with_proof: Collection[TheoryItemId] = frozenset()) -> str:
+    """The items as the prompts show them, the ones in `with_proof` with their proof; "(cap)" when there are none."""
+    return "\n\n".join(it.render(with_proof=it.id in with_proof) for it in items) or "(cap)"

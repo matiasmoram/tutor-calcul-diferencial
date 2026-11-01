@@ -1,7 +1,8 @@
 from itertools import pairwise
 
-from pydantic import AliasChoices, BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field
 
+from core.shared.domain.contract import catalan_alias
 from core.shared.domain.ids import ExerciseId, SessionId
 from core.tutoring.domain.entities.tutor_session import TutorSession
 from core.tutoring.domain.entities.tutor_turn import TutorTurn
@@ -10,28 +11,32 @@ from core.tutoring.domain.entities.tutor_turn import TutorTurn
 _NOT_LOOPS = ("despres_de_tancar", "redirigir")
 
 
-def _ca(catalan: str, english: str) -> AliasChoices:
-    return AliasChoices(catalan, english)
-
-
 class SessionSummary(BaseModel):
     """One session in the professor's review list, with the flags worth a look."""
 
     model_config = ConfigDict(serialize_by_alias=True, frozen=True)
 
     id: SessionId
-    exercise_id: ExerciseId = Field(validation_alias=_ca("exercici", "exercise_id"), serialization_alias="exercici")
-    started_at: float = Field(validation_alias=_ca("inici", "started_at"), serialization_alias="inici")
-    last_activity_at: float = Field(validation_alias=_ca("darrer", "last_activity_at"), serialization_alias="darrer")
-    turns: int = Field(validation_alias=_ca("torns", "turns"), serialization_alias="torns")
-    closed: bool = Field(validation_alias=_ca("tancat", "closed"), serialization_alias="tancat")
+    exercise_id: ExerciseId = Field(
+        validation_alias=catalan_alias("exercici", "exercise_id"), serialization_alias="exercici"
+    )
+    started_at: float = Field(validation_alias=catalan_alias("inici", "started_at"), serialization_alias="inici")
+    last_activity_at: float = Field(
+        validation_alias=catalan_alias("darrer", "last_activity_at"), serialization_alias="darrer"
+    )
+    turns: int = Field(validation_alias=catalan_alias("torns", "turns"), serialization_alias="torns")
+    closed: bool = Field(validation_alias=catalan_alias("tancat", "closed"), serialization_alias="tancat")
     fallbacks: int
     guard_rejections: int = Field(
-        validation_alias=_ca("rebutjos_guardia", "guard_rejections"), serialization_alias="rebutjos_guardia"
+        validation_alias=catalan_alias("rebutjos_guardia", "guard_rejections"), serialization_alias="rebutjos_guardia"
     )
-    loops: int = Field(validation_alias=_ca("bucles", "loops"), serialization_alias="bucles")
-    steps_shown: int = Field(validation_alias=_ca("mostrar_pas", "steps_shown"), serialization_alias="mostrar_pas")
-    frustration: int = Field(validation_alias=_ca("frustracio", "frustration"), serialization_alias="frustracio")
+    loops: int = Field(validation_alias=catalan_alias("bucles", "loops"), serialization_alias="bucles")
+    steps_shown: int = Field(
+        validation_alias=catalan_alias("mostrar_pas", "steps_shown"), serialization_alias="mostrar_pas"
+    )
+    frustration: int = Field(
+        validation_alias=catalan_alias("frustracio", "frustration"), serialization_alias="frustracio"
+    )
 
     @classmethod
     def of(cls, session: TutorSession, turns: list[TutorTurn]) -> "SessionSummary":

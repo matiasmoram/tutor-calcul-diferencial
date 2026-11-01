@@ -91,8 +91,9 @@ Behaviour of the service:
    accepted as is. URL-encode special characters in the password (`@ : / #`). The engine disables prepared
    statements, which the transaction pooler does not support.
 4. Nothing needs loading by hand. The course is read from the YAML in the image on every start, and the pre-generated
-   documents and quizzes are imported on start when the database lacks them. `uv run python scripts/db.py
-   import-generats` and `stats` do the same from a workstation.
+   documents (both layouts of Troba l'error) and quizzes are imported on start when the database lacks them. `uv run
+   python scripts/db.py import-generats` and `stats` do the same from a workstation. The "Pas a pas" layout needs
+   the migration `20261031000000_mistake_parts.sql` (the `layout` columns and the part tables) applied first.
 
 ### Schema changes
 

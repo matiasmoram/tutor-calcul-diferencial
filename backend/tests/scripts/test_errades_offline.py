@@ -9,7 +9,14 @@ import pytest
 from core.mistakes.infra import prompts
 from core.shared.llm.client import JsonObject
 from tests.core.mistakes.builders import finding, gen, tgen
-from tests.scripts.builders import PROBLEM_ERRORS, PROBLEM_FINDINGS, THEORY_ERRORS, THEORY_FINDINGS, stored
+from tests.scripts.builders import (
+    PROBLEM_ERRORS,
+    PROBLEM_FINDINGS,
+    THEORY_ERRORS,
+    THEORY_FINDINGS,
+    stored,
+    write_json,
+)
 from tests.scripts.loader import load_script
 
 errades_offline = load_script("errades_offline")
@@ -21,11 +28,6 @@ def batch_doc(errors: list[JsonObject], doc_id: str = "t2-4c", difficulty: str =
 
 def theory_doc() -> JsonObject:
     return {"font": "teoria", "id": "T3.21", "dificultat": "normal"} | tgen(THEORY_ERRORS)
-
-
-def write_json(path: Path, data: object) -> Path:
-    path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
-    return path
 
 
 def test_offline_validate_reports_each_bad_document(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
@@ -179,3 +181,15 @@ def test_check_cache_reapplies_the_verification_gate_to_the_stored_review(
     edit_verification(path, problemes=[*PROBLEM_FINDINGS, extra])
     assert errades_offline.cmd_check_cache(out_dir) == 1
     assert "hi ha un error NO intencionat al fragment 2" in capsys.readouterr().out
+
+
+def test_check_cache_reports_a_document_whose_errors_compound_and_keeps_it(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    out_dir, path = import_one(tmp_path, capsys)
+    upstream = finding(1, "el quocient tendeix a $0$", "consequencia", "hereta un valor erroni")
+    edit_verification(path, problemes=[*PROBLEM_FINDINGS, upstream])
+    assert errades_offline.cmd_check_cache(out_dir) == 1
+    out = capsys.readouterr().out
+    assert f"{path.relative_to(out_dir)}: un error es propaga fins a un altre error" in out
+    assert path.exists()

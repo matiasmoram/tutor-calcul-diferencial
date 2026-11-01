@@ -10,7 +10,7 @@ class PregeneratedImporter:
         self._exercises = exercises
 
     async def import_all(self) -> int:
-        documents = self._source.load()
+        documents = self._source.load_all()
         for exercise in documents:
             await self._exercises.save(exercise)
         return len(documents)

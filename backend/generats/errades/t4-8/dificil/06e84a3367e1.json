@@ -1,0 +1,142 @@
+{
+  "id": "06e84a3367e1",
+  "exercici": "t4-8",
+  "font": "problema",
+  "dificultat": "dificil",
+  "format": "per_parts",
+  "n_enunciat": 0,
+  "parts": [
+    {
+      "titol": "Situar el punt i la seva imatge",
+      "pas": "punt_imatge",
+      "fragments": [
+        "La diferencial de la inversa s'avalua a la imatge del punt on invertim, així que cal veure quin punt es transforma en $(4,4,-1)$. Calculem $G(1,-1,2)=(1-1+2^2,\\ 1+1+2,\\ 2-1-2)=(4,4,-1)$.",
+        "Per tant $(4,4,-1)=G(1,-1,2)$, i $DG^{-1}(4,4,-1)$ és la diferencial de la inversa local definida al voltant de $(1,-1,2)$."
+      ],
+      "fragments_errats": [
+        "La diferencial de la inversa s'avalua a la imatge del punt on invertim, així que cal veure quin punt es transforma en $(4,4,-1)$. Calculem $G(1,-1,2)=(1-1+2^2,\\ 1+1+2,\\ 2-1-2)=(4,4,-1)$.",
+        "Per tant $(1,-1,2)$ és l'única antiimatge de $(4,4,-1)$, i $DG^{-1}(4,4,-1)$ és la diferencial de la inversa local definida al voltant de $(1,-1,2)$."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 2,
+        "cita": "$(1,-1,2)$ és l'única antiimatge de $(4,4,-1)$",
+        "inici": 9,
+        "fi": 55,
+        "tipus": "conclusio",
+        "explicacio": "Només s'ha comprovat que $G(1,-1,2)=(4,4,-1)$; això no exclou altres antiimatges (per exemple $(1,-6,-3)$ també va a $(4,4,-1)$), perquè $G$ no és injectiva.",
+        "correccio": "Per tant $(4,4,-1)=G(1,-1,2)$, i $DG^{-1}(4,4,-1)$ és la diferencial de la inversa local definida al voltant de $(1,-1,2)$.",
+        "pista": "Has comprovat que un punt va a $(4,4,-1)$; n'hi pot haver algun altre que hi vagi?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-3.json",
+        "valoracio": "El càlcul G(1,-1,2)=(4,4,-1) és correcte, però es conclou que és l'única antiimatge, cosa falsa (també ho és (1,-6,-3)) i contradiu que G no tingui inversa global.",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "Per tant $(1,-1,2)$ és l'única antiimatge de $(4,4,-1)$",
+            "gravetat": "error",
+            "explicacio": "Afirmació falsa i no justificada: G no és injectiva. Per exemple G(1,-6,-3)=(1-6+9, 1+6-3, 2-6+3)=(4,4,-1), així que (4,4,-1) té almenys dues antiimatges (z i -1-z). Calcular G(1,-1,2) només mostra que és una antiimatge, no l'única. La conclusió útil és que DG^{-1}(4,4,-1) es refereix a la inversa local al voltant de (1,-1,2)."
+          }
+        ],
+        "hash_referencia": "64bbb9f37e9981aea38df565306bd85adf6d00f26c8d8453362b2edbf8b3fc43"
+      }
+    },
+    {
+      "titol": "Jacobiana i hipòtesis del TFI",
+      "pas": "jacobiana",
+      "fragments": [
+        "$G$ és polinòmica, per tant de classe $\\mathcal{C}^\\infty$. La jacobiana és $JG(x,y,z)=\\begin{pmatrix}1&1&2z\\\\ 1&-1&1\\\\ 2&1&-1\\end{pmatrix}$.",
+        "Desenvolupant per la primera fila: $\\det JG=1\\cdot(1-1)-1\\cdot(-1-2)+2z\\cdot(1+2)=0+3+6z=3+6z$. En $(1,-1,2)$ val $3+12=15\\neq 0$.",
+        "Pel teorema de la funció inversa, existeix un entorn $U$ de $(1,-1,2)$ on $G$ és injectiva, $G(U)$ és obert i la inversa local és de classe $\\mathcal{C}^\\infty$. Per tant $G$ admet inversa local diferenciable al voltant del punt."
+      ],
+      "fragments_errats": [
+        "$G$ és polinòmica, per tant de classe $\\mathcal{C}^\\infty$. La jacobiana és $JG(x,y,z)=\\begin{pmatrix}1&1&2z\\\\ 1&-1&1\\\\ 2&1&-1\\end{pmatrix}$.",
+        "Desenvolupant per la primera fila: $\\det JG=1\\cdot(1-1)-1\\cdot(-1-2)+2z\\cdot(1+2)=0+3+6z=3+6z$. En $(1,-1,2)$ val $3+12=15\\neq 0$, i per tant $\\det JG\\neq 0$ a tot $\\mathbb{R}^3$.",
+        "Pel teorema de la funció inversa, existeix un entorn $U$ de $(1,-1,2)$ on $G$ és injectiva, $G(U)$ és obert i la inversa local és de classe $\\mathcal{C}^\\infty$. Per tant $G$ admet inversa local diferenciable al voltant del punt."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 4,
+        "cita": "i per tant $\\det JG\\neq 0$ a tot $\\mathbb{R}^3$",
+        "inici": 131,
+        "fi": 178,
+        "tipus": "hipotesi",
+        "explicacio": "Que $\\det JG$ no s'anul·li en $(1,-1,2)$ no implica que no s'anul·li enlloc més: $3+6z=0$ per a $z=-\\frac12$.",
+        "correccio": "En $(1,-1,2)$ val $3+12=15\\neq 0$, i això només garanteix una inversa local a l'entorn d'aquest punt.",
+        "pista": "Què has comprovat exactament sobre el determinant i en quins punts?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-3.json",
+        "valoracio": "Jacobiana i determinant 3+6z correctes, així com el valor 15 i l'aplicació local del TFI (fragments 1 i 3). Error només en l'afirmació que el determinant no s'anul·la a tot R^3.",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "i per tant $\\det JG\\neq 0$ a tot $\\mathbb{R}^3$",
+            "gravetat": "error",
+            "explicacio": "det JG=3+6z s'anul·la en z=-1/2, així que no és diferent de zero a tot R^3. Només es té det JG(1,-1,2)=15≠0 (i per continuïtat en un entorn). La conclusió global és falsa."
+          }
+        ],
+        "hash_referencia": "64bbb9f37e9981aea38df565306bd85adf6d00f26c8d8453362b2edbf8b3fc43"
+      }
+    },
+    {
+      "titol": "Calcular la diferencial de la inversa",
+      "pas": "diferencial_inversa",
+      "fragments": [
+        "Pel mateix teorema, $DG^{-1}(4,4,-1)=\\big(JG(1,-1,2)\\big)^{-1}$, amb $JG(1,-1,2)=\\begin{pmatrix}1&1&4\\\\ 1&-1&1\\\\ 2&1&-1\\end{pmatrix}$ i determinant $15$.",
+        "La matriu d'adjunts (cofactors) és $\\begin{pmatrix}0&3&3\\\\ 5&-9&1\\\\ 5&3&-2\\end{pmatrix}$; la inversa és la seva transposada dividida pel determinant: $\\frac{1}{15}\\begin{pmatrix}0&5&5\\\\ 3&-9&3\\\\ 3&1&-2\\end{pmatrix}$.",
+        "Comprovem la primera fila de $JG$ per les columnes: $(1,1,4)\\cdot(0,3,3)=15$, $(1,1,4)\\cdot(5,-9,1)=0$, $(1,1,4)\\cdot(5,3,-2)=0$, com cal. Resultat: $DG^{-1}(4,4,-1)=\\begin{pmatrix}0&\\frac13&\\frac13\\\\ \\frac15&-\\frac35&\\frac15\\\\ \\frac15&\\frac1{15}&-\\frac2{15}\\end{pmatrix}$."
+      ],
+      "fragments_errats": [
+        "Pel mateix teorema, $DG^{-1}(4,4,-1)=\\big(JG(1,-1,2)\\big)^{-1}$, amb $JG(1,-1,2)=\\begin{pmatrix}1&1&4\\\\ 1&-1&1\\\\ 2&1&-1\\end{pmatrix}$ i determinant $15$.",
+        "La matriu d'adjunts (cofactors) és $\\begin{pmatrix}0&3&3\\\\ 5&-9&1\\\\ 5&3&-2\\end{pmatrix}$; la inversa és la seva transposada dividida pel determinant: $\\frac{1}{15}\\begin{pmatrix}0&5&5\\\\ 3&-9&3\\\\ 3&1&-2\\end{pmatrix}$.",
+        "Comprovem la primera fila de $JG$ per les columnes: $(1,1,4)\\cdot(0,3,3)=15$, $(1,1,4)\\cdot(5,-9,1)=0$, $(1,1,4)\\cdot(5,3,-2)=0$, com cal. Aquesta matriu no depèn del punt, de manera que $DG^{-1}$ és constant a tot l'entorn de $(4,4,-1)$. Resultat: $DG^{-1}(4,4,-1)=\\begin{pmatrix}0&\\frac13&\\frac13\\\\ \\frac15&-\\frac35&\\frac15\\\\ \\frac15&\\frac1{15}&-\\frac2{15}\\end{pmatrix}$."
+      ],
+      "error": {
+        "id": "e3",
+        "fragment": 8,
+        "cita": "Aquesta matriu no depèn del punt, de manera que $DG^{-1}$ és constant a tot l'entorn de $(4,4,-1)$",
+        "inici": 139,
+        "fi": 237,
+        "tipus": "logica",
+        "explicacio": "La jacobiana $JG$ depèn de $z$ (conté $2z$), i la diferencial de la inversa és $(JG)^{-1}$ avaluada a l'antiimatge de cada punt; per tant no és constant, només s'ha calculat en $(4,4,-1)$.",
+        "correccio": "Aquest resultat és el valor de $DG^{-1}$ només en el punt $(4,4,-1)$; en altres punts de l'entorn la matriu és diferent.",
+        "pista": "La jacobiana de $G$ que has escrit a la part 2 és la mateixa a tots els punts? Què passa llavors amb la seva inversa?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-3.json",
+        "valoracio": "Els càlculs (determinant 15, cofactors, adjunta transposada, inversa final i comprovació de la primera fila) són correctes i coincideixen amb la referència. L'únic error és l'afirmació afegida que DG^{-1} és constant a l'entorn, que és falsa perquè JG depèn de z.",
+        "problemes": [
+          {
+            "fragment": 3,
+            "cita": "Aquesta matriu no depèn del punt, de manera que $DG^{-1}$ és constant a tot l'entorn de $(4,4,-1)$.",
+            "gravetat": "error",
+            "explicacio": "Fals. JG(x,y,z) conté l'entrada 2z, i det JG = 3+6z, així que la jacobiana depèn del punt. La matriu calculada és només JG(1,-1,2)^{-1}; DG^{-1}(y) = (JG(G^{-1}(y)))^{-1} varia amb y, i no és constant a l'entorn de (4,4,-1)."
+          }
+        ],
+        "hash_referencia": "64bbb9f37e9981aea38df565306bd85adf6d00f26c8d8453362b2edbf8b3fc43"
+      }
+    },
+    {
+      "titol": "Inversa global",
+      "pas": "inversa_global",
+      "fragments": [
+        "El teorema de la funció inversa només dona una inversa local; una inversa global exigiria que $G$ fos injectiva a tot $\\mathbb{R}^3$. Resolem $G(x,y,z)=(u,v,w)$: sumant les dues darreres components, $v+w=3x$, així que $x=\\frac{v+w}{3}$, i de la segona $y=x+z-v$.",
+        "Substituint a la primera: $u=x+y+z^2=2x-v+z+z^2$, és a dir $z^2+z=u+v-2x$. Aquesta equació de segon grau en $z$ té, en general, dues solucions $z$ i $-1-z$, que donen dues antiimatges diferents.",
+        "Exemple explícit: $G(0,0,0)=(0,0,0)$ i $G(0,-1,-1)=(0-1+1,\\ 0+1-1,\\ 0-1+1)=(0,0,0)$. Com $G$ no és injectiva, no admet inversa global."
+      ]
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-3.json",
+    "valoracio": "Tots els càlculs verificats: G(1,-1,2)=(4,4,-1), det JG=3+6z=15, matriu d'adjunts i inversa correctes, comprovació de la primera fila correcta, no injectivitat amb l'exemple (0,0,0) i (0,-1,-1) correcta.",
+    "problemes": [],
+    "hash_referencia": "64bbb9f37e9981aea38df565306bd85adf6d00f26c8d8453362b2edbf8b3fc43"
+  },
+  "creat": 1793558045.9398084
+}

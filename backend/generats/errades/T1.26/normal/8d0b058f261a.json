@@ -1,0 +1,128 @@
+{
+  "id": "8d0b058f261a",
+  "exercici": "T1.26",
+  "font": "teoria",
+  "dificultat": "normal",
+  "format": "per_parts",
+  "n_enunciat": 2,
+  "parts": [
+    {
+      "titol": "Enunciat",
+      "pas": "",
+      "fragments": [
+        "Sigui $(M,d)$ un espai mètric i sigui $A\\subseteq M$.",
+        "Aleshores $A$ és compacte $\\Leftrightarrow$ $A$ és seqüencialment compacte."
+      ],
+      "fragments_errats": [
+        "Sigui $(M,d)$ un espai mètric i sigui $A\\subseteq M$.",
+        "Aleshores $A$ és compacte $\\Leftrightarrow$ $A$ és tancat i fitat."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 2,
+        "cita": "$A$ és compacte $\\Leftrightarrow$ $A$ és tancat i fitat",
+        "inici": 10,
+        "fi": 65,
+        "tipus": "conclusio",
+        "explicacio": "En un espai mètric general tancat i fitat no implica compacte. Contraexemple: $A=\\mathbb{N}$ amb la mètrica discreta ($d(m,n)=1$ si $m\\neq n$) és tancat i fitat, però la successió $(n)_n$ no té cap parcial convergent.",
+        "correccio": "El teorema diu que $A$ és compacte si i només si $A$ és seqüencialment compacte.",
+        "pista": "Quan una caracterització de la compacitat amb tancat i fitat és certa, i en quins espais? Passa en qualsevol espai mètric?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-5.json",
+        "valoracio": "L'enunciat és incorrecte: substitueix 'seqüencialment compacte' per 'tancat i fitat', i l'equivalència és falsa en espais mètrics generals. Fragment 1 correcte.",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "Aleshores $A$ és compacte $\\Leftrightarrow$ $A$ és tancat i fitat.",
+            "gravetat": "error",
+            "explicacio": "L'enunciat dels apunts (Bolzano-Weierstrass) diu: A compacte <=> A seqüencialment compacte. Aquí la conclusió s'ha canviat per 'tancat i fitat', que en un espai mètric general és fals: compacte => tancat i fitat és cert, però el recíproc falla. Contraexemple: M=A=N amb la mètrica discreta (o l'esfera unitat de l^2): és tancat i fitat però no compacte (el recobriment per boles obertes de radi 1/2 no té subrecobriment finit). L'equivalència només val a R^n (Heine-Borel)."
+          }
+        ],
+        "hash_referencia": "db64912b1e8b21b1f5945c429f243d9fc4dc31ef7155f1475967ce028982e616"
+      }
+    },
+    {
+      "titol": "Muntatge per reducció a l'absurd",
+      "pas": "",
+      "fragments": [
+        "$\\Rightarrow$) Suposem $A$ compacte i, per reducció a l'absurd, sigui $(x_n)_n\\subseteq A$ una successió sense cap parcial convergent. Aleshores $(x_n)_n$ no pot repetir infinites vegades un mateix element $x_{n_0}$, perquè la parcial constant $x_{n}=x_{n_0}$ seria convergent a $x_{n_0}$.",
+        "Eliminem les còpies i definim $(y_n)_n\\subseteq A$ formada pels elements de $(x_n)_n$ diferents dos a dos. Així $(y_n)_n$ és una subsuccessió de $(x_n)_n$, de manera que tampoc no té cap parcial convergent. Hem establert que podem treballar amb una successió $(y_n)_n$ d'elements diferents dos a dos sense parcials convergents."
+      ]
+    },
+    {
+      "titol": "Entorns que aïllen cada punt",
+      "pas": "",
+      "fragments": [
+        "Afirmació: existeix una successió d'oberts $(U_n)_n$ amb $y_n\\in U_n$ tal que $y_n$ és l'únic punt de $(y_n)_n$ que pertany a $U_n$. Per reducció a l'absurd, si no existís, hi hauria un $y_{n_0}$ tal que tot obert que el conté en conté una infinitat d'altres punts de $(y_n)_n$.",
+        "Això val en particular per als oberts $V_m=B_{1/m}(y_{n_0})$, $m\\geq 1$. Podem triar inductivament $y_m^0\\in V_m\\setminus\\{y_{n_0}\\}$ amb índex creixent respecte de la tria anterior, perquè $V_m$ conté infinits punts de la successió. Llavors $d(y_m^0,y_{n_0})<\\frac{1}{m}\\to 0$, de manera que $(y_m^0)_m$ és una parcial convergent a $y_{n_0}\\in A$, contra la hipòtesi.",
+        "Queda establert que existeixen oberts $U_n\\ni y_n$ amb $U_n\\cap\\{y_k: k\\geq 1\\}=\\{y_n\\}$."
+      ]
+    },
+    {
+      "titol": "Contradicció amb la compacitat",
+      "pas": "",
+      "fragments": [
+        "Sigui $Y=\\{y_1,y_2,\\ldots\\}\\subseteq A$. Cap $z\\in A$ no és punt d'acumulació de $Y$: si ho fos, hi hauria una successió de punts diferents de $Y$ convergent a $z$, que seria una parcial de $(x_n)_n$ convergent. Per tant $\\overline{Y}\\cap A=Y$ i $Y$ és tancat dins de $A$.",
+        "Com que $A$ és compacte i $Y$ és un tancat de $A$, el Lema 28 dóna que $Y$ és compacte. Ara bé, $\\bigcup_{n\\geq 1}U_n\\supseteq Y$ és un recobriment per oberts, i com que cada $U_n$ conté només el punt $y_n$ de $Y$, qualsevol unió finita d'aquests oberts conté només un nombre finit de punts de $Y$. Com que $Y$ és infinit, no hi ha subrecobriment finit: contradicció.",
+        "Hem establert que tota successió $(x_n)_n\\subseteq A$ té una parcial convergent $(x_{n_k})_k$ amb límit $x\\in M$."
+      ]
+    },
+    {
+      "titol": "El límit queda dins del conjunt",
+      "pas": "",
+      "fragments": [
+        "Com que $x_{n_k}\\in A$ per a tot $k$ i $x_{n_k}\\to x$, el punt $x$ és adherent a $A$, és a dir $x\\in\\overline{A}$.",
+        "Per ser $A$ compacte, $A$ és tancat (Lema 28), és a dir $\\overline{A}=A$. Per tant $x\\in A$. Això prova que $A$ és seqüencialment compacte."
+      ]
+    },
+    {
+      "titol": "Implicació recíproca",
+      "pas": "",
+      "fragments": [
+        "$\\Leftarrow$) Suposem $A$ seqüencialment compacte i sigui $\\bigcup_{i\\in I}U_i\\supseteq A$ un recobriment per oberts. Pel Lema 29 existeix $\\delta>0$ tal que per a tot $a\\in A$ hi ha un $i=i(a)\\in I$ amb $B_\\delta(a)\\subseteq U_i$.",
+        "Apliquem el Lema 30 amb $\\varepsilon=\\delta$: existeixen $y_1,\\ldots,y_r\\in A$ amb $A\\subseteq B_\\delta(y_1)\\cup\\ldots\\cup B_\\delta(y_r)$. Com que $B_\\delta(y_j)\\subseteq U_{i_j}$, resulta $A\\subseteq U_{i_1}\\cup\\ldots\\cup U_{i_r}$.",
+        "Hem extret un subrecobriment finit, i per tant $A$ és compacte."
+      ],
+      "fragments_errats": [
+        "$\\Leftarrow$) Suposem $A$ seqüencialment compacte i sigui $\\bigcup_{i\\in I}U_i\\supseteq A$ un recobriment per oberts. Pel Lema 29 existeix $\\delta>0$ tal que per a tot $a\\in A$ hi ha un $i=i(a)\\in I$ amb $B_\\delta(a)\\subseteq U_i$.",
+        "Apliquem el Lema 30 amb $\\varepsilon=\\delta$: existeixen $y_1,\\ldots,y_r\\in M$ amb $A\\subseteq B_\\delta(y_1)\\cup\\ldots\\cup B_\\delta(y_r)$. Com que $B_\\delta(y_j)\\subseteq U_{i_j}$, resulta $A\\subseteq U_{i_1}\\cup\\ldots\\cup U_{i_r}$.",
+        "Hem extret un subrecobriment finit, i per tant $A$ és compacte."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 14,
+        "cita": "existeixen $y_1,\\ldots,y_r\\in M$",
+        "inici": 46,
+        "fi": 78,
+        "tipus": "hipotesi",
+        "explicacio": "El Lema 30 dóna centres $y_j$ dins de $A$. Si només se sap $y_j\\in M$, el Lema 29 (que dóna $B_\\delta(a)\\subseteq U_i$ només per a $a\\in A$) no permet afirmar $B_\\delta(y_j)\\subseteq U_{i_j}$ i la conclusió del subrecobriment finit no queda justificada.",
+        "correccio": "Els centres són $y_1,\\ldots,y_r\\in A$, de manera que el Lema 29 s'hi pot aplicar i dóna $B_\\delta(y_j)\\subseteq U_{i_j}$.",
+        "pista": "On han de ser els centres $y_j$ perquè es pugui aplicar el Lema 29 a cada bola $B_\\delta(y_j)$?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-5.json",
+        "valoracio": "El fragment 1 i el 3 són correctes. El fragment 2 aplica bé el Lema 30 amb $\\varepsilon=\\delta$, però escriu els centres a $M$ en lloc de $A$, i això deixa sense justificar la inclusió $B_\\delta(y_j)\\subseteq U_{i_j}$.",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "existeixen $y_1,\\ldots,y_r\\in M$ amb $A\\subseteq B_\\delta(y_1)\\cup\\ldots\\cup B_\\delta(y_r)$. Com que $B_\\delta(y_j)\\subseteq U_{i_j}$",
+            "gravetat": "error",
+            "explicacio": "El Lema 30 dona centres $y_j\\in A$, no $y_j\\in M$. El Lema 29 només garanteix $B_\\delta(a)\\subseteq U_i$ per a $a\\in A$. Amb $y_j\\in M$ qualsevol, l'afirmació $B_\\delta(y_j)\\subseteq U_{i_j}$ no se segueix. L'enunciat del lema queda debilitat i el pas següent depèn de la hipòtesi $y_j\\in A$ que s'ha perdut."
+          }
+        ],
+        "hash_referencia": "db64912b1e8b21b1f5945c429f243d9fc4dc31ef7155f1475967ce028982e616"
+      }
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-5.json",
+    "valoracio": "Enunciat idèntic als apunts. Les dues implicacions són correctes: la negació de l'afirmació, la tria de parcials amb índex creixent, el tancat Y dins d'A amb el Lema 28 i el recobriment per boles amb els Lemes 29 i 30 se segueixen sense errors.",
+    "problemes": [],
+    "hash_referencia": "db64912b1e8b21b1f5945c429f243d9fc4dc31ef7155f1475967ce028982e616"
+  },
+  "creat": 1793558206.233198
+}

@@ -5,11 +5,13 @@ from pydantic import BaseModel
 from core.course.domain.entities.course import Course
 from core.course.domain.entities.theory_item import TheoryItem
 from core.mistakes.domain.entities.annotation import Annotation
+from core.mistakes.domain.entities.mistake_exercise import MistakeExercise
 from core.mistakes.domain.entities.mistake_grading import MistakeGrading
 from core.mistakes.domain.entities.mistake_session import MistakeSession
 from core.mistakes.domain.exceptions import (
     GradingInProgressException,
     MistakeGradingTimeoutException,
+    MistakeLayoutMismatchException,
     MistakeSessionAlreadyGradedException,
 )
 from core.mistakes.domain.ports import AnnotationGrader
@@ -30,7 +32,8 @@ class AnnotationsGrading(BaseModel):
 
 
 class AnnotationsGrader:
-    """Grades a session's annotations once; later submissions get the stored result."""
+    """Grades a "sencer" session's annotations once; later submissions get the stored result. Per-parts sessions
+    are graded part by part (PartAnnotationsGrader)."""
 
     def __init__(
         self,
@@ -49,6 +52,8 @@ class AnnotationsGrader:
     async def grade(self, session_id: SessionId, annotations: list[Annotation]) -> AnnotationsGrading:
         check_annotations(annotations)
         session = await self._sessions.get(session_id)
+        if session.layout != "sencer":
+            raise MistakeLayoutMismatchException(session_id, session.layout)
         if session.grading is not None:
             return self._outcome(session, session.grading)
         claimed_at = self._clock.now()
@@ -79,6 +84,8 @@ class AnnotationsGrader:
 
     async def _grade(self, session: MistakeSession, annotations: list[Annotation]) -> MistakeGrading:
         exercise = await self._exercises.get(session.exercise_id)
+        if not isinstance(exercise, MistakeExercise):
+            raise MistakeLayoutMismatchException(session.id, exercise.layout)
         source = source_of(self._course, session.source_kind, session.source_id)
         located = locate_annotations(exercise, annotations)
         if not located:

@@ -63,6 +63,115 @@ def verification_schema() -> JsonObject:
     }
 
 
+_FRAGMENTS: JsonObject = {"type": "array", "items": {"type": "string"}}
+
+
+def resolution_schema(step_ids: list[str] | None) -> JsonObject:
+    """Stage A. Problems: one part per sheet step (`step_ids`); theory (None): the statement, then titled stages."""
+    if step_ids is None:
+        part: JsonObject = {
+            "type": "object",
+            "additionalProperties": False,
+            "required": ["titol", "fragments"],
+            "properties": {"titol": {"type": "string"}, "fragments": _FRAGMENTS},
+        }
+        return {
+            "type": "object",
+            "additionalProperties": False,
+            "required": ["enunciat", "parts"],
+            "properties": {"enunciat": _FRAGMENTS, "parts": {"type": "array", "items": part}},
+        }
+    part = {
+        "type": "object",
+        "additionalProperties": False,
+        "required": ["pas", "fragments"],
+        "properties": {"pas": {"type": "string", "enum": step_ids}, "fragments": _FRAGMENTS},
+    }
+    return {
+        "type": "object",
+        "additionalProperties": False,
+        "required": ["parts"],
+        "properties": {"parts": {"type": "array", "items": part}},
+    }
+
+
+def _findings(n_fragments: int) -> JsonObject:
+    return {
+        "type": "array",
+        "items": {
+            "type": "object",
+            "additionalProperties": False,
+            "required": ["fragment", "cita", "gravetat", "explicacio"],
+            "properties": {
+                "fragment": {"type": "integer", "enum": list(range(1, n_fragments + 1))},
+                "cita": {"type": "string"},
+                "gravetat": {"type": "string", "enum": list(SEVERITIES)},
+                "explicacio": {"type": "string"},
+            },
+        },
+    }
+
+
+def resolution_verification_schema(n_fragments: int) -> JsonObject:
+    """The blind check of the correct resolution (stage A): the findings, and whether it reaches the result."""
+    return {
+        "type": "object",
+        "additionalProperties": False,
+        "required": ["problemes", "valoracio", "arriba_al_resultat"],
+        "properties": {
+            "problemes": _findings(n_fragments),
+            "valoracio": {"type": "string"},
+            "arriba_al_resultat": {"type": "boolean"},
+        },
+    }
+
+
+def corruption_schema(n_fragments: int, theory: bool = False) -> JsonObject:
+    """Stage B: the edits of one part (fragments numbered inside the part) and the error they make."""
+    return {
+        "type": "object",
+        "additionalProperties": False,
+        "required": ["apte", "canvis", "cita", "tipus", "explicacio", "correccio", "pista"],
+        "properties": {
+            "apte": {"type": "boolean"},
+            "canvis": {
+                "type": "array",
+                "description": "D'1 a 3 canvis; el primer és l'error.",
+                "items": {
+                    "type": "object",
+                    "additionalProperties": False,
+                    "required": ["fragment", "original", "nou"],
+                    "properties": {
+                        "fragment": {"type": "integer", "enum": list(range(1, n_fragments + 1))},
+                        "original": {"type": "string"},
+                        "nou": {"type": "string"},
+                    },
+                },
+            },
+            "cita": {"type": "string"},
+            "tipus": {"type": "string", "enum": list(THEORY_MISTAKE_KINDS if theory else PROBLEM_MISTAKE_KINDS)},
+            "explicacio": {"type": "string"},
+            "correccio": {"type": "string"},
+            "pista": {"type": "string"},
+        },
+    }
+
+
+def part_verification_schema(n_fragments: int) -> JsonObject:
+    """The blind check of one corrupted part (stage C), fragments numbered inside the part."""
+    return {
+        "type": "object",
+        "additionalProperties": False,
+        "required": ["problemes", "valoracio", "context_correcte", "alerta_context"],
+        "properties": {
+            "problemes": _findings(n_fragments),
+            "valoracio": {"type": "string"},
+            "context_correcte": {"type": "boolean"},
+            "alerta_context": {"type": "string"},
+        },
+    }
+
+
 def grading_schema(annotation_ids: list[str], mistake_ids: list[str]) -> JsonObject:
     return {
         "type": "object",

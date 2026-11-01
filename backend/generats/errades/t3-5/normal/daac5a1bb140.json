@@ -1,0 +1,209 @@
+{
+  "id": "daac5a1bb140",
+  "exercici": "t3-5",
+  "font": "problema",
+  "dificultat": "normal",
+  "format": "per_parts",
+  "n_enunciat": 0,
+  "parts": [
+    {
+      "titol": "Continuïtat fora de l'eix",
+      "pas": "continuitat_obert",
+      "fragments": [
+        "Considerem l'obert $U=\\{(x,y)\\in\\mathbb{R}^2: y\\neq 0\\}$. En aquest conjunt la funció està definida per una única expressió, $f(x,y)=\\frac{x^2}{y}$.",
+        "Com que $x^2$ i $y$ són funcions polinòmiques i el denominador no s'anul·la a $U$, el quocient és continu en tot punt de $U$. Per tant, el resultat intermedi és que $f$ és contínua en tots els punts amb $y\\neq0$."
+      ]
+    },
+    {
+      "titol": "Discontinuïtat a l'eix, fora de l'origen",
+      "pas": "discontinuitat_eix",
+      "fragments": [
+        "Ara prenem un punt de l'eix de la forma $(x_0,0)$ amb $x_0\\neq0$. Per estudiar el límit en aquest punt, mirem el camí vertical $x=x_0$.",
+        "Si $y\\neq0$, sobre aquest camí tenim $f(x_0,y)=\\frac{x_0^2}{y}$. Quan $y\\to0^+$ aquest valor tendeix a $+\\infty$, i quan $y\\to0^-$ tendeix a $-\\infty$.",
+        "Així, el límit de $f(x,y)$ quan $(x,y)\\to(x_0,0)$ no existeix, mentre que $f(x_0,0)=0$. Per tant, el resultat intermedi és que $f$ és discontínua en tot punt $(x_0,0)$ amb $x_0\\neq0$."
+      ]
+    },
+    {
+      "titol": "Discontinuïtat a l'origen",
+      "pas": "discontinuitat_origen",
+      "fragments": [
+        "Queda estudiar la continuïtat a l'origen. El valor de la funció en aquest punt és $f(0,0)=0$, perquè l'origen pertany a l'eix $y=0$.",
+        "Considerem ara el camí parabòlic $y=x^2$. Si $x\\neq0$, aleshores $y\\neq0$ i $f(x,x^2)=\\frac{x^2}{x^2}=1$.",
+        "Per tant, al llarg d'aquest camí, $f(x,x^2)\\to1$ quan $x\\to0$, però $f(0,0)=0$. Així, el resultat intermedi és que $f$ no és contínua a l'origen."
+      ]
+    },
+    {
+      "titol": "Direccionals fora de l'eix",
+      "pas": "direccionals_obert",
+      "fragments": [
+        "Siguem ara en un punt $(x_0,y_0)$ amb $y_0\\neq0$ i sigui $v=(v_1,v_2)$ una direcció no nul·la. Per a $t$ prou petit, $y_0+tv_2$ continua sent no nul, de manera que podem escriure la restricció a la recta com $g(t)=f(x_0+tv_1,y_0+tv_2)=\\frac{(x_0+tv_1)^2}{y_0+tv_2}$.",
+        "Aquesta funció d'una variable és derivable prop de $t=0$, perquè és un quocient de funcions derivables amb denominador no nul. Per tant, existeix la derivada direccional i és $D_vf(x_0,y_0)=g'(0)$.",
+        "Derivant, obtenim $g'(0)=\\frac{2x_0v_1y_0-x_0^2v_2}{y_0^2}$. Per tant, el resultat intermedi és que en qualsevol punt amb $y_0\\neq0$ existeixen totes les derivades direccionals i valen $D_vf(x_0,y_0)=\\frac{2x_0y_0v_1-x_0^2v_2}{y_0^2}$."
+      ]
+    },
+    {
+      "titol": "Direccionals a l'eix, fora de l'origen",
+      "pas": "direccionals_eix",
+      "fragments": [
+        "Prenem ara un punt $(x_0,0)$ amb $x_0\\neq0$ i una direcció $v=(v_1,v_2)\\neq(0,0)$. Per definició, $D_vf(x_0,0)=\\lim_{t\\to0}\\frac{f(x_0+tv_1,tv_2)-f(x_0,0)}{t}$, si aquest límit existeix.",
+        "Si $v_2\\neq0$, per a $t\\neq0$ petit tenim $tv_2\\neq0$ i, com que $f(x_0,0)=0$, $\\frac{f(x_0+tv_1,tv_2)}{t}=\\frac{(x_0+tv_1)^2}{t^2v_2}$. Aquest quocient no té límit finit quan $t\\to0$, perquè el numerador tendeix a $x_0^2\\neq0$ i apareix el factor $t^2$ al denominador.",
+        "Si $v_2=0$, la recta queda sobre l'eix $y=0$, i llavors $f(x_0+tv_1,0)=0$ per a tot $t$. Per tant, el quocient incremental és sempre $0$.",
+        "Així, el resultat intermedi és que en un punt $(x_0,0)$ amb $x_0\\neq0$ només existeixen les derivades direccionals en direccions horitzontals, és a dir, amb $v_2=0$, i en aquest cas valen $D_vf(x_0,0)=0$."
+      ],
+      "fragments_errats": [
+        "Prenem ara un punt $(x_0,0)$ amb $x_0\\neq0$ i una direcció $v=(v_1,v_2)\\neq(0,0)$. Per definició, $D_vf(x_0,0)=\\lim_{t\\to0}\\frac{f(x_0+tv_1,tv_2)-f(x_0,0)}{t}$, si aquest límit existeix.",
+        "Si $v_2\\neq0$, per a $t\\neq0$ petit tenim $tv_2\\neq0$ i, com que $f(x_0,0)=0$, $\\frac{f(x_0+tv_1,tv_2)}{t}=\\frac{(x_0+tv_1)^2}{t^2v_2}$. Aquest quocient no té límit finit quan $t\\to0$, perquè el numerador tendeix a $x_0^2\\neq0$ i apareix el factor $t^2$ al denominador.",
+        "Si $v_2=0$, la recta queda sobre l'eix $y=0$, i llavors $f(x_0+tv_1,0)=0$ per a tot $t$. Per tant, el quocient incremental és sempre $0$.",
+        "Així, el resultat intermedi és que en un punt $(x_0,0)$ amb $x_0\\neq0$ existeixen les derivades direccionals en totes les direccions; si $v_2\\neq0$ tenen valor infinit i, si $v_2=0$, valen $D_vf(x_0,0)=0$."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 15,
+        "cita": "si $v_2\\neq0$ tenen valor infinit",
+        "inici": 134,
+        "fi": 167,
+        "tipus": "conclusio",
+        "explicacio": "Una derivada direccional ha de ser un límit finit real. Que el quocient incremental divergeixi cap a infinit no vol dir que la derivada existeixi amb valor infinit.",
+        "correccio": "Ha de dir que, si $v_2\\neq0$, la derivada direccional no existeix; només existeix quan $v_2=0$, i llavors val $0$.",
+        "pista": "Segons la definició de derivada direccional, un límit infinit compta com a derivada existent?"
+      },
+      "verificacio": {
+        "origen": "llm",
+        "valoracio": "El càlcul dels casos és correcte fins al fragment [3], però la conclusió final és incorrecta: en un punt $(x_0,0)$ amb $x_0\\neq0$ només existeixen les derivades direccionals en direccions horitzontals, és a dir, quan $v_2=0$, i aleshores valen $0$.",
+        "problemes": [
+          {
+            "fragment": 4,
+            "cita": "existeixen les derivades direccionals en totes les direccions; si $v_2\\neq0$ tenen valor infinit",
+            "gravetat": "error",
+            "explicacio": "Segons la definició de derivada direccional, el límit ha d'existir com a nombre real finit. Al fragment [2] s'ha vist correctament que, si $v_2\\neq0$, el quocient incremental no té límit finit, sinó que divergeix com $\\frac{x_0^2}{v_2t^2}$. Per tant, en aquestes direccions la derivada direccional no existeix; no es pot dir que existeixi amb valor infinit."
+          }
+        ],
+        "intents": [
+          {
+            "intent": 1,
+            "generacio": {
+              "model": "gpt-5.5",
+              "latency_ms": 51511,
+              "input_tokens": 6387,
+              "output_tokens": 4375,
+              "cached_tokens": 0
+            },
+            "validacio": [],
+            "verificacio": {
+              "model": "gpt-5.5",
+              "latency_ms": 8320,
+              "input_tokens": 5382,
+              "output_tokens": 607,
+              "cached_tokens": 0
+            },
+            "problemes_verificador": [
+              {
+                "fragment": 4,
+                "cita": "existeixen les derivades direccionals en totes les direccions; si $v_2\\neq0$ tenen valor infinit",
+                "gravetat": "error",
+                "explicacio": "Segons la definició de derivada direccional, el límit ha d'existir com a nombre real finit. Al fragment [2] s'ha vist correctament que, si $v_2\\neq0$, el quocient incremental no té límit finit, sinó que divergeix com $\\frac{x_0^2}{v_2t^2}$. Per tant, en aquestes direccions la derivada direccional no existeix; no es pot dir que existeixi amb valor infinit."
+              }
+            ],
+            "discrepancies": []
+          }
+        ]
+      }
+    },
+    {
+      "titol": "Direccionals a l'origen",
+      "pas": "direccionals_origen",
+      "fragments": [
+        "Finalment calculem les derivades direccionals a l'origen. Sigui $v=(v_1,v_2)\\neq(0,0)$; com que $f(0,0)=0$, cal estudiar $D_vf(0,0)=\\lim_{t\\to0}\\frac{f(tv_1,tv_2)}{t}$.",
+        "Si $v_2\\neq0$, per a $t\\neq0$ tenim $tv_2\\neq0$ i $f(tv_1,tv_2)=\\frac{t^2v_1^2}{tv_2}=t\\frac{v_1^2}{v_2}$. Per tant, $\\frac{f(tv_1,tv_2)}{t}=\\frac{v_1^2}{v_2}$, i el límit existeix.",
+        "Si $v_2=0$, el camí és l'eix $y=0$, de manera que $f(tv_1,0)=0$ per a tot $t$ i el quocient incremental és $0$.",
+        "Per tant, el resultat intermedi final és que a l'origen existeixen totes les derivades direccionals, amb $D_vf(0,0)=\\frac{v_1^2}{v_2}$ si $v_2\\neq0$ i $D_vf(0,0)=0$ si $v_2=0$; això mostra que tenir totes les derivades direccionals no implica continuïtat."
+      ],
+      "fragments_errats": [
+        "Finalment calculem les derivades direccionals a l'origen. Sigui $v=(v_1,v_2)\\neq(0,0)$; com que $f(0,0)=0$, cal estudiar $D_vf(0,0)=\\lim_{t\\to0}\\frac{f(tv_1,tv_2)}{t}$.",
+        "Si $v_2\\neq0$, per a $t\\neq0$ tenim $tv_2\\neq0$ i $f(tv_1,tv_2)=\\frac{t^2v_1^2}{tv_2}=t\\frac{v_1^2}{v_2}$. Per tant, $\\frac{f(tv_1,tv_2)}{t}=\\frac{v_1^2}{v_2}$, i el límit existeix.",
+        "Si $v_2=0$, el camí és l'eix $y=0$, de manera que $f(tv_1,0)=0$ per a tot $t$ i el quocient incremental és $0$.",
+        "Per tant, el resultat intermedi final és que a l'origen existeixen totes les derivades direccionals, amb $D_vf(0,0)=\\frac{v_1^2}{v_2}$ si $v_2\\neq0$ i $D_vf(0,0)=0$ si $v_2=0$; això mostra que tenir totes les derivades direccionals garanteix la continuïtat."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 19,
+        "cita": "tenir totes les derivades direccionals garanteix la continuïtat",
+        "inici": 193,
+        "fi": 256,
+        "tipus": "conclusio",
+        "explicacio": "Aquesta conclusió és falsa: l'existència de totes les derivades direccionals en un punt no garanteix la continuïtat en aquell punt. De fet, en aquesta mateixa resolució s'ha vist que a l'origen totes les direccionals existeixen però la funció no és contínua.",
+        "correccio": "Hauria de dir que tenir totes les derivades direccionals no implica continuïtat.",
+        "pista": "Què s'ha demostrat abans sobre la continuïtat de $f$ a l'origen, i què s'acaba de demostrar sobre les seves derivades direccionals?"
+      },
+      "verificacio": {
+        "origen": "llm",
+        "valoracio": "Els càlculs de les derivades direccionals a l'origen són correctes. L'únic error és la conclusió final, que inverteix el significat de l'exemple: aquest cas mostra que totes les derivades direccionals poden existir sense que la funció sigui contínua.",
+        "problemes": [
+          {
+            "fragment": 4,
+            "cita": "això mostra que tenir totes les derivades direccionals garanteix la continuïtat.",
+            "gravetat": "error",
+            "explicacio": "La conclusió és falsa i, de fet, és justament la contrària del que mostra l'exemple. A l'origen s'han trobat totes les derivades direccionals, però a les parts anteriors ja s'ha establert que la funció no és contínua a l'origen. Per tant, l'existència de totes les derivades direccionals no garanteix la continuïtat."
+          }
+        ],
+        "intents": [
+          {
+            "intent": 1,
+            "generacio": {
+              "model": "gpt-5.5",
+              "latency_ms": 51537,
+              "input_tokens": 6381,
+              "output_tokens": 4201,
+              "cached_tokens": 5888
+            },
+            "validacio": [],
+            "verificacio": {
+              "model": "gpt-5.5",
+              "latency_ms": 7294,
+              "input_tokens": 5714,
+              "output_tokens": 496,
+              "cached_tokens": 4864
+            },
+            "problemes_verificador": [
+              {
+                "fragment": 4,
+                "cita": "això mostra que tenir totes les derivades direccionals garanteix la continuïtat.",
+                "gravetat": "error",
+                "explicacio": "La conclusió és falsa i, de fet, és justament la contrària del que mostra l'exemple. A l'origen s'han trobat totes les derivades direccionals, però a les parts anteriors ja s'ha establert que la funció no és contínua a l'origen. Per tant, l'existència de totes les derivades direccionals no garanteix la continuïtat."
+              }
+            ],
+            "discrepancies": []
+          }
+        ]
+      }
+    }
+  ],
+  "verificacio": {
+    "origen": "llm",
+    "valoracio": "La resolució és correcta i completa: estudia la continuïtat fora de l’eix, la discontinuïtat a tots els punts de l’eix inclòs l’origen, i calcula adequadament les derivades direccionals en tots els casos.",
+    "problemes": [],
+    "intents": [
+      {
+        "intent": 1,
+        "generacio": {
+          "model": "gpt-5.5",
+          "latency_ms": 21780,
+          "input_tokens": 3930,
+          "output_tokens": 2001,
+          "cached_tokens": 0
+        },
+        "validacio": [],
+        "verificacio": {
+          "model": "gpt-5.5",
+          "latency_ms": 4478,
+          "input_tokens": 5444,
+          "output_tokens": 303,
+          "cached_tokens": 0
+        },
+        "problemes_verificador": [],
+        "discrepancies": []
+      }
+    ]
+  },
+  "creat": 1793541914.4283588
+}

@@ -3,6 +3,8 @@
 Its JSON (Catalan keys) is a stored-document contract: the pre-generated files in ``backend/generats/errades`` and
 the ``mistake_exercises.data`` column both hold ``MistakeExercise.model_dump(mode="json")``."""
 
+from typing import Literal
+
 from pydantic import BaseModel, ConfigDict, Field
 
 from core.mistakes.domain.values.difficulty import Difficulty
@@ -103,6 +105,10 @@ class MistakeExercise(BaseModel):
     difficulty: Difficulty = Field(
         validation_alias=catalan_alias("dificultat", "difficulty"), serialization_alias="dificultat"
     )
+    # Never written: a document without `format` is a "sencer" one, so the stored documents keep their bytes.
+    layout: Literal["sencer"] = Field(
+        default="sencer", validation_alias=catalan_alias("format", "layout"), exclude=True
+    )
     fragments: list[str]
     # Theory: the first `statement_fragments` fragments are the statement, the rest the proof. 0 for problems.
     statement_fragments: int = Field(
@@ -119,6 +125,10 @@ class MistakeExercise(BaseModel):
     @property
     def n_mistakes(self) -> int:
         return len(self.mistakes)
+
+    @property
+    def annotatable(self) -> range:
+        return range(1, len(self.fragments) + 1)
 
     def mistakes_in(self, fragment: int) -> list[DeclaredMistake]:
         return [m for m in self.mistakes if m.fragment == fragment]

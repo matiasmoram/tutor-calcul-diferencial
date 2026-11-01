@@ -1,0 +1,108 @@
+{
+  "id": "bb207494415f",
+  "exercici": "T2.23",
+  "font": "teoria",
+  "dificultat": "normal",
+  "format": "per_parts",
+  "n_enunciat": 2,
+  "parts": [
+    {
+      "titol": "Enunciat",
+      "pas": "",
+      "fragments": [
+        "Sigui $f:\\Omega\\subseteq M\\to\\mathbb{R}$ contínua i sigui $K\\subseteq\\Omega$ compacte.",
+        "Llavors $f(K)$ és fitat i existeixen $x_0,x_1\\in K$ tals que $f(x_0)=\\min_{x\\in K}f(x)$ i $f(x_1)=\\max_{x\\in K}f(x)$."
+      ],
+      "fragments_errats": [
+        "Sigui $f:\\Omega\\subseteq M\\to\\mathbb{R}$ contínua i sigui $K\\subseteq\\Omega$ tancat.",
+        "Llavors $f(K)$ és fitat i existeixen $x_0,x_1\\in K$ tals que $f(x_0)=\\min_{x\\in K}f(x)$ i $f(x_1)=\\max_{x\\in K}f(x)$."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 1,
+        "cita": "sigui $K\\subseteq\\Omega$ tancat",
+        "inici": 52,
+        "fi": 83,
+        "tipus": "hipotesi",
+        "explicacio": "Amb $K$ només tancat el teorema és fals: $f(x)=x$ és contínua i $K=\\mathbb{R}$ és tancat, però $f(K)=\\mathbb{R}$ no és fitat i no té màxim ni mínim.",
+        "correccio": "$K\\subseteq\\Omega$ ha de ser compacte.",
+        "pista": "Quina propietat de $K$ fa que una funció contínua sigui fitada? Una funció contínua sobre un tancat qualsevol ho és?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-5.json",
+        "valoracio": "La hipotesi de compacitat s'ha afeblit a tancat, cosa que fa fals el teorema.",
+        "problemes": [
+          {
+            "fragment": 1,
+            "cita": "sigui $K\\subseteq\\Omega$ tancat.",
+            "gravetat": "error",
+            "explicacio": "Els apunts demanen K compacte. Tancat no n'hi ha prou: f(x)=x a R amb K=R es contínua, K tancat, pero f(K)=R no es fitat i no hi ha maxim ni minim. L'enunciat es fals."
+          }
+        ],
+        "hash_referencia": "01232e690e81143a3dc6642b333cabc56c3d88539b2bf35c6089ec7699b5ee96"
+      }
+    },
+    {
+      "titol": "Fitació de la imatge",
+      "pas": "",
+      "fragments": [
+        "Com que $f$ és contínua i $K$ és compacte, $f(K)\\subset\\mathbb{R}$ és compacte, i en particular és fitat.",
+        "Per tant existeixen $f_M:=\\sup_{x\\in K}f(x)$ i $f_m:=\\inf_{x\\in K}f(x)$, tots dos reals. Queda establert que $f(K)$ és fitat; falta veure que $f_M$ i $f_m$ s'atenyen. Ho fem per al màxim; el mínim és anàleg."
+      ]
+    },
+    {
+      "titol": "Successió maximitzant",
+      "pas": "",
+      "fragments": [
+        "Per definició de suprem, per a cada $n\\geq 1$ existeix $x_n\\in K$ amb $f_M-\\frac{1}{n}<f(x_n)\\leq f_M$. Per tant $f(x_n)\\to f_M$.",
+        "Com que $K$ és compacte (seqüencialment), existeix una parcial $(x_{n_k})_k$ amb $x_{n_k}\\to x^*\\in K$. Hem establert un punt $x^*\\in K$ límit d'una parcial de la successió maximitzant."
+      ],
+      "fragments_errats": [
+        "Per definició de suprem, per a cada $n\\geq 1$ existeix $x_n\\in K$ amb $f_M-\\frac{1}{n}<f(x_n)\\leq f_M$. Per tant $f(x_n)\\to f_M$.",
+        "Com que $K$ és fitat, existeix una parcial $(x_{n_k})_k$ amb $x_{n_k}\\to x^*\\in K$. Hem establert un punt $x^*\\in K$ límit d'una parcial de la successió maximitzant."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 6,
+        "cita": "Com que $K$ és fitat, existeix una parcial $(x_{n_k})_k$ amb $x_{n_k}\\to x^*\\in K$",
+        "inici": 0,
+        "fi": 82,
+        "tipus": "pas_injustificat",
+        "explicacio": "Que $K$ sigui fitat no assegura que una successió tingui una parcial convergent, i menys que el límit sigui a $K$ (p. ex. $K=(0,1)$ i $x_n=1/n$).",
+        "correccio": "Com que $K$ és compacte (seqüencialment), la successió té una parcial convergent a un punt de $K$.",
+        "pista": "Quina propietat de $K$ garanteix que una successió tingui una parcial convergent amb el límit dins de $K$? N'hi ha prou amb ser fitat?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-5.json",
+        "valoracio": "El fragment 1 és correcte; al 2 s'invoca la hipòtesi equivocada (fitat en comptes de compacte).",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "Com que $K$ és fitat, existeix una parcial $(x_{n_k})_k$ amb $x_{n_k}\\to x^*\\in K$.",
+            "gravetat": "error",
+            "explicacio": "En un espai mètric general, ser fitat no dona cap parcial convergent (Bolzano-Weierstrass requereix compacte/seqüencialment compacte). Cal usar que K és compacte, i per tant seqüencialment compacte."
+          }
+        ],
+        "hash_referencia": "01232e690e81143a3dc6642b333cabc56c3d88539b2bf35c6089ec7699b5ee96"
+      }
+    },
+    {
+      "titol": "El màxim s'ateny",
+      "pas": "",
+      "fragments": [
+        "Per continuïtat de $f$ a $x^*$, $f(x_{n_k})\\to f(x^*)$. Però $(f(x_{n_k}))_k$ és una parcial de $(f(x_n))_n$, que tendeix a $f_M$, de manera que també $f(x_{n_k})\\to f_M$.",
+        "Per unicitat del límit, $f(x^*)=f_M$. Per tant $f$ ateny el màxim a $x_1:=x^*\\in K$; de manera anàloga, ateny el mínim a algun $x_0\\in K$."
+      ]
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-5.json",
+    "valoracio": "Enunciat idèntic als apunts. La demostració (compacte, fitat, successió maximitzant, parcial convergent, continuïtat i unicitat del límit) és correcta.",
+    "problemes": [],
+    "hash_referencia": "01232e690e81143a3dc6642b333cabc56c3d88539b2bf35c6089ec7699b5ee96"
+  },
+  "creat": 1793547999.1337013
+}

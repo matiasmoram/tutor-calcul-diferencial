@@ -8,13 +8,17 @@ from core.mistakes.application.annotations_grader import GRADING_CLAIM_TIMEOUT_S
 from core.mistakes.application.availability_lister import AvailabilityLister
 from core.mistakes.application.mistake_exercise_provider import MistakeExerciseProvider
 from core.mistakes.application.mistake_session_starter import MistakeSessionStarter, MistakeSessionStarterInput
+from core.mistakes.application.parted_mistake_exercise_generator import PartedMistakeExerciseGenerator
 from core.mistakes.domain.entities.annotation import Annotation
+from core.mistakes.domain.entities.mistake_exercise import MistakeExercise
 from core.mistakes.domain.entities.mistake_grading import MistakeGrading
+from core.mistakes.domain.entities.parted_mistake_exercise import PartedMistakeExercise
 from core.mistakes.domain.exceptions import (
     GradingInProgressException,
     InvalidAnnotationsException,
     MistakeExerciseNotReadyException,
     MistakeGradingTimeoutException,
+    MistakeLayoutMismatchException,
     MistakeSessionNotFoundException,
     MistakeSourceRequiredException,
     UnknownTheoryResultException,
@@ -30,24 +34,38 @@ from core.shared.llm.client import CallMeta, JsonObject, LLMError, LLMRequest, S
 from core.shared.storage.session_provider import SQLModelSessionProvider
 from tests.core.mistakes.builders import (
     COURSE,
+    PART2_ERROR,
     FixedClock,
     err,
     exercise_generator,
     finding,
     gen,
+    part_checked,
+    parted,
+    parted_generator,
     problem_source,
+    resolution_checked,
+    seed_choosing,
     solution,
+    theory_parted,
+    written,
 )
 from tests.fakes.llm import ScriptedLLMClient
 
 
 class Wiring:
-    def __init__(self, provider: SQLModelSessionProvider, llm: ScriptedLLMClient, may_generate: bool = True) -> None:
+    def __init__(
+        self,
+        provider: SQLModelSessionProvider,
+        llm: ScriptedLLMClient,
+        may_generate: bool = True,
+        parted: PartedMistakeExerciseGenerator | None = None,
+    ) -> None:
         self.clock = FixedClock()
         self.exercises = SQLModelMistakeExerciseRepository(provider)
         self.sessions = SQLModelMistakeSessionRepository(provider)
         self.provider = MistakeExerciseProvider(
-            self.exercises, exercise_generator(llm, self.clock), may_generate=may_generate
+            self.exercises, exercise_generator(llm, self.clock), may_generate=may_generate, parted_generator=parted
         )
         self.starter = MistakeSessionStarter(COURSE, self.provider, self.sessions, self.clock)
         self.grader = AnnotationsGrader(COURSE, self.sessions, self.exercises, LLMAnnotationGrader(llm), self.clock)
@@ -310,3 +328,72 @@ async def test_theory_results_are_listed_by_topic_with_their_ready_documents(
     entry = next(i for i in t3.items if i.item.id == "T3.21")
     assert entry.ready == {"normal": 1}
     assert all(i.ready == {} for t in topics for i in t.items if i.item.id != "T3.21")
+
+
+async def test_a_session_is_served_a_document_of_its_layout_only(session_provider: SQLModelSessionProvider) -> None:
+    w = Wiring(session_provider, ScriptedLLMClient({}))
+    await w.exercises.save(solution("aaaaaaaaaaaa"))
+    await w.exercises.save(parted("bbbbbbbbbbbb"))
+    await w.exercises.save(theory_parted().model_copy(update={"id": "cccccccccccc"}))
+    started = await w.starter.start(MistakeSessionStarterInput(exercise_id="t2-4c", layout="per_parts"))
+    assert isinstance(started.document, PartedMistakeExercise) and started.document.id == "bbbbbbbbbbbb"
+    assert started.session.layout == "per_parts" and (await w.sessions.get(started.session.id)).layout == "per_parts"
+    with pytest.raises(MistakeLayoutMismatchException) as e:
+        _ = started.exercise
+    assert e.value.error_code == 409
+    sencer = await w.starter.start(MistakeSessionStarterInput(exercise_id="t2-4c"))
+    assert isinstance(sencer.document, MistakeExercise) and sencer.exercise.id == "aaaaaaaaaaaa"
+    assert sencer.session.layout == "sencer"
+    assert await w.lister.availability() == {"t2-4c": {"normal": 1}}
+    assert await w.lister.availability("per_parts") == {"t2-4c": {"normal": 1}, "T3.21": {"normal": 1}}
+    t3 = next(t for t in await w.lister.theory_results("per_parts") if t.topic.number == 3)
+    assert next(i for i in t3.items if i.item.id == "T3.21").ready == {"normal": 1}
+    assert all(i.ready == {} for t in await w.lister.theory_results() for i in t.items)
+
+
+async def test_a_per_parts_session_on_the_whole_document_grading_is_refused(
+    session_provider: SQLModelSessionProvider,
+) -> None:
+    llm = ScriptedLLMClient({})
+    w = Wiring(session_provider, llm)
+    await w.exercises.save(parted())
+    started = await w.starter.start(MistakeSessionStarterInput(exercise_id="t2-4c", layout="per_parts"))
+    with pytest.raises(MistakeLayoutMismatchException) as e:
+        await w.grader.grade(started.session.id, [])
+    assert e.value.error_code == 409 and e.value.message == "Aquest document es corregeix part per part."
+    assert (await w.sessions.get(started.session.id)).grading is None
+
+
+async def test_a_missing_per_parts_document_is_generated_by_the_parted_generator(
+    session_provider: SQLModelSessionProvider,
+) -> None:
+    llm = ScriptedLLMClient(
+        {
+            Stage.MISTAKES_GENERATION: [written(), PART2_ERROR],
+            Stage.MISTAKES_VERIFICATION: [resolution_checked(True), part_checked(finding(1, "x^4 \\ge"))],
+        }
+    )
+    w = Wiring(session_provider, llm, parted=parted_generator(llm, seed=seed_choosing(2, 1)))
+    await w.exercises.save(solution())
+    request = MistakeSessionStarterInput(exercise_id="t2-4c", difficulty="facil", layout="per_parts")
+    assert await w.starter.needs_generation(request)
+    started = await w.starter.start(request)
+    assert started.generated_now and isinstance(started.document, PartedMistakeExercise)
+    assert started.document.flawed_parts == [2]
+    assert await w.lister.availability("per_parts") == {"t2-4c": {"facil": 1}}
+    assert not await w.starter.needs_generation(request)
+    assert llm.calls(Stage.MISTAKES_GENERATION) == 2
+
+
+async def test_without_a_parted_generator_per_parts_documents_are_only_served_ready(
+    session_provider: SQLModelSessionProvider,
+) -> None:
+    llm = ScriptedLLMClient({})
+    w = Wiring(session_provider, llm)
+    request = MistakeSessionStarterInput(exercise_id="t2-4c", layout="per_parts", fresh=True)
+    assert not await w.starter.needs_generation(request)
+    with pytest.raises(MistakeExerciseNotReadyException):
+        await w.starter.start(request)
+    await w.exercises.save(parted())
+    assert (await w.starter.start(request)).document.id == "0000000000bb"
+    assert llm.calls(Stage.MISTAKES_GENERATION) == 0

@@ -2,7 +2,7 @@
 
 import asyncio
 from collections import defaultdict
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Callable
 from contextlib import asynccontextmanager
 
 from dotenv import load_dotenv
@@ -26,11 +26,8 @@ from core.counterexamples.domain.entities.spec import SpecCatalog
 from core.counterexamples.infra.pool_property_checker import PoolPropertyChecker, VerdictCache
 from core.counterexamples.infra.yaml_spec_source import YamlSpecSource
 from core.course.infra.yaml_course_source import YamlCourseSource
-from core.mistakes.domain.entities.mistake_exercise import MistakeExercise
 from core.mistakes.infra.json_file_source import JsonFileMistakeSource
 from core.mistakes.infra.sqlmodel_repository import SQLModelMistakeExerciseRepository
-from core.quizzes.domain.entities.quiz import Quiz
-from core.quizzes.domain.values.difficulty import Difficulty
 from core.quizzes.infra.json_quiz_files import JsonQuizFiles
 from core.quizzes.infra.sqlmodel_repository import SQLModelQuizRepository
 from core.shared.domain.exceptions import DomainException
@@ -58,18 +55,24 @@ async def _seed_generated(sessions: SQLModelSessionProvider) -> None:
     """Pre-generated documents and quizzes (backend/generats) seed the generated-content tables.
 
     Every start imports the files whose id the database lacks (a first start, or a deploy that added files): one
-    query per source and difficulty, one write per missing document. Counting rows instead would let the documents
-    generated at run time hide new files forever. Assumes one server process (the Dockerfile runs one worker); with
-    several, run `scripts/db.py import-generats` as a deploy step instead."""
+    query per source and difficulty (and layout, for documents), one write per missing document. Counting rows instead
+    would let the documents generated at run time hide new files forever. Assumes one server process (the Dockerfile
+    runs one worker); with several, run `scripts/db.py import-generats` as a deploy step instead."""
     generated = BACKEND_DIR / "generats"
     mistakes = SQLModelMistakeExerciseRepository(sessions)
-    for (source_id, difficulty), documents in _grouped(JsonFileMistakeSource(generated / "errades").load()).items():
-        stored = {e.id for e in await mistakes.of_source(source_id, difficulty)}
+    documents_by_group = _grouped(
+        JsonFileMistakeSource(generated / "errades").load_all(), lambda d: (d.source_id, d.difficulty, d.layout)
+    )
+    for (source_id, difficulty, layout), documents in documents_by_group.items():
+        stored = {e.id for e in await mistakes.of_source(source_id, difficulty, layout)}
         for document in documents:
             if document.id not in stored:
                 await mistakes.save(document)
     quizzes = SQLModelQuizRepository(sessions)
-    for (source_id, difficulty), group in _grouped(JsonQuizFiles(generated / "afirmacions").load_all()).items():
+    quizzes_by_group = _grouped(
+        JsonQuizFiles(generated / "afirmacions").load_all(), lambda q: (q.source_id, q.difficulty)
+    )
+    for (source_id, difficulty), group in quizzes_by_group.items():
         stored = {q.id for q in await quizzes.of_source(source_id, difficulty)}
         for quiz in group:
             if quiz.id not in stored:
@@ -124,10 +127,10 @@ async def _warm_sympy(pool: SympyCheckPool, verdicts: VerdictCache, catalog: Spe
         logger.info("sympy warm-up done")
 
 
-def _grouped[T: (MistakeExercise, Quiz)](items: list[T]) -> dict[tuple[str, Difficulty], list[T]]:
-    out: dict[tuple[str, Difficulty], list[T]] = defaultdict(list)
+def _grouped[K, T](items: list[T], key: Callable[[T], K]) -> dict[K, list[T]]:
+    out: dict[K, list[T]] = defaultdict(list)
     for item in items:
-        out[(item.source_id, item.difficulty)].append(item)
+        out[key(item)].append(item)
     return out
 
 

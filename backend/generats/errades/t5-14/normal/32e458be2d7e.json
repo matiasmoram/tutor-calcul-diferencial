@@ -1,0 +1,118 @@
+{
+  "id": "32e458be2d7e",
+  "exercici": "t5-14",
+  "font": "problema",
+  "dificultat": "normal",
+  "format": "per_parts",
+  "n_enunciat": 0,
+  "parts": [
+    {
+      "titol": "Gradient i punts crítics",
+      "pas": "punts_critics",
+      "fragments": [
+        "$\\varphi$ és derivable, per tant contínua, i el teorema fonamental del càlcul permet derivar la integral. Com $f(x,y)=\\int_x^y\\varphi(t)\\,dt$, el límit superior dona $\\frac{\\partial f}{\\partial y}=\\varphi(y)$ i l'inferior, amb un canvi de signe, $\\frac{\\partial f}{\\partial x}=-\\varphi(x)$.",
+        "Les dues parcials són contínues, així que $f$ és diferenciable (de fet $\\mathcal{C}^1$) i $\\nabla f(x,y)=(-\\varphi(x),\\varphi(y))$.",
+        "$\\nabla f=0$ equival a $\\varphi(x)=0$ i $\\varphi(y)=0$, és a dir $x,y\\in\\{a,b\\}$. Els punts crítics són $(a,a)$, $(a,b)$, $(b,a)$ i $(b,b)$."
+      ]
+    },
+    {
+      "titol": "Signe de φ",
+      "pas": "signe_phi",
+      "fragments": [
+        "Com $\\varphi(a)=0$, $\\varphi'(a)=\\lim_{t\\to a}\\frac{\\varphi(t)}{t-a}>0$, així que prop de $a$ el signe de $\\varphi(t)$ és el de $t-a$: negatiu a l'esquerra i positiu a la dreta. De la mateixa manera $\\varphi'(b)=\\lim_{t\\to b}\\frac{\\varphi(t)}{t-b}<0$, així que prop de $b$ $\\varphi$ és positiva a l'esquerra i negativa a la dreta.",
+        "$\\varphi$ és contínua i no té més zeros que $a$ i $b$; si canviés de signe dins d'un dels intervals $(-\\infty,a)$, $(a,b)$, $(b,+\\infty)$, pel teorema del valor intermedi s'hi anul·laria. Per tant el signe és constant a cada interval: $\\varphi<0$ a $(-\\infty,a)$, $\\varphi>0$ a $(a,b)$, $\\varphi<0$ a $(b,+\\infty)$.",
+        "Sigui $\\Phi(s)=\\int_a^s\\varphi$, amb $\\Phi'=\\varphi$. Llavors $\\Phi$ decreix, creix i decreix en aquests intervals, de manera que $a$ és mínim local estricte de $\\Phi$ i $b$ és màxim local estricte de $\\Phi$."
+      ]
+    },
+    {
+      "titol": "Caràcter dels punts crítics",
+      "pas": "classificar",
+      "fragments": [
+        "Tenim $f(x,y)=\\Phi(y)-\\Phi(x)$, per tant $f(x,y)-f(x_0,y_0)=[\\Phi(y)-\\Phi(y_0)]-[\\Phi(x)-\\Phi(x_0)]$.",
+        "En $(a,b)$: prop del punt, $\\Phi(y)\\leq\\Phi(b)$ i $\\Phi(x)\\geq\\Phi(a)$, amb igualtat només si $y=b$ i $x=a$ respectivament. Si $(x,y)\\neq(a,b)$ alguna desigualtat és estricta, així que $f(x,y)<f(a,b)$: màxim local estricte. En $(b,a)$ tot s'inverteix, i és un mínim local estricte.",
+        "En $(a,a)$: $f(a,y)-f(a,a)=\\Phi(y)-\\Phi(a)>0$ per $y\\neq a$ proper, i $f(x,a)-f(a,a)=-(\\Phi(x)-\\Phi(a))<0$ per $x\\neq a$ proper. Hi ha punts propers amb valor més gran i més petit, per tant és un punt de sella; anàlogament $(b,b)$ és de sella. No fem servir la hessiana perquè només sabem que $\\varphi$ és derivable, no que $\\varphi'$ sigui contínua."
+      ],
+      "fragments_errats": [
+        "Tenim $f(x,y)=\\Phi(y)-\\Phi(x)$, per tant $f(x,y)-f(x_0,y_0)=[\\Phi(y)-\\Phi(y_0)]-[\\Phi(x)-\\Phi(x_0)]$.",
+        "En $(a,b)$: prop del punt, $\\Phi(y)\\leq\\Phi(b)$ i $\\Phi(x)\\geq\\Phi(a)$, amb igualtat només si $y=b$ i $x=a$ respectivament. Si $(x,y)\\neq(a,b)$ alguna desigualtat és estricta, així que $f(x,y)<f(a,b)$: màxim local estricte. En $(b,a)$ tot s'inverteix, i és un mínim local estricte.",
+        "En $(a,a)$: $f(a,y)-f(a,a)=\\Phi(y)-\\Phi(a)>0$ per $y\\neq a$ proper, i $f(x,a)-f(a,a)=\\Phi(x)-\\Phi(a)>0$ per $x\\neq a$ proper. Tots els punts propers tenen valor més gran, per tant és un mínim local; anàlogament $(b,b)$ és un màxim local. No fem servir la hessiana perquè només sabem que $\\varphi$ és derivable, no que $\\varphi'$ sigui contínua."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 9,
+        "cita": "$f(x,a)-f(a,a)=\\Phi(x)-\\Phi(a)>0$ per $x\\neq a$ proper",
+        "inici": 70,
+        "fi": 124,
+        "tipus": "calcul",
+        "explicacio": "Com $f(x,y)=\\Phi(y)-\\Phi(x)$, la variable $x$ entra amb signe menys: $f(x,a)-f(a,a)=-(\\Phi(x)-\\Phi(a))<0$. Hi ha punts propers amb valor més gran i més petit, i $(a,a)$ és de sella.",
+        "correccio": "$f(x,a)-f(a,a)=-(\\Phi(x)-\\Phi(a))<0$ per $x\\neq a$ proper; per tant $(a,a)$ és un punt de sella, i anàlogament $(b,b)$.",
+        "pista": "Quin signe té $x$ dins l'expressió $f(x,y)=\\Phi(y)-\\Phi(x)$ i com afecta això a l'increment quan només es mou $x$?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-3.json",
+        "valoracio": "Fragments 1 i 2 correctes ((a,b) maxim estricte, (b,a) minim estricte). Al fragment 3 s'oblida el signe menys a x, i es conclou erròniament minim/maxim en lloc de sella per a (a,a) i (b,b).",
+        "problemes": [
+          {
+            "fragment": 3,
+            "cita": "$f(x,a)-f(a,a)=\\Phi(x)-\\Phi(a)>0$ per $x\\neq a$ proper",
+            "gravetat": "error",
+            "explicacio": "Com f(x,y)=Phi(y)-Phi(x), f(x,a)-f(a,a) = -(Phi(x)-Phi(a)) < 0 per x proper != a. Hi falta el signe menys. Aixo fa que (a,a) sigui punt de sella (f>0 en una direccio, f<0 en l'altra), no minim local."
+          },
+          {
+            "fragment": 3,
+            "cita": "Tots els punts propers tenen valor més gran, per tant és un mínim local; anàlogament $(b,b)$ és un màxim local.",
+            "gravetat": "consequencia",
+            "explicacio": "Conclusio erronia heretada del signe incorrecte: (a,a) i (b,b) son punts de sella, no minim ni maxim local. A mes, 'tots els punts propers' no es dedueix de mirar nomes els eixos."
+          }
+        ],
+        "hash_referencia": "d9a53ba33a851ccf3e643b47b5f9c3b490c72db46b5b9b8f333cf5aea3c7c870"
+      }
+    },
+    {
+      "titol": "Interpretar",
+      "pas": "interpretar",
+      "fragments": [
+        "$f(x,y)$ és l'àrea amb signe sota $\\varphi$ entre $x$ i $y$. El valor $f(a,b)=\\int_a^b\\varphi>0$ és l'àrea de tot el tram on $\\varphi$ és positiva: moure $a$ o $b$ cap a fora afegeix àrea negativa, i cap a dins treu àrea positiva, de manera que la integral decreix. Per això $(a,b)$ és màxim.",
+        "$f(b,a)=-f(a,b)<0$ és el mateix interval recorregut al revés, que dona el mínim. A la diagonal $f(x,x)=0$, i prop de $(a,a)$ o $(b,b)$ la integral sobre un interval petit pot sortir positiva o negativa segons cap a on el posem: són punts de sella."
+      ],
+      "fragments_errats": [
+        "$f(x,y)$ és l'àrea amb signe sota $\\varphi$ entre $x$ i $y$. El valor $f(a,b)=\\int_a^b\\varphi>0$ és l'àrea de tot el tram on $\\varphi$ és positiva: moure $a$ o $b$ cap a fora afegeix àrea negativa, i cap a dins treu àrea positiva, de manera que la integral decreix. Per això $(a,b)$ és màxim.",
+        "$f(b,a)=f(a,b)>0$ és el mateix interval recorregut al revés, que dona també un màxim. A la diagonal $f(x,x)=0$, i prop de $(a,a)$ o $(b,b)$ la integral sobre un interval petit pot sortir positiva o negativa segons cap a on el posem: són punts de sella."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 11,
+        "cita": "$f(b,a)=f(a,b)>0$ és el mateix interval recorregut al revés, que dona també un màxim",
+        "inici": 0,
+        "fi": 84,
+        "tipus": "logica",
+        "explicacio": "Recórrer l'interval al revés canvia el signe de la integral: $f(b,a)=\\int_b^a\\varphi=-\\int_a^b\\varphi=-f(a,b)<0$, i això dona el mínim, no un altre màxim.",
+        "correccio": "$f(b,a)=-f(a,b)<0$ és el mateix interval recorregut al revés, que dona el mínim.",
+        "pista": "Què li passa a una integral quan intercanvies els límits d'integració?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-3.json",
+        "valoracio": "El fragment 1 és correcte. Al fragment 2 es confon f(b,a) amb f(a,b) (cal el signe menys) i se'n deriva que (b,a) és màxim en lloc de mínim; la part sobre la diagonal i les selles és correcta.",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "$f(b,a)=f(a,b)>0$ és el mateix interval recorregut al revés, que dona també un màxim.",
+            "gravetat": "error",
+            "explicacio": "Recórrer l'interval al revés canvia el signe de la integral: f(b,a)=-f(a,b)<0. A més, (b,a) és un mínim local estricte (com s'ha provat abans), no un màxim; la conclusió contradiu la part anterior."
+          }
+        ],
+        "hash_referencia": "d9a53ba33a851ccf3e643b47b5f9c3b490c72db46b5b9b8f333cf5aea3c7c870"
+      }
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-3.json",
+    "valoracio": "Gradient, punts crítics, signe de phi (amb valor intermedi), classificació via Phi(y)-Phi(x), sella a (a,a) i (b,b), evitació de la hessiana i interpretació: tot correcte.",
+    "problemes": [],
+    "hash_referencia": "d9a53ba33a851ccf3e643b47b5f9c3b490c72db46b5b9b8f333cf5aea3c7c870"
+  },
+  "creat": 1793548122.3969097
+}

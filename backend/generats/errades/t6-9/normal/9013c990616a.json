@@ -1,0 +1,119 @@
+{
+  "id": "9013c990616a",
+  "exercici": "t6-9",
+  "font": "problema",
+  "dificultat": "normal",
+  "format": "per_parts",
+  "n_enunciat": 0,
+  "parts": [
+    {
+      "titol": "Descriure $K$",
+      "pas": "recinte",
+      "fragments": [
+        "De $1\\le y\\le x^2$ i $x>0$ surt $x^2\\ge1$, és a dir $x\\ge1$. De $xy\\le8$ i $y\\ge1$ surt $x\\le xy\\le8$, per tant $1\\le x\\le8$.",
+        "Intersecquem les corbes dos a dos. $y=1$ i $y=x^2$ donen $(1,1)$; $y=x^2$ i $xy=8$ donen $x^3=8$, o sigui $(2,4)$; $xy=8$ i $y=1$ donen $(8,1)$.",
+        "Així $K$ és un recinte tancat i fitat (compacte) de vèrtexs $(1,1)$, $(2,4)$ i $(8,1)$. La frontera la formen el segment $y=1$, $x\\in[1,8]$, l'arc de paràbola $y=x^2$, $x\\in[1,2]$, i l'arc d'hipèrbola $y=\\frac8x$, $x\\in[2,8]$."
+      ]
+    },
+    {
+      "titol": "Eliminar el logaritme",
+      "pas": "reduir",
+      "fragments": [
+        "Sigui $g(x,y)=8xy-x^2+1$. A $K$ tenim $y\\ge1$, per tant $8xy\\ge8x$, i com que $1\\le x\\le8$, $8x\\ge x^2$ (ja que $x(8-x)\\ge0$). Llavors $8xy\\ge8x\\ge x^2$, és a dir $8xy-x^2\\ge0$, i per tant $g\\ge1>0$.",
+        "Per tant $f=\\log g$ està ben definida i és contínua a $K$, que és compacte; per Weierstrass $f$ hi té màxim i mínim. Com que el logaritme és estrictament creixent, els extrems de $f$ són als mateixos punts que els de $g$. Resultat: n'hi ha prou d'estudiar $g$ a $K$."
+      ],
+      "fragments_errats": [
+        "Sigui $g(x,y)=8xy-x^2+1$. A $K$ tenim $y\\ge1$, per tant $8xy\\ge8x$, i com que $1\\le x\\le8$, $8x\\ge x^2$ (ja que $x(x-8)\\ge0$). Llavors $8xy\\ge8x\\ge x^2$, és a dir $8xy-x^2\\ge0$, i per tant $g\\ge1>0$.",
+        "Per tant $f=\\log g$ està ben definida i és contínua a $K$, que és compacte; per Weierstrass $f$ hi té màxim i mínim. Com que el logaritme és estrictament creixent, els extrems de $f$ són als mateixos punts que els de $g$. Resultat: n'hi ha prou d'estudiar $g$ a $K$."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 4,
+        "cita": "$8x\\ge x^2$ (ja que $x(x-8)\\ge0$)",
+        "inici": 92,
+        "fi": 125,
+        "tipus": "desigualtat",
+        "explicacio": "$x(x-8)\\ge0$ equival a $x^2\\ge8x$, el contrari del que es vol; per a $1\\le x\\le8$ és $x(8-x)\\ge0$, que dona $8x\\ge x^2$.",
+        "correccio": "$8x\\ge x^2$ perquè $x(8-x)\\ge0$, ja que $1\\le x\\le8$.",
+        "pista": "Quin signe té $x(x-8)$ quan $1\\le x\\le8$? I a quina desigualtat entre $8x$ i $x^2$ equival?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-4.json",
+        "valoracio": "La cadena 8xy>=8x>=x^2 i g>=1>0 és certa, però la justificació de 8x>=x^2 té el signe invertit. El fragment 2 és correcte.",
+        "problemes": [
+          {
+            "fragment": 1,
+            "cita": "$8x\\ge x^2$ (ja que $x(x-8)\\ge0$)",
+            "gravetat": "error",
+            "explicacio": "8x>=x^2 equival a x(8-x)>=0, és a dir x(x-8)<=0. Amb 1<=x<=8, x(x-8)<=0, no >=0 (només val 0 a x=8). La justificació és falsa, tot i que la desigualtat 8x>=x^2 és certa."
+          }
+        ],
+        "hash_referencia": "7db9a60bed907cb843bd0b30fa6c240507bfcbf5df302335c2cbd3f9fb4abc4e"
+      }
+    },
+    {
+      "titol": "Interior",
+      "pas": "interior",
+      "fragments": [
+        "Un extrem a l'interior de $K$ (obert) seria un punt crític, on $\\nabla g=(8y-2x,\\,8x)=(0,0)$. Però $g_y=8x\\ne0$ perquè $x\\ge1$ a $K$.",
+        "Per tant $g$ no té punts crítics a l'interior de $K$ i els extrems són a la frontera."
+      ]
+    },
+    {
+      "titol": "Els tres trossos de frontera",
+      "pas": "frontera",
+      "fragments": [
+        "Sobre $y=1$, $x\\in[1,8]$: $g=8x-x^2+1$, amb $g'=8-2x=0$ per a $x=4$, on $g(4)=32-16+1=17$. Als extrems de l'interval $g(1)=8$ i $g(8)=1$.",
+        "Sobre $y=x^2$, $x\\in[1,2]$: $g=8x^3-x^2+1$ i $g'=24x^2-2x=2x(12x-1)>0$ per a $x\\ge1$, així que és creixent, de $g(1)=8$ a $g(2)=64-4+1=61$.",
+        "Sobre $y=\\frac8x$, $x\\in[2,8]$: $g=8x\\cdot\\frac8x-x^2+1=65-x^2$, decreixent, de $g(2)=61$ a $g(8)=1$. Candidats: valors $17$ (a $(4,1)$), $8$ (a $(1,1)$), $61$ (a $(2,4)$) i $1$ (a $(8,1)$)."
+      ],
+      "fragments_errats": [
+        "Sobre $y=1$, $x\\in[1,8]$: $g=8x-x^2+1$, amb $g'=8-2x=0$ per a $x=4$, on $g(4)=32-16+1=17$. Com que $x=4$ és l'únic punt crític, no cal mirar els extrems.",
+        "Sobre $y=x^2$, $x\\in[1,2]$: $g=8x^3-x^2+1$ i $g'=24x^2-2x=2x(12x-1)>0$ per a $x\\ge1$, així que és creixent, de $g(1)=8$ a $g(2)=64-4+1=61$.",
+        "Sobre $y=\\frac8x$, $x\\in[2,8]$: $g=8x\\cdot\\frac8x-x^2+1=65-x^2$, decreixent, de $g(2)=61$ a $g(8)=1$. Candidats: valors $17$ (a $(4,1)$), $8$ (a $(1,1)$), $61$ (a $(2,4)$) i $1$ (a $(8,1)$)."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 8,
+        "cita": "Com que $x=4$ és l'únic punt crític, no cal mirar els extrems.",
+        "inici": 91,
+        "fi": 153,
+        "tipus": "logica",
+        "explicacio": "A l'interval tancat $[1,8]$ els extrems absoluts també poden ser als extrems; aquí $x=4$ és un màxim i el mínim s'assoleix a un extrem.",
+        "correccio": "Cal avaluar també els extrems: $g(1)=8$ i $g(8)=1$.",
+        "pista": "En un interval tancat, només els punts crítics poden ser extrems absoluts? Què passa amb el mínim de $g$ sobre aquest segment?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-4.json",
+        "valoracio": "Càlculs numèrics correctes (17, 8, 61, 1); l'única falla és la justificació falsa que els extrems no cal mirar-los al primer tros, tot i que els vèrtexs acaben sent als candidats via els altres trossos.",
+        "problemes": [
+          {
+            "fragment": 1,
+            "cita": "Com que $x=4$ és l'únic punt crític, no cal mirar els extrems.",
+            "gravetat": "error",
+            "explicacio": "Un extrem absolut sobre [1,8] pot assolir-se als extrems de l'interval, no només als punts crítics. Cal avaluar g(1)=8 i g(8)=1 (de fet el mínim és a x=8). Afirmar que no cal mirar-los és fals."
+          }
+        ],
+        "hash_referencia": "7db9a60bed907cb843bd0b30fa6c240507bfcbf5df302335c2cbd3f9fb4abc4e"
+      }
+    },
+    {
+      "titol": "Concloure",
+      "pas": "comparar",
+      "fragments": [
+        "Comparant els valors candidats $8$, $17$, $61$ i $1$, el màxim de $g$ és $61$ a $(2,4)$ i el mínim és $1$ a $(8,1)$.",
+        "Com que el logaritme és creixent, $\\max f=\\log61$ assolit a $(2,4)$ i $\\min f=\\log1=0$ assolit a $(8,1)$."
+      ]
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-4.json",
+    "valoracio": "Vèrtexs, positivitat de g (8xy>=8x>=x^2), absència de punts crítics (g_y=8x!=0), valors a la frontera (17, 8, 61, 1) tots verificats. Màxim log61 a (2,4), mínim 0 a (8,1).",
+    "problemes": [],
+    "hash_referencia": "7db9a60bed907cb843bd0b30fa6c240507bfcbf5df302335c2cbd3f9fb4abc4e"
+  },
+  "creat": 1793548245.8988214
+}

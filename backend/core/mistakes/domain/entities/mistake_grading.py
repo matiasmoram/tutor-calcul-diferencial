@@ -46,3 +46,34 @@ class MistakeGrading(BaseModel):
     )
     summary: str = Field(validation_alias=catalan_alias("resum", "summary"), serialization_alias="resum")
     call: ModelUsage | None = Field(validation_alias=catalan_alias("crida", "call"), serialization_alias="crida")
+
+
+class PartGrading(BaseModel):
+    """The grading of one flawed part of a per-parts session, stored once. Its score already carries the hint
+    factor when the student asked for the part's hint."""
+
+    part: int
+    hint_used: bool
+    grading: MistakeGrading
+
+
+class PartScore(BaseModel):
+    model_config = ConfigDict(serialize_by_alias=True)
+
+    part: int
+    score: int = Field(validation_alias=catalan_alias("nota", "score"), serialization_alias="nota")
+    hint_used: bool = Field(validation_alias=catalan_alias("pista", "hint_used"), serialization_alias="pista")
+
+
+class PartedMistakeGrading(BaseModel):
+    """A per-parts session once every flawed part is graded: the mean of the part scores."""
+
+    model_config = ConfigDict(serialize_by_alias=True)
+
+    score: int = Field(validation_alias=catalan_alias("nota", "score"), serialization_alias="nota")  # 0..100
+    found: int = Field(validation_alias=catalan_alias("trobats", "found"), serialization_alias="trobats")
+    total: int
+    false_positives: int = Field(
+        validation_alias=catalan_alias("falsos_positius", "false_positives"), serialization_alias="falsos_positius"
+    )
+    parts: list[PartScore]

@@ -1,0 +1,132 @@
+{
+  "id": "bad59b67f874",
+  "exercici": "t3-17",
+  "font": "problema",
+  "dificultat": "normal",
+  "format": "per_parts",
+  "n_enunciat": 0,
+  "parts": [
+    {
+      "titol": "Continuïtat",
+      "pas": "continuitat",
+      "fragments": [
+        "L'aplicació $(x,y)\\mapsto xy$ és contínua (producte de contínues) i el valor absolut també, així que $(x,y)\\mapsto|xy|$ és contínua i amb valors a $[0,\\infty)$.",
+        "L'arrel quadrada és contínua a $[0,\\infty)$ i l'exponencial a $\\mathbb{R}$. Per la composició de funcions contínues, $f(x,y)=e^{\\sqrt{|xy|}}$ és contínua a tot $\\mathbb{R}^2$."
+      ],
+      "fragments_errats": [
+        "L'aplicació $(x,y)\\mapsto xy$ és contínua (producte de contínues) i el valor absolut també, així que $(x,y)\\mapsto|xy|$ és contínua i amb valors a $[0,\\infty)$.",
+        "L'arrel quadrada és contínua a $[0,\\infty)$ i l'exponencial a $\\mathbb{R}$. Com que l'arrel no és derivable a $0$, $f(x,y)=e^{\\sqrt{|xy|}}$ només és contínua quan $xy\\neq0$."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 2,
+        "cita": "Com que l'arrel no és derivable a $0$, $f(x,y)=e^{\\sqrt{|xy|}}$ només és contínua quan $xy\\neq0$.",
+        "inici": 76,
+        "fi": 173,
+        "tipus": "logica",
+        "explicacio": "Es confon derivabilitat amb continuïtat. L'arrel és contínua a $0$ encara que no hi sigui derivable, i la composició de contínues és contínua a tot $\\mathbb{R}^2$.",
+        "correccio": "Per composició de funcions contínues, $f$ és contínua a tot $\\mathbb{R}^2$, eixos inclosos.",
+        "pista": "Quina propietat de l'arrel i de l'exponencial necessites per a la composició: continuïtat o derivabilitat?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-2.json",
+        "valoracio": "El fragment 1 és correcte. El fragment 2 estableix bé la continuïtat de les peces però en conclou erròniament que només és contínua fora dels eixos.",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "Com que l'arrel no és derivable a $0$, $f(x,y)=e^{\\sqrt{|xy|}}$ només és contínua quan $xy\\neq0$.",
+            "gravetat": "error",
+            "explicacio": "Falsa: f és contínua a tot R^2 per composició de funcions contínues (el mateix fragment ho acaba de dir). La no derivabilitat de l'arrel a 0 no afecta la continuïtat; sqrt és contínua a [0,∞)."
+          }
+        ],
+        "hash_referencia": "256edd5e7de60737fa05ee65e067fae5c10cf907ea3543a25edfb8ba0313d394"
+      }
+    },
+    {
+      "titol": "Fora dels eixos",
+      "pas": "fora_eixos",
+      "fragments": [
+        "Sigui $(x_0,y_0)$ amb $x_0y_0\\neq0$. En un entorn prou petit, $xy$ té signe constant $s=\\pm1$ i $|xy|=sxy>0$, així que $f=e^{\\sqrt{sxy}}$ i no hi ha cap problema amb el valor absolut ni amb l'arrel.",
+        "Les parcials són $\\frac{\\partial f}{\\partial x}=e^{\\sqrt{|xy|}}\\frac{sy}{2\\sqrt{|xy|}}$ i $\\frac{\\partial f}{\\partial y}=e^{\\sqrt{|xy|}}\\frac{sx}{2\\sqrt{|xy|}}$, i són contínues en aquest entorn (composicions i quocients amb denominador no nul).",
+        "Per la condició suficient, $f$ és diferenciable als punts amb $xy\\neq0$, i per tant hi existeixen totes les derivades direccionals, $D_uf=\\langle\\nabla f,u\\rangle$."
+      ]
+    },
+    {
+      "titol": "Punts dels eixos fora de l'origen",
+      "pas": "eixos_no_origen",
+      "fragments": [
+        "Prenem $(a,0)$ amb $a\\neq0$ i $u=(u_1,u_2)\\neq0$. Com que $f(a,0)=e^0=1$, el quocient incremental és $\\frac{f(a+tu_1,tu_2)-1}{t}=\\frac{e^{\\sqrt{|a+tu_1||u_2|}\\sqrt{|t|}}-1}{t}$.",
+        "Si $u_2\\neq0$, quan $t\\to0$ l'exponent tendeix a $0$ i $e^z-1\\sim z$, així que el quocient és equivalent a $\\sqrt{|a||u_2|}\\,\\frac{\\sqrt{|t|}}{t}$, que en mòdul tendeix a $\\infty$: no hi ha límit finit.",
+        "Si $u_2=0$, sobre l'eix $f\\equiv1$ i el quocient és $0$, de manera que $D_uf(a,0)=0$. Anàlogament a $(0,b)$ amb $b\\neq0$ només existeix per a $u_1=0$, i val $0$."
+      ]
+    },
+    {
+      "titol": "L'origen",
+      "pas": "origen",
+      "fragments": [
+        "A l'origen, $f(0,0)=1$ i $f(tu_1,tu_2)=e^{\\sqrt{t^2|u_1u_2|}}=e^{c|t|}$ amb $c=\\sqrt{|u_1u_2|}\\ge0$. El quocient és $\\frac{e^{c|t|}-1}{t}$.",
+        "Com que $e^{c|t|}-1\\sim c|t|$, el límit per $t\\to0^+$ és $c$ i per $t\\to0^-$ és $-c$. Els límits laterals coincideixen només si $c=-c$, és a dir $c=0$, o sigui $u_1u_2=0$.",
+        "Així, a l'origen la derivada direccional només existeix en les direccions dels eixos, i en aquest cas val $0$."
+      ],
+      "fragments_errats": [
+        "A l'origen, $f(0,0)=1$ i $f(tu_1,tu_2)=e^{\\sqrt{t^2|u_1u_2|}}=e^{c|t|}$ amb $c=\\sqrt{|u_1u_2|}\\ge0$. El quocient és $\\frac{e^{c|t|}-1}{t}$.",
+        "Com que $e^{c|t|}-1\\sim c|t|$, el límit per $t\\to0^+$ és $c$ i per $t\\to0^-$ també és $c$, perquè $|t|\\ge0$. Els límits laterals coincideixen sempre, així que el límit existeix i val $c$.",
+        "Així, a l'origen la derivada direccional existeix en totes les direccions i val $\\sqrt{|u_1u_2|}$."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 10,
+        "cita": "el límit per $t\\to0^+$ és $c$ i per $t\\to0^-$ també és $c$, perquè $|t|\\ge0$",
+        "inici": 31,
+        "fi": 107,
+        "tipus": "calcul",
+        "explicacio": "El quocient és $\\frac{e^{c|t|}-1}{t}$ i per $t<0$ el denominador és negatiu, així que el límit lateral per l'esquerra és $-c$. Els límits només coincideixen si $c=0$.",
+        "correccio": "Per $t\\to0^-$ el límit és $-c$; la derivada direccional només existeix si $u_1u_2=0$ i llavors val $0$.",
+        "pista": "Quin signe té el denominador $t$ del quocient quan $t$ s'apropa a $0$ per l'esquerra?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-2.json",
+        "valoracio": "El fragment 1 és correcte; el 2 oblida el signe de t al límit lateral esquerre i el 3 en hereta la conclusió falsa.",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "el límit per $t\\to0^+$ és $c$ i per $t\\to0^-$ també és $c$, perquè $|t|\\ge0$",
+            "gravetat": "error",
+            "explicacio": "El quocient és (e^{c|t|}-1)/t amb t al denominador, no |t|. Per t<0 és ~ c|t|/t = -c, així que el límit per l'esquerra és -c. Els límits laterals només coincideixen si c=0."
+          },
+          {
+            "fragment": 2,
+            "cita": "Els límits laterals coincideixen sempre, així que el límit existeix i val $c$.",
+            "gravetat": "consequencia",
+            "explicacio": "Fals: els límits laterals són c i -c, i coincideixen només si c=0."
+          },
+          {
+            "fragment": 3,
+            "cita": "la derivada direccional existeix en totes les direccions i val $\\sqrt{|u_1u_2|}$",
+            "gravetat": "consequencia",
+            "explicacio": "Només existeix per a u_1u_2=0 (direccions dels eixos), i llavors val 0. La conclusió hereta l'error dels límits laterals."
+          }
+        ],
+        "hash_referencia": "256edd5e7de60737fa05ee65e067fae5c10cf907ea3543a25edfb8ba0313d394"
+      }
+    },
+    {
+      "titol": "No diferenciabilitat als eixos",
+      "pas": "diferenciabilitat_eixos",
+      "fragments": [
+        "Si $f$ fos diferenciable en un punt dels eixos, hi existirien totes les derivades direccionals, amb $D_uf=Df\\,u$.",
+        "Però a $(a,0)$ amb $a\\neq0$, a $(0,b)$ amb $b\\neq0$ i a l'origen hi ha direccions on la derivada direccional no existeix. Per tant $f$ no és diferenciable a cap punt amb $xy=0$, i és diferenciable exactament a $\\{xy\\neq0\\}$."
+      ]
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-2.json",
+    "valoracio": "Continuïtat per composició, diferenciabilitat fora dels eixos per la condició suficient, derivades direccionals als eixos i a l'origen (amb límits laterals) correctes, i no diferenciabilitat als eixos ben deduïda.",
+    "problemes": [],
+    "hash_referencia": "256edd5e7de60737fa05ee65e067fae5c10cf907ea3543a25edfb8ba0313d394"
+  },
+  "creat": 1793547994.5511026
+}

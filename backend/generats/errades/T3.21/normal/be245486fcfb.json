@@ -1,0 +1,140 @@
+{
+  "id": "be245486fcfb",
+  "exercici": "T3.21",
+  "font": "teoria",
+  "dificultat": "normal",
+  "format": "per_parts",
+  "n_enunciat": 2,
+  "parts": [
+    {
+      "titol": "Enunciat",
+      "pas": "",
+      "fragments": [
+        "Siguin $f:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}^m$ i $g:\\Theta\\subseteq\\mathbb{R}^m\\to\\mathbb{R}^p$ amb $f(\\Omega)\\subseteq\\Theta$, i sigui $a\\in\\mathring{\\Omega}$ tal que $f(a)\\in\\mathring{\\Theta}$. Si $f$ és diferenciable en $a$ i $g$ és diferenciable en $f(a)$, llavors $g\\circ f$ és diferenciable en $a$.",
+        "A més, $J(g\\circ f)(a)=Jg(f(a))\\cdot Jf(a)$, és a dir, per a tot $i=1,\\ldots,p$ i $j=1,\\ldots,n$: $\\displaystyle \\frac{\\partial(g\\circ f)_i}{\\partial x_j}(a)=\\sum_{\\ell=1}^m\\frac{\\partial g_i}{\\partial y_\\ell}(f(a))\\cdot\\frac{\\partial f_\\ell}{\\partial x_j}(a)$."
+      ],
+      "fragments_errats": [
+        "Siguin $f:\\Omega\\subseteq\\mathbb{R}^n\\to\\mathbb{R}^m$ i $g:\\Theta\\subseteq\\mathbb{R}^m\\to\\mathbb{R}^p$ amb $f(\\Omega)\\subseteq\\Theta$, i sigui $a\\in\\mathring{\\Omega}$ tal que $f(a)\\in\\mathring{\\Theta}$. Si $f$ és diferenciable en $a$ i $g$ és contínua en $f(a)$, llavors $g\\circ f$ és diferenciable en $a$.",
+        "A més, $J(g\\circ f)(a)=Jg(f(a))\\cdot Jf(a)$, és a dir, per a tot $i=1,\\ldots,p$ i $j=1,\\ldots,n$: $\\displaystyle \\frac{\\partial(g\\circ f)_i}{\\partial x_j}(a)=\\sum_{\\ell=1}^m\\frac{\\partial g_i}{\\partial y_\\ell}(f(a))\\cdot\\frac{\\partial f_\\ell}{\\partial x_j}(a)$."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 1,
+        "cita": "$g$ és contínua en $f(a)$",
+        "inici": 236,
+        "fi": 261,
+        "tipus": "hipotesi",
+        "explicacio": "Amb $g$ només contínua en $f(a)$ la composició pot no ser diferenciable. Contraexemple: $n=m=p=1$, $f(x)=x$, $a=0$, $g(y)=|y|$; $g$ és contínua en $0$ però $g\\circ f=|x|$ no és diferenciable en $0$.",
+        "correccio": "Cal que $g$ sigui diferenciable en $f(a)$, no només contínua.",
+        "pista": "Quina propietat de $g$ en $f(a)$ necessitem perquè existeixi la matriu $Jg(f(a))$ que apareix a la fórmula?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-6.json",
+        "valoracio": "L'enunciat és incorrecte: canvia la hipòtesi 'g diferenciable en f(a)' per 'g contínua en f(a)', amb la qual la conclusió és falsa (contraexemple g=|y|). La resta (conclusió, fórmula de les parcials) coincideix amb els apunts, llevat de la notació ∂/∂y_ℓ, equivalent.",
+        "problemes": [
+          {
+            "fragment": 1,
+            "cita": "Si $f$ és diferenciable en $a$ i $g$ és contínua en $f(a)$, llavors $g\\circ f$ és diferenciable en $a$.",
+            "gravetat": "error",
+            "explicacio": "La hipòtesi sobre g s'ha afeblit: als apunts g ha de ser diferenciable en f(a), no només contínua. L'enunciat és fals: p.ex. f(x)=x, g(y)=|y| a a=0 és contínua en f(0)=0 però g∘f=|x| no és diferenciable en 0."
+          },
+          {
+            "fragment": 2,
+            "cita": "$J(g\\circ f)(a)=Jg(f(a))\\cdot Jf(a)$",
+            "gravetat": "consequencia",
+            "explicacio": "La fórmula pressuposa que existeix Jg(f(a)), cosa que no es garanteix amb g només contínua; amb la hipòtesi afeblida del fragment 1 les derivades parcials de g i la fórmula no tenen sentit en general."
+          }
+        ],
+        "hash_referencia": "e3f8e7ae54bcb83f3ba8953a10a164e1e78aa821d10aba0f7bcc2350ee2e1320"
+      }
+    },
+    {
+      "titol": "Hipòtesis en forma de desigualtats",
+      "pas": "",
+      "fragments": [
+        "Que $f$ sigui diferenciable en $a$ vol dir que per a tot $\\tilde\\varepsilon>0$ existeix $\\delta_1(\\tilde\\varepsilon)>0$ tal que, si $x\\in\\Omega$ i $\\|x-a\\|<\\delta_1(\\tilde\\varepsilon)$, llavors $\\|f(x)-f(a)-Jf(a)(x-a)\\|<\\tilde\\varepsilon\\|x-a\\|$. (a)",
+        "Anàlogament, que $g$ sigui diferenciable en $f(a)$ vol dir que existeix $\\delta_2(\\tilde\\varepsilon)>0$ tal que, si $y\\in\\Theta$ i $\\|y-f(a)\\|<\\delta_2(\\tilde\\varepsilon)$, llavors $\\|g(y)-g(f(a))-Jg(f(a))(y-f(a))\\|<\\tilde\\varepsilon\\|y-f(a)\\|$. (b)",
+        "Per tant, hem de provar que per a tot $\\varepsilon>0$ existeix $\\delta>0$ tal que, si $x\\in\\Omega$ i $\\|x-a\\|<\\delta$, llavors $\\|(g\\circ f)(x)-(g\\circ f)(a)-D(g\\circ f)(a)(x-a)\\|\\le\\varepsilon\\|x-a\\|$ (amb $\\varepsilon$ arbitrari, això equival a la desigualtat estricta amb $2\\varepsilon$). Això ho reduirem a (a) i (b)."
+      ]
+    },
+    {
+      "titol": "Candidata a diferencial i descomposició",
+      "pas": "",
+      "fragments": [
+        "Per composició de les matrius jacobianes de $f$ en $a$ i de $g$ en $f(a)$, l'única candidata a matriu jacobiana de $D(g\\circ f)(a)$ és $Jg(f(a))\\cdot Jf(a)$.",
+        "Sumant i restant $Jg(f(a))(f(x)-f(a))$ i aplicant la desigualtat triangular:",
+        "$\\|g(f(x))-g(f(a))-Jg(f(a))Jf(a)(x-a)\\|\\le\\|g(f(x))-g(f(a))-Jg(f(a))(f(x)-f(a))\\|+\\|Jg(f(a))\\big(f(x)-f(a)-Jf(a)(x-a)\\big)\\|$.",
+        "Hem reduït el problema a fitar per separat aquests dos termes per $\\frac{\\varepsilon}{2}\\|x-a\\|$."
+      ]
+    },
+    {
+      "titol": "Primer terme",
+      "pas": "",
+      "fragments": [
+        "Com que $f$ és diferenciable en $a$, és localment Lipschitz en $a$: existeixen $\\delta_3>0$ i $M>0$ tals que $\\|f(x)-f(a)\\|\\le M\\|x-a\\|$ si $x\\in\\Omega$ i $\\|x-a\\|<\\delta_3$.",
+        "Prenem $\\tilde\\varepsilon=\\frac{\\varepsilon}{2M}$ a (b) i $\\delta\\le\\min\\{\\delta_3,\\delta_2(\\varepsilon/2M)/M\\}$ (els dos primers del mínim). Si $\\|x-a\\|<\\delta$, llavors $\\|f(x)-f(a)\\|\\le M\\|x-a\\|<\\delta_2(\\varepsilon/2M)$, així que $y=f(x)\\in\\Theta$ és admissible a (b).",
+        "Per tant $\\|g(f(x))-g(f(a))-Jg(f(a))(f(x)-f(a))\\|\\le\\frac{\\varepsilon}{2M}\\|f(x)-f(a)\\|\\le\\frac{\\varepsilon}{2M}M\\|x-a\\|=\\frac{\\varepsilon}{2}\\|x-a\\|$. (11)",
+        "Així, el primer terme és com a molt $\\frac{\\varepsilon}{2}\\|x-a\\|$."
+      ]
+    },
+    {
+      "titol": "Segon terme",
+      "pas": "",
+      "fragments": [
+        "Per a una norma matricial consistent amb la vectorial, $\\|Jg(f(a))\\big(f(x)-f(a)-Jf(a)(x-a)\\big)\\|\\le\\|Jg(f(a))\\|\\,\\|f(x)-f(a)-Jf(a)(x-a)\\|$.",
+        "Prenem $\\tilde\\varepsilon=\\frac{\\varepsilon}{2(\\|Jg(f(a))\\|+1)}$ a (a) (el $+1$ evita el problema que $Jg(f(a))$ sigui la matriu nul·la). Si $\\|x-a\\|<\\delta_1(\\tilde\\varepsilon)$, llavors $\\|f(x)-f(a)-Jf(a)(x-a)\\|\\le\\frac{\\varepsilon}{2(\\|Jg(f(a))\\|+1)}\\|x-a\\|$.",
+        "Multiplicant per $\\|Jg(f(a))\\|$: el segon terme és $\\le\\frac{\\varepsilon\\|Jg(f(a))\\|}{2(\\|Jg(f(a))\\|+1)}\\|x-a\\|\\le\\frac{\\varepsilon}{2}\\|x-a\\|$. (12)",
+        "Així, el segon terme també és com a molt $\\frac{\\varepsilon}{2}\\|x-a\\|$."
+      ],
+      "fragments_errats": [
+        "Per a una norma matricial consistent amb la vectorial, $\\|Jg(f(a))\\big(f(x)-f(a)-Jf(a)(x-a)\\big)\\|\\le\\|Jg(f(a))\\|\\,\\|f(x)-f(a)-Jf(a)(x-a)\\|$.",
+        "Prenem $\\tilde\\varepsilon=\\frac{\\varepsilon}{2(\\|Jg(f(a))\\|+1)}$ a (a) (el $+1$ evita el problema que $Jg(f(a))$ sigui la matriu nul·la). Si $\\|x-a\\|<\\delta_2(\\tilde\\varepsilon)$, llavors $\\|f(x)-f(a)-Jf(a)(x-a)\\|\\le\\frac{\\varepsilon}{2(\\|Jg(f(a))\\|+1)}\\|x-a\\|$.",
+        "Multiplicant per $\\|Jg(f(a))\\|$: el segon terme és $\\le\\frac{\\varepsilon\\|Jg(f(a))\\|}{2(\\|Jg(f(a))\\|+1)}\\|x-a\\|\\le\\frac{\\varepsilon}{2}\\|x-a\\|$. (12)",
+        "Així, el segon terme també és com a molt $\\frac{\\varepsilon}{2}\\|x-a\\|$."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 15,
+        "cita": "Si $\\|x-a\\|<\\delta_2(\\tilde\\varepsilon)$, llavors",
+        "inici": 138,
+        "fi": 187,
+        "tipus": "hipotesi",
+        "explicacio": "La fita sobre $\\|f(x)-f(a)-Jf(a)(x-a)\\|$ ve de (a), que només val per a $\\|x-a\\|<\\delta_1(\\tilde\\varepsilon)$; $\\delta_2$ és el radi de (b), que parla de $g$, i no dona cap garantia sobre $f$.",
+        "correccio": "Cal prendre $\\|x-a\\|<\\delta_1(\\tilde\\varepsilon)$, el radi associat a la diferenciabilitat de $f$ a (a).",
+        "pista": "Quina de les hipòtesis (a) o (b) dona la fita que s'usa aquí, i per a quins $x$ val?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-6.json",
+        "valoracio": "Fragments 1, 3 i 4 correctes: la fita amb norma matricial consistent, el +1 per evitar el cas nul i ||Jg||/(||Jg||+1)<=1 estan bé. L'únic error és usar delta_2 en lloc de delta_1 al fragment 2.",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "Si $\\|x-a\\|<\\delta_2(\\tilde\\varepsilon)$, llavors $\\|f(x)-f(a)-Jf(a)(x-a)\\|\\le\\frac{\\varepsilon}{2(\\|Jg(f(a))\\|+1)}\\|x-a\\|$.",
+            "gravetat": "error",
+            "explicacio": "La hipòtesi (a) sobre f dona el radi delta_1(epsilon tilde), no delta_2 (que és el radi de g a (b)). Amb ||x-a||<delta_2 no es pot garantir la desigualtat de (a). Cal usar delta_1(epsilon/(2(||Jg(f(a))||+1)))."
+          }
+        ],
+        "hash_referencia": "e3f8e7ae54bcb83f3ba8953a10a164e1e78aa821d10aba0f7bcc2350ee2e1320"
+      }
+    },
+    {
+      "titol": "Conclusió i regla de la cadena",
+      "pas": "",
+      "fragments": [
+        "Prenem $\\delta>0$ més petit o igual que $\\delta_3$, que $\\delta_2(\\varepsilon/2M)/M$ i que $\\delta_1\\big(\\frac{\\varepsilon}{2(\\|Jg(f(a))\\|+1)}\\big)$. Si $\\|x-a\\|<\\delta$, valen (11) i (12) i, sumant, $\\|(g\\circ f)(x)-(g\\circ f)(a)-Jg(f(a))Jf(a)(x-a)\\|\\le\\frac{\\varepsilon}{2}\\|x-a\\|+\\frac{\\varepsilon}{2}\\|x-a\\|=\\varepsilon\\|x-a\\|$.",
+        "Com que $\\varepsilon>0$ és arbitrari, $g\\circ f$ és diferenciable en $a$ amb $D(g\\circ f)(a)$ de matriu $Jg(f(a))\\cdot Jf(a)$.",
+        "Finalment, l'entrada $(i,j)$ del producte de matrius $Jg(f(a))\\cdot Jf(a)$ és $\\sum_{\\ell=1}^m\\frac{\\partial g_i}{\\partial y_\\ell}(f(a))\\frac{\\partial f_\\ell}{\\partial x_j}(a)$, que dona la fórmula per a les derivades parcials."
+      ]
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-6.json",
+    "valoracio": "Enunciat equivalent al dels apunts. Demostració correcta: el canvi a delta <= min{delta3, delta2(eps/2M)/M} és vàlid (M||x-a|| < delta2, i f(x) in Theta perquè f(Omega) subset Theta). Fites (11) i (12) correctes; la conclusió amb desigualtat no estricta és equivalent, i el fragment 5 ho justifica.",
+    "problemes": [],
+    "hash_referencia": "e3f8e7ae54bcb83f3ba8953a10a164e1e78aa821d10aba0f7bcc2350ee2e1320"
+  },
+  "creat": 1793548249.8971834
+}

@@ -1,0 +1,129 @@
+{
+  "id": "936b4c37b293",
+  "exercici": "t2-10",
+  "font": "problema",
+  "dificultat": "normal",
+  "format": "per_parts",
+  "n_enunciat": 0,
+  "parts": [
+    {
+      "titol": "Fora de la circumferència",
+      "pas": "fora_cercle",
+      "fragments": [
+        "El conjunt $U=\\{x^2+y^2\\neq1\\}$ és la unió de $\\{x^2+y^2<1\\}$ i $\\{x^2+y^2>1\\}$, que són oberts perquè $x^2+y^2$ és contínua (conjunts definits per desigualtats estrictes). Per tant $U$ és obert.",
+        "A $U$ el denominador $x^2+y^2-1$ no s'anul·la i $f=\\dfrac{x^3y}{x^2+y^2-1}$ és un quocient de polinomis. Per l'àlgebra de funcions contínues, $f$ és contínua en cada punt de $U$ (i com que $U$ és obert, és contínua en un entorn de cada punt)."
+      ]
+    },
+    {
+      "titol": "Punts de la circumferència amb numerador no nul",
+      "pas": "punts_generics",
+      "fragments": [
+        "Sigui $(a,b)$ amb $a^2+b^2=1$ i $ab\\neq0$; allà $f(a,b)=0$. Ens apropem pel camí $(x,y)=(1+t)(a,b)$ amb $t\\to0$, $t\\neq0$, que queda fora de la circumferència, on $f$ és el quocient.",
+        "Com que $x^2+y^2-1=(1+t)^2-1=t(2+t)$ i $x^3y=(1+t)^4a^3b$, resulta $f=\\dfrac{(1+t)^4a^3b}{t(2+t)}$. El numerador tendeix a $a^3b\\neq0$ i el denominador a $0$, així que $|f|\\to\\infty$.",
+        "Per tant $f$ no té límit finit a $(a,b)$ i no és contínua en aquests punts."
+      ],
+      "fragments_errats": [
+        "Sigui $(a,b)$ amb $a^2+b^2=1$ i $ab\\neq0$; allà $f(a,b)=0$. Ens apropem pel camí $(x,y)=(1+t)(a,b)$ amb $t\\to0$, $t\\neq0$, que queda fora de la circumferència, on $f$ és el quocient.",
+        "Com que $x^2+y^2-1=(1+t)^2-1=t^2$ i $x^3y=(1+t)^4a^3b$, resulta $f=\\dfrac{(1+t)^4a^3b}{t^2}$. El numerador tendeix a $a^3b\\neq0$ i el denominador a $0$, així que $|f|\\to\\infty$.",
+        "Per tant $f$ no té límit finit a $(a,b)$ i no és contínua en aquests punts."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 4,
+        "cita": "Com que $x^2+y^2-1=(1+t)^2-1=t^2$",
+        "inici": 0,
+        "fi": 33,
+        "tipus": "calcul",
+        "explicacio": "Desenvolupant, $(1+t)^2-1=2t+t^2=t(2+t)$, no $t^2$: falta el terme $2t$. El denominador és $t(2+t)$.",
+        "correccio": "$x^2+y^2-1=(1+t)^2-1=t(2+t)$ i $f=\\dfrac{(1+t)^4a^3b}{t(2+t)}$.",
+        "pista": "Desenvolupa $(1+t)^2$ i resta $1$: quins termes queden?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-1.json",
+        "valoracio": "L'estratègia és bona, però el denominador al camí radial està mal calculat (t^2 en lloc de t(2+t)). La conclusió final de discontinuïtat és correcta.",
+        "problemes": [
+          {
+            "fragment": 1,
+            "cita": "que queda fora de la circumferència, on $f$ és el quocient",
+            "gravetat": "imprecisio",
+            "explicacio": "Per a t<0 petit el punt (1+t)(a,b) queda dins el disc, no fora. Tot i això, per a t≠0 el denominador no s'anul·la i f és el quocient, així que el raonament segueix valent."
+          },
+          {
+            "fragment": 2,
+            "cita": "$x^2+y^2-1=(1+t)^2-1=t^2$",
+            "gravetat": "error",
+            "explicacio": "(1+t)^2-1 = 2t+t^2 = t(2+t), no t^2. El càlcul del denominador és incorrecte."
+          },
+          {
+            "fragment": 2,
+            "cita": "resulta $f=\\dfrac{(1+t)^4a^3b}{t^2}$",
+            "gravetat": "consequencia",
+            "explicacio": "Hereta el denominador erroni; el correcte és f=(1+t)^4 a^3 b/(t(2+t)). La conclusió |f|→∞ continua sent certa (f ~ a^3b/(2t)), però no per la fórmula escrita."
+          }
+        ],
+        "hash_referencia": "c826612e924641b437bca39d81c5e3e6928a4e19d8c0fa0c9ffe05752f958ea0"
+      }
+    },
+    {
+      "titol": "Els quatre punts on el numerador s'anul·la",
+      "pas": "punts_especials",
+      "fragments": [
+        "Els punts de la circumferència on s'anul·la el numerador són $(\\pm1,0)$ i $(0,\\pm1)$. A $(1,0)$, sobre la recta $x=1$ amb $y\\neq0$: $f(1,y)=\\dfrac{y}{1+y^2-1}=\\dfrac1y$, que no és fitat quan $y\\to0$. Anàlogament $f(-1,y)=-\\dfrac1y$ a $(-1,0)$.",
+        "A $(0,1)$ prenem el camí $y=\\sqrt{1-x^2+x^4}$, que tendeix a $1$ quan $x\\to0$. Aleshores $x^2+y^2-1=x^4$ i $f=\\dfrac{x^3y}{x^4}=\\dfrac yx$, que no és fitat quan $x\\to0$ perquè $y\\to1$. Anàlogament a $(0,-1)$ amb $y=-\\sqrt{1-x^2+x^4}$.",
+        "Per tant no existeix el límit i $f$ no és contínua en cap dels quatre punts, tot i que el numerador s'hi anul·la."
+      ]
+    },
+    {
+      "titol": "Conclusió",
+      "pas": "conclusio",
+      "fragments": [
+        "Ajuntant els tres casos: $f$ és contínua a tot punt de $\\{x^2+y^2\\neq1\\}$ i discontínua a tots els punts de la circumferència (els que tenen $ab\\neq0$ i els quatre especials).",
+        "Per tant $f$ és contínua exactament a $\\mathbb{R}^2\\setminus\\{x^2+y^2=1\\}$."
+      ],
+      "fragments_errats": [
+        "Ajuntant els tres casos: $f$ és contínua a tot punt de $\\{x^2+y^2\\neq1\\}$ i discontínua als punts de la circumferència (només els que tenen $ab\\neq0$).",
+        "Per tant $f$ és contínua exactament a $\\mathbb{R}^2\\setminus\\{x^2+y^2=1,\\ xy\\neq0\\}$."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 9,
+        "cita": "als punts de la circumferència (només els que tenen $ab\\neq0$)",
+        "inici": 88,
+        "fi": 150,
+        "tipus": "conclusio",
+        "explicacio": "Als quatre punts $(\\pm1,0)$, $(0,\\pm1)$ s'ha vist que $f$ tampoc no és contínua, tot i que el numerador s'anul·la. Aquesta conclusió els deixa fora dels punts de discontinuïtat.",
+        "correccio": "$f$ és discontínua a tots els punts de la circumferència, també als quatre especials, i contínua exactament a $\\mathbb{R}^2\\setminus\\{x^2+y^2=1\\}$.",
+        "pista": "Has recollit a la conclusió tots els casos estudiats a les parts anteriors? Què passava als punts $(\\pm1,0)$ i $(0,\\pm1)$?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-1.json",
+        "valoracio": "La conclusió exclou els quatre punts amb xy=0 de la discontinuïtat, tot i que la part anterior havia provat que hi són discontinus. Resultat final incorrecte.",
+        "problemes": [
+          {
+            "fragment": 1,
+            "cita": "discontínua als punts de la circumferència (només els que tenen $ab\\neq0$)",
+            "gravetat": "error",
+            "explicacio": "Contradiu el tercer cas de les parts anteriors: f també és discontínua als quatre punts (±1,0), (0,±1) (ab=0). La discontinuïtat és a tota la circumferència."
+          },
+          {
+            "fragment": 2,
+            "cita": "$f$ és contínua exactament a $\\mathbb{R}^2\\setminus\\{x^2+y^2=1,\\ xy\\neq0\\}$",
+            "gravetat": "consequencia",
+            "explicacio": "Heretat de l'error anterior: el conjunt de continuïtat correcte és {x^2+y^2≠1}; f no és contínua en cap dels quatre punts amb xy=0 de la circumferència."
+          }
+        ],
+        "hash_referencia": "c826612e924641b437bca39d81c5e3e6928a4e19d8c0fa0c9ffe05752f958ea0"
+      }
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-1.json",
+    "valoracio": "Continuïtat fora de la circumferència justificada amb obert; discontinuïtat als punts amb ab!=0 i als quatre especials amb camins i càlculs correctes (x^2+y^2-1=x^4, f(1,y)=1/y). Conclusió correcta.",
+    "problemes": [],
+    "hash_referencia": "c826612e924641b437bca39d81c5e3e6928a4e19d8c0fa0c9ffe05752f958ea0"
+  },
+  "creat": 1793548241.9682896
+}

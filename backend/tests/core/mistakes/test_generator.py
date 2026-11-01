@@ -104,7 +104,7 @@ async def test_concurrent_requests_share_one_generation(session_provider: SQLMod
     assert len({p.exercise.id for p in provided}) == 1 and all(p.generated_now for p in provided)
     assert llm.calls(Stage.MISTAKES_GENERATION) == 1
     assert len(await repo.of_source("t2-4c", "facil")) == 1
-    assert not generations.in_flight(("problema", "t2-4c", "facil"))
+    assert not generations.in_flight(("problema", "t2-4c", "facil", "sencer"))
 
 
 async def test_generate_gives_up_after_max_attempts() -> None:

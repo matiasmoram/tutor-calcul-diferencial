@@ -1,0 +1,121 @@
+{
+  "id": "3404df8cafd0",
+  "exercici": "t2-2i",
+  "font": "problema",
+  "dificultat": "normal",
+  "format": "per_parts",
+  "n_enunciat": 0,
+  "parts": [
+    {
+      "titol": "Equació fora de la paràbola",
+      "pas": "equacio",
+      "fragments": [
+        "Prenem un punt amb $x\\neq-y^2$, de manera que $f(x,y)=\\frac{x}{x+y^2}$ i el denominador no s'anul·la. Aleshores $f(x,y)=k$ equival a $x=k(x+y^2)$, és a dir $x=kx+ky^2$.",
+        "Passant $kx$ a l'esquerra i traient factor comú, $x(1-k)=ky^2$. Aquesta és l'equació que han de complir els punts de $C_k$ fora de la paràbola $x=-y^2$."
+      ]
+    },
+    {
+      "titol": "Cas $k=1$",
+      "pas": "k_u",
+      "fragments": [
+        "Si $k=1$, l'equació $x(1-k)=ky^2$ queda $0=y^2$, per tant $y=0$. A més, cal que el punt estigui fora de la paràbola, és a dir $x\\neq-0^2=0$.",
+        "Comprovem-ho: $f(x,0)=\\frac{x}{x}=1$ per a $x\\neq0$. Sobre la paràbola $x=-y^2$ tenim $f=0\\neq1$, així que no n'hi ha cap punt. Per tant $C_1=\\{(x,0)\\mid x\\neq0\\}$, l'eix $x$ sense l'origen."
+      ],
+      "fragments_errats": [
+        "Si $k=1$, l'equació $x(1-k)=ky^2$ queda $0=y^2$, per tant $y=0$. A més, com que el punt és de l'eix $x$ i l'equació només exigeix $y=0$, qualsevol $x$ hi serveix.",
+        "Comprovem-ho: $f(x,0)=\\frac{x}{x}=1$ per a $x\\neq0$. Sobre la paràbola $x=-y^2$ tenim $f=0\\neq1$, així que no n'hi ha cap punt. Per tant $C_1=\\{(x,0)\\mid x\\in\\mathbb{R}\\}$, tot l'eix $x$."
+      ],
+      "error": {
+        "id": "e1",
+        "fragment": 3,
+        "cita": "com que el punt és de l'eix $x$ i l'equació només exigeix $y=0$, qualsevol $x$ hi serveix",
+        "inici": 72,
+        "fi": 161,
+        "tipus": "logica",
+        "explicacio": "L'equació $x(1-k)=ky^2$ només és vàlida fora de la paràbola $x=-y^2$. Cal descartar $x=-0^2=0$, perquè l'origen és de la paràbola i allà $f=0\\neq1$.",
+        "correccio": "Cal afegir la condició $x\\neq-0^2=0$: $C_1$ és l'eix $x$ sense l'origen.",
+        "pista": "L'equació obtinguda al pas anterior és vàlida per a tots els punts del pla? Què passa amb l'origen quan mires com val $f$ allà?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-2.json",
+        "valoracio": "Cas k=1 mal acabat: s'inclou l'origen a C_1, que és de la paràbola x=-y^2 on f=0. Resultat final incorrecte.",
+        "problemes": [
+          {
+            "fragment": 1,
+            "cita": "qualsevol $x$ hi serveix",
+            "gravetat": "error",
+            "explicacio": "L'equació x(1-k)=ky^2 només val fora de la paràbola (x≠-y^2). Amb y=0 cal x≠0; el punt (0,0) és de la paràbola on f=0, no 1. Es passa per alt aquesta condició."
+          },
+          {
+            "fragment": 2,
+            "cita": "Per tant $C_1=\\{(x,0)\\mid x\\in\\mathbb{R}\\}$, tot l'eix $x$.",
+            "gravetat": "consequencia",
+            "explicacio": "L'origen no pertany a C_1 perquè f(0,0)=0 per definició (el mateix fragment diu f(x,0)=1 només per x≠0). Correcte: C_1={(x,0) | x≠0}."
+          }
+        ],
+        "hash_referencia": "d512a3b8369ae332ef4b553ea904448031f7572c886a6b67b4c001325fabd0b7"
+      }
+    },
+    {
+      "titol": "Cas $k=0$",
+      "pas": "k_zero",
+      "fragments": [
+        "Hi ha dues fonts de zeros. Fora de la paràbola, $k=0$ dona $x\\cdot1=0$, és a dir $x=0$, amb $y\\neq0$ (si $y=0$ i $x=0$ seríem sobre la paràbola). És l'eix $y$ sense l'origen.",
+        "Sobre la paràbola $x=-y^2$, $f=0$ per definició, i això inclou l'origen. Unint-ho, $C_0=\\{x=0\\}\\cup\\{x=-y^2\\}$."
+      ],
+      "fragments_errats": [
+        "Hi ha dues fonts de zeros. Fora de la paràbola, $k=0$ dona $x\\cdot1=0$, és a dir $x=0$, amb $y\\neq0$ (si $y=0$ i $x=0$ seríem sobre la paràbola). És l'eix $y$ sense l'origen.",
+        "Sobre la paràbola $x=-y^2$, $f=0$ per definició, però aquests punts no són de $C_0$, perquè el quocient no hi està definit. Unint-ho, $C_0$ és l'eix $y$ sense l'origen."
+      ],
+      "error": {
+        "id": "e2",
+        "fragment": 6,
+        "cita": "aquests punts no són de $C_0$, perquè el quocient no hi està definit",
+        "inici": 54,
+        "fi": 122,
+        "tipus": "conclusio",
+        "explicacio": "La definició de $f$ diu explícitament que $f=0$ sobre la paràbola $x=-y^2$, així que aquests punts compleixen $f=0$ i són de $C_0$ (origen inclòs).",
+        "correccio": "$C_0=\\{x=0\\}\\cup\\{x=-y^2\\}$: l'eix $y$ més la paràbola, perquè allà $f=0$ per definició.",
+        "pista": "Quin valor assigna la definició de $f$ als punts de la paràbola? Compleixen la condició $f=0$?"
+      },
+      "verificacio": {
+        "origen": "offline",
+        "lot": "parts-2.json",
+        "valoracio": "El fragment 1 és correcte. El fragment 2 ignora la definició de f sobre la paràbola i obté un C_0 incomplet.",
+        "problemes": [
+          {
+            "fragment": 2,
+            "cita": "però aquests punts no són de $C_0$, perquè el quocient no hi està definit",
+            "gravetat": "error",
+            "explicacio": "La funció està definida a x=-y^2 per f=0 (segona línia de la definició), per tant aquests punts compleixen f=0 i pertanyen a C_0. Que el quocient no hi tingui sentit és irrellevant."
+          },
+          {
+            "fragment": 2,
+            "cita": "Unint-ho, $C_0$ és l'eix $y$ sense l'origen.",
+            "gravetat": "consequencia",
+            "explicacio": "El resultat correcte és C_0={x=0}∪{x=-y^2}, origen inclòs; la conclusió hereta l'error d'excloure la paràbola."
+          }
+        ],
+        "hash_referencia": "d512a3b8369ae332ef4b553ea904448031f7572c886a6b67b4c001325fabd0b7"
+      }
+    },
+    {
+      "titol": "Cas $k\\neq 0,1$",
+      "pas": "k_general",
+      "fragments": [
+        "Per a $k\\neq0,1$ podem dividir per $1-k\\neq0$ i obtenim $x=\\frac{k}{1-k}y^2=cy^2$ amb $c=\\frac{k}{1-k}$, una paràbola de vèrtex l'origen i eix l'eix $x$.",
+        "Es té $c=-1$ només si $k=-(1-k)$, és a dir $0=-1$, cosa impossible. Per tant aquesta paràbola només talla $x=-y^2$ a l'origen (de $cy^2=-y^2$ amb $c\\neq-1$ surt $y=0$), on $f=0\\neq k$. Així $C_k$ és la paràbola sense el vèrtex.",
+        "Orientació: si $0<k<1$, $c>0$ i s'obre cap a $x>0$; si $k<0$, $1-k>1$ i $-1<c<0$; si $k>1$, $1-k<0$ i $c<-1$. En aquests dos últims casos s'obre cap a $x<0$."
+      ]
+    }
+  ],
+  "verificacio": {
+    "origen": "offline",
+    "lot": "parts-2.json",
+    "valoracio": "Resolució correcta i completa: separa k=1, inclou la paràbola a C_0 (origen inclòs), exclou l'origen de C_k i comprova c≠-1. Orientacions correctes.",
+    "problemes": [],
+    "hash_referencia": "d512a3b8369ae332ef4b553ea904448031f7572c886a6b67b4c001325fabd0b7"
+  },
+  "creat": 1793547994.5468667
+}
